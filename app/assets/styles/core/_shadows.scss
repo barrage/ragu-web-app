@@ -1,0 +1,14 @@
+@layer -shadows {
+  :root {
+    --shadow-1: 0px 16px 64px 0px rgba(0, 0, 0, 0.1),
+      0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+    --shadow-2: 0px 12px 48px 0px rgba(0, 0, 0, 0.1),
+      0px 6px 12px 0px rgba(0, 0, 0, 0.1);
+    --shadow-3: 0px 4px 12px 0px rgba(0, 0, 0, 0.05),
+      0px 4px 12px 0px rgba(0, 0, 0, 0.05);
+    --shadow-4: 1px 1px 2px 0px rgba(0, 0, 0, 0.1) inset;
+    --shadow-5: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+    --shadow-6: 0px 24px 96px 0px rgba(0, 0, 0, 0.1),
+      0px 12px 24px 0px rgba(0, 0, 0, 0.1);
+  }
+}

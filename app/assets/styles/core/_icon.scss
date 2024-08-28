@@ -1,0 +1,6 @@
+@layer svg-icon {
+  .svg-icon--fill,
+  .svg-icon--fill * {
+    fill: currentColor;
+  }
+}

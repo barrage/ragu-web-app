@@ -1,0 +1,36 @@
+@layer base {
+  :root {
+    --body-font-family: var(--font-primary);
+    --body-font-size: var(--font-size-base);
+    --body-line-height: var(--font-line-height-base);
+    // label text color
+    --body-color: var(--color-primary);
+    --body-background: var(--color-gray-100);
+  }
+
+  html {
+    font-size: 100%;
+    width: 100vw;
+    overflow-x: hidden;
+
+    &.dark {
+      --body-background: var(--color-darkmode-600);
+    }
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size);
+    line-height: var(--body-line-height);
+    letter-spacing: 0.0084rem;
+    color: var(--body-color);
+    background-color: var(--body-background);
+    width: 100% !important;
+  }
+}
+
+html.dark {
+  --color-primary: var(--shade-0);
+}

@@ -1,0 +1,154 @@
+@layer typography {
+  :root {
+    // Font family
+    --font-sans: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+      Noto Sans, sans-serif;
+    --font-serif: ui-serif, serif;
+    --font-mono: Dank Mono, Operator Mono, Inconsolata, Fira Mono, ui-monospace,
+      SF Mono, Monaco, Droid Sans Mono, Source Code Pro, monospace;
+    --font-asap: 'Asap', 'Arial', 'Helvetica', sans-serif;
+    --font-primary: var(--font-asap, var(--font-sans));
+
+    // Font weights
+    --font-weight-thin: 100;
+    --font-weight-extra-light: 200;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extra-bold: 800;
+
+    // Mobile font sizes
+    --font-size-mobile-1: 0.6375rem;
+    --font-size-mobile-2: 0.8rem;
+    --font-size-mobile-3: 1rem;
+    --font-size-mobile-4: 1.25rem;
+    --font-size-mobile-5: 1.5625rem;
+    --font-size-mobile-6: 1.9563rem;
+    --font-size-mobile-7: 2.4438rem;
+    --font-size-mobile-8: 3.05rem;
+    --font-size-mobile-9: 3.8125rem;
+    --font-size-mobile-10: 4.7687rem;
+
+    // Desktop font sizes
+    --font-size-desktop-1: 0.7188rem;
+    --font-size-desktop-2: 0.9rem;
+    --font-size-desktop-3: 1.125rem;
+    --font-size-desktop-4: 1.4063rem;
+    --font-size-desktop-5: 1.7563rem;
+    --font-size-desktop-6: 2.2rem;
+    --font-size-desktop-7: 2.75rem;
+    --font-size-desktop-8: 3.4312rem;
+    --font-size-desktop-9: 4.2938rem;
+    --font-size-desktop-10: 5.3625rem;
+
+    // Fluid font sizes
+    --font-size-fluid-1: clamp(0.6375rem, 0.6178rem + 0.0841vw, 0.71875rem);
+    --font-size-fluid-2: clamp(0.8rem, 0.7757rem + 0.1036vw, 0.9rem);
+    --font-size-fluid-3: clamp(1rem, 0.9697rem + 0.1294vw, 1.125rem);
+    --font-size-fluid-4: clamp(1.25rem, 1.2121rem + 0.1618vw, 1.40625rem);
+    --font-size-fluid-5: clamp(1.5625rem, 1.5155rem + 0.2006vw, 1.75625rem);
+    --font-size-fluid-6: clamp(1.95625rem, 1.8971rem + 0.2524vw, 2.2rem);
+    --font-size-fluid-7: clamp(2.44375rem, 2.3694rem + 0.3172vw, 2.75rem);
+    --font-size-fluid-8: clamp(3.05rem, 2.9575rem + 0.3948vw, 3.43125rem);
+    --font-size-fluid-9: clamp(3.8125rem, 3.6957rem + 0.4984vw, 4.29375rem);
+    --font-size-fluid-10: clamp(4.76875rem, 4.6246rem + 0.6149vw, 5.3625rem);
+    --font-size-base: var(--font-size-fluid-3);
+    --font-line-height-base: 1.2;
+
+    // Headings
+    --heading-font-family: var(--font-primary);
+    --heading-font-size: inherit;
+    --heading-line-height: var(--font-line-height-base);
+    --heading-letter-spacing: initial;
+    --heading-font-weight: var(--font-weight-medium);
+    --heading-color: var(--color-primary);
+    --heading-margin-block: 0;
+    --heading-margin-inline: 0;
+
+    // Paragraphs
+    --paragraph-margin-base: clamp(1.2rem, 1.1636rem + 0.1553vw, 1.35rem);
+    --paragraph-font-family: var(--body-font-family);
+    --paragraph-font-size: var(--body-font-size);
+    --paragraph-color: var(--color-primary);
+    --paragraph-margin-block: 0 var(--paragraph-margin-base);
+
+    //  Labels
+    --t-ht-label-font-size: clamp(0.8rem, 0.7757rem + 0.1036vw, 0.9rem);
+  }
+
+  // Fonts
+  @font-face {
+    font-family: 'Asap';
+    src: url('../fonts/Asap/Asap-Regular.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Asap';
+    src: url('../fonts/Asap/Asap-Medium.ttf') format('ttf');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Asap';
+    src: url('../fonts/Asap/Asap-Bold.ttf') format('ttf');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  // Headings
+  :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
+    font-family: var(--heading-font-family);
+    font-size: var(--heading-font-size);
+    line-height: var(--heading-line-height);
+    letter-spacing: var(--heading-letter-spacing);
+    font-weight: var(--heading-font-weight);
+    color: var(--heading-color);
+    margin-block: 0 var(--heading-margin-block);
+    margin-inline: 0 var(--heading-margin-inline);
+  }
+
+  :is(h1, .h1) {
+    --heading-font-size: var(--font-size-fluid-9);
+  }
+
+  :is(h2, .h2) {
+    --heading-font-size: var(--font-size-fluid-8);
+  }
+
+  :is(h3, .h3) {
+    --heading-font-size: var(--font-size-fluid-7);
+  }
+
+  :is(h4, .h4) {
+    --heading-font-size: var(--font-size-fluid-6);
+  }
+
+  :is(h5, .h5) {
+    --heading-font-size: var(--font-size-fluid-5);
+  }
+
+  :is(h6, .h6) {
+    --heading-font-size: var(--font-size-fluid-4);
+  }
+
+  // Paragraphs
+  p {
+    font-family: var(--paragraph-font-family);
+    font-size: var(--paragraph-font-size);
+    color: var(--paragraph-color);
+    margin-block: var(--paragraph-margin-block);
+
+    &:only-child,
+    &:last-of-type {
+      margin: 0;
+    }
+  }
+}

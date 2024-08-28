@@ -1,0 +1,70 @@
+@layer spacings {
+  :root {
+    // Spacings mobile
+    --spacing-mobile-7-xs: 0.25rem;
+    --spacing-mobile-6-xs: 0.3125rem;
+    --spacing-mobile-5-xs: 0.375rem;
+    --spacing-mobile-4-xs: 0.4375rem;
+    --spacing-mobile-3-xs: 0.5rem;
+    --spacing-mobile-2-xs: 0.625rem;
+    --spacing-mobile-xs: 0.8125rem;
+    --spacing-mobile-s: 1rem;
+    --spacing-mobile-m: 1.25rem;
+    --spacing-mobile-l: 1.5rem;
+    --spacing-mobile-xl: 1.875rem;
+    --spacing-mobile-2-xl: 2.375rem;
+    --spacing-mobile-3-xl: 2.9375rem;
+    --spacing-mobile-4-xl: 3.6875rem;
+    --spacing-mobile-5-xl: 4.625rem;
+    --spacing-mobile-6-xl: 5.75rem;
+    --spacing-mobile-7-xl: 7.1875rem;
+    --spacing-mobile-8-xl: 9rem;
+    --spacing-mobile-9-xl: 11.1875rem;
+    --spacing-mobile-10-xl: 14rem;
+
+    // Spacings desktop
+    --spacing-desktop-7-xs: 0.25rem;
+    --spacing-desktop-6-xs: 0.3125rem;
+    --spacing-desktop-5-xs: 0.375rem;
+    --spacing-desktop-4-xs: 0.5rem;
+    --spacing-desktop-3-xs: 0.5625rem;
+    --spacing-desktop-2-xs: 0.75rem;
+    --spacing-desktop-xs: 0.875rem;
+    --spacing-desktop-s: 1.125rem;
+    --spacing-desktop-m: 1.375rem;
+    --spacing-desktop-l: 1.6875rem;
+    --spacing-desktop-xl: 2.125rem;
+    --spacing-desktop-2-xl: 2.6875rem;
+    --spacing-desktop-3-xl: 3.3125rem;
+    --spacing-desktop-4-xl: 4.125rem;
+    --spacing-desktop-5-xl: 5.1875rem;
+    --spacing-desktop-6-xl: 6.4375rem;
+    --spacing-desktop-7-xl: 8.0625rem;
+    --spacing-desktop-8-xl: 10.0625rem;
+    --spacing-desktop-9-xl: 12.625rem;
+    --spacing-desktop-10-xl: 15.75rem;
+
+    // Spacings fluid
+    --spacing-fluid-7-xs: clamp(0.25rem, 0.25rem + 0vw, 0.25rem);
+    --spacing-fluid-6-xs: clamp(0.3125rem, 0.3125rem + 0vw, 0.3125rem);
+    --spacing-fluid-5-xs: clamp(0.375rem, 0.375rem + 0vw, 0.375rem);
+    --spacing-fluid-4-xs: clamp(0.4375rem, 0.4223rem + 0.0647vw, 0.5rem);
+    --spacing-fluid-3-xs: clamp(0.5rem, 0.4848rem + 0.0647vw, 0.5625rem);
+    --spacing-fluid-2-xs: clamp(0.625rem, 0.5947rem + 0.1294vw, 0.75rem);
+    --spacing-fluid-xs: clamp(0.8125rem, 0.7973rem + 0.0647vw, 0.875rem);
+    --spacing-fluid-s: clamp(1rem, 0.9697rem + 0.1294vw, 1.125rem);
+    --spacing-fluid-m: clamp(1.25rem, 1.2197rem + 0.1294vw, 1.375rem);
+    --spacing-fluid-l: clamp(1.5rem, 1.4545rem + 0.1942vw, 1.6875rem);
+    --spacing-fluid-xl: clamp(1.875rem, 1.8143rem + 0.2589vw, 2.125rem);
+    --spacing-fluid-2-xl: clamp(2.375rem, 2.2992rem + 0.3236vw, 2.6875rem);
+    --spacing-fluid-3-xl: clamp(2.9375rem, 2.8465rem + 0.3883vw, 3.3125rem);
+    --spacing-fluid-4-xl: clamp(3.6875rem, 3.5813rem + 0.4531vw, 4.125rem);
+    --spacing-fluid-5-xl: clamp(4.625rem, 4.4885rem + 0.5825vw, 5.1875rem);
+    --spacing-fluid-6-xl: clamp(5.75rem, 5.5831rem + 0.712vw, 6.4375rem);
+    --spacing-fluid-7-xl: clamp(7.1875rem, 6.9751rem + 0.9061vw, 8.0625rem);
+    --spacing-fluid-8-xl: clamp(9rem, 8.7421rem + 1.1003vw, 10.0625rem);
+    --spacing-fluid-9-xl: clamp(11.1875rem, 10.8386rem + 1.4887vw, 12.625rem);
+    --spacing-fluid-10-xl: clamp(14rem, 13.5752rem + 1.8123vw, 15.75rem);
+    --spacing-fluid-default: clamp(1rem, 0.909rem + 0.3883vw, 1.375rem);
+  }
+}

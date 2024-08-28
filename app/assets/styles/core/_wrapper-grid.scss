@@ -1,0 +1,20 @@
+@layer wrapper-grid {
+  :root {
+    --wrapper-grid-width: 107.125rem;
+    --wrapper-grid-spacing-fluid: clamp(1rem, -0.3198rem + 5.6311vw, 6.4375rem);
+  }
+
+  .wrapper-grid {
+    display: grid;
+    grid-template-columns:
+      [full-width-start] minmax(var(--wrapper-grid-spacing-fluid), 1fr)
+      [content-start] min(
+        100% - (var(--wrapper-grid-spacing-fluid) * 2),
+        var(--wrapper-grid-width)
+      )
+      [content-end]
+      minmax(var(--wrapper-grid-spacing-fluid), 1fr) [full-width-end];
+
+    grid-auto-rows: max-content;
+  }
+}

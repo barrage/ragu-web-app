@@ -1,0 +1,33 @@
+@layer borders {
+  :root {
+    --border-size-1: 0.0625rem;
+    --border-size-2: 0.125rem;
+    --border-type-solid: solid;
+    --border-type-dashed: dashed;
+    --border-color: var(--color-gray-300);
+    --border-transparent: rgba(0, 0, 0, 0.05);
+    --outline-color: var(--color-blue-500);
+    --radius-1: 0.125rem;
+    --radius-2: 0.25rem;
+    --radius-3: 0.375rem;
+    --radius-4: 0.5rem;
+    --radius-5: 0.625rem;
+    --radius-6: 0.75rem;
+    --radius-9: 1.125rem;
+    --radius-circle: 100%;
+    --border-global-1: var(--border-size-1) var(--border-type-solid)
+      var(--border-color);
+    --border-global-2: var(--border-size-2) var(--border-type-solid)
+      var(--border-color);
+    --border-global-transparent: var(--border-size-1) var(--border-type-solid)
+      var(--border-transparent);
+
+    --outline-global: var(--border-size-2) var(--border-type-solid)
+      var(--outline-color);
+    --outline-global-offset: 0.0625rem;
+  }
+
+  html.dark {
+    --outline-color: var(--color-blue-200);
+  }
+}

@@ -1,0 +1,40 @@
+@import '../mixins/media';
+
+@layer grid {
+  :root {
+    --grid-auto-rows: max-content;
+    --grid-rows: 1;
+    --grid-columns: 4;
+    --grid-row-gap: clamp(1rem, 0.909rem + 0.3883vw, 1.375rem);
+    --grid-column-gap: clamp(1rem, 0.909rem + 0.3883vw, 1.375rem);
+    --grid-inner-auto-rows: max-content;
+    --grid-inner-rows: 1;
+    --grid-inner-columns: 4;
+    --grid-inner-row-gap: clamp(1rem, 0.909rem + 0.3883vw, 1.375rem);
+    --grid-inner-column-gap: clamp(1rem, 0.909rem + 0.3883vw, 1.375rem);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-rows: repeat(var(--grid-rows), 1fr);
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    grid-auto-rows: var(--grid-auto-rows);
+    gap: var(--grid-row-gap) var(--grid-column-gap);
+
+    @include viewport-s {
+      --grid-columns: 8;
+    }
+
+    @include viewport-m {
+      --grid-columns: 12;
+    }
+  }
+
+  .grid-inner {
+    display: grid;
+    grid-template-rows: repeat(var(--grid-inner-rows), 1fr);
+    grid-template-columns: repeat(var(--grid-inner-columns), 1fr);
+    grid-auto-rows: var(--grid-inner-auto-rows);
+    gap: var(--grid-inner-row-gap) var(--grid-inner-column-gap);
+  }
+}
