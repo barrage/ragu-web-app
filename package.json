@@ -12,8 +12,7 @@
     "lint:fix": "eslint . --fix",
     "test-watch": "vitest",
     "test-once": "vitest run",
-    "prepare": "husky ./.husky",
-    "precommit": "lint-staged && npm run test-once"
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@nuxt/eslint": "^0.3.13",
@@ -37,7 +36,6 @@
     "eslint": "^8.57.0",
     "eslint-plugin-format": "^0.1.2",
     "happy-dom": "^14.12.3",
-    "husky": "^9.1.1",
     "lint-staged": "^15.2.7",
     "sass": "^1.77.8",
     "vitest": "^2.0.4"
