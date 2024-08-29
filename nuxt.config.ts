@@ -58,7 +58,7 @@ export default defineNuxtConfig({
       {
         code: 'hr',
         iso: 'hr',
-        name: 'Hrvatski',
+        name: 'Croatian',
         file: 'hr.ts',
       },
       {
@@ -67,12 +67,7 @@ export default defineNuxtConfig({
         name: 'English',
         file: 'en.ts',
       },
-      {
-        code: 'es',
-        iso: 'es',
-        name: 'Español',
-        file: 'es.ts',
-      },
+
     ],
     defaultLocale: 'en',
     detectBrowserLanguage: {

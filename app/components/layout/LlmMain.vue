@@ -15,9 +15,9 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
       height="50"
       class="ai-logo"
     />
-    <h5>Talk the data to me</h5>
+    <h5>{{ $t('title') }}</h5>
     <p class="description">
-      Choose prompt below or write your own to <br> start chatting with me
+      {{ $t('description') }}
     </p>
     <div class="about-container">
       <p>Ask About:</p>
@@ -56,9 +56,9 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
 .ai-logo {
   color: var(--color-gray-500);
   padding: 0.5rem;
-  border: 1px solid var(--color-gray-500);
+  border: 0.0625rem solid var(--color-gray-500);
   border-radius: 0.625rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
   margin-block: 9.375rem 1.875rem;
 }
 
@@ -66,13 +66,16 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   text-align: center;
   font-weight: 300;
   margin-bottom: 3.125rem;
+  max-width: 21.875rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .about-container {
   text-align: center;
   p {
     margin-bottom: 1.25rem;
-    font-size: 16px;
+    font-size: 1rem;
     opacity: 0.7;
   }
 }
@@ -86,9 +89,13 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   span {
     width: max-content;
     padding: 0.625rem 0.5rem;
-    border: 1px solid var(--color-primary-200);
+    border: 0.0625rem solid var(--color-gray-200);
     border-radius: 1.625rem;
     cursor: pointer;
+
+    &:hover {
+      color: var(--color-gray-500);
+    }
   }
 }
 .input-container {
@@ -96,9 +103,9 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   align-items: center;
   margin-block: auto 3.125rem;
   padding: 0.5rem;
-  border: 1px solid var(--color-primary-500);
+  border: 0.0625rem solid var(--color-gray-500);
   border-radius: 1.25rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
   background-color: #ffffff;
   width: 100%;
 }
@@ -135,7 +142,7 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 4px var(--color-gray-500);
+    box-shadow: 0 0 0.25rem var(--color-gray-500);
   }
 }
 .dark {

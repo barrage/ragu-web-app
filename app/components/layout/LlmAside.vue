@@ -13,8 +13,8 @@ const navigationStore = useNavigationStore()
   <aside>
     <nav class="navigation-container">
       <div v-if="!navigationStore.isSidebarCollapsed" class="chat">
-        <span>New Chat</span>
-        <span>Chat History</span>
+        <span>{{ $t('newChat') }}</span>
+        <span>{{ $t('chatHistory') }}</span>
       </div>
       <div v-else class="chat-icons chat">
         <Add />
