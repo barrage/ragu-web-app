@@ -34,9 +34,9 @@ aside {
   grid-area: aside;
   transition: width 0.3s ease;
   overflow: hidden;
+  background-color: var(--color-primary-200);
 
   .navigation-container {
-    background-color: var(--color-gray-100);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -59,13 +59,18 @@ aside {
   .toggle-btn {
     position: absolute;
     width: max-content;
-    background-color: var(--color-gray-300);
+    background-color: var(--color-primary-500);
     border: none;
     color: white;
     cursor: pointer;
     padding: 0.8rem;
     right: -0.8125rem;
     top: 0.625rem;
+  }
+}
+.dark {
+  aside {
+    background-color: var(--color-primary-800);
   }
 }
 </style>

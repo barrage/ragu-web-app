@@ -32,7 +32,12 @@ const navigationStore = useNavigationStore()
 
 .main {
   grid-area: main;
-  background-color: #ffffff;
+  background-color: var(--color-primary-subtle);
   padding: 0.75rem;
+}
+.dark {
+  .main {
+    background-color: var(--color-primary-900);
+  }
 }
 </style>

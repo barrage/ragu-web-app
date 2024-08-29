@@ -11,7 +11,7 @@ import More from '~/assets/icons/svg/more.svg'
       height="80px"
       color="black"
     />
-
+    <ThemeSelector />
     <button class="settings">
       <More />
     </button>
@@ -28,8 +28,8 @@ header {
   top: 0;
   z-index: 1;
   padding: 0.75rem;
-  border-bottom: 1px solid var(--color-gray-200);
-  background-color: white;
+  /* border-bottom: 1px solid var(--color-primary-300); */
+  background-color: var(--color-primary-200);
 
   .settings {
     border: none;
@@ -38,6 +38,13 @@ header {
     &:hover {
       color: var(--color-gray-500);
     }
+  }
+}
+
+.dark {
+  header {
+    background-color: var(--color-primary-800);
+    border-bottom: 1px solid var(--color-primary-800);
   }
 }
 </style>

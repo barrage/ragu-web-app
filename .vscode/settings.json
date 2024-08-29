@@ -72,5 +72,8 @@
     "scss",
     "pcss",
     "postcss"
+  ],
+  "i18n-ally.localesPaths": [
+    "app/locales"
   ]
 }

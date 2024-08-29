@@ -46,7 +46,7 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  background-color: var(--color-primary-subtle);
   h5 {
     margin-bottom: 0.9375rem;
     font-weight: bold;
@@ -86,7 +86,7 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   span {
     width: max-content;
     padding: 0.625rem 0.5rem;
-    border: 1px solid var(--color-gray-200);
+    border: 1px solid var(--color-primary-200);
     border-radius: 1.625rem;
     cursor: pointer;
   }
@@ -96,7 +96,7 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   align-items: center;
   margin-block: auto 3.125rem;
   padding: 0.5rem;
-  border: 1px solid var(--color-gray-500);
+  border: 1px solid var(--color-primary-500);
   border-radius: 1.25rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #ffffff;
@@ -136,6 +136,11 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   &:focus {
     outline: none;
     box-shadow: 0 0 4px var(--color-gray-500);
+  }
+}
+.dark {
+  .main-container {
+    background-color: var(--color-primary-900);
   }
 }
 </style>
