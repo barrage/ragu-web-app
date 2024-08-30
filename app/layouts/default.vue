@@ -24,9 +24,9 @@ const navigationStore = useNavigationStore()
   min-height: 100vh;
   position: relative;
   transition: grid-template-columns 0.3s ease;
-
+  background: var(--color-primary-subtle);
   &.sidebar-collapsed {
-    grid-template-columns: 5rem 1fr;
+    grid-template-columns: 100px 1fr;
   }
 }
 
@@ -37,6 +37,9 @@ const navigationStore = useNavigationStore()
 }
 .dark {
   .main {
+    background-color: var(--color-primary-900);
+  }
+  .main-layout {
     background-color: var(--color-primary-900);
   }
 }

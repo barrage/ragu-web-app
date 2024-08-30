@@ -43,9 +43,8 @@ const setCurrentLocale = async (localeCode: string) => {
 <template>
   <header>
     <BarrageLogo
-      width="80px"
-      height="70px"
-      color="black"
+      width="110px"
+      height="40px"
     />
     <ThemeSelector />
 
@@ -119,9 +118,9 @@ header {
   position: sticky;
   top: 0;
   z-index: 1;
-  padding: 0.75rem;
-  border-bottom: 0.0625rem solid var(--color-gray-200);
-  background-color: white;
+  padding: 1rem;
+  /*   border-bottom: 1px solid var(--color-primary-300); */
+  background-color: var(--color-primary-subtle);
 
   .header-right {
     display: flex;
@@ -306,8 +305,8 @@ header {
 
 .dark {
   header {
-    background-color: var(--color-primary-800);
-    border-bottom: 1px solid var(--color-primary-800);
+    background-color: var(--color-primary-900);
+    /*  border-bottom: 1px solid var(--color-primary-600); */
   }
 }
 </style>

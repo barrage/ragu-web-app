@@ -12,19 +12,16 @@ const navigationStore = useNavigationStore()
 <template>
   <aside>
     <nav class="navigation-container">
+      <button class="toggle-btn" @click="navigationStore.toggleSidebar">
+        <Layout />
+      </button>
       <div v-if="!navigationStore.isSidebarCollapsed" class="chat">
         <span>{{ $t('newChat') }}</span>
         <span>{{ $t('chatHistory') }}</span>
       </div>
       <div v-else class="chat-icons chat">
         <Add />
-        <Layout />
       </div>
-
-      <button class="toggle-btn" @click="navigationStore.toggleSidebar">
-        <CaretLeft v-if="!navigationStore.isSidebarCollapsed" />
-        <CaretRight v-if="navigationStore.isSidebarCollapsed " />
-      </button>
     </nav>
   </aside>
 </template>
@@ -35,11 +32,14 @@ aside {
   transition: width 0.3s ease;
   overflow: hidden;
   background-color: var(--color-primary-200);
+  border: 1px solid var(--color-primary-300);
+  border-radius: 12px;
+  margin: 6px 16px 16px 16px;
+  box-shadow: 0 4px 8px var(--color-primary-300);
 
   .navigation-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     position: relative;
     padding: 0.75rem;
     height: 100%;
@@ -57,15 +57,31 @@ aside {
   }
 
   .toggle-btn {
-    position: absolute;
     width: max-content;
-    background-color: var(--color-primary-500);
+    height: fit-content;
+    background-color: transparent;
     border: none;
     color: white;
     cursor: pointer;
     padding: 0.8rem;
-    right: -0.8125rem;
-    top: 0.625rem;
+    margin-inline: auto;
+    border-radius: 8px;
+
+    &:hover {
+      background: var(--color-primary-300);
+    }
+  }
+}
+.dark {
+  aside {
+    background-color: var(--color-primary-800);
+    border: 1px solid var(--color-primary-700);
+    box-shadow: 0 4px 8px var(--color-primary-700);
+  }
+  .toggle-btn {
+    &:hover {
+      background: var(--color-primary-700);
+    }
   }
 }
 .dark {
