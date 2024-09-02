@@ -1,43 +1,22 @@
 <script lang="ts" setup>
 // IMPORTS
 import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
-import Details from '~/assets/icons/svg/more.svg'
+/* import AccountIcon from '~/assets/icons/svg/account.svg'
 import Close from '~/assets/icons/svg/close.svg'
-import Web from '~/assets/icons/svg/globe.svg'
+import LocaleIcon from '~/assets/icons/svg/locale.svg'
 import Accounting from '~/assets/icons/svg/tablet.svg'
-import Info from '~/assets/icons/svg/info.svg'
+import Info from '~/assets/icons/svg/info.svg' */
 
 // CONSTANTS
-const { setLocale, locales, locale } = useI18n()
 
 // STATE
-const isDrawerOpen = ref(false)
-const isLocaleDropdownOpen = ref(false)
-const prompts = ['New best practice..', 'How to add...', 'Stock status']
-
-// COMPUTEDS
-const availableLocales = computed(() => {
-  return locales.value.filter(i => i.code !== locale.value)
-})
-
-const currentLanguageName = computed(() => {
-  const current = locales.value.find(i => i.code === locale.value)
-  return current ? current.name : locale.value
-})
+/* const isDrawerOpen = ref(false)
+const prompts = ['New best practice..', 'How to add...', 'Stock status'] */
 
 // HELPERS
-const toggleDrawer = () => {
+/* const toggleDrawer = () => {
   isDrawerOpen.value = !isDrawerOpen.value
-}
-
-const toggleLocaleDropdown = () => {
-  isLocaleDropdownOpen.value = !isLocaleDropdownOpen.value
-}
-
-const setCurrentLocale = async (localeCode: string) => {
-  setLocale(localeCode)
-  isLocaleDropdownOpen.value = false
-}
+} */
 </script>
 
 <template>
@@ -46,35 +25,26 @@ const setCurrentLocale = async (localeCode: string) => {
       width="110px"
       height="40px"
     />
-    <ThemeSelector />
 
     <div class="header-right">
-      <div class="localization-switcher">
-        <button class="locale-btn" @click="toggleLocaleDropdown">
-          <svg class="dropdown-icon">
-            <Web width="20px" height="20px" />
-          </svg>
-          {{ currentLanguageName }}
-        </button>
-        <ul v-if="isLocaleDropdownOpen" class="locale-list">
-          <li
-            v-for="locale in availableLocales"
-            :key="locale.code"
-            @click="setCurrentLocale(locale.code)"
-          >
-            {{ locale.name }}
-          </li>
-        </ul>
-      </div>
-
-      <button class="details" @click="toggleDrawer">
-        <Details v-if="!isDrawerOpen" />
-        <Close v-else />
-        <span>{{ $t("details") }}</span>
-      </button>
+      <ThemeSelector />
+      <div class="vertical-divider" />
+      <LightDarkModeSelector />
+      <div class="vertical-divider" />
+      <LocalizationSelector />
+      <div class="vertical-divider" />
+      <ProfileDropdown />
+      <!--  <el-button
+        class="details"
+        size="small"
+        @click="toggleDrawer"
+      >
+        <AccountIcon v-if="!isDrawerOpen" size="36" />
+        <Close v-else size="36" />
+      </el-button> -->
     </div>
 
-    <div class="drawer" :class="{ open: isDrawerOpen }">
+    <!--  <div class="drawer" :class="{ open: isDrawerOpen }">
       <div class="header-container">
         <h6>Profile details</h6>
         <button class="close-btn" @click="toggleDrawer">
@@ -99,13 +69,13 @@ const setCurrentLocale = async (localeCode: string) => {
         <div class="sources">
           <p>Sources</p>
           <div class="sources-container">
-            <span class="source"><Web /> Web</span>
+            <span class="source"><LocaleIcon /> Web</span>
             <span class="source"><Accounting /> Accounting</span>
             <span class="source"><Info /> Information</span>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </header>
 </template>
 
@@ -120,10 +90,11 @@ header {
   z-index: 1;
   padding: 1rem;
   /*   border-bottom: 1px solid var(--color-primary-300); */
-  background-color: var(--color-primary-subtle);
+  background-color: transparent;
 
   .header-right {
     display: flex;
+    align-items: center;
     column-gap: 0.75rem;
   }
 
@@ -133,74 +104,13 @@ header {
     padding: 0.625rem 0.5rem;
     border-radius: 0.625rem;
     border: none;
-    color: var(--color-gray-700);
+    color: var(--color-primary-700);
+    background: transparent;
+    transition: 0.2s ease-in;
     font-size: 0.875rem;
     cursor: pointer;
     &:hover {
-      color: var(--color-gray-500);
-      transition: 0.2s ease-in;
-    }
-  }
-
-  .localization-switcher {
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    &:hover {
-      color: var(--color-gray-500);
-      transition: 0.2s ease-in;
-    }
-
-    .locale-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.625rem 0.5rem;
-      border-radius: 0.625rem;
-      border: none;
-      color: var(--color-gray-700);
-      font-size: 0.875rem;
-      cursor: pointer;
-
-      &:hover {
-        color: var(--color-gray-500);
-        transition: 0.2s ease-in;
-      }
-
-      .dropdown-icon {
-        width: 1.25rem;
-        height: 1.25rem;
-        fill: currentColor;
-      }
-    }
-
-    .locale-list {
-      position: absolute;
-      top: 50px;
-      left: 0;
-      background: white;
-      border: 0.0625rem solid var(--color-gray-300);
-      border-radius: 0.625rem;
-      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      z-index: 2;
-
-      li {
-        padding: 0.5rem;
-        cursor: pointer;
-        font-size: 0.875rem;
-        color: var(--color-gray-700);
-
-        &:hover {
-          color: var(--color-gray-500);
-          transition: 0.2s ease-in;
-          background-color: var(--color-gray-100);
-        }
-      }
+      color: var(--color-primary-500);
     }
   }
 
@@ -302,11 +212,27 @@ header {
     }
   }
 }
+.vertical-divider {
+  width: 1px;
+
+  height: 32px;
+  background: var(--color-primary-100);
+}
 
 .dark {
   header {
-    background-color: var(--color-primary-900);
+    /*   background-color: var(--color-primary-900); */
     /*  border-bottom: 1px solid var(--color-primary-600); */
+    & .vertical-divider {
+      background: var(--color-primary-800);
+    }
+  }
+  & .details {
+    color: var(--color-primary-200);
+
+    &:hover {
+      color: var(--color-primary-100);
+    }
   }
 }
 </style>

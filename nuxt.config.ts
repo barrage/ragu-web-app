@@ -54,6 +54,10 @@ export default defineNuxtConfig({
     },
   ],
   i18n: {
+    lazy: true,
+    langDir: 'locales',
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
     locales: [
       {
         code: 'hr',
@@ -67,14 +71,49 @@ export default defineNuxtConfig({
         name: 'English',
         file: 'en.ts',
       },
+      {
+        code: 'de',
+        iso: 'de',
+        name: 'German',
+        file: 'de.ts',
+      },
+      {
+        code: 'es',
+        iso: 'es',
+        name: 'Spanish',
+        file: 'es.ts',
+      },
+      {
+        code: 'fr',
+        iso: 'fr',
+        name: 'France',
+        file: 'fr.ts',
+      },
+      {
+        code: 'it',
+        iso: 'it',
+        name: 'Italian',
+        file: 'it.ts',
+      },
+      {
+        code: 'ja',
+        iso: 'ja',
+        name: 'Japanese',
+        file: 'ja.ts',
+      },
+      {
+        code: 'pt',
+        iso: 'pt',
+        name: 'Portuguese',
+        file: 'pt.ts',
+      },
 
     ],
-    defaultLocale: 'en',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root',
     },
-    langDir: 'locales',
+
   },
 })

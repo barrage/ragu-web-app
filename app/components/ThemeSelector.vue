@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useThemeStore } from '~/stores/theme'
 import PalleteIcon from '~/assets/icons/svg/palette-theme.svg'
-import LightDarkMode from '~/assets/icons/svg/light-dark-mode.svg'
 
 const popperOptions = {
   placement: 'bottom-end',
@@ -20,9 +19,7 @@ const popperOptions = {
     },
   ],
 }
-const isDark = useDark()
 
-const toggleDark = useToggle(isDark)
 const themeStore = useThemeStore()
 const themeOptions = ref([
   {
@@ -70,41 +67,44 @@ const themeOptions = ref([
 </script>
 
 <template>
-  <div style="display: flex;justify-content: flex-end;gap: 22px;">
-    <ClientOnly>
-      <el-dropdown trigger="click" :popper-options="popperOptions">
-        <el-button class="theme-switch-button " size="small">
-          <PalleteIcon />
-        </el-button>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <!--   <el-dropdown-item
+  <ClientOnly>
+    <el-dropdown trigger="hover" :popper-options="popperOptions">
+      <el-button class="theme-switch-button " size="small">
+        <PalleteIcon size="20" />
+      </el-button>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <!--   <el-dropdown-item
             v-for="theme in themeOptions"
             :key="theme.value"
             @click="themeStore.selectedColor = theme.value"
           >
             {{ theme.name }}
           </el-dropdown-item> -->
-            <div class="colors-container">
-              <template v-for="color in themeOptions" :key="color.name">
-                <div :style="{ background: color.value === themeStore.selectedPrimaryColor ? `var(--color-primary-0)` : 'transparent', padding: '10px', borderRadius: '5px' }">
-                  <div
-                    class="color-circle"
-                    :value="color.value"
-                    :style="{ background: `var(--color-${color.value}-300)` }"
-                    @click="themeStore.selectedPrimaryColor = color.value"
-                  />
-                </div>
-              </template>
-            </div>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </ClientOnly>
-    <button class="theme-switch-button" @click="toggleDark()">
-      <LightDarkMode size="24" />
-    </button>
-  </div>
+          <div class="colors-container">
+            <template v-for="color in themeOptions" :key="color.name">
+              <div
+                class="color-section"
+                :class="{ selected: color.value === themeStore.selectedPrimaryColor }"
+                @click="themeStore.selectedPrimaryColor = color.value"
+              >
+                <div
+                  class="color-circle"
+                  :value="color.value"
+                  :style="{
+                    background: color.value === 'default'
+                      ? 'linear-gradient(90deg, black 50%, white 50%)'
+                      : `var(--color-${color.value}-300)`,
+
+                  }"
+                />
+              </div>
+            </template>
+          </div>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
@@ -114,22 +114,51 @@ const themeOptions = ref([
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-gap: 1px;
 }
+
+.color-section {
+  transition: all 0.5s ease-out;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &.selected {
+    background: var(--color-primary-0);
+  }
+
+  &:hover {
+    background: var(--color-primary-0);
+  }
+}
 .color-circle {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  cursor: pointer;
 }
 .theme-switch-button {
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--color-primary-600);
+  color: var(--color-primary-800);
+  &:hover {
+    background: var(--color-primary-100);
+  }
 }
 
 .dark {
   & .theme-switch-button {
+    color: var(--color-primary-100);
     &:hover {
+      color: var(--color-primary-0);
+      background: var(--color-primary-600);
+    }
+  }
+  & .color-section {
+    &.selected {
+      background: var(--color-primary-600);
+    }
+
+    &:hover {
+      background: var(--color-primary-500);
     }
   }
 }

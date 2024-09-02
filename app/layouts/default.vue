@@ -24,7 +24,12 @@ const navigationStore = useNavigationStore()
   min-height: 100vh;
   position: relative;
   transition: grid-template-columns 0.3s ease;
-  background: var(--color-primary-subtle);
+  background: transparent;
+  background: radial-gradient(
+    circle,
+    var(--color-lightmode-0) 0%,
+    var(--color-primary-subtle) 100%
+  );
   &.sidebar-collapsed {
     grid-template-columns: 100px 1fr;
   }
@@ -33,14 +38,16 @@ const navigationStore = useNavigationStore()
 .main {
   grid-area: main;
   background-color: var(--color-primary-subtle);
+  background-color: transparent;
   padding: 0.75rem;
 }
 .dark {
-  .main {
-    background-color: var(--color-primary-900);
-  }
   .main-layout {
-    background-color: var(--color-primary-900);
+    background: radial-gradient(
+      circle,
+      var(--color-darkmode-300) 0%,
+      var(--color-primary-900) 100%
+    );
   }
 }
 </style>

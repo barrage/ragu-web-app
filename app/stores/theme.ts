@@ -9,9 +9,11 @@ export const useThemeStore = defineStore('theme', () => {
 
   const updateHtmlClass = () => {
     if (!process.client || !document?.documentElement) { return }
+
     const html = document.documentElement
     html.className = html.className.replace(/\btheme-\S+/g, '')
     html.classList.add(`theme-${selectedPrimaryColor.value}`)
+
     if (isDarkMode.value) {
       html.classList.add('dark')
     }

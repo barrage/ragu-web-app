@@ -46,7 +46,7 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--color-primary-subtle);
+  background: transparent;
   h5 {
     margin-bottom: 0.9375rem;
     font-weight: bold;
@@ -147,7 +147,7 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
 }
 .dark {
   .main-container {
-    background-color: var(--color-primary-900);
+    /* background-color: var(--color-primary-900); */
   }
 }
 </style>
