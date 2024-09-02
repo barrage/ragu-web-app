@@ -1,0 +1,190 @@
+@layer barrage-input {
+  :root {
+    --input-width: 100%;
+    --input-height: max-content !important;
+    --input-color: var(--color-gray-900);
+    --input-error-color: var(--color-red-500);
+    --input-background-color: transparent;
+    --input-border: var(--border-global-1);
+    --input-border-color: var(--color-gray-500);
+    --input-border-radius: var(--radius-4);
+    --input-icon-size: 1rem;
+    --input-padding-block-start: var(--spacing-mobile-m);
+    --input-padding-block-end: var(--spacing-mobile-7-xs);
+    --input-padding-inline-start: clamp(
+      0.625rem,
+      0.5947rem + 0.1294vw,
+      0.75rem
+    );
+    --input-padding-inline-end: clamp(0.625rem, 0.5947rem + 0.1294vw, 0.75rem);
+    --input-suffix-position-right: clamp(
+      0.625rem,
+      0.5947rem + 0.1294vw,
+      0.75rem
+    );
+    --input-word-count-font-size: var(--font-size-fluid-1);
+    --input-word-count-color: var(--color-gray-600);
+  }
+
+  html.dark {
+    .barrage-input {
+      &__inner {
+        --input-color: var(--color-gray-50);
+        --input-border-color: var(--color-gray-600);
+
+        &:focus {
+          --input-border-color: var(--color-gray-400);
+        }
+
+        &:not(:placeholder-shown) {
+          --input-border-color: var(--color-gray-400);
+        }
+
+        &:disabled {
+          --input-color: var(--color-gray-700);
+          --input-border-color: var(--color-gray-700);
+        }
+      }
+    }
+
+    .barrage-input__count {
+      --input-word-count-color: var(--color-gray-400);
+    }
+  }
+
+  // Input styles
+  // ------------------------------------
+  .barrage-input {
+    &__wrapper {
+      position: relative;
+    }
+
+    // Actual input and his states
+    &__inner {
+      width: var(--input-width);
+      height: var(--input-height);
+      color: var(--input-color);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background-color: var(--input-background-color);
+      border: var(--input-border);
+      border-color: var(--input-border-color);
+      border-radius: var(--input-border-radius);
+      padding-block: var(--input-padding-block-start)
+        var(--input-padding-block-end);
+      padding-inline: var(--input-padding-inline-start)
+        var(--input-padding-inline-end);
+
+      outline-color: transparent;
+      outline-offset: var(--outline-global-offset);
+      transition:
+        outline-color 0.3s ease-out,
+        border-color 0.3s ease-out,
+        color 0.3s ease-out;
+      margin-bottom: var(--spacing-fluid-2-xs);
+
+      &::placeholder {
+        color: var(--input-color);
+        opacity: 0;
+        transition: opacity 0.4s ease-out;
+      }
+
+      &:focus {
+        --input-border-color: var(--color-gray-600);
+
+        outline: var(--outline-global);
+
+        &::placeholder {
+          opacity: 1;
+        }
+      }
+
+      &:not(:placeholder-shown) {
+        --input-border-color: var(--color-gray-600);
+      }
+
+      &:disabled {
+        --input-color: var(--color-gray-300);
+        --input-border-color: var(--color-gray-300);
+
+        cursor: not-allowed;
+      }
+    }
+
+    // Prefix, suffix and icon control
+    &__prefix,
+    &__suffix {
+      position: absolute;
+      top: 50%;
+      right: var(--input-suffix-position-right);
+      width: var(--input-icon-size);
+      height: var(--input-icon-size);
+      transform: translateY(-50%);
+      transform-origin: center;
+      transition: transform 0.3s ease-out;
+      cursor: pointer;
+      z-index: 1;
+
+      // Change global icon size (it reflects on select, datepicker that use the input component)
+      .barrage-icon {
+        --icon-width: var(--input-icon-size);
+        --icon-height: var(--input-icon-size);
+
+        will-change: transform;
+        transition: transform 0.3s ease-out;
+        transform-origin: center;
+
+        &.is-reverse {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  // Word count global styles
+  .barrage-input__count {
+    display: block;
+    font-size: var(--input-word-count-font-size);
+    color: var(--input-word-count-color);
+    transition: color 0.3s ease-out;
+  }
+
+  // Position of wordd count inner element due to parent nesting inside form item
+  .barrage-input__count-inner {
+    display: flex;
+    width: max-content;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    will-change: transform;
+    transform: translate(
+      var(--spacing-desktop-2-xs),
+      var(--spacing-desktop-xl)
+    );
+  }
+
+  .is-error {
+    color: var(--input-error-color);
+
+    & .barrage-form-item__label {
+      color: var(--input-error-color);
+    }
+  }
+
+  .barrage-form-item {
+    &:first-of-type {
+      margin-bottom: var(--spacing-fluid-l);
+    }
+    &:nth-of-type(2) {
+      margin-bottom: var(--spacing-fluid-m);
+    }
+
+    &__content {
+      margin-top: var(--spacing-fluid-4-xs);
+    }
+
+    &__label {
+      color: var(--color-gray-700);
+    }
+  }
+}
