@@ -21,6 +21,7 @@ const navigationStore = useNavigationStore()
         </el-button>
       </div>
       <div class="horizontal-divider" />
+
       <a
         class="new-chat"
         :class="{ opened: !navigationStore.isSidebarCollapsed }"
@@ -28,12 +29,11 @@ const navigationStore = useNavigationStore()
       >
         <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('newChat') }}</span> <AddIcon class="add-icon" />
       </a>
-      <span v-if="!navigationStore.isSidebarCollapsed" class="history"> {{ $t('chatHistory') }}</span>
 
+      <ChatsDisplay v-if="!navigationStore.isSidebarCollapsed" />
       <div class="get-help-section">
-        <div class="horizontal-divider" />
         <div class="gel-help-content">
-          <span v-if="!navigationStore.isSidebarCollapsed">Get help </span> <QuestionIcon />
+          <span v-if="!navigationStore.isSidebarCollapsed">Get help </span> <QuestionIcon size="24" />
         </div>
       </div>
     </nav>
@@ -73,7 +73,7 @@ aside {
 
   & .new-chat {
     margin-inline: auto;
-    height: 2.5rem;
+    height: 3rem;
     transition: all 0.2s ease-out;
     cursor: pointer;
     display: flex;
@@ -82,6 +82,7 @@ aside {
     color: var(--color-primary-900);
     width: 100%;
     gap: 0.625rem;
+    margin-top: 1rem;
     padding-inline: 0.25rem;
     border-radius: 8px;
     background-color: transparent;
@@ -96,6 +97,8 @@ aside {
       &:hover {
         & .add-icon {
           display: block;
+          opacity: 1;
+          transform: translateX(-5px);
         }
       }
     }
@@ -109,6 +112,7 @@ aside {
     cursor: pointer;
     padding: 0.8rem;
     margin-left: auto;
+
     border-radius: 8px;
     color: var(--color-primary-900);
 
@@ -172,8 +176,10 @@ aside {
 }
 .add-icon {
   display: none;
+  opacity: 0;
   margin-left: auto;
-  transition: all 2s ease-out;
+  transition: all 0.3s ease;
+  transform: translateX(5px);
 }
 
 @keyframes typing {
@@ -190,7 +196,6 @@ aside {
   width: 100%;
   height: 1px;
   background: var(--color-primary-400);
-  margin-bottom: var(--spacing-fluid-s);
 }
 
 .dark {
@@ -209,8 +214,12 @@ aside {
   bottom: 0;
   left: 0;
   padding-inline: 10px;
-  background: transparent;
+  background: blur(10px);
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   & .gel-help-content {
     display: flex;

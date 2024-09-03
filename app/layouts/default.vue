@@ -22,6 +22,7 @@ const navigationStore = useNavigationStore()
   grid-template-columns: 16.25rem 1fr;
   grid-template-rows: auto 1fr;
   min-height: 100vh;
+  max-height: 100vh;
   position: relative;
   transition: grid-template-columns 0.3s ease;
   background: transparent;

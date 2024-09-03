@@ -5,7 +5,7 @@ import { useDark, useToggle } from '@vueuse/core'
 export const useThemeStore = defineStore('theme', () => {
   const isDarkMode = useDark()
   const toggleDarkMode = useToggle(isDarkMode)
-  const selectedPrimaryColor = ref<string>('red')
+  const selectedPrimaryColor = ref<string>('default')
 
   const updateHtmlClass = () => {
     if (!process.client || !document?.documentElement) { return }

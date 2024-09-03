@@ -1,0 +1,98 @@
+import { defineEventHandler } from 'h3'
+
+const fakeChats = [
+  {
+    id: '5a4ed1de-bf1b-466b-88c9-7fb552a696d0',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'Understanding WebAssembly',
+    createdAt: '2024-09-02T12:00:55.580Z',
+    updatedAt: '2024-09-02T12:01:09.294Z',
+    messages: [],
+  },
+  {
+    id: '6b5ed2df-cf1c-477c-99d9-8ab661b797d1',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'Exploring Rust Programming',
+    createdAt: '2024-09-01T15:20:30.580Z',
+    updatedAt: '2024-09-01T15:21:00.294Z',
+    messages: [],
+  },
+  {
+    id: '7c6fe3f0-df2d-488d-bade-9bc772c8a8e2',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'Learning Python Data Science',
+    createdAt: '2024-08-30T08:10:15.580Z',
+    updatedAt: '2024-08-30T08:11:25.294Z',
+    messages: [],
+  },
+  {
+    id: '8d7gf4h1-eg3f-499e-cbfe-acd883d9b9f3',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'JavaScript Best Practices',
+    createdAt: '2024-08-25T17:45:30.580Z',
+    updatedAt: '2024-08-25T17:46:10.294Z',
+    messages: [],
+  },
+  {
+    id: '9e8hg5i2-fh4g-511f-dcgh-bed994e9c0g4',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'CSS Grid and Flexbox',
+    createdAt: '2024-08-10T09:30:00.580Z',
+    updatedAt: '2024-08-10T09:31:40.294Z',
+    messages: [],
+  },
+  {
+    id: 'af9ij6j3-gj5h-622g-edhi-cfeaaae0d1h5',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'Kubernetes Essentials',
+    createdAt: '2024-07-15T11:25:20.580Z',
+    updatedAt: '2024-07-15T11:26:50.294Z',
+    messages: [],
+  },
+  {
+    id: 'bk0jk7k4-hk6i-733h-feij-dghbbbf1e2i6',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'Docker and Containerization',
+    createdAt: '2024-06-05T14:00:00.580Z',
+    updatedAt: '2024-06-05T14:01:30.294Z',
+    messages: [],
+  },
+  {
+    id: 'cl1kl8l5-il7j-844i-gfji-eihcccj2f3j7',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'DevOps Best Practices',
+    createdAt: '2024-04-20T20:45:00.580Z',
+    updatedAt: '2024-04-20T20:46:20.294Z',
+    messages: [],
+  },
+  {
+    id: 'dm2lm9m6-jm8k-955j-hgkj-fjiaddk3g4k8',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'Intro to Machine Learning',
+    createdAt: '2024-01-10T18:30:00.580Z',
+    updatedAt: '2024-01-10T18:31:45.294Z',
+    messages: [],
+  },
+  {
+    id: 'en3mn0n7-kn9l-066k-ihlk-gkjbbel4h5l9',
+    userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',
+    agentId: 1,
+    title: 'Understanding Cloud Computing',
+    createdAt: '2023-11-25T22:15:00.580Z',
+    updatedAt: '2023-11-25T22:16:05.294Z',
+    messages: [],
+  },
+]
+
+export default defineEventHandler(() => {
+  return fakeChats
+})
