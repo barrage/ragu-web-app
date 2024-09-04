@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ElNotification } from 'element-plus'
-import LlmLoader from '~/components/LlmLoader.vue'
+import { useRouter } from 'vue-router'
 import { isStrongPassword, isValidEmail } from '~/utils/useValidation.js'
 
 // CONSTANTS
@@ -8,6 +8,7 @@ import { isStrongPassword, isValidEmail } from '~/utils/useValidation.js'
 definePageMeta({
   layout: 'login-layout',
 })
+const router = useRouter()
 
 // STATE
 
@@ -78,15 +79,17 @@ const handleSubmit = () => {
       title: 'Success',
       message: 'Form submitted successfully',
       type: 'success',
-      duration: 2000,
+      duration: 700,
+      onClose: () => {
+        isLeftVisible.value = false
+        isRightVisible.value = false
+
+        setTimeout(() => {
+          router.push('/')
+        }, 500)
+      },
     })
     console.log('Form submitted successfully')
-
-    setTimeout(() => {
-      isLeftVisible.value = false
-
-      isRightVisible.value = false
-    }, 500)
   }
 }
 </script>

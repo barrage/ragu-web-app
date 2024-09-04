@@ -17,9 +17,7 @@ const props = defineProps<{
     >
       <div class="chat-content">
         <span class="chat-title">{{ chat.title }}</span>
-        <div class="icon-container">
-          <MoreIcon class="more-icon" />
-        </div>
+        <MoreIcon class="more-icon icon-container" />
       </div>
     </div>
   </div>
@@ -90,7 +88,7 @@ const props = defineProps<{
   }
 }
 
-.icon-container {
+.more-icon {
   position: absolute;
   top: 0;
   right: 0;
@@ -105,13 +103,10 @@ const props = defineProps<{
     transform 0.3s ease;
 
   background: var(--color-primary-300);
-  width: 2.2rem;
+  padding-right: 0.1875rem;
   height: 100%;
   border-radius: 0 8px 8px 0;
-
-  .more-icon {
-    color: var(--color-primary-700);
-  }
+  color: var(--color-primary-700);
 }
 
 .dark {

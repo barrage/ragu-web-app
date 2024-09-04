@@ -46,10 +46,10 @@ aside {
   transition: width 0.3s ease;
   overflow: hidden;
   background-color: var(--color-primary-200);
-  border: 1px solid var(--color-primary-300);
-  border-radius: 12px;
-  margin: 6px 16px 16px 16px;
-  box-shadow: 0 4px 8px var(--color-primary-300);
+  border: 0.0625rem solid var(--color-primary-300);
+  border-radius: 0.75rem;
+  margin: 1.25rem 1rem 1rem 1rem;
+  box-shadow: 0 0.25rem 0.5rem var(--color-primary-300);
   color: var(--color-primary-900);
 
   .navigation-container {
@@ -210,9 +210,6 @@ aside {
 }
 
 .get-help-section {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   padding-inline: 10px;
   background: blur(10px);
   width: 100%;
@@ -220,6 +217,7 @@ aside {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: auto;
 
   & .gel-help-content {
     display: flex;

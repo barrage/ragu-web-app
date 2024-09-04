@@ -31,6 +31,9 @@ const navigationStore = useNavigationStore()
     var(--color-lightmode-0) 0%,
     var(--color-primary-subtle) 100%
   );
+  opacity: 0;
+  animation: fadeIn 2.5s ease-out forwards;
+
   &.sidebar-collapsed {
     grid-template-columns: 100px 1fr;
   }
@@ -42,6 +45,16 @@ const navigationStore = useNavigationStore()
   background-color: transparent;
   padding: 0.75rem;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .dark {
   .main-layout {
     background: radial-gradient(
