@@ -33,7 +33,7 @@ const navigationStore = useNavigationStore()
   ); */
   background: var(--color-primary-subtle);
   opacity: 0;
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.5s ease-out forwards;
 
   &.sidebar-collapsed {
     grid-template-columns: 100px 1fr;
