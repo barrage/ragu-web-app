@@ -6,17 +6,13 @@
     --input-error-color: var(--color-red-500);
     --input-background-color: transparent;
     --input-border: var(--border-global-1);
-    --input-border-color: var(--color-gray-500);
+    --input-border-color: var(--color-red-500);
     --input-border-radius: var(--radius-4);
     --input-icon-size: 1rem;
-    --input-padding-block-start: var(--spacing-mobile-m);
-    --input-padding-block-end: var(--spacing-mobile-7-xs);
-    --input-padding-inline-start: clamp(
-      0.625rem,
-      0.5947rem + 0.1294vw,
-      0.75rem
-    );
-    --input-padding-inline-end: clamp(0.625rem, 0.5947rem + 0.1294vw, 0.75rem);
+    --input-padding-block-start: 8px;
+    --input-padding-block-end: 6px;
+    --input-padding-inline-start: 6px;
+    --input-padding-inline-end: 6px;
     --input-suffix-position-right: clamp(
       0.625rem,
       0.5947rem + 0.1294vw,
@@ -33,7 +29,8 @@
         --input-border-color: var(--color-gray-600);
 
         &:focus {
-          --input-border-color: var(--color-gray-400);
+          outline: none;
+          /*    --input-border-color: var(--color-gray-400); */
         }
 
         &:not(:placeholder-shown) {
@@ -57,6 +54,10 @@
   .barrage-input {
     &__wrapper {
       position: relative;
+
+      &:focus {
+        background: transparent;
+      }
     }
 
     // Actual input and his states
@@ -81,7 +82,7 @@
         outline-color 0.3s ease-out,
         border-color 0.3s ease-out,
         color 0.3s ease-out;
-      margin-bottom: var(--spacing-fluid-2-xs);
+      /*   margin-bottom: var(--spacing-fluid-2-xs); */
 
       &::placeholder {
         color: var(--input-color);
@@ -90,10 +91,11 @@
       }
 
       &:focus {
-        --input-border-color: var(--color-gray-600);
+        /*     border: 2px solid red; */
+        /*  --input-border-color: var(--color-red-600); */
 
-        outline: var(--outline-global);
-
+        /*  outline: var(--outline-global); */
+        outline: none;
         &::placeholder {
           opacity: 1;
         }

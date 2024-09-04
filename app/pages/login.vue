@@ -149,6 +149,7 @@ const handleSubmit = () => {
   justify-content: center;
   grid-column: 1/-1;
   grid-row: 1;
+  background-color: var(--color-primary-100);
   transition:
     opacity 0.8s ease,
     transform 0.8s ease;
@@ -163,7 +164,6 @@ const handleSubmit = () => {
     grid-column: span 5;
     margin-block: 0.625rem;
     border-radius: 0.5rem;
-    background-color: white;
   }
 
   .login-container {

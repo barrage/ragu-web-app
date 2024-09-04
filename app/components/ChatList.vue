@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import type { Chat } from '~/types/ChatTypes'
+import type { Chat } from '~/types/chat'
 import MoreIcon from '~/assets/icons/svg/more.svg'
 
 const props = defineProps<{
   chats: Chat[]
 }>()
+
+const router = useRouter()
 </script>
 
 <template>
@@ -14,6 +16,7 @@ const props = defineProps<{
       v-for="chat in props.chats"
       :key="chat.id"
       class="chat-item"
+      @click="router.push(`/c/${chat.id}`)"
     >
       <div class="chat-content">
         <span class="chat-title">{{ chat.title }}</span>

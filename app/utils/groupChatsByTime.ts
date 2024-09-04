@@ -1,4 +1,4 @@
-import type { Chat, GroupedChats } from '~/types/ChatTypes'
+import type { Chat, GroupedChats } from '~/types/chat'
 
 export function groupChatsByTime(chats: Chat[]): GroupedChats {
   const groupedChats: GroupedChats = {

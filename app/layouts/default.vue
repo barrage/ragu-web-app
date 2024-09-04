@@ -41,9 +41,9 @@ const navigationStore = useNavigationStore()
 
 .main {
   grid-area: main;
-  background-color: var(--color-primary-subtle);
   background-color: transparent;
   padding: 0.75rem;
+  overflow: hidden;
 }
 
 @keyframes fadeIn {
@@ -62,6 +62,14 @@ const navigationStore = useNavigationStore()
       var(--color-darkmode-300) 0%,
       var(--color-primary-900) 100%
     );
+    /*  background-image: radial-gradient(
+      circle,
+      #252525,
+      #23232b,
+      #1f2131,
+      #182038,
+      #0a1f3f
+    ); */
   }
 }
 </style>

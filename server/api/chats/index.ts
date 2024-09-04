@@ -1,6 +1,6 @@
 import { defineEventHandler } from 'h3'
 
-const fakeChats = [
+export const fakeChats = [
   {
     id: '5a4ed1de-bf1b-466b-88c9-7fb552a696d0',
     userId: 'ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb',

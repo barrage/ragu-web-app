@@ -7,6 +7,8 @@ import QuestionIcon from '~/assets/icons/svg/question.svg'
 
 // CONSTANTS
 const navigationStore = useNavigationStore()
+
+const router = useRouter()
 </script>
 
 <template>
@@ -25,14 +27,14 @@ const navigationStore = useNavigationStore()
       <a
         class="new-chat"
         :class="{ opened: !navigationStore.isSidebarCollapsed }"
-        @click="navigationStore.toggleSidebar"
+        @click="router.push('/')"
       >
-        <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('newChat') }}</span> <AddIcon class="add-icon" />
+        <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('newChat') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
       </a>
 
       <ChatsDisplay v-if="!navigationStore.isSidebarCollapsed" />
       <div class="get-help-section">
-        <div class="gel-help-content">
+        <div class="gel-help-content" @click="router.push(`/login`)">
           <span v-if="!navigationStore.isSidebarCollapsed">Get help </span> <QuestionIcon size="24" />
         </div>
       </div>
@@ -96,7 +98,6 @@ aside {
 
       &:hover {
         & .add-icon {
-          display: block;
           opacity: 1;
           transform: translateX(-5px);
         }
@@ -175,7 +176,6 @@ aside {
   padding-bottom: var(--spacing-fluid-4-xs);
 }
 .add-icon {
-  display: none;
   opacity: 0;
   margin-left: auto;
   transition: all 0.3s ease;
