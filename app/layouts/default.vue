@@ -26,13 +26,14 @@ const navigationStore = useNavigationStore()
   position: relative;
   transition: grid-template-columns 0.3s ease;
   background: transparent;
-  background: radial-gradient(
+  /* background: radial-gradient(
     circle,
     var(--color-lightmode-0) 0%,
     var(--color-primary-subtle) 100%
-  );
+  ); */
+  background: var(--color-primary-subtle);
   opacity: 0;
-  animation: fadeIn 2.5s ease-out forwards;
+  animation: fadeIn 0.8s ease-out forwards;
 
   &.sidebar-collapsed {
     grid-template-columns: 100px 1fr;
@@ -57,11 +58,12 @@ const navigationStore = useNavigationStore()
 
 .dark {
   .main-layout {
-    background: radial-gradient(
+    /*   background: radial-gradient(
       circle,
       var(--color-darkmode-300) 0%,
       var(--color-primary-900) 100%
-    );
+    ); */
+    background: var(--color-primary-900);
     /*  background-image: radial-gradient(
       circle,
       #252525,

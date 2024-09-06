@@ -1,40 +1,24 @@
-// stores/chat.ts
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { useRuntimeConfig } from '#imports' // To access environment variables
-
-interface Chat {
-  id: string
-  title: string
-  createdAt: string
-  // Add any other properties for Chat
-}
-
-interface Message {
-  id: string
-  content: string
-  createdAt: string
-  // Add any other properties for Message
-}
+import { useRuntimeConfig } from '#imports'
+import type { Chat, Message } from '~/types/chat.ts'
 
 export const useChatStore = defineStore('chat', () => {
   // State
   const chats = ref<Chat[]>([])
-  const messages = ref<Record<string, Message[]>>({}) // Store messages by chatId
+  const messages = ref< Message[] | any>()
+  const selectedChat = ref<Chat | null>(null)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
-  // Get environment variables
   const config = useRuntimeConfig()
-  console.log(config)
-  const API_BASE_URL = config.public.apiBaseUrl // Use your environment variable here
 
-  // Computed property to check if chats are empty
+  const API_BASE_URL = config.public.apiBaseUrl
+
   const hasChats = computed(() => chats.value.length > 0)
 
   // Actions
 
-  // Fetch chats for a specific user
   async function fetchChats(userId: string) {
     isLoading.value = true
     error.value = null
@@ -51,7 +35,6 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
-  // Fetch messages for a specific chat
   async function fetchMessages(chatId: string) {
     isLoading.value = true
     error.value = null
@@ -74,6 +57,7 @@ export const useChatStore = defineStore('chat', () => {
     isLoading,
     error,
     hasChats,
+    selectedChat,
     fetchChats,
     fetchMessages,
   }

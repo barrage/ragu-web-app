@@ -63,7 +63,20 @@ const rules = {
 const handleSubmit = () => {
   emailError.value = ''
   passwordError.value = ''
+  ElNotification({
+    title: 'Success',
+    message: 'Form submitted successfully',
+    type: 'success',
+    duration: 700,
+    onClose: () => {
+      isLeftVisible.value = false
+      isRightVisible.value = false
 
+      setTimeout(() => {
+        router.push('/')
+      }, 500)
+    },
+  })
   if (!isValidEmail(form.value.email)) {
     emailError.value = 'Please enter a valid email address.'
     return

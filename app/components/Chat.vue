@@ -10,9 +10,12 @@ const props = defineProps<{
 
 <template>
   <div v-if="props?.chat" class="chat-container">
-    <h5 class="chat-title">
-      {{ props.chat.title }}
-    </h5>
+    <div class="chat-title">
+      <h5>
+        {{ props.chat.title }}
+      </h5>
+    </div>
+
     <div class="messages-container">
       <template
         v-for="message in messages"
@@ -31,7 +34,7 @@ const props = defineProps<{
   width: 100%;
 
   & .messages-container {
-    margin-top: 20px;
+    margin: 32px 0 32px;
     display: flex;
     flex-direction: column;
     gap: 36px;
@@ -40,13 +43,37 @@ const props = defineProps<{
 }
 
 .chat-title {
-  color: var(--color-primary-900);
-  font-weight: var(--font-weight-bold);
-  margin: auto;
+  position: sticky;
+  top: 0;
+  background: inherit;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: var(--color-primary-subtle);
+  padding: var(--spacing-fluid-5-xs);
+
+  & h5 {
+    transition: all 0.3s ease-out;
+    color: var(--color-primary-900);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-fluid-5);
+  }
+}
+
+.chat_title_small {
+  .chat-title {
+    & h5 {
+      font-size: var(--font-size-fluid-4);
+    }
+  }
 }
 .dark {
   & .chat-title {
-    color: var(--color-primary-0);
+    background: var(--color-primary-900);
+    & h5 {
+      margin-bottom: 4px;
+      color: var(--color-primary-0);
+    }
   }
 }
 </style>

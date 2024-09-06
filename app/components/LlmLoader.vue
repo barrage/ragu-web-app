@@ -39,7 +39,7 @@ const slots = defineSlots<Slots>()
   --loader-icon-color: var(--color-blue-600);
   --loader-text-color: var(--color-gray-500);
   --loader-icon-size: 10rem;
-  --loader-outer-circle-color: var(--color-magenta-standard);
+  --loader-outer-circle-color: var(--color-primary-100);
   --loader-inner-circle-color: var(--color-gray-100);
 }
 

@@ -35,14 +35,6 @@ const props = defineProps<{
   color: var(--color-primary-900);
 }
 
-.message.assistant {
-  background-color: transparent;
-}
-
-.message.user {
-  /*   background-color: var(--color-primary-100); */
-}
-
 .sender {
   font-weight: bold;
   min-width: max-content;
@@ -52,12 +44,17 @@ const props = defineProps<{
 
 .usermessage {
   background-color: var(--color-primary-100);
-  padding: 8px;
+
   border-radius: 8px;
+}
+
+.user {
+  flex-direction: row-reverse;
 }
 
 .content {
   margin: 5px 0;
+  padding: 8px;
 }
 
 .dark {
