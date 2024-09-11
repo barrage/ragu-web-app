@@ -126,7 +126,6 @@
       transform-origin: center;
       transition: transform 0.3s ease-out;
       cursor: pointer;
-      z-index: 1;
 
       // Change global icon size (it reflects on select, datepicker that use the input component)
       .barrage-icon {
@@ -159,7 +158,6 @@
       &__inner {
         border-radius: 18px;
         padding-block: 14px;
-        padding-inline: 8px;
       }
     }
   }

@@ -1,34 +1,42 @@
 <script setup lang="ts">
+// IMPORTS
 import type { NuxtError } from '#app'
 
+// PROPS
 defineProps({
   error: Object as () => NuxtError,
 })
-
-const handleError = () => clearError({ redirect: '/' })
 </script>
 
 <template>
   <section class="wrapper-grid">
     <div class="content">
-      <div><h1>ERROR</h1></div>
       <div v-if="error?.statusCode === 500">
-        <h2>Oh, oh, server error</h2>
-        <h3>{{ error?.statusCode }}</h3>
-        <p>{{ error?.message }}</p>
+        <LlmError
+          title="Oh, oh, server error"
+          :description=" error?.message "
+          :error="error?.statusCode"
+        >
+          <template #image>
+            <img src="~/assets/images/login-img.jpg" alt="Error">
+          </template>
+        </LlmError>
       </div>
       <div v-else-if="error?.statusCode === 404">
-        <h2>Oh, no page does not exist!</h2>
-        <h3>{{ error?.statusCode }}</h3>
-        <p>We don't have the page you're looking for.</p>
+        <LlmError
+          title="Oh no, page not found"
+          :description=" error?.message "
+          :error="error?.statusCode"
+        >
+          <template #image>
+            <img src="~/assets/images/login-img.jpg" alt="Error">
+          </template>
+        </LlmError>
       </div>
       <div v-else>
         <h1>We have an error!</h1>
         <p>Contact us to fix it.</p>
       </div>
-      <button @click="handleError">
-        Go to home page
-      </button>
     </div>
   </section>
 </template>

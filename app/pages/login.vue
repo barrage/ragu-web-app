@@ -1,154 +1,27 @@
 <script lang="ts" setup>
-import { ElNotification } from 'element-plus'
-import { useRouter } from 'vue-router'
-import { isStrongPassword, isValidEmail } from '~/utils/useValidation.js'
-
 // CONSTANTS
-
-definePageMeta({
-  layout: 'login-layout',
-})
-const router = useRouter()
+const authStore = useAuthStore()
 
 // STATE
-
-const loginForm = ref()
-
-const form = ref({
-  email: '',
-  password: '',
-})
-
-const showPassword = ref(false)
-const emailError = ref('')
-const passwordError = ref('')
 const isLeftVisible = ref(true)
 const isRightVisible = ref(true)
 
-const rules = {
-  email: [
-    {
-      required: true,
-      message: 'Please enter a valid email address.',
-      validator: (rule, value, callback) => {
-        if (isValidEmail(value)) {
-          callback()
-        }
-        else {
-          callback(new Error('Please enter a valid email address.'))
-        }
-      },
-      trigger: 'blur',
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: 'Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character.',
-      validator: (rule, value, callback) => {
-        if (isStrongPassword(value)) {
-          callback()
-        }
-        else {
-          callback(new Error('Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character.'))
-        }
-      },
-      trigger: 'blur',
-    },
-  ],
-}
+// LIFECYCLE
+definePageMeta({
+  layout: 'login-layout',
+})
 
-// HELPERS
+// API CALLS
+const { error } = await useAsyncData(() => authStore.handleOAuthLogin())
 
-const handleSubmit = () => {
-  emailError.value = ''
-  passwordError.value = ''
-  ElNotification({
-    title: 'Success',
-    message: 'Form submitted successfully',
-    type: 'success',
-    duration: 700,
-    onClose: () => {
-      isLeftVisible.value = false
-      isRightVisible.value = false
-
-      setTimeout(() => {
-        router.push('/')
-      }, 500)
-    },
-  })
-  if (!isValidEmail(form.value.email)) {
-    emailError.value = 'Please enter a valid email address.'
-    return
-  }
-
-  if (!isStrongPassword(form.value.password)) {
-    passwordError.value = 'Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character.'
-    return
-  }
-
-  if (!emailError.value && !passwordError.value) {
-    ElNotification({
-      title: 'Success',
-      message: 'Form submitted successfully',
-      type: 'success',
-      duration: 700,
-      onClose: () => {
-        isLeftVisible.value = false
-        isRightVisible.value = false
-
-        setTimeout(() => {
-          router.push('/')
-        }, 500)
-      },
-    })
-  }
-}
+errorHandler(error, true)
 </script>
 
 <template>
   <div class="left" :class="{ hidden: !isLeftVisible }">
     <div class="login-container">
-      <h4>Login</h4>
-
-      <ClientOnly>
-        <ElForm
-          ref="loginForm"
-          :model="form"
-          :rules="rules"
-          @submit.prevent="handleSubmit"
-        >
-          <ElFormItem label="Email Address:" prop="email">
-            <ElInput
-              id="email"
-              v-model="form.email"
-              type="email"
-              placeholder="Enter your email"
-              clearable
-            />
-          </ElFormItem>
-
-          <ElFormItem label="Password:" prop="password">
-            <ElInput
-              id="password"
-              v-model="form.password"
-              :type="showPassword ? 'text' : 'password'"
-              placeholder="Enter your password"
-              show-password
-            />
-          </ElFormItem>
-
-          <ElFormItem>
-            <ElButton
-              type="primary"
-              native-type="submit"
-              class="login-btn"
-            >
-              Login now
-            </ElButton>
-          </ElFormItem>
-        </ElForm>
-      </ClientOnly>
+      <h3>Login</h3>
+      <LlmOauthLogin />
     </div>
   </div>
   <div class="right" :class="{ hidden: !isRightVisible }" />
@@ -195,29 +68,13 @@ const handleSubmit = () => {
     }
   }
 
-  h4 {
+  h3 {
     margin-bottom: var(--spacing-fluid-xl);
     color: black;
 
     @include viewport-ml {
       color: var(--color-gray-900);
     }
-  }
-
-  .login-btn {
-    width: 100%;
-    padding: 0.625rem;
-    background-color: #007bff;
-    border: none;
-    border-radius: 0.5rem;
-    color: #ffffff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .login-btn:hover {
-    background-color: #0056b3;
   }
 }
 

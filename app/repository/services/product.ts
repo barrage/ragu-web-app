@@ -14,15 +14,11 @@ export default class ProductService extends FetchFactory {
     try {
       return await this.$fetch<Product[]>(this.endpoint)
     }
-    catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error('Failed to fetch products:', error.message)
-        throw new Error(`Failed to fetch products: ${error.message}`)
-      }
-      else {
-        console.error('An unknown error occurred')
-        throw new Error('An unknown error occurred while fetching products')
-      }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch product with code ${error?.statusCode}`,
+      })
     }
   }
 
@@ -36,15 +32,11 @@ export default class ProductService extends FetchFactory {
     try {
       return await this.$fetch<Product>(`${this.endpoint}/${id}`)
     }
-    catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error('Failed to fetch product:', error.message)
-        throw new Error(`Failed to fetch product: ${error.message}`)
-      }
-      else {
-        console.error('An unknown error occurred')
-        throw new Error('An unknown error occurred while fetching product')
-      }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch product with code ${error?.statusCode}`,
+      })
     }
   }
 }
