@@ -1,8 +1,10 @@
 // Japanese
 export default {
   details: '詳細',
-  newChat: '新しいチャット',
+  newChat: 'チャットを作成',
   chatHistory: 'チャット履歴',
+  chatDock: 'チャットドック',
   title: 'データで話して',
-  description: '以下のプロンプトを選択するか、自分で入力してチャットを始めてください',
+  askAbout: 'について質問する：',
+  description: '下のプロンプトを選ぶか、自分で入力して私と会話を始めてください。',
 }

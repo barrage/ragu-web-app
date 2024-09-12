@@ -1,8 +1,10 @@
 // Italian
 export default {
   details: 'Dettagli',
-  newChat: 'Nuova chat',
+  newChat: 'Crea chat',
   chatHistory: 'Cronologia chat',
+  chatDock: 'Pannello Chat',
   title: 'Parla i dati con me',
-  description: 'Scegli un suggerimento qui sotto o scrivi il tuo per iniziare a chattare con me',
+  askAbout: 'Chiedi su:',
+  description: ' Scegli un prompt qui sotto o scrivi il tuo per iniziare una conversazione con me.',
 }

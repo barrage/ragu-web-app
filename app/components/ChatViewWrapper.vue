@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 const chatStore = useChatStore()
-const messages = computed(() => chatStore.messages)
+const messages = computed(() => {
+  return [...(chatStore.messages || [])].reverse()
+})
 </script>
 
 <template>

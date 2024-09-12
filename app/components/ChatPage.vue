@@ -35,11 +35,13 @@ const scrollToBottom = async () => {
 const chatStore = useChatStore()
 const messages = computed(() => chatStore.messages)
 
-watch(messages, async () => {
-  await nextTick()
-  scrollToBottom()
-})
-
+watch(
+  messages,
+  () => {
+    scrollToBottom()
+  },
+  { immediate: true, deep: true },
+)
 onMounted(() => {
   scrollToBottom()
 })

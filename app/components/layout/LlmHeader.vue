@@ -43,7 +43,7 @@ header {
 .vertical-divider {
   width: 1px;
   height: 32px;
-  background: var(--color-primary-100);
+  background: var(--color-primary-200);
 }
 
 .dark {

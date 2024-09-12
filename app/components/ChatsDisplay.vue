@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { groupChatsByTime } from '~/utils/groupChatsByTime'
-import type { Chat, GroupedChats } from '~/types/ChatTypes'
+import type { GroupedChats } from '~/types/chat'
 
-const { data: chats, error } = await useFetch<Chat[]>('/api/chats')
+const chatStore = useChatStore()
+const allChats = computed(() => {
+  return chatStore.chats
+})
 
 const groupedChats = ref<GroupedChats>({
   today: [],
@@ -14,13 +17,18 @@ const groupedChats = ref<GroupedChats>({
   lastYear: [],
 })
 
+const updateGroupedChats = () => {
+  if (allChats.value) {
+    groupedChats.value = groupChatsByTime(allChats.value)
+  }
+}
+
 onMounted(() => {
-  if (chats.value) {
-    groupedChats.value = groupChatsByTime(chats.value)
-  }
-  else if (error.value) {
-    console.error('Failed to fetch chats:', error.value)
-  }
+  updateGroupedChats()
+})
+
+watch(allChats, () => {
+  updateGroupedChats()
 })
 </script>
 

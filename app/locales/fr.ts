@@ -1,8 +1,10 @@
 // France
 export default {
   details: 'Détails',
-  newChat: 'Nouvelle discussion',
+  newChat: 'Créer un chat',
   chatHistory: 'Historique des discussions',
+  chatDock: 'Panneau de Chat',
   title: 'Parlez-moi des données',
-  description: 'Choisissez une suggestion ci-dessous ou écrivez la vôtre pour commencer à discuter avec moi',
+  askAbout: 'Demander à propos de :',
+  description: 'Choisissez une suggestion ci-dessous ou écrivez la vôtre pour démarrer une conversation avec moi.',
 }

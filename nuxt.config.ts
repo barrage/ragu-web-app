@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  nitro: {
+    experimental: {
+      websocket: true,
+    },
+  },
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
@@ -11,7 +16,7 @@ export default defineNuxtConfig({
     },
   },
   modules: ['@nuxt/eslint', '@vueuse/nuxt', 'nuxt-svgo', '@pinia/nuxt', '@nuxtjs/i18n', '@element-plus/nuxt'],
-  plugins: ['~/plugins/error-handler'],
+  plugins: ['~/plugins/error-handler', { src: '~/plugins/websocket.client.ts', mode: 'client' }],
   eslint: {
     config: {
       stylistic: true,
@@ -19,12 +24,10 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/styles/styles.scss'],
   elementPlus: {
-    /**
-     * Set the `importStyle` to `false` to disable importing Element Plus styles
-     */
+
     importStyle: false,
     /**
-     * Changes the Element Plus namespace/prefix to be `t-ht` instead of the default `el`
+     * Changes the Element Plus namespace/prefix to be `project-name` instead of the default `el`
      */
     namespace: 'barrage',
   },

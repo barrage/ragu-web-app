@@ -84,11 +84,11 @@ const slots = defineSlots<Slots>()
 
     path {
       &:nth-child(1) {
-        fill: var(--loader-inner-circle-color);
+        fill: var(--color-primary-100);
       }
 
       &:nth-child(2) {
-        fill: var(--loader-outer-circle-color);
+        fill: var(--color-primary-200);
       }
     }
   }

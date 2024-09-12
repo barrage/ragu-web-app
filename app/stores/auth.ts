@@ -13,7 +13,7 @@ interface User {
 export const useAuthStore = defineStore('auth', () => {
   // State
   const user = ref<User | null>(null) // Stores authenticated user info
-  const fakeUserId = ref('ef2b6db8-e784-46bf-9ce1-3f43cd1d1beb')
+  const fakeUserId = ref('660a7998-2a27-11ee-be56-0242ac120002')
   const isAuthenticated = computed(() => !!user.value) // Checks if the user is authenticated
   const error = ref<string | null>(null) // Stores error messages
 

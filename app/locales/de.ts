@@ -1,8 +1,10 @@
 // German
 export default {
   details: 'Details',
-  newChat: 'Neuer Chat',
+  newChat: 'Chat erstellen',
+  chatDock: 'Chat-Bereich',
   chatHistory: 'Chatverlauf',
-  title: 'Sprich mit den Daten zu mir',
+  title: 'BarrageGPT',
+  askAbout: 'Fragen zu:',
   description: 'Wähle unten eine Eingabeaufforderung oder schreibe deine eigene, um mit mir zu chatten',
 }

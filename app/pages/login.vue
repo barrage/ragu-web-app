@@ -102,7 +102,6 @@ const handleSubmit = () => {
         }, 500)
       },
     })
-    console.log('Form submitted successfully')
   }
 }
 </script>

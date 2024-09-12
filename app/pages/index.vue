@@ -1,11 +1,18 @@
 <script lang="ts" setup>
-const messages = ref([])
+const chatStore = useChatStore()
+const messages = computed(() => chatStore.messages)
+
+onMounted(() => {
+  chatStore.messages = []
+})
 </script>
 
 <template>
   <ChatPage>
     <template #default>
-      <template v-if="messages.length > 0">
+      <template
+        v-if="messages && messages.length > 0"
+      >
         <ChatViewWrapper />
       </template>
       <template v-else>

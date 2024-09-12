@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 // CONSTANTS
 const navigationStore = useNavigationStore()
+
+const chatStore = useChatStore()
+
+chatStore.GET_AllChats()
 </script>
 
 <template>
@@ -37,6 +41,10 @@ const navigationStore = useNavigationStore()
 
   &.sidebar-collapsed {
     grid-template-columns: 100px 1fr;
+  }
+
+  @include viewport-xl {
+    grid-template-columns: 22.25rem 1fr;
   }
 }
 

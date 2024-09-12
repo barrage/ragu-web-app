@@ -7,7 +7,6 @@ import QuestionIcon from '~/assets/icons/svg/question.svg'
 
 // CONSTANTS
 const navigationStore = useNavigationStore()
-
 const router = useRouter()
 </script>
 
@@ -16,7 +15,7 @@ const router = useRouter()
     <nav class="navigation-container">
       <div class="sidebar-head-section">
         <p v-if="!navigationStore.isSidebarCollapsed" class="typing-effect">
-          Chat Dock
+          {{ $t('chatDock') }}
         </p>
         <el-button class="toggle-btn" @click="navigationStore.toggleSidebar">
           <LayoutIcon />
@@ -82,10 +81,13 @@ aside {
     align-items: center;
     justify-content: center;
     color: var(--color-primary-900);
+    text-wrap: nowrap;
     width: 100%;
     gap: 0.625rem;
     margin-top: 1rem;
     padding-inline: 0.25rem;
+    padding-top: 8px;
+    padding-bottom: 8px;
     border-radius: 8px;
     background-color: transparent;
     font-size: var(--font-size-fluid-3);
@@ -210,14 +212,13 @@ aside {
 }
 
 .get-help-section {
-  padding-inline: 10px;
-  background: blur(10px);
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: auto;
+  border-radius: 8px;
 
   & .gel-help-content {
     display: flex;

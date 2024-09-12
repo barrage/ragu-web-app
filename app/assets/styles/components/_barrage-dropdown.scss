@@ -1,10 +1,10 @@
 @layer barrage-dropdown {
   :root {
-    --dropdown-background-color: var(--color-primary-100);
+    --dropdown-background-color: var(--color-primary-0);
     --dropdown-padding-block: clamp(0.25rem, 0.2197rem + 0.1294vw, 0.375rem);
     --dropdown-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.05),
       0px 4px 12px 0px rgba(0, 0, 0, 0.05);
-    --dropdown-item-background-color: var(--color-primary-100);
+    --dropdown-item-background-color: var(--color-primary-0);
     --dropdown-item-padding-block: clamp(
       0.625rem,
       0.5947rem + 0.1294vw,
@@ -28,10 +28,10 @@
 
     .barrage-dropdown-menu {
       &__item {
-        --dropdown-item-background-color: var(--color-primary-900);
+        --dropdown-item-background-color: var(--color-primary-800);
 
         &:hover {
-          --dropdown-item-background-color: var(--color-primary-800);
+          --dropdown-item-background-color: var(--color-primary-900);
         }
 
         &:active {

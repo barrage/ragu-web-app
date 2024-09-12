@@ -8,6 +8,10 @@ const props = defineProps<{
 }>()
 
 const router = useRouter()
+const route = useRoute()
+const chatId = computed(() => {
+  return route.params.chatId
+})
 </script>
 
 <template>
@@ -16,11 +20,12 @@ const router = useRouter()
       v-for="chat in props.chats"
       :key="chat.id"
       class="chat-item"
+      :class="{ selected: chatId === chat.id }"
       @click="router.push(`/c/${chat.id}`)"
     >
       <div class="chat-content">
-        <span class="chat-title">{{ chat.title }}</span>
-        <MoreIcon class="more-icon icon-container" />
+        <span class="chat-title">{{ chat.title || 'Chat' }}</span>
+        <MoreIcon class="more-icon icon-container" size="26" />
       </div>
     </div>
   </div>
@@ -36,7 +41,8 @@ const router = useRouter()
 .chat-item {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 4px;
+  padding-inline-start: 8px;
   font-size: var(--font-size-desktop-2);
   color: var(--color-primary-800);
   transition:
@@ -46,6 +52,17 @@ const router = useRouter()
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  &.selected {
+    background: var(--color-primary-300);
+    color: var(--color-primary-900);
+    .chat-title::after {
+      background: linear-gradient(
+        to left,
+        var(--color-primary-300),
+        transparent
+      );
+    }
+  }
 
   &:hover {
     background: var(--color-primary-300);
@@ -54,7 +71,7 @@ const router = useRouter()
 
   &:hover .icon-container {
     opacity: 1;
-    transform: translateX(10px);
+    transform: translateX(6px);
   }
   &:hover .chat-title {
     &::after {
@@ -107,8 +124,9 @@ const router = useRouter()
 
   background: var(--color-primary-300);
   padding-right: 0.1875rem;
-  height: 100%;
+  height: 100% !important;
   border-radius: 0 8px 8px 0;
+
   color: var(--color-primary-700);
 }
 
@@ -119,6 +137,17 @@ const router = useRouter()
     &:hover {
       background: var(--color-primary-700);
       color: var(--color-primary-0);
+    }
+    &.selected {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
+      .chat-title::after {
+        background: linear-gradient(
+          to left,
+          var(--color-primary-700),
+          transparent
+        );
+      }
     }
   }
 

@@ -1,18 +1,19 @@
 import FetchFactory from '../fetchFactory'
-import type { Product } from '@/types/products'
+import type { Chat, Message } from '~/types/chat.ts'
 
-export default class ProductService extends FetchFactory {
+export default class ChatServise extends FetchFactory {
   // Endpoint for product-related API requests.
   private readonly endpoint: string = '/chats'
+  private readonly userId: string = '660a7998-2a27-11ee-be56-0242ac120002'
 
   /**
    * Fetches a list of all products from the API.
    * @returns A promise that resolves to an array of Product objects.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllChats(): Promise<Product[]> {
+  async GetAllChats(): Promise<Chat[]> {
     try {
-      return await this.$fetch<Product[]>(this.endpoint)
+      return await this.$fetch<Chat[]>(`${this.endpoint}/${this.userId}`)
     }
     catch (error: unknown) {
       if (error instanceof Error) {
@@ -32,9 +33,9 @@ export default class ProductService extends FetchFactory {
    * @returns A promise that resolves to a Product object.
    * @throws Will throw an error if the request fails.
    */
-  async GetChatMessages(id: string): Promise<Product> {
+  async GetChatMessages(id: string): Promise<Message[]> {
     try {
-      return await this.$fetch<Product>(`${this.endpoint}/${id}`)
+      return await this.$fetch<Message[]>(`${this.endpoint}/${id}/messages`)
     }
     catch (error: unknown) {
       if (error instanceof Error) {

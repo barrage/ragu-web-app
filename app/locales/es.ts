@@ -2,9 +2,11 @@
 export default {
 
   details: 'Detalles',
-  newChat: 'Nueva conversación',
+  newChat: 'Crear chat',
   chatHistory: 'Historial de conversaciones',
+  chatDock: 'Panel de Chat',
   title: 'Háblame con los datos',
-  description: 'Elige una sugerencia a continuación o escribe la tuya para empezar a chatear conmigo',
+  askAbout: 'Pregunta sobre:',
+  description: 'Elige una sugerencia a continuación o escribe la tuya para iniciar una conversación conmigo.',
 
 }

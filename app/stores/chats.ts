@@ -1,53 +1,40 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
-import { useRuntimeConfig } from '#imports'
 import type { Chat, Message } from '~/types/chat.ts'
 
 export const useChatStore = defineStore('chat', () => {
   // State
   const chats = ref<Chat[]>([])
-  const messages = ref< Message[] | any>()
+  const messages = ref<Message[]>()
   const selectedChat = ref<Chat | null>(null)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
-  const config = useRuntimeConfig()
-
-  const API_BASE_URL = config.public.apiBaseUrl
+  const isWebSocketStreaming = ref(false)
 
   const hasChats = computed(() => chats.value.length > 0)
+  const { $api } = useNuxtApp()
 
-  // Actions
+  /* API */
 
-  async function fetchChats(userId: string) {
-    isLoading.value = true
-    error.value = null
-    try {
-      const response = await $fetch<Chat[]>(`${API_BASE_URL}/chats/${userId}?msgLimit=0`)
-      chats.value = response
+  async function GET_ChatMessages(chatId: string, userId?: string): Promise<Message[]> {
+    const { data } = await useAsyncData(() => $api.chat.GetChatMessages(chatId))
+
+    if (data.value) {
+      return messages.value = data.value
     }
-    catch (err) {
-      error.value = 'Failed to fetch chats'
-      console.error(err)
-    }
-    finally {
-      isLoading.value = false
+    else {
+      return []
     }
   }
 
-  async function fetchMessages(chatId: string) {
-    isLoading.value = true
-    error.value = null
-    try {
-      const response = await $fetch<Message[]>(`${API_BASE_URL}/chats/${chatId}/messages?msgLimit=4`)
-      messages.value[chatId] = response
+  async function GET_AllChats(userId?: string): Promise<Chat[]> {
+    const { data } = await useAsyncData(() => $api.chat.GetAllChats())
+
+    if (data.value) {
+      return chats.value = data.value
     }
-    catch (err) {
-      error.value = 'Failed to fetch messages'
-      console.error(err)
-    }
-    finally {
-      isLoading.value = false
+    else {
+      return []
     }
   }
 
@@ -58,7 +45,8 @@ export const useChatStore = defineStore('chat', () => {
     error,
     hasChats,
     selectedChat,
-    fetchChats,
-    fetchMessages,
+    isWebSocketStreaming,
+    GET_ChatMessages,
+    GET_AllChats,
   }
 })

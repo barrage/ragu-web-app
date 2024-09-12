@@ -14,12 +14,12 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
       height="64"
       class="ai-logo"
     />
-    <h5>{{ $t('title') }}</h5>
+    <h5>BarrageGPT</h5>
     <p class="description">
       {{ $t('description') }}
     </p>
     <div class="about-container">
-      <p>Ask About:</p>
+      <p> {{ $t('askAbout') }}</p>
       <div class="suggestions-container">
         <span v-for="(suggestion, index) in suggestions" :key="index"> {{ suggestion }}</span>
       </div>
@@ -111,7 +111,7 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
     text-align: center;
 
     p {
-      color: var(--color-primary-300);
+      color: var(--color-primary-200);
     }
   }
   .suggestions-container {
