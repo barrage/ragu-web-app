@@ -17,10 +17,10 @@ export const useChatStore = defineStore('chat', () => {
   /* API */
 
   async function GET_ChatMessages(chatId: string, userId?: string): Promise<Message[]> {
-    const { data } = await useAsyncData(() => $api.chat.GetChatMessages(chatId))
+    const data = await $api.chat.GetChatMessages(chatId)
 
-    if (data.value) {
-      return messages.value = data.value
+    if (data) {
+      return messages.value = data
     }
     else {
       return []
@@ -28,10 +28,10 @@ export const useChatStore = defineStore('chat', () => {
   }
 
   async function GET_AllChats(userId?: string): Promise<Chat[]> {
-    const { data } = await useAsyncData(() => $api.chat.GetAllChats())
+    const data = await $api.chat.GetAllChats()
 
-    if (data.value) {
-      return chats.value = data.value
+    if (data) {
+      return chats.value = data
     }
     else {
       return []

@@ -88,6 +88,7 @@ const sendMessage = () => {
       size="large"
       placeholder="Pošalji poruku"
       :disabled="!($wsConnectionState === 'open')"
+      @keyup.enter="sendMessage"
     >
       <template #suffix>
         <div class="suffix-icon" @click="sendMessage">

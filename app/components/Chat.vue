@@ -42,12 +42,12 @@ const popperOptions = {
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>
-                <div style="display: flex; gap: 8px;">
+                <div class="dropdown-item">
                   <EditTextIcon /> Edit title
                 </div>
               </el-dropdown-item>
               <el-dropdown-item>
-                <div style="display: flex; gap: 8px;">
+                <div class="dropdown-item">
                   <DeleteIcon /> Delete chat
                 </div>
               </el-dropdown-item>
@@ -94,7 +94,7 @@ const popperOptions = {
   width: 100%;
   background: var(--color-primary-subtle);
   padding: var(--spacing-fluid-5-xs);
-
+  z-index: 10;
   & h5 {
     transition: all 0.3s ease-out;
     color: var(--color-primary-900);
@@ -124,6 +124,13 @@ const popperOptions = {
     }
   }
 }
+
+.dropdown-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .dark {
   & .chat-title {
     background: var(--color-primary-900);

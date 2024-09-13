@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
+
 import type { Message } from '~/types/chat'
 
 const props = defineProps<{
@@ -9,29 +9,73 @@ const props = defineProps<{
 }>()
 
 const chatStore = useChatStore()
+const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
+const displayedContent = ref('')
+const pendingContent = ref('')
+const isAnimating = ref(false)
+let animationTimeout: number | null = null
+
+const animateNextLetter = () => {
+  if (pendingContent.value.length > 0) {
+    displayedContent.value += pendingContent.value[0]
+    pendingContent.value = pendingContent.value.slice(1)
+    isAnimating.value = true
+    animationTimeout = window.setTimeout(() => {
+      animateNextLetter()
+    }, 10)
+  }
+  else {
+    isAnimating.value = false
+  }
+}
+
+watch(
+  () => props.message?.content,
+  (newContent, oldContent) => {
+    if (isAssistantMessage.value && newContent && oldContent) {
+      pendingContent.value += newContent.slice(oldContent.length)
+
+      if (!isAnimating.value) {
+        animateNextLetter()
+      }
+    }
+    else if (newContent) {
+      displayedContent.value = newContent
+      pendingContent.value = ''
+    }
+  },
+  { immediate: true },
+)
+
+onBeforeUnmount(() => {
+  if (animationTimeout) {
+    clearTimeout(animationTimeout)
+  }
+})
 </script>
 
 <template>
   <template v-if="props.message">
-    <div
-
-      class="message"
-      :class="[props.message.senderType]"
-    >
+    <div class="message" :class="[props.message.senderType]">
       <div class="sender">
         <BrainIcon v-if="props.message.senderType === 'assistant'" size="32" />
         <ProfileIcon v-else size="32" />
       </div>
-      <template v-if="props.message.senderType === 'assistant' && chatStore.isWebSocketStreaming && !(props.message.content)">
+      {{ chatStore.isWebSocketStreaming }}
+      <template v-if="props.message.senderType === 'assistant' && chatStore.isWebSocketStreaming && !props.message.content">
         <LlmLoader class="assistant-message-loader" />
       </template>
-
       <p
         v-else
-        :class="{ usermessage: props.message.senderType === 'user', assistantmessage: props.message.senderType === 'assistant' }"
+        :class="{
+          usermessage: !isAssistantMessage,
+          assistantmessage: isAssistantMessage,
+          animating: isAnimating,
+        }"
         class="content"
       >
-        {{ props.message.content }}
+        {{ displayedContent }}
+        <span v-if="isAnimating" class="cursor" />
       </p>
     </div>
   </template>
@@ -54,23 +98,26 @@ const chatStore = useChatStore()
 
 .usermessage {
   background-color: var(--color-primary-100);
-
   border-radius: 8px;
 }
 
 .assistantmessage {
   max-width: max-content;
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 16;
-    right: 0;
-    height: 18px;
-    border-radius: 50%;
-    width: 18px;
-    background: var(--color-primary-900);
-    /* animation: blink 1s step-end infinite; */
+  position: relative;
+
+  & span {
+    opacity: 0;
+    animation: fadeInChar 0.5s forwards;
   }
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: currentColor;
+  margin-left: 2px;
+  animation: blink 0.7s step-end infinite;
 }
 
 .user {
@@ -84,30 +131,41 @@ const chatStore = useChatStore()
   line-height: var(--font-line-height-base);
 }
 
+@keyframes fadeInChar {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 .dark {
   & .usermessage {
     background-color: var(--color-primary-800);
     color: var(--color-primary-0);
   }
+
   & .sender {
     color: var(--color-primary-100);
   }
+
   & .content {
     color: var(--color-primary-0);
   }
 }
+
 .assistant-message-loader {
   margin: auto;
-}
-@keyframes blink {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0; // Make the cursor disappear halfway through the cycle
-  }
-  100% {
-    opacity: 1;
-  }
 }
 </style>
