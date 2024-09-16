@@ -4,7 +4,7 @@
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 
 // STATE
-const suggestions = ['Clean account fields', 'Clean contact fields', 'Create master list', 'Create master store', 'Create master store', 'Create master store', 'Create master list']
+const suggestions = ['How do I debug a segmentation fault in C++?', 'What\'s the best way to manage dependencies in a Node.js project?', 'Can you explain the purpose of unit testing in software development?', 'How do I handle asynchronous operations in Python?']
 </script>
 
 <template>
@@ -21,7 +21,9 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
     <div class="about-container">
       <p> {{ $t('askAbout') }}</p>
       <div class="suggestions-container">
-        <span v-for="(suggestion, index) in suggestions" :key="index"> {{ suggestion }}</span>
+        <template v-for="(suggestion, index) in suggestions" :key="index">
+          <ChatSuggestionCard :text="suggestion" />
+        </template>
       </div>
     </div>
   </div>
@@ -55,7 +57,7 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
 .description {
   text-align: center;
   font-weight: 300;
-  margin-bottom: 3.125rem;
+  margin-bottom: 1rem;
   max-width: 21.875rem;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -74,24 +76,16 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
 }
 .suggestions-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  column-gap: 0.625rem;
-  row-gap: 0.9375rem;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  gap: 1rem;
+  overflow: auto;
+
+  padding-bottom: 2rem;
   color: var(--color-primary-800);
-
-  span {
-    width: max-content;
-    padding: 0.625rem 0.5rem;
-    border: 0.0625rem solid var(--color-primary-500);
-    border-radius: 1.625rem;
-    color: var(--color-primary-700);
-    cursor: pointer;
-
-    &:hover {
-      color: var(--color-primary-900);
-      border: 0.0625rem solid var(--color-primary-700);
-    }
+  & .chat-suggestion-card {
+    flex: 0 0 calc(25% - 1rem);
+    min-width: 180px;
   }
 }
 
@@ -116,17 +110,6 @@ const suggestions = ['Clean account fields', 'Clean contact fields', 'Create mas
   }
   .suggestions-container {
     color: var(--color-primary-100);
-
-    span {
-      border: 0.0625rem solid var(--color-primary-200);
-
-      color: var(--color-primary-0);
-
-      &:hover {
-        color: var(--color-primary-200);
-        border: 0.0625rem solid var(--color-primary-100);
-      }
-    }
   }
 }
 </style>

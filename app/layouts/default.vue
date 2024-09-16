@@ -4,7 +4,7 @@ const navigationStore = useNavigationStore()
 
 const chatStore = useChatStore()
 
-chatStore.GET_AllChats()
+chatStore.GET_AllChats(chatStore.userId)
 </script>
 
 <template>

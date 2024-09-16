@@ -42,14 +42,14 @@ header {
 }
 .vertical-divider {
   width: 1px;
-  height: 32px;
-  background: var(--color-primary-200);
+  height: 1.75rem;
+  background: var(--color-primary-300);
 }
 
 .dark {
   header {
     & .vertical-divider {
-      background: var(--color-primary-800);
+      background: var(--color-primary-700);
     }
   }
 }

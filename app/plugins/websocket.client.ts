@@ -61,9 +61,14 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
 
     ws.onclose = (event) => {
-      console.log('WebSocket connection closed:', event.code, event.reason)
-      connectionState.value = 'closed'
-      ws = null
+      if (event.code === 1000) {
+        console.log('WebSocket connection closed normally:', event.code, event.reason)
+        connectionState.value = 'closed'
+        ws = null
+      }
+      else {
+        console.warn('WebSocket connection closed with an error:', event.code, event.reason)
+      }
     }
   }
 

@@ -26,18 +26,34 @@ const themeOptions = ref([
     name: 'default',
     value: 'default',
   },
-
+  {
+    name: 'sage',
+    value: 'sage',
+  },
+  {
+    name: 'teal',
+    value: 'teal',
+  },
   {
     name: 'blue',
     value: 'blue',
   },
+
   {
     name: 'violet',
     value: 'violet',
   },
   {
+    name: 'lime',
+    value: 'lime',
+  },
+  {
     name: 'green',
     value: 'green',
+  },
+  {
+    name: 'yellow',
+    value: 'yellow',
   },
   {
     name: 'orange',
@@ -51,18 +67,12 @@ const themeOptions = ref([
     name: 'magenta',
     value: 'magenta',
   },
+
   {
-    name: 'yellow',
-    value: 'yellow',
+    name: 'brown',
+    value: 'brown',
   },
-  {
-    name: 'lime',
-    value: 'lime',
-  },
-  {
-    name: 'teal',
-    value: 'teal',
-  },
+
 ])
 </script>
 
@@ -74,13 +84,6 @@ const themeOptions = ref([
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>
-          <!--   <el-dropdown-item
-            v-for="theme in themeOptions"
-            :key="theme.value"
-            @click="themeStore.selectedColor = theme.value"
-          >
-            {{ theme.name }}
-          </el-dropdown-item> -->
           <div class="colors-container">
             <template v-for="color in themeOptions" :key="color.name">
               <div
@@ -122,11 +125,11 @@ const themeOptions = ref([
   cursor: pointer;
 
   &.selected {
-    background: var(--color-primary-0);
+    background: var(--color-primary-100);
   }
 
   &:hover {
-    background: var(--color-primary-0);
+    background: var(--color-primary-100);
   }
 }
 .color-circle {

@@ -70,7 +70,7 @@ const { setLocale, locales, locale } = useI18n()
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 10px;
+  padding: 2px 10px;
   color: var(--color-primary-700);
   font-size: var(--font-size-fluid-2);
 

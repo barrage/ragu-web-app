@@ -61,18 +61,17 @@ watch(allChats, () => {
       </h6>
       <ChatList :chats="groupedChats.last30Days" />
     </div>
-    <template v-if="chats">
-      <template v-if="chats.length > 0">
-        <div
-          v-for="(chats, month) in groupedChats.monthsThisYear"
-          :key="month"
-        >
-          <h6 class="chat-group-title">
-            {{ month }}
-          </h6>
-          <ChatList :chats="chats" />
-        </div>
-      </template>
+
+    <template v-if="allChats.length > 0">
+      <div
+        v-for="(chats, month) in groupedChats.monthsThisYear"
+        :key="month"
+      >
+        <h6 class="chat-group-title">
+          {{ month }}
+        </h6>
+        <ChatList :chats="chats" />
+      </div>
     </template>
 
     <div v-if="groupedChats.lastYear.length > 0">
@@ -91,7 +90,7 @@ watch(allChats, () => {
   max-height: 100%;
   overflow-y: auto;
   margin-top: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .chat-group-title {

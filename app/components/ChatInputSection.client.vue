@@ -35,7 +35,7 @@ const handleServerMessage = (data: string) => {
     else {
       if (jsonObject?.body?.chatId && jsonObject?.header === 'chat_response') {
         router.push(`c/${jsonObject?.body?.chatId}`)
-        chatStore.GET_AllChats()
+        chatStore.GET_AllChats(chatStore.userId)
       }
     }
   }

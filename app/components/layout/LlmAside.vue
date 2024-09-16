@@ -208,6 +208,13 @@ aside {
     &:hover {
       background: var(--color-primary-700);
     }
+    &::before {
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--color-primary-800)
+      );
+    }
   }
 }
 
@@ -219,6 +226,21 @@ aside {
   justify-content: center;
   margin-top: auto;
   border-radius: 8px;
+  position: relative;
+
+  &::before {
+    content: '';
+    height: 3rem;
+    width: 100%;
+    position: absolute;
+    top: -3rem;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-primary-200)
+    );
+    pointer-events: none;
+  }
 
   & .gel-help-content {
     display: flex;
@@ -226,6 +248,7 @@ aside {
     gap: 8px;
     justify-content: center;
     height: 2.5rem;
+    text-wrap: wrap;
   }
 
   &:hover {

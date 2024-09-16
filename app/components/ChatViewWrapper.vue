@@ -3,6 +3,10 @@ const chatStore = useChatStore()
 const messages = computed(() => {
   return [...(chatStore.messages || [])].reverse()
 })
+
+const selectedChat = computed(() => {
+  return chatStore.selectedChat
+})
 </script>
 
 <template>
@@ -10,7 +14,7 @@ const messages = computed(() => {
     class="chat-view-wrapper"
   >
     <div class="chat-wrapper">
-      <Chat :chat="useChatStore().selectedChat" :messages="messages" />
+      <Chat :chat="selectedChat" :messages="messages" />
     </div>
   </div>
 </template>

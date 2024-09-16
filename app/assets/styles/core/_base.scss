@@ -29,8 +29,39 @@
     background-color: var(--body-background);
     width: 100% !important;
   }
+
+  $scrollbar-width: 8px;
+  $scrollbar-track-color: trasparent;
+  $scrollbar-thumb-color: var(--color-primary-300);
+  $scrollbar-thumb-hover-color: var(--color-primary-400);
+
+  ::-webkit-scrollbar {
+    width: $scrollbar-width;
+    height: $scrollbar-width;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $scrollbar-track-color;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $scrollbar-thumb-color;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: $scrollbar-thumb-hover-color;
+  }
+
+  /* For Firefox */
+  .scrollable-element {
+    scrollbar-width: auto;
+    scrollbar-color: $scrollbar-thumb-color $scrollbar-track-color;
+  }
 }
 
 html.dark {
   --color-primary: var(--shade-0);
+  $scrollbar-thumb-color: var(--color-blue-600);
+  $scrollbar-thumb-hover-color: var(--color-primary-800);
 }

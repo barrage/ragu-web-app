@@ -61,7 +61,6 @@ onBeforeUnmount(() => {
         <BrainIcon v-if="props.message.senderType === 'assistant'" size="32" />
         <ProfileIcon v-else size="32" />
       </div>
-      {{ chatStore.isWebSocketStreaming }}
       <template v-if="props.message.senderType === 'assistant' && chatStore.isWebSocketStreaming && !props.message.content">
         <LlmLoader class="assistant-message-loader" />
       </template>

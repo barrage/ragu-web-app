@@ -11,9 +11,9 @@ export default class ChatServise extends FetchFactory {
    * @returns A promise that resolves to an array of Chat objects.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllChats(): Promise<Chat[]> {
+  async GetAllChats(userId: string): Promise<Chat[]> {
     try {
-      return await this.$fetch<Chat[]>(`${this.endpoint}/${this.userId}`)
+      return await this.$fetch<Chat[]>(`${this.endpoint}/${userId}`)
     }
     catch (error: any) {
       throw createError({
@@ -29,9 +29,9 @@ export default class ChatServise extends FetchFactory {
    * @returns A promise that resolves to an array of Message objects.
    * @throws Will throw an error if the request fails.
    */
-  async GetChatMessages(id: string): Promise<Message[]> {
+  async GetChatMessages(chatId: string): Promise<Message[]> {
     try {
-      return await this.$fetch<Message[]>(`${this.endpoint}/${id}/messages`)
+      return await this.$fetch<Message[]>(`${this.endpoint}/${chatId}/messages`)
     }
     catch (error: any) {
       throw createError({
