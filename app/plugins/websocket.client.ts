@@ -8,7 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const connectionState = ref<'closed' | 'opening' | 'open' | 'closing'>('closed')
 
   // Function to establish a WebSocket connection
-  const connect = (chatId: string | null = null) => {
+  const connect = (chatId: string | null = null, agentId: string | number) => {
     ws = null
 
     const userId = '660a7998-2a27-11ee-be56-0242ac120002'
@@ -17,7 +17,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     connectionState.value = 'opening'
 
     ws.onopen = () => {
-      console.log('WebSocket connection established')
+      console.log('WebSocket connection established', agentId)
       connectionState.value = 'open'
 
       const initialMessage = {
@@ -26,7 +26,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         payload: {
           header: 'open_chat',
           body: {
-            agentId: 1,
+            agentId: agentId || 1,
             llm: 'gpt-4',
             language: 'eng',
             ...(chatId && { chatId }), // Add chatId if it exists

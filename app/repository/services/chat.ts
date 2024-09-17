@@ -18,7 +18,7 @@ export default class ChatServise extends FetchFactory {
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch product with code ${error?.statusCode}`,
+        statusMessage: error?.message || `Failed to fetch chats with code ${error?.statusCode}`,
       })
     }
   }
@@ -36,7 +36,7 @@ export default class ChatServise extends FetchFactory {
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch product with code ${error?.statusCode}`,
+        statusMessage: error?.message || `Failed to fetch chat messages with code ${error?.statusCode}`,
       })
     }
   }

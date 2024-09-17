@@ -1,7 +1,7 @@
 import { defineNuxtPlugin } from '#app'
 import AuthService from '~/repository/services/auth'
-import ProductService from '~/repository/services/product'
 import ChatService from '~/repository/services/chat'
+import AgentService from '~/repository/services/agent'
 
 /**
  * Nuxt Plugin for initializing and configuring services and stores.
@@ -24,17 +24,16 @@ export default defineNuxtPlugin(() => {
   // Instantiate the ProductService class with the custom $fetch instance.
   // ProductService is responsible for interacting with the product-related API endpoints,
   // including fetching all products, fetching a single product by ID, etc.
-  const productService = new ProductService(baseApiFetcher)
   const chatService = new ChatService(baseApiFetcher)
+  const agentService = new AgentService(baseApiFetcher)
   const authService = new AuthService(baseApiFetcher)
-
   // Note: Additional services  can be initialized and configured here as needed.
   // This is the central place to set up other dependencies or state management layers in the application.
 
   return {
     provide: {
       api: {
-        product: productService,
+        agent: agentService,
         chat: chatService,
         auth: authService,
       },

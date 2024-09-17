@@ -96,8 +96,10 @@ onBeforeUnmount(() => {
 }
 
 .usermessage {
+  max-width: max-content;
   background-color: var(--color-primary-100);
   border-radius: 8px;
+  position: relative;
 }
 
 .assistantmessage {
@@ -121,6 +123,7 @@ onBeforeUnmount(() => {
 
 .user {
   flex-direction: row-reverse;
+  word-break: break-word;
 }
 
 .content {

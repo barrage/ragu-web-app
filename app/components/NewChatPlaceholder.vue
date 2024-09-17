@@ -3,8 +3,8 @@
 
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 
-// STATE
-const suggestions = ['How do I debug a segmentation fault in C++?', 'What\'s the best way to manage dependencies in a Node.js project?', 'Can you explain the purpose of unit testing in software development?', 'How do I handle asynchronous operations in Python?']
+const agentStore = useAgentStore()
+agentStore.GET_AllAgents()
 </script>
 
 <template>
@@ -14,15 +14,15 @@ const suggestions = ['How do I debug a segmentation fault in C++?', 'What\'s the
       height="64"
       class="ai-logo"
     />
-    <h5>BarrageGPT</h5>
+    <h5>LLM Chat</h5>
     <p class="description">
       {{ $t('description') }}
     </p>
     <div class="about-container">
       <p> {{ $t('askAbout') }}</p>
       <div class="suggestions-container">
-        <template v-for="(suggestion, index) in suggestions" :key="index">
-          <ChatSuggestionCard :text="suggestion" />
+        <template v-for="(agent, index) in agentStore.agents" :key="index">
+          <ChatAgentSelectCard :agent="agent" />
         </template>
       </div>
     </div>
@@ -34,6 +34,7 @@ const suggestions = ['How do I debug a segmentation fault in C++?', 'What\'s the
   height: 100%;
   max-width: 48rem;
   margin-inline: auto;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,7 +52,7 @@ const suggestions = ['How do I debug a segmentation fault in C++?', 'What\'s the
   border: 0.0625rem solid var(--color-primary-200);
   border-radius: 0.625rem;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
-  margin-block: 9.375rem 1.875rem;
+  margin-block: 9.375rem 1rem;
 }
 
 .description {
@@ -83,7 +84,7 @@ const suggestions = ['How do I debug a segmentation fault in C++?', 'What\'s the
 
   padding-bottom: 2rem;
   color: var(--color-primary-800);
-  & .chat-suggestion-card {
+  & .agent-select-card {
     flex: 0 0 calc(25% - 1rem);
     min-width: 180px;
   }

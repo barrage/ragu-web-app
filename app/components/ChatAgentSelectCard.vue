@@ -1,0 +1,95 @@
+<script lang="ts" setup>
+import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import type { Agent } from '~/types/agent.ts'
+
+const props = defineProps<{
+  agent: Agent | null
+}>()
+
+const agentStore = useAgentStore()
+</script>
+
+<template>
+  <div
+    class="agent-select-card"
+    :class="{ selected: agent?.id === agentStore.selectedAgent?.id }"
+    @click="agentStore.setSelectedAgent(props.agent?.id)"
+  >
+    <div class="agent-body-wrapper">
+      <ChatAgentIcon size="32" class="chat-agent-icon" />
+      <p class="agent-select-text">
+        {{ props.agent?.name }}
+      </p>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.agent-select-card {
+  border: 1px solid var(--color-primary-400);
+  padding: 0.75rem;
+  padding-bottom: 1rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  &.selected {
+    background: var(--color-primary-100);
+    border: 1px solid var(--color-primary-500);
+    & .agent-select-text {
+      color: var(--color-primary-900);
+      font-weight: var(--font-weight-medium);
+    }
+  }
+  & .agent-body-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+
+    & .chat-agent-icon {
+      min-width: max-content;
+    }
+  }
+
+  & .agent-select-text {
+    font-size: var(--font-size-desktop-3);
+    text-align: left;
+    line-height: 1.5rem;
+    color: var(--color-primary-700);
+  }
+
+  &:hover {
+    border: 1px solid var(--color-primary-500);
+    background: var(--color-primary-100);
+    cursor: pointer;
+
+    & .agent-select-text {
+      color: var(--color-primary-900);
+    }
+  }
+}
+
+.dark {
+  & .agent-select-card {
+    &.selected {
+      border: 1px solid var(--color-primary-300);
+      background: var(--color-primary-800);
+      & .agent-select-text {
+        color: var(--color-primary-0);
+        font-weight: var(--font-weight-medium);
+      }
+    }
+
+    & .agent-select-text {
+      color: var(--color-primary-200);
+    }
+
+    &:hover {
+      border: 1px solid var(--color-primary-300);
+      background: var(--color-primary-800);
+
+      & .agent-select-text {
+        color: var(--color-primary-0);
+      }
+    }
+  }
+}
+</style>

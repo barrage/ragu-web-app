@@ -71,6 +71,7 @@ onMounted(() => {
   & .chat-page-content {
     flex: 1 0 calc(90%);
     overflow-y: auto;
+    overflow-x: hidden;
     max-height: 100%;
   }
 

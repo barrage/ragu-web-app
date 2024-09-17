@@ -45,6 +45,10 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
+  const getChatById = (chatId: string) => {
+    return chats.value?.find(chat => chat.id === (chatId)) || null
+  }
+
   return {
     chats,
     messages,
@@ -55,6 +59,7 @@ export const useChatStore = defineStore('chat', () => {
     isWebSocketStreaming,
     GET_ChatMessages,
     GET_AllChats,
+    getChatById,
     userId,
   }
 })

@@ -3,6 +3,7 @@
 import ArrowUp from '~/assets/icons/svg/arrow-up.svg'
 import { useNuxtApp } from '#app'
 
+const agentStore = useAgentStore()
 const chatStore = useChatStore()
 const { $getWs, $wsConnect, $wsSendMessage, $wsConnectionState } = useNuxtApp()
 const message = ref('')
@@ -14,7 +15,7 @@ const handleServerMessage = (data: string) => {
   const assistantMessage = chatStore?.messages?.find(
     msg => msg.id === 'currentlyStreaming',
   )
-  if (chatStore.isWebSocketStreaming) {
+  if (chatStore.isWebSocketStreaming && assistantMessage) {
     if (assistantMessage && data !== '##STOP##') {
       assistantMessage.content += data
     }
@@ -24,7 +25,6 @@ const handleServerMessage = (data: string) => {
     }
   }
   else {
-    console.log('---->', data)
     const jsonObject = JSON.parse(data)
 
     if (chatId) {
@@ -41,13 +41,27 @@ const handleServerMessage = (data: string) => {
   }
 }
 
-onMounted(() => {
-  $wsConnect(chatId)
-  const ws = $getWs()
-  ws.onmessage = (event) => {
-    handleServerMessage(event.data)
+const agentId = computed(() => {
+  if (chatId) {
+    const selectedChatAgent = chatStore.getChatById(chatId)
+    return selectedChatAgent?.agentId
+  }
+  else {
+    return agentStore.selectedAgent?.id
   }
 })
+
+watch(
+  agentId,
+  () => {
+    $wsConnect(chatId, agentId.value)
+    const ws = $getWs()
+    ws.onmessage = (event) => {
+      handleServerMessage(event.data)
+    }
+  },
+  { immediate: true, deep: true },
+)
 
 const sendMessage = () => {
   chatStore.isWebSocketStreaming = true
@@ -88,6 +102,7 @@ const sendMessage = () => {
       size="large"
       placeholder="Pošalji poruku"
       :disabled="!($wsConnectionState === 'open')"
+      class="barrage-chat-input"
       @keyup.enter="sendMessage"
     >
       <template #suffix>
@@ -107,7 +122,7 @@ const sendMessage = () => {
   display: flex;
   align-items: start;
   justify-content: space-around;
-  & .barrage-input {
+  & .barrage-chat-input {
     width: 100%;
     max-width: 768px;
   }
