@@ -51,12 +51,14 @@ const popperOptions = {
             :style="{ display: !isModalVisible ? 'block' : 'none' }"
           >
             <div class="user-details">
-              <p>User</p>
+              <p class="user-title">
+                User
+              </p>
               <div class="user">
                 <p>
                   Marica Pekarica
                 </p>
-                <span class="user-avatar" @click="openModal">Change Avatar <ProfileIcon size="20" /></span>
+                <span class="user-avatar" @click="openModal">Change Avatar <ProfileIcon size="25" /></span>
               </div>
             </div>
             <div class="default-prompts">
@@ -83,11 +85,11 @@ const popperOptions = {
     </el-dropdown>
     <LlmModal
       v-if="isModalVisible"
-      type="primary"
+      size="md"
       @close="closeModal"
     >
       <template #header>
-        <h2>Change Avatar</h2>
+        Change Avatar
       </template>
       <template #content>
         <p>You can upload your avatar here </p>
@@ -120,6 +122,7 @@ const popperOptions = {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  color: var(--color-primary-800);
 
   h6 {
     margin-bottom: 0.9375rem;
@@ -130,25 +133,46 @@ const popperOptions = {
     display: flex;
     flex-direction: column;
     border-bottom: 0.0625rem solid var(--color-primary-400);
-    padding-block: 0.625rem 1.25rem;
+    padding-block: 0.625rem 1rem;
     color: var(--color-primary-100);
+    margin-bottom: 0.9375rem;
 
     .user-avatar {
       display: flex;
-      column-gap: 0.1875rem;
-      color: var(--paragraph-color);
+      column-gap: 0.5rem;
+      align-items: center;
+      color: var(--color-primary-800);
+      font-weight: 500;
       cursor: pointer;
+
+      &:hover {
+        color: var(--color-primary-500);
+        transition: 0.2s ease-in;
+
+        svg {
+          color: var(--color-primary-500);
+          transition: 0.2s ease-in;
+        }
+      }
     }
 
-    & p:first-of-type {
+    .user-title {
+      margin-bottom: 1rem;
       padding-left: 0.625rem;
-      margin-bottom: 0.9375rem;
+      font-weight: bold;
+      color: var(--color-primary-800);
     }
 
     .user {
       padding-left: 0.625rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+
+      & p:first-of-type {
+        color: var(--color-primary-800);
+        font-weight: 500;
+      }
     }
   }
 
@@ -160,6 +184,8 @@ const popperOptions = {
 
     & p:first-of-type {
       margin-bottom: 0.9375rem;
+      font-weight: bold;
+      color: var(--color-primary-800);
     }
 
     p {
@@ -180,26 +206,27 @@ const popperOptions = {
       align-items: center;
       gap: 0.375rem;
       width: max-content;
-      padding: 0.625rem;
+      padding: 0.5rem 0.625rem;
       border: 0.0625rem solid var(--color-primary-100);
       border-radius: 0.625rem;
       cursor: pointer;
       font-size: 1rem;
       background-color: var(--color-primary-300);
-      color: var(--paragraph-color);
+      color: var(--color-primary-800);
+      font-weight: 500;
 
       &:hover {
         color: var(--color-primary-500);
         transition: 0.2s ease-in;
 
         svg {
-          color: var(--color-primary-200);
+          color: var(--color-primary-500);
           transition: 0.2s ease-in;
         }
       }
 
       svg {
-        color: var(--color-gray-700);
+        color: var(--color-gray-600);
       }
     }
   }
@@ -228,27 +255,51 @@ const popperOptions = {
     }
   }
 
-  .profile-dropdown-container {
-    & .user-details,
-    .default-prompts,
-    .sources {
-      border-bottom: 0.0625rem solid var(--color-primary-600);
-    }
-    & .source {
-      border: 0.0625rem solid var(--color-primary-200);
-      background-color: var(--color-primary-200);
+  .user-details {
+    .user-avatar {
+      color: var(--color-primary-100);
 
       &:hover {
-        transition: 0.2s ease-in;
+        color: var(--color-primary-200);
 
         svg {
-          color: var(--color-primary-500);
-          transition: 0.2s ease-in;
+          color: var(--color-primary-200);
+        }
+      }
+    }
+
+    & p:first-of-type {
+      color: var(--color-primary-100);
+    }
+
+    .user {
+      & p:first-of-type {
+        color: var(--color-primary-100);
+      }
+    }
+  }
+
+  .default-prompts,
+  .sources {
+    & p:first-of-type {
+      color: var(--color-primary-100);
+    }
+
+    .prompt,
+    .source {
+      background-color: inherit;
+      color: var(--color-primary-0);
+
+      &:hover {
+        color: var(--color-primary-200);
+
+        svg {
+          color: var(--color-primary-200);
         }
       }
 
       svg {
-        color: var(--color-primary-500);
+        color: var(--color-primary-0);
       }
     }
   }

@@ -7,11 +7,7 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  type: {
-    type: String,
-    default: 'primary',
-    validator: (val: string) => ['primary', 'secondary'].includes(val),
-  },
+
   size: {
     type: String,
     default: 'lg',
@@ -25,34 +21,24 @@ defineEmits(['close'])
   <div class="modal">
     <div
       class="modal__inner"
-      :class="`modal__inner--${props.size} modal--${props.type}`"
+      :class="`modal__inner--${props.size}`"
     >
-      <div
-        v-if="props.showCloseButton"
-        class="close"
-        @click="$emit('close')"
-      >
-        <CloseIcon />
-      </div>
-      <div class="modal__header" :class="`modal__header--${props.type}`">
-        <template v-if="props.type === 'primary'">
-          <LogoIcon size="64" />
-          <h1 v-if="$slots.header">
-            <slot name="header" />
-          </h1>
-        </template>
-        <template v-else-if="props.type === 'secondary'">
-          <template v-if="props.size === 'md'">
-            <h2 v-if="$slots.header">
-              <slot name="header" />
-            </h2>
-          </template>
-          <template v-else>
-            <h5 v-if="$slots.header">
+      <div class="modal__header ">
+        <div class="modal__header--main">
+          <div class="logo-header">
+            <LogoIcon size="44" />
+            <h5>
               <slot name="header" />
             </h5>
-          </template>
-        </template>
+          </div>
+          <div
+            v-if="props.showCloseButton"
+            class="close"
+            @click="$emit('close')"
+          >
+            <CloseIcon size="28" />
+          </div>
+        </div>
       </div>
       <div v-if="$slots.content" class="modal__content">
         <slot name="content" />
@@ -73,10 +59,9 @@ defineEmits(['close'])
   left: 0;
   bottom: 0;
   background: rgba(51, 51, 51, 0.1);
-  z-index: 1000;
   backdrop-filter: blur(10px);
   overflow: auto;
-  padding-block: 56px;
+
   & .modal__inner {
     position: relative;
     box-sizing: border-box;
@@ -89,64 +74,76 @@ defineEmits(['close'])
 
     &.modal__inner--lg {
       max-width: 824px;
-      padding: 80px;
     }
     &.modal__inner--md {
       max-width: 663px;
-      padding: 60px;
+
       & .close {
-        top: 100px;
-        right: 80px;
+        top: 46px;
       }
     }
-    &.modal--secondary {
-      & .close {
-        top: 105px;
-        right: 80px;
-      }
-    }
+
     & .close {
       cursor: pointer;
-      position: absolute;
-      right: 100px;
+      object-fit: cover;
+      color: var(--color-primary-800);
 
       &:hover {
         &:deep() svg path {
           fill: var(--color-primary-500);
         }
       }
-      &:deep() svg {
-        margin: 5px auto 0;
-        display: block;
-        transform: scale(2);
-        & path {
-          transition: 0.3s;
+    }
+    & .modal__header {
+      margin-bottom: 40px;
+
+      & .modal__header--main {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        border-bottom: 0.0625rem solid var(--color-primary-400);
+        padding: 1.5rem;
+
+        .logo-header {
+          color: var(--color-primary-800);
+          display: flex;
+          align-items: center;
+          column-gap: 0.9375rem;
+
+          h5 {
+            color: var(--color-primary-800);
+          }
         }
       }
     }
-    & .modal__header {
-      padding-right: 40px;
-      &.modal__header--primary {
-        margin-bottom: 40px;
-      }
-      &.modal__header--secondary {
-        margin-bottom: 40px;
-      }
-      & svg {
-        display: block;
-        margin-bottom: 40px;
-      }
-    }
-    & .modal__footer {
-      margin-top: 44px;
-    }
+  }
+  & .modal__footer {
+    padding: 1.5rem;
+    margin-top: 44px;
+  }
+  & .modal__content {
+    padding: 1.5rem;
   }
 }
 
 .dark .modal .modal__inner {
   background-color: var(--color-primary-600);
 
+  & .modal__header {
+    .modal__header--main {
+      .logo-header {
+        color: var(--color-primary-100);
+
+        h5 {
+          color: var(--color-primary-100);
+        }
+      }
+    }
+  }
+
   & .close {
+    color: var(--color-primary-100);
     &:hover {
       &:deep() svg path {
         fill: var(--color-primary-200);

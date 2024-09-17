@@ -80,13 +80,13 @@ const popperOptions = {
     flex-direction: column;
     gap: 36px;
     width: 100%;
+    z-index: -1;
   }
 }
 
 .chat-title {
   position: sticky;
   top: 0;
-  background: inherit;
   display: flex;
   align-items: center;
   gap: 22px;
@@ -94,7 +94,7 @@ const popperOptions = {
   width: 100%;
   background: var(--color-primary-subtle);
   padding: var(--spacing-fluid-5-xs);
-  z-index: 10;
+
   & h5 {
     transition: all 0.3s ease-out;
     color: var(--color-primary-900);
