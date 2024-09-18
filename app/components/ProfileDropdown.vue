@@ -4,6 +4,7 @@ import ProfileIcon from '~/assets/icons/svg/account.svg'
 import LocaleIcon from '~/assets/icons/svg/locale.svg'
 import Accounting from '~/assets/icons/svg/tablet.svg'
 import Info from '~/assets/icons/svg/info.svg'
+import { toggleBodyOverflow } from '~/utils/useBodyOverflow'
 
 // STATE
 const prompts = ['New best practice..', 'How to add...', 'Stock status']
@@ -35,6 +36,10 @@ const popperOptions = {
     },
   ],
 }
+
+watch(isModalVisible, (newVal) => {
+  toggleBodyOverflow(newVal)
+})
 </script>
 
 <template>
@@ -83,28 +88,28 @@ const popperOptions = {
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <LlmModal
-      v-if="isModalVisible"
-      size="md"
-      @close="closeModal"
-    >
-      <template #header>
-        Change Avatar
-      </template>
-      <template #content>
-        <p>You can upload your avatar here </p>
-        <el-upload
-          class="upload-container"
-          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-          multiple
-        >
-          <el-button class="theme-switch-button " size="small">
-            Click to upload
-          </el-button>
-        </el-upload>
-      </template>
-    </LlmModal>
   </ClientOnly>
+  <LlmModal
+    v-if="isModalVisible"
+    size="md"
+    @close="closeModal"
+  >
+    <template #header>
+      Change Avatar
+    </template>
+    <template #content>
+      <p>You can upload your avatar here </p>
+      <el-upload
+        class="upload-container"
+        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+        multiple
+      >
+        <el-button class="theme-switch-button " size="small">
+          Click to upload
+        </el-button>
+      </el-upload>
+    </template>
+  </LlmModal>
 </template>
 
 <style lang="scss" scoped>

@@ -61,6 +61,7 @@ defineEmits(['close'])
   background: rgba(51, 51, 51, 0.1);
   backdrop-filter: blur(10px);
   overflow: auto;
+  z-index: 100;
 
   & .modal__inner {
     position: relative;
@@ -95,13 +96,11 @@ defineEmits(['close'])
       }
     }
     & .modal__header {
-      margin-bottom: 40px;
-
       & .modal__header--main {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 40px;
+
         border-bottom: 0.0625rem solid var(--color-primary-400);
         padding: 1.5rem;
 
