@@ -20,7 +20,7 @@ agentStore.GET_AllAgents()
     </p>
     <div class="about-container">
       <p> {{ $t('askAbout') }}</p>
-      <div class="suggestions-container">
+      <div class="suggestions-container scrollable-element">
         <template v-for="(agent, index) in agentStore.agents" :key="index">
           <ChatAgentSelectCard :agent="agent" />
         </template>
@@ -80,7 +80,8 @@ agentStore.GET_AllAgents()
   flex-wrap: nowrap;
   justify-content: space-around;
   gap: 1rem;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   padding-bottom: 2rem;
   color: var(--color-primary-800);

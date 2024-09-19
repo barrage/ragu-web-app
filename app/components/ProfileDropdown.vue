@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 // IMPORTS
 import ProfileIcon from '~/assets/icons/svg/account.svg'
-import LocaleIcon from '~/assets/icons/svg/locale.svg'
-import Accounting from '~/assets/icons/svg/tablet.svg'
-import Info from '~/assets/icons/svg/info.svg'
-import { toggleBodyOverflow } from '~/utils/useBodyOverflow'
-
+import LogoutIcon from '~/assets/icons/svg/logout.svg'
+import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import SupportIcon from '~/assets/icons/svg/support.svg'
+import SettingsIcon from '~/assets/icons/svg/settings.svg'
+import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 // STATE
-const prompts = ['New best practice..', 'How to add...', 'Stock status']
 
 const isModalVisible = ref(false)
 
@@ -37,9 +36,13 @@ const popperOptions = {
   ],
 }
 
-watch(isModalVisible, (newVal) => {
-  toggleBodyOverflow(newVal)
+const user = ref({
+  name: 'Ime',
+  surname: 'Prezime',
+  email: 'imeprezime@gmail.com',
 })
+
+const router = useRouter()
 </script>
 
 <template>
@@ -49,45 +52,86 @@ watch(isModalVisible, (newVal) => {
         <ProfileIcon size="36" />
       </el-button>
       <template #dropdown>
-        <el-dropdown-menu>
-          <div
-            class="profile-dropdown-container"
-            :class="{ hidden: isModalVisible }"
-            :style="{ display: !isModalVisible ? 'block' : 'none' }"
-          >
-            <div class="user-details">
-              <p class="user-title">
-                User
+        <el-dropdown-menu class="dropdown-menu">
+          <div class="user-profile-item">
+            <ProfileIcon size="42" />
+            <div class="username-mail-wrapper">
+              <p class="username">
+                {{ `${user.name} ${user.surname}` }}
               </p>
-              <div class="user">
-                <p>
-                  Marica Pekarica
-                </p>
-                <span class="user-avatar" @click="openModal">Change Avatar <ProfileIcon size="25" /></span>
-              </div>
-            </div>
-            <div class="default-prompts">
-              <p>Default prompts</p>
-              <div class="prompts-container">
-                <span
-                  v-for="(prompt, index) in prompts"
-                  :key="index"
-                  class="prompt"
-                >{{ prompt }}</span>
-              </div>
-            </div>
-            <div class="sources">
-              <p>Sources</p>
-              <div class="sources-container">
-                <span class="source"><LocaleIcon /> Web</span>
-                <span class="source"><Accounting /> Accounting</span>
-                <span class="source"><Info /> Information</span>
-              </div>
+              <span class="user-mail">{{ user.email }}</span>
             </div>
           </div>
+          <div class="horizontal-divider" />
+          <el-dropdown-item @click="openModal">
+            <div class="dropdown-item">
+              <ProfileIcon /> <p>View Profile</p>
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <div class="dropdown-item">
+              <SettingsIcon /> <p>Settings</p>
+            </div>
+          </el-dropdown-item>
+          <div class="horizontal-divider" />
+          <el-dropdown-item>
+            <div class="dropdown-item">
+              <ChatAgentIcon />  <p>Agents</p>
+            </div>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <div class="dropdown-item">
+              <SupportIcon /> <p>Support</p>
+            </div>
+          </el-dropdown-item>
+          <div class="horizontal-divider" />
+          <el-dropdown-item @click="router.push('/login')">
+            <div class="dropdown-item">
+              <LogoutIcon /> <p>Sign out</p>
+            </div>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
+    <!--  <LlmModal
+      v-if="isModalVisible"
+      size="md"
+      @close="closeModal"
+    >
+      <template #header>
+        Change Avatar
+      </template>
+      <template #content>
+        <p>You can upload your avatar here </p>
+        <el-upload
+          class="upload-container"
+          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+          multiple
+        >
+          <el-button class="theme-switch-button " size="small">
+            Click to upload
+          </el-button>
+        </el-upload>
+      </template>
+    </LlmModal> -->
+  </ClientOnly>
+  <ClientOnly>
+    <ElDialog
+      v-model="isModalVisible"
+      align-center
+      class="barrage-dialog--large"
+      :close-icon="CloseCircleIcon"
+    >
+      <template #header>
+        header
+      </template>
+
+      content
+
+      <template #footer>
+        footer
+      </template>
+    </ElDialog>
   </ClientOnly>
   <LlmModal
     v-if="isModalVisible"
@@ -113,6 +157,61 @@ watch(isModalVisible, (newVal) => {
 </template>
 
 <style lang="scss" scoped>
+.dropdown-menu {
+  padding: 8px 12px;
+
+  &:deep(.barrage-dropdown-menu__item) {
+    border-radius: 0.5rem;
+    padding: 6px 8px;
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+
+  & p {
+    font-size: var(--font-size-fluid-2);
+  }
+}
+
+.horizontal-divider {
+  width: 100%;
+  height: 1px;
+  margin: 4px 0px;
+  background: var(--color-primary-300);
+}
+
+.user-profile-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+  margin-right: 1rem;
+}
+
+.username-mail-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & .username {
+    margin: 0;
+    font-size: var(--font-size-fluid-2);
+    line-height: normal;
+    font-weight: var(--font-weight-bold);
+  }
+  & .user-mail {
+    margin: 0;
+    line-height: normal;
+    font-size: var(--font-size-fluid-1);
+  }
+}
+
+/* ______ */
 .profile-toggle-button {
   background: transparent;
   border: none;
@@ -120,120 +219,6 @@ watch(isModalVisible, (newVal) => {
   color: var(--color-primary-800);
   &:hover {
     background: var(--color-primary-100);
-  }
-}
-
-.profile-dropdown-container {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  color: var(--color-primary-800);
-
-  h6 {
-    margin-bottom: 0.9375rem;
-    opacity: 0.7;
-  }
-
-  .user-details {
-    display: flex;
-    flex-direction: column;
-    border-bottom: 0.0625rem solid var(--color-primary-400);
-    padding-block: 0.625rem 1rem;
-    color: var(--color-primary-100);
-    margin-bottom: 0.9375rem;
-
-    .user-avatar {
-      display: flex;
-      column-gap: 0.5rem;
-      align-items: center;
-      color: var(--color-primary-800);
-      font-weight: 500;
-      cursor: pointer;
-
-      &:hover {
-        color: var(--color-primary-500);
-        transition: 0.2s ease-in;
-
-        svg {
-          color: var(--color-primary-500);
-          transition: 0.2s ease-in;
-        }
-      }
-    }
-
-    .user-title {
-      margin-bottom: 1rem;
-      padding-left: 0.625rem;
-      font-weight: bold;
-      color: var(--color-primary-800);
-    }
-
-    .user {
-      padding-left: 0.625rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      & p:first-of-type {
-        color: var(--color-primary-800);
-        font-weight: 500;
-      }
-    }
-  }
-
-  .default-prompts,
-  .sources {
-    border-bottom: 0.0625rem solid var(--color-primary-400);
-    margin-bottom: 0.9375rem;
-    padding-block: 0.625rem 1.25rem;
-
-    & p:first-of-type {
-      margin-bottom: 0.9375rem;
-      font-weight: bold;
-      color: var(--color-primary-800);
-    }
-
-    p {
-      padding-left: 0.625rem;
-    }
-
-    .prompts-container,
-    .sources-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.625rem 0.9375rem;
-      padding-left: 0.625rem;
-    }
-
-    .prompt,
-    .source {
-      display: flex;
-      align-items: center;
-      gap: 0.375rem;
-      width: max-content;
-      padding: 0.5rem 0.625rem;
-      border: 0.0625rem solid var(--color-primary-100);
-      border-radius: 0.625rem;
-      cursor: pointer;
-      font-size: 1rem;
-      background-color: var(--color-primary-300);
-      color: var(--color-primary-800);
-      font-weight: 500;
-
-      &:hover {
-        color: var(--color-primary-500);
-        transition: 0.2s ease-in;
-
-        svg {
-          color: var(--color-primary-500);
-          transition: 0.2s ease-in;
-        }
-      }
-
-      svg {
-        color: var(--color-gray-600);
-      }
-    }
   }
 }
 
@@ -259,54 +244,8 @@ watch(isModalVisible, (newVal) => {
       background: var(--color-primary-600);
     }
   }
-
-  .user-details {
-    .user-avatar {
-      color: var(--color-primary-100);
-
-      &:hover {
-        color: var(--color-primary-200);
-
-        svg {
-          color: var(--color-primary-200);
-        }
-      }
-    }
-
-    & p:first-of-type {
-      color: var(--color-primary-100);
-    }
-
-    .user {
-      & p:first-of-type {
-        color: var(--color-primary-100);
-      }
-    }
-  }
-
-  .default-prompts,
-  .sources {
-    & p:first-of-type {
-      color: var(--color-primary-100);
-    }
-
-    .prompt,
-    .source {
-      background-color: inherit;
-      color: var(--color-primary-0);
-
-      &:hover {
-        color: var(--color-primary-200);
-
-        svg {
-          color: var(--color-primary-200);
-        }
-      }
-
-      svg {
-        color: var(--color-primary-0);
-      }
-    }
+  & .horizontal-divider {
+    background: var(--color-primary-700);
   }
 }
 </style>

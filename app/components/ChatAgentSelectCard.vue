@@ -30,10 +30,9 @@ const agentStore = useAgentStore()
   padding: 0.75rem;
   padding-bottom: 1rem;
   border-radius: 1rem;
-  transition: all 0.3s ease;
   &.selected {
     background: var(--color-primary-100);
-    border: 1px solid var(--color-primary-500);
+    border: 1.5px solid var(--color-primary-500);
     & .agent-select-text {
       color: var(--color-primary-900);
       font-weight: var(--font-weight-medium);
@@ -57,7 +56,7 @@ const agentStore = useAgentStore()
   }
 
   &:hover {
-    border: 1px solid var(--color-primary-500);
+    border: 1.5px solid var(--color-primary-500);
     background: var(--color-primary-100);
     cursor: pointer;
 
@@ -70,7 +69,7 @@ const agentStore = useAgentStore()
 .dark {
   & .agent-select-card {
     &.selected {
-      border: 1px solid var(--color-primary-300);
+      border: 1.5px solid var(--color-primary-300);
       background: var(--color-primary-800);
       & .agent-select-text {
         color: var(--color-primary-0);
@@ -83,7 +82,7 @@ const agentStore = useAgentStore()
     }
 
     &:hover {
-      border: 1px solid var(--color-primary-300);
+      border: 1.5px solid var(--color-primary-300);
       background: var(--color-primary-800);
 
       & .agent-select-text {

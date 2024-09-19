@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { groupChatsByTime } from '~/utils/groupChatsByTime'
-import type { GroupedChats } from '~/types/chat'
+import type { Chat, GroupedChats } from '~/types/chat'
 
 const chatStore = useChatStore()
 const allChats = computed(() => {
@@ -30,32 +30,36 @@ onMounted(() => {
 watch(allChats, () => {
   updateGroupedChats()
 })
+
+const isChatGroupEmpty = (chatGroup: Chat[] | null) => {
+  return chatGroup?.length ? !(chatGroup?.length > 0) : true
+}
 </script>
 
 <template>
-  <div class="chat-display">
-    <div v-if="groupedChats.today.length > 0">
+  <div class="chat-display scrollable-element">
+    <div v-if="!isChatGroupEmpty(groupedChats.today)">
       <h6 class="chat-group-title">
         Today
       </h6>
       <ChatList :chats="groupedChats.today" />
     </div>
 
-    <div v-if="groupedChats.yesterday.length > 0">
+    <div v-if="!isChatGroupEmpty(groupedChats.yesterday)">
       <h6 class="chat-group-title">
         Yesterday
       </h6>
       <ChatList :chats="groupedChats.yesterday" />
     </div>
 
-    <div v-if="groupedChats.last7Days.length > 0">
+    <div v-if="!isChatGroupEmpty(groupedChats.last7Days)">
       <h6 class="chat-group-title">
         Last 7 Days
       </h6>
       <ChatList :chats="groupedChats.last7Days" />
     </div>
 
-    <div v-if="groupedChats.last30Days.length > 0">
+    <div v-if="!isChatGroupEmpty(groupedChats.last30Days)">
       <h6 class="chat-group-title">
         Last 30 Days
       </h6>
@@ -74,7 +78,7 @@ watch(allChats, () => {
       </div>
     </template>
 
-    <div v-if="groupedChats.lastYear.length > 0">
+    <div v-if="!isChatGroupEmpty(groupedChats.lastYear)">
       <h6 class="chat-group-title">
         Last Year
       </h6>
@@ -91,6 +95,7 @@ watch(allChats, () => {
   overflow-y: auto;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+  padding-bottom: 1rem;
 }
 
 .chat-group-title {

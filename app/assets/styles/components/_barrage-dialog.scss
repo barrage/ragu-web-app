@@ -1,0 +1,258 @@
+@layer barrage-dialog {
+  :root {
+    --dialog-width: 100%;
+    --dialog-small: 31.25rem;
+    --dialog-medium: 42rem;
+    --dialog-large: 64rem;
+    --dialog-background-color: var(--color-primary-0);
+    --dialog-border-radius: var(--radius-6);
+    --dialog-box-shadow: var(--shadow-6);
+    --dialog-padding: var(--spacing-fluid-default);
+    --dialog-margin-top: 15vh;
+    --overlay-background-color: rgba(17, 17, 17, 0.15);
+    --overlay-padding: clamp(1.25rem, 0.9011rem + 1.4887vw, 2.6875rem);
+  }
+
+  html.dark {
+    .barrage-overlay {
+      --overlay-background-color: var(--color-primary-200);
+    }
+
+    .barrage-dialog {
+      --dialog-background-color: var(--color-primary-700);
+
+      &__headerbtn {
+        .barrage-icon--fill,
+        .svg-icon--fill * {
+          fill: var(--color-primary-200);
+        }
+      }
+    }
+  }
+
+  .barrage-overlay {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    backdrop-filter: blur(8px);
+    overflow: auto;
+    & .barrage-overlay-dialog {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow: auto;
+      padding: var(--overlay-padding);
+    }
+  }
+
+  .barrage-popup-parent--hidden {
+    overflow: hidden;
+  }
+
+  .barrage-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-fluid-m) 0;
+    position: relative;
+    width: var(--dialog-width);
+    background: var(--dialog-background-color);
+    border-radius: var(--dialog-border-radius);
+    box-shadow: var(--dialog-box-shadow);
+    padding: var(--dialog-padding);
+    margin: auto;
+
+    &:focus {
+      outline: 0 !important;
+    }
+
+    &__wrapper {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: 0;
+      overflow: auto;
+    }
+
+    &__header {
+      --heading-font-weight: var(--font-weight-bold);
+
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__headerbtn {
+      background: none;
+      border: none;
+      outline: 0;
+      padding: 0;
+      cursor: pointer;
+
+      .barrage-icon {
+        --icon-width: 1.5rem;
+        --icon-height: 1.5rem;
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+      .svg-icon--fill * {
+        fill: var(--color-primary-800);
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-fluid-2-xl) 0;
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    // Dialog modifiers
+    // -- Size types
+    &--small {
+      max-width: var(--dialog-small);
+    }
+
+    &--medium {
+      max-width: var(--dialog-medium);
+    }
+
+    &--large {
+      max-width: var(--dialog-large);
+    }
+
+    &--medium,
+    &--large {
+      .barrage-dialog {
+        &__body {
+          margin-block-end: var(--spacing-fluid-default);
+        }
+      }
+
+      // Modifications given by center component prop (centers text inside of dialog body)
+      &--center {
+        text-align: center;
+
+        .barrage-dialog {
+          &__body {
+            text-align: initial;
+            padding: var(--dialog-padding);
+          }
+
+          &__footer {
+            text-align: inherit;
+          }
+        }
+
+        &.is-align-center {
+          margin: auto;
+        }
+
+        &.is-fullscreen {
+          --dialog-width: 100%;
+          --dialog-margin-top: 0;
+
+          margin-bottom: 0;
+          height: 100%;
+          overflow: auto;
+        }
+
+        &.is-draggable {
+          .barrage-dialog {
+            &__header {
+              cursor: move;
+              user-select: none;
+            }
+          }
+        }
+      }
+
+      .v-modal-enter {
+        animation: v-modal-in var(--transition-duration-fast) ease;
+      }
+
+      .v-modal-leave {
+        animation: v-modal-out var(--transition-duration-fast) ease forwards;
+      }
+
+      @keyframes v-modal-in {
+        0% {
+          opacity: 0;
+        }
+      }
+      @keyframes v-modal-out {
+        100% {
+          opacity: 0;
+        }
+      }
+
+      // Dialog animations
+      .dialog-fade-enter-active {
+        animation: modal-fade-in var(--transition-duration);
+      }
+
+      .dialog-fade-enter-active .barrage-overlay-dialog {
+        animation: dialog-fade-in var(--transition-duration);
+      }
+
+      .dialog-fade-leave-active {
+        animation: modal-fade-out var(--transition-duration);
+      }
+
+      .dialog-fade-leave-active .barrage-overlay-dialog {
+        animation: dialog-fade-out var(--transition-duration);
+      }
+
+      @keyframes dialog-fade-in {
+        0% {
+          transform: translate3d(0, -20px, 0);
+          opacity: 0;
+        }
+        100% {
+          transform: translate3d(0, 0, 0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes dialog-fade-out {
+        0% {
+          transform: translate3d(0, 0, 0);
+          opacity: 1;
+        }
+        100% {
+          transform: translate3d(0, -20px, 0);
+          opacity: 0;
+        }
+      }
+
+      @keyframes modal-fade-in {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes modal-fade-out {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
