@@ -64,56 +64,65 @@ function socialSignIn(provider: OAuthProvider) {
 </script>
 
 <template>
-  <div class="login-divider" />
   <div class="social-container">
     <div class="social" @click="socialSignIn('google')">
       <GoogleLogo name="google" original />
       <p class="semi-bold">
-        Continue with Google
+        {{ $t('login.continueWith') }} Google
       </p>
     </div>
     <div class="social" @click="socialSignIn('microsoft')">
       <MicrosoftLogo name="microsoft" original />
       <p class="semi-bold">
-        Continue with Microsoft
+        {{ $t('login.continueWith') }} Microsoft
       </p>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.login-divider {
-  height: 20px;
-  position: relative;
-  background-color: var(--color-primary-400);
-  display: block;
-  height: 1px;
-  width: 100%;
-}
 .social-container {
-  margin-block: 40px;
+  margin-block: 1.75rem;
+
+  min-width: max-content;
   & .social {
     cursor: pointer;
     display: flex;
     align-items: center;
     box-sizing: border-box;
     padding: 12px 20px;
-    background-color: var(--color-primary-300);
-    box-shadow: 0px 2px 8px rgba(51, 51, 51, 0.06);
+    background-color: var(--color-primary-200);
+    border: 1px solid var(--color-primary-300);
+
     border-radius: 8px;
     transition: 0.3s;
     &:not(:last-child) {
-      margin-bottom: 40px;
+      margin-bottom: 1.25rem;
     }
     &:hover {
-      background-color: var(--color-primary-400);
+      background-color: var(--color-primary-300);
     }
     & p {
       margin-left: 20px;
+      color: var(--color-primary-900);
     }
     &.social--disabled {
       cursor: not-allowed;
       opacity: 0.8;
+    }
+  }
+}
+
+.dark {
+  & .social {
+    background: var(--color-primary-700);
+    border: 1px solid var(--color-primary-600);
+    color: var(--color-primary-0);
+    &:hover {
+      background-color: var(--color-primary-600);
+    }
+    & p {
+      color: var(--color-primary-0);
     }
   }
 }

@@ -83,12 +83,12 @@ watch(isModalVisible, (newVal) => {
             <el-dropdown-menu>
               <el-dropdown-item @click="startEditingTitle">
                 <div class="dropdown-item">
-                  <EditTextIcon /> Edit title
+                  <EditTextIcon />  {{ $t('chat.editTitle') }}
                 </div>
               </el-dropdown-item>
               <el-dropdown-item @click="openModal">
                 <div class="dropdown-item">
-                  <DeleteIcon /> Delete chat
+                  <DeleteIcon /> {{ $t('chat.deleteChat') }}
                 </div>
               </el-dropdown-item>
             </el-dropdown-menu>

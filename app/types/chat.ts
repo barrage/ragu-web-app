@@ -35,8 +35,8 @@ export interface Chat {
 export interface GroupedChats {
   today: Chat[]
   yesterday: Chat[]
-  last7Days: Chat[]
-  last30Days: Chat[]
+  last7days: Chat[]
+  last30days: Chat[]
   monthsThisYear: { [month: string]: Chat[] }
   lastYear: Chat[]
 }

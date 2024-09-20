@@ -16,10 +16,10 @@ agentStore.GET_AllAgents()
     />
     <h5>LLM Chat</h5>
     <p class="description">
-      {{ $t('description') }}
+      {{ $t('chat.newChat.description') }}
     </p>
     <div class="about-container">
-      <p> {{ $t('askAbout') }}</p>
+      <p> {{ $t('chat.newChat.choseFrom') }}</p>
       <div class="suggestions-container scrollable-element">
         <template v-for="(agent, index) in agentStore.agents" :key="index">
           <ChatAgentSelectCard :agent="agent" />

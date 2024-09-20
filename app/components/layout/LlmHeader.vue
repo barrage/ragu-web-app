@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// IMPORTS
 import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
 </script>
 

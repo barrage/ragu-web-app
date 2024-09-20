@@ -3,7 +3,6 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useScroll } from '@vueuse/core'
 
 const chatViewWrapper = ref<HTMLElement | null>(null)
-
 const smooth = ref<boolean>(true)
 const behavior = computed<'smooth' | 'auto'>(() => (smooth.value ? 'smooth' : 'auto'))
 

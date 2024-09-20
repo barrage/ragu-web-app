@@ -11,8 +11,8 @@ const allChats = computed(() => {
 const groupedChats = ref<GroupedChats>({
   today: [],
   yesterday: [],
-  last7Days: [],
-  last30Days: [],
+  last7days: [],
+  last30days: [],
   monthsThisYear: {},
   lastYear: [],
 })
@@ -40,30 +40,30 @@ const isChatGroupEmpty = (chatGroup: Chat[] | null) => {
   <div class="chat-display scrollable-element">
     <div v-if="!isChatGroupEmpty(groupedChats.today)">
       <h6 class="chat-group-title">
-        Today
+        {{ $t('timePeriod.today') }}
       </h6>
       <ChatList :chats="groupedChats.today" />
     </div>
 
     <div v-if="!isChatGroupEmpty(groupedChats.yesterday)">
       <h6 class="chat-group-title">
-        Yesterday
+        {{ $t('timePeriod.yesterday') }}
       </h6>
       <ChatList :chats="groupedChats.yesterday" />
     </div>
 
-    <div v-if="!isChatGroupEmpty(groupedChats.last7Days)">
+    <div v-if="!isChatGroupEmpty(groupedChats.last7days)">
       <h6 class="chat-group-title">
-        Last 7 Days
+        {{ $t('timePeriod.last7days') }}
       </h6>
-      <ChatList :chats="groupedChats.last7Days" />
+      <ChatList :chats="groupedChats.last7days" />
     </div>
 
-    <div v-if="!isChatGroupEmpty(groupedChats.last30Days)">
+    <div v-if="!isChatGroupEmpty(groupedChats.last30days)">
       <h6 class="chat-group-title">
-        Last 30 Days
+        {{ $t('timePeriod.last30days') }}
       </h6>
-      <ChatList :chats="groupedChats.last30Days" />
+      <ChatList :chats="groupedChats.last30days" />
     </div>
 
     <template v-if="allChats.length > 0">
@@ -80,7 +80,7 @@ const isChatGroupEmpty = (chatGroup: Chat[] | null) => {
 
     <div v-if="!isChatGroupEmpty(groupedChats.lastYear)">
       <h6 class="chat-group-title">
-        Last Year
+        {{ $t('timePeriod.lastYear') }}
       </h6>
       <ChatList :chats="groupedChats.lastYear" />
     </div>

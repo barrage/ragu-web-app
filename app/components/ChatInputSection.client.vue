@@ -100,7 +100,7 @@ const sendMessage = () => {
     <el-input
       v-model="message"
       size="large"
-      placeholder="Pošalji poruku"
+      :placeholder="$t('chat.chatInputPlaceholder')"
       :disabled="!($wsConnectionState === 'open')"
       class="barrage-chat-input"
       @keyup.enter="sendMessage"

@@ -28,13 +28,13 @@ const router = useRouter()
         :class="{ opened: !navigationStore.isSidebarCollapsed }"
         @click="router.push('/')"
       >
-        <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('newChat') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
+        <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
       </a>
 
       <ChatsDisplay v-if="!navigationStore.isSidebarCollapsed" />
       <div class="get-help-section">
         <div class="gel-help-content" @click="router.push(`/login`)">
-          <span v-if="!navigationStore.isSidebarCollapsed">Get help </span> <QuestionIcon size="24" />
+          <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('getHelp.title') }}</span> <QuestionIcon size="24" />
         </div>
       </div>
     </nav>

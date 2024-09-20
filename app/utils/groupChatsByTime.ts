@@ -4,8 +4,8 @@ export function groupChatsByTime(chats: Chat[]): GroupedChats {
   const groupedChats: GroupedChats = {
     today: [],
     yesterday: [],
-    last7Days: [],
-    last30Days: [],
+    last7days: [],
+    last30days: [],
     monthsThisYear: {},
     lastYear: [],
   }
@@ -35,10 +35,10 @@ export function groupChatsByTime(chats: Chat[]): GroupedChats {
       addChatToGroup(chat, 'yesterday')
     }
     else if (isWithinDays(chatDate, 7)) {
-      addChatToGroup(chat, 'last7Days')
+      addChatToGroup(chat, 'last7days')
     }
     else if (isWithinDays(chatDate, 30)) {
-      addChatToGroup(chat, 'last30Days')
+      addChatToGroup(chat, 'last30days')
     }
     else if (chatDate.getFullYear() === today.getFullYear()) {
       const monthName = chatDate.toLocaleString('default', { month: 'long' })

@@ -12,15 +12,17 @@
 
 <style lang="scss" scoped>
 .login-layout {
-  background: radial-gradient(
-    circle,
-    var(--color-lightmode-0) 0%,
-    var(--color-primary-subtle) 100%
-  );
+  background: var(--color-primary-subtle);
 }
 .main-wrapper {
   max-width: 120rem;
   margin-inline: auto;
   height: 100vh;
+}
+
+.dark {
+  .login-layout {
+    background: var(--color-primary-900);
+  }
 }
 </style>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // IMPORTS
+import AdminIcon from '~/assets/icons/svg/admin.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import LogoutIcon from '~/assets/icons/svg/logout.svg'
 import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
@@ -43,6 +44,11 @@ const user = ref({
 })
 
 const router = useRouter()
+
+const isAdminPanel = ref(false)
+const switchPanel = () => {
+  isAdminPanel.value = !isAdminPanel.value
+}
 </script>
 
 <template>
@@ -63,31 +69,37 @@ const router = useRouter()
             </div>
           </div>
           <div class="horizontal-divider" />
+          <el-dropdown-item @click="switchPanel()">
+            <div class="dropdown-item">
+              <AdminIcon /> <p>  {{ isAdminPanel ? $t('profileDropdown.switchToAdmin') : $t('profileDropdown.switchToUser') }}</p>
+            </div>
+          </el-dropdown-item>
+          <div class="horizontal-divider" />
           <el-dropdown-item @click="openModal">
             <div class="dropdown-item">
-              <ProfileIcon /> <p>View Profile</p>
+              <ProfileIcon /> <p> {{ $t('profileDropdown.profile') }}</p>
             </div>
           </el-dropdown-item>
           <el-dropdown-item>
             <div class="dropdown-item">
-              <SettingsIcon /> <p>Settings</p>
+              <SettingsIcon /> <p>{{ $t('profileDropdown.settings') }}</p>
             </div>
           </el-dropdown-item>
           <div class="horizontal-divider" />
           <el-dropdown-item>
             <div class="dropdown-item">
-              <ChatAgentIcon />  <p>Agents</p>
+              <ChatAgentIcon />  <p>{{ $t('profileDropdown.agents') }}</p>
             </div>
           </el-dropdown-item>
           <el-dropdown-item>
             <div class="dropdown-item">
-              <SupportIcon /> <p>Support</p>
+              <SupportIcon /> <p>{{ $t('profileDropdown.support') }}</p>
             </div>
           </el-dropdown-item>
           <div class="horizontal-divider" />
           <el-dropdown-item @click="router.push('/login')">
             <div class="dropdown-item">
-              <LogoutIcon /> <p>Sign out</p>
+              <LogoutIcon /> <p>{{ $t('profileDropdown.signOut') }}</p>
             </div>
           </el-dropdown-item>
         </el-dropdown-menu>
