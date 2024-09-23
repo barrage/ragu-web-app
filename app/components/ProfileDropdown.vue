@@ -44,10 +44,16 @@ const user = ref({
 })
 
 const router = useRouter()
-
-const isAdminPanel = ref(false)
+const oAuthStore = useAuthStore()
 const switchPanel = () => {
-  isAdminPanel.value = !isAdminPanel.value
+  if (oAuthStore.selectedRole === 'user') {
+    router.push('/admin')
+    oAuthStore.selectedRole = 'admin'
+  }
+  else {
+    router.push('/')
+    oAuthStore.selectedRole = 'user'
+  }
 }
 </script>
 
@@ -71,7 +77,7 @@ const switchPanel = () => {
           <div class="horizontal-divider" />
           <el-dropdown-item @click="switchPanel()">
             <div class="dropdown-item">
-              <AdminIcon /> <p>  {{ isAdminPanel ? $t('profileDropdown.switchToAdmin') : $t('profileDropdown.switchToUser') }}</p>
+              <AdminIcon /> <p>  {{ oAuthStore.selectedRole === 'user' ? $t('profileDropdown.switchToAdmin') : $t('profileDropdown.switchToUser') }}</p>
             </div>
           </el-dropdown-item>
           <div class="horizontal-divider" />

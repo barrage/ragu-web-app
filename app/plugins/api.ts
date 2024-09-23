@@ -2,6 +2,7 @@ import { defineNuxtPlugin } from '#app'
 import AuthService from '~/repository/services/auth'
 import ChatService from '~/repository/services/chat'
 import AgentService from '~/repository/services/agent'
+import UsersService from '~/repository/services/users'
 
 /**
  * Nuxt Plugin for initializing and configuring services and stores.
@@ -26,6 +27,7 @@ export default defineNuxtPlugin(() => {
   // including fetching all products, fetching a single product by ID, etc.
   const chatService = new ChatService(baseApiFetcher)
   const agentService = new AgentService(baseApiFetcher)
+  const usersService = new UsersService(baseApiFetcher)
   const authService = new AuthService(baseApiFetcher)
   // Note: Additional services  can be initialized and configured here as needed.
   // This is the central place to set up other dependencies or state management layers in the application.
@@ -36,6 +38,7 @@ export default defineNuxtPlugin(() => {
         agent: agentService,
         chat: chatService,
         auth: authService,
+        user: usersService,
       },
     },
   }

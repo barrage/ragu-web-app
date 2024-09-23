@@ -5,6 +5,9 @@ const messages = computed(() => chatStore.messages)
 onMounted(() => {
   chatStore.messages = []
 })
+definePageMeta({
+  layout: 'default',
+})
 </script>
 
 <template>

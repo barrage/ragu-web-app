@@ -1,16 +1,18 @@
 <script lang="ts" setup>
+import PanelIcon from '~/assets/icons/svg/panel.svg'
 import LayoutIcon from '~/assets/icons/svg/layout.svg'
 import QuestionIcon from '~/assets/icons/svg/question.svg'
-import ProfileIcon from '~/assets/icons/svg/account.svg'
+import TeamIcon from '~/assets/icons/svg/team.svg'
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
-import ReportsIcon from '~/assets/icons/svg/document-details-icon.svg'
+import DocumentIcon from '~/assets/icons/svg/document.svg'
+import CollectionIcon from '~/assets/icons/svg/collection.svg'
 
 interface MenuItem {
   label: string
   link: string
   icon: string
 }
-
+const navigationStore = useNavigationStore()
 interface MenuCategory {
   title: string
   category: 'menu' | 'options'
@@ -21,33 +23,39 @@ const router = useRouter()
 
 const menuList: MenuCategory[] = ([
   {
-    title: 'Menu',
+    title: '',
     category: 'menu',
     items: [
       {
         label: 'Dashboard',
-        link: '/dashboard',
+        link: '/admin',
         icon: LayoutIcon,
       },
       {
         label: 'Users',
-        link: '/users',
-        icon: ProfileIcon,
+        link: '/admin/users',
+        icon: TeamIcon,
       },
       {
         label: 'Agents',
-        link: '/agents',
+        link: '/admin/agents',
         icon: AgentIcon,
       },
       {
-        label: 'Reports',
-        link: '/reports',
-        icon: ReportsIcon,
+        label: 'Documents',
+        link: '/admin/documents',
+        icon: DocumentIcon,
+      },
+      {
+        label: 'Collections',
+        link: '/admin/collections',
+        icon: CollectionIcon,
       },
     ],
 
   },
-  {
+
+  /* {
     title: 'Options',
     category: 'options',
     items: [
@@ -76,7 +84,7 @@ const menuList: MenuCategory[] = ([
       },
     ],
 
-  },
+  }, */
 
 ])
 
@@ -91,19 +99,20 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
   <aside>
     <nav class="navigation-container">
       <div class="sidebar-head-title">
-        <p class="typing-effect">
+        <p v-if="!navigationStore.isAdminSidebarCollapsed" class="typing-effect">
           Admin Panel
         </p>
+        <el-button class="toggle-btn" @click="navigationStore.toggleAdminSidebar">
+          <PanelIcon size="24" />
+        </el-button>
       </div>
       <div class="horizontal-divider" />
 
-      <!-- Item List Section -->
-
       <div class="feature-container scrollable-element">
         <div v-for="menuItem in menuList" :key="menuItem.category">
-          <h6 class="feature-group-title">
+          <p v-if="menuItem.title" class="feature-group-title">
             {{ menuItem.title }}
-          </h6>
+          </p>
           <div class="feature-list">
             <div
               v-for="(item, index2) in menuItem.items"
@@ -112,12 +121,12 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
               :class="{ selected: selectedFeature?.label === item.label && selectedFeature?.category === menuItem.category }"
               @click="selectFeature(item, menuItem.category)"
             >
-              <div class="item-content">
-                <component :is="item.icon" size="26" />
-                <p class="item-title">
+              <NuxtLink class="item-content" :to="item.link">
+                <component :is="item.icon" size="20" />
+                <p v-if="!navigationStore.isAdminSidebarCollapsed" class="item-title">
                   {{ item.label }}
                 </p>
-              </div>
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -153,18 +162,41 @@ aside {
     height: 100%;
   }
 }
+
+.toggle-btn {
+  width: max-content;
+  height: fit-content;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 10px;
+  margin-left: auto;
+  border-radius: 8px;
+  color: var(--color-primary-900);
+  transition: all 0.3s ease-in;
+
+  &:hover {
+    background: var(--color-primary-300);
+  }
+}
 .feature-list {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding-left: 10px;
-  margin-bottom: 42px;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-collapsed {
+  & .toggle-btn {
+    transform: scaleX(-1);
+  }
 }
 
 .feature-item {
   display: flex;
   align-items: center;
   padding: 4px 10px;
+  min-height: 40px;
   transition:
     background-color 0.2s ease-out,
     color 0.2s ease-out;
@@ -177,7 +209,6 @@ aside {
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
-    font-weight: bold;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
   }
@@ -201,7 +232,7 @@ aside {
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-  font-size: var(--font-size-desktop-3);
+  font-size: var(--font-size-desktop-2);
   color: var(--color-primary-800);
   transition: color 0.3s ease;
 }
@@ -209,7 +240,6 @@ aside {
 .typing-effect {
   white-space: nowrap;
   overflow: hidden;
-  font-size: var(--font-size-desktop-4);
   border-right: 2px solid black;
   display: inline-block;
   max-width: max-content;
@@ -251,13 +281,6 @@ aside {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   padding-bottom: 1rem;
-}
-
-.feature-group-title {
-  color: var(--color-primary-800);
-  font-weight: bold;
-  font-size: var(--font-size-desktop-4);
-  padding: 12px 0px 18px 0px;
 }
 
 .get-help-section {
@@ -305,6 +328,12 @@ aside {
     border: 1px solid var(--color-primary-700);
     box-shadow: 0 4px 8px var(--color-primary-700);
     color: var(--color-primary-100);
+  }
+  .toggle-btn {
+    color: var(--color-primary-100);
+    &:hover {
+      background: var(--color-primary-700);
+    }
   }
   .feature-item {
     color: var(--color-primary-100);
@@ -355,6 +384,18 @@ aside {
         var(--color-primary-800)
       );
     }
+  }
+}
+
+.feature-group-title {
+  color: var(--color-primary-800);
+  font-weight: 700;
+  font-size: var(--font-size-desktop-1);
+  padding: 12px 0px 8px 0px;
+}
+.dark {
+  & .feature-group-title {
+    color: var(--color-primary-200);
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // IMPORTS
-import LayoutIcon from '~/assets/icons/svg/layout.svg'
+import PanelIcon from '~/assets/icons/svg/panel.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import AddIcon from '~/assets/icons/svg/add.svg'
 import QuestionIcon from '~/assets/icons/svg/question.svg'
@@ -18,7 +18,7 @@ const router = useRouter()
           {{ $t('chatDock') }}
         </p>
         <el-button class="toggle-btn" @click="navigationStore.toggleSidebar">
-          <LayoutIcon />
+          <PanelIcon size="24" />
         </el-button>
       </div>
       <div class="horizontal-divider" />
@@ -113,15 +113,20 @@ aside {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    padding: 0.8rem;
+    padding: 4px 10px;
     margin-left: auto;
-
     border-radius: 8px;
     color: var(--color-primary-900);
+    transition: all 0.3s ease-in;
 
     &:hover {
       background: var(--color-primary-300);
     }
+  }
+}
+.sidebar-collapsed {
+  & .toggle-btn {
+    transform: scaleX(-1);
   }
 }
 .dark {

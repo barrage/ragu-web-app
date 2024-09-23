@@ -5,8 +5,8 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="admin-dashboard-page-container">
-    <h4>Dashboard</h4>
+  <div class="admin-documents-page-container">
+    <h4>Documents</h4>
   </div>
 </template>
 

@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null) // Stores authenticated user info
   const fakeUserId = ref('660a7998-2a27-11ee-be56-0242ac120002')
   const isAuthenticated = computed(() => !!user.value) // Checks if the user is authenticated
+  const selectedRole = ref<'user' | 'admin'>('user')
   const error = ref<string | null>(null) // Stores error messages
 
   // ACTIONS
@@ -67,6 +68,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     fakeUserId,
     error,
+    selectedRole,
     loginWithOAuth,
     handleOAuthLogin,
 

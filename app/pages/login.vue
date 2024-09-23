@@ -119,7 +119,7 @@ errorHandler(error, true)
   color: var(--color-primary-800);
   font-weight: 600;
   animation:
-    typing 1.5s steps(30, end) forwards,
+    typing 1.75s steps(30, end) forwards,
     blink 0.75s step-end infinite;
 }
 

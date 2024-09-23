@@ -8,7 +8,7 @@ chatStore.GET_AllChats(chatStore.userId)
 </script>
 
 <template>
-  <div class="main-layout" :class="{ 'sidebar-collapsed': navigationStore.isSidebarCollapsed }">
+  <div class="main-layout" :class="{ 'sidebar-collapsed': navigationStore.isAdminSidebarCollapsed }">
     <LlmHeader />
     <LlmAdminAside />
     <main class="main">
