@@ -18,7 +18,9 @@ const props = defineProps<{
 .users-list-container {
   display: flex;
   flex-direction: column;
-  gap: 1.375rem;
-  max-width: max-content;
+  gap: 0.5rem;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
 }
 </style>

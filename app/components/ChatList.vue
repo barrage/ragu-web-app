@@ -23,10 +23,22 @@ const chatId = computed(() => {
       :class="{ selected: chatId === chat.id }"
       @click="router.push(`/c/${chat.id}`)"
     >
-      <div class="chat-content">
-        <span class="chat-title">{{ chat.title || 'Chat' }}</span>
-        <MoreIcon class="more-icon icon-container" size="26" />
-      </div>
+      <ElTooltip
+        :show-after="1500"
+        :enterable="false"
+        placement="right"
+      >
+        <template #content>
+          <div class="chat-tooltip">
+            <span>{{ chat.title }}</span>
+            <span>{{ formatDate(chat.createdAt) }}</span>
+          </div>
+        </template>
+        <div class="chat-content">
+          <span class="chat-title">{{ chat.title || 'Chat' }}</span>
+          <MoreIcon class="more-icon icon-container" size="26" />
+        </div>
+      </ElTooltip>
     </div>
   </div>
 </template>
@@ -79,7 +91,10 @@ const chatId = computed(() => {
     }
   }
 }
-
+.chat-tooltip {
+  display: flex;
+  flex-direction: column;
+}
 .chat-content {
   display: flex;
   align-items: center;

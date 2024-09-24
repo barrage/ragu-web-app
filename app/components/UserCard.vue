@@ -5,21 +5,47 @@ import type { User } from '~/types/users'
 const props = defineProps<{
   user: User | null
 }>()
+
+const userData = computed(() => {
+  return {
+    name: props.user?.name || 'Unknown name',
+    phone: props.user?.phone || 'Missing phone nubmer',
+    updatedAt: props.user?.updatedAt ? formatDate(props.user?.updatedAt) : 'Unknown date',
+    createdAt: props.user?.createdAt ? formatDate(props.user?.createdAt) : 'Unknown date',
+  }
+})
 </script>
 
 <template>
   <div class="user-card">
     <div class="username-title-wrapper">
-      <ProfileIcon size="36" />
-      <h6>
-        {{ props.user?.name }}
-      </h6>
+      <ProfileIcon size="34" />
+      <p class="username">
+        {{ userData.name }}
+      </p>
     </div>
 
     <div class="user-informations">
-      <LabelDescriptionItem label="Phone:" :description="props.user?.phone" />
-      <LabelDescriptionItem label="Updated at:" :description="props.user?.updatedAt" />
-      <LabelDescriptionItem label="Created at:" :description="props.user?.createdAt" />
+      <LabelDescriptionItem
+        label="Phone"
+        :description="userData?.phone"
+        reversed
+      />
+      <LabelDescriptionItem
+        label="Updated at"
+        :description="userData.updatedAt "
+        reversed
+      />
+      <LabelDescriptionItem
+        label="Created at"
+        :description="userData.createdAt"
+        reversed
+      />
+      <LabelDescriptionItem
+        label="Role"
+        description="Member"
+        reversed
+      />
     </div>
   </div>
 </template>
@@ -27,32 +53,47 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .user-card {
   display: flex;
-  flex-direction: column;
-  gap: 32px;
-  border: 1px solid var(--color-primary-400);
-  box-shadow: 0 0.25rem 0.5rem var(--color-primary-200);
+  flex-direction: row;
+
+  gap: 16px;
+  border: 0.5px solid var(--color-primary-300);
+  background: var(--color-primary-100);
+  box-shadow: 0 0.2rem 0.3rem var(--color-primary-200);
   border-radius: 16px;
   padding: 1rem;
 
   .username-title-wrapper {
     display: flex;
+    align-items: center;
     gap: 0.6rem;
-    color: var(--color-primary-800);
+    color: var(--color-primary-900);
+    min-width: max-content;
+    margin-right: 32px;
+    & .username {
+      color: var(--color-primary-900);
+    }
   }
 
   & .user-informations {
     display: flex;
-    gap: 33px;
+    gap: 2.5rem;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: 1.5rem;
   }
 }
 
 .dark {
   .user-card {
-    border: 1px solid var(--color-primary-500);
+    border: 0.5px solid var(--color-primary-500);
+    background: var(--color-primary-800);
     box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
   }
   .username-title-wrapper {
     color: var(--color-primary-0);
+    & .username {
+      color: var(--color-primary-0);
+    }
   }
 }
 </style>

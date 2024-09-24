@@ -2,11 +2,12 @@
 const props = defineProps<{
   label: string | undefined
   description: string | undefined
+  reversed?: boolean
 }>()
 </script>
 
 <template>
-  <div class="label-description-item-container">
+  <div class="label-description-item-container" :class="{ reversed }">
     <span class="label">
       {{ props.label }}
     </span>
@@ -21,6 +22,10 @@ const props = defineProps<{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  &.reversed {
+    flex-direction: column-reverse;
+  }
 
   & .label {
     font-size: var(--font-size-fluid-2);

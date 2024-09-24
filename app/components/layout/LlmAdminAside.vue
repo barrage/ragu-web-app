@@ -32,8 +32,8 @@ const menuList: MenuCategory[] = ([
         icon: LayoutIcon,
       },
       {
-        label: 'Users',
-        link: '/admin/users',
+        label: 'Members',
+        link: '/admin/members',
         icon: TeamIcon,
       },
       {
@@ -114,20 +114,21 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
             {{ menuItem.title }}
           </p>
           <div class="feature-list">
-            <div
+            <NuxtLink
               v-for="(item, index2) in menuItem.items"
               :key="index2"
+              :to="item.link"
               class="feature-item"
               :class="{ selected: selectedFeature?.label === item.label && selectedFeature?.category === menuItem.category }"
               @click="selectFeature(item, menuItem.category)"
             >
-              <NuxtLink class="item-content" :to="item.link">
+              <div class="item-content">
                 <component :is="item.icon" size="20" />
                 <p v-if="!navigationStore.isAdminSidebarCollapsed" class="item-title">
                   {{ item.label }}
                 </p>
-              </NuxtLink>
-            </div>
+              </div>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -135,7 +136,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
       <!-- Get Help Section -->
       <div class="get-help-section">
         <div class="gel-help-content" @click="router.push(`/login`)">
-          <span>Get help </span> <QuestionIcon size="24" />
+          <span v-if="!navigationStore.isAdminSidebarCollapsed">Get help </span> <QuestionIcon size="24" />
         </div>
       </div>
     </nav>
@@ -182,7 +183,7 @@ aside {
 .feature-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
   margin-bottom: 0.5rem;
 }
 
@@ -313,7 +314,7 @@ aside {
     gap: 8px;
     justify-content: center;
     height: 2.5rem;
-    text-wrap: wrap;
+    text-wrap: nowrap;
   }
 
   &:hover {

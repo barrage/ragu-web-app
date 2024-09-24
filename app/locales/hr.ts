@@ -35,7 +35,7 @@ export default {
 
     newChat: {
       title: 'Novi chat',
-      description: 'Izaberite agenta s kojim želite započeti chat',
+      description: 'Izaberite agenta s kojim želite započeti razgovor',
       choseFrom: 'Agenti:',
     },
   },

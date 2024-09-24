@@ -17,19 +17,30 @@ const router = useRouter()
         <p v-if="!navigationStore.isSidebarCollapsed" class="typing-effect">
           {{ $t('chatDock') }}
         </p>
-        <el-button class="toggle-btn" @click="navigationStore.toggleSidebar">
-          <PanelIcon size="24" />
-        </el-button>
+        <ElTooltip
+          content="Toggle sidebar"
+          :show-after="700"
+          :enterable="false"
+        >
+          <el-button class="toggle-btn" @click="navigationStore.toggleSidebar">
+            <PanelIcon size="24" />
+          </el-button>
+        </ElTooltip>
       </div>
       <div class="horizontal-divider" />
-
-      <a
-        class="new-chat"
-        :class="{ opened: !navigationStore.isSidebarCollapsed }"
-        @click="router.push('/')"
+      <ElTooltip
+        content="Pokreni novi chat"
+        :show-after="1500"
+        :enterable="false"
       >
-        <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
-      </a>
+        <a
+          class="new-chat"
+          :class="{ opened: !navigationStore.isSidebarCollapsed }"
+          @click="router.push('/')"
+        >
+          <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
+        </a>
+      </ElTooltip>
 
       <ChatsDisplay v-if="!navigationStore.isSidebarCollapsed" />
       <div class="get-help-section">

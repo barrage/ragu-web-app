@@ -1,19 +1,19 @@
 @layer barrage-button {
   :root {
     --button-width: max-content;
-    --button-min-height: clamp(2.875rem, 2.8447rem + 0.1294vw, 3rem);
+    --button-min-height: clamp(0.875rem, 0.8447rem + 0.1294vw, 1rem);
     --button-font-size: var(--font-size-base);
     --button-font-weight: var(--font-weight-medium);
-    --button-text-color: var(--color-gray-900);
-    --button-primary-text-color: var(--color-gray-50);
+    --button-text-color: var(--color-primary-900);
+    --button-primary-text-color: var(--color-primary-50);
     --button-letter-spacing: clamp(
       0.0075rem,
       0.0073rem + 0.001vw,
       0.0084375rem
     );
     --button-icon-gap: var(--spacing-fluid-2-xs);
-    --button-background-color: var(--color-gray-50);
-    --button-border-color: var(--color-gray-500);
+    --button-background-color: var(--color-primary-50);
+    --button-border-color: var(--color-primary-500);
     --button-border-radius: var(--radius-4);
     --button-padding-block: var(--spacing-desktop-2-xs);
     --button-padding-inline: var(--spacing-fluid-s);
@@ -21,85 +21,85 @@
 
   html.dark {
     .barrage-button {
-      --button-text-color: var(--color-gray-50);
-      --button-background-color: var(--color-gray-900);
+      --button-text-color: var(--color-primary-0);
+      --button-background-color: var(--color-primary-800);
 
       &:hover {
-        --button-background-color: var(--color-gray-800);
-        --button-border-color: var(--color-gray-500);
+        --button-background-color: var(--color-primary-700);
+        --button-border-color: var(--color-primary-500);
       }
 
       &:active {
-        --button-background-color: var(--color-gray-700);
-        --button-border-color: var(--color-gray-100);
+        --button-background-color: var(--color-primary-600);
+        --button-border-color: var(--color-primary-100);
       }
 
       &:disabled {
-        --button-text-color: var(--color-gray-700);
-        --button-background-color: var(--color-gray-900);
-        --button-border-color: var(--color-gray-700);
+        --button-text-color: var(--color-primary-700);
+        --button-background-color: var(--color-primary-900);
+        --button-border-color: var(--color-primary-700);
       }
 
       // Button type
       &--primary {
-        --button-text-color: var(--color-green-0);
-        --button-background-color: var(--color-green-200);
-        --button-border-color: var(--color-green-800);
+        --button-text-color: var(--color-primary-0);
+        --button-background-color: var(--color-primary-900);
+        --button-border-color: var(--color-primary-600);
 
         &:hover {
-          --button-text-color: var(--color-green-500);
-          --button-background-color: var(--color-green-100);
-          --button-border-color: var(--color-green-200);
+          --button-text-color: var(--color-primary-100);
+          --button-background-color: var(--color-primary-700);
+          --button-border-color: var(--color-primary-400);
         }
 
         &:active {
-          --button-text-color: var(--color-gray-100);
-          --button-background-color: var(--color-green-300);
-          --button-border-color: var(--color-green-400);
+          --button-text-color: var(--color-primary-100);
+          --button-background-color: var(--color-primary-300);
+          --button-border-color: var(--color-primary-400);
         }
 
         &:disabled {
-          --button-text-color: var(--color-gray-700);
-          --button-background-color: var(--color-gray-900);
-          --button-border-color: var(--color-green-300);
+          --button-text-color: var(--color-primary-700);
+          --button-background-color: var(--color-primary-900);
+          --button-border-color: var(--color-primary-300);
         }
       }
 
       // Button type SUCCESS
       &--success {
-        --button-text-color: var(--color-green-0);
-        --button-background-color: var(--color-green-500);
-        --button-border-color: var(--color-green-800);
+        --button-text-color: var(--color-primary-0);
+        --button-background-color: var(--color-primary-500);
+        --button-border-color: var(--color-primary-800);
 
         &:hover {
-          --button-text-color: var(--color-green-600);
-          --button-background-color: var(--color-green-200);
-          --button-border-color: var(--color-green-800);
+          --button-text-color: var(--color-primary-600);
+          --button-background-color: var(--color-primary-200);
+          --button-border-color: var(--color-primary-800);
         }
 
         &:active {
-          --button-text-color: var(--color-gray-100);
-          --button-background-color: var(--color-green-300);
-          --button-border-color: var(--color-green-400);
+          --button-text-color: var(--color-primary-100);
+          --button-background-color: var(--color-primary-300);
+          --button-border-color: var(--color-primary-400);
         }
 
         &:disabled {
-          --button-text-color: var(--color-gray-700);
-          --button-background-color: var(--color-gray-900);
-          --button-border-color: var(--color-green-600);
+          --button-text-color: var(--color-primary-700);
+          --button-background-color: var(--color-primary-900);
+          --button-border-color: var(--color-primary-600);
         }
       }
 
       // Button type DANGER
       &--danger {
-        --button-text-color: var(--color-red-0);
-        --button-background-color: var(--color-red-500);
+        --button-text-color: var(--color-primary-0);
+        --button-background-color: var(--color-red-900);
         --button-border-color: var(--color-red-800);
 
         &:hover {
-          --button-text-color: var(--color-red-600);
-          --button-background-color: var(--color-red-200);
-          --button-border-color: var(--color-red-800);
+          --button-text-color: var(--color-red-0);
+          --button-background-color: var(--color-red-800);
+          --button-border-color: var(--color-red-700);
         }
 
         &:active {
@@ -109,8 +109,8 @@
         }
 
         &:disabled {
-          --button-text-color: var(--color-gray-700);
-          --button-background-color: var(--color-gray-900);
+          --button-text-color: var(--color-primary-700);
+          --button-background-color: var(--color-primary-900);
           --button-border-color: var(--color-red-300);
         }
       }
@@ -134,8 +134,8 @@
         }
 
         &:disabled {
-          --button-text-color: var(--color-gray-700);
-          --button-background-color: var(--color-gray-900);
+          --button-text-color: var(--color-primary-700);
+          --button-background-color: var(--color-primary-900);
           --button-border-color: var(--color-yellow-300);
         }
       }
@@ -159,8 +159,8 @@
         }
 
         &:disabled {
-          --button-text-color: var(--color-gray-700);
-          --button-background-color: var(--color-gray-900);
+          --button-text-color: var(--color-primary-700);
+          --button-background-color: var(--color-primary-900);
           --button-border-color: var(--color-blue-300);
         }
       }
@@ -202,21 +202,21 @@
     }
 
     &:hover {
-      --button-background-color: var(--color-gray-200);
-      --button-border-color: var(--color-gray-700);
+      --button-background-color: var(--color-primary-200);
+      --button-border-color: var(--color-primary-700);
     }
 
     &:active {
-      --button-background-color: var(--color-gray-400);
-      --button-border-color: var(--color-gray-700);
+      --button-background-color: var(--color-primary-400);
+      --button-border-color: var(--color-primary-700);
 
       outline: none;
     }
 
     &:disabled {
-      --button-text-color: var(--color-gray-500);
-      --button-background-color: var(--color-gray-50);
-      --button-border-color: var(--color-gray-300);
+      --button-text-color: var(--color-primary-500);
+      --button-background-color: var(--color-primary-50);
+      --button-border-color: var(--color-primary-300);
 
       cursor: not-allowed;
     }
@@ -261,51 +261,51 @@
 
     // Button type
     &--primary {
-      --button-text-color: var(--color-green-0);
-      --button-background-color: var(--color-green-100);
-      --button-border-color: var(--color-green-800);
+      --button-text-color: var(--color-primary-900);
+      --button-background-color: var(--color-primary-300);
+      --button-border-color: var(--color-primary-500);
 
       &:hover {
-        --button-text-color: var(--color-green-500);
-        --button-background-color: var(--color-green-100);
-        --button-border-color: var(--color-green-200);
+        --button-text-color: var(--color-primary-800);
+        --button-background-color: var(--color-primary-200);
+        --button-border-color: var(--color-primary-400);
       }
 
       &:active {
-        --button-text-color: var(--color-gray-100);
-        --button-background-color: var(--color-green-300);
-        --button-border-color: var(--color-green-400);
+        --button-text-color: var(--color-primary-100);
+        --button-background-color: var(--color-primary-300);
+        --button-border-color: var(--color-primary-400);
       }
 
       &:disabled {
-        --button-text-color: var(--color-gray-500);
-        --button-background-color: var(--color-gray-300);
-        --button-border-color: var(--color-green-300);
+        --button-text-color: var(--color-primary-500);
+        --button-background-color: var(--color-primary-300);
+        --button-border-color: var(--color-primary-300);
       }
     }
 
     // Button type SUCCESS
     &--success {
-      --button-text-color: var(--color-green-0);
-      --button-background-color: var(--color-green-200);
-      --button-border-color: var(--color-green-800);
+      --button-text-color: var(--color-primary-0);
+      --button-background-color: var(--color-primary-200);
+      --button-border-color: var(--color-primary-800);
 
       &:hover {
-        --button-text-color: var(--color-green-600);
-        --button-background-color: var(--color-green-200);
-        --button-border-color: var(--color-green-800);
+        --button-text-color: var(--color-primary-600);
+        --button-background-color: var(--color-primary-200);
+        --button-border-color: var(--color-primary-800);
       }
 
       &:active {
-        --button-text-color: var(--color-gray-100);
-        --button-background-color: var(--color-green-300);
-        --button-border-color: var(--color-green-400);
+        --button-text-color: var(--color-primary-100);
+        --button-background-color: var(--color-primary-300);
+        --button-border-color: var(--color-primary-400);
       }
 
       &:disabled {
-        --button-text-color: var(--color-gray-500);
-        --button-background-color: var(--color-gray-300);
-        --button-border-color: var(--color-green-600);
+        --button-text-color: var(--color-primary-500);
+        --button-background-color: var(--color-primary-300);
+        --button-border-color: var(--color-primary-600);
       }
     }
 
@@ -328,8 +328,8 @@
       }
 
       &:disabled {
-        --button-text-color: var(--color-gray-500);
-        --button-background-color: var(--color-gray-300);
+        --button-text-color: var(--color-primary-500);
+        --button-background-color: var(--color-primary-300);
         --button-border-color: var(--color-red-300);
       }
     }
@@ -353,8 +353,8 @@
       }
 
       &:disabled {
-        --button-text-color: var(--color-gray-500);
-        --button-background-color: var(--color-gray-300);
+        --button-text-color: var(--color-primary-500);
+        --button-background-color: var(--color-primary-300);
         --button-border-color: var(--color-yellow-300);
       }
     }
@@ -378,8 +378,8 @@
       }
 
       &:disabled {
-        --button-text-color: var(--color-gray-500);
-        --button-background-color: var(--color-gray-300);
+        --button-text-color: var(--color-primary-500);
+        --button-background-color: var(--color-primary-300);
         --button-border-color: var(--color-blue-300);
       }
     }
