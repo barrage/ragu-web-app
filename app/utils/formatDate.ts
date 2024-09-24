@@ -1,6 +1,4 @@
-// https://vueuse.org/shared/useDateFormat/
 import { useDateFormat } from '@vueuse/core'
-import { useI18n } from 'vue-i18n' // Assuming project is using vue-i18n
 
 /**
  * Formats a date based on a provided format string and optional locale.
@@ -16,7 +14,8 @@ export function formatDate(
   format: string = 'DD/MMMM/YYYY',
   locales?: string,
 ): ComputedRef<string> {
-  const { locale } = useI18n()
+  const { $i18n } = useNuxtApp()
+  const locale = $i18n.locale
 
   return useDateFormat(date, format, {
     locales: locales || locale.value,

@@ -1,0 +1,243 @@
+@layer barrage-textarea {
+  :root {
+    --textarea-width: 100%;
+    --textarea-height: max-content !important;
+    --textarea-color: var(--color-primary-700);
+    --textarea-error-color: var(--color-red-500);
+    --textarea-background-color: transparent;
+    --textarea-border: var(--border-global-2);
+    --textarea-border-color: var(--color-primary-500);
+    --textarea-border-radius: var(--radius-4);
+    --textarea-icon-size: 1rem;
+    --textarea-padding-block-start: var(--spacing-mobile-m);
+    --textarea-padding-block-end: var(--spacing-mobile-7-xs);
+    --textarea-padding-inline-start: clamp(
+      0.625rem,
+      0.5947rem + 0.1294vw,
+      0.75rem
+    );
+    --textarea-padding-inline-end: clamp(
+      0.625rem,
+      0.5947rem + 0.1294vw,
+      0.75rem
+    );
+    --textarea-suffix-position-right: clamp(
+      0.625rem,
+      0.5947rem + 0.1294vw,
+      0.75rem
+    );
+    --textarea-word-count-font-size: var(--font-size-fluid-1);
+    --textarea-word-count-color: var(--color-primary-600);
+  }
+
+  html.dark {
+    .barrage-textarea {
+      --textarea-color: var(--color-primary-50);
+      &__inner {
+        --textarea-border-color: var(--color-primary-600);
+
+        &:focus {
+          --textarea-border-color: var(--color-primary-400);
+        }
+
+        &:not(:placeholder-shown) {
+          --textarea-border-color: var(--color-primary-400);
+        }
+
+        &:disabled {
+          --textarea-color: var(--color-primary-700);
+          --textarea-border-color: var(--color-primary-700);
+        }
+      }
+    }
+
+    .barrage-textarea__count {
+      --textarea-word-count-color: var(--color-primary-400);
+    }
+
+    .is-error {
+      color: var(--color-primary-200);
+    }
+  }
+
+  // Input styles
+  // ------------------------------------
+  .barrage-textarea {
+    &__wrapper {
+      position: relative;
+    }
+
+    // Actual input and his states
+    &__inner {
+      width: var(--textarea-width);
+      height: var(--textarea-height);
+      color: var(--textarea-color);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background-color: var(--textarea-background-color);
+      border: none;
+      border-bottom: var(--textarea-border);
+      border-color: var(--textarea-border-color);
+      padding-block: var(--textarea-padding-block-start)
+        var(--textarea-padding-block-end);
+      padding-inline: var(--textarea-padding-inline-start)
+        var(--textarea-padding-inline-end);
+
+      outline-color: transparent;
+      outline-offset: var(--outline-global-offset);
+      transition:
+        outline-color 0.3s ease-out,
+        border-color 0.3s ease-out,
+        color 0.3s ease-out;
+      margin-bottom: var(--spacing-fluid-2-xs);
+
+      &::placeholder {
+        color: var(--textarea-color);
+        opacity: 0.2;
+        transition: opacity 0.4s ease-out;
+      }
+
+      &:focus {
+        --textarea-border-color: var(--color-primary-600);
+        outline: none;
+
+        &::placeholder {
+          opacity: 1;
+        }
+      }
+
+      &:not(:placeholder-shown) {
+        --textarea-border-color: var(--color-primary-600);
+      }
+
+      &:disabled {
+        --textarea-color: var(--color-primary-300);
+        --textarea-border-color: var(--color-primary-300);
+
+        cursor: not-allowed;
+      }
+    }
+
+    // Prefix, suffix and icon control
+    &__prefix,
+    &__suffix {
+      position: absolute;
+      top: 50%;
+      width: var(--textarea-icon-size);
+      height: var(--textarea-icon-size);
+      transform: translateY(-50%);
+      transform-origin: center;
+      transition: transform 0.3s ease-out;
+      cursor: pointer;
+      z-index: 1;
+
+      // Change global icon size (it reflects on select, datepicker that use the input component)
+      .barrage-icon {
+        --icon-width: var(--textarea-icon-size);
+        --icon-height: var(--textarea-icon-size);
+
+        will-change: transform;
+        transition: transform 0.3s ease-out;
+        transform-origin: center;
+
+        &.is-reverse {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    &__prefix {
+      left: var(--textarea-suffix-position-right);
+      transform: translateY(-40%) translateX(-50%);
+      --textarea-padding-inline-start: 40px;
+    }
+    &__suffix {
+      right: var(--textarea-suffix-position-right);
+    }
+  }
+
+  // Word count global styles
+  .barrage-textarea__count {
+    display: block;
+    font-size: var(--textarea-word-count-font-size);
+    color: var(--textarea-word-count-color);
+    transition: color 0.3s ease-out;
+  }
+
+  // Position of wordd count inner element due to parent nesting inside form item
+  .barrage-textarea__count-inner {
+    display: flex;
+    width: max-content;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    will-change: transform;
+    transform: translate(
+      var(--spacing-desktop-2-xs),
+      var(--spacing-desktop-xl)
+    );
+  }
+
+  .is-error {
+    color: var(--color-primary-800);
+
+    .barrage-form-item__error {
+      animation: move-up-with-opacity 2s ease forwards;
+      z-index: 1;
+    }
+
+    .barrage-textarea__wrapper {
+      animation: input-error-move-up 2s ease forwards;
+      z-index: 2;
+    }
+
+    & .barrage-form-item__label {
+      color: var(--textarea-error-color);
+    }
+  }
+
+  .barrage-form-item {
+    width: 250px;
+    &:first-of-type {
+      margin-bottom: var(--spacing-fluid-);
+    }
+    &:nth-of-type(2) {
+      margin-bottom: var(--spacing-fluid-m);
+    }
+
+    &__content {
+      margin-top: var(--spacing-fluid-4-xs);
+    }
+
+    &__label {
+      color: var(--color-primary-700);
+    }
+
+    .barrage-textarea--prefix {
+      color: var(--textarea-color);
+      .barrage-input__inner {
+        padding-left: 28px;
+      }
+    }
+  }
+
+  @keyframes input-error-move-up {
+    0% {
+      transform: translateY(25px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes move-up-with-opacity {
+    0% {
+      opacity: 0;
+      transform: translateY(1px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

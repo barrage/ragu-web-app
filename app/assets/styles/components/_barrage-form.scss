@@ -1,0 +1,235 @@
+@layer barrage-form {
+  :root {
+    --form: 100%;
+    --form-display: flex;
+    --form-direction: initial;
+    --form-wrap: wrap;
+    --form-item-grow: 1;
+    --form-gap: var(--spacing-fluid-l);
+    --form-item-height: clamp(4.125rem, 4.0947rem + 0.1294vw, 4.25rem);
+    --form-item-label-color: var(--primary-color-600);
+  }
+
+  html.dark {
+    .barrage-form-item {
+      &__label {
+        --form-item-label-color: var(--color-primary-400);
+      }
+
+      &__error {
+        --input-error-color: var(--color-primary-400);
+      }
+
+      &.is-error {
+        .barrage-input__inner {
+          --input-border-color: var(--color-primary-400);
+        }
+      }
+
+      &:has(.barrage-input__inner:disabled) {
+        .barrage-form-item__label {
+          --form-item-label-color: var(--color-primary-700);
+        }
+      }
+
+      &:has(
+          .barrage-input__wrapper.is-focus,
+          .barrage-input__inner:not(:placeholder-shown)
+        ) {
+        .barrage-input__count {
+          --input-word-count-color: var(--color-primary-50);
+        }
+      }
+
+      &:has(
+          .barrage-textarea__inner:focus,
+          .barrage-textarea__inner:not(:placeholder-shown)
+        ) {
+        .barrage-input__count {
+          --input-word-count-color: var(--color-primary-50);
+        }
+      }
+    }
+
+    .barrage-textarea__inner {
+      color: var(--color-primary-200);
+    }
+  }
+
+  .barrage-form {
+    max-width: var(--form);
+    display: var(--form-display);
+    flex-wrap: var(--form-wrap);
+    flex-direction: var(--form-direction);
+    gap: var(--form-gap);
+
+    // default item arrangement of items inside of form due to space consistency
+    > * {
+      flex-grow: var(--form-item-grow);
+    }
+  }
+
+  // Form Item styles
+  // ------------------------------------
+  // Form item uses min-height due to correct info message position
+  .barrage-form-item {
+    width: 100%;
+    flex-grow: 1;
+    position: relative;
+    min-height: var(--form-item-height);
+    transition: all 0.3s ease-out;
+
+    .barrage-form-item__content {
+      position: relative;
+    }
+
+    // Form item label
+    &__label {
+      color: var(--form-item-label-color);
+    }
+
+    // Form item error element
+    &__error {
+      display: flex;
+      align-items: center;
+      gap: 0 var(--spacing-mobile-7-xs);
+      font-size: var(--font-size-fluid-1);
+      font-weight: bold;
+      letter-spacing: 0.0054rem;
+      color: var(--color-primary-600);
+
+      position: absolute;
+      top: 100%;
+      left: 0;
+      will-change: transform;
+      transform: translateY(0.25rem);
+
+      &::before {
+        content: '!';
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1rem;
+        height: 1rem;
+        border: var(--border-global-1);
+        border-color: var(--primary-red-500);
+        border-radius: var(--radius-circle);
+        transition: var(--transition-all);
+      }
+    }
+
+    // Validation error state on form item due to style manipulation
+    &.is-error {
+      .barrage-input__inner:not(:disabled) {
+        --input-border-color: var(--color-primary-500);
+      }
+
+      .barrage-input__inner {
+        &::placeholder {
+          opacity: 1;
+        }
+      }
+
+      .barrage-form-item__label {
+        transform: translate(
+          calc(var(--input-padding-inline-start) + 0.0625rem),
+          var(--spacing-mobile-5-xs)
+        );
+      }
+    }
+
+    // Label manipulation on input state change
+    &:has(
+        .barrage-input__wrapper.is-focus,
+        .barrage-input__inner:not(:placeholder-shown)
+      ) {
+      .barrage-form-item__label {
+        transform: translate(
+          calc(var(--input-padding-inline-start) + 0.0625rem),
+          var(--spacing-mobile-5-xs)
+        );
+      }
+
+      .barrage-input__count {
+        --input-word-count-color: var(--color-primary-900);
+      }
+    }
+
+    &:has(.barrage-input__inner:disabled) {
+      .barrage-form-item__label {
+        --form-item-label-color: var(--color-primary-300);
+      }
+
+      .barrage-input__count {
+        --input-word-count-color: var(--color-primary-300);
+      }
+    }
+
+    // Label manipulation on textarea state change
+    &:has(
+        .barrage-textarea__inner:focus,
+        .barrage-textarea__inner:not(:placeholder-shown)
+      ) {
+      .barrage-form-item__label {
+        transform: translate(
+          calc(var(--input-padding-inline-start) + 0.0625rem),
+          var(--spacing-mobile-5-xs)
+        );
+      }
+    }
+
+    // Datepicker state manipulation and icon behaviour
+    &:has(.barrage-date-editor .barrage-input__inner:not(:placeholder-shown)) {
+      .barrage-input__wrapper {
+        &:hover {
+          .barrage-input__prefix {
+            opacity: 0;
+          }
+
+          .barrage-input__suffix-inner {
+            opacity: 1;
+          }
+        }
+      }
+
+      // Multi select state and label manipulation due to collapse-tags option
+      &:has(.multi-select .barrage-select__tags:not(:empty)) {
+        .barrage-form-item__label {
+          visibility: hidden;
+          opacity: 0;
+          transition: all 0.2s ease-out;
+        }
+
+        .barrage-input__inner {
+          --input-border-color: var(--color-primary-200);
+        }
+      }
+
+      &:has(.multi-select .barrage-select__tags:empty) {
+        .barrage-form-item__label {
+          visibility: visible;
+          opacity: 1;
+          transition: all 0.2s ease-out;
+        }
+      }
+
+      // Form item class that should wrap buttons that correspond with the actual form
+      &.actions {
+        width: 100%;
+        min-height: max-content;
+        margin-bottom: 0;
+
+        .barrage-form-item__content {
+          display: flex;
+          column-gap: 1.875rem;
+          align-items: flex-start;
+        }
+      }
+
+      // Remove margin from the last form item in form
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}

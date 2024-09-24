@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { type Component, defineProps, defineSlots, withDefaults } from 'vue'
-
 import LoadingIcon from '~/assets/icons/svg/loading.svg'
 
 interface Slots {
