@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.API_BASE_URL,
+      apiChunkerUrl: process.env.API_CHUCKER_URL,
     },
   },
   app: {

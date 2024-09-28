@@ -20,6 +20,7 @@ interface MenuCategory {
 }
 
 const router = useRouter()
+const route = useRoute()
 
 const menuList: MenuCategory[] = ([
   {
@@ -119,7 +120,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
               :key="index2"
               :to="item.link"
               class="feature-item"
-              :class="{ selected: selectedFeature?.label === item.label && selectedFeature?.category === menuItem.category }"
+              :class="{ selected: item.link === route.path }"
               @click="selectFeature(item, menuItem.category)"
             >
               <div class="item-content">

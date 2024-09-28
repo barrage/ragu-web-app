@@ -15,8 +15,8 @@
     --button-background-color: var(--color-primary-50);
     --button-border-color: var(--color-primary-500);
     --button-border-radius: var(--radius-4);
-    --button-padding-block: var(--spacing-desktop-2-xs);
-    --button-padding-inline: var(--spacing-fluid-s);
+    --button-padding-block: var(--spacing-fluid-4-xs);
+    --button-padding-inline: var(--spacing-fluid-3-xs);
   }
 
   html.dark {
@@ -202,7 +202,7 @@
     }
 
     &:hover {
-      --button-background-color: var(--color-primary-200);
+      --button-background-color: var(--color-primary-100);
       --button-border-color: var(--color-primary-700);
     }
 
@@ -262,12 +262,12 @@
     // Button type
     &--primary {
       --button-text-color: var(--color-primary-900);
-      --button-background-color: var(--color-primary-300);
+      --button-background-color: var(--color-primary-200);
       --button-border-color: var(--color-primary-500);
 
       &:hover {
         --button-text-color: var(--color-primary-800);
-        --button-background-color: var(--color-primary-200);
+        --button-background-color: var(--color-primary-100);
         --button-border-color: var(--color-primary-400);
       }
 

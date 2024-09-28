@@ -3,6 +3,7 @@ import AuthService from '~/repository/services/auth'
 import ChatService from '~/repository/services/chat'
 import AgentService from '~/repository/services/agent'
 import UsersService from '~/repository/services/users'
+import DocumentService from '~/repository/services/document'
 
 /**
  * Nuxt Plugin for initializing and configuring services and stores.
@@ -21,6 +22,9 @@ export default defineNuxtPlugin(() => {
   const baseApiFetcher = $fetch.create({
     baseURL: config.public.apiBaseUrl,
   })
+  const baseApiChucker = $fetch.create({
+    baseURL: config.public.apiChunkerUrl,
+  })
 
   // Instantiate the ProductService class with the custom $fetch instance.
   // ProductService is responsible for interacting with the product-related API endpoints,
@@ -29,6 +33,7 @@ export default defineNuxtPlugin(() => {
   const agentService = new AgentService(baseApiFetcher)
   const usersService = new UsersService(baseApiFetcher)
   const authService = new AuthService(baseApiFetcher)
+  const documentService = new DocumentService(baseApiChucker)
   // Note: Additional services  can be initialized and configured here as needed.
   // This is the central place to set up other dependencies or state management layers in the application.
 
@@ -39,6 +44,7 @@ export default defineNuxtPlugin(() => {
         chat: chatService,
         auth: authService,
         user: usersService,
+        document: documentService,
       },
     },
   }

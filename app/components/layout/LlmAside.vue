@@ -21,6 +21,7 @@ const router = useRouter()
           content="Toggle sidebar"
           :show-after="700"
           :enterable="false"
+          placement="right"
         >
           <el-button class="toggle-btn" @click="navigationStore.toggleSidebar">
             <PanelIcon size="24" />
@@ -32,6 +33,7 @@ const router = useRouter()
         content="Pokreni novi chat"
         :show-after="1500"
         :enterable="false"
+        placement="right"
       >
         <a
           class="new-chat"

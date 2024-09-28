@@ -65,7 +65,7 @@
     border-radius: var(--dialog-border-radius);
     box-shadow: var(--dialog-box-shadow);
     padding: var(--dialog-padding);
-    margin: auto;
+    margin: 0 auto auto auto;
 
     &:focus {
       outline: 0 !important;

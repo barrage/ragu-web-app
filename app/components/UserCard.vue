@@ -57,8 +57,8 @@ const userData = computed(() => {
 
   gap: 16px;
   border: 0.5px solid var(--color-primary-300);
-  background: var(--color-primary-100);
-  box-shadow: 0 0.2rem 0.3rem var(--color-primary-200);
+  background: var(--color-primary-0);
+  box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
   border-radius: 16px;
   padding: 1rem;
 
@@ -85,8 +85,8 @@ const userData = computed(() => {
 
 .dark {
   .user-card {
-    border: 0.5px solid var(--color-primary-500);
-    background: var(--color-primary-800);
+    border: 0.5px solid var(--color-primary-600);
+    background: var(--color-primary-900);
     box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
   }
   .username-title-wrapper {

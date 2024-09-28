@@ -47,7 +47,7 @@ chatStore.GET_AllChats(chatStore.userId)
   grid-area: main;
   background-color: transparent;
   padding: 0.75rem;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 @keyframes fadeIn {

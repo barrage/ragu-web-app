@@ -32,8 +32,7 @@ usersStore.GET_AllUsers()
 
 <style lang="scss" scoped>
 .admin-users-page-container {
-  padding-left: 2rem;
-  padding-top: 1rem;
+  padding: 1rem 2rem;
 
   & .page-title {
     margin-bottom: 0.5rem;

@@ -63,13 +63,13 @@ watch(
       }
 
       &.selected {
-        background: var(--color-primary-200);
+        background: var(--color-primary-100);
       }
     }
   }
   & .selected-agent-wrapper {
     flex: 0 0 calc(50%);
-    background: var(--color-primary-200);
+    background: var(--color-primary-100);
     padding: 1.5rem;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
