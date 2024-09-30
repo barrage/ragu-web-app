@@ -1,0 +1,69 @@
+@layer barrage-input-number {
+  :root {
+    --barrage-input-number-increase-position: 0;
+    --barrage-input-number-decrease-position: 3rem;
+
+    --barrage-input-number-button-border-color: var(--barrage-color-gray-200);
+    --barrage-input-number-button-background: var(--color-red-800);
+  }
+
+  html.dark {
+    --barrage-input-number-button-border-color: var(--color-red-800);
+    --barrage-input-number-button-background: var(--color-red-800);
+  }
+
+  .barrage-input-number {
+    position: relative;
+
+    &__decrease,
+    &__increase {
+      position: absolute;
+      width: 3rem;
+      height: 1.25rem;
+      right: 0;
+      bottom: var(--spacing-mobile-4-xs);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 1;
+      cursor: pointer;
+
+      .barrage-icon {
+        display: none;
+      }
+
+      /* &::before {
+        content: '';
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: var(--barrage-radius-2);
+        background-color: transparent;
+        transition: background-color 0.3s ease-out;
+      } */
+
+      &:hover {
+        &::before {
+          background-color: var(--barrage-input-number-button-background);
+        }
+      }
+    }
+
+    /*  &__increase {
+      &::before {
+        background-position: center;
+      }
+    } */
+
+    &__decrease {
+      right: var(--barrage-input-number-decrease-position);
+      border-right: var(--barrage-border-global-1);
+      border-color: var(--barrage-input-number-button-border-color);
+
+      &::before {
+        background-position: center;
+      }
+    }
+  }
+}

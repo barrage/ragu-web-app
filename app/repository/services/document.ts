@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { Document, DocumentListResponse, ParseDocumentBody } from '~/types/document.ts'
+import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document.ts'
 
 export default class DocumentServise extends FetchFactory {
   // Endpoint for documents-related API requests.
@@ -83,24 +83,74 @@ export default class DocumentServise extends FetchFactory {
   /**
    * Parses a document.
    * @param id - The id of the document.
-   * @param parseDocumentBody - The parseDocumentBody object containig parametares for parser.
+   * @param ParserConfig - The ParserConfig object containig parametares for parser.
    * @returns A promise that resolves to the string response.
    * @throws Will throw an error if the upload fails.
    */
-  async PostParseDocument(id: string, parseDocumentBody?: ParseDocumentBody): Promise<string> {
+  async PostParseDocumentPreview(id: string, ParserConfig?: ParserConfig): Promise<string> {
     try {
       return await this.$fetch<string>(`${this.endpoint}/${id}/parse/preview`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: parseDocumentBody,
+        body: ParserConfig,
       })
     }
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to upload document with code ${error?.statusCode}`,
+        statusMessage: error?.message || `Failed to parse document with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Chunk a document.
+   * @param id - The id of the document.
+   * @param ChunkerConfig - The ChunkerConfig object containig parametares for chunker.
+   * @returns A promise that resolves to the string response.
+   * @throws Will throw an error if the upload fails.
+   */
+  async PostChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<string> {
+    try {
+      return await this.$fetch<string>(`${this.endpoint}/${id}/chunk/preview`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: chunkDocumentBody,
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to chunk document with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Update document config.
+   * @param id - The id of the document.
+   * @param documentConfig - The documentConfig object containig parametares for parser and chunker.
+   * @returns A promise that resolves to the string response.
+   * @throws Will throw an error if the upload fails.
+   */
+  async PutUpdateDocumentConfig(id: string, documentConfig?: DocumentConfig): Promise<string> {
+    try {
+      return await this.$fetch<string>(`${this.endpoint}/${id}/config`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: documentConfig,
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to chunk document with code ${error?.statusCode}`,
       })
     }
   }

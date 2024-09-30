@@ -38,7 +38,7 @@ export default {
   },
   agents: {
     titles: {
-      mainTitle: 'List Of All Agents',
+      mainTitle: 'Agents',
       details: 'Agent Details',
       description: 'Overview where you can easily view, edit, and manage your agents details and statuses in one place.',
       edit: 'Edit Agent',

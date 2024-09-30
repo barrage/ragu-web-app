@@ -98,50 +98,52 @@ watch(() => agentStore.selectedAgent, (newAgent) => {
     </h4>
 
     <!-- EDIT FORM -->
-    <ElForm
-      v-if="agentStore.editMode"
-      ref="formRef"
-      class="container grid"
-      :model="form"
-      :rules="rules"
-    >
-      <ElFormItem
-        class="group"
-        :label="t('agents.labels.name')"
-        prop="name"
+    <template v-if="agentStore.editMode">
+      <ElForm
+
+        ref="formRef"
+        class="container grid"
+        :model="form"
+        :rules="rules"
       >
-        <ElInput v-model="form.name" />
-      </ElFormItem>
-      <ElFormItem
-        class="group context"
-        :label="t('agents.labels.context')"
-        prop="context"
-      >
-        <ElInput
-          v-model="form.context"
-          type="textarea"
-          :maxlength="maxContext"
-          show-word-limit
-          resize="vertical"
-        />
-      </ElFormItem>
-      <ElFormItem class="actions">
-        <ElButton
-          type="primary"
-          class="left-button"
-          @click="cancelUpdate"
+        <ElFormItem
+          class="group"
+          :label="t('agents.labels.name')"
+          prop="name"
         >
-          {{ t('agents.buttons.cancel') }}
-        </ElButton>
-        <ElButton
-          type="primary"
-          :loading="updateStatus === 'pending'"
-          @click="updateAgent(formRef)"
+          <ElInput v-model="form.name" />
+        </ElFormItem>
+        <ElFormItem
+          class="group context"
+          :label="t('agents.labels.context')"
+          prop="context"
         >
-          {{ t('agents.buttons.save') }}
-        </ElButton>
-      </ElFormItem>
-    </ElForm>
+          <ElInput
+            v-model="form.context"
+            type="textarea"
+            :maxlength="maxContext"
+            show-word-limit
+            resize="vertical"
+          />
+        </ElFormItem>
+        <ElFormItem class="actions">
+          <ElButton
+            type="primary"
+            class="left-button"
+            @click="cancelUpdate"
+          >
+            {{ t('agents.buttons.cancel') }}
+          </ElButton>
+          <ElButton
+            type="primary"
+            :loading="updateStatus === 'pending'"
+            @click="updateAgent(formRef)"
+          >
+            {{ t('agents.buttons.save') }}
+          </ElButton>
+        </ElFormItem>
+      </ElForm>
+    </template>
 
     <!-- INFO DISPLAY -->
     <div v-else class="container grid">

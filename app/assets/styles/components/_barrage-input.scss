@@ -4,7 +4,7 @@
     --input-height: max-content !important;
     --input-color: var(--color-primary-900);
     --input-error-color: var(--color-red-500);
-    --input-background-color: var(--color-primary-100);
+    --input-background-color: var(--color-primary-300);
     --input-border: var(--border-global-1);
     --input-border-color: var(--color-primary-500);
     --input-border-radius: var(--radius-4);
@@ -193,13 +193,6 @@
   }
 
   .barrage-form-item {
-    &:first-of-type {
-      margin-bottom: var(--spacing-fluid-);
-    }
-    &:nth-of-type(2) {
-      margin-bottom: var(--spacing-fluid-m);
-    }
-
     &__content {
       margin-top: var(--spacing-fluid-4-xs);
     }

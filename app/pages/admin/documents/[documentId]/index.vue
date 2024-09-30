@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import ParseDocument from '~/assets/icons/svg/parse-document.svg'
 import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
+import DataSettingsIcon from '~/assets/icons/svg/data-settings.svg'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -37,24 +37,13 @@ const closeDeleteDialog = () => {
 }
 
 function deleteDocument() {
-  documentStore.DELETE_Document(selectedDocument?.value?.id)
-  documentStore.GET_AllDocuments()
+  if (selectedDocument.value?.id) {
+    documentStore.DELETE_Document(selectedDocument.value.id)
+    documentStore.GET_AllDocuments()
+  }
 }
 
 /* Parse document */
-const isParserDialogVisible = ref(false)
-const openParserDialog = () => {
-  isParserDialogVisible.value = true
-}
-
-const closeParserDialog = () => {
-  isParserDialogVisible.value = false
-}
-
-function parseDocument() {
-  documentStore.POST_ParseDocument(props.document.id)
-  documentStore.GET_AllDocuments()
-}
 
 /* Chunk document */
 const isChunkDialogVisible = ref(false)
@@ -67,9 +56,18 @@ const closeChunkDialog = () => {
 }
 
 function chunkDocument() {
-  documentStore.POST_ParseDocument(props.document.id)
-  documentStore.GET_AllDocuments()
+  if (selectedDocument.value?.id) {
+    documentStore.POST_ParseDocumentPreview(selectedDocument.value.id)
+    documentStore.GET_AllDocuments()
+  }
 }
+
+onUnmounted(() => {
+  documentStore.parserPreview = null
+})
+
+/* Tabs */
+const activeTab = ref('parser')
 </script>
 
 <template>
@@ -102,58 +100,51 @@ function chunkDocument() {
         :description="selectedDocument?.hash"
         :can-copy="true"
       />
+      <ElTooltip
+        content="Delete document"
+        :show-after="100"
+        class="barrage-tabs--primary"
+        :enterable="false"
+        placement="top"
+      >
+        <el-button @click="openDeleteDialog">
+          <DeleteIcon />
+        </el-button>
+      </ElTooltip>
     </div>
-    <h6>Config</h6>
-    <pre>{{ selectedDocument }}</pre>
-    <ElTooltip
-      content="Parse document"
-      :show-after="100"
-      :enterable="false"
-      placement="top"
+
+    <!-- ------------ -->
+
+    <!-- ------------ -->
+    <div class="icon-title-container">
+      <DataSettingsIcon size="42" />
+      <h5>Configuration</h5>
+    </div>
+    <ElTabs
+      v-model="activeTab"
+      class="barrage-tabs--primary"
     >
-      <el-button @click="openParserDialog">
-        <ParseDocument />
-      </el-button>
-    </ElTooltip>
-    <ElTooltip
-      content="Chunk document"
-      :show-after="100"
-      :enterable="false"
-      placement="top"
-    >
-      <el-button>
-        <ChunkDocument />
-      </el-button>
-    </ElTooltip>
-    <ElTooltip
-      content="Delete document"
-      :show-after="100"
-      :enterable="false"
-      placement="top"
-    >
-      <el-button @click="openDeleteDialog">
-        <DeleteIcon />
-      </el-button>
-    </ElTooltip>
-    <el-dialog
-      v-model="isParserDialogVisible"
-      :before-close="closeParserDialog"
-      :close-icon="CloseCircleIcon"
-      class="barrage-dialog--medium"
-    >
-      <template #header>
-        <h6>Parse Document</h6>
-      </template>
-      <p>Selected document: <b>{{ props.document.name }}</b> </p>
-      <template #footer>
-        <el-button @click="closeParserDialog">
-          Close
-        </el-button>
-        <el-button @click="parseDocument">
-          Parse
-        </el-button>
-      </template>
-    </el-dialog>
+      <ElTabPane label="Parser" name="parser">
+        <template v-if="activeTab === 'parser'">
+          <ParserConfigTab />
+        </template>
+      </ElTabPane>
+      <ElTabPane label="Chunker" name="chunker">
+        <template v-if="activeTab === 'chunker'">
+          <h6>Chunker</h6>
+          <ElTooltip
+            content="Chunk document"
+            :show-after="100"
+            :enterable="false"
+            placement="top"
+          >
+            <el-button>
+              <ChunkDocument />
+            </el-button>
+          </ElTooltip>
+        </template>
+      </ElTabPane>
+    </ElTabs>
 
     <el-dialog
       v-model="isDeleteDialogVisible"
@@ -164,7 +155,7 @@ function chunkDocument() {
       <template #header>
         <h6>Parser</h6>
       </template>
-      <p>Are you sure that you want to delete: <b>{{ props.document.name }} document</b> </p>
+      <p>Are you sure that you want to delete: <b>{{ selectedDocument?.name }} document</b> </p>
       <template #footer>
         <el-button @click="closeDeleteDialog">
           Cancel
@@ -191,21 +182,28 @@ function chunkDocument() {
 }
 .document-title {
   color: var(--color-primary-900);
-  margin: 22px 0px 22px 12px;
+  margin: 22px 0px 12px 12px;
 }
 .document-details-wrapper {
   display: flex;
   gap: 1.375rem;
   flex-wrap: wrap;
-  background-color: var(--color-primary-0);
-  border: 1px solid var(--color-primary-200);
-  box-shadow: 0 2px 4px var(--color-primary-100);
+  background-color: var(--color-primary-100);
+  border: 1px solid var(--color-primary-300);
+  box-shadow: 0 2px 4px var(--color-primary-200);
   border-radius: 12px;
   padding: 22px;
 
   & .label-description-item-container {
     flex: 1 0 calc(33% - 22px);
   }
+}
+.icon-title-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
 }
 .dark {
   .page-title {

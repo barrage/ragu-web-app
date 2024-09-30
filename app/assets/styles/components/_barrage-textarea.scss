@@ -182,12 +182,12 @@
     color: var(--color-primary-800);
 
     .barrage-form-item__error {
-      animation: move-up-with-opacity 2s ease forwards;
+      animation: move-up-with-opacity 0.5s ease forwards;
       z-index: 1;
     }
 
     .barrage-textarea__wrapper {
-      animation: input-error-move-up 2s ease forwards;
+      animation: input-error-move-up 0.5s ease forwards;
       z-index: 2;
     }
 
@@ -198,12 +198,6 @@
 
   .barrage-form-item {
     width: 250px;
-    &:first-of-type {
-      margin-bottom: var(--spacing-fluid-);
-    }
-    &:nth-of-type(2) {
-      margin-bottom: var(--spacing-fluid-m);
-    }
 
     &__content {
       margin-top: var(--spacing-fluid-4-xs);

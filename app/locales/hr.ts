@@ -41,7 +41,7 @@ export default {
   },
   agents: {
     titles: {
-      mainTitle: 'Popis svih agenata',
+      mainTitle: 'Agenti',
       details: 'Detalji agenta',
       description: 'Pregled u kojem možete jednostavno pregledavati, uređivati i upravljati detaljima i statusima svojih agenata na jednom mjestu.',
       edit: 'Uredi agenta',

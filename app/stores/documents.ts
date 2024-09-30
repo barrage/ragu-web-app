@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Document, DocumentListResponse, ParseDocumentBody } from '~/types/document.ts'
+import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document.ts'
 
 export const useDocumentsStore = defineStore('document', () => {
   // State
@@ -60,12 +60,12 @@ export const useDocumentsStore = defineStore('document', () => {
       console.error(`Error deleting document with ID ${id}:`, error)
     }
   }
+  /* PARSER */
+  const parserPreview = ref<string | null>(null)
 
-  const parserPreview = ref<string | null>()
-
-  async function POST_ParseDocument(id: string, parseDocumentBody?: ParseDocumentBody): Promise<string | null> {
+  async function POST_ParseDocumentPreview(id: string, ParserConfig?: ParserConfig): Promise<string | null> {
     try {
-      const response = await $api.document.PostParseDocument(id, parseDocumentBody)
+      const response = await $api.document.PostParseDocumentPreview(id, ParserConfig)
 
       if (response) {
         return parserPreview.value = response
@@ -75,7 +75,45 @@ export const useDocumentsStore = defineStore('document', () => {
       }
     }
     catch (error) {
-      console.error('Error uploading document:', error)
+      console.error('Error parsing document:', error)
+      return null
+    }
+  }
+  /* CHUNKER */
+  const chunkPreview = ref<string | null>(null)
+  async function POST_ChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<string | null> {
+    try {
+      const response = await $api.document.PostChunkDocumentPreview(id, chunkDocumentBody)
+
+      if (response) {
+        return parserPreview.value = response
+      }
+      else {
+        return parserPreview.value = null
+      }
+    }
+    catch (error) {
+      console.error('Error chunking document:', error)
+      return null
+    }
+  }
+
+  /* CONFIG */
+
+  const configUpdate = ref()
+  async function PUT_UpdateDocumentConfig(id: string, documentConfig?: DocumentConfig): Promise<string | null> {
+    try {
+      const response = await $api.document.PutUpdateDocumentConfig(id, documentConfig)
+
+      if (response) {
+        return configUpdate.value = response
+      }
+      else {
+        return configUpdate.value = null
+      }
+    }
+    catch (error) {
+      console.error('Error chunking document:', error)
       return null
     }
   }
@@ -83,10 +121,14 @@ export const useDocumentsStore = defineStore('document', () => {
   return {
     documentResponse,
     selectedDocument,
+    parserPreview,
+    chunkPreview,
     GET_AllDocuments,
     GET_SingleDocument,
-    POST_UploadDocument,
     DELETE_Document,
-    POST_ParseDocument,
+    POST_UploadDocument,
+    POST_ParseDocumentPreview,
+    POST_ChunkDocumentPreview,
+    PUT_UpdateDocumentConfig,
   }
 })

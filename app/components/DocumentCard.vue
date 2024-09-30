@@ -6,6 +6,7 @@ import TxtIcon from '~/assets/icons/svg/txt-icon.svg'
 import MarkdownIcon from '~/assets/icons/svg/markdown-icon.svg'
 import CsvIcon from '~/assets/icons/svg/csv-icon.svg'
 import JsonIcon from '~/assets/icons/svg/json-icon.svg'
+import FileDetailsIcon from '~/assets/icons/svg/file-details.svg'
 
 import UnknownDocumentIcon from '~/assets/icons/svg/unknown-document-icon.svg'
 
@@ -81,7 +82,7 @@ const navigateToDocumentDetailsPage = () => {
         placement="top"
       >
         <el-button @click="navigateToDocumentDetailsPage">
-          Manage
+          <FileDetailsIcon :size="24" />
         </el-button>
       </ElTooltip>
     </div>
@@ -153,7 +154,7 @@ const navigateToDocumentDetailsPage = () => {
       padding: 8px 12px;
       border: none;
       border-radius: 4px;
-      background-color: var(--color-primary-500);
+      background-color: var(--color-primary-300);
       color: white;
       cursor: pointer;
 
