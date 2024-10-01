@@ -86,4 +86,54 @@ export default {
 
   },
 
+  collections: {
+    titles: {
+      title: 'Collections',
+      subTitle: 'Overview where you can easily view and manage your collections',
+      deleteTitle: 'Delete collection?',
+      deleteDescription: 'Are you sure you want to delete collection?',
+      create: 'Create Collection',
+      createDescription: 'Create a new collection according to your needs!',
+    },
+
+    buttons: {
+      create: 'Create Collection',
+      delete: 'Delete',
+      cancel: 'Cancel',
+      save: 'Save',
+    },
+
+    labels: {
+      name: 'Collection Name',
+      vectorProvider: 'Vector Provider',
+      vectorPlaceholder: 'Select Vector Provider',
+      embeddingProvider: 'Embedding Provider',
+      embeddingPlaceholder: 'Select Embedding Provider',
+      model: 'Model',
+      modelPlaceholder: 'Select Model',
+
+    },
+
+    rules: {
+      name: {
+        required_message: 'Please input Collection name',
+        length_message: 'Name should be {min} to {max} charaters long',
+      },
+      vectorProvider: 'Please select Vector provider',
+      embeddingProvider: 'Please select Embedding provider',
+      model: 'Please select Model',
+    },
+
+    notifications: {
+      delete_title: 'Success',
+      delete_message: 'Collection {name} is deleted!',
+      delete_error: 'Collection is not deleted',
+      create_title: 'Success',
+      create_message: 'Collection {name} is created!',
+      form_title: 'Form Error',
+      form_message: 'Please fix the highlighted errors in the form.',
+      invalid_collection: 'Oops! Something went wrong. The agent you are trying to delete doesn’t seem to exist.',
+    },
+  },
+
 }

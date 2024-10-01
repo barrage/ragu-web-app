@@ -98,7 +98,7 @@ errorHandler(deleteError)
     />
     <LabelDescriptionItem
       label="Updated at"
-      :description="agentData.updatedAt "
+      :description="agentData.updatedAt"
     />
     <LabelDescriptionItem
       label="Created at"

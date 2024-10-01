@@ -8,6 +8,7 @@ const props = defineProps<{
   reversed?: boolean
   horizontal?: boolean
   canCopy?: boolean
+  centered?: boolean
 }>()
 
 const { copy } = useClipboard()
@@ -29,7 +30,7 @@ const copyItem = () => {
 <template>
   <div
     class="label-description-item-container"
-    :class="{ reversed, horizontal }"
+    :class="{ reversed, horizontal, centered }"
   >
     <span class="label">
       {{ props.label }}
@@ -54,8 +55,13 @@ const copyItem = () => {
     flex-direction: row;
     align-items: center;
   }
+
   &.reversed {
     flex-direction: column-reverse;
+  }
+
+  &.centered {
+    align-items: center;
   }
 
   & .label {

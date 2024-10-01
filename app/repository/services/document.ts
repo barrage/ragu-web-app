@@ -61,10 +61,10 @@ export default class DocumentServise extends FetchFactory {
   }
 
   /**
-   * Uploads a document to the server.
-   * @param formData - The FormData object containing the file to upload.
-   * @returns A promise that resolves to the uploaded document's response.
-   * @throws Will throw an error if the upload fails.
+   * Deletes a document from the server by its ID.
+   * @param id - The unique identifier of the document to be deleted.
+   * @returns A promise that resolves when the document is successfully deleted.
+   * @throws Will throw an error if the deletion fails, providing the appropriate status code and message.
    */
   async DeleteDocument(id: string): Promise<void> {
     try {

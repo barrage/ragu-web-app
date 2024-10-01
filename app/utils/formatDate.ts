@@ -13,11 +13,13 @@ export function formatDate(
   date: Date | number | string,
   format: string = 'DD/MMMM/YYYY',
   locales?: string,
-): ComputedRef<string> {
+): string {
   const { $i18n } = useNuxtApp()
   const locale = $i18n.locale
 
-  return useDateFormat(date, format, {
+  const formattedDate = useDateFormat(date, format, {
     locales: locales || locale.value,
   })
+
+  return formattedDate.value
 }

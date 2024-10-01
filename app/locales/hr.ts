@@ -89,5 +89,53 @@ export default {
     },
 
   },
+  collections: {
+    titles: {
+      title: 'Kolekcije',
+      subTitle: 'Pregled gdje možete jednostavno pregledavati svoje zbirke i upravljati njima',
+      deleteTitle: 'Izbriši kolekciju',
+      deleteDescription: 'Jeste li sigurni da želite izbrisati kolekciju?',
+      create: 'Kreiraj kolekciju',
+      createDescription: 'Kreirajte novu kolekciju prema svojim potrebama!',
+    },
+    buttons: {
+      create: 'Kreiraj kolekciju',
+      delete: 'Izbriši',
+      cancel: 'Odustani',
+      save: 'Spremi',
+    },
+
+    labels: {
+      name: 'Ime Kolekcije',
+      vectorProvider: 'Pružatelj vektora',
+      vectorPlaceholder: 'Odaberite pružatelja vektora',
+      embeddingProvider: 'Pružatelj ugrađivanja',
+      embeddingPlaceholder: 'Odaberite pružatelja ugrađivanja',
+      model: 'Model',
+      modelPlaceholder: 'Odaberite model',
+    },
+    rules: {
+      name: {
+        required_message: 'Unesite naziv kolekcije',
+        length_message: 'Naziv treba biti dug {min} do {max} znakova',
+      },
+      vectorProvider: 'Molimo odaberite pružatelja vektora',
+      embeddingProvider: 'Molimo odaberite pružatelja ugrađivanja',
+      model: 'Molimo odaberite model',
+    },
+
+    notifications: {
+      delete_title: 'Uspjeh',
+      delete_message: 'Kolekcija {name} je izbrisan!',
+      delete_error: 'Kolekcija nije izbrisana',
+      update_title: 'Uspjeh',
+      update_message: 'Kolekcija {name} je ažuriran!',
+      create_title: 'Uspjeh',
+      create_message: 'Kolekcija {name} je kreiran!',
+      form_title: 'Greška u obrascu',
+      form_message: 'Molimo popravite označene pogreške u obrascu.',
+      invalid_agent: 'Ups! Nešto nije u redu. Čini se da Kolekcija kojeg pokušavate izbrisati ne postoji.',
+    },
+  },
 
 }

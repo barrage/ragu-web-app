@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document.ts'
+import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document'
 
 export const useDocumentsStore = defineStore('document', () => {
   // State
