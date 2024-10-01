@@ -21,6 +21,11 @@ const isSignOutModalVisible = ref(false)
 const openSignOutModal = () => {
   isSignOutModalVisible.value = true
 }
+// Profile
+const isProfileModelVisible = ref(false)
+const openProfileModal = () => {
+  isProfileModelVisible.value = true
+}
 
 const popperOptions = {
   placement: 'bottom-end',
@@ -75,13 +80,13 @@ const switchPanel = () => {
           </div>
         </div>
         <div class="horizontal-divider" />
-        <el-dropdown-item @click="switchPanel()">
+        <el-dropdown-item @click="switchPanel">
           <div class="dropdown-item">
             <AdminIcon /> <p>  {{ oAuthStore.selectedRole === 'user' ? $t('profileDropdown.switchToAdmin') : $t('profileDropdown.switchToUser') }}</p>
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
-        <el-dropdown-item>
+        <el-dropdown-item @click="openProfileModal">
           <div class="dropdown-item">
             <ProfileIcon /> <p> {{ $t('profileDropdown.profile') }}</p>
           </div>
@@ -92,7 +97,7 @@ const switchPanel = () => {
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
-        <el-dropdown-item @click="openAgentsModal()">
+        <el-dropdown-item @click="openAgentsModal">
           <div class="dropdown-item">
             <ChatAgentIcon />  <p>{{ $t('profileDropdown.agents') }}</p>
           </div>
@@ -103,7 +108,7 @@ const switchPanel = () => {
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
-        <el-dropdown-item @click=" openSignOutModal()">
+        <el-dropdown-item @click=" openSignOutModal">
           <div class="dropdown-item">
             <LogoutIcon /> <p>{{ $t('profileDropdown.signOut') }}</p>
           </div>
@@ -146,6 +151,17 @@ const switchPanel = () => {
         {{ $t('profileDropdown.signOut') }}
       </el-button>
     </template>
+  </ElDialog>
+  <ElDialog
+    v-model="isProfileModelVisible"
+    align-center
+    class="barrage-dialog--medium"
+    :close-icon="CloseCircleIcon"
+  >
+    <template #header>
+      <h5>Profile Settings</h5>
+    </template>
+    <ProfileOverview />
   </ElDialog>
 
   <!-- <LlmModal
