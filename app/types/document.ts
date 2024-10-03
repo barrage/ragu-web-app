@@ -65,7 +65,7 @@ export interface SemanticChunker {
   }
 }
 
-export type ChunkerConfig = SnappingChunker | SlidingChunker | SemanticChunker
+export type ChunkerConfig = SlidingChunker | SnappingChunker | SemanticChunker
 
 export interface DocumentConfig {
   parser: ParserConfig | null

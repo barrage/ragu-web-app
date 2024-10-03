@@ -6,6 +6,7 @@ const props = defineProps<{
   label: string | undefined
   description: string | undefined
   reversed?: boolean
+  horizontal?: boolean
   canCopy?: boolean
 }>()
 
@@ -28,7 +29,7 @@ const copyItem = () => {
 <template>
   <div
     class="label-description-item-container"
-    :class="{ reversed }"
+    :class="{ reversed, horizontal }"
   >
     <span class="label">
       {{ props.label }}
@@ -49,6 +50,10 @@ const copyItem = () => {
   flex-direction: column;
   gap: 0.5rem;
 
+  &.horizontal {
+    flex-direction: row;
+    align-items: center;
+  }
   &.reversed {
     flex-direction: column-reverse;
   }

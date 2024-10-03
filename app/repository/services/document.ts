@@ -119,7 +119,7 @@ export default class DocumentServise extends FetchFactory {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: chunkDocumentBody,
+        body: { chunker: chunkDocumentBody },
       })
     }
     catch (error: any) {

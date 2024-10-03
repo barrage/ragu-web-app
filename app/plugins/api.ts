@@ -4,6 +4,7 @@ import ChatService from '~/repository/services/chat'
 import AgentService from '~/repository/services/agent'
 import UsersService from '~/repository/services/users'
 import DocumentService from '~/repository/services/document'
+import AppConfigService from '~/repository/services/appConfig'
 
 /**
  * Nuxt Plugin for initializing and configuring services and stores.
@@ -34,6 +35,7 @@ export default defineNuxtPlugin(() => {
   const usersService = new UsersService(baseApiFetcher)
   const authService = new AuthService(baseApiFetcher)
   const documentService = new DocumentService(baseApiChucker)
+  const appConfigService = new AppConfigService(baseApiChucker)
   // Note: Additional services  can be initialized and configured here as needed.
   // This is the central place to set up other dependencies or state management layers in the application.
 
@@ -45,6 +47,7 @@ export default defineNuxtPlugin(() => {
         auth: authService,
         user: usersService,
         document: documentService,
+        appConfig: appConfigService,
       },
     },
   }

@@ -44,6 +44,9 @@ watch(
 onMounted(() => {
   scrollToBottom()
 })
+onBeforeUnmount(() => {
+  chatViewWrapper.value = null
+})
 </script>
 
 <template>

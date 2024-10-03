@@ -1,0 +1,295 @@
+<script lang="ts" setup>
+import type { FormInstance, FormRules } from 'element-plus'
+import type { SnappingChunker, SnappingChunkerConfig } from '~/types/document.ts'
+import ParseDocument from '~/assets/icons/svg/parse-document.svg'
+import AddIcon from '~/assets/icons/svg/add.svg'
+import MinusIcon from '~/assets/icons/svg/minus.svg'
+import CloseIcon from '~/assets/icons/svg/close.svg'
+
+const scrollIntoViewOptions = {
+  behavior: 'smooth',
+  block: 'center',
+}
+
+const documentStore = useDocumentsStore()
+const selectedDocument = computed(() => {
+  return documentStore.selectedDocument
+})
+
+const formRef = ref<FormInstance>()
+const form = reactive<SnappingChunker>({
+  snapping: {
+    config: {
+      size: 0,
+      overlap: 0,
+    },
+    delimiter: '',
+    skipForward: [],
+    skipBack: [],
+  },
+})
+
+const validateSize = (_rule: any, value: any, callback: any) => {
+  if (value <= form.snapping.config.overlap) {
+    callback(new Error('Size must be greater than overlap'))
+  }
+
+  else {
+    callback()
+  }
+}
+
+// Validation rules
+const rules = reactive<FormRules<SnappingChunker>>({
+  'snapping.config.size': [
+    { required: true, message: 'Required', trigger: 'blur' },
+    { validator: validateSize, trigger: 'change' },
+  ],
+  'snapping.config.overlap': [
+    { required: true, message: 'Required', trigger: 'blur' },
+  ],
+})
+
+function chunkPreviewDocument() {
+  if (selectedDocument.value?.id) {
+    documentStore.POST_ChunkDocumentPreview(selectedDocument.value.id, form)
+    documentStore.GET_AllDocuments()
+  }
+}
+
+async function saveConfig() {
+  if (selectedDocument.value?.id) {
+    await documentStore.PUT_UpdateDocumentConfig(selectedDocument.value.id, { parser: selectedDocument.value?.parseConfig, chunker: form || null })
+    await documentStore.GET_SingleDocument(selectedDocument.value.id)
+  }
+}
+
+const prefillForm = () => {
+  const chunkConfig = selectedDocument.value?.chunkConfig
+  if (chunkConfig && 'snapping' in chunkConfig) {
+    form.snapping.config.size = chunkConfig.snapping.config.size || 0
+    form.snapping.config.overlap = chunkConfig.snapping.config.overlap || 0
+    form.snapping.delimiter = chunkConfig.snapping.delimiter || '.'
+    form.snapping.skipForward = chunkConfig.snapping.skipForward || []
+    form.snapping.skipBack = chunkConfig.snapping.skipBack || []
+  }
+}
+
+watch(
+  () => selectedDocument.value,
+  () => {
+    prefillForm()
+  },
+  { immediate: true },
+)
+
+const submitPreviewForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) {
+    return
+  }
+  await formEl.validate((valid) => {
+    if (valid) {
+      chunkPreviewDocument()
+    }
+  })
+}
+
+const submitSaveForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) {
+    return
+  }
+  await formEl.validate((valid) => {
+    if (valid) {
+      saveConfig()
+    }
+  })
+}
+
+const forwardFilterString = ref('')
+const backFilterString = ref('')
+
+const addForwardFilter = () => {
+  if (!form.snapping.skipForward.includes(forwardFilterString.value) && forwardFilterString.value) {
+    form.snapping.skipForward.push(forwardFilterString.value)
+  }
+  forwardFilterString.value = ''
+}
+
+const addBackFilter = () => {
+  if (!form.snapping.skipBack.includes(backFilterString.value) && backFilterString.value) {
+    form.snapping.skipBack.push(backFilterString.value)
+  }
+  backFilterString.value = ''
+}
+
+const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
+  const index = form.snapping[type].indexOf(filter)
+  if (index !== -1) {
+    form.snapping[type].splice(index, 1)
+  }
+}
+</script>
+
+<template>
+  <div class="edit-parser-config-wrapper">
+    <h6>Snapping Chunker Config</h6>
+    <ElForm
+      ref="formRef"
+      :model="form"
+      :rules="rules"
+      :scroll-to-error="true"
+      :scroll-into-view-options="scrollIntoViewOptions"
+    >
+      <div class="form-items-wrapper">
+        <ElFormItem
+          label="Size"
+          prop="snapping.config.size"
+        >
+          <ElInputNumber
+            v-model="form.snapping.config.size"
+            :min="0"
+          >
+            <template #increase-icon>
+              <AddIcon />
+            </template>
+            <template #decrease-icon>
+              <MinusIcon />
+            </template>
+          </ElInputNumber>
+        </ElFormItem>
+
+        <ElFormItem
+          label="Overlap"
+          prop="snapping.config.overlap"
+        >
+          <ElInputNumber
+            v-model="form.snapping.config.overlap"
+            :min="0"
+          >
+            <template #increase-icon>
+              <AddIcon />
+            </template>
+            <template #decrease-icon>
+              <MinusIcon />
+            </template>
+          </ElInputNumber>
+        </ElFormItem>
+
+        <ElFormItem
+          label="Delimiter"
+          prop="snapping.delimiter"
+        >
+          <ElInput v-model="form.snapping.delimiter" />
+        </ElFormItem>
+      </div>
+
+      <div class="range-filters-wrapper">
+        <ElFormItem
+          label="Skip Forward"
+          prop="snapping.skipForward"
+        >
+          <ElInput v-model="forwardFilterString" @keyup.enter="addForwardFilter()" />
+          <template v-for="filter in form.snapping.skipForward" :key="filter">
+            <div class="filter-item">
+              <span>{{ filter }}</span>
+              <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipForward')" />
+            </div>
+          </template>
+        </ElFormItem>
+
+        <ElFormItem
+          label="Skip Back"
+          prop="snapping.skipBack"
+        >
+          <ElInput v-model="backFilterString" @keyup.enter="addBackFilter()" />
+          <template v-for="filter in form.snapping.skipBack" :key="filter">
+            <div class="filter-item">
+              <span>{{ filter }}</span>
+              <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipBack')" />
+            </div>
+          </template>
+        </ElFormItem>
+      </div>
+
+      <ElFormItem>
+        <div class="form-actions">
+          <ElTooltip
+            content="Preview Parse document"
+            :show-after="100"
+            :enterable="false"
+            placement="top"
+          >
+            <el-button @click="submitPreviewForm(formRef)">
+              Preview <ParseDocument />
+            </el-button>
+          </ElTooltip>
+          <ElTooltip
+            content="Save New Config"
+            :show-after="100"
+            :enterable="false"
+            placement="top"
+          >
+            <ElButton
+              type="primary"
+              @click="submitSaveForm(formRef)"
+            >
+              Save
+            </ElButton>
+          </ElTooltip>
+        </div>
+      </ElFormItem>
+    </ElForm>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.edit-parser-config-wrapper {
+  border-top: 1px solid var(--color-primary-400);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  & .form-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  & .range-filters-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+.form-actions {
+  display: flex;
+  gap: 22px;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+.filter-item {
+  display: flex;
+  margin-right: 12px;
+  align-items: center;
+  border: 1px solid var(--color-primary-400);
+  width: max-content;
+  padding: 2px 4px;
+  border-radius: 6px;
+
+  & .delete-filter-icon {
+    cursor: pointer;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+.dark {
+  & .edit-parser-config-wrapper {
+    border-top: 1px solid var(--color-primary-600);
+  }
+}
+</style>

@@ -3,6 +3,7 @@ import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import DataSettingsIcon from '~/assets/icons/svg/data-settings.svg'
+import DocumentIcon from '~/assets/icons/svg/document.svg'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -46,7 +47,7 @@ function deleteDocument() {
 /* Parse document */
 
 /* Chunk document */
-const isChunkDialogVisible = ref(false)
+/* const isChunkDialogVisible = ref(false)
 const openChunkDialog = () => {
   isChunkDialogVisible.value = true
 }
@@ -60,7 +61,7 @@ function chunkDocument() {
     documentStore.POST_ParseDocumentPreview(selectedDocument.value.id)
     documentStore.GET_AllDocuments()
   }
-}
+} */
 
 onUnmounted(() => {
   documentStore.parserPreview = null
@@ -72,34 +73,16 @@ const activeTab = ref('parser')
 
 <template>
   <div class="admin-document-page-container">
-    <h4 class="page-title">
-      Document Details
-    </h4>
-    <p class="description">
-      Manage your {{ selectedDocument?.name }} document
-    </p>
-    <h6 class="document-title">
-      <b>{{ selectedDocument?.name }}</b>
-    </h6>
-    <div class="document-details-wrapper">
-      <LabelDescriptionItem
-        label="Path:"
-        :description="selectedDocument?.path"
-        :can-copy="true"
-      />
-      <LabelDescriptionItem
-        label="Exstension:"
-        :description="selectedDocument?.ext"
-      />
-      <LabelDescriptionItem
-        label="Source:"
-        :description="selectedDocument?.src"
-      />
-      <LabelDescriptionItem
-        label="Hash:"
-        :description="selectedDocument?.hash"
-        :can-copy="true"
-      />
+    <div class="admin-document-page-header">
+      <div>
+        <h4 class="page-title">
+          Document Details
+        </h4>
+        <p class="description">
+          Manage your {{ selectedDocument?.name }} document
+        </p>
+      </div>
+
       <ElTooltip
         content="Delete document"
         :show-after="100"
@@ -113,12 +96,36 @@ const activeTab = ref('parser')
       </ElTooltip>
     </div>
 
+    <h6 class="document-title">
+      <DocumentIcon size="32" /> <b>{{ selectedDocument?.name }}</b>
+    </h6>
+    <div class="document-details-wrapper">
+      <LabelDescriptionItem
+        label="Name:"
+        :description="selectedDocument?.name"
+        :can-copy="true"
+      />
+      <LabelDescriptionItem
+        label="Exstension:"
+        :description="selectedDocument?.ext"
+      />
+      <LabelDescriptionItem
+        label="Path:"
+        :description="selectedDocument?.path"
+      />
+
+      <LabelDescriptionItem
+        label="Source:"
+        :description="selectedDocument?.src"
+      />
+    </div>
+
     <!-- ------------ -->
 
     <!-- ------------ -->
     <div class="icon-title-container">
-      <DataSettingsIcon size="42" />
-      <h5>Configuration</h5>
+      <DataSettingsIcon size="32" />
+      <h6>Configuration</h6>
     </div>
     <ElTabs
       v-model="activeTab"
@@ -131,8 +138,8 @@ const activeTab = ref('parser')
       </ElTabPane>
       <ElTabPane label="Chunker" name="chunker">
         <template v-if="activeTab === 'chunker'">
-          <h6>Chunker</h6>
-          <ElTooltip
+          <ChunkerConfigTab />
+          <!--  <ElTooltip
             content="Chunk document"
             :show-after="100"
             :enterable="false"
@@ -141,7 +148,7 @@ const activeTab = ref('parser')
             <el-button>
               <ChunkDocument />
             </el-button>
-          </ElTooltip>
+          </ElTooltip> -->
         </template>
       </ElTabPane>
     </ElTabs>
@@ -169,6 +176,11 @@ const activeTab = ref('parser')
 </template>
 
 <style lang="scss" scoped>
+.admin-document-page-header {
+  display: flex;
+  gap: 22px;
+  justify-content: space-between;
+}
 .admin-document-page-container {
   padding: 1rem 2rem;
 }
@@ -183,6 +195,9 @@ const activeTab = ref('parser')
 .document-title {
   color: var(--color-primary-900);
   margin: 22px 0px 12px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 .document-details-wrapper {
   display: flex;
@@ -195,7 +210,7 @@ const activeTab = ref('parser')
   padding: 22px;
 
   & .label-description-item-container {
-    flex: 1 0 calc(33% - 22px);
+    flex: 1 0 calc(25% - 22px);
   }
 }
 .icon-title-container {
@@ -204,6 +219,7 @@ const activeTab = ref('parser')
   align-items: center;
   margin-top: 3rem;
   margin-bottom: 1rem;
+  color: var(--color-primary-900);
 }
 .dark {
   .page-title {
@@ -219,6 +235,9 @@ const activeTab = ref('parser')
     background-color: var(--color-primary-800);
     border: 1px solid var(--color-primary-500);
     box-shadow: 0 2px 4px var(--color-primary-600);
+  }
+  & .icon-title-container {
+    color: var(--color-primary-0);
   }
 }
 </style>

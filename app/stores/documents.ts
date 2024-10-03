@@ -62,9 +62,10 @@ export const useDocumentsStore = defineStore('document', () => {
   }
   /* PARSER */
   const parserPreview = ref<string | null>(null)
-
+  const loadingParsePreview = ref<boolean>(false)
   async function POST_ParseDocumentPreview(id: string, ParserConfig?: ParserConfig): Promise<string | null> {
     try {
+      loadingParsePreview.value = true
       const response = await $api.document.PostParseDocumentPreview(id, ParserConfig)
 
       if (response) {
@@ -78,23 +79,32 @@ export const useDocumentsStore = defineStore('document', () => {
       console.error('Error parsing document:', error)
       return null
     }
+    finally {
+      loadingParsePreview.value = false
+    }
   }
   /* CHUNKER */
   const chunkPreview = ref<string | null>(null)
+  const loadingChunkPreview = ref<boolean>(false)
+
   async function POST_ChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<string | null> {
     try {
+      loadingChunkPreview.value = true
       const response = await $api.document.PostChunkDocumentPreview(id, chunkDocumentBody)
 
       if (response) {
-        return parserPreview.value = response
+        return chunkPreview.value = response
       }
       else {
-        return parserPreview.value = null
+        return chunkPreview.value = null
       }
     }
     catch (error) {
       console.error('Error chunking document:', error)
       return null
+    }
+    finally {
+      loadingChunkPreview.value = false
     }
   }
 
@@ -122,7 +132,9 @@ export const useDocumentsStore = defineStore('document', () => {
     documentResponse,
     selectedDocument,
     parserPreview,
+    loadingParsePreview,
     chunkPreview,
+    loadingChunkPreview,
     GET_AllDocuments,
     GET_SingleDocument,
     DELETE_Document,
