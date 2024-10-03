@@ -35,7 +35,6 @@ const form = reactive<SemanticChunker>({
 
 })
 
-// Validation rules
 const validateThreshold = (_rule: any, value: any, callback: any) => {
   if (value < 0) {
     callback(new Error('Threshold cannot be negative'))
