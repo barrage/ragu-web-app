@@ -26,7 +26,7 @@ usersStore.GET_AllUsers()
         </el-button>
       </div>
     </div>
-    <UsersList :users="usersStore.usersResponse" />
+    <MembersList :users="usersStore.usersResponse" />
   </div>
 </template>
 

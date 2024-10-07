@@ -9,7 +9,7 @@ const props = defineProps<{
 <template>
   <div class="users-list-container">
     <template v-for="user in props.users" :key="user.id">
-      <UserCard :user="user" />
+      <MemberCard :user="user" />
     </template>
   </div>
 </template>
@@ -18,7 +18,7 @@ const props = defineProps<{
 .users-list-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   width: 100%;
   border-radius: 10px;
   overflow: hidden;

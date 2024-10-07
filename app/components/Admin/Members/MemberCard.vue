@@ -29,22 +29,18 @@ const userData = computed(() => {
       <LabelDescriptionItem
         label="Phone"
         :description="userData?.phone"
-        reversed
       />
       <LabelDescriptionItem
         label="Updated at"
         :description="userData.updatedAt "
-        reversed
       />
       <LabelDescriptionItem
         label="Created at"
         :description="userData.createdAt"
-        reversed
       />
       <LabelDescriptionItem
         label="Role"
         description="Member"
-        reversed
       />
     </div>
   </div>
@@ -86,7 +82,7 @@ const userData = computed(() => {
 .dark {
   .user-card {
     border: 0.5px solid var(--color-primary-600);
-    background: var(--color-primary-900);
+    background: var(--color-primary-800);
     box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
   }
   .username-title-wrapper {

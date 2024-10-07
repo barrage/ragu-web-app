@@ -30,6 +30,7 @@ const agentStore = useAgentStore()
   padding: 0.75rem;
   padding-bottom: 1rem;
   border-radius: 1rem;
+  min-height: 100px;
   &.selected {
     background: var(--color-primary-100);
     border: 1.5px solid var(--color-primary-500);
@@ -40,7 +41,7 @@ const agentStore = useAgentStore()
   }
   & .agent-body-wrapper {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 1rem;
 
     & .chat-agent-icon {
@@ -53,6 +54,7 @@ const agentStore = useAgentStore()
     text-align: left;
     line-height: 1.5rem;
     color: var(--color-primary-700);
+    font-weight: var(--font-weight-medium);
   }
 
   &:hover {

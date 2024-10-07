@@ -167,9 +167,9 @@ const navigateToDocumentDetailsPage = () => {
 
 .dark {
   .document-card {
-    border: 1px solid var(--color-primary-600);
+    border: 1px solid var(--color-primary-700);
     background-color: var(--color-primary-800);
-    box-shadow: 0 2px 4px var(--color-primary-700);
+    box-shadow: 0 2px 4px var(--color-primary-600);
     &:hover {
       border: 1px solid var(--color-primary-500);
       box-shadow: 0 2px 4px var(--color-primary-600);

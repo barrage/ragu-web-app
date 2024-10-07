@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
+import MicrophoneIcon from '~/assets/icons/svg/microphone.svg'
+import LikeIcon from '~/assets/icons/svg/like.svg'
+import DislikeIcon from '~/assets/icons/svg/dislike.svg'
+import CopyIcon from '~/assets/icons/svg/copy.svg'
+import StopIcon from '~/assets/icons/svg/stop.svg'
 
 import type { Message } from '~/types/chat'
 
@@ -46,19 +51,66 @@ watch(
   },
   { immediate: true },
 )
+const isSpeaking = ref(false)
 
+/* VOICE */
+const stopReading = () => {
+  if (speechSynthesis.speaking) {
+    speechSynthesis.cancel()
+    isSpeaking.value = false
+  }
+}
+
+const readText = () => {
+  if (isSpeaking.value) {
+    stopReading()
+  }
+  else {
+    if (props.message?.content) {
+      const utterance = new SpeechSynthesisUtterance(props.message.content)
+      utterance.onend = () => {
+        isSpeaking.value = false
+      }
+      speechSynthesis.speak(utterance)
+      isSpeaking.value = true
+    }
+  }
+}
 onBeforeUnmount(() => {
   if (animationTimeout) {
     clearTimeout(animationTimeout)
   }
+  stopReading()
 })
+
+const { copy } = useClipboard()
+
+const copyItem = () => {
+  if (props.message?.content) {
+    copy(props.message.content)
+    ElNotification({
+      title: 'Copied',
+      message: `Copied message to clipboard`,
+      type: 'info',
+      customClass: 'info',
+      duration: 2500,
+    })
+  }
+}
 </script>
 
 <template>
-  <template v-if="props.message">
-    <div class="message" :class="[props.message.senderType]">
+  <div v-if="props.message">
+    <div
+
+      class="message"
+      :class="[props.message.senderType]"
+    >
       <div class="sender">
-        <BrainIcon v-if="props.message.senderType === 'assistant'" size="32" />
+        <BrainIcon
+          v-if="props.message.senderType === 'assistant'"
+          size="32"
+        />
         <ProfileIcon v-else size="32" />
       </div>
       <template v-if="props.message.senderType === 'assistant' && chatStore.isWebSocketStreaming && !props.message.content">
@@ -77,7 +129,51 @@ onBeforeUnmount(() => {
         <span v-if="isAnimating" class="cursor" />
       </p>
     </div>
-  </template>
+    <div v-if="props.message.senderType === 'assistant' && !chatStore.isWebSocketStreaming" class="agent-message-actions">
+      <ElTooltip
+        v-if="!isSpeaking"
+        content="Read aloud"
+        :show-after="50"
+        :enterable="false"
+        placement="top"
+      >
+        <MicrophoneIcon size="18" @click="readText" />
+      </ElTooltip>
+      <ElTooltip
+        v-else
+        content="Stop reading"
+        :show-after="50"
+        :enterable="false"
+        placement="top"
+      >
+        <StopIcon size="18" @click="stopReading" />
+      </ElTooltip>
+      <ElTooltip
+        content="Copy message"
+        :show-after="50"
+        :enterable="false"
+        placement="top"
+      >
+        <CopyIcon size="18" @click="copyItem()" />
+      </ElTooltip>
+      <ElTooltip
+        content="Good answer"
+        :show-after="50"
+        :enterable="false"
+        placement="top"
+      >
+        <LikeIcon size="18" />
+      </ElTooltip>
+      <ElTooltip
+        content="Bad answer"
+        :show-after="50"
+        :enterable="false"
+        placement="top"
+      >
+        <DislikeIcon size="18" />
+      </ElTooltip>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -100,6 +196,20 @@ onBeforeUnmount(() => {
   background-color: var(--color-primary-100);
   border-radius: 8px;
   position: relative;
+}
+
+.agent-message-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--color-primary-600);
+  padding-left: 2px;
+  & svg {
+    &:hover {
+      color: var(--color-primary-900);
+      cursor: pointer;
+    }
+  }
 }
 
 .assistantmessage {
@@ -164,6 +274,14 @@ onBeforeUnmount(() => {
 
   & .content {
     color: var(--color-primary-0);
+  }
+  & .agent-message-actions {
+    color: var(--color-primary-300);
+    & svg {
+      &:hover {
+        color: var(--color-primary-0);
+      }
+    }
   }
 }
 

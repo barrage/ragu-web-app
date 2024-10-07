@@ -8,7 +8,7 @@ const props = defineProps<{
 
 <template>
   <div class="app-config-container">
-    <h5>App configuration</h5>
+    <h5>Providers</h5>
     <div class="app-config-widgets-wrapper">
       <VectorProviders :vector-providers="props.appConfig?.vectorProviders" />
       <EmbeddingProviders :embedding-providers="props.appConfig?.embeddingProviders" />

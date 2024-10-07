@@ -4,7 +4,7 @@
     --input-height: max-content !important;
     --input-color: var(--color-primary-900);
     --input-error-color: var(--color-red-500);
-    --input-background-color: var(--color-primary-300);
+    --input-background-color: var(--color-primary-200);
     --input-border: var(--border-global-1);
     --input-border-color: var(--color-primary-500);
     --input-border-radius: var(--radius-4);
@@ -25,9 +25,9 @@
   html.dark {
     .barrage-input {
       &__inner {
-        --input-color: var(--color-primary-0);
-        --input-border-color: var(--color-primary-600);
-        --input-background-color: var(--color-primary-700);
+        --input-color: var(--color-primary-100);
+        --input-border-color: var(--color-primary-500);
+        --input-background-color: var(--color-primary-800);
 
         &:focus {
           outline: none;
