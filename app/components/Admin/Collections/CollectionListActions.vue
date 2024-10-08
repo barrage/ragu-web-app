@@ -7,7 +7,7 @@ const collectiontore = useCollectionsStore()
 <template>
   <div class="collection-actions-container">
     <div class="collection-actions-wrapper">
-      <SearchInput placeholder="Search user" />
+      <SearchInput placeholder="Search collections" />
       <h6> <b>{{ collectiontore?.collectionResponse?.items?.length || 0 }}</b> collection</h6>
     </div>
     <el-button>

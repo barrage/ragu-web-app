@@ -2,7 +2,6 @@
 import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 
-const authStore = useAuthStore()
 useThemeStore()
 
 definePageMeta({
@@ -10,9 +9,7 @@ definePageMeta({
 })
 
 // API CALLS
-const { error } = await useAsyncData(() => authStore.handleOAuthLogin())
-
-errorHandler(error, true)
+/* const { error } = await useAsyncData(() => authStore.handleOAuthLogin()) */
 </script>
 
 <template>

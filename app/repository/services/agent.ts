@@ -12,7 +12,9 @@ export default class AgentService extends FetchFactory {
    */
   async GetAllAgents(_payload: object | undefined): Promise<AgentListResponse> {
     try {
-      return await this.$fetch<AgentListResponse>(`${this.endpoint}`)
+      return await this.$fetch<AgentListResponse>(this.endpoint, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({

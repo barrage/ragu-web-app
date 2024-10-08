@@ -2,7 +2,10 @@ export type OAuthProvider = 'google' | 'microsoft'
 
 export interface OAuthPayload {
   code: string | string[]
+  redirect_uri: string
   provider: OAuthProvider
+  source: string
+  grant_type: string
 }
 
 export interface tfa {
@@ -10,7 +13,6 @@ export interface tfa {
   authenticated: boolean
 }
 export interface AuthResponse {
-
   success: boolean
   csrf: string
   tfa: tfa
@@ -19,8 +21,12 @@ export interface AuthResponse {
 }
 export interface User {
   id: string
-  name: string
   email: string
-  token: string
-
+  fullName: string
+  firstName: string
+  lastName: string
+  active: boolean
+  role: string
+  createdAt: string | Date
+  updatedAt: string | Date
 }

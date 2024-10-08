@@ -48,7 +48,7 @@ const handleError = () => clearError({ redirect: '/' })
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .error-wrapper {
   align-items: center;
   display: flex;

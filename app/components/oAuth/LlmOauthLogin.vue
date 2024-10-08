@@ -4,13 +4,10 @@ import GoogleLogo from '~/assets/icons/svg/google.svg'
 import MicrosoftLogo from '~/assets/icons/svg/microsoft.svg'
 
 const scopes = {
-  // specific permissions
   google: [
-    'admin.directory.user',
-    'admin.directory.user.readonly',
-    'admin.directory.orgunit',
-    'admin.directory.orgunit.readonly',
-    'cloud-platform&openid.realm',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'openid',
   ],
   microsoft: [
     'openid',
@@ -29,18 +26,12 @@ const oAuthConfig = {
   google: {
     authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
     client_id: import.meta.env?.VITE_OAUTH_GOOGLE_LOGIN_CLIENTID as string,
-    workspace_client_id: import.meta.env
-      ?.VITE_OAUTH_GOOGLE_WORKSPACE_CLIENTID as string,
     additionalParams: '&access_type=offline&include_granted_scopes=true',
-    scopes: scopes.google
-      .map(scope => encodeURI(`https://www.googleapis.com/auth/${scope}`))
-      .join(' '),
+    scopes: scopes.google.join(' '),
   },
   microsoft: {
     authUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
     client_id: import.meta.env?.VITE_OAUTH_MICROSOFT_LOGIN_CLIENTID as string,
-    workspace_client_id: import.meta.env
-      ?.VITE_OAUTH_MICROSOFT_WORKSPACE_CLIENTID as string,
     additionalParams: '&response_mode=query',
     scopes: scopes.microsoft.join(' '),
   },
@@ -51,15 +42,22 @@ function socialSignIn(provider: OAuthProvider) {
   const protocol = window.location.protocol
   const hostname = window.location.hostname
   const port = window.location.port ? `:${window.location.port}` : ''
-  const URI = `${protocol}//${hostname}${port}/auth/oauth/${provider}`
+  const URI = `${protocol}//${hostname}${port}/auth/${provider}`
 
   if (provider === 'google') {
-    redirectUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${oAuthConfig.google?.client_id}&scope=email profile&redirect_uri=${URI}&response_type=code&access_type=offline&include_granted_scopes=true`
+    redirectUrl = `${oAuthConfig.google.authUrl}?client_id=${oAuthConfig.google.client_id}&scope=${encodeURIComponent(
+      oAuthConfig.google.scopes,
+    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code${oAuthConfig.google.additionalParams}`
   }
   else if (provider === 'microsoft') {
-    redirectUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${oAuthConfig.microsoft?.client_id}&scope=openid offline_access email profile User.Read&response_type=code&response_mode=query&redirect_uri=${URI}&include_granted_scopes=true`
+    redirectUrl = `${oAuthConfig.microsoft.authUrl}?client_id=${oAuthConfig.microsoft.client_id}&scope=${encodeURIComponent(
+      oAuthConfig.microsoft.scopes,
+    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code${oAuthConfig.microsoft.additionalParams}`
   }
-  if (redirectUrl) { window.location.href = redirectUrl }
+
+  if (redirectUrl) {
+    window.location.href = redirectUrl
+  }
 }
 </script>
 
@@ -71,7 +69,7 @@ function socialSignIn(provider: OAuthProvider) {
         {{ $t('login.continueWith') }} Google
       </p>
     </div>
-    <div class="social" @click="socialSignIn('microsoft')">
+    <div class="social microsoft" @click="socialSignIn('microsoft')">
       <MicrosoftLogo name="microsoft" original />
       <p class="semi-bold">
         {{ $t('login.continueWith') }} Microsoft
@@ -109,6 +107,15 @@ function socialSignIn(provider: OAuthProvider) {
     &.social--disabled {
       cursor: not-allowed;
       opacity: 0.8;
+    }
+  }
+
+  .microsoft {
+    opacity: 0.7;
+    pointer-events: none;
+
+    & p {
+      text-decoration: line-through;
     }
   }
 }

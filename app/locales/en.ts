@@ -150,4 +150,10 @@ export default {
     },
   },
 
+  auth: {
+    notifications: {
+      user_authenticate: 'User not authenticated, redirecting to login',
+    },
+
+  },
 }

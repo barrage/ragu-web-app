@@ -1,76 +1,78 @@
-// stores/auth.ts
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
-import { getDomain } from '@/utils/domainUtils'
+import { ref } from 'vue'
 import { useNuxtApp } from '#app'
-import type { AuthResponse, OAuthPayload, OAuthProvider, User } from '~/types/auth'
+import type { OAuthPayload, OAuthProvider, User } from '~/types/auth'
 
 export const useAuthStore = defineStore('auth', () => {
+  // TYPES
+  type UserRole = 'USER' | 'ADMIN'
+
   // CONSTANTS
   const { $api } = useNuxtApp()
-  const router = useRouter()
 
   // STATE
-  const user = ref<User | null>(null) // Stores authenticated user info
-  const fakeUserId = ref('660a7998-2a27-11ee-be56-0242ac120002')
-  const isAuthenticated = computed(() => !!user.value) // Checks if the user is authenticated
-  const selectedRole = ref<'user' | 'admin'>('user')
-  const error = ref<string | null>(null) // Stores error messages
+  const user = ref<User | null>(null)
+  const selectedRole = ref<UserRole | null>(null)
+  const isAuthenticated = ref<boolean>(false)
+  const iscurrentUserLoading = ref<boolean>(true)
 
   // ACTIONS
-  async function loginWithOAuth(payload: OAuthPayload): Promise<AuthResponse> {
-    const data = await $api.auth.loginOAuth(payload)
 
-    // Use useCookie composable to set cookies
-    if (data?.csrf) {
-      const csrfCookie = useCookie('X-CSRF-TOKEN', {
-        path: '/',
-        secure: true,
-      })
-      csrfCookie.value = data.csrf
+  /**
+   * Fetch the current user's information.
+   */
+  async function GET_CurrentUser() {
+    iscurrentUserLoading.value = true
+    try {
+      const currentUser = await $api.auth.GetCurrentUser()
 
-      const sessionCookie = useCookie('app-session', {
-        domain: getDomain(),
-        path: '/',
-        secure: true,
-      })
-      sessionCookie.value = 'true'
-
-      // Navigate to dashboard
-      router.push('/')
+      user.value = currentUser
+      selectedRole.value = currentUser.role as UserRole
+      isAuthenticated.value = true
     }
-    if (data?.token) {
-      router.push(`/verify-token?token=${data.token}&requiresTos=true`)
+    catch (error) {
+      console.error('Failed fetch current user', error)
+      isAuthenticated.value = false
     }
-
-    return data
-  }
-
-  async function handleOAuthLogin() {
-    const code = router.currentRoute.value.query.code
-    const provider: OAuthProvider | '' = ['google', 'microsoft'].includes(
-      router.currentRoute.value.params.provider as OAuthProvider,
-    )
-      ? (router.currentRoute.value.params.provider as OAuthProvider)
-      : ''
-
-    if (provider) {
-      await loginWithOAuth({ code, provider })
-      return 'success'
-    }
-    else {
-      router.push('/login')
-      return 'redirect'
+    finally {
+      iscurrentUserLoading.value = false
     }
   }
+
+  /**
+   * Login user using OAuth provider (Google, Microsoft, etc.).
+   * @param code - The authorization code returned from OAuth provider.
+   * @param provider - The OAuth provider (e.g., 'google', 'microsoft').
+   * @param source - The source of the login request (e.g., 'web', 'ios').
+   */
+  async function POST_Login(code: string, provider: OAuthProvider, source: string) {
+    const payload: OAuthPayload = {
+      code,
+      redirect_uri: `${window.location.origin}/auth/${provider}`,
+      provider,
+      source,
+      grant_type: 'authorization_code',
+    }
+
+    await $api.auth.Login(payload)
+    await GET_CurrentUser()
+  }
+
+  /**
+   * Logout the current user.
+   */
+  async function POST_Logout() {
+    await $api.auth.Logout()
+    user.value = null
+  }
+
   return {
     user,
-    isAuthenticated,
-    fakeUserId,
-    error,
     selectedRole,
-    loginWithOAuth,
-    handleOAuthLogin,
-
+    isAuthenticated,
+    iscurrentUserLoading,
+    POST_Login,
+    POST_Logout,
+    GET_CurrentUser,
   }
 })

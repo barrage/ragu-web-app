@@ -10,7 +10,7 @@ export const useAgentStore = defineStore('agent', () => {
   const agentsResponse = ref<AgentListResponse | null >()
   const selectedAgent = ref<Agent | null>()
   const agents = computed<Agent[]>(() => {
-    return agentsResponse.value?.agents || [] // Return agents array or empty array if null
+    return agentsResponse.value?.items || [] // Return agents array or empty array if null
   })
 
   const setEditMode = (value: boolean) => {
@@ -23,7 +23,7 @@ export const useAgentStore = defineStore('agent', () => {
     const data = await $api.agent.GetAllAgents(payload)
 
     if (data) {
-      selectedAgent.value = data.agents[0]
+      selectedAgent.value = data.items[0]
       agentsResponse.value = data
       return data
     }
@@ -80,22 +80,22 @@ export const useAgentStore = defineStore('agent', () => {
 
   // COMPUTEDS
   const getMappedAgents = computed<Agent[]>(() => {
-    return agentsResponse.value?.agents.map((agent: Agent) => {
+    return agentsResponse.value?.items.map((agent: Agent) => {
       return {
         ...agent,
         context: `${agent.context.split('.')[0]}...`,
-        createdAt: formatDate(agent.createdAt).value,
-        updatedAt: formatDate(agent.updatedAt).value,
+        createdAt: formatDate(agent.createdAt),
+        updatedAt: formatDate(agent.updatedAt),
       }
     }) || []
   })
 
   const setSelectedAgent = (agentId: string) => {
-    selectedAgent.value = agentsResponse.value?.agents.find(agent => agent.id === Number.parseInt(agentId)) || null
+    selectedAgent.value = agentsResponse.value?.items.find(agent => agent.id === agentId) || null
   }
 
   const getAgentById = (agentId: string) => {
-    return agentsResponse.value?.agents.find(agent => agent.id === Number.parseInt(agentId)) || null
+    return agentsResponse.value?.items.find(agent => agent.id === agentId) || null
   }
 
   return {

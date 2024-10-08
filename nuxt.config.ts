@@ -9,6 +9,7 @@ export default defineNuxtConfig({
       websocket: true,
     },
   },
+
   devtools: { enabled: true },
   runtimeConfig: {
     public: {

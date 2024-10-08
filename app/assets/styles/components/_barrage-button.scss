@@ -248,8 +248,6 @@
     }
 
     &--large {
-      --button-min-height: clamp(3.125rem, 2.9733rem + 0.6472vw, 3.75rem);
-      --button-padding-block: clamp(0.875rem, 0.8143rem + 0.2589vw, 1.125rem);
       --button-padding-inline: clamp(1.25rem, 1.1438rem + 0.4531vw, 1.6875rem);
 
       &.icon-only {

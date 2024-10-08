@@ -50,7 +50,7 @@ defineEmits(['close'])
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .modal {
   display: flex;
   position: fixed;

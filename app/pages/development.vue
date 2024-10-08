@@ -1,5 +1,12 @@
 <script lang="ts" setup>
 import DropdownSection from '~/components/DevelopmentShowcase/Dropdown/DropdownSection.vue'
+import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
+
+const isDialogVisible = ref<boolean>(false)
+
+const openModal = () => {
+  isDialogVisible.value = true
+}
 
 definePageMeta({
   layout: 'login-layout',
@@ -20,6 +27,18 @@ definePageMeta({
 
     <section>
       <h6>Dialog</h6>
+      <button @click="openModal">
+        Open modal
+      </button>
+      <el-dialog
+        v-model="isDialogVisible"
+        :close-icon="CloseCircleIcon"
+        class="barrage-dialog--large"
+      >
+        <template #header>
+          <h6>Chunk Preview</h6>
+        </template>
+      </el-dialog>
     </section>
 
     <section>

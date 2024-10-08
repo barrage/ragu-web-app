@@ -1,30 +1,23 @@
+<script setup lang="ts">
+const authStore = useAuthStore()
+const router = useRouter()
+
+onBeforeMount(async () => {
+  if (import.meta.client) {
+    await authStore.GET_CurrentUser()
+
+    if (!authStore.isAuthenticated) {
+      router.push('/login')
+    }
+  }
+})
+</script>
+
 <template>
   <div>
     <ElConfigProvider namespace="barrage">
       <NuxtLayout />
+      <LlmOverlayLoader v-show="authStore.iscurrentUserLoading" />
     </ElConfigProvider>
   </div>
 </template>
-
-<!-- <style scoped>
-.layout-enter-active,
-.layout-leave-active {
-  position: absolute;
-  width: 100%;
-  transition: all 0.5s ease;
-}
-
-.layout-leave-active {
-  opacity: 1;
-}
-.layout-leave-to {
-  opacity: 0;
-}
-
-.layout-enter-active {
-  opacity: 0;
-}
-.layout-enter-to {
-  opacity: 1;
-}
-</style> -->

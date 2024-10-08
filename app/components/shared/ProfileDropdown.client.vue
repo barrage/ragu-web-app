@@ -27,6 +27,25 @@ const openProfileModal = () => {
   isProfileModelVisible.value = true
 }
 
+// Helpers
+async function handleSignOut() {
+  try {
+    await oAuthStore.POST_Logout()
+    isSignOutModalVisible.value = false
+    await router.push('/login')
+  }
+  catch (error) {
+    console.error('Logout failed:', error)
+    ElNotification({
+      title: 'Logout failed',
+      message: 'An error occurred while trying to log you out. Please try again.',
+      type: 'error',
+      customClass: 'error',
+      duration: 2500,
+    })
+  }
+}
+
 const popperOptions = {
   placement: 'bottom-end',
   modifiers: [
@@ -51,14 +70,14 @@ const user = ref({
   email: 'imeprezime@gmail.com',
 })
 
-const switchPanel = () => {
-  if (oAuthStore.selectedRole === 'user') {
+const switchRole = () => {
+  const currentPath = router.currentRoute.value.path
+
+  if (currentPath === '/') {
     router.push('/admin')
-    oAuthStore.selectedRole = 'admin'
   }
-  else {
+  else if (currentPath === '/admin') {
     router.push('/')
-    oAuthStore.selectedRole = 'user'
   }
 }
 </script>
@@ -79,12 +98,15 @@ const switchPanel = () => {
             <span class="user-mail">{{ user.email }}</span>
           </div>
         </div>
-        <div class="horizontal-divider" />
-        <el-dropdown-item @click="switchPanel">
-          <div class="dropdown-item">
-            <AdminIcon /> <p>  {{ oAuthStore.selectedRole === 'user' ? $t('profileDropdown.switchToAdmin') : $t('profileDropdown.switchToUser') }}</p>
-          </div>
-        </el-dropdown-item>
+        <template v-if="oAuthStore.selectedRole === 'ADMIN'">
+          <div class="horizontal-divider" />
+          <el-dropdown-item @click="switchRole">
+            <div class="dropdown-item">
+              <AdminIcon /> <p>  {{ router.currentRoute.value.path === '/' ? $t('profileDropdown.switchToAdmin') : $t('profileDropdown.switchToUser') }}</p>
+            </div>
+          </el-dropdown-item>
+        </template>
+
         <div class="horizontal-divider" />
         <el-dropdown-item @click="openProfileModal">
           <div class="dropdown-item">
@@ -146,7 +168,7 @@ const switchPanel = () => {
       </el-button>
       <el-button
         type="primary"
-        @click="router.push('/login')"
+        @click="handleSignOut"
       >
         {{ $t('profileDropdown.signOut') }}
       </el-button>

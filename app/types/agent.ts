@@ -1,14 +1,23 @@
 export interface Agent {
-  id: number
-  name: string
+  active: boolean
   context: string
   createdAt: string
+  description: string
+  embeddingModel: string
+  embeddingProvider: string
+  id: string
+  language: string
+  llmProvider: string
+  model: string
+  name: string
+  temperature: number
   updatedAt: string
+  vectorProvider: string
 }
 
 export interface AgentListResponse {
-  count: number
-  agents: Agent[]
+  items: Agent[]
+  total: number
 }
 export interface AgentDetail {
   name: string

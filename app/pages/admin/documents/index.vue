@@ -9,7 +9,7 @@ const documentStore = useDocumentsStore()
 
 documentStore.GET_AllDocuments()
 </script>
-
+  
 <template>
   <AdminPageContainer>
     <AdminPageHeadingTemplate>

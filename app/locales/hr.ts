@@ -152,4 +152,11 @@ export default {
     },
   },
 
+  auth: {
+    notifications: {
+      user_authenticate: 'Korisnik nije autentificiran, preusmjerava se na prijavu',
+    },
+
+  },
+
 }
