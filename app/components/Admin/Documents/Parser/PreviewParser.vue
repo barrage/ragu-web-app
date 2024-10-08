@@ -82,6 +82,7 @@ watch(
   padding: 12px;
   margin-right: 12px;
   max-height: max-content;
+  max-width: calc(50% - 22px);
   & .parser-preview-heading {
     display: flex;
     align-items: center;

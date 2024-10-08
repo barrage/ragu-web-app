@@ -9,9 +9,9 @@ const props = defineProps<{
 
 <template>
   <div>
-    <p class="current-config-title">
+    <h6 class="current-config-title">
       Current config
-    </p>
+    </h6>
     <div class="current-parser-config">
       <template v-if="props.config">
         <div class="start-end-range-wrapper">
@@ -30,13 +30,11 @@ const props = defineProps<{
             :description="props.config.range.toString()"
             horizontal
           />
-          <LabelDescriptionItem
-            label="Filters:"
-            :description="props.config.filters.join(', ')"
-            horizontal
-          />
         </div>
-
+        <LabelDescriptionItem
+          label="Filters:"
+          :description="props.config.filters.join(', ')"
+        />
         <!-- <span>Filters:
           <template v-if=" props?.config?.filters?.length">
             <template v-for="filter in props?.config?.filters">
@@ -73,6 +71,7 @@ const props = defineProps<{
   & .start-end-range-wrapper {
     display: flex;
     flex-direction: column;
+    gap: 8px;
     justify-content: space-between;
   }
   & span {

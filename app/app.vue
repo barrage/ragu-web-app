@@ -1,10 +1,12 @@
 <template>
-  <ElConfigProvider namespace="barrage">
-    <NuxtLayout />
-  </ElConfigProvider>
+  <div>
+    <ElConfigProvider namespace="barrage">
+      <NuxtLayout />
+    </ElConfigProvider>
+  </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .layout-enter-active,
 .layout-leave-active {
   position: absolute;
@@ -25,4 +27,4 @@
 .layout-enter-to {
   opacity: 1;
 }
-</style>
+</style> -->

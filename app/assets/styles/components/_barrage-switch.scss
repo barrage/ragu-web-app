@@ -1,0 +1,186 @@
+@layer barrage-switch {
+  :root {
+    --color-switch-background-color: var(--color-primary-900);
+    --color-switch-text-color: var(--color-primary-900);
+
+    --barrage-switch-ball-size: 20px;
+    --barrage-switch-border-width: 1px;
+    --color-switch-ball-color: var(--color-primary-900);
+
+    --color-switch-border-width: 1px;
+    --color-switch-border-style: var(--color-border-type-solid);
+    --color-switch-border-color: var(-color-primary-200);
+  }
+
+  html.dark {
+    .barrage-switch {
+      --barrage-switch-ball-color: var(--color-primary-100);
+      &::after {
+        color: var(--color-primary-100);
+      }
+
+      &.is-disabled::after {
+        color: var(--color-primary-200);
+      }
+
+      &__core {
+        background: var(--color-primary-700);
+        border-color: var(--color-primary-600);
+
+        &:hover {
+          background: var(--color-primary-700);
+          border-color: var(--color-primary-500);
+        }
+
+        &:active {
+          background: var(--color-primary-600);
+          border-color: var(--color-primary-600);
+        }
+      }
+
+      &.is-disabled {
+        .barrage-switch {
+          &__core {
+            background: var(--color-primary-800);
+            border-color: var(--color-primary-100);
+          }
+
+          &__action {
+            color: var(--color-primary-200);
+          }
+        }
+      }
+    }
+  }
+
+  .barrage-switch {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    font-size: 14px;
+    line-height: 20px;
+    height: 32px;
+    vertical-align: middle;
+    counter-reset: my-counter;
+    cursor: pointer;
+
+    &::after {
+      transition: color 0.3s;
+      position: absolute;
+      top: 6px;
+      right: 7px;
+      content: '0';
+      color: var(--color-primary-900);
+      pointer-events: none;
+      font-size: 12px;
+    }
+
+    &.is-checked::after {
+      left: 10px;
+      content: 'I';
+      --barrage-switch-text-color: var(--barrage-shade-0);
+    }
+
+    &.is-disabled::after {
+      --barrage-switch-text-color: var(--color-primary-600);
+    }
+
+    &__input {
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      margin: 0;
+    }
+
+    &:has(input:focus) &__core {
+      outline: var(--barrage-outline-global);
+      outline-offset: var(--barrage-outline-global-offset);
+    }
+
+    &__core {
+      display: inline-flex;
+      position: relative;
+      align-items: center;
+      min-width: 42px;
+      height: 24px;
+      transition:
+        border-color 0.3s,
+        background-color 0.3s;
+      border-width: var();
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--color-primary-800);
+      border-radius: 12px;
+      background: var(--barrage-switch-background-color);
+
+      &:hover {
+        --barrage-switch-background-color: var(--color-gray-500);
+        --barrage-switch-border-color: var(--color-gray-500);
+      }
+
+      &:active {
+        --barrage-switch-background-color: var(--color-gray-600);
+        --barrage-switch-border-color: var(--color-gray-600);
+      }
+    }
+
+    &__action {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      width: var(--barrage-switch-ball-size);
+      height: var(--barrage-switch-ball-size);
+      z-index: 1;
+      left: 1px;
+      border-radius: 50%;
+      transition: all 0.3s;
+      background: var(--color-primary-600);
+    }
+
+    &.is-checked &__action {
+      left: calc(
+        100% - var(--barrage-switch-ball-size) - var(
+            --barrage-switch-border-width
+          )
+      );
+    }
+
+    &.is-checked &__core {
+      --barrage-switch-background-color: var(--barrage-color-magenta-standard);
+      --barrage-switch-border-color: var(--barrage-color-magenta-standard);
+
+      &:hover {
+        --barrage-switch-background-color: var(--barrage-color-magenta-hovered);
+        --barrage-switch-border-color: var(--barrage-color-magenta-hovered);
+      }
+
+      &:active {
+        --barrage-switch-background-color: var(--barrage-color-magenta-pressed);
+        --barrage-switch-border-color: var(--barrage-color-magenta-pressed);
+      }
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+    }
+
+    &.is-disabled &__core {
+      &,
+      &:hover,
+      &:focus {
+        --barrage-switch-background-color: var(--barrage-color-gray-200);
+        --barrage-switch-border-color: var(--barrage-color-gray-200);
+      }
+    }
+
+    &.is-disabled &__action {
+      &,
+      &:hover,
+      &:focus {
+        --barrage-switch-ball-color: var(--color-primary-100);
+      }
+    }
+  }
+}

@@ -164,29 +164,33 @@ const removeFilter = (filter: string) => {
             </template>
           </ElInputNumber>
         </ElFormItem>
-      </div>
-      <div class="range-filters-wrapper">
         <ElFormItem
           label="Range"
           prop="range"
           class="range-checkbox"
         >
-          <input
+          <!--    <input
             v-model="form.range"
             type="checkbox"
-          >
+          > -->
+
+          <el-switch v-model="form.range" />
         </ElFormItem>
+      </div>
+      <div class="range-filters-wrapper">
         <ElFormItem
           label="Filters"
           prop="end"
         >
           <ElInput v-model="filtersString" @keyup.enter="addFilter()" />
-          <template v-for="filter in form.filters" :key="filter">
-            <div class="filter-item">
-              <span> {{ filter }}  </span>
-              <CloseIcon class="delete-filter-icon" @click="removeFilter(filter)" />
-            </div>
-          </template>
+          <div class="filter-items-wrapper">
+            <template v-for="filter in form.filters" :key="filter">
+              <div class="filter-item">
+                <span> {{ filter }}  </span>
+                <CloseIcon class="delete-filter-icon" @click="removeFilter(filter)" />
+              </div>
+            </template>
+          </div>
         </ElFormItem>
       </div>
 
@@ -229,6 +233,11 @@ const removeFilter = (filter: string) => {
   flex-direction: column;
   gap: 12px;
 
+  & h6 {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-800);
+  }
+
   & .start-end-form-items-wrapper {
     display: flex;
     gap: 22px;
@@ -243,6 +252,34 @@ const removeFilter = (filter: string) => {
     }
   }
 }
+
+.filter-items-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  row-gap: 12px;
+
+  .filter-item {
+    display: flex;
+    margin-right: 12px;
+    align-items: center;
+    border: 1px solid var(--color-primary-400);
+    color: var(--color-primary-700);
+    width: max-content;
+    padding: 2px 4px;
+    border-radius: 6px;
+    font-size: var(--font-size-fluid-2);
+
+    & .delete-filter-icon {
+      color: var(--color-primary-600);
+      cursor: pointer;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
 .form-actions {
   display: flex;
   gap: 22px;
@@ -251,26 +288,23 @@ const removeFilter = (filter: string) => {
   margin-top: 32px;
 }
 
-.filter-item {
-  display: flex;
-  margin-right: 12px;
-  align-items: center;
-  border: 1px solid var(--color-primary-400);
-  width: max-content;
-  padding: 2px 4px;
-  border-radius: 6px;
-
-  & .delete-filter-icon {
-    cursor: pointer;
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-}
-
 .dark {
   & .edit-parser-config-wrapper {
     border-top: 1px solid var(--color-primary-600);
+
+    & h6 {
+      color: var(--color-primary-100);
+    }
+  }
+  & .filter-items-wrapper {
+    .filter-item {
+      border: 1px solid var(--color-primary-300);
+      color: var(--color-primary-300);
+
+      & .delete-filter-icon {
+        color: var(--color-primary-400);
+      }
+    }
   }
 }
 </style>

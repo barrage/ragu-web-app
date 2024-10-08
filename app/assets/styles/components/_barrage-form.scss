@@ -13,7 +13,7 @@
   html.dark {
     .barrage-form-item {
       &__label {
-        --form-item-label-color: var(--color-primary-400);
+        --form-item-label-color: var(--color-primary-100);
       }
 
       &__error {
@@ -28,7 +28,7 @@
 
       &:has(.barrage-input__inner:disabled) {
         .barrage-form-item__label {
-          --form-item-label-color: var(--color-primary-700);
+          --form-item-label-color: var(--color-primary-500);
         }
       }
 

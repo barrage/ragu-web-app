@@ -3,13 +3,17 @@
     --barrage-input-number-increase-position: 0;
     --barrage-input-number-decrease-position: 3rem;
 
-    --barrage-input-number-button-border-color: var(--color-primary-200);
+    --barrage-input-number-button-border-color: var(--color-primary-400);
     --barrage-input-number-button-background: var(--color-primary-200);
+    --barrage-input-number-button-increase-background: var(--color-primary-300);
+    --barrage-input-number-button-decrease-background: var(--color-primary-300);
   }
 
   html.dark {
-    --barrage-input-number-button-border-color: var(--color-primary-800);
-    --barrage-input-number-button-background: var(--color-primary-800);
+    --barrage-input-number-button-border-color: var(--color-primary-600);
+    --barrage-input-number-button-background: var(--color-primary-700);
+    --barrage-input-number-button-increase-background: var(--color-primary-600);
+    --barrage-input-number-button-decrease-background: var(--color-primary-600);
   }
 
   .barrage-input-number {
@@ -28,39 +32,63 @@
       line-height: var(--el-input-height);
       box-sizing: border-box;
       vertical-align: middle;
-    }
-    &__decrease,
-    &__increase {
-      position: absolute;
-      width: fit-content;
-      padding: 4px;
-      height: auto;
-      right: 0;
-      bottom: var(--spacing-mobile-4-xs);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      z-index: 1;
-      margin-right: 4px;
-      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid var(--barrage-input-number-button-border-color);
+      background: var(--barrage-input-number-button-background);
 
-      .barrage-icon {
-        display: none;
+      .barrage-input__wrapper {
+        display: inline-flex;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+        padding-left: 42px;
+        padding-right: 42px;
+
+        & .barrage-input__inner {
+          text-align: center;
+          line-height: 1;
+          padding-inline: 0;
+        }
       }
-      &:hover {
-        background-color: var(--barrage-input-number-button-background);
-      }
+    }
+
+    &__increase {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      position: absolute;
+      z-index: 1;
+      top: 1px;
+      bottom: 1px;
+      width: 32px;
+      background: var(--el-fill-color-light);
+      color: var(--el-text-color-regular);
+      cursor: pointer;
+      font-size: 13px;
+      user-select: none;
+      right: 1px;
+      border-radius: 6px;
+      background: var(--barrage-input-number-button-increase-background);
     }
 
     &__decrease {
-      right: var(--barrage-input-number-decrease-position);
-      border-right: var(--barrage-border-global-1);
-      border-color: var(--barrage-input-number-button-border-color);
-
-      &::before {
-        background-position: center;
-      }
+      left: 1px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      position: absolute;
+      z-index: 1;
+      top: 1px;
+      bottom: 1px;
+      width: 32px;
+      background: var(--el-fill-color-light);
+      color: var(--el-text-color-regular);
+      cursor: pointer;
+      background: var(--barrage-input-number-button-decrease-background);
+      user-select: none;
     }
   }
 }
