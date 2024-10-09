@@ -6,7 +6,7 @@ import TxtIcon from '~/assets/icons/svg/txt-icon.svg'
 import MarkdownIcon from '~/assets/icons/svg/markdown-icon.svg'
 import CsvIcon from '~/assets/icons/svg/csv-icon.svg'
 import JsonIcon from '~/assets/icons/svg/json-icon.svg'
-import FileDetailsIcon from '~/assets/icons/svg/file-details.svg'
+import DocumentArrowRightIcon from '~/assets/icons/svg/document-arrow-right.svg'
 
 import UnknownDocumentIcon from '~/assets/icons/svg/unknown-document-icon.svg'
 
@@ -22,6 +22,9 @@ const navigateToDocumentDetailsPage = () => {
   if (props.document.id) {
     router.push(`documents/${props.document.id}`)
   }
+}
+const formatName = (str: string, n: number) => {
+  return str.length > n ? `${str.slice(0, n)}...` : str
 }
 </script>
 
@@ -60,7 +63,7 @@ const navigateToDocumentDetailsPage = () => {
         original
       />
       <div class="document-name-wrapper">
-        <h6>{{ props.document.name }}</h6>
+        <h6>{{ formatName(props.document.name, 25) }}</h6>
         <span>Uploaded {{ formatDate(props.document.createdAt) }}</span>
       </div>
     </div>
@@ -81,8 +84,8 @@ const navigateToDocumentDetailsPage = () => {
         :enterable="false"
         placement="top"
       >
-        <el-button @click="navigateToDocumentDetailsPage">
-          <FileDetailsIcon :size="24" />
+        <el-button type="primary" @click="navigateToDocumentDetailsPage">
+          <DocumentArrowRightIcon size="24" />
         </el-button>
       </ElTooltip>
     </div>
@@ -94,12 +97,12 @@ const navigateToDocumentDetailsPage = () => {
   border: 1px solid var(--color-primary-200);
   border-radius: 8px;
   padding: 16px;
-  background-color: var(--color-primary-0);
+  background-color: var(--color-primary-100);
   box-shadow: 0 2px 4px var(--color-primary-100);
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 1.5rem;
   align-items: center;
 
   &:hover {
@@ -112,6 +115,7 @@ const navigateToDocumentDetailsPage = () => {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    text-overflow: ellipsis;
 
     &:hover {
       cursor: pointer;
@@ -122,6 +126,7 @@ const navigateToDocumentDetailsPage = () => {
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
+      text-overflow: ellipsis;
       h6 {
         font-weight: var(--font-weight-bold);
         font-size: var(--font-size-fluid-3);
@@ -149,19 +154,6 @@ const navigateToDocumentDetailsPage = () => {
     display: flex;
     gap: 0.5rem;
     margin-top: 8px;
-
-    button {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 4px;
-      background-color: var(--color-primary-300);
-      color: white;
-      cursor: pointer;
-
-      &:hover {
-        background-color: var(--color-primary-600);
-      }
-    }
   }
 }
 

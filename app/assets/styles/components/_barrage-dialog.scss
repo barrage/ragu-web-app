@@ -38,7 +38,7 @@
     bottom: 0;
     left: 0;
     z-index: 2000;
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.5);
     overflow: auto;
     & .barrage-overlay-dialog {
       position: fixed;
@@ -57,6 +57,7 @@
 
   .barrage-dialog {
     display: flex;
+    z-index: 1999;
     flex-direction: column;
     gap: var(--spacing-fluid-m) 0;
     position: relative;

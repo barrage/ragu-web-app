@@ -36,11 +36,24 @@ export default {
       choseFrom: 'Agents:',
     },
   },
+  documents: {
+    title: 'Documents',
+    description: 'Organize and manage all documents that contribute to the AI\'s learning.',
+  },
+  members: {
+    title: 'Members',
+    description: 'Manage team members of your organization and set their access level',
+  },
+  dashboard: {
+    title: 'Dashboard',
+    description: '',
+  },
   agents: {
+    title: 'Agents',
     titles: {
       mainTitle: 'Agents',
       details: 'Agent Details',
-      description: 'Overview where you can easily view, edit, and manage your agents details and statuses in one place.',
+      description: 'Manage the agents responsible for interacting with the AI',
       edit: 'Edit Agent',
       create: 'Create Agent',
       createDescription: 'Create your new agent by providing their name and context to get started!',
@@ -48,7 +61,7 @@ export default {
       deleteDescription: 'Are you sure you want to delete agent?',
     },
     labels: {
-      name: 'Agent Name',
+      name: 'Name',
       context: 'Context',
       created_at: 'Created At',
       updated_at: 'Updated At',
@@ -87,9 +100,10 @@ export default {
   },
 
   collections: {
+    title: 'Collections',
     titles: {
       title: 'Collections',
-      subTitle: 'Overview where you can easily view and manage your collections',
+      subTitle: 'Manage the content collections that guide the AI\'s knowledge base.',
       deleteTitle: 'Delete collection?',
       deleteDescription: 'Are you sure you want to delete collection?',
       create: 'Create Collection',

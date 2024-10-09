@@ -39,11 +39,24 @@ export default {
       choseFrom: 'Agenti:',
     },
   },
+  documents: {
+    title: 'Dokumenti',
+    description: 'Upravljajte i organizirajte sve dokumente koji pomažu AI-ju u učenju.',
+  },
+  members: {
+    title: 'Korisnici',
+    description: 'Upravljajte članovima svog tima i postavite njihove razine pristupa.',
+  },
+  dashboard: {
+    title: 'Nadzorna ploča',
+    description: '',
+  },
   agents: {
+    title: 'Agenti',
     titles: {
       mainTitle: 'Agenti',
       details: 'Detalji agenta',
-      description: 'Pregled u kojem možete jednostavno pregledavati, uređivati i upravljati detaljima i statusima svojih agenata na jednom mjestu.',
+      description: 'Upravljajte agentima odgovornima za interakciju s AI-om.',
       edit: 'Uredi agenta',
       create: 'Kreiraj agenta',
       createDescription: 'Stvorite svog novog agenta tako da navedete njegovo ime i kontekst da biste započeli!',
@@ -52,9 +65,9 @@ export default {
 
     },
     labels: {
-      name: 'Ime agenta',
+      name: 'Naziv',
       context: 'Kontekst',
-      created_at: 'Stvoren',
+      created_at: 'Kreiran',
       updated_at: 'Ažuriran',
       actions: 'Radnje',
     },
@@ -90,9 +103,10 @@ export default {
 
   },
   collections: {
+    title: 'Kolekcije',
     titles: {
       title: 'Kolekcije',
-      subTitle: 'Pregled gdje možete jednostavno pregledavati svoje zbirke i upravljati njima',
+      subTitle: 'Upravljajte kolekcijama sadržaja koje usmjeravaju bazu znanja AI-a.',
       deleteTitle: 'Izbriši kolekciju',
       deleteDescription: 'Jeste li sigurni da želite izbrisati kolekciju?',
       create: 'Kreiraj kolekciju',

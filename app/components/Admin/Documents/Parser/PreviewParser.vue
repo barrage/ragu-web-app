@@ -97,6 +97,7 @@ watch(
     padding: 8px;
     margin-top: 8px;
     height: 480px;
+    overflow-x: hidden;
     overflow-y: auto;
 
     & p {

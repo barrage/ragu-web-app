@@ -21,73 +21,40 @@ interface MenuCategory {
 
 const router = useRouter()
 const route = useRoute()
-
-const menuList: MenuCategory[] = ([
+const { t } = useI18n()
+const menuList = computed<MenuCategory[]>(() => ([
   {
     title: '',
     category: 'menu',
     items: [
       {
-        label: 'Dashboard',
+        label: t('dashboard.title'),
         link: '/admin',
         icon: LayoutIcon,
       },
       {
-        label: 'Members',
+        label: t('members.title'),
         link: '/admin/members',
         icon: TeamIcon,
       },
       {
-        label: 'Agents',
+        label: t('agents.title'),
         link: '/admin/agents',
         icon: AgentIcon,
       },
       {
-        label: 'Documents',
+        label: t('documents.title'),
         link: '/admin/documents',
         icon: DocumentIcon,
       },
       {
-        label: 'Collections',
+        label: t('collections.title'),
         link: '/admin/collections',
         icon: CollectionIcon,
       },
     ],
-
   },
-
-  /* {
-    title: 'Options',
-    category: 'options',
-    items: [
-      {
-        label: 'Calendar',
-        link: '/calendar',
-        icon: LayoutIcon,
-      },
-      {
-        label: 'Gallerty',
-        link: '/gallery',
-        icon: LayoutIcon,
-
-      },
-      {
-        label: 'Support',
-        link: '/support',
-        icon: LayoutIcon,
-
-      },
-      {
-        label: 'Settings',
-        link: '/settings',
-        icon: LayoutIcon,
-
-      },
-    ],
-
-  }, */
-
-])
+]))
 
 const selectedFeature = ref<{ label: string, category: 'menu' | 'options' } | null>(null)
 
