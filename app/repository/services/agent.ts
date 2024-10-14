@@ -3,7 +3,7 @@ import type { Agent, AgentDetail, AgentListResponse } from '~/types/agent'
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
-  private readonly endpoint: string = '/agents'
+  private readonly endpoint: string = 'admin/agents'
 
   /**
    * Fetches a list of all agents.
@@ -32,7 +32,9 @@ export default class AgentService extends FetchFactory {
    */
   async GetSingleAgent(agentId: string): Promise<Agent> {
     try {
-      return await this.$fetch<Agent>(`${this.endpoint}/${agentId}`)
+      return await this.$fetch<Agent>(`${this.endpoint}/${agentId}`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({
@@ -51,6 +53,7 @@ export default class AgentService extends FetchFactory {
   async CreateAgent(body: AgentDetail): Promise<Agent> {
     try {
       return await this.$fetch(this.endpoint, {
+        credentials: 'include',
         method: 'POST',
         body: JSON.stringify(body),
       })
@@ -73,6 +76,7 @@ export default class AgentService extends FetchFactory {
   async UpdateAgent(id: number, body: AgentDetail): Promise<Agent> {
     try {
       return await this.$fetch(`${this.endpoint}/${id}`, {
+        credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(body),
       })
@@ -94,6 +98,7 @@ export default class AgentService extends FetchFactory {
   async DeleteAgent(id: number): Promise<number> {
     try {
       await this.$fetch(`${this.endpoint}/${id}`, {
+        credentials: 'include',
         method: 'DELETE',
       })
       return 204

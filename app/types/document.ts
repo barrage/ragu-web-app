@@ -57,6 +57,7 @@ export interface SemanticChunkerConfig {
   skipForward: string[]
   skipBack: string[]
   embedModel: string
+  embedProvider: string
 }
 
 export interface SemanticChunker {

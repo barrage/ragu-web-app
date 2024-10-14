@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AddIcon from '~/assets/icons/svg/add.svg'
+import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
@@ -12,7 +12,7 @@ const localePath = useLocalePath()
       class="create-button"
       @click="navigateTo({ path: localePath('/admin/agents/create') })"
     >
-      <AddIcon /> {{ t('agents.buttons.create') }}
+      <AgentIcon size="24" />  {{ t('agents.buttons.create') }}
     </ElButton>
   </div>
 </template>

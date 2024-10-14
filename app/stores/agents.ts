@@ -6,6 +6,7 @@ export const useAgentStore = defineStore('agent', () => {
   const { $api } = useNuxtApp()
 
   // STATE
+
   const editMode = ref<boolean>(false)
   const agentsResponse = ref<AgentListResponse | null >()
   const selectedAgent = ref<Agent | null>()
@@ -43,6 +44,7 @@ export const useAgentStore = defineStore('agent', () => {
       return selectedAgent.value = null
     }
   }
+
   async function CreateAgent(body: AgentDetail): Promise<Agent | null> {
     const data = await $api.agent.CreateAgent(body)
     if (data) {
@@ -67,15 +69,8 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function DeleteAgent(id: number): Promise<boolean> {
-    try {
-      await $api.agent.DeleteAgent(id)
-      return true
-    }
-    catch (error) {
-      console.error(`Error deleting agent with ID ${id}:`, error)
-      return false
-    }
+  async function DeleteAgent(id: number): Promise<void> {
+    await $api.agent.DeleteAgent(id)
   }
 
   // COMPUTEDS
@@ -112,5 +107,6 @@ export const useAgentStore = defineStore('agent', () => {
     CreateAgent,
     UpdateAgent,
     DeleteAgent,
+
   }
 })

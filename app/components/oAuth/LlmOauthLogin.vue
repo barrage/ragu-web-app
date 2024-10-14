@@ -3,6 +3,9 @@ import type { OAuthProvider } from '~/types/auth'
 import GoogleLogo from '~/assets/icons/svg/google.svg'
 import MicrosoftLogo from '~/assets/icons/svg/microsoft.svg'
 
+// CONSTANTS
+const runtimeConfig = useRuntimeConfig()
+
 const scopes = {
   google: [
     'https://www.googleapis.com/auth/userinfo.profile',
@@ -25,13 +28,13 @@ const scopes = {
 const oAuthConfig = {
   google: {
     authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
-    client_id: import.meta.env?.VITE_OAUTH_GOOGLE_LOGIN_CLIENTID as string,
+    client_id: runtimeConfig.public.oAuthGoogleId as string,
     additionalParams: '&access_type=offline&include_granted_scopes=true',
     scopes: scopes.google.join(' '),
   },
   microsoft: {
     authUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-    client_id: import.meta.env?.VITE_OAUTH_MICROSOFT_LOGIN_CLIENTID as string,
+    client_id: import.meta.env?.OAUTH_MICROSOFT_LOGIN_CLIENTID as string,
     additionalParams: '&response_mode=query',
     scopes: scopes.microsoft.join(' '),
   },

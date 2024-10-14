@@ -10,15 +10,28 @@ definePageMeta({
 
 // CONSTANTS
 const agentStore = useAgentStore()
+const providerStore = useProviderStore()
+const collectionStore = useCollectionsStore()
 const { t } = useI18n()
 const localePath = useLocalePath()
-const maxContext = 1000
 
 // STATE
+
+const maxContext = 1000
+const embeddingProviders = ['fembed', 'openai']
 const formRef = ref<FormInstance>()
 const form = reactive<AgentDetail>({
   name: '',
   context: '',
+  description: '',
+  llmProvider: '',
+  model: '',
+  language: '',
+  temperature: 0.1,
+  vectorProvider: '',
+  embeddingProvider: '',
+  embeddingModel: '',
+  active: true,
 })
 const rules = reactive<FormRules<AgentDetail>>({
   name: [
@@ -29,12 +42,58 @@ const rules = reactive<FormRules<AgentDetail>>({
     { required: true, message: t('agents.rules.context.required_message'), trigger: 'blur' },
     { min: 30, max: maxContext, message: t('agents.rules.context.length_message', { min: 30, max: maxContext }), trigger: 'blur' },
   ],
+  description: [
+    { required: true, message: t('agents.rules.description.required_message'), trigger: 'blur' },
+  ],
+  llmProvider: [
+    { required: true, message: t('agents.rules.llmProvider.required_message'), trigger: 'change' },
+  ],
+  model: [
+    { required: true, message: t('agents.rules.model.required_message'), trigger: 'blur' },
+  ],
+  language: [
+    { required: true, message: t('agents.rules.language.required_message'), trigger: 'blur' },
+  ],
+  temperature: [
+    { required: true, message: t('agents.rules.temperature.required_message'), trigger: 'change' },
+  ],
+  vectorProvider: [
+    { required: true, message: t('agents.rules.vectorProvider.required_message'), trigger: 'change' },
+  ],
+  embeddingProvider: [
+    { required: true, message: t('agents.rules.embeddingProvider.required_message'), trigger: 'change' },
+  ],
+  embeddingModel: [
+    { required: true, message: t('agents.rules.embeddingModel.required_message'), trigger: 'blur' },
+  ],
+  active: [
+    { required: true, message: t('agents.rules.active.required_message'), trigger: 'change' },
+  ],
+})
+
+// DYNAMIC MODELS STATE
+
+// WATCHER FOR LLM PROVIDER
+watch(() => form.llmProvider, async (newProvider) => {
+  if (newProvider) {
+    await providerStore.GET_AvailableListLlms(newProvider)
+  }
+})
+watch(() => form.embeddingProvider, async (newModel) => {
+  if (newModel === 'azure') {
+    await collectionStore.GET_ListEmbeddingModels('openai')
+  }
+  else {
+    await collectionStore.GET_ListEmbeddingModels(newModel)
+  }
 })
 
 // API CALLS
 const { execute: createExecute, error: createError, status: createStatus } = await useAsyncData(() => agentStore.CreateAgent(form), {
   immediate: false,
 })
+
+providerStore.GET_List_Providers()
 
 // HELPERS
 const createAgent = async (formEl: FormInstance | undefined) => {
@@ -86,13 +145,13 @@ errorHandler(createError)
       {{ t('agents.titles.createDescription') }}
     </p>
 
-    <!-- EDIT FORM -->
     <ElForm
       ref="formRef"
       class="container"
       :model="form"
       :rules="rules"
     >
+      <!-- Name -->
       <ElFormItem
         class="group"
         :label="t('agents.labels.name')"
@@ -100,16 +159,137 @@ errorHandler(createError)
       >
         <ElInput v-model="form.name" />
       </ElFormItem>
+
+      <!-- Context -->
       <ElFormItem
         class="group context"
         :label="t('agents.labels.context')"
         prop="context"
       >
-        <ElInput
-          v-model="form.context"
-          type="textarea"
+        <ElInput v-model="form.context" type="textarea" />
+      </ElFormItem>
+
+      <!-- Description -->
+      <ElFormItem
+        class="group description"
+        :label="t('agents.labels.description')"
+        prop="description"
+      >
+        <ElInput v-model="form.description" />
+      </ElFormItem>
+
+      <!-- LLM Provider -->
+      <ElFormItem
+        class="group"
+        :label="t('agents.labels.llmProvider')"
+        prop="llmProvider"
+      >
+        <ElSelect v-model="form.llmProvider" placeholder="Select LLM Provider">
+          <ElOption
+            v-for="provider in embeddingProviders"
+            :key="provider"
+            :label="provider"
+            :value="provider"
+          />
+        </ElSelect>
+      </ElFormItem>
+
+      <!-- Model -->
+      <ElFormItem
+        class="group"
+        :label="t('agents.labels.model')"
+        prop="model"
+      >
+        <ElSelect
+          v-model="form.model"
+          placeholder="Select Model"
+          :disabled="providerStore?.availableLlmList?.length === 0"
+        >
+          <ElOption
+            v-for="model in providerStore?.availableLlmList"
+            :key="model"
+            :label="model"
+            :value="model"
+          />
+        </ElSelect>
+      </ElFormItem>
+
+      <!-- Language -->
+      <ElFormItem
+        class="group"
+        :label="t('agents.labels.language')"
+        prop="language"
+      >
+        <ElInput v-model="form.language" />
+      </ElFormItem>
+
+      <!-- Temperature -->
+      <ElFormItem
+        class="group"
+        :label="t('agents.labels.temperature')"
+        prop="temperature"
+      >
+        <ElSlider
+          v-model="form.temperature"
+          :min="0"
+          :max="1"
+          :step="0.1"
         />
       </ElFormItem>
+
+      <!-- Vector Provider -->
+      <ElFormItem
+        class="group"
+        :label="t('agents.labels.vectorProvider')"
+        prop="vectorProvider"
+      >
+        <ElSelect v-model="form.vectorProvider" placeholder="Select Vector Provider">
+          <ElOption
+            v-for="provider in providerStore?.listProviders?.vector"
+            :key="provider"
+            :label="provider"
+            :value="provider"
+          />
+        </ElSelect>
+      </ElFormItem>
+
+      <!-- Embedding Provider -->
+      <ElFormItem
+        class="group"
+        :label="t('agents.labels.embeddingProvider')"
+        prop="embeddingProvider"
+      >
+        <ElSelect v-model="form.embeddingProvider" placeholder="Select Embedding Provider">
+          <ElOption
+            v-for="provider in providerStore.listProviders?.embedding"
+            :key="provider"
+            :label="provider"
+            :value="provider"
+          />
+        </ElSelect>
+      </ElFormItem>
+
+      <!-- Embedding Model -->
+      <ElFormItem
+        class="group"
+        :label="t('agents.labels.model')"
+        prop="embeddingModel"
+      >
+        <ElSelect
+          v-model="form.embeddingModel"
+          placeholder="Select Model"
+          :disabled="collectionStore?.listEmbeddingsModels?.length === 0"
+        >
+          <ElOption
+            v-for="(dimension, model) in collectionStore?.listEmbeddingsModels"
+            :key="model"
+            :label="`${model} - ${dimension}`"
+            :value="model"
+          />
+        </ElSelect>
+      </ElFormItem>
+
+      <!-- Form Actions -->
       <ElFormItem class="actions">
         <ElButton
           type="primary"

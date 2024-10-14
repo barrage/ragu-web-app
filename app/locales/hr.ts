@@ -86,9 +86,18 @@ export default {
     labels: {
       name: 'Naziv',
       context: 'Kontekst',
-      created_at: 'Kreiran',
-      updated_at: 'Ažuriran',
+      created_at: 'Kreirano',
+      updated_at: 'Ažurirano',
       actions: 'Radnje',
+      description: 'Opis',
+      llmProvider: 'Llm Provider',
+      model: 'Model',
+      language: 'Jezik',
+      temperature: 'Temperatura',
+      vectorProvider: 'Vector Provider',
+      embeddingProvider: 'Embedding Provider',
+      embeddingModel: 'Embedding Model',
+      active: 'Aktivno',
     },
     buttons: {
       create: 'Kreiraj agenta',
@@ -117,6 +126,33 @@ export default {
       context: {
         required_message: 'Molimo unesite kontekst agenta',
         length_message: 'Kontekst mora biti dugačak između {min} i {max} znakova',
+      },
+      description: {
+        required_message: 'Molimo unesite opis',
+      },
+      llmProvider: {
+        required_message: 'Molimo odaberite valjanog LLM pružatelja',
+      },
+      model: {
+        required_message: 'Molimo odaberite model',
+      },
+      language: {
+        required_message: 'Molimo navedite jezik',
+      },
+      temperature: {
+        required_message: 'Molimo postavite temperaturu između 0 i 1',
+      },
+      vectorProvider: {
+        required_message: 'Molimo odaberite valjanog vektorskog pružatelja',
+      },
+      embeddingProvider: {
+        required_message: 'Molimo odaberite pružatelja ugrađenih modela',
+      },
+      embeddingModel: {
+        required_message: 'Molimo unesite ugrađeni model',
+      },
+      active: {
+        required_message: 'Molimo navedite je li agent aktivan',
       },
     },
 

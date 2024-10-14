@@ -175,7 +175,7 @@ errorHandler(createError)
           <ElSelect
             v-model="form.model"
             :placeholder="t('collections.labels.modelPlaceholder')"
-            :disabled="!form.embeddingProvider"
+            :disabled="form.embeddingProvider.length === 0"
           >
             <ElOption
               v-for="(dimension, model) in listEmbeddingsModels"

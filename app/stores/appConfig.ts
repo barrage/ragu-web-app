@@ -23,5 +23,6 @@ export const useAppConfigStore = defineStore('appConfig', () => {
   return {
     appConfig,
     GET_AppConfig,
+
   }
 })

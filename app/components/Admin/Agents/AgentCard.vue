@@ -15,7 +15,7 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 // STATE
-const agentToDeleteId = ref<number | null>(null)
+const agentToDeleteId = ref<number | string | null >(null)
 const isDeleteModalVisible = ref(false)
 
 // API CALLS

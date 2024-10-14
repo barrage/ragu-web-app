@@ -24,5 +24,18 @@ const props = defineProps<{
   border-radius: 8px;
   border: 1px solid var(--color-primary-400);
   padding: 12px 16px;
+
+  p:nth-child(1) {
+    margin-bottom: 5px;
+  }
+
+  p {
+    font-style: italic;
+  }
+
+  h6 {
+    text-decoration: underline;
+    font-weight: bold;
+  }
 }
 </style>

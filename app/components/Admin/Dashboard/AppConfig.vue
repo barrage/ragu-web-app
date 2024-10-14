@@ -12,6 +12,7 @@ const props = defineProps<{
     <div class="app-config-widgets-wrapper">
       <VectorProviders :vector-providers="props.appConfig?.vectorProviders" />
       <EmbeddingProviders :embedding-providers="props.appConfig?.embeddingProviders" />
+      <DefaultChunkers :default-chunkers="props.appConfig?.defaultChunkers" />
     </div>
   </div>
 </template>

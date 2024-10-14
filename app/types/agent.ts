@@ -22,6 +22,15 @@ export interface AgentListResponse {
 export interface AgentDetail {
   name: string
   context: string
+  description: string
+  llmProvider: string
+  model: string
+  language: string
+  temperature: number
+  vectorProvider: string
+  embeddingProvider: string
+  embeddingModel: string
+  active: boolean
 }
 
 export interface AgentsWithCount {

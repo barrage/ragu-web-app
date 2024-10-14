@@ -85,6 +85,16 @@ export default {
       created_at: 'Created At',
       updated_at: 'Updated At',
       actions: 'Actions',
+      description: 'Description',
+      llmProvider: 'Llm Provider',
+      model: 'Model',
+      language: 'Language',
+      temperature: 'Temperature',
+      vectorProvider: 'Vector Provider',
+      embeddingProvider: 'Embedding Provider',
+      embeddingModel: 'Embedding Model',
+      active: 'active',
+
     },
     buttons: {
       create: 'Create Agent',
@@ -113,6 +123,33 @@ export default {
       context: {
         required_message: 'Please input Agent context',
         length_message: 'Context should be {min} to {max} charaters long',
+      },
+      description: {
+        required_message: 'Please provide a description',
+      },
+      llmProvider: {
+        required_message: 'Please select a valid LLM provider',
+      },
+      model: {
+        required_message: 'Please select a model',
+      },
+      language: {
+        required_message: 'Please specify a language',
+      },
+      temperature: {
+        required_message: 'Please set a temperature between 0 and 1',
+      },
+      vectorProvider: {
+        required_message: 'Please select a valid vector provider',
+      },
+      embeddingProvider: {
+        required_message: 'Please select an embedding provider',
+      },
+      embeddingModel: {
+        required_message: 'Please provide an embedding model',
+      },
+      active: {
+        required_message: 'Please specify whether the agent is active',
       },
     },
 

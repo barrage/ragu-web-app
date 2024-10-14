@@ -1,0 +1,102 @@
+@layer barrage-slider {
+  :root {
+    --slider-runway-height: 0.375rem;
+    --slider-runway-background-color: var(--color-primary-300);
+    --slider-runway-radius: 6.25rem;
+    --slider-bar-background-color: var(--color-primary-300);
+    --slider-button-background-color: var(--color-primary-600);
+  }
+
+  .barrage-slider {
+    &__runway {
+      &.is-disabled {
+        .barrage-slider {
+          &__bar {
+            --slider-bar-background-color: var(--color-primary-600);
+          }
+        }
+      }
+    }
+  }
+
+  .barrage-slider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 32px;
+
+    &__runway {
+      flex: 1;
+      height: var(--slider-runway-height);
+      background-color: var(--slider-runway-background-color);
+      border-radius: var(--slider-runway-radius);
+      position: relative;
+      cursor: pointer;
+
+      &.is-disabled {
+        cursor: not-allowed;
+
+        .barrage-slider {
+          &__button-wrapper {
+            display: none;
+          }
+
+          &__bar {
+            --slider-bar-background-color: var(--color-primary-400);
+          }
+        }
+      }
+    }
+
+    &__bar {
+      height: 6px;
+      background-color: var(--slider-bar-background-color);
+      border-radius: 100px;
+      position: absolute;
+    }
+
+    &__button-wrapper {
+      height: 2.25rem;
+      width: 2.25rem;
+      position: absolute;
+      top: -0.9375rem;
+      transform: translateX(-50%);
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      outline: 0;
+      z-index: 1;
+
+      &.hover {
+        cursor: grab;
+
+        &.dragging {
+          cursor: grabbing;
+        }
+      }
+    }
+
+    &__button {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: var(--border-global-transparent);
+      background-color: var(--slider-button-background-color);
+      border-radius: var(--radius-circle);
+      box-shadow: var(--shadow-3);
+
+      &.dragging {
+        outline: var(--outline-global);
+        outline-offset: var(--outline-global-offset);
+      }
+    }
+
+    &__stop {
+      background-color: var(--slider-bar-background-color);
+      position: absolute;
+      height: 100%;
+      width: 1px;
+    }
+  }
+}

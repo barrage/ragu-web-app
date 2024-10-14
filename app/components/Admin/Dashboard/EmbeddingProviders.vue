@@ -6,7 +6,9 @@ const props = defineProps<{
 
 <template>
   <div class="embedding-providers-card">
-    <h6>Embedding Providers</h6>
+    <h6 class="title">
+      Embedding Providers
+    </h6>
 
     <div v-if="props.embeddingProviders && Object.keys(props.embeddingProviders).length" class="vector-providers-list">
       <div
@@ -34,11 +36,17 @@ const props = defineProps<{
   border: 1px solid var(--color-primary-400);
   padding: 12px 16px;
 
+  .title {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
   .provider {
     margin-bottom: 16px;
 
     h6 {
       margin-bottom: 4px;
+      font-style: italic;
     }
   }
 

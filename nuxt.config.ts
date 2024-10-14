@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     public: {
       apiBaseUrl: process.env.API_BASE_URL,
       apiChunkerUrl: process.env.API_CHUCKER_URL,
+      oAuthGoogleId: process.env.OAUTH_GOOGLE_LOGIN_CLIENTID,
     },
   },
   app: {
