@@ -36,4 +36,30 @@ export default {
       choseFrom: 'エージェント:',
     },
   },
+
+  users: {
+    title: 'ユーザー',
+    description: 'チームメンバーを管理し、アクセスレベルを設定します。',
+    invite_user: 'ユーザーを招待',
+    user_card: {
+      role: '役割',
+      status: '状態',
+      active_status: 'アクティブ',
+      inactive_status: '非アクティブ',
+      created_at: '作成済み',
+      view_more: 'ユーザーの詳細を見る',
+      edit_user: 'ユーザーを編集',
+      delete_user: 'ユーザーを削除',
+      adminRole: '管理者',
+      userRole: 'ユーザー',
+      updated_at: '更新日',
+      user_id: 'ユーザーID',
+      first_name: '名',
+      last_name: '姓',
+      username: 'ユーザー名',
+      email: 'メール',
+    },
+
+  },
+
 }

@@ -1,9 +1,24 @@
 export interface User {
   id: string
-  name: string
-  phone: string
-  createdAt: string
-  updatedAt: string
+  firstName: string
+  lastName: string
+  fullName: string
+  email: string
+  role: string
+  active: boolean
+  createdAt: string | number | Date
+  updatedAt: string | number | Date
 }
 
-export type UsersResponse = User[]
+export interface UsersResponse {
+  items: User[]
+  total: number
+}
+
+export interface CreateUserPayload {
+  email: string
+  fullName: string
+  firstName: string
+  lastName: string
+  role: string
+}

@@ -17,16 +17,16 @@ export default defineNuxtConfig({
       apiChunkerUrl: process.env.API_CHUCKER_URL,
     },
   },
-  /*  app: {
+  app: {
     pageTransition: {
       name: 'page',
       mode: 'out-in',
     },
-    layoutTransition: {
+    /*  layoutTransition: {
       name: 'layout',
       mode: 'out-in',
-    },
-  }, */
+    }, */
+  },
   modules: ['@nuxt/eslint', '@vueuse/nuxt', 'nuxt-svgo', '@pinia/nuxt', '@nuxtjs/i18n', '@element-plus/nuxt'],
   plugins: ['~/plugins/error-handler', { src: '~/plugins/websocket.client.ts', mode: 'client' }],
   eslint: {

@@ -37,4 +37,29 @@ export default {
       choseFrom: 'Agenten:',
     },
   },
+
+  users: {
+    title: 'Benutzer',
+    description: 'Verwalten Sie die Mitglieder Ihres Teams und legen Sie deren Zugriffsrechte fest.',
+    invite_user: 'Benutzer einladen',
+    user_card: {
+      role: 'Rolle',
+      status: 'Status',
+      active_status: 'Aktiv',
+      inactive_status: 'Inaktiv',
+      created_at: 'Erstellt',
+      view_more: 'Benutzerdetails anzeigen',
+      edit_user: 'Benutzer bearbeiten',
+      delete_user: 'Benutzer löschen',
+      adminRole: 'Administrator',
+      userRole: 'Benutzer',
+      updated_at: 'Aktualisiert am',
+      user_id: 'Benutzer-ID',
+      first_name: 'Vorname',
+      last_name: 'Nachname',
+      username: 'Benutzername',
+      email: 'E-Mail',
+    },
+  },
+
 }

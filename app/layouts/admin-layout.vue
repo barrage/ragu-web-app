@@ -8,7 +8,12 @@ const navigationStore = useNavigationStore()
     <LlmHeader />
     <LlmAdminAside />
     <main class="main">
-      <NuxtPage />
+      <NuxtPage
+        :transition="{
+          name: 'page',
+          mode: 'out-in',
+        }"
+      />
     </main>
   </div>
 </template>

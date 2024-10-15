@@ -2,6 +2,11 @@
 import { useClipboard } from '@vueuse/core'
 import CopyIcon from '~/assets/icons/svg/copy.svg'
 
+interface Slots {
+  customLabel?: () => string | Component
+  customDescription?: () => string | Component
+}
+
 const props = defineProps<{
   label: string | undefined
   description: string | undefined
@@ -9,7 +14,10 @@ const props = defineProps<{
   horizontal?: boolean
   canCopy?: boolean
   centered?: boolean
+  size?: 'small' | 'medium' | 'large'
 }>()
+
+const slots = defineSlots<Slots>()
 
 const { copy } = useClipboard()
 
@@ -30,12 +38,19 @@ const copyItem = () => {
 <template>
   <div
     class="label-description-item-container"
-    :class="{ reversed, horizontal, centered }"
+    :class="{ reversed, horizontal, centered, small: props.size === 'small', large: props.size === 'large' }"
   >
-    <span class="label">
+    <template v-if="slots.customLabel">
+      <slot name="customLabel" />
+    </template>
+    <span v-else class="label">
       {{ props.label }}
     </span>
+    <template v-if="slots.customDescription">
+      <slot name="customDescription" />
+    </template>
     <span
+      v-else
       class="description"
       :class="{ canCopy }"
       @click="copyItem"
@@ -63,7 +78,16 @@ const copyItem = () => {
   &.centered {
     align-items: center;
   }
-
+  &.small {
+    & .label {
+      font-size: var(--font-size-fluid-1);
+      line-height: normal;
+    }
+    & .description {
+      font-size: var(--font-size-fluid-2);
+      line-height: normal;
+    }
+  }
   & .label {
     font-size: var(--font-size-fluid-2);
     line-height: normal;

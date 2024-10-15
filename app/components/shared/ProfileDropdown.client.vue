@@ -64,20 +64,20 @@ const popperOptions = {
   ],
 }
 
-const user = ref({
-  name: 'Ime',
-  surname: 'Prezime',
-  email: 'imeprezime@gmail.com',
+const user = computed(() => {
+  return {
+    fullname: oAuthStore.user?.fullName,
+    email: oAuthStore.user?.email,
+  }
 })
 
 const switchRole = () => {
   const currentPath = router.currentRoute.value.path
-
-  if (currentPath === '/') {
-    router.push('/admin')
-  }
-  else if (currentPath === '/admin') {
+  if (currentPath.includes('/admin')) {
     router.push('/')
+  }
+  else {
+    router.push('/admin')
   }
 }
 </script>
@@ -93,7 +93,7 @@ const switchRole = () => {
           <ProfileIcon size="42" />
           <div class="username-mail-wrapper">
             <p class="username">
-              {{ `${user.name} ${user.surname}` }}
+              {{ user.fullname }}
             </p>
             <span class="user-mail">{{ user.email }}</span>
           </div>

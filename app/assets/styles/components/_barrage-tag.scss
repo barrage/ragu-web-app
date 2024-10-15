@@ -1,0 +1,184 @@
+@layer barrage-tag {
+  :root {
+    --barrage-tag-width: max-content;
+    --barrage-tag-height: clamp(1.5rem, 1.4697rem + 0.1294vw, 1.625rem);
+    --barrage-tag-gap: var(--spacing-mobile-5-xs);
+    --barrage-tag-font-size: var(--font-size-fluid-2);
+    --barrage-tag-font-weight: var(--font-weight-medium);
+    --barrage-tag-color: var(--color-gray-0);
+    --barrage-tag-background-color: var(--color-red-100);
+    --barrage-tag-border-radius: var(--radius-2);
+    --barrage-tag-padding-block: var(--spacing-fluid-7-xs);
+    --barrage-tag-padding-inline: var(--spacing-fluid-5-xs);
+    --barrage-tag-dot-size: 0.5rem;
+
+    // Default sizes
+    --barrage-tag-font-size-default: var(--font-size-fluid-2);
+    --barrage-tag-font-size-large: var(--font-size-fluid-3);
+    --barrage-tag-font-size-small: var(--font-size-fluid-1);
+
+    --barrage-tag-height-default: clamp(1.5rem, 1.4697rem + 0.1294vw, 1.625rem);
+    --barrage-tag-height-large: clamp(2rem, 1.8rem + 0.15vw, 2.25rem);
+    --barrage-tag-height-small: clamp(1.25rem, 1.2rem + 0.1vw, 1.5rem);
+  }
+
+  html.dark {
+    .barrage-tag {
+      &__content {
+        .barrage-icon--fill-success,
+        .barrage-icon--fill-success * {
+          fill: var(--color-green-300);
+        }
+
+        .barrage-icon--fill-info,
+        .barrage-icon--fill-info * {
+          fill: var(--color-blue-200);
+        }
+
+        .barrage-icon--fill-inactive,
+        .barrage-icon--fill-inactive * {
+          fill: var(--color-gray-500);
+        }
+      }
+
+      &--primary {
+        --barrage-tag-dot-color: var(--color-primary-300);
+        --barrage-tag-background-color: transparent;
+        --barrage-tag-border-color: var(--color-primary-500);
+        --barrage-tag-color: var(--color-primary-0);
+      }
+
+      &--success {
+        --barrage-tag-dot-color: var(--color-green-700);
+        --barrage-tag-background-color: var(--color-green-400);
+        --barrage-tag-border-color: var(--color-green-900);
+        --barrage-tag-color: var(--color-gray-0);
+      }
+
+      &--info {
+        --barrage-tag-dot-color: var(--color-blue-600);
+        --barrage-tag-background-color: var(--color-blue-400);
+        --barrage-tag-border-color: var(--color-blue-600);
+        --barrage-tag-color: var(--color-blue-0);
+      }
+
+      &--warning {
+        --barrage-tag-dot-color: var(--color-yellow-700);
+        --barrage-tag-background-color: var(--color-yellow-500);
+        --barrage-tag-border-color: var(--color-yellow-600);
+        --barrage-tag-color: var(--color-yellow-0);
+      }
+
+      &--danger {
+        --barrage-tag-dot-color: var(--color-red-600);
+        --barrage-tag-background-color: var(--color-red-300);
+        --barrage-tag-border-color: var(--color-red-400);
+        --barrage-tag-color: var(--color-red-0);
+      }
+
+      &.inactive {
+        --barrage-tag-color: var(--color-gray-500);
+      }
+    }
+  }
+
+  .barrage-tag {
+    width: var(--barrage-tag-width);
+    height: var(--barrage-tag-height);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--barrage-tag-gap);
+    font-size: var(--barrage-tag-font-size);
+    font-weight: var(--barrage-tag-font-weight);
+    color: var(--barrage-tag-color);
+    background-color: var(--barrage-tag-background-color);
+    border-radius: var(--barrage-tag-border-radius);
+    padding-block: var(--barrage-tag-padding-block);
+    padding-inline: var(--barrage-tag-padding-inline);
+    border: 1px solid var(--barrage-tag-border-color, var(--color-primary-400));
+
+    font-size: var(--barrage-tag-font-size-default);
+    height: var(--barrage-tag-height-default);
+
+    &--large {
+      font-size: var(--barrage-tag-font-size-large);
+      height: var(--barrage-tag-height-large);
+    }
+
+    &--small {
+      font-size: var(--barrage-tag-font-size-small);
+      height: var(--barrage-tag-height-small);
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+      gap: var(--barrage-tag-gap);
+
+      .status-dot {
+        width: var(--barrage-tag-dot-size);
+        height: var(--barrage-tag-dot-size);
+        border-radius: 50%;
+        background-color: var(--barrage-tag-dot-color);
+        animation: blink-dot 3s infinite;
+
+        @keyframes blink-dot {
+          0% {
+            transform: scale(0.8);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.1);
+            opacity: 0.2;
+          }
+          100% {
+            transform: scale(0.8);
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    &__close {
+      --barrage-icon-width: 1rem;
+      --barrage-icon-height: 1rem;
+      cursor: pointer;
+    }
+
+    // Define different status styles
+    &--primary {
+      --barrage-tag-dot-color: var(--color-primary-500);
+      --barrage-tag-background-color: var(--color-primary-100);
+      --barrage-tag-border-color: var(--color-primary-400);
+      --barrage-tag-color: var(--color-primary-900);
+    }
+
+    &--success {
+      --barrage-tag-dot-color: var(--color-green-400);
+      --barrage-tag-background-color: var(--color-green-0);
+      --barrage-tag-border-color: var(--color-green-300);
+      --barrage-tag-color: var(--color-green-900);
+    }
+
+    &--info {
+      --barrage-tag-dot-color: var(--color-blue-500);
+      --barrage-tag-background-color: var(--color-blue-100);
+      --barrage-tag-border-color: var(--color-blue-400);
+      --barrage-tag-color: var(--color-blue-900);
+    }
+
+    &--warning {
+      --barrage-tag-dot-color: var(--color-yellow-500);
+      --barrage-tag-background-color: var(--color-yellow-100);
+      --barrage-tag-border-color: var(--color-yellow-400);
+      --barrage-tag-color: var(--color-yellow-900);
+    }
+
+    &--danger {
+      --barrage-tag-dot-color: var(--color-red-500);
+      --barrage-tag-background-color: var(--color-red-100);
+      --barrage-tag-border-color: var(--color-red-400);
+      --barrage-tag-color: var(--color-red-900);
+    }
+  }
+}

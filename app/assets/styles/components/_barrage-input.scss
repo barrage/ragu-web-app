@@ -4,9 +4,9 @@
     --input-height: max-content !important;
     --input-color: var(--color-primary-900);
     --input-error-color: var(--color-red-500);
-    --input-background-color: var(--color-primary-200);
+    --input-background-color: var(--color-primary-0);
     --input-border: var(--border-global-1);
-    --input-border-color: var(--color-primary-500);
+    --input-border-color: var(--color-primary-100);
     --input-border-radius: var(--radius-4);
     --input-icon-size: 2rem;
     --input-padding-block-start: 8px;
@@ -25,9 +25,9 @@
   html.dark {
     .barrage-input {
       &__inner {
-        --input-color: var(--color-primary-100);
-        --input-border-color: var(--color-primary-500);
-        --input-background-color: var(--color-primary-700);
+        --input-color: var(--color-primary-0);
+        --input-border-color: var(--color-primary-800);
+        --input-background-color: var(--color-primary-600);
 
         &:focus {
           outline: none;
@@ -69,7 +69,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       background-color: var(--input-background-color);
-      border: none;
+      border: 1px solid;
       border-color: var(--input-border-color);
       border-radius: var(--input-border-radius);
       padding-block: var(--input-padding-block-start)

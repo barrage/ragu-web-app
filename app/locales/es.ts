@@ -36,4 +36,30 @@ export default {
       choseFrom: 'Agentes:',
     },
   },
+
+  users: {
+    title: 'Usuarios',
+    description: 'Administra los miembros de tu equipo y establece sus niveles de acceso.',
+    invite_user: 'Invitar usuario',
+    user_card: {
+      role: 'Rol',
+      status: 'Estado',
+      active_status: 'Activo',
+      inactive_status: 'Inactivo',
+      created_at: 'Creado',
+      view_more: 'Ver detalles del usuario',
+      edit_user: 'Editar usuario',
+      delete_user: 'Eliminar usuario',
+      adminRole: 'Administrador',
+      userRole: 'Usuario',
+      updated_at: 'Actualizado el',
+      user_id: 'ID de usuario',
+      first_name: 'Nombre',
+      last_name: 'Apellido',
+      username: 'Nombre de usuario',
+      email: 'Correo electrónico',
+    },
+
+  },
+
 }

@@ -4,16 +4,17 @@ import type { Chat, Message } from '~/types/chat.ts'
 export default class ChatServise extends FetchFactory {
   // Endpoint for product-related API requests.
   private readonly endpoint: string = '/chats'
-  private readonly userId: string = '660a7998-2a27-11ee-be56-0242ac120002'
 
   /**
    * Fetches a list of all chats for the user from the API.
    * @returns A promise that resolves to an array of Chat objects.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllChats(userId: string): Promise<Chat[]> {
+  async GetAllChats(): Promise<Chat[]> {
     try {
-      return await this.$fetch<Chat[]>(`${this.endpoint}/${userId}`)
+      return await this.$fetch<Chat[]>(`/${this.endpoint}?page=1&perPage=10`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({
@@ -31,7 +32,9 @@ export default class ChatServise extends FetchFactory {
    */
   async GetChatMessages(chatId: string): Promise<Message[]> {
     try {
-      return await this.$fetch<Message[]>(`${this.endpoint}/${chatId}/messages`)
+      return await this.$fetch<Message[]>(`${this.endpoint}/${chatId}/messages`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({

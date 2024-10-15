@@ -17,7 +17,8 @@
       }
 
       &__error {
-        --input-error-color: var(--color-primary-400);
+        --input-error-color: var(--color-red-300);
+        color: var(--input-error-color);
       }
 
       &.is-error {
@@ -78,6 +79,7 @@
     position: relative;
     min-height: var(--form-item-height);
     transition: all 0.3s ease-out;
+    padding-bottom: 32px;
 
     .barrage-form-item__content {
       position: relative;
@@ -96,7 +98,7 @@
       font-size: var(--font-size-fluid-1);
       font-weight: bold;
       letter-spacing: 0.0054rem;
-      color: var(--color-red-700);
+      color: var(--color-red-600);
 
       position: absolute;
       top: 100%;

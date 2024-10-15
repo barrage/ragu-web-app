@@ -39,17 +39,25 @@
         --button-background-color: var(--color-primary-900);
         --button-border-color: var(--color-primary-700);
       }
+      &.is-plain {
+        background: transparent;
+        &:hover {
+          color: var(--color-primary-0);
+          background: var(--color-primary-700);
+          border-color: var(--color-primary-500);
+        }
+      }
 
       // Button type
       &--primary {
-        --button-text-color: var(--color-primary-100);
-        --button-background-color: var(--color-primary-800);
-        --button-border-color: var(--color-primary-600);
+        --button-text-color: var(--color-primary-0);
+        --button-background-color: var(--color-primary-700);
+        --button-border-color: var(--color-primary-500);
 
         &:hover {
           --button-text-color: var(--color-primary-0);
-          --button-background-color: var(--color-primary-700);
-          --button-border-color: var(--color-primary-400);
+          --button-background-color: var(--color-primary-600);
+          --button-border-color: var(--color-primary-300);
         }
 
         &:active {
@@ -112,6 +120,16 @@
           --button-text-color: var(--color-red-600);
           --button-background-color: var(--color-red-900);
           --button-border-color: var(--color-red-700);
+        }
+        &.is-plain {
+          color: var(--color-red-100);
+          background: transparent;
+          border-color: var(--color-red-200);
+          &:hover {
+            color: var(--color-red-0);
+            background: var(--color-red-300);
+            border-color: var(--color-red-400);
+          }
         }
       }
 
@@ -246,6 +264,14 @@
         --icon-height: 1rem;
       }
     }
+    &.is-plain {
+      background: transparent;
+      &:hover {
+        color: var(--color-primary-900);
+        background: var(--color-primary-200);
+        border-color: var(--color-primary-400);
+      }
+    }
 
     &--large {
       --button-padding-inline: clamp(1.25rem, 1.1438rem + 0.4531vw, 1.6875rem);
@@ -329,6 +355,16 @@
         --button-text-color: var(--color-red-300);
         --button-background-color: var(--color-red-100);
         --button-border-color: var(--color-red-400);
+      }
+      &.is-plain {
+        color: var(--color-red-900);
+        background: var(--color-red-0);
+        border-color: var(--color-red-200);
+        &:hover {
+          color: var(--color-gray-50);
+          background: var(--color-red-300);
+          border-color: var(--color-red-500);
+        }
       }
     }
 

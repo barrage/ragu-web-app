@@ -33,8 +33,8 @@ const menuList = computed<MenuCategory[]>(() => ([
         icon: LayoutIcon,
       },
       {
-        label: t('members.title'),
-        link: '/admin/members',
+        label: t('users.title'),
+        link: '/admin/users',
         icon: TeamIcon,
       },
       {

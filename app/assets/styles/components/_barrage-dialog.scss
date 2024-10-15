@@ -123,6 +123,7 @@
     // -- Size types
     &--small {
       max-width: var(--dialog-small);
+      margin: auto;
     }
 
     &--medium {

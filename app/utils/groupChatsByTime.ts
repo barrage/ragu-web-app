@@ -9,6 +9,7 @@ export function groupChatsByTime(chats: Chat[]): GroupedChats {
     monthsThisYear: {},
     lastYear: [],
   }
+
   const today = new Date()
   const yesterday = new Date(today)
   yesterday.setDate(today.getDate() - 1)
