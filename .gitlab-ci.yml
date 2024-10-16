@@ -1,0 +1,66 @@
+include:
+  - project: devops/ci-template
+    ref: v1.0.0
+    file: GitlabFlow/Deploy-custom.yml
+
+build: 
+  extends: .build-vault
+  variables: 
+    VAULT_SECRET_DEV: build-web-app-dev
+    VAULT_SECRET_REVIEW: build-web-app-dev
+    VAULT_SECRET_STG: build-web-app-stg
+    VAULT_SECRET_PROD: build-web-app-prod
+    VAULT_SECRET_ENGINE: llmao
+  rules:
+    - !reference [.build-vault, rules]
+    - when: on_success
+
+review:
+  extends: .review_app
+  variables:
+    HELM_RELEASE_NAME: llmao-web-app
+  environment:
+    on_stop: cleanup
+  needs:
+    - job: build
+  rules:
+    - !reference [.review_app, rules]
+    - when: on_success
+
+cleanup:
+  extends: .stop_review
+  needs:
+    - job: cleanup
+  rules:
+    - !reference [.stop_review, rules]
+    - when: manual
+
+development:
+  extends: .development
+  variables:
+    HELM_RELEASE_NAME: llmao-web-app
+  needs:
+    - job: build
+  rules:
+    - !reference [.development, rules]
+    - when: on_success
+
+staging:
+  extends: .pre-production
+  variables:
+    HELM_RELEASE_NAME: llmao-web-app
+  needs:
+    - job: build
+  rules:
+    - !reference [.pre_production, rules]
+    - when: on_success
+
+production:
+  extends: .production
+  variables:
+    HELM_RELEASE_NAME: llmao-web-app
+  needs:
+    - job: build
+  rules:
+    - !reference [.production, rules]
+    - when: on_success
