@@ -42,16 +42,6 @@ development:
   needs:
     - job: build
   rules:
-    - !reference [.development, rules]
-    - when: on_success
-
-staging:
-  extends: .pre-production
-  variables:
-    HELM_RELEASE_NAME: llmao-web-app
-  needs:
-    - job: build
-  rules:
     - !reference [.pre-production, rules]
     - when: on_success
 
