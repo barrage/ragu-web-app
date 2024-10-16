@@ -52,7 +52,7 @@ staging:
   needs:
     - job: build
   rules:
-    - !reference [.pre_production, rules]
+    - !reference [.pre-production, rules]
     - when: on_success
 
 production:
