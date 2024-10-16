@@ -30,7 +30,7 @@ review:
 cleanup:
   extends: .stop_review
   needs:
-    - job: cleanup
+    - job: build
   rules:
     - !reference [.stop_review, rules]
     - when: manual
