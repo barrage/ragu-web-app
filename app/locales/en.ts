@@ -1,3 +1,5 @@
+import { textProps } from 'element-plus'
+
 export default {
   details: 'Details',
   chatDock: 'Chat panel',
@@ -79,8 +81,17 @@ export default {
       deleteTitle: 'Delete agent?',
       deleteDescription: 'Are you sure you want to delete agent?',
     },
+    agent_card: {
+      unknown_agentname: 'Unknown agent name',
+      unknown_agentcontext: 'Missing agent context',
+      active_status: 'Active',
+      inactive_status: 'Inactive',
+      created_at: 'Unknown Date',
+      edit_agent: 'Edit agent',
+      delete_agent: 'Delete agent',
+    },
     labels: {
-      name: 'Name',
+      name: 'Agent Name',
       context: 'Context',
       created_at: 'Created At',
       updated_at: 'Updated At',
@@ -94,7 +105,7 @@ export default {
       embeddingProvider: 'Embedding Provider',
       embeddingModel: 'Embedding Model',
       active: 'active',
-
+      status: 'Agent Status',
     },
     buttons: {
       create: 'Create Agent',
@@ -102,6 +113,16 @@ export default {
       delete: 'Delete',
       cancel: 'Cancel',
       save: 'Save',
+      overview: 'Agent overview',
+      filter: 'Filter',
+    },
+
+    placeholder: {
+      llmProvider: 'Select LLM Provider',
+      model: 'Select Model',
+      vecotrProvider: 'Select Vector Provider',
+      embeddingProvider: 'Select Embedding Provider',
+      search: 'Search Agents',
     },
 
     notifications: {
@@ -171,17 +192,29 @@ export default {
       delete: 'Delete',
       cancel: 'Cancel',
       save: 'Save',
+      filter: 'Filter',
+    },
+
+    placeholders: {
+      search: 'Search Collections',
+      vectorPlaceholder: 'Select Vector Provider',
+      embeddingPlaceholder: 'Select Embedding Provider',
+      modelPlaceholder: 'Select Model',
     },
 
     labels: {
       name: 'Collection Name',
       vectorProvider: 'Vector Provider',
-      vectorPlaceholder: 'Select Vector Provider',
       embeddingProvider: 'Embedding Provider',
-      embeddingPlaceholder: 'Select Embedding Provider',
       model: 'Model',
-      modelPlaceholder: 'Select Model',
+      updated_at: 'Updated At',
+      created_at: 'Ceated At',
 
+    },
+
+    deleteModal: {
+      title: 'Delete Collection',
+      text: 'Are you sure you want to delete this collection?',
     },
 
     rules: {

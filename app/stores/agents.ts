@@ -9,13 +9,18 @@ export const useAgentStore = defineStore('agent', () => {
 
   const editMode = ref<boolean>(false)
   const agentsResponse = ref<AgentListResponse | null >()
-  const selectedAgent = ref<Agent | null>()
+  const selectedAgent = ref<Agent | null | undefined>()
+
   const agents = computed<Agent[]>(() => {
     return agentsResponse.value?.items || [] // Return agents array or empty array if null
   })
 
   const setEditMode = (value: boolean) => {
     editMode.value = value
+  }
+
+  const setSelectedAgent = (agentId: string) => {
+    selectedAgent.value = agentsResponse.value?.items.find(agent => agent.id === agentId) || null
   }
 
   // API
@@ -34,18 +39,21 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function GET_SingleAgent(agentId: string | any): Promise<Agent | null> {
-    const data = await $api.agent.GetSingleAgent(agentId)
+  async function GET_SingleAgent(agentId: string | null | undefined): Promise<Agent | null> {
+    if (agentId) {
+      const data = await $api.agent.GetSingleAgent(agentId)
 
-    if (data) {
-      return selectedAgent.value = data
+      if (data) {
+        selectedAgent.value = data
+        return data
+      }
     }
-    else {
-      return selectedAgent.value = null
-    }
+
+    selectedAgent.value = null
+    return null
   }
 
-  async function CreateAgent(body: AgentDetail): Promise<Agent | null> {
+  async function POST_CreateAgent(body: AgentDetail): Promise<Agent | null> {
     const data = await $api.agent.CreateAgent(body)
     if (data) {
       selectedAgent.value = data
@@ -57,7 +65,7 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function UpdateAgent(id: number, body: AgentDetail): Promise<Agent | null> {
+  async function PUT_UpdateAgent(id: string, body: AgentDetail): Promise<Agent | null> {
     const data = await $api.agent.UpdateAgent(id, body)
     if (data) {
       selectedAgent.value = data
@@ -69,7 +77,7 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function DeleteAgent(id: number): Promise<void> {
+  async function DELETE_DeleteAgent(id: number): Promise<void> {
     await $api.agent.DeleteAgent(id)
   }
 
@@ -78,20 +86,12 @@ export const useAgentStore = defineStore('agent', () => {
     return agentsResponse.value?.items.map((agent: Agent) => {
       return {
         ...agent,
-        context: `${agent.context.split('.')[0]}...`,
+        context: `${agent.context.split(' ').slice(0, 5).join(' ')}...`,
         createdAt: formatDate(agent.createdAt),
         updatedAt: formatDate(agent.updatedAt),
       }
     }) || []
   })
-
-  const setSelectedAgent = (agentId: string) => {
-    selectedAgent.value = agentsResponse.value?.items.find(agent => agent.id === agentId) || null
-  }
-
-  const getAgentById = (agentId: string) => {
-    return agentsResponse.value?.items.find(agent => agent.id === agentId) || null
-  }
 
   return {
     agents,
@@ -101,12 +101,11 @@ export const useAgentStore = defineStore('agent', () => {
     editMode,
     setEditMode,
     setSelectedAgent,
-    getAgentById,
     GET_AllAgents,
     GET_SingleAgent,
-    CreateAgent,
-    UpdateAgent,
-    DeleteAgent,
+    POST_CreateAgent,
+    PUT_UpdateAgent,
+    DELETE_DeleteAgent,
 
   }
 })

@@ -67,7 +67,7 @@ export default class usersService extends FetchFactory {
    */
   async PostCreateUser(user: CreateUserPayload): Promise<User> {
     try {
-      return await this.$fetch<User>('/dev/users', {
+      return await this.$fetch<User>(`${this.endpoint}`, {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {

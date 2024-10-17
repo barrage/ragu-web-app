@@ -1,3 +1,5 @@
+import type { Collection } from '~/types/collection'
+
 export interface Agent {
   active: boolean
   context: string
@@ -41,4 +43,16 @@ export interface AgentsWithCount {
 export interface AgentPayload {
   page?: number
   sortOrder?: 'asc' | 'desc'
+}
+
+export interface Instructions {
+  titleInstruction: string
+  languageInstruction: string
+  summaryInstruction: string
+}
+
+export interface SelectedAgent {
+  agent: Agent
+  instructions: Instructions
+  collections: Collection[]
 }

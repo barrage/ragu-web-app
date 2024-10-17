@@ -14,12 +14,9 @@ export interface CollectionListResponse {
 }
 
 export interface CollectionDetail {
-
   name: string
   model: string
   vectorProvider: string
   embeddingProvider: string
 
 }
-
-

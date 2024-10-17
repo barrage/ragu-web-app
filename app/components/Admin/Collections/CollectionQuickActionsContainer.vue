@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AddIcon from '~/assets/icons/svg/add.svg'
+import CollectionIcon from '~/assets/icons/svg/collection.svg'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
@@ -12,7 +12,7 @@ const localePath = useLocalePath()
       class="create-button"
       @click="navigateTo({ path: localePath('/admin/collections/create') })"
     >
-      <AddIcon /> {{ t('collections.buttons.create') }}
+      <CollectionIcon /> {{ t('collections.buttons.create') }}
     </ElButton>
   </div>
 </template>

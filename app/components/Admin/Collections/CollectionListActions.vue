@@ -1,18 +1,20 @@
 <script lang="ts" setup>
 import FilterIcon from '~/assets/icons/svg/filter.svg'
 
+// CONSTANTS
 const collectiontore = useCollectionsStore()
+const { t } = useI18n()
 </script>
 
 <template>
   <div class="collection-actions-container">
     <div class="collection-actions-wrapper">
-      <SearchInput placeholder="Search collections" />
-      <h6> <b>{{ collectiontore?.collectionResponse?.items?.length || 0 }}</b> collection</h6>
+      <SearchInput :placeholder="t('collections.placeholders.search')" />
+      <h6> <b>{{ collectiontore?.collectionResponse?.items?.length || 0 }}</b> {{ t('collections.title') }}</h6>
     </div>
     <el-button>
       <FilterIcon />
-      Filter
+      {{ t('collections.buttons.filter') }}
     </el-button>
   </div>
 </template>

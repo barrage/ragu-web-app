@@ -8,13 +8,18 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
+const deleteUserModalVisible = ref(props.isOpen)
+
+const closeModal = () => {
+  deleteUserModalVisible.value = false
+  emits('toggleModal')
+}
 
 const submitDeleteUser = async () => {
   if (props.selectedUser) {
     emits('deleteUserConfirm', props.selectedUser)
   }
 }
-const deleteUserModalVisible = ref(props.isOpen)
 
 watch(() => props.isOpen, (newVal) => {
   deleteUserModalVisible.value = newVal
@@ -22,10 +27,6 @@ watch(() => props.isOpen, (newVal) => {
 interface Emits {
   (event: 'toggleModal'): void
   (event: 'deleteUserConfirm', user: User): void
-}
-const toggleDeleteUserModal = () => {
-  deleteUserModalVisible.value = !deleteUserModalVisible.value
-  emits('toggleModal')
 }
 </script>
 
@@ -37,7 +38,7 @@ const toggleDeleteUserModal = () => {
       align-center
       class="barrage-dialog--small"
       :close-icon="CloseCircleIcon"
-      @close="emits('toggleModal')"
+      @close="'closeModal'"
     >
       <template #header>
         <h6>Delete User</h6>
@@ -49,7 +50,7 @@ const toggleDeleteUserModal = () => {
       </div>
 
       <template #footer>
-        <el-button @click="toggleDeleteUserModal">
+        <el-button @click="closeModal">
           Cancel
         </el-button>
         <el-button type="danger" @click="submitDeleteUser()">

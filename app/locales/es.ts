@@ -37,6 +37,167 @@ export default {
     },
   },
 
+  agents: {
+    title: 'Agentes',
+    titles: {
+      mainTitle: 'Agentes',
+      details: 'Detalles del agente',
+      description: 'Gestiona los agentes responsables de interactuar con la IA',
+      edit: 'Editar agente',
+      create: 'Crear agente',
+      createDescription: '¡Crea tu nuevo agente proporcionando su nombre y contexto para comenzar!',
+      deleteTitle: '¿Eliminar agente?',
+      deleteDescription: '¿Estás seguro de que deseas eliminar el agente?',
+    },
+    agent_card: {
+      unknown_agentname: 'Nombre de agente desconocido',
+      unknown_agentcontext: 'Falta el contexto del agente',
+      active_status: 'Activo',
+      inactive_status: 'Inactivo',
+      created_at: 'Fecha desconocida',
+      edit_agent: 'Editar agente',
+      delete_agent: 'Eliminar agente',
+    },
+    labels: {
+      name: 'Nombre del agente',
+      context: 'Contexto',
+      created_at: 'Creado en',
+      updated_at: 'Actualizado en',
+      actions: 'Acciones',
+      description: 'Descripción',
+      llmProvider: 'Proveedor LLM',
+      model: 'Modelo',
+      language: 'Idioma',
+      temperature: 'Temperatura',
+      vectorProvider: 'Proveedor de vectores',
+      embeddingProvider: 'Proveedor de embeddings',
+      embeddingModel: 'Modelo de embeddings',
+      active: 'activo',
+      status: 'Estado del agente',
+    },
+    buttons: {
+      create: 'Crear agente',
+      edit: 'Editar',
+      delete: 'Eliminar',
+      cancel: 'Cancelar',
+      save: 'Guardar',
+      overview: 'Resumen del agente',
+      filter: 'Filtrar',
+    },
+
+    placeholder: {
+      llmProvider: 'Seleccionar proveedor LLM',
+      model: 'Seleccionar modelo',
+      vecotrProvider: 'Seleccionar proveedor de vectores',
+      embeddingProvider: 'Seleccionar proveedor de embeddings',
+      search: 'Buscar agentes',
+    },
+
+    notifications: {
+      delete_title: 'Éxito',
+      delete_message: '¡El agente {name} ha sido eliminado!',
+      update_title: 'Éxito',
+      update_message: '¡El agente {name} ha sido actualizado!',
+      create_title: 'Éxito',
+      create_message: '¡El agente {name} ha sido creado!',
+      form_title: 'Error en el formulario',
+      form_message: 'Por favor, corrija los errores resaltados en el formulario.',
+      invalid_agent: '¡Vaya! Algo salió mal. Parece que el agente que intentas eliminar no existe.',
+    },
+    rules: {
+      name: {
+        required_message: 'Por favor, ingresa el nombre del agente',
+        length_message: 'El nombre debe tener entre {min} y {max} caracteres',
+      },
+      context: {
+        required_message: 'Por favor, ingresa el contexto del agente',
+        length_message: 'El contexto debe tener entre {min} y {max} caracteres',
+      },
+      description: {
+        required_message: 'Por favor, proporciona una descripción',
+      },
+      llmProvider: {
+        required_message: 'Por favor, selecciona un proveedor LLM válido',
+      },
+      model: {
+        required_message: 'Por favor, selecciona un modelo',
+      },
+      language: {
+        required_message: 'Por favor, selecciona un idioma',
+      },
+      temperature: {
+        required_message: 'Por favor, establece una temperatura entre 0 y 1',
+      },
+      vectorProvider: {
+        required_message: 'Por favor, selecciona un proveedor de vectores válido',
+      },
+      embeddingProvider: {
+        required_message: 'Por favor, selecciona un proveedor de embeddings',
+      },
+      embeddingModel: {
+        required_message: 'Por favor, proporciona un modelo de embeddings',
+      },
+      active: {
+        required_message: 'Por favor, especifica si el agente está activo',
+      },
+    },
+  },
+  collections: {
+    title: 'Colecciones',
+    titles: {
+      title: 'Colecciones',
+      subTitle: 'Administra las colecciones de contenido que guían la base de conocimiento de la IA.',
+      deleteTitle: '¿Eliminar colección?',
+      deleteDescription: '¿Estás seguro de que deseas eliminar la colección?',
+      create: 'Crear colección',
+      createDescription: '¡Crea una nueva colección según tus necesidades!',
+    },
+    buttons: {
+      create: 'Crear colección',
+      delete: 'Eliminar',
+      cancel: 'Cancelar',
+      save: 'Guardar',
+      filter: 'Filtrar',
+    },
+    placeholders: {
+      search: 'Buscar colecciones',
+      vectorPlaceholder: 'Selecciona proveedor de vectores',
+      embeddingPlaceholder: 'Selecciona proveedor de embeddings',
+      modelPlaceholder: 'Selecciona modelo',
+    },
+    labels: {
+      name: 'Nombre de la colección',
+      vectorProvider: 'Proveedor de vectores',
+      embeddingProvider: 'Proveedor de embeddings',
+      model: 'Modelo',
+      updated_at: 'Actualizado en',
+      created_at: 'Creado en',
+    },
+    deleteModal: {
+      title: 'Eliminar colección',
+      text: '¿Estás seguro de que deseas eliminar esta colección?',
+    },
+    rules: {
+      name: {
+        required_message: 'Por favor, introduce el nombre de la colección',
+        length_message: 'El nombre debe tener entre {min} y {max} caracteres',
+      },
+      vectorProvider: 'Selecciona un proveedor de vectores',
+      embeddingProvider: 'Selecciona un proveedor de embeddings',
+      model: 'Selecciona un modelo',
+    },
+    notifications: {
+      delete_title: 'Éxito',
+      delete_message: 'La colección {name} ha sido eliminada!',
+      delete_error: 'La colección no se ha eliminado',
+      create_title: 'Éxito',
+      create_message: 'La colección {name} ha sido creada!',
+      form_title: 'Error en el formulario',
+      form_message: 'Por favor, corrige los errores resaltados en el formulario.',
+      invalid_collection: '¡Vaya! Algo salió mal. Parece que la colección que intentas eliminar no existe.',
+    },
+  },
+
   users: {
     title: 'Usuarios',
     description: 'Administra los miembros de tu equipo y establece sus niveles de acceso.',

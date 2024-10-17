@@ -37,6 +37,168 @@ export default {
       choseFrom: 'Agenten:',
     },
   },
+  agents: {
+    title: 'Agenten',
+    titles: {
+      mainTitle: 'Agenten',
+      details: 'Agentendetails',
+      description: 'Verwalten Sie die Agenten, die für die Interaktion mit der KI verantwortlich sind',
+      edit: 'Agent bearbeiten',
+      create: 'Agent erstellen',
+      createDescription: 'Erstellen Sie einen neuen Agenten, indem Sie seinen Namen und Kontext eingeben, um loszulegen!',
+      deleteTitle: 'Agent löschen?',
+      deleteDescription: 'Sind Sie sicher, dass Sie den Agenten löschen möchten?',
+    },
+    agent_card: {
+      unknown_agentname: 'Unbekannter Agentenname',
+      unknown_agentcontext: 'Fehlender Agentenkontext',
+      active_status: 'Aktiv',
+      inactive_status: 'Inaktiv',
+      created_at: 'Unbekanntes Datum',
+      edit_agent: 'Agent bearbeiten',
+      delete_agent: 'Agent löschen',
+    },
+    labels: {
+      name: 'Agentenname',
+      context: 'Kontext',
+      created_at: 'Erstellt am',
+      updated_at: 'Aktualisiert am',
+      actions: 'Aktionen',
+      description: 'Beschreibung',
+      llmProvider: 'LLM-Anbieter',
+      model: 'Modell',
+      language: 'Sprache',
+      temperature: 'Temperatur',
+      vectorProvider: 'Vektor-Anbieter',
+      embeddingProvider: 'Embedding-Anbieter',
+      embeddingModel: 'Embedding-Modell',
+      active: 'aktiv',
+      status: 'Agentenstatus',
+    },
+    buttons: {
+      create: 'Agent erstellen',
+      edit: 'Bearbeiten',
+      delete: 'Löschen',
+      cancel: 'Abbrechen',
+      save: 'Speichern',
+      overview: 'Agentenübersicht',
+      filter: 'Filter',
+    },
+
+    placeholder: {
+      llmProvider: 'LLM-Anbieter auswählen',
+      model: 'Modell auswählen',
+      vecotrProvider: 'Vektoranbieter auswählen',
+      embeddingProvider: 'Embedding-Anbieter auswählen',
+      search: 'Agenten suchen',
+
+    },
+
+    notifications: {
+      delete_title: 'Erfolg',
+      delete_message: 'Agent {name} wurde gelöscht!',
+      update_title: 'Erfolg',
+      update_message: 'Agent {name} wurde aktualisiert!',
+      create_title: 'Erfolg',
+      create_message: 'Agent {name} wurde erstellt!',
+      form_title: 'Formularfehler',
+      form_message: 'Bitte beheben Sie die markierten Fehler im Formular.',
+      invalid_agent: 'Oops! Etwas ist schiefgelaufen. Der Agent, den Sie löschen möchten, scheint nicht zu existieren.',
+    },
+    rules: {
+      name: {
+        required_message: 'Bitte geben Sie den Namen des Agenten ein',
+        length_message: 'Der Name sollte zwischen {min} und {max} Zeichen lang sein',
+      },
+      context: {
+        required_message: 'Bitte geben Sie den Kontext des Agenten ein',
+        length_message: 'Der Kontext sollte zwischen {min} und {max} Zeichen lang sein',
+      },
+      description: {
+        required_message: 'Bitte geben Sie eine Beschreibung an',
+      },
+      llmProvider: {
+        required_message: 'Bitte wählen Sie einen gültigen LLM-Anbieter',
+      },
+      model: {
+        required_message: 'Bitte wählen Sie ein Modell',
+      },
+      language: {
+        required_message: 'Bitte wählen Sie eine Sprache',
+      },
+      temperature: {
+        required_message: 'Bitte legen Sie eine Temperatur zwischen 0 und 1 fest',
+      },
+      vectorProvider: {
+        required_message: 'Bitte wählen Sie einen gültigen Vektoranbieter',
+      },
+      embeddingProvider: {
+        required_message: 'Bitte wählen Sie einen Embedding-Anbieter',
+      },
+      embeddingModel: {
+        required_message: 'Bitte geben Sie ein Embedding-Modell an',
+      },
+      active: {
+        required_message: 'Bitte geben Sie an, ob der Agent aktiv ist',
+      },
+    },
+  },
+
+  collections: {
+    title: 'Sammlungen',
+    titles: {
+      title: 'Sammlungen',
+      subTitle: 'Verwalten Sie die Inhaltssammlungen, die die Wissensbasis der KI leiten.',
+      deleteTitle: 'Sammlung löschen?',
+      deleteDescription: 'Sind Sie sicher, dass Sie die Sammlung löschen möchten?',
+      create: 'Sammlung erstellen',
+      createDescription: 'Erstellen Sie eine neue Sammlung nach Ihren Bedürfnissen!',
+    },
+    buttons: {
+      create: 'Sammlung erstellen',
+      delete: 'Löschen',
+      cancel: 'Abbrechen',
+      save: 'Speichern',
+      filter: 'Filtern',
+    },
+    placeholders: {
+      search: 'Sammlungen durchsuchen',
+      vectorPlaceholder: 'Wählen Sie den Vektor-Anbieter',
+      embeddingPlaceholder: 'Wählen Sie den Einbettungsanbieter',
+      modelPlaceholder: 'Modell auswählen',
+    },
+    labels: {
+      name: 'Sammlungsname',
+      vectorProvider: 'Vektor-Anbieter',
+      embeddingProvider: 'Einbettungsanbieter',
+      model: 'Modell',
+      updated_at: 'Aktualisiert am',
+      created_at: 'Erstellt am',
+    },
+    deleteModal: {
+      title: 'Sammlung löschen',
+      text: 'Sind Sie sicher, dass Sie diese Sammlung löschen möchten?',
+    },
+    rules: {
+      name: {
+        required_message: 'Bitte geben Sie den Sammlungsnamen ein',
+        length_message: 'Der Name sollte zwischen {min} und {max} Zeichen lang sein',
+      },
+      vectorProvider: 'Bitte wählen Sie einen Vektor-Anbieter',
+      embeddingProvider: 'Bitte wählen Sie einen Einbettungsanbieter',
+      model: 'Bitte wählen Sie ein Modell',
+    },
+    notifications: {
+      delete_title: 'Erfolg',
+      delete_message: 'Sammlung {name} wurde gelöscht!',
+      delete_error: 'Sammlung wurde nicht gelöscht',
+      create_title: 'Erfolg',
+      create_message: 'Sammlung {name} wurde erstellt!',
+      form_title: 'Formularfehler',
+      form_message: 'Bitte beheben Sie die hervorgehobenen Fehler im Formular.',
+      invalid_collection: 'Hoppla! Etwas ist schiefgelaufen. Die Sammlung, die Sie löschen möchten, scheint nicht zu existieren.',
+    },
+  },
 
   users: {
     title: 'Benutzer',

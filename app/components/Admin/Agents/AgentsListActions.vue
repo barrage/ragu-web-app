@@ -1,24 +1,26 @@
 <script lang="ts" setup>
 import FilterIcon from '~/assets/icons/svg/filter.svg'
 
+// CONSTANTS
 const agentStore = useAgentStore()
+const { t } = useI18n()
 </script>
 
 <template>
   <div class="agents-actions-container">
     <div class="agents-actions-wrapper">
-      <SearchInput placeholder="Search user" />
-      <h6> <b>{{ agentStore?.getMappedAgents?.length || 0 }}</b> agents</h6>
+      <SearchInput :placeholder="t('agents.placeholder.search')" />
+      <h6> <b>{{ agentStore?.getMappedAgents?.length || 0 }}</b> {{ t('agents.title') }}</h6>
     </div>
     <el-button>
       <FilterIcon />
-      Filter
+      {{ t('agents.buttons.filter') }}
     </el-button>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.agents-actions-container {
+  .agents-actions-container {
   display: flex;
   justify-content: space-between;
   align-items: center;

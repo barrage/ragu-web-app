@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
+// CONSTANTS
+
 const { t } = useI18n()
 const localePath = useLocalePath()
 </script>

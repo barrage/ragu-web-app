@@ -1,33 +1,15 @@
 <script lang="ts" setup>
-// IMPORTS
-import type { Agent } from '~/types/agent'
-import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import { useAgentStore } from '~/stores/agents'
-import type { Collection } from '~/types/collection'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
+import type { Collection } from '~/types/collection'
 
-// PROPS
 const props = defineProps<{
   collection: Collection | null
 }>()
 
-// CONSTANTS
+const emit = defineEmits(['openDeleteModal'])
 
 const { t } = useI18n()
-const collectionStore = useCollectionsStore()
 
-// STATE
-
-const collectionToDeleteId = ref<string>('')
-const isDeleteModalVisible = ref(false)
-
-// API CALLS
-const { error: deleteError, status: deleteStatus } = await useAsyncData(() => collectionStore.DELETE_Collection(collectionToDeleteId.value as string), {
-
-  immediate: false,
-})
-
-// HELPERS
 const collectionData = computed(() => {
   return {
     collectionId: props.collection?.id,
@@ -38,106 +20,48 @@ const collectionData = computed(() => {
   }
 })
 
-const confirmDelete = async (collection: Collection | null | undefined): Promise<void> => {
-  if (!collection || !collection.id) {
-    ElNotification({
-      title: 'Error',
-      message: t('collections.notifications.invalid_collection'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-    return
-  }
-
-  try {
-    await collectionStore.DELETE_Collection(collection.id)
-
-    ElNotification({
-      title: t('collections.notifications.delete_title'),
-      message: t('collections.notifications.delete_message', { name: collection.name }),
-      type: 'success',
-      customClass: 'success',
-      duration: 2500,
-    })
-    await collectionStore.GET_AllCollections()
-    isDeleteModalVisible.value = false
-  }
-  catch {
-    ElNotification({
-      title: 'Error',
-      message: t('collections.notifications.delete_error'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-  }
+const openDeleteModal = () => {
+  emit('openDeleteModal', props.collection)
 }
-
-const openDeleteAgentModal = () => {
-  isDeleteModalVisible.value = true
-}
-
-// ERROR HANDLERS
-errorHandler(deleteError)
 </script>
 
 <template>
   <div class="collection-card">
     <LabelDescriptionItem
-      label="Collection Name"
+      :label="t('collections.labels.name')"
       :description="collectionData?.name"
+      size="small"
     />
 
     <LabelDescriptionItem
-      label="Updated at"
+      :label="t('collections.labels.updated_at')"
       :description="formatDate(collectionData.updatedAt)"
+      size="small"
       centered
     />
     <LabelDescriptionItem
-      label="Created at"
+      :label="t('collections.labels.created_at')"
       :description="formatDate(collectionData.createdAt)"
+      size="small"
       centered
     />
     <LabelDescriptionItem
-      label="Model"
+      :label="t('collections.labels.model')"
       :description="collectionData.model"
+      size="small"
       centered
     />
 
     <div class="action-links">
       <ElButton
-        type="primary"
-        @click.stop
-        @click=" openDeleteAgentModal"
+        type="danger"
+        plain
+        @click.stop="openDeleteModal"
       >
         <DeleteIcon />
       </ElButton>
     </div>
   </div>
-  <ElDialog
-    v-model="isDeleteModalVisible"
-    align-center
-    class="barrage-dialog--small"
-    :close-icon="CloseCircleIcon"
-  >
-    <template #header>
-      <h5>  {{ t('collections.titles.deleteTitle') }} </h5>
-    </template>
-    <p> {{ t('collections.titles.deleteDescription') }}</p>
-    <template #footer>
-      <el-button @click="isDeleteModalVisible = false">
-        {{ t('collections.buttons.cancel') }}
-      </el-button>
-      <el-button
-        type="primary"
-        :loading="deleteStatus === 'pending'"
-        @click.stop="confirmDelete(collection)"
-      >
-        {{ t('collections.buttons.delete') }}
-      </el-button>
-    </template>
-  </ElDialog>
 </template>
 
 <style lang="scss" scoped>
@@ -159,7 +83,6 @@ errorHandler(deleteError)
 
   button {
     font-size: var(--font-size-fluid-3);
-    color: var(--color-primary-700);
   }
 }
 
@@ -168,12 +91,6 @@ errorHandler(deleteError)
     border: 0.5px solid var(--color-primary-500);
     background: var(--color-primary-800);
     box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
-  }
-
-  .action-links {
-    button {
-      color: var(--color-primary-100);
-    }
   }
 }
 </style>

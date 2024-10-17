@@ -70,10 +70,10 @@ const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
 }
 const userRoles = [{
   label: 'Admin',
-  value: 'ADMIN',
+  value: 'admin',
 }, {
   label: 'User',
-  value: 'USER',
+  value: 'user',
 }]
 </script>
 
