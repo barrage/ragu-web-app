@@ -89,7 +89,7 @@ watch(() => form.embeddingProvider, async (newModel) => {
 })
 
 // API CALLS
-const { execute: createExecute, error: createError, status: createStatus } = await useAsyncData(() => agentStore.CreateAgent(form), {
+const { execute: createExecute, error: createError, status: createStatus } = await useAsyncData(() => agentStore.POST_CreateAgent(form), {
   immediate: false,
 })
 
@@ -184,7 +184,7 @@ errorHandler(createError)
         :label="t('agents.labels.llmProvider')"
         prop="llmProvider"
       >
-        <ElSelect v-model="form.llmProvider" placeholder="Select LLM Provider">
+        <ElSelect v-model="form.llmProvider" :placeholder="t('agents.placeholder.llmProvider')">
           <ElOption
             v-for="provider in embeddingProviders"
             :key="provider"
@@ -202,7 +202,7 @@ errorHandler(createError)
       >
         <ElSelect
           v-model="form.model"
-          placeholder="Select Model"
+          :placeholder="t('agents.placeholder.model')"
           :disabled="providerStore?.availableLlmList?.length === 0"
         >
           <ElOption
@@ -243,7 +243,7 @@ errorHandler(createError)
         :label="t('agents.labels.vectorProvider')"
         prop="vectorProvider"
       >
-        <ElSelect v-model="form.vectorProvider" placeholder="Select Vector Provider">
+        <ElSelect v-model="form.vectorProvider" :placeholder="t('agents.placeholder.vecotrProvider')">
           <ElOption
             v-for="provider in providerStore?.listProviders?.vector"
             :key="provider"
@@ -259,7 +259,7 @@ errorHandler(createError)
         :label="t('agents.labels.embeddingProvider')"
         prop="embeddingProvider"
       >
-        <ElSelect v-model="form.embeddingProvider" placeholder="Select Embedding Provider">
+        <ElSelect v-model="form.embeddingProvider" :placeholder="t('agents.placeholder.embeddingProvider')">
           <ElOption
             v-for="provider in providerStore.listProviders?.embedding"
             :key="provider"
@@ -277,7 +277,7 @@ errorHandler(createError)
       >
         <ElSelect
           v-model="form.embeddingModel"
-          placeholder="Select Model"
+          :placeholder="t('agents.placeholder.model')"
           :disabled="collectionStore?.listEmbeddingsModels?.length === 0"
         >
           <ElOption

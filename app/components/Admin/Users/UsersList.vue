@@ -79,8 +79,8 @@ const changePage = (page: number) => {
     </div>
 
     <DeleteUserModal
-      :selected-user="selectedUser"
       :is-open="deleteUserModalVisible"
+      :selected-user="selectedUser"
       @toggle-modal="toggleModal"
       @delete-user-confirm="handleDeleteUser"
     />

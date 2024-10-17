@@ -73,7 +73,7 @@ export default class AgentService extends FetchFactory {
    * @returns A promise that resolves to Agent object
    * @throws Will throw an error if request fails
    */
-  async UpdateAgent(id: number, body: AgentDetail): Promise<Agent> {
+  async UpdateAgent(id: string, body: AgentDetail): Promise<Agent> {
     try {
       return await this.$fetch(`${this.endpoint}/${id}`, {
         credentials: 'include',

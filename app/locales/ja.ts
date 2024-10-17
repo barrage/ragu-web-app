@@ -36,6 +36,167 @@ export default {
       choseFrom: 'エージェント:',
     },
   },
+  agents: {
+    title: 'エージェント',
+    titles: {
+      mainTitle: 'エージェント',
+      details: 'エージェントの詳細',
+      description: 'AIとのやり取りを担当するエージェントを管理します',
+      edit: 'エージェントを編集',
+      create: 'エージェントを作成',
+      createDescription: 'エージェントの名前とコンテキストを入力して、新しいエージェントを作成しましょう！',
+      deleteTitle: 'エージェントを削除しますか？',
+      deleteDescription: '本当にエージェントを削除しますか？',
+    },
+    agent_card: {
+      unknown_agentname: '不明なエージェント名',
+      unknown_agentcontext: 'エージェントコンテキストがありません',
+      active_status: 'アクティブ',
+      inactive_status: '非アクティブ',
+      created_at: '不明な日付',
+      edit_agent: 'エージェントを編集',
+      delete_agent: 'エージェントを削除',
+    },
+    labels: {
+      name: 'エージェント名',
+      context: 'コンテキスト',
+      created_at: '作成日',
+      updated_at: '更新日',
+      actions: 'アクション',
+      description: '説明',
+      llmProvider: 'LLMプロバイダー',
+      model: 'モデル',
+      language: '言語',
+      temperature: '温度',
+      vectorProvider: 'ベクタープロバイダー',
+      embeddingProvider: '埋め込みプロバイダー',
+      embeddingModel: '埋め込みモデル',
+      active: 'アクティブ',
+      status: 'エージェントステータス',
+    },
+    buttons: {
+      create: 'エージェントを作成',
+      edit: '編集',
+      delete: '削除',
+      cancel: 'キャンセル',
+      save: '保存',
+      overview: 'エージェントの概要',
+      filter: 'フィルター',
+    },
+
+    placeholder: {
+      llmProvider: 'LLMプロバイダーを選択',
+      model: 'モデルを選択',
+      vecotrProvider: 'ベクタープロバイダーを選択',
+      embeddingProvider: '埋め込みプロバイダーを選択',
+      search: 'エージェントを検索',
+    },
+
+    notifications: {
+      delete_title: '成功',
+      delete_message: 'エージェント {name} は削除されました！',
+      update_title: '成功',
+      update_message: 'エージェント {name} は更新されました！',
+      create_title: '成功',
+      create_message: 'エージェント {name} が作成されました！',
+      form_title: 'フォームエラー',
+      form_message: 'フォームのエラーを修正してください。',
+      invalid_agent: 'エラーが発生しました。削除しようとしているエージェントが存在しないようです。',
+    },
+    rules: {
+      name: {
+        required_message: 'エージェント名を入力してください',
+        length_message: '名前は {min} から {max} 文字で入力してください',
+      },
+      context: {
+        required_message: 'エージェントコンテキストを入力してください',
+        length_message: 'コンテキストは {min} から {max} 文字で入力してください',
+      },
+      description: {
+        required_message: '説明を入力してください',
+      },
+      llmProvider: {
+        required_message: '有効なLLMプロバイダーを選択してください',
+      },
+      model: {
+        required_message: 'モデルを選択してください',
+      },
+      language: {
+        required_message: '言語を指定してください',
+      },
+      temperature: {
+        required_message: '0から1までの温度を設定してください',
+      },
+      vectorProvider: {
+        required_message: '有効なベクタープロバイダーを選択してください',
+      },
+      embeddingProvider: {
+        required_message: '埋め込みプロバイダーを選択してください',
+      },
+      embeddingModel: {
+        required_message: '埋め込みモデルを提供してください',
+      },
+      active: {
+        required_message: 'エージェントがアクティブかどうかを指定してください',
+      },
+    },
+  },
+
+  collections: {
+    title: 'コレクション',
+    titles: {
+      title: 'コレクション',
+      subTitle: 'AIの知識ベースを導くコンテンツコレクションを管理します。',
+      deleteTitle: 'コレクションを削除しますか？',
+      deleteDescription: 'コレクションを削除してもよろしいですか？',
+      create: 'コレクションを作成',
+      createDescription: 'あなたのニーズに合わせて新しいコレクションを作成してください！',
+    },
+    buttons: {
+      create: 'コレクションを作成',
+      delete: '削除',
+      cancel: 'キャンセル',
+      save: '保存',
+      filter: 'フィルタ',
+    },
+    placeholders: {
+      search: 'コレクションを検索',
+      vectorPlaceholder: 'ベクタープロバイダーを選択',
+      embeddingPlaceholder: '埋め込みプロバイダーを選択',
+      modelPlaceholder: 'モデルを選択',
+    },
+    labels: {
+      name: 'コレクション名',
+      vectorProvider: 'ベクタープロバイダー',
+      embeddingProvider: '埋め込みプロバイダー',
+      model: 'モデル',
+      updated_at: '更新日',
+      created_at: '作成日',
+    },
+    deleteModal: {
+      title: 'コレクションを削除',
+      text: 'このコレクションを削除してもよろしいですか？',
+    },
+    rules: {
+      name: {
+        required_message: 'コレクション名を入力してください',
+        length_message: '名前は{min}〜{max}文字である必要があります',
+      },
+      vectorProvider: 'ベクタープロバイダーを選択してください',
+      embeddingProvider: '埋め込みプロバイダーを選択してください',
+      model: 'モデルを選択してください',
+    },
+    notifications: {
+      delete_title: '成功',
+      delete_message: 'コレクション{name}は削除されました！',
+      delete_error: 'コレクションが削除されませんでした',
+      create_title: '成功',
+      create_message: 'コレクション{name}は作成されました！',
+      form_title: 'フォームエラー',
+      form_message: 'フォームの強調表示されたエラーを修正してください。',
+      invalid_collection: 'おっと！ 何かがうまくいかなかったようです。削除しようとしているコレクションは存在しないようです。',
+    },
+  },
 
   users: {
     title: 'ユーザー',

@@ -10,13 +10,13 @@ definePageMeta({
 
 // CONSTANTS
 const collectionStore = useCollectionsStore()
+const providerStore = useProviderStore()
 const { t } = useI18n()
 const localePath = useLocalePath()
 
 // STATE
 const vectorProviders = ['qdrant', 'weaviate']
 const embeddingProviders = ['fembed', 'openai']
-
 const formRef = ref<FormInstance>()
 const form = reactive<CollectionDetail>({
   name: '',
@@ -133,7 +133,7 @@ errorHandler(createError)
       >
         <ElSelect
           v-model="form.vectorProvider"
-          :placeholder="t('collections.labels.vectorPlaceholder')"
+          :placeholder="t('collections.placeholders.vectorPlaceholder')"
         >
           <ElOption
             v-for="vectorProvider in vectorProviders"
@@ -150,7 +150,7 @@ errorHandler(createError)
         :label="t('collections.labels.embeddingProvider')"
         prop="embeddingProvider"
       >
-        <ElSelect v-model="form.embeddingProvider" :placeholder="t('collections.labels.embeddingPlaceholder')">
+        <ElSelect v-model="form.embeddingProvider" :placeholder="t('collections.placeholders.embeddingPlaceholder')">
           <ElOption
             v-for="embeddingProvider in embeddingProviders"
             :key="embeddingProvider"
@@ -167,18 +167,17 @@ errorHandler(createError)
         prop="model"
       >
         <ElTooltip
-          v-if="!form.embeddingProvider"
           content="Please select an Embedding Provider first."
           placement="bottom"
           :show-after="500"
         >
           <ElSelect
             v-model="form.model"
-            :placeholder="t('collections.labels.modelPlaceholder')"
-            :disabled="form.embeddingProvider.length === 0"
+            :placeholder="t('collections.placeholders.modelPlaceholder')"
+            :disabled="providerStore?.availableLlmList?.length === 0"
           >
             <ElOption
-              v-for="(dimension, model) in listEmbeddingsModels"
+              v-for="(dimension, model) in collectionStore?.listEmbeddingsModels"
               :key="model"
               :label="`${model} - ${dimension} dims`"
               :value="model"

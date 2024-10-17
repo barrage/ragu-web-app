@@ -13,13 +13,14 @@ definePageMeta({
 const agentStore = useAgentStore()
 const providerStore = useProviderStore()
 const collectionStore = useCollectionsStore()
+
 const route = useRoute()
 const { t } = useI18n()
 const router = useRouter()
 const localePath = useLocalePath()
-const agentId = Number.parseInt(route.params.agentId as string, 10)
 const maxContext = 1000
-const embeddingProviders = ['fembed', 'openai']
+const embeddingProviders = ['azure', 'openai', 'ollama']
+const agentId = ref(route.params.agentId as string)
 
 // STATE
 const formRef = ref<FormInstance>()
@@ -75,8 +76,8 @@ const rules = reactive<FormRules<AgentDetail>>({
 })
 
 // API CALLS
-const { error } = await useAsyncData(() => agentStore.GET_SingleAgent(agentId))
-const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => agentStore.UpdateAgent(agentId, form), {
+const { error } = await useAsyncData(() => agentStore.GET_SingleAgent(agentStore.selectedAgent.id))
+const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => agentStore.PUT_UpdateAgent(agentId.value, form), {
   immediate: false,
 })
 
@@ -98,8 +99,8 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
             customClass: 'success',
             duration: 2500,
           })
-          agentStore.setEditMode(false)
         }
+        agentStore.setEditMode(false)
       }
       catch (error) {
         console.error(error)
@@ -116,12 +117,10 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
 }
 
 const cancelUpdate = () => {
-  form.name = agentStore.selectedAgent?.name ?? ''
-  form.context = agentStore.selectedAgent?.context ?? ''
-  agentStore.setEditMode(false)
   navigateTo({ path: localePath(`/admin/agents`) })
 }
 
+providerStore.GET_List_Providers()
 // ERROR HANDLERS
 errorHandler(error, true)
 errorHandler(updateError)
@@ -130,6 +129,15 @@ errorHandler(updateError)
 watch(() => agentStore.selectedAgent, (newAgent) => {
   form.name = newAgent?.name ?? ''
   form.context = newAgent?.context ?? ''
+  form.description = newAgent?.description ?? ''
+  form.llmProvider = newAgent?.llmProvider ?? ''
+  form.model = newAgent?.model ?? ''
+  form.language = newAgent?.language ?? ''
+  form.temperature = newAgent?.temperature ?? 0.1
+  form.vectorProvider = newAgent?.vectorProvider ?? ''
+  form.embeddingProvider = newAgent?.embeddingProvider ?? ''
+  form.embeddingModel = newAgent?.embeddingModel ?? ''
+  form.active = newAgent?.active ?? true
 }, { immediate: true })
 
 // WATCHER FOR LLM PROVIDER
@@ -155,7 +163,7 @@ watch(() => form.embeddingProvider, async (newModel) => {
     </h4>
 
     <!-- EDIT FORM -->
-    <template v-if="agentStore.editMode">
+    <div v-if="agentStore.editMode" class="edit-form">
       <ElForm
         ref="formRef"
         class="container"
@@ -300,6 +308,14 @@ watch(() => form.embeddingProvider, async (newModel) => {
           </ElSelect>
         </ElFormItem>
 
+        <ElFormItem
+          label="Acri"
+          prop="range"
+          class="range-checkbox"
+        >
+          <el-switch v-model="form.active" />
+        </ElFormItem>
+
         <ElFormItem class="actions">
           <ElButton
             type="primary"
@@ -317,10 +333,10 @@ watch(() => form.embeddingProvider, async (newModel) => {
           </ElButton>
         </ElFormItem>
       </ElForm>
-    </template>
+    </div>
 
     <!-- INFO DISPLAY -->
-    <div v-else class="container grid">
+    <div v-else class="container grid edit-form">
       <div class="date">
         <p>
           {{ t('agents.labels.created_at') }}:
@@ -386,11 +402,6 @@ watch(() => form.embeddingProvider, async (newModel) => {
         <p>{{ agentStore.selectedAgent?.embeddingModel }}</p>
       </div>
 
-      <div class="group">
-        <label>{{ t('agents.labels.active') }}:</label>
-        <p>{{ agentStore.selectedAgent?.active ? t('agents.labels.active_true') : t('agents.labels.active_false') }}</p>
-      </div>
-
       <div class="actions">
         <ElButton
           type="primary"
@@ -423,11 +434,14 @@ watch(() => form.embeddingProvider, async (newModel) => {
   color: var(--color-primary-900);
 }
 
+.edit-form {
+  grid-column: 1/-1;
+}
+
 .container {
   --container-background-color: var(--color-primary-100);
   --lable-text-color: var(--color-gray-500);
 
-  grid-column: 1/-1;
   display: flex;
   flex-direction: column;
   background: var(--container-background-color);

@@ -3,6 +3,8 @@
 import type { Agent } from '~/types/agent'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import { useAgentStore } from '~/stores/agents'
+import EditIcon from '~/assets/icons/svg/edit-user.svg'
+import DeleteIcon from '~/assets/icons/svg/delete.svg'
 
 // PROPS
 const props = defineProps<{
@@ -19,19 +21,28 @@ const agentToDeleteId = ref<number | string | null >(null)
 const isDeleteModalVisible = ref(false)
 
 // API CALLS
-const { execute: deleteExecute, error: deleteError, status: deleteStatus } = await useAsyncData(() => agentStore.DeleteAgent(agentToDeleteId.value as number), {
+const { execute: deleteExecute, error: deleteError, status: deleteStatus } = await useAsyncData(() => agentStore.DELETE_DeleteAgent(agentToDeleteId.value as number), {
 
   immediate: false,
 })
+
+enum StatusType {
+  Primary = 'primary',
+  Success = 'success',
+  Info = 'info',
+  Warning = 'warning',
+  Danger = 'danger',
+}
 
 // HELPERS
 const agentData = computed(() => {
   return {
     id: props.agent?.id,
-    name: props.agent?.name || 'Unknown name',
-    context: props.agent?.context || 'Missing agent context',
-    updatedAt: props.agent?.updatedAt || 'Unknown date',
-    createdAt: props.agent?.createdAt || 'Unknown date',
+    name: props.agent?.name || t('agents.agent_card.unknown_agentname'),
+    context: props.agent?.context || t('agents.agent_card.unknown_agentcontext'),
+    status: props.agent?.active ? t('agents.agent_card.active_status') : t('users.agent_card.inactive_status'),
+    statusType: props.agent?.active ? StatusType.Success : StatusType.Danger,
+    createdAt: props.agent?.createdAt || t('agents.agent_card.created_at'),
   }
 })
 
@@ -74,7 +85,7 @@ const confirmDelete = async (agent: Agent | null | undefined): Promise<void> => 
   else {
     ElNotification({
       title: 'Agent se nafufurio',
-      message: 'nistas od agenta',
+      message: t('agents.notifications.invalid_agent'),
       type: 'error',
       customClass: 'error',
       duration: 2500,
@@ -93,37 +104,62 @@ errorHandler(deleteError)
 <template>
   <div class="agent-card">
     <LabelDescriptionItem
-      label="Agent Name"
+      :label="t('agents.labels.name')"
+      size="small"
       :description="agentData?.name"
-    />
-    <LabelDescriptionItem
-      label="Updated at"
-      :description="agentData.updatedAt"
-    />
-    <LabelDescriptionItem
-      label="Created at"
-      :description="agentData.createdAt"
-    />
-    <LabelDescriptionItem
-      label="Context"
-      :description="agentData?.context"
+      class="agent-name"
     />
 
+    <LabelDescriptionItem
+      :label="t('agents.labels.status')"
+      size="small"
+      :description="agentData?.status"
+    >
+      <template #customDescription>
+        <el-tag :type="agentData.statusType" size="small">
+          <span class="status-dot" />  {{ agentData?.status }}
+        </el-tag>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      :label="t('agents.labels.created_at')"
+      :description="agentData.createdAt"
+      size="small"
+    />
+    <LabelDescriptionItem
+      :label="t('agents.labels.context')"
+      :description="agentData?.context"
+      size="small"
+    />
     <div class="action-links">
-      <ElButton
-        type="primary"
-        @click="editClick(agent)"
+      <ElTooltip
+        :content="t('agents.agent_card.edit_agent')"
+        :enterable="false"
+        placement="top"
       >
-        {{ t('agents.buttons.edit') }}
-      </ElButton>
-      <ElButton
-        type="primary"
-        :loading="deleteStatus === 'pending'"
-        @click.stop
-        @click=" openDeleteAgentModal"
+        <ElButton
+          type="primary"
+          plain
+          @click="editClick(agent)"
+        >
+          <EditIcon />
+        </ElButton>
+      </ElTooltip>
+      <ElTooltip
+        :content="t('agents.agent_card.delete_agent')"
+        :enterable="false"
+        placement="top"
       >
-        {{ t('agents.buttons.delete') }}
-      </ElButton>
+        <ElButton
+          type="danger"
+          plain
+          :loading="deleteStatus === 'pending'"
+          @click.stop
+          @click="openDeleteAgentModal"
+        >
+          <DeleteIcon />
+        </ElButton>
+      </ElTooltip>
     </div>
   </div>
   <ElDialog
@@ -154,7 +190,7 @@ errorHandler(deleteError)
 <style lang="scss" scoped>
 .agent-card {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 16px;
   border: 0.5px solid var(--color-primary-300);
   background: var(--color-primary-100);
@@ -172,10 +208,12 @@ errorHandler(deleteError)
   button {
     font-size: var(--font-size-fluid-3);
     line-height: normal;
-    color: var(--color-primary-700);
   }
 }
 
+.agent-name {
+  grid-column: span 2;
+}
 .dark {
   .agent-card {
     border: 0.5px solid var(--color-primary-500);
@@ -186,12 +224,6 @@ errorHandler(deleteError)
     color: var(--color-primary-0);
     & .agentname {
       color: var(--color-primary-0);
-    }
-  }
-
-  .action-links {
-    button {
-      color: var(--color-primary-100);
     }
   }
 }
