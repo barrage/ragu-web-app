@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { UploadUserFile } from 'element-plus'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import AddIcon from '~/assets/icons/svg/add.svg'
+import DocumentAddIcon from '~/assets/icons/svg/document-add.svg'
 
 const documentStore = useDocumentsStore()
 const isUploadModalVisible = ref(false)
@@ -31,8 +31,11 @@ const upload = async () => {
 
 <template>
   <div class="documents-actions-container">
-    <el-button type="primary" @click="openUploadModal">
-      <AddIcon />  Upload document
+    <el-button
+      type="primary"
+      @click="openUploadModal"
+    >
+      <DocumentAddIcon />  Upload
     </el-button>
     <ClientOnly>
       <ElDialog

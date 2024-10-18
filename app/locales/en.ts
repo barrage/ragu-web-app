@@ -45,7 +45,7 @@ export default {
   users: {
     title: 'Users',
     description: 'Manage team members of your organization and set their access level',
-    invite_user: 'Invite User',
+    invite_user: 'Invite user',
     user_card: {
       role: 'Role',
       status: 'Status',

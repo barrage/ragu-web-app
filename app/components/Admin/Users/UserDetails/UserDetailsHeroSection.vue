@@ -34,9 +34,9 @@ const userData = computed(() => {
     <div class="profile-avatar-wrapper">
       <ProfileIcon size="80" />
       <div class="username-status-wrapper">
-        <h6 class="username">
+        <h5 class="username">
           {{ `${userData.fullName}` }}
-        </h6>
+        </h5>
         <el-tag :type="userData.statusType" size="small">
           <span class="status-dot" />  {{ userData?.status }}
         </el-tag>
@@ -78,6 +78,10 @@ const userData = computed(() => {
     display: flex;
     align-items: center;
     gap: 2rem;
+  }
+  & .username {
+    font-weight: var(--font-weight-bold);
+    line-height: normal;
   }
 }
 </style>

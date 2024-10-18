@@ -1,8 +1,8 @@
 import FetchFactory from '../fetchFactory'
-import type { Chat, Message } from '~/types/chat.ts'
+import type { Chat, ChatsResponse, Message } from '~/types/chat.ts'
 
 export default class ChatServise extends FetchFactory {
-  // Endpoint for product-related API requests.
+  // Endpoint for chat-related API requests.
   private readonly endpoint: string = '/chats'
 
   /**
@@ -10,9 +10,9 @@ export default class ChatServise extends FetchFactory {
    * @returns A promise that resolves to an array of Chat objects.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllChats(): Promise<Chat[]> {
+  async GetAllChats(): Promise<ChatsResponse> {
     try {
-      return await this.$fetch<Chat[]>(`/${this.endpoint}?page=1&perPage=10`, {
+      return await this.$fetch<ChatsResponse>(`/${this.endpoint}?page=1&perPage=10`, {
         credentials: 'include',
       })
     }

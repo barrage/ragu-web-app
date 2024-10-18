@@ -15,9 +15,9 @@ if (documentId) {
 </script>
 
 <template>
+  <h6>Edit Parser</h6>
   <div class="document-parser-config-container">
     <div class="document-parser-config-wrapper">
-      <CurrentParserConfig :config="selectedDocument?.parseConfig" />
       <EditParserConfig />
     </div>
     <PreviewParser />

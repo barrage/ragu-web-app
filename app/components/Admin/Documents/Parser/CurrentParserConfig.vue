@@ -8,9 +8,9 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div>
+  <div class="current-parser-config-card">
     <h6 class="current-config-title">
-      Current config
+      Parser
     </h6>
     <div class="current-parser-config">
       <template v-if="props.config">
@@ -57,6 +57,14 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
+.current-parser-config-card {
+  border: 0.5px solid var(--color-primary-300);
+  background: var(--color-primary-0);
+  box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
+  border-radius: 16px;
+  padding: 1rem;
+  width: 100%;
+}
 .current-config-title {
   font-weight: var(--font-weight-bold);
   color: var(--color-primary-800);
