@@ -42,6 +42,12 @@ export default {
   documents: {
     title: 'Dokumenti',
     description: 'Upravljajte i organizirajte sve dokumente koji pomažu AI-ju u učenju.',
+    name: 'Naziv',
+    extension: 'Format',
+    path: 'Lokacija',
+    source: 'Izvor',
+    id: 'Dokument ID',
+    hash: 'Hash',
   },
   users: {
     title: 'Korisnici',

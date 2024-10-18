@@ -8,8 +8,8 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="document-list">
-    <div class="documents-container">
+  <div class="document-list ">
+    <div class="documents-container grid">
       <DocumentCard
         v-for="document in props.documents"
         :key="document.id"
@@ -21,9 +21,12 @@ const props = defineProps<{
 
   <style scoped>
   .documents-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  row-gap: 0.8rem;
+  padding-right: var(--spacing-desktop-l);
+  & .document-card {
+    grid-column: span 12;
+    row-gap: 0.8rem;
+  }
 }
 
 h2 {

@@ -13,7 +13,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     const userId = '660a7998-2a27-11ee-be56-0242ac120002'
 
-    ws = new WebSocket(`wss://api.llmao-ai-development.guja.barrage.corp?userId=${userId}`)
+    ws = new WebSocket(`wss://llmao-kotlin-api-staging.m2.barrage.beer?userId=${userId}`)
     connectionState.value = 'opening'
 
     ws.onopen = () => {

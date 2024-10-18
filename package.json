@@ -24,7 +24,8 @@
     "pinia": "^2.1.7",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-echarts": "^7.0.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "2.22.4",

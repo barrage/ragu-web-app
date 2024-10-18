@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import type { Chat, Message } from '~/types/chat.ts'
+import type { Chat, ChatsResponse, Message } from '~/types/chat.ts'
 
 export const useChatStore = defineStore('chat', () => {
   // State
   const chats = ref<Chat[]>([])
+  const chatsResponse = ref<ChatsResponse | null>(null)
   const messages = ref<Message[]>()
   const selectedChat = computed(() => {
     if (!messages.value || messages.value.length === 0) { return null }
@@ -18,9 +19,6 @@ export const useChatStore = defineStore('chat', () => {
   const hasChats = computed(() => chats.value.length > 0)
   const { $api } = useNuxtApp()
 
-  /* _____Fake_____ */
-  const userId = ref('660a7998-2a27-11ee-be56-0242ac120002')
-
   /* API */
 
   async function GET_ChatMessages(chatId: string): Promise<Message[]> {
@@ -34,14 +32,14 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
-  async function GET_AllChats(userId: string): Promise<Chat[]> {
-    const data = await $api.chat.GetAllChats(userId)
+  async function GET_AllChats(): Promise<ChatsResponse | null> {
+    const data = await $api.chat.GetAllChats()
 
-    if (data) {
-      return chats.value = data
+    if (data.items) {
+      return chatsResponse.value = data
     }
     else {
-      return []
+      return chatsResponse.value = null
     }
   }
 
@@ -60,6 +58,5 @@ export const useChatStore = defineStore('chat', () => {
     GET_ChatMessages,
     GET_AllChats,
     getChatById,
-    userId,
   }
 })

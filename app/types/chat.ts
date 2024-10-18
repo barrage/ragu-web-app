@@ -40,3 +40,7 @@ export interface GroupedChats {
   monthsThisYear: { [month: string]: Chat[] }
   lastYear: Chat[]
 }
+export interface ChatsResponse {
+  items: Chat[]
+  total: number
+}

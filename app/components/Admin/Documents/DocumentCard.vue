@@ -1,14 +1,13 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import PdfIcon from '~/assets/icons/svg/pdfIcon.svg'
 import DocxIcon from '~/assets/icons/svg/docx-icon.svg'
 import TxtIcon from '~/assets/icons/svg/txt-icon.svg'
 import MarkdownIcon from '~/assets/icons/svg/markdown-icon.svg'
 import CsvIcon from '~/assets/icons/svg/csv-icon.svg'
 import JsonIcon from '~/assets/icons/svg/json-icon.svg'
-import DocumentArrowRightIcon from '~/assets/icons/svg/document-arrow-right.svg'
-
+import DocumentEditIcon from '~/assets/icons/svg/document-edit.svg'
 import UnknownDocumentIcon from '~/assets/icons/svg/unknown-document-icon.svg'
+import DeleteIcon from '~/assets/icons/svg/delete.svg'
 
 import type { Document } from '~/types/document'
 
@@ -16,6 +15,8 @@ import type { Document } from '~/types/document'
 const props = defineProps<{
   document: Document
 }>()
+/* const emits = defineEmits<Emits>() */
+
 const router = useRouter()
 
 const navigateToDocumentDetailsPage = () => {
@@ -26,34 +27,48 @@ const navigateToDocumentDetailsPage = () => {
 const formatName = (str: string, n: number) => {
   return str.length > n ? `${str.slice(0, n)}...` : str
 }
+
+const { t } = useI18n()
+
+const documentData = computed(() => {
+  return {
+    name: props.document?.name || t('users.user_card.unknown_name'),
+    extension: props.document?.ext || t('users.user_card.unknown_email'),
+    updatedAt: props.document?.updatedAt || t('users.user_card.unknown_date'),
+    createdAt: props.document?.createdAt || t('users.user_card.unknown_date'),
+  }
+})
+/* interface Emits {
+  (event: 'delete-document', document: Document): void
+} */
 </script>
 
 <template>
-  <div class="document-card">
+  <div class="document-card grid">
     <div class="document-name-type-wrapper" @click="navigateToDocumentDetailsPage()">
       <PdfIcon
-        v-if="props.document.ext === 'pdf'"
+        v-if="documentData.extension === 'pdf'"
         size="36"
         original
       />
-      <DocxIcon v-else-if="props.document.ext === 'docx'" size="36" />
+      <DocxIcon v-else-if="documentData.extension === 'docx'" size="36" />
       <MarkdownIcon
-        v-else-if="props.document.ext === 'md'"
+        v-else-if="documentData.extension === 'md'"
         size="36"
         original
       />
       <CsvIcon
-        v-else-if="props.document.ext === 'csv'"
+        v-else-if="documentData.extension === 'csv'"
         size="36"
         original
       />
       <JsonIcon
-        v-else-if="props.document.ext === 'json'"
+        v-else-if="documentData.extension === 'json'"
         size="36"
         original
       />
       <TxtIcon
-        v-else-if="props.document.ext === 'txt'"
+        v-else-if="documentData.extension === 'txt'"
         size="36"
         original
       />
@@ -63,18 +78,14 @@ const formatName = (str: string, n: number) => {
         original
       />
       <div class="document-name-wrapper">
-        <h6>{{ formatName(props.document.name, 25) }}</h6>
-        <span>Uploaded {{ formatDate(props.document.createdAt) }}</span>
+        <h6>{{ formatName(documentData.name, 25) }}</h6>
       </div>
     </div>
     <div class="document-inforamtions">
       <LabelDescriptionItem
         label="Extension"
-        :description="props.document.ext "
-      />
-      <LabelDescriptionItem
-        label="Path"
-        :description="props.document.path"
+        size="small"
+        :description="documentData.extension "
       />
     </div>
     <div class="document-actions">
@@ -84,8 +95,28 @@ const formatName = (str: string, n: number) => {
         :enterable="false"
         placement="top"
       >
-        <el-button type="primary" @click="navigateToDocumentDetailsPage">
-          <DocumentArrowRightIcon size="24" />
+        <el-button
+          type="primary"
+          plain
+          class="manage-document-button"
+          @click="navigateToDocumentDetailsPage"
+        >
+          <DocumentEditIcon size="24" />
+        </el-button>
+      </ElTooltip>
+      <ElTooltip
+        content="Manage your document"
+        :show-after="100"
+        :enterable="false"
+        placement="top"
+      >
+        <el-button
+          type="danger"
+          plain
+          class="manage-document-button"
+          @click="navigateToDocumentDetailsPage"
+        >
+          <DeleteIcon size="24" />
         </el-button>
       </ElTooltip>
     </div>
@@ -94,28 +125,19 @@ const formatName = (str: string, n: number) => {
 
 <style lang="scss" scoped>
 .document-card {
-  border: 1px solid var(--color-primary-200);
-  border-radius: 8px;
-  padding: 16px;
-  background-color: var(--color-primary-100);
-  box-shadow: 0 2px 4px var(--color-primary-100);
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  gap: 1.5rem;
-  align-items: center;
-
-  &:hover {
-    border: 1px solid var(--color-primary-300);
-    box-shadow: 0 2px 4px var(--color-primary-200);
-  }
+  border: 0.5px solid var(--color-primary-300);
+  background: var(--color-primary-0);
+  box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
+  border-radius: 16px;
+  padding: 1rem;
 
   & .document-name-type-wrapper {
-    flex: 0 0 calc(30% - 8px);
-    display: flex;
-    gap: 0.5rem;
+    grid-column: span 7;
     align-items: center;
     text-overflow: ellipsis;
+    display: flex;
+    min-width: fit-content;
+    gap: 6px;
 
     &:hover {
       cursor: pointer;
@@ -123,10 +145,6 @@ const formatName = (str: string, n: number) => {
     }
 
     & .document-name-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      text-overflow: ellipsis;
       h6 {
         font-weight: var(--font-weight-bold);
         font-size: var(--font-size-fluid-3);
@@ -143,29 +161,27 @@ const formatName = (str: string, n: number) => {
   }
 
   & .document-inforamtions {
+    grid-column: span 3;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 2.5rem;
+    gap: 22px;
+    width: 100%;
+    align-items: center;
   }
 
   & .document-actions {
-    margin-left: auto;
+    grid-column: span 2;
     display: flex;
-    gap: 0.5rem;
-    margin-top: 8px;
+    gap: 12px;
   }
 }
-
+.manage-document-button {
+  margin-left: auto;
+}
 .dark {
   .document-card {
-    border: 1px solid var(--color-primary-700);
-    background-color: var(--color-primary-800);
-    box-shadow: 0 2px 4px var(--color-primary-600);
-    &:hover {
-      border: 1px solid var(--color-primary-500);
-      box-shadow: 0 2px 4px var(--color-primary-600);
-    }
+    border: 0.5px solid var(--color-primary-700);
+    background-color: var(--color-primary-900);
+    box-shadow: 0px 2px 6px 0px var(--color-primary-800);
 
     & .document-name-wrapper {
       h6 {
