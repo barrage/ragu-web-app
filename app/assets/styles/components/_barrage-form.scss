@@ -104,7 +104,6 @@
       top: 100%;
       left: 0;
       will-change: transform;
-      transform: translateY(0.25rem);
 
       &::before {
         content: '!';
@@ -131,13 +130,6 @@
           opacity: 1;
         }
       }
-
-      .barrage-form-item__label {
-        transform: translate(
-          calc(var(--input-padding-inline-start) + 0.0625rem),
-          var(--spacing-mobile-5-xs)
-        );
-      }
     }
 
     // Label manipulation on input state change
@@ -145,13 +137,6 @@
         .barrage-input__wrapper.is-focus,
         .barrage-input__inner:not(:placeholder-shown)
       ) {
-      .barrage-form-item__label {
-        transform: translate(
-          calc(var(--input-padding-inline-start) + 0.0625rem),
-          var(--spacing-mobile-5-xs)
-        );
-      }
-
       .barrage-input__count {
         --input-word-count-color: var(--color-primary-900);
       }
@@ -164,19 +149,6 @@
 
       .barrage-input__count {
         --input-word-count-color: var(--color-primary-300);
-      }
-    }
-
-    // Label manipulation on textarea state change
-    &:has(
-        .barrage-textarea__inner:focus,
-        .barrage-textarea__inner:not(:placeholder-shown)
-      ) {
-      .barrage-form-item__label {
-        transform: translate(
-          calc(var(--input-padding-inline-start) + 0.0625rem),
-          var(--spacing-mobile-5-xs)
-        );
       }
     }
 

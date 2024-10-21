@@ -1,10 +1,16 @@
 <script lang="ts" setup>
 import type { Collection } from '~/types/collection'
+import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
   collections: Collection[] | null | undefined
 }>()
 
+const emits = defineEmits<{
+  (event: 'pageChange', page: number): number
+}>()
+
+const collectionStore = useCollectionsStore()
 const cardClasses = ref<string[]>([])
 const isDeleteModalVisible = ref(false)
 const collectionToDelete = ref<Collection | null>(null)
@@ -12,6 +18,18 @@ const collectionToDelete = ref<Collection | null>(null)
 const openDeleteModal = (collection: Collection | null) => {
   collectionToDelete.value = collection
   isDeleteModalVisible.value = true
+}
+
+const pagination = ref<Pagination>({
+  currentPage: 1,
+  pageSize: 10,
+  total: collectionStore.collectionResponse?.total || 0,
+  disabled: false,
+})
+
+const changePage = (page: number) => {
+  pagination.value.currentPage = page
+  emits('pageChange', pagination.value.currentPage)
 }
 
 onMounted(() => {
@@ -38,6 +56,12 @@ onMounted(() => {
         @open-delete-modal="openDeleteModal(collection)"
       />
     </div>
+    <Pagination
+      :current-page="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :total="pagination.total"
+      @page-change="(page) => changePage(page)"
+    />
     <DeleteCollectionModal
       v-model:visible="isDeleteModalVisible"
       :collection="collectionToDelete"

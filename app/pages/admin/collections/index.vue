@@ -9,9 +9,19 @@ definePageMeta({
   layout: 'admin-layout',
 })
 
-const { error: getError } = await useAsyncData(() => collectionStore.GET_AllCollections())
+const currentPage = ref(1)
+const itemsPerPage = ref(10)
 
-errorHandler(getError)
+const fetchCollections = async (page: number = 1) => {
+  const { error: getError } = await useAsyncData(() => collectionStore.GET_AllCollections(page, itemsPerPage.value))
+  errorHandler(getError)
+}
+
+await fetchCollections(currentPage.value)
+
+const handlePageChange = async (page: number) => {
+  currentPage.value = page
+}
 </script>
 
 <template>
@@ -32,7 +42,7 @@ errorHandler(getError)
       </template>
     </AdminPageHeadingTemplate>
     <CollectionListActions />
-    <CollectionList :collections="collectionStore.collections" />
+    <CollectionList :collections="collectionStore.collections" @page-change="handlePageChange" />
   </AdminPageContainer>
 </template>
 

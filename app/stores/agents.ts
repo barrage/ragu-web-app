@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Agent, AgentDetail, AgentListResponse } from '~/types/agent'
+import type { Agent, AgentDetail, AgentListResponse, SelectedAgent } from '~/types/agent'
 
 export const useAgentStore = defineStore('agent', () => {
   // CONSTANTS
@@ -10,6 +10,7 @@ export const useAgentStore = defineStore('agent', () => {
   const editMode = ref<boolean>(false)
   const agentsResponse = ref<AgentListResponse | null >()
   const selectedAgent = ref<Agent | null | undefined>()
+  const singleAgent = ref<Agent | null | undefined>()
 
   const agents = computed<Agent[]>(() => {
     return agentsResponse.value?.items || [] // Return agents array or empty array if null
@@ -24,32 +25,44 @@ export const useAgentStore = defineStore('agent', () => {
   }
 
   // API
+  async function GET_AllAgents(
+    page: number = 1,
+    perPage: number = 10,
+    sortBy: string = 'active',
+    sortOrder: 'asc' | 'desc' = 'desc',
+    showDeactivated: boolean = true,
+  ): Promise<AgentListResponse | null> {
+    try {
+      const data = await $api.agent.GetAllAgents(page, perPage, sortBy, sortOrder, showDeactivated)
 
-  async function GET_AllAgents(payload?: object): Promise<AgentListResponse | null > {
-    const data = await $api.agent.GetAllAgents(payload)
-
-    if (data) {
-      selectedAgent.value = data.items[0]
-      agentsResponse.value = data
-      return data
+      if (data) {
+        selectedAgent.value = data.items[0]
+        agentsResponse.value = data
+        return data
+      }
+      else {
+        agentsResponse.value = null
+        return null
+      }
     }
-    else {
+    catch (error) {
+      console.error('Failed to fetch agents:', error)
       agentsResponse.value = null
       return null
     }
   }
 
-  async function GET_SingleAgent(agentId: string | null | undefined): Promise<Agent | null> {
+  async function GET_SingleAgent(agentId: string | null | undefined): Promise<SelectedAgent | null> {
     if (agentId) {
       const data = await $api.agent.GetSingleAgent(agentId)
 
       if (data) {
-        selectedAgent.value = data
+        singleAgent.value = data.agent
         return data
       }
     }
 
-    selectedAgent.value = null
+    singleAgent.value = null
     return null
   }
 
@@ -68,11 +81,11 @@ export const useAgentStore = defineStore('agent', () => {
   async function PUT_UpdateAgent(id: string, body: AgentDetail): Promise<Agent | null> {
     const data = await $api.agent.UpdateAgent(id, body)
     if (data) {
-      selectedAgent.value = data
+      singleAgent.value = data
       return data
     }
     else {
-      selectedAgent.value = null
+      singleAgent.value = null
       return null
     }
   }
@@ -99,6 +112,7 @@ export const useAgentStore = defineStore('agent', () => {
     selectedAgent,
     getMappedAgents,
     editMode,
+    singleAgent,
     setEditMode,
     setSelectedAgent,
     GET_AllAgents,

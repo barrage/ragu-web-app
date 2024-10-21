@@ -1,25 +1,51 @@
 import FetchFactory from '../fetchFactory'
-import type { Agent, AgentDetail, AgentListResponse } from '~/types/agent'
+import type { Agent, AgentDetail, AgentListResponse, SelectedAgent } from '~/types/agent'
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
   private readonly endpoint: string = 'admin/agents'
 
   /**
-   * Fetches a list of all agents.
-   * @returns A promise that resolves to an AgentListResponse type.
-   * @throws Will throw an error if the request fails.
+   * Fetches a list of agents with optional filtering, sorting, and pagination.
+   *
+   * @param {number} [page=1] - The current page of the results. Defaults to the first page.
+   * @param {number} [perPage=10] - The number of agents to retrieve per page. Defaults to 10.
+   * @param {string} [sortBy='status'] - The field by which to sort the results. Defaults to 'status'.
+   * @param {'asc' | 'desc'} [sortOrder='asc'] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
+   * @param {boolean} [showDeactivated=true] - Whether to include deactivated agents in the results. Defaults to true.
+   *
+   * @returns {Promise<AgentListResponse>} - A promise that resolves to the list of agents.
+   *
+   * @throws {Error} - Throws an error if the request fails, including a status code and error message.
    */
-  async GetAllAgents(_payload: object | undefined): Promise<AgentListResponse> {
+
+  async GetAllAgents(
+    page: number = 1,
+    perPage: number = 10,
+    sortBy: string = 'active',
+    sortOrder: 'asc' | 'desc' = 'desc',
+    showDeactivated: boolean = true,
+  ): Promise<AgentListResponse> {
     try {
-      return await this.$fetch<AgentListResponse>(this.endpoint, {
+      // Build query parameters using function arguments
+      const queryParams = new URLSearchParams({
+        page: page.toString(),
+        perPage: perPage.toString(),
+        sortBy,
+        sortOrder,
+        showDeactivated: showDeactivated.toString(),
+      }).toString()
+
+      // Make the API request with the constructed URL
+      return await this.$fetch<AgentListResponse>(`${this.endpoint}?${queryParams}`, {
         credentials: 'include',
       })
     }
     catch (error: any) {
+      // Handle errors and throw custom error message
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch product with code ${error?.statusCode}`,
+        statusMessage: error?.message || `Failed to fetch agents with code ${error?.statusCode}`,
       })
     }
   }
@@ -30,9 +56,9 @@ export default class AgentService extends FetchFactory {
    * @returns A promise that resolves to an Agent object.
    * @throws Will throw an error if the request fails.
    */
-  async GetSingleAgent(agentId: string): Promise<Agent> {
+  async GetSingleAgent(agentId: string): Promise<SelectedAgent> {
     try {
-      return await this.$fetch<Agent>(`${this.endpoint}/${agentId}`, {
+      return await this.$fetch<SelectedAgent>(`${this.endpoint}/${agentId}`, {
         credentials: 'include',
       })
     }
