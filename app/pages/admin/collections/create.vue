@@ -224,7 +224,7 @@ errorHandler(createError)
 
 .container {
   --container-background-color: var(--color-primary-100);
-
+  --form-gap: 0;
   background: var(--container-background-color);
   border: var(--border-global-transparent);
   border-radius: var(--radius-4);

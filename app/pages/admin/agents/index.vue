@@ -10,9 +10,21 @@ definePageMeta({
   layout: 'admin-layout',
 })
 
-const { error } = await useAsyncData(() => agentStore.GET_AllAgents())
+const currentPage = ref(1)
+const itemsPerPage = ref(10)
 
-errorHandler(error)
+const fetchAgents = async (page: number = 1) => {
+  const { error } = await useAsyncData(() => agentStore.GET_AllAgents(page, itemsPerPage.value))
+
+  errorHandler(error)
+}
+
+await fetchAgents(currentPage.value)
+
+const handlePageChange = async (page: number) => {
+  currentPage.value = page
+  await fetchAgents(page)
+}
 </script>
 
 <template>
@@ -33,7 +45,7 @@ errorHandler(error)
       </template>
     </AdminPageHeadingTemplate>
     <AgentsListActions />
-    <AgentsList :agents="agentStore.getMappedAgents" />
+    <AgentsList :agents="agentStore.getMappedAgents" @page-change="handlePageChange" />
   </AdminPageContainer>
 </template>
 

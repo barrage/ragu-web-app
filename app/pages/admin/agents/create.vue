@@ -2,7 +2,7 @@
 // IMPORTS
 import { ElNotification, type FormInstance, type FormRules } from 'element-plus'
 import { useAgentStore } from '~/stores/agents'
-import type { AgentDetail } from '~/types/agent'
+import type { AgentDetail, EmbeddingProvider } from '~/types/agent'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -18,7 +18,7 @@ const localePath = useLocalePath()
 // STATE
 
 const maxContext = 1000
-const embeddingProviders = ['fembed', 'openai']
+const embeddingProviders: EmbeddingProvider[] = ['azure', 'openai', 'ollama']
 const formRef = ref<FormInstance>()
 const form = reactive<AgentDetail>({
   name: '',
@@ -327,7 +327,7 @@ errorHandler(createError)
 
 .container {
   --container-background-color: var(--color-primary-100);
-
+  --form-gap: 0;
   background: var(--container-background-color);
   border: var(--border-global-transparent);
   border-radius: var(--radius-4);

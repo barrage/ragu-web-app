@@ -31,6 +31,7 @@ const agentStore = useAgentStore()
   padding-bottom: 1rem;
   border-radius: 1rem;
   min-height: 100px;
+  display: flex;
   &.selected {
     background: var(--color-primary-100);
     border: 1.5px solid var(--color-primary-500);

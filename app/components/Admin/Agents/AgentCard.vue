@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 // IMPORTS
 import type { Agent } from '~/types/agent'
-import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
+
 import { useAgentStore } from '~/stores/agents'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
-import DeleteIcon from '~/assets/icons/svg/delete.svg'
+import EyeIcon from '~/assets/icons/svg/eye.svg'
 
 // PROPS
 const props = defineProps<{
@@ -14,17 +14,7 @@ const props = defineProps<{
 // CONSTANTS
 const agentStore = useAgentStore()
 const { t } = useI18n()
-const localePath = useLocalePath()
-
-// STATE
-const agentToDeleteId = ref<number | string | null >(null)
-const isDeleteModalVisible = ref(false)
-
-// API CALLS
-const { execute: deleteExecute, error: deleteError, status: deleteStatus } = await useAsyncData(() => agentStore.DELETE_DeleteAgent(agentToDeleteId.value as number), {
-
-  immediate: false,
-})
+const router = useRouter()
 
 enum StatusType {
   Primary = 'primary',
@@ -40,65 +30,21 @@ const agentData = computed(() => {
     id: props.agent?.id,
     name: props.agent?.name || t('agents.agent_card.unknown_agentname'),
     context: props.agent?.context || t('agents.agent_card.unknown_agentcontext'),
-    status: props.agent?.active ? t('agents.agent_card.active_status') : t('users.agent_card.inactive_status'),
+    status: props.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
     statusType: props.agent?.active ? StatusType.Success : StatusType.Danger,
     createdAt: props.agent?.createdAt || t('agents.agent_card.created_at'),
   }
 })
 
-const editClick = (agent: Agent | null): void => {
-  if (!agent) {
-    return
-  }
+const editClick = (): void => {
   agentStore.setEditMode(true)
 
-  navigateTo({ path: localePath(`/admin/agents/${agent?.id}`) })
+  router.push(`/admin/agents/${props.agent?.id}`)
 }
 
-const confirmDelete = async (agent: Agent | null | undefined): Promise<void> => {
-  if (!agent || !agent.id) {
-    ElNotification({
-      title: 'Error',
-      message: t('agents.notifications.invalid_agent'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-    return
-  }
-  agentToDeleteId.value = agent.id
-
-  if (agentToDeleteId.value !== null) {
-    await deleteExecute()
-    if (deleteStatus.value === 'success') {
-      ElNotification({
-        title: t('agents.notifications.delete_title'),
-        message: t('agents.notifications.delete_message', { name: props?.agent?.name }),
-        type: 'success',
-        customClass: 'success',
-        duration: 2500,
-      })
-    }
-
-    agentToDeleteId.value = null
-  }
-  else {
-    ElNotification({
-      title: 'Agent se nafufurio',
-      message: t('agents.notifications.invalid_agent'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-  }
+const redirectToAgentDetails = () => {
+  return router.push(`/admin/agents/${props.agent?.id}`)
 }
-
-const openDeleteAgentModal = () => {
-  isDeleteModalVisible.value = true
-}
-
-// ERROR HANDLERS
-errorHandler(deleteError)
 </script>
 
 <template>
@@ -131,7 +77,21 @@ errorHandler(deleteError)
       :description="agentData?.context"
       size="small"
     />
+
     <div class="action-links">
+      <ElTooltip
+        :content="t('agents.agent_card.view_more')"
+        :enterable="false"
+        placement="top"
+      >
+        <el-button
+          plain
+          type="primary"
+          @click="redirectToAgentDetails()"
+        >
+          <EyeIcon />
+        </el-button>
+      </ElTooltip>
       <ElTooltip
         :content="t('agents.agent_card.edit_agent')"
         :enterable="false"
@@ -140,51 +100,13 @@ errorHandler(deleteError)
         <ElButton
           type="primary"
           plain
-          @click="editClick(agent)"
+          @click="editClick"
         >
           <EditIcon />
         </ElButton>
       </ElTooltip>
-      <ElTooltip
-        :content="t('agents.agent_card.delete_agent')"
-        :enterable="false"
-        placement="top"
-      >
-        <ElButton
-          type="danger"
-          plain
-          :loading="deleteStatus === 'pending'"
-          @click.stop
-          @click="openDeleteAgentModal"
-        >
-          <DeleteIcon />
-        </ElButton>
-      </ElTooltip>
     </div>
   </div>
-  <ElDialog
-    v-model="isDeleteModalVisible"
-    align-center
-    class="barrage-dialog--small"
-    :close-icon="CloseCircleIcon"
-  >
-    <template #header>
-      <h5>  {{ t('agents.titles.deleteTitle') }} </h5>
-    </template>
-    <p> {{ t('agents.titles.deleteDescription') }}</p>
-    <template #footer>
-      <el-button @click="isDeleteModalVisible = false">
-        {{ t('agents.buttons.cancel') }}
-      </el-button>
-      <el-button
-        type="primary"
-        :loading="deleteStatus === 'pending'"
-        @click.stop="confirmDelete(agent)"
-      >
-        {{ t('agents.buttons.delete') }}
-      </el-button>
-    </template>
-  </ElDialog>
 </template>
 
 <style lang="scss" scoped>
@@ -193,7 +115,7 @@ errorHandler(deleteError)
   grid-template-columns: repeat(6, 1fr);
   gap: 16px;
   border: 0.5px solid var(--color-primary-300);
-  background: var(--color-primary-100);
+  background: var(--color-primary-0);
   box-shadow: 0 0.2rem 0.3rem var(--color-primary-200);
   border-radius: 16px;
   padding: 1rem;

@@ -5,7 +5,7 @@ const agentStore = useAgentStore()
 agentStore.GET_AllAgents()
 
 const allAgents = computed(() => {
-  return agentStore.agentsResponse?.agents
+  return agentStore.agentsResponse?.items
 })
 const selectedAgent = ref(allAgents.value?.[0])
 const selectAgent = (agent: any) => {
