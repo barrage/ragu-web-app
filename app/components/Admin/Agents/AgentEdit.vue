@@ -119,7 +119,6 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
 }
 
 const cancelUpdate = (agent: Agent | null | undefined): void => {
-  agentStore.setEditMode(false)
   navigateTo({ path: localePath(`/admin/agents/${agent?.id}`) })
 }
 
@@ -155,6 +154,10 @@ onMounted(async () => {
   form.active = agentStore.singleAgent?.active ?? true
 },
 )
+
+onUnmounted(() => {
+  agentStore.setEditMode(false)
+})
 </script>
 
 <template>

@@ -112,7 +112,7 @@ const createAgent = async (formEl: FormInstance | undefined) => {
           customClass: 'success',
           duration: 2500,
         })
-        agentStore.setEditMode(false)
+
         navigateTo({ path: localePath(`/admin/agents/${agentStore.selectedAgent?.id}`) })
       }
     }
