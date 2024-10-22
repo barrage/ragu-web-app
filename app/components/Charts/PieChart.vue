@@ -26,9 +26,9 @@ const chartHeight = computed(() => (props.small ? '128px' : '348px'))
 const radius = computed(() => (props.small ? ['50%', '80%'] : [80, 125]))
 
 const predefinedColors = [
-  '#00ADB5',
+  '#8B181A',
+  '#F9CA07',
   '#9BEC00',
-  '#F5004F',
   '#fac858',
   '#ee6666',
   '#73c0de',

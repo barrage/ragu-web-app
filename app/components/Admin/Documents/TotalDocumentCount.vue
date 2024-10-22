@@ -5,13 +5,20 @@ const props = defineProps<{ total: number }>()
 </script>
 
 <template>
-  <div class="total-document-count">
-    <h6>Total</h6>
-    <div class="total-count-info">
-      <h4> {{ props.total }}</h4>
-      <DocumentDatabaseIcon size="32" />
+  <ElTooltip
+    content="Displays the total number of documents,"
+    :show-after="1000"
+    :enterable="false"
+    placement="top"
+  >
+    <div class="total-document-count">
+      <h6>Total</h6>
+      <div class="total-count-info">
+        <h4> {{ props.total }}</h4>
+        <DocumentDatabaseIcon size="32" />
+      </div>
     </div>
-  </div>
+  </ElTooltip>
 </template>
 
   <style lang="scss" scoped>

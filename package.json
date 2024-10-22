@@ -25,7 +25,8 @@
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
     "vue": "latest",
-    "vue-echarts": "^7.0.3"
+    "vue-echarts": "^7.0.3",
+    "vue-virtual-scroller": "^1.1.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "2.22.4",

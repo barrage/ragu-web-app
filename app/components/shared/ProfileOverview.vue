@@ -86,13 +86,6 @@ const getMappedProfileInfo = computed(() => [
   }
 }
 
-.horizontal-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--color-primary-300);
-  margin: 1rem 0;
-}
-
 .profile-bottom {
   display: grid;
   grid-template-columns: 1fr;

@@ -77,7 +77,7 @@ watch(
 <style lang="scss" scoped>
 .parser-preview-wrapper {
   flex: 0 0 calc(50% - 22px);
-  background: var(--color-primary-300);
+  background: var(--color-primary-200);
   border-radius: 10px;
   padding: 12px;
   margin-right: 12px;
@@ -115,7 +115,7 @@ watch(
 
 .dark {
   & .parser-preview-wrapper {
-    background: var(--color-primary-700);
+    background: var(--color-primary-800);
 
     & .parser-preview-heading {
       border-bottom: 1px solid var(--color-primary-800);

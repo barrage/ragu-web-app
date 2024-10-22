@@ -1,14 +1,11 @@
 <script lang="ts" setup>
 import FilterIcon from '~/assets/icons/svg/filter.svg'
-
-const documentStore = useDocumentsStore()
 </script>
 
 <template>
   <div class="documents-actions-container">
     <div class="documents-actions-wrapper">
-      <SearchInput placeholder="Search user" />
-      <h6> <b>{{ documentStore?.documentResponse?.items?.length || 0 }}</b> documents</h6>
+      <SearchInput placeholder="Search documents" />
     </div>
     <el-button>
       <FilterIcon />
@@ -22,8 +19,8 @@ const documentStore = useDocumentsStore()
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-inline: 1rem;
   margin-bottom: 1.5rem;
+  margin-top: 1rem;
 
   & h6 {
     color: var(--color-primary-800);

@@ -212,16 +212,7 @@ aside {
   }
 }
 
-.horizontal-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--color-primary-400);
-}
-
 .dark {
-  & .horizontal-divider {
-    background: var(--color-primary-600);
-  }
   .get-help-section {
     &:hover {
       background: var(--color-primary-700);

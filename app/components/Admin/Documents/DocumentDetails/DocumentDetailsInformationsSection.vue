@@ -16,9 +16,9 @@ const formatName = (str: string, n: number) => {
 
 const documentData = computed(() => {
   return {
-    name: props.document?.name || t('documents.document_card.unknown_name'),
+    name: props.document?.name ? formatName(props.document?.name, 35) : t('documents.document_card.unknown_name'),
     extension: props.document?.ext || t('documents.document_card.unknown_email'),
-    path: props.document?.path || t('documents.document_card.path'),
+    path: props.document?.path ? formatName(props.document?.path, 35) : t('documents.document_card.path'),
     id: props.document?.id ? formatName(props.document?.hash, 40) : t('documents.document_card.id'),
     hash: props.document?.hash ? formatName(props.document?.hash, 40) : t('documents.document_card.hash'),
     source: props.document?.src || t('documents.document_card.src'),
@@ -114,7 +114,8 @@ const documentData = computed(() => {
 .document-informations-section {
   display: flex;
   padding-block: 2rem;
-  row-gap: 1.5rem;
+  padding-inline: 1.5rem;
+  row-gap: 0.5rem;
   max-width: 100%;
   flex-wrap: wrap;
   & .label-description-item-container {

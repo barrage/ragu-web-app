@@ -31,11 +31,11 @@ documentStore.GET_AllDocuments()
     <!--   <DocumentsListActions /> -->
     <template v-if="documentStore.documentResponse?.items">
       <div class="active-screen-container grid">
-        <div class="documents-overview">
-          <DocumentList :documents="documentStore.documentResponse?.items" />
-        </div>
         <div class="widgets">
           <DocumentStatistics :documents="documentStore.documentResponse?.items" />
+        </div>
+        <div class="documents-overview">
+          <DocumentList :documents="documentStore.documentResponse?.items" />
         </div>
       </div>
     </template>

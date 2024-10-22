@@ -9,15 +9,23 @@ const customTitle = computed(() => {
 </script>
 
 <template>
-  <div class="document-formats-count">
-    <h6>Formats</h6>
-    <PieChart
-      :data="formats"
-      series-name="Format"
-      :title-text="customTitle"
-      title-subtext="Specific formats"
-    />
-  </div>
+  <ElTooltip
+    content="Shows the distribution of different document formats in a pie chart"
+    :show-after="3000"
+    :enterable="false"
+    placement="top"
+  >
+    <div class="document-formats-count">
+      <h6>Formats</h6>
+
+      <PieChart
+        :data="formats"
+        series-name="Format"
+        :title-text="customTitle"
+        title-subtext="Specific formats"
+      />
+    </div>
+  </ElTooltip>
 </template>
 
   <style lang="scss" scoped>

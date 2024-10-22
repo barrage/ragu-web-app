@@ -90,7 +90,7 @@
     gap: var(--barrage-tag-gap);
     font-size: var(--barrage-tag-font-size);
     font-weight: var(--barrage-tag-font-weight);
-    color: var(--barrage-tag-color);
+    color: var(--barrage-tag-color) !important;
     background-color: var(--barrage-tag-background-color);
     border-radius: var(--barrage-tag-border-radius);
     padding-block: var(--barrage-tag-padding-block);

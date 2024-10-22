@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import SearchIcon from '~/assets/icons/svg/search.svg'
 
 const props = defineProps<{
   placeholder?: string
@@ -33,6 +33,8 @@ watch(searchValue, (newValue) => {
   <el-input
     v-model="searchValue"
     :placeholder="placeholder"
+    size="small"
+    :suffix-icon="SearchIcon"
     @input="onInput"
   />
 </template>

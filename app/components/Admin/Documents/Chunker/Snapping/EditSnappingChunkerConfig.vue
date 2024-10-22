@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
 import type { SnappingChunker, SnappingChunkerConfig } from '~/types/document.ts'
-import ParseDocument from '~/assets/icons/svg/parse-document.svg'
+import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
 import AddIcon from '~/assets/icons/svg/add.svg'
 import MinusIcon from '~/assets/icons/svg/minus.svg'
 import CloseIcon from '~/assets/icons/svg/close.svg'
+import SaveIcon from '~/assets/icons/svg/save-icon.svg'
 
 const scrollIntoViewOptions = {
   behavior: 'smooth',
@@ -46,6 +47,9 @@ const rules = reactive<FormRules<SnappingChunker>>({
     { validator: validateSize, trigger: 'change' },
   ],
   'snapping.config.overlap': [
+    { required: true, message: 'Required', trigger: 'blur' },
+  ],
+  'snapping.delimiter': [
     { required: true, message: 'Required', trigger: 'blur' },
   ],
 })
@@ -140,48 +144,46 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
       :scroll-to-error="true"
       :scroll-into-view-options="scrollIntoViewOptions"
     >
-      <div class="form-items-wrapper">
-        <ElFormItem
-          label="Size"
-          prop="snapping.config.size"
+      <ElFormItem
+        label="Size"
+        prop="snapping.config.size"
+      >
+        <ElInputNumber
+          v-model="form.snapping.config.size"
+          :min="0"
         >
-          <ElInputNumber
-            v-model="form.snapping.config.size"
-            :min="0"
-          >
-            <template #increase-icon>
-              <AddIcon />
-            </template>
-            <template #decrease-icon>
-              <MinusIcon />
-            </template>
-          </ElInputNumber>
-        </ElFormItem>
+          <template #increase-icon>
+            <AddIcon />
+          </template>
+          <template #decrease-icon>
+            <MinusIcon />
+          </template>
+        </ElInputNumber>
+      </ElFormItem>
 
-        <ElFormItem
-          label="Overlap"
-          prop="snapping.config.overlap"
+      <ElFormItem
+        label="Overlap"
+        prop="snapping.config.overlap"
+      >
+        <ElInputNumber
+          v-model="form.snapping.config.overlap"
+          :min="0"
         >
-          <ElInputNumber
-            v-model="form.snapping.config.overlap"
-            :min="0"
-          >
-            <template #increase-icon>
-              <AddIcon />
-            </template>
-            <template #decrease-icon>
-              <MinusIcon />
-            </template>
-          </ElInputNumber>
-        </ElFormItem>
+          <template #increase-icon>
+            <AddIcon />
+          </template>
+          <template #decrease-icon>
+            <MinusIcon />
+          </template>
+        </ElInputNumber>
+      </ElFormItem>
 
-        <ElFormItem
-          label="Delimiter"
-          prop="snapping.delimiter"
-        >
-          <ElInput v-model="form.snapping.delimiter" />
-        </ElFormItem>
-      </div>
+      <ElFormItem
+        label="Delimiter"
+        prop="snapping.delimiter"
+      >
+        <ElInput v-model="form.snapping.delimiter" />
+      </ElFormItem>
 
       <div class="range-filters-wrapper">
         <ElFormItem
@@ -189,12 +191,18 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
           prop="snapping.skipForward"
         >
           <ElInput v-model="forwardFilterString" @keyup.enter="addForwardFilter()" />
-          <template v-for="filter in form.snapping.skipForward" :key="filter">
-            <div class="filter-item">
-              <span>{{ filter }}</span>
-              <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipForward')" />
-            </div>
-          </template>
+          <div class="filter-items-wrapper">
+            <template v-for="filter in form.snapping.skipForward" :key="filter">
+              <el-tag size="small">
+                <span> {{ filter }}  </span>
+                <CloseIcon
+                  size="12"
+                  class="delete-filter-icon"
+                  @click="removeFilter(filter, 'skipForward')"
+                />
+              </el-tag>
+            </template>
+          </div>
         </ElFormItem>
 
         <ElFormItem
@@ -202,12 +210,18 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
           prop="snapping.skipBack"
         >
           <ElInput v-model="backFilterString" @keyup.enter="addBackFilter()" />
-          <template v-for="filter in form.snapping.skipBack" :key="filter">
-            <div class="filter-item">
-              <span>{{ filter }}</span>
-              <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipBack')" />
-            </div>
-          </template>
+          <div class="filter-items-wrapper">
+            <template v-for="filter in form.snapping.skipBack" :key="filter">
+              <el-tag size="small">
+                <span> {{ filter }}  </span>
+                <CloseIcon
+                  size="12"
+                  class="delete-filter-icon"
+                  @click="removeFilter(filter, 'skipBack')"
+                />
+              </el-tag>
+            </template>
+          </div>
         </ElFormItem>
       </div>
 
@@ -220,7 +234,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
             placement="top"
           >
             <el-button @click="submitPreviewForm(formRef)">
-              Preview <ParseDocument />
+              Preview <ChunkDocument />
             </el-button>
           </ElTooltip>
           <ElTooltip
@@ -233,7 +247,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
               type="primary"
               @click="submitSaveForm(formRef)"
             >
-              Save
+              <SaveIcon />  Save
             </ElButton>
           </ElTooltip>
         </div>
@@ -250,12 +264,6 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
   flex-direction: column;
   gap: 12px;
 
-  & .form-items-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
-
   & .range-filters-wrapper {
     display: flex;
     flex-direction: column;
@@ -268,6 +276,12 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
   width: 100%;
   justify-content: flex-end;
   margin-top: 32px;
+}
+.filter-items-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  gap: 6px;
 }
 
 .filter-item {

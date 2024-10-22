@@ -1,10 +1,7 @@
 <script lang="ts" setup>
-/* STATE */
-const documentStore = useDocumentsStore()
+import ParseDocumentIcon from '~/assets/icons/svg/parse-document.svg'
 
-const selectedDocument = computed(() => {
-  return documentStore.selectedDocument
-})
+const documentStore = useDocumentsStore()
 
 const route = useRoute()
 const documentId = Array.isArray(route.params.documentId) ? route.params.documentId[0] : route.params.documentId
@@ -15,13 +12,19 @@ if (documentId) {
 </script>
 
 <template>
-  <h6>Edit Parser</h6>
-  <div class="document-parser-config-container">
-    <div class="document-parser-config-wrapper">
-      <EditParserConfig />
+  <section class="edit-parser-section">
+    <div class="parse-title-wrapper">
+      <ParseDocumentIcon size="32" />
+      <h6> <b>Parser</b> </h6>
     </div>
-    <PreviewParser />
-  </div>
+
+    <div class="document-parser-config-container">
+      <div class="document-parser-config-wrapper">
+        <EditParserConfig />
+      </div>
+      <PreviewParser />
+    </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -29,6 +32,13 @@ if (documentId) {
   display: flex;
   align-items: center;
   gap: 22px;
+}
+.edit-parser-section {
+  margin: 2.5rem 0rem;
+}
+.parse-title-wrapper {
+  display: flex;
+  gap: 6px;
 }
 
 .document-parser-config-container {

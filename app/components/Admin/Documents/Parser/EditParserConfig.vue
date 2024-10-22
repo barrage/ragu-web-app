@@ -3,6 +3,7 @@ import type { FormInstance, FormRules } from 'element-plus'
 import type { Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document.ts'
 import ParseDocument from '~/assets/icons/svg/parse-document.svg'
 import AddIcon from '~/assets/icons/svg/add.svg'
+import SaveIcon from '~/assets/icons/svg/save-icon.svg'
 import MinusIcon from '~/assets/icons/svg/minus.svg'
 import CloseIcon from '~/assets/icons/svg/close.svg'
 
@@ -125,7 +126,6 @@ const removeFilter = (filter: string) => {
 
 <template>
   <div class="edit-parser-config-wrapper">
-    <h6>Edit Config </h6>
     <ElForm
       ref="formRef"
       :model="form"
@@ -133,50 +133,48 @@ const removeFilter = (filter: string) => {
       :scroll-to-error="true"
       :scroll-into-view-options="scrollIntoViewOptions"
     >
-      <div class="start-end-form-items-wrapper">
-        <ElFormItem
-          label="Start"
-          prop="start"
+      <ElFormItem
+        label="Start"
+        prop="start"
+      >
+        <ElInputNumber
+          v-model="form.start"
+          :min="0"
         >
-          <ElInputNumber
-            v-model="form.start"
-            :min="0"
-          >
-            <template #increase-icon>
-              <AddIcon />
-            </template>
-            <template #decrease-icon>
-              <MinusIcon />
-            </template>
-          </ElInputNumber>
-        </ElFormItem>
+          <template #increase-icon>
+            <AddIcon />
+          </template>
+          <template #decrease-icon>
+            <MinusIcon />
+          </template>
+        </ElInputNumber>
+      </ElFormItem>
 
-        <ElFormItem
-          label="End"
-          prop="end"
-        >
-          <ElInputNumber v-model="form.end" :min="0">
-            <template #increase-icon>
-              <AddIcon />
-            </template>
-            <template #decrease-icon>
-              <MinusIcon />
-            </template>
-          </ElInputNumber>
-        </ElFormItem>
-        <ElFormItem
-          label="Range"
-          prop="range"
-          class="range-checkbox"
-        >
-          <!--    <input
+      <ElFormItem
+        label="End"
+        prop="end"
+      >
+        <ElInputNumber v-model="form.end" :min="0">
+          <template #increase-icon>
+            <AddIcon />
+          </template>
+          <template #decrease-icon>
+            <MinusIcon />
+          </template>
+        </ElInputNumber>
+      </ElFormItem>
+      <ElFormItem
+        label="Range"
+        prop="range"
+        class="range-checkbox"
+      >
+        <!--    <input
             v-model="form.range"
             type="checkbox"
           > -->
 
-          <el-switch v-model="form.range" />
-        </ElFormItem>
-      </div>
+        <el-switch v-model="form.range" />
+      </ElFormItem>
       <div class="range-filters-wrapper">
         <ElFormItem
           label="Filters"
@@ -185,10 +183,14 @@ const removeFilter = (filter: string) => {
           <ElInput v-model="filtersString" @keyup.enter="addFilter()" />
           <div class="filter-items-wrapper">
             <template v-for="filter in form.filters" :key="filter">
-              <div class="filter-item">
+              <el-tag size="small">
                 <span> {{ filter }}  </span>
-                <CloseIcon class="delete-filter-icon" @click="removeFilter(filter)" />
-              </div>
+                <CloseIcon
+                  size="12"
+                  class="delete-filter-icon"
+                  @click="removeFilter(filter)"
+                />
+              </el-tag>
             </template>
           </div>
         </ElFormItem>
@@ -216,7 +218,7 @@ const removeFilter = (filter: string) => {
               type="primary"
               @click="submitSaveForm(formRef)"
             >
-              Save
+              <SaveIcon /> Save
             </ElButton>
           </ElTooltip>
         </div>
@@ -227,7 +229,7 @@ const removeFilter = (filter: string) => {
 
 <style lang="scss" scoped>
 .edit-parser-config-wrapper {
-  border-top: 1px solid var(--color-primary-400);
+  /*   border-top: 1px solid var(--color-primary-400); */
   padding-top: 12px;
   display: flex;
   flex-direction: column;
@@ -236,11 +238,6 @@ const removeFilter = (filter: string) => {
   & h6 {
     font-weight: var(--font-weight-bold);
     color: var(--color-primary-800);
-  }
-
-  & .start-end-form-items-wrapper {
-    display: flex;
-    gap: 22px;
   }
 
   & .range-filters-wrapper {
@@ -257,7 +254,7 @@ const removeFilter = (filter: string) => {
   display: flex;
   flex-wrap: wrap;
   padding-top: 12px;
-  row-gap: 12px;
+  gap: 6px;
 
   .filter-item {
     display: flex;
@@ -285,12 +282,11 @@ const removeFilter = (filter: string) => {
   gap: 22px;
   width: 100%;
   justify-content: flex-end;
-  margin-top: 32px;
 }
 
 .dark {
   & .edit-parser-config-wrapper {
-    border-top: 1px solid var(--color-primary-600);
+    /*   border-top: 1px solid var(--color-primary-600); */
 
     & h6 {
       color: var(--color-primary-100);

@@ -8,7 +8,7 @@ import JsonIcon from '~/assets/icons/svg/json-icon.svg'
 import DocumentEditIcon from '~/assets/icons/svg/document-edit.svg'
 import UnknownDocumentIcon from '~/assets/icons/svg/unknown-document-icon.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
-
+import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import type { Document } from '~/types/document'
 
 /* Setup */
@@ -38,9 +38,23 @@ const documentData = computed(() => {
     createdAt: props.document?.createdAt || t('users.user_card.unknown_date'),
   }
 })
-/* interface Emits {
-  (event: 'delete-document', document: Document): void
-} */
+/* Delete document */
+const isDeleteDialogVisible = ref(false)
+const documentStore = useDocumentsStore()
+const openDeleteDialog = () => {
+  isDeleteDialogVisible.value = true
+}
+
+const closeDeleteDialog = () => {
+  isDeleteDialogVisible.value = false
+}
+
+function deleteDocument() {
+  if (props?.document?.id) {
+    documentStore.DELETE_Document(props.document.id)
+    documentStore.GET_AllDocuments()
+  }
+}
 </script>
 
 <template>
@@ -105,7 +119,7 @@ const documentData = computed(() => {
         </el-button>
       </ElTooltip>
       <ElTooltip
-        content="Manage your document"
+        content="Delete your document"
         :show-after="100"
         :enterable="false"
         placement="top"
@@ -114,12 +128,31 @@ const documentData = computed(() => {
           type="danger"
           plain
           class="manage-document-button"
-          @click="navigateToDocumentDetailsPage"
+          @click="openDeleteDialog"
         >
           <DeleteIcon size="24" />
         </el-button>
       </ElTooltip>
     </div>
+    <el-dialog
+      v-model="isDeleteDialogVisible"
+      :before-close="closeDeleteDialog"
+      :close-icon="CloseCircleIcon"
+      class="barrage-dialog--small"
+    >
+      <template #header>
+        <h6>Delete</h6>
+      </template>
+      <p>Are you sure that you want to delete: <b>{{ document?.name }} document</b> </p>
+      <template #footer>
+        <el-button @click="closeDeleteDialog">
+          Cancel
+        </el-button>
+        <el-button type="danger" @click="deleteDocument()">
+          Delete
+        </el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -129,7 +162,7 @@ const documentData = computed(() => {
   background: var(--color-primary-0);
   box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
   border-radius: 16px;
-  padding: 1rem;
+  padding: 0.6rem;
 
   & .document-name-type-wrapper {
     grid-column: span 7;

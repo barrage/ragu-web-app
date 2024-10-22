@@ -5,6 +5,9 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 const documentStore = useDocumentsStore()
 const isChunkerDialogVisible = ref(false)
 const isLoaderVisible = ref(false)
+const itemsPerLoad = 500
+const currentItemCount = ref(itemsPerLoad)
+
 const openChunkerDialog = () => {
   isChunkerDialogVisible.value = true
 }
@@ -21,13 +24,30 @@ const selectedDocument = computed(() => {
   return documentStore.selectedDocument
 })
 
+const hasChunks = computed(() => {
+  return chunkerResponse.value && chunkerResponse.value.length > 0
+})
+
+const displayedChunks = computed(() => {
+  return hasChunks.value ? chunkerResponse.value?.slice(0, currentItemCount.value) : []
+})
+
+const hasMoreItems = computed(() => {
+  return currentItemCount.value < (hasChunks.value && chunkerResponse.value?.length ? chunkerResponse.value.length : 0)
+})
+
+function loadMoreItems() {
+  if (hasMoreItems.value) {
+    currentItemCount.value += itemsPerLoad
+  }
+}
+
+// Watch for loading state
 watch(
   () => documentStore.loadingChunkPreview,
   (loading) => {
-    if (loading) {
-      isLoaderVisible.value = true
-    }
-    else {
+    isLoaderVisible.value = loading
+    if (!loading) {
       setTimeout(() => {
         isLoaderVisible.value = false
       }, 800)
@@ -42,7 +62,7 @@ watch(
       <p class="chunker-preview-title">
         Chunker preview
       </p>
-      <el-button :disabled="chunkerResponse === null" @click="openChunkerDialog">
+      <el-button :disabled="!hasChunks" @click="openChunkerDialog">
         <FullscreenIcon />
       </el-button>
     </div>
@@ -51,11 +71,24 @@ watch(
         <LlmLoader />
       </div>
       <template v-else>
-        <template v-for="(chunk, index) in chunkerResponse" :key="chunk">
-          <span class="chunk-title">  {{ index + 1 }}. Chunk</span>
-          <p class="single-chunk">
-            {{ chunk }}
-          </p>
+        <template v-if="hasChunks">
+          <span class="chunk-title">Chunk Preview</span>
+          <template v-for="(chunk, index) in displayedChunks" :key="chunk">
+            <span class="chunk-title">{{ index + 1 }}. Chunk</span>
+            <p class="single-chunk">
+              {{ chunk }}
+            </p>
+          </template>
+          <button
+            v-if="hasMoreItems"
+            class="load-more-button"
+            @click="loadMoreItems"
+          >
+            Load More
+          </button>
+        </template>
+        <template v-else>
+          <p>No chunks available to display.</p> <
         </template>
       </template>
     </div>
@@ -71,12 +104,25 @@ watch(
       <h6>Chunk Preview</h6>
     </template>
     <p>Selected document: <b>{{ selectedDocument?.name }}</b> </p>
+    <p>  Total chunks: <b>{{ chunkerResponse?.length }}</b> </p>
     <div class="chunker-preview-content-wrapper">
-      <template v-for="(chunk, index) in chunkerResponse" :key="chunk">
-        {{ index + 1 }}. Chunk
-        <p class="single-chunk">
-          {{ chunk }}
-        </p>
+      <template v-if="hasChunks">
+        <template v-for="(chunk, index) in displayedChunks" :key="chunk">
+          <span class="chunk-title">{{ index + 1 }}. Chunk</span>
+          <p class="single-chunk">
+            {{ chunk }}
+          </p>
+        </template>
+        <button
+          v-if="hasMoreItems"
+          class="load-more-button"
+          @click="loadMoreItems"
+        >
+          Load More
+        </button>
+      </template>
+      <template v-else>
+        <p>No chunks available to display.</p>
       </template>
     </div>
   </el-dialog>
@@ -112,6 +158,7 @@ watch(
     }
   }
 }
+
 .single-chunk {
   padding: 8px 12px;
   background: var(--color-primary-200);
@@ -129,6 +176,21 @@ watch(
 .chunk-title {
   font-size: var(--font-size-fluid-2);
   color: var(--color-primary-700);
+}
+
+.load-more-button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: var(--color-primary-500);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.load-more-button:hover {
+  background-color: var(--color-primary-600);
 }
 
 .dark {

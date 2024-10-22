@@ -12,7 +12,7 @@
       0.0084375rem
     );
     --button-icon-gap: var(--spacing-fluid-2-xs);
-    --button-background-color: var(--color-primary-50);
+    --button-background-color: var(--color-primary-0);
     --button-border-color: var(--color-primary-500);
     --button-border-radius: var(--radius-4);
     --button-padding-block: var(--spacing-fluid-4-xs);
@@ -286,13 +286,13 @@
     // Button type
     &--primary {
       --button-text-color: var(--color-primary-900);
-      --button-background-color: var(--color-primary-300);
-      --button-border-color: var(--color-primary-500);
+      --button-background-color: var(--color-primary-200);
+      --button-border-color: var(--color-primary-400);
 
       &:hover {
-        --button-text-color: var(--color-primary-800);
-        --button-background-color: var(--color-primary-100);
-        --button-border-color: var(--color-primary-400);
+        --button-text-color: var(--color-primary-0);
+        --button-background-color: var(--color-primary-300);
+        --button-border-color: var(--color-primary-500);
       }
 
       &:active {

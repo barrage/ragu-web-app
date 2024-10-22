@@ -1,0 +1,167 @@
+@layer barrage-upload {
+  :root {
+    --upload-background-color: var(--color-primary-50);
+    --upload-border-color: var(--color-primary-200);
+    --upload-hover-color: var(--color-primary-100);
+    --upload-icon-color: var(--color-primary-500);
+    --upload-success-color: var(--color-green-600);
+    --upload-error-color: var(--color-red-600);
+    --upload-remove-color: var(--color-gray-700);
+    --upload-remove-hover-color: var(--color-red-600);
+    --upload-padding: var(--spacing-fluid-2-xs);
+    --upload-margin: var(--spacing-fluid-1-xs);
+    --upload-border-radius: var(--radius-2);
+    --upload-icon-size: 1rem;
+    --upload-font-size: var(--font-size-base);
+  }
+
+  html.dark {
+    .barrage-upload {
+      --upload-background-color: var(--color-primary-900);
+      --upload-border-color: var(--color-primary-300);
+      --upload-hover-color: var(--color-primary-800);
+      --upload-icon-color: var(--color-primary-300);
+      --upload-success-color: var(--color-green-400);
+      --upload-remove-color: var(--color-gray-300);
+    }
+  }
+
+  .barrage-upload {
+    &--text {
+      background-color: var(--upload-background-color);
+      border-radius: var(--upload-border-radius);
+      padding: var(--upload-padding);
+      margin-top: var(--upload-margin);
+      transition: background-color var(--transition-duration) ease-out;
+      position: relative;
+
+      &.is-drag {
+        border: 2px dashed var(--upload-border-color);
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &__input {
+      display: none;
+    }
+
+    &-list {
+      margin-top: 22px;
+      list-style: none;
+      padding: 0;
+
+      &--text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--upload-margin);
+      }
+
+      &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: var(--border-size-1) solid var(--upload-border-color);
+        border-radius: var(--upload-border-radius);
+        padding: var(--upload-padding);
+        background-color: var(--upload-background-color);
+        transition: background-color var(--transition-duration) ease-out;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--upload-hover-color);
+        }
+
+        &.is-ready {
+          border-color: var(--color-green-600);
+        }
+
+        &.is-error {
+          border-color: var(--upload-error-color);
+          background-color: var(--color-red-50);
+
+          .barrage-upload-list__item-name {
+            color: var(--upload-error-color);
+          }
+        }
+
+        &.is-success {
+          border-color: var(--upload-success-color);
+        }
+
+        &:focus,
+        &:focus-within {
+          outline: none;
+          border-color: var(--color-primary-600);
+          box-shadow: 0 0 0 var(--border-size-1) var(--color-primary-300);
+        }
+      }
+
+      &__item-info {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-fluid-1-xs);
+      }
+
+      &__item-name {
+        color: var(--upload-icon-color);
+        font-size: var(--upload-font-size);
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px; // Adjust this to control truncation
+      }
+
+      &__item-status-label {
+        font-size: var(--font-size-small);
+        color: var(--upload-success-color);
+      }
+
+      &__item-remove-btn {
+        background: none;
+        border: none;
+        color: var(--upload-remove-color);
+        cursor: pointer;
+        font-size: var(--font-size-small);
+
+        &:hover {
+          color: var(--upload-remove-hover-color);
+        }
+
+        &--tooltip {
+          display: none;
+          font-size: var(--font-size-small);
+          color: var(--upload-remove-color);
+          background-color: var(--color-gray-200);
+          padding: var(--spacing-fluid-1-xs);
+          border-radius: var(--radius-1);
+        }
+
+        &:focus-within + &--tooltip {
+          display: block;
+        }
+      }
+
+      &__item-file-name {
+        font-size: var(--font-size-small);
+        margin-left: var(--spacing-fluid-2-xs);
+        color: var(--upload-icon-color);
+      }
+
+      & .barrage-icon {
+        &--document,
+        &--upload-success,
+        &--close {
+          width: var(--upload-icon-size) !important;
+          height: var(--upload-icon-size) !important;
+        }
+
+        &--close-tip {
+          font-size: var(--font-size-small) !important;
+          color: var(--upload-remove-color) !important;
+          margin-left: var(--spacing-fluid-2-xs) !important;
+        }
+      }
+    }
+  }
+}

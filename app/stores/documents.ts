@@ -33,23 +33,14 @@ export const useDocumentsStore = defineStore('document', () => {
     }
   }
 
-  async function POST_UploadDocument(file: File): Promise<DocumentListResponse | null> {
-    try {
-      const formData = new FormData()
-      formData.append('file', file)
-      const response = await $api.document.PostUploadDocument(formData)
+  async function GET_SyncFs() {
+    await $api.document.GetSyncFs()
+  }
 
-      if (response) {
-        return documentResponse.value = response
-      }
-      else {
-        return documentResponse.value = null
-      }
-    }
-    catch (error) {
-      console.error('Error uploading document:', error)
-      return null
-    }
+  async function POST_UploadDocument(file: File): Promise<DocumentListResponse | null> {
+    const formData = new FormData()
+    formData.append('file', file)
+    return await $api.document.PostUploadDocument(formData)
   }
 
   async function DELETE_Document(id: string): Promise<void> {
@@ -87,10 +78,10 @@ export const useDocumentsStore = defineStore('document', () => {
   const chunkPreview = ref<string | null>(null)
   const loadingChunkPreview = ref<boolean>(false)
 
-  async function POST_ChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<string | null> {
+  async function POST_ChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig, embedder?: string): Promise<string | null> {
     try {
       loadingChunkPreview.value = true
-      const response = await $api.document.PostChunkDocumentPreview(id, chunkDocumentBody)
+      const response = await $api.document.PostChunkDocumentPreview(id, chunkDocumentBody, embedder)
 
       if (response) {
         return chunkPreview.value = response
@@ -137,6 +128,7 @@ export const useDocumentsStore = defineStore('document', () => {
     loadingChunkPreview,
     GET_AllDocuments,
     GET_SingleDocument,
+    GET_SyncFs,
     DELETE_Document,
     POST_UploadDocument,
     POST_ParseDocumentPreview,

@@ -1,21 +1,10 @@
 <script lang="ts" setup>
-import { computed, watchEffect } from 'vue'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import { useI18n } from 'vue-i18n'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import type { User } from '~/types/users'
-import 'dayjs/locale/de'
-import 'dayjs/locale/hr'
-import 'dayjs/locale/en'
-import 'dayjs/locale/it'
-import 'dayjs/locale/es'
-import 'dayjs/locale/pt'
-import 'dayjs/locale/ja'
-import 'dayjs/locale/fr'
 
 const props = defineProps<{
   user: User
@@ -23,22 +12,10 @@ const props = defineProps<{
 
 const emits = defineEmits<Emits>()
 
-dayjs.extend(relativeTime)
-
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const router = useRouter()
 
-const relativeCreatedDate = ref(props.user?.createdAt ? dayjs(props.user.createdAt).fromNow() : t('users.user_card.unknown_date'))
-const calculateDays = () => {
-  if (props.user?.createdAt) {
-    relativeCreatedDate.value = dayjs(props.user.createdAt).fromNow()
-  }
-}
-
-watch(locale, (newLocale) => {
-  dayjs.locale(newLocale)
-  calculateDays()
-})
+const relativeCreatedDate = ref(props.user?.createdAt ? useRelativeDate(props.user.createdAt) : t('users.user_card.unknown_date'))
 
 enum StatusType {
   Primary = 'primary',
@@ -55,7 +32,7 @@ const userData = computed(() => {
     status: props.user?.active ? t('users.user_card.active_status') : t('users.user_card.inactive_status'),
     statusType: props.user?.active ? StatusType.Success : StatusType.Danger,
     role: props.user?.role === 'ADMIN' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
-    updatedAt: props.user?.updatedAt ? dayjs(props.user.updatedAt).format('MMMM DD, YYYY') : t('users.user_card.unknown_date'),
+    updatedAt: props.user?.updatedAt ? useRelativeDate(props.user.updatedAt) : t('users.user_card.unknown_date'),
     createdAt: relativeCreatedDate.value,
   }
 })
@@ -219,9 +196,9 @@ interface Emits {
 
 .dark {
   .user-card {
-    border: 0.5px solid var(--color-primary-600);
-    background: var(--color-primary-800);
-    box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
+    border: 0.5px solid var(--color-primary-700);
+    background: var(--color-primary-900);
+    box-shadow: 0 0.2rem 0.3rem var(--color-primary-800);
   }
   .username-title-wrapper {
     color: var(--color-primary-0);

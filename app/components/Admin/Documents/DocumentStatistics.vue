@@ -4,16 +4,22 @@ import type { Document } from '~/types/document'
 const props = defineProps<{ documents: Document[] }>()
 
 const lastModifiedDocuments = computed(() => {
-  return props.documents
+  if (!props?.documents) {
+    return []
+  }
+  return props?.documents
     .slice()
     .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-    .slice(0, 5)
+    .slice(0, 3)
 })
 
 const documentFormats = computed(() => {
+  if (!props?.documents) {
+    return []
+  }
   const formatCounts: Record<string, number> = {}
 
-  props.documents.forEach((doc) => {
+  props?.documents.forEach((doc) => {
     formatCounts[doc.ext] = (formatCounts[doc.ext] || 0) + 1
   })
 
@@ -23,7 +29,7 @@ const documentFormats = computed(() => {
   }))
 })
 
-const totalDocuments = computed(() => props.documents.length)
+const totalDocuments = computed(() => props?.documents?.length)
 
 /* const mostUsedTag = computed(() => {
   const tagCounts: Record<string, number> = {}
