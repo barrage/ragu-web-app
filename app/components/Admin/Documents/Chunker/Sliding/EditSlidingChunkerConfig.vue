@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
 import type { SlidingChunker, SlidingChunkerConfig } from '~/types/document.ts'
-import ParseDocument from '~/assets/icons/svg/parse-document.svg'
+import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
 import AddIcon from '~/assets/icons/svg/add.svg'
 import MinusIcon from '~/assets/icons/svg/minus.svg'
-
+import SaveIcon from '~/assets/icons/svg/save-icon.svg'
 // Define scroll options
 const scrollIntoViewOptions = {
   behavior: 'smooth',
@@ -155,7 +155,7 @@ const submitSaveForm = async (formEl: FormInstance | undefined) => {
             placement="top"
           >
             <el-button @click="submitForm(formRef)">
-              Preview <ParseDocument />
+              <ChunkDocument />   Preview
             </el-button>
           </ElTooltip>
           <ElTooltip
@@ -168,7 +168,7 @@ const submitSaveForm = async (formEl: FormInstance | undefined) => {
               type="primary"
               @click="submitSaveForm(formRef)"
             >
-              Save
+              <SaveIcon /> Save
             </ElButton>
           </ElTooltip>
         </div>

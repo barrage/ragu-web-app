@@ -21,9 +21,9 @@ const isSemanticChunker = (config: ChunkerConfig | null | undefined): config is 
 
 <template>
   <div class="current-chunker-config-card ">
-    <p class="current-config-title">
-      Chunker config
-    </p>
+    <h6 class="current-config-title">
+      Chunker
+    </h6>
     <div class="current-parser-config">
       <template v-if="props.config">
         <SnappingChunkerConfig v-if="isSnappingChunker(config)" :config="config" />
@@ -82,13 +82,18 @@ const isSemanticChunker = (config: ChunkerConfig | null | undefined): config is 
 }
 .dark {
   & .current-config-title {
-    color: var(--color-primary-100);
+    color: var(--color-primary-0);
   }
   & .current-parser-config {
     & span {
       margin: 0;
       color: var(--color-primary-100);
     }
+  }
+  & .current-chunker-config-card {
+    border: 0.5px solid var(--color-primary-600);
+    background: var(--color-primary-800);
+    box-shadow: 0 0.2rem 0.3rem var(--color-primary-700);
   }
 }
 </style>

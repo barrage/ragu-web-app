@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
-
-import DataSettingsIcon from '~/assets/icons/svg/data-settings.svg'
+import DocumentConfigurationIcon from '~/assets/icons/svg/document-configuration.svg'
+import DocumentEditIcon from '~/assets/icons/svg/document-edit.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import type { Document } from '~/types/document'
 
@@ -48,7 +48,7 @@ function chunkDocument() {
     <div class="horizontal-divider" />
 
     <div class="icon-title-container">
-      <DataSettingsIcon size="42" />
+      <DocumentConfigurationIcon size="42" />
       <h5> Configuration</h5>
     </div>
     <div class="current-configuration grid">
@@ -59,7 +59,14 @@ function chunkDocument() {
         <CurrentChunkerConfig :config="document?.chunkConfig" />
       </div>
     </div>
-
+    <div class="icon-title-container">
+      <DocumentEditIcon size="32" />
+      <h5>Edit configuration</h5>
+    </div>
+    <div class="horizontal-divider" />
+    <ParserConfigTab />
+    <div class="horizontal-divider" />
+    <ChunkerConfigTab />
     <!-- ------------ -->
 
     <!-- ------------ -->
@@ -82,11 +89,19 @@ function chunkDocument() {
 
 <style lang="scss" scoped>
 .current-configuration {
+  height: max-content;
+
   & .parser-template {
     grid-column: span 6;
+    & .current-parser-config-card {
+      height: 100%;
+    }
   }
   & .chunker-template {
     grid-column: span 6;
+    & .current-chunker-config-card {
+      height: 100%;
+    }
   }
 }
 .admin-document-page-header {
@@ -102,26 +117,21 @@ function chunkDocument() {
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 2.5rem;
   margin-bottom: 1rem;
   color: var(--color-primary-900);
 
   & h5 {
     color: var(--color-primary-900);
+    font-weight: var(--font-weight-bold);
   }
 }
 .dark {
   & .icon-title-container {
     color: var(--color-primary-0);
   }
-  & .horizontal-divider {
-    background: var(--color-primary-700);
+  & h5 {
+    color: var(--color-primary-0);
   }
-}
-.horizontal-divider {
-  width: 100%;
-  height: 1px;
-  margin: 4px 0px;
-  background: var(--color-primary-300);
 }
 </style>

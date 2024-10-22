@@ -6,8 +6,8 @@ export interface User {
   email: string
   role: string
   active: boolean
-  createdAt: string | number | Date
-  updatedAt: string | number | Date
+  createdAt: string | Date
+  updatedAt: string | Date
 }
 
 export interface UsersResponse {

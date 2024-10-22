@@ -236,12 +236,6 @@ aside {
   }
 }
 
-.horizontal-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--color-primary-400);
-}
-
 .feature-container {
   display: flex;
   flex-direction: column;
@@ -337,9 +331,6 @@ aside {
 
   .typing-effect {
     color: var(--color-primary-200);
-  }
-  .horizontal-divider {
-    background: var(--color-primary-600);
   }
 
   .get-help-section {

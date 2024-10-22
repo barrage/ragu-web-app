@@ -6,7 +6,7 @@
     --input-error-color: var(--color-red-500);
     --input-background-color: var(--color-primary-0);
     --input-border: var(--border-global-1);
-    --input-border-color: var(--color-primary-100);
+    --input-border-color: var(--color-primary-200);
     --input-border-radius: var(--radius-4);
     --input-icon-size: 2rem;
     --input-padding-block-start: 8px;
@@ -53,6 +53,28 @@
   // Input styles
   // ------------------------------------
   .barrage-input {
+    &--small {
+      font-size: var(--font-size-fluid-2);
+
+      .barrage-input {
+        &__inner {
+          border-radius: 8px;
+          padding-block: 4px;
+          padding-inline: 8px;
+        }
+
+        &__prefix,
+        &__suffix {
+          width: 1.5rem;
+          height: 1.5rem;
+
+          .barrage-icon {
+            --icon-width: 1.5rem;
+            --icon-height: 1.5rem;
+          }
+        }
+      }
+    }
     &__wrapper {
       position: relative;
 

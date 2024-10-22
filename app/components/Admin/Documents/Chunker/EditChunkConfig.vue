@@ -43,23 +43,36 @@ const checkConfigType = () => {
 onMounted(() => {
   checkConfigType()
 })
+
+const selectedButtonType = (name: string) => {
+  return name === editChunkerSelectedType.value ? 'primary' : 'default'
+}
 </script>
 
 <template>
   <div class="edit-chunker-config-container">
-    <h6 class="edit-title">
-      Edit Config
-    </h6>
     <template v-if="selectedDocument?.parseConfig">
       <div class="select-chunker-type-wrapper">
         Selected type:
-        <el-button size="small" @click="selectChunkerType('semantic')">
+        <el-button
+          size="small"
+          :type="selectedButtonType('semantic')"
+          @click="selectChunkerType('semantic')"
+        >
           Semantic
         </el-button>
-        <el-button size="small" @click="selectChunkerType('sliding')">
+        <el-button
+          size="small"
+          :type="selectedButtonType('sliding')"
+          @click="selectChunkerType('sliding')"
+        >
           Sliding
         </el-button>
-        <el-button size="small" @click="selectChunkerType('snapping')">
+        <el-button
+          size="small"
+          :type="selectedButtonType('snapping')"
+          @click="selectChunkerType('snapping')"
+        >
           Snapping
         </el-button>
       </div>
@@ -90,7 +103,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .edit-chunker-config-container {
-  border-top: 1px solid var(--color-primary-400);
   padding-top: 12px;
   display: flex;
   flex-direction: column;

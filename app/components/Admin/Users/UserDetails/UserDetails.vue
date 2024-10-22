@@ -21,17 +21,4 @@ const props = defineProps<{
   border-radius: 10px;
   overflow: hidden;
 }
-
-.horizontal-divider {
-  width: 100%;
-  height: 1px;
-  margin: 4px 0px;
-  background: var(--color-primary-300);
-}
-
-.dark {
-  & .horizontal-divider {
-    background: var(--color-primary-700);
-  }
-}
 </style>

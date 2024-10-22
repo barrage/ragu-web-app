@@ -20,31 +20,35 @@ const props = defineProps<{
             :description="props.config.start.toString()"
             horizontal
           />
+          <div class="horizontal-divider" />
           <LabelDescriptionItem
             label="End:"
             :description="props.config.end.toString()"
             horizontal
           />
+          <div class="horizontal-divider" />
           <LabelDescriptionItem
             label="Range:"
             :description="props.config.range.toString()"
             horizontal
           />
         </div>
+        <div class="horizontal-divider" />
         <LabelDescriptionItem
           label="Filters:"
           :description="props.config.filters.join(', ')"
-        />
-        <!-- <span>Filters:
-          <template v-if=" props?.config?.filters?.length">
-            <template v-for="filter in props?.config?.filters">
-              {{ filter }}
-            </template>
+        >
+          <template #customDescription>
+            <div class="tag-list">
+              <el-tag
+                v-for="item in props.config.filters"
+                :key="item"
+              >
+                {{ item }}
+              </el-tag>
+            </div>
           </template>
-          <template v-else>
-            Empty
-          </template>
-        </span> -->
+        </LabelDescriptionItem>
       </template>
       <template v-else>
         <div class="empty-config-container">
@@ -65,6 +69,12 @@ const props = defineProps<{
   padding: 1rem;
   width: 100%;
 }
+.tag-list {
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
 .current-config-title {
   font-weight: var(--font-weight-bold);
   color: var(--color-primary-800);
@@ -72,14 +82,14 @@ const props = defineProps<{
 .current-parser-config {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   padding-inline: 12px;
   padding-top: 16px;
 
   & .start-end-range-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     justify-content: space-between;
   }
   & span {
@@ -101,6 +111,11 @@ const props = defineProps<{
       margin: 0;
       color: var(--color-primary-100);
     }
+  }
+  & .current-parser-config-card {
+    border: 0.5px solid var(--color-primary-600);
+    background: var(--color-primary-800);
+    box-shadow: 0 0.2rem 0.3rem var(--color-primary-700);
   }
 }
 </style>

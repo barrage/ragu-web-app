@@ -1,16 +1,21 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import type { SemanticChunker, SemanticChunkerConfig } from '~/types/document.ts'
-import ParseDocument from '~/assets/icons/svg/parse-document.svg'
+import type { SemanticChunker } from '~/types/document.ts'
+import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
 import AddIcon from '~/assets/icons/svg/add.svg'
 import MinusIcon from '~/assets/icons/svg/minus.svg'
 import CloseIcon from '~/assets/icons/svg/close.svg'
+import SaveIcon from '~/assets/icons/svg/save-icon.svg'
 
 // Define scroll options
 const scrollIntoViewOptions = {
   behavior: 'smooth',
   block: 'center',
 }
+
+const appConfigStore = useAppConfigStore()
+
+appConfigStore.GET_AppConfig()
 
 // Document store and selected document
 const documentStore = useDocumentsStore()
@@ -30,6 +35,7 @@ const form = reactive<SemanticChunker>({
       skipForward: [],
       skipBack: [],
       embedModel: '',
+      embedProvider: '',
     },
   },
 
@@ -44,31 +50,37 @@ const validateThreshold = (_rule: any, value: any, callback: any) => {
   }
 }
 
-const rules = reactive<FormRules<SemanticChunkerConfig>>({
-  size: [
+const rules = reactive<FormRules<SemanticChunker>>({
+  'semantic.config.size': [
     { required: true, message: 'Required', trigger: 'blur' },
   ],
-  threshold: [
+  'semantic.config.threshold': [
     { required: true, message: 'Required', trigger: 'blur' },
     { validator: validateThreshold, trigger: 'change' },
   ],
-  distanceFn: [
+  'semantic.config.distanceFn': [
     { required: true, message: 'Required', trigger: 'blur' },
   ],
-  delimiter: [
+  'semantic.config.delimiter': [
     { required: true, message: 'Required', trigger: 'blur' },
   ],
-  skipForward: [
+  'semantic.config.embedModel': [
+    { required: true, message: 'Required', trigger: 'blur' },
+  ],
+  'semantic.config.embedProvider': [
+    { required: true, message: 'Required', trigger: 'blur' },
+  ],
+  'semantic.config.skipForward': [
     { type: 'array', required: true, message: 'Required', trigger: 'blur' },
   ],
-  skipBack: [
+  'semantic.config.skipBack': [
     { type: 'array', required: true, message: 'Required', trigger: 'blur' },
   ],
 })
 
 function parseDocument() {
   if (selectedDocument.value?.id) {
-    documentStore.POST_ChunkDocumentPreview(selectedDocument.value.id, form)
+    documentStore.POST_ChunkDocumentPreview(selectedDocument.value.id, form, form.semantic.config.embedProvider)
     documentStore.GET_AllDocuments()
   }
 }
@@ -91,7 +103,20 @@ const prefillForm = () => {
     form.semantic.config.skipBack = chunkConfig.semantic.config.skipBack || []
   }
 }
+const embeddingProviders = ['fembed', 'openai']
+const getModelsByProvider = (providerName: string) => {
+  const models = appConfigStore.embeddingProviders[providerName]
+  if (!models) {
+    return []
+  }
 
+  return Object.entries(models).map(([name, value]) => ({
+    name,
+    value,
+  }))
+}
+
+const availableModels = ref()
 watch(
   () => selectedDocument.value,
   () => {
@@ -145,11 +170,16 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
     form.semantic.config[type].splice(index, 1)
   }
 }
+
+function onProviderChange() {
+  form.semantic.config.embedModel = ''
+  availableModels.value = getModelsByProvider(form.semantic.config.embedProvider)
+}
 </script>
 
 <template>
   <div class="edit-parser-config-wrapper">
-    <h6>Semantic Chunker Config</h6>
+    <p> <b>Semantic Chunker Config</b></p>
     <ElForm
       ref="formRef"
       :model="form"
@@ -157,63 +187,88 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
       :scroll-to-error="true"
       :scroll-into-view-options="scrollIntoViewOptions"
     >
-      <div class="form-items-wrapper">
-        <ElFormItem
-          label="Size"
-          prop="semantic.config.size"
+      <ElFormItem
+        label="Size"
+        prop="semantic.config.size"
+      >
+        <ElInputNumber
+          v-model="form.semantic.config.size"
+          :min="0"
         >
-          <ElInputNumber
-            v-model="form.semantic.config.size"
-            :min="0"
-          >
-            <template #increase-icon>
-              <AddIcon />
-            </template>
-            <template #decrease-icon>
-              <MinusIcon />
-            </template>
-          </ElInputNumber>
-        </ElFormItem>
+          <template #increase-icon>
+            <AddIcon />
+          </template>
+          <template #decrease-icon>
+            <MinusIcon />
+          </template>
+        </ElInputNumber>
+      </ElFormItem>
 
-        <ElFormItem
-          label="Threshold"
-          prop="semantic.config.threshold"
+      <ElFormItem
+        label="Threshold"
+        prop="semantic.config.threshold"
+      >
+        <ElInputNumber
+          v-model="form.semantic.config.threshold"
+          :min="0"
+          :step="0.1"
+          :max="1"
         >
-          <ElInputNumber
-            v-model="form.semantic.config.threshold"
-            :min="0"
-            :step="0.1"
-            :max="1"
-          >
-            <template #increase-icon>
-              <AddIcon />
-            </template>
-            <template #decrease-icon>
-              <MinusIcon />
-            </template>
-          </ElInputNumber>
-        </ElFormItem>
+          <template #increase-icon>
+            <AddIcon />
+          </template>
+          <template #decrease-icon>
+            <MinusIcon />
+          </template>
+        </ElInputNumber>
+      </ElFormItem>
 
-        <ElFormItem
-          label="Distance Function"
-          prop="semantic.config.distanceFn"
-        >
-          <ElInput v-model="form.semantic.config.distanceFn" />
-        </ElFormItem>
+      <ElFormItem
+        label="Distance Function"
+        prop="semantic.config.distanceFn"
+      >
+        <ElInput v-model="form.semantic.config.distanceFn" />
+      </ElFormItem>
 
-        <ElFormItem
-          label="Delimiter"
-          prop="semantic.config.delimiter"
+      <ElFormItem
+        label="Delimiter"
+        prop="semantic.config.delimiter"
+      >
+        <ElInput v-model="form.semantic.config.delimiter" />
+      </ElFormItem>
+      <ElFormItem
+        label="Embed provider"
+        prop="semantic.config.embedProvider"
+      >
+        <ElSelect
+          v-model="form.semantic.config.embedProvider"
+          placeholder="Select provider"
+          @change="onProviderChange"
         >
-          <ElInput v-model="form.semantic.config.delimiter" />
-        </ElFormItem>
-        <ElFormItem
-          label="Embed Model"
-          prop="semantic.config.embedModel"
+          <ElOption
+            v-for="(provider) in embeddingProviders"
+            :key="provider"
+            :label="provider"
+            :value="provider"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
+        label="Embed Model"
+        prop="semantic.config.embedModel"
+      >
+        <ElSelect
+          v-model="form.semantic.config.embedModel"
+          placeholder="Select model"
         >
-          <ElInput v-model="form.semantic.config.embedModel" />
-        </ElFormItem>
-      </div>
+          <ElOption
+            v-for="model in availableModels"
+            :key="model.value"
+            :label="model.name"
+            :value="model.name"
+          />
+        </ElSelect>
+      </ElFormItem>
 
       <div class="range-filters-wrapper">
         <ElFormItem
@@ -221,12 +276,14 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
           prop="semantic.config.skipForward"
         >
           <ElInput v-model="forwardFilterString" @keyup.enter="addForwardFilter()" />
-          <template v-for="filter in form.semantic.config.skipForward" :key="filter">
-            <div class="filter-item">
-              <span>{{ filter }}</span>
-              <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipForward')" />
-            </div>
-          </template>
+          <div class="filter-items-wrapper">
+            <template v-for="filter in form.semantic.config.skipForward" :key="filter">
+              <el-tag size="small">
+                {{ filter }}
+                <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipForward')" />
+              </el-tag>
+            </template>
+          </div>
         </ElFormItem>
 
         <ElFormItem
@@ -235,10 +292,10 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
         >
           <ElInput v-model="backFilterString" @keyup.enter="addBackFilter()" />
           <template v-for="filter in form.semantic.config.skipBack" :key="filter">
-            <div class="filter-item">
-              <span>{{ filter }}</span>
+            <el-tag>
+              {{ filter }}
               <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipBack')" />
-            </div>
+            </el-tag>
           </template>
         </ElFormItem>
       </div>
@@ -246,13 +303,13 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
       <ElFormItem>
         <div class="form-actions">
           <ElTooltip
-            content="Preview Parse document"
+            content="Preview Semantic chunker"
             :show-after="100"
             :enterable="false"
             placement="top"
           >
             <el-button @click="submitForm(formRef)">
-              Preview <ParseDocument />
+              <ChunkDocument />  Preview
             </el-button>
           </ElTooltip>
           <ElTooltip
@@ -265,7 +322,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
               type="primary"
               @click="submitSaveForm(formRef)"
             >
-              Save
+              <SaveIcon /> Save
             </ElButton>
           </ElTooltip>
         </div>
@@ -300,6 +357,13 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
   width: 100%;
   justify-content: flex-end;
   margin-top: 32px;
+}
+
+.filter-items-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  gap: 12px;
 }
 
 .filter-item {

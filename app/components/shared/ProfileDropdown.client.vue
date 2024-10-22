@@ -230,13 +230,6 @@ const switchRole = () => {
   }
 }
 
-.horizontal-divider {
-  width: 100%;
-  height: 1px;
-  margin: 4px 0px;
-  background: var(--color-primary-300);
-}
-
 .user-profile-item {
   display: flex;
   gap: 0.5rem;
@@ -296,9 +289,6 @@ const switchRole = () => {
       color: var(--color-primary-200);
       background: var(--color-primary-600);
     }
-  }
-  & .horizontal-divider {
-    background: var(--color-primary-700);
   }
 }
 </style>

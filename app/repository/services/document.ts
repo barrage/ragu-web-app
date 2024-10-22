@@ -40,6 +40,22 @@ export default class DocumentServise extends FetchFactory {
   }
 
   /**
+   * Syncs a list of all documents.
+   * @throws Will throw an error if the request fails.
+   */
+  async GetSyncFs() {
+    try {
+      return await this.$fetch(`${this.endpoint}/sync/fs`)
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to sync documents with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
    * Uploads a document to the server.
    * @param formData - The FormData object containing the file to upload.
    * @returns A promise that resolves to the uploaded document's response.
@@ -109,17 +125,18 @@ export default class DocumentServise extends FetchFactory {
    * Chunk a document.
    * @param id - The id of the document.
    * @param ChunkerConfig - The ChunkerConfig object containig parametares for chunker.
+   * @param embedder - The name of the document embedder.
    * @returns A promise that resolves to the string response.
    * @throws Will throw an error if the upload fails.
    */
-  async PostChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<string> {
+  async PostChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig, embedder?: string): Promise<string> {
     try {
       return await this.$fetch<string>(`${this.endpoint}/${id}/chunk/preview`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: { chunker: chunkDocumentBody },
+        body: { chunker: chunkDocumentBody, embedder },
       })
     }
     catch (error: any) {
