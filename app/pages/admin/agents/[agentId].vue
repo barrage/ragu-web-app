@@ -21,7 +21,6 @@ errorHandler(error)
 <template>
   <AdminPageContainer>
     <NuxtLink
-      v-if="!agentStore.editMode"
       to="/admin/agents"
       class="back-link"
     >

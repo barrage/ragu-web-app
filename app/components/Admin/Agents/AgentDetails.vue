@@ -72,7 +72,6 @@ const editClick = (): void => {
       </el-button>
     </div>
   </div>
-  <div class="horizontal-divider" />
   <div class="agent-informations-section">
     <LabelDescriptionItem
       :label="t('agents.labels.id')"
