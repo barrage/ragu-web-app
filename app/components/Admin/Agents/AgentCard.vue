@@ -139,7 +139,7 @@ const redirectToAgentDetails = () => {
 .dark {
   .agent-card {
     border: 0.5px solid var(--color-primary-500);
-    background: var(--color-primary-800);
+    background: var(--color-primary-900);
     box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
   }
   .agentname-title-wrapper {

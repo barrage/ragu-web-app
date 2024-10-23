@@ -70,7 +70,7 @@ const openDeleteModal = () => {
   grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   border: 0.5px solid var(--color-primary-300);
-  background: var(--color-primary-100);
+  background: var(--color-primary-0);
   box-shadow: 0 0.2rem 0.3rem var(--color-primary-200);
   border-radius: 16px;
   padding: 1rem;
@@ -89,7 +89,7 @@ const openDeleteModal = () => {
 .dark {
   .collection-card {
     border: 0.5px solid var(--color-primary-500);
-    background: var(--color-primary-800);
+    background: var(--color-primary-900);
     box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
   }
 }

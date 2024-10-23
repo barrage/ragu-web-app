@@ -1,14 +1,16 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
 const router = useRouter()
+const route = useRoute()
 
-onBeforeMount(async () => {
-  if (import.meta.client) {
-    await authStore.GET_CurrentUser()
+onMounted(async () => {
+  await authStore.GET_CurrentUser()
 
-    if (!authStore.isAuthenticated) {
-      router.push('/login')
-    }
+  const isLoginRoute = route.path === '/login'
+  const isAuthGoogleRoute = route.path === '/auth/google'
+
+  if (!authStore.isAuthenticated && !isLoginRoute && !isAuthGoogleRoute) {
+    router.push('/login')
   }
 })
 </script>
@@ -17,7 +19,7 @@ onBeforeMount(async () => {
   <div>
     <ElConfigProvider namespace="barrage">
       <NuxtLayout />
-      <LlmOverlayLoader v-show="authStore.iscurrentUserLoading " />
+      <LlmOverlayLoader v-if="authStore.iscurrentUserLoading" />
     </ElConfigProvider>
   </div>
 </template>

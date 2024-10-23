@@ -46,4 +46,9 @@ const handlePageChange = async (page: number) => {
   </AdminPageContainer>
 </template>
 
-<style lang="scss" scoped />
+<style lang="scss" scoped>
+.fufura {
+  width: max-content;
+  margin-top: 100px;
+}
+</style>

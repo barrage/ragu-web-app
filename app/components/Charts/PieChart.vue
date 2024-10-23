@@ -109,7 +109,7 @@ const updateChartOptions = (data: DataEntry[]) => {
             : 'var(--color-primary-300)',
         },
         itemStyle: {
-          color: (param: any) => coloredData[param.dataIndex].itemColor,
+          color: (param: any) => coloredData[param.dataIndex]?.itemColor,
         },
       },
     ],

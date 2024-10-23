@@ -146,7 +146,6 @@ watch(isModalVisible, (newVal) => {
     flex-direction: column;
     gap: 36px;
     width: 100%;
-    z-index: 1;
   }
 }
 

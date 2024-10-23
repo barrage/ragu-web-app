@@ -13,10 +13,10 @@ definePageMeta({
 const agentStore = useAgentStore()
 const providerStore = useProviderStore()
 const collectionStore = useCollectionsStore()
+const router = useRouter()
 
 const route = useRoute()
 const { t } = useI18n()
-const localePath = useLocalePath()
 const maxContext = 1000
 const embeddingProviders: EmbeddingProvider[] = ['azure', 'openai', 'ollama']
 const agentId = ref(route.params.agentId as string)
@@ -94,7 +94,7 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
         if (updateStatus.value === 'success') {
           ElNotification({
             title: t('agents.notifications.update_title'),
-            message: t('agents.notifications.update_message', { name: agentStore.selectedAgent?.name }),
+            message: t('agents.notifications.update_message', { name: agentStore.singleAgent?.name }),
             type: 'success',
             customClass: 'success',
             duration: 2500,
@@ -118,8 +118,8 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
   }
 }
 
-const cancelUpdate = (agent: Agent | null | undefined): void => {
-  navigateTo({ path: localePath(`/admin/agents/${agent?.id}`) })
+const cancelUpdate = (agent: Agent | null | undefined): void => {
+  router.push(`/admin/agents/${agent?.id}`)
 }
 
 // ERROR HANDLERS
