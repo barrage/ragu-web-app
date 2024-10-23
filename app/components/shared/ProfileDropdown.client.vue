@@ -185,28 +185,6 @@ const switchRole = () => {
     </template>
     <ProfileOverview />
   </ElDialog>
-
-  <!-- <LlmModal
-    v-if="isAgentsModalVisible"
-    size="md"
-    @close="closeModal"
-  >
-    <template #header>
-      Change Avatar
-    </template>
-    <template #content>
-      <p>You can upload your avatar here </p>
-      <el-upload
-        class="upload-container"
-        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-        multiple
-      >
-        <el-button class="theme-switch-button " size="small">
-          Click to upload
-        </el-button>
-      </el-upload>
-    </template>
-  </LlmModal> -->
 </template>
 
 <style lang="scss" scoped>

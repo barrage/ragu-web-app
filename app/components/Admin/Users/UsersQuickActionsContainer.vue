@@ -31,6 +31,7 @@ const validateEmail = (_rule: any, value: string, callback: (error?: Error) => v
 }
 
 const inviteUserformRef = ref<FormInstance>()
+
 const inviteUserform = reactive<CreateUserPayload>({
   email: '',
   fullName: '',
@@ -57,6 +58,8 @@ const rules = reactive<FormRules<CreateUserPayload>>({
   ],
 })
 
+const { execute } = await useAsyncData(() => usersStore.GET_AllUsers(), { immediate: false })
+
 const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
     return
@@ -64,7 +67,8 @@ const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, __) => {
     if (valid) {
       usersStore.POST_CreateUser(inviteUserform)
-      usersStore.GET_AllUsers()
+      execute()
+      inviteUserModalOpen.value = false
     }
   })
 }
@@ -75,6 +79,13 @@ const userRoles = [{
   label: 'User',
   value: 'user',
 }]
+
+watch(
+  () => [inviteUserform.firstName, inviteUserform.lastName],
+  ([newFirstName, newLastName]) => {
+    inviteUserform.fullName = `${newFirstName} ${newLastName}`.trim()
+  },
+)
 </script>
 
 <template>

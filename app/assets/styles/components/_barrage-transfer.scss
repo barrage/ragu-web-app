@@ -1,0 +1,186 @@
+@layer barrage-transfer {
+  :root {
+    --transfer-border-color: var(--color-primary-300);
+    --transfer-border-radius: var(--radius-3);
+    --transfer-panel-width: 400px;
+    --transfer-panel-header-height: 40px;
+    --transfer-panel-header-bg-color: var(--color-primary-200);
+    --transfer-panel-footer-height: 40px;
+    --transfer-panel-body-height: 278px;
+    --transfer-item-height: 30px;
+    --transfer-filter-height: 32px;
+    --transfer-background-color: var(--color-primary-100);
+    --transfer-button-background-color: var(--color-primary-200);
+    --transfer-checkbox-background-color: var(--color-primary-800);
+  }
+
+  html.dark {
+    --transfer-button-background-color: var(--color-primary-700);
+    --transfer-background-color: var(--color-primary-800);
+    --transfer-checkbox-background-color: var(--color-primary-100);
+    --transfer-border-color: var(--color-primary-500);
+  }
+
+  .barrage-transfer {
+    display: flex;
+    width: 100%;
+    background: var(--transfer-background-color);
+    border: 1px solid var(--transfer-border-color);
+
+    &-panel {
+      overflow: hidden;
+      background: var(--transfer-background-color);
+      display: inline-block;
+      text-align: left;
+      vertical-align: middle;
+      width: var(--transfer-panel-width);
+      max-height: 100%;
+      box-sizing: border-box;
+      position: relative;
+
+      &__header {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: var(--transfer-panel-header-height);
+        background: var(--transfer-panel-header-bg-color);
+        margin: 0;
+        padding-left: 15px;
+        border: 1px solid var(--transfer-border-color);
+        border-top-left-radius: var(--transfer-border-radius);
+        border-top-right-radius: var(--transfer-border-radius);
+        box-sizing: border-box;
+
+        .barrage-checkbox {
+          &__input {
+            white-space: nowrap;
+            cursor: pointer;
+            outline: none;
+            display: inline-flex;
+          }
+
+          &__label {
+            font-size: 16px;
+            color: var(--color-primary-800);
+            font-weight: 400;
+            padding-left: 8px;
+
+            span {
+              position: absolute;
+              right: 15px;
+              top: 50%;
+              transform: translate3d(0, -50%, 0);
+              color: var(--color-primary-900);
+              font-size: 12px;
+              font-weight: 400;
+              color: var(--color-primary-800);
+            }
+          }
+        }
+      }
+
+      &__body {
+        height: var(--transfer-panel-body-height);
+        border-left: 1px solid var(--transfer-border-color);
+        border-right: 1px solid var(--transfer-border-color);
+        border-bottom: 1px solid var(--transfer-border-color);
+        border-bottom-left-radius: var(--transfer-border-radius);
+        border-bottom-right-radius: var(--transfer-border-radius);
+        overflow: hidden;
+        .barrage-checkbox-group {
+          margin: 0;
+          padding: 6px 0;
+          list-style: none;
+          height: var(--transfer-panel-body-height);
+          overflow: auto;
+          box-sizing: border-box;
+          .barrage-checkbox {
+            height: var(--transfer-item-height);
+            align-items: center;
+            padding-left: 15px;
+            display: block !important;
+            position: relative;
+            font-size: 14px;
+            line-height: var(--transfer-item-height);
+            color: var(--transfer-checkbox-background-color);
+            &__input {
+              white-space: nowrap;
+              cursor: pointer;
+              outline: none;
+              display: inline-flex;
+            }
+            &__label {
+              span {
+                padding-left: 8px;
+              }
+            }
+          }
+        }
+
+        .barrage-transfer-panel__empty {
+          margin: 0;
+          height: var(--transfer-item-height);
+          line-height: var(--transfer-item-height);
+          padding: 6px 15px 0;
+          color: var(--color-red-600);
+          text-align: center;
+        }
+      }
+    }
+
+    .barrage-transfer-panel__body.is-with-footer {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .barrage-transfer-panel__footer {
+      background: var(--transfer-background-color);
+      margin: 0;
+      padding: 0;
+      border: 1px solid var(--transfer-border-color);
+      border-bottom-left-radius: var(--l-transfer-border-radius);
+      border-bottom-right-radius: var(--transfer-border-radius);
+
+      button {
+        padding: 6px 5px;
+        background-color: var(--transfer-button-background-color);
+        margin-inline: 15px 0;
+        margin-block: 15px;
+        font-size: 12px;
+
+        &:hover {
+          --button-text-color: var(--color-primary-0);
+          background-color: var(--color-primary-300);
+          --button-border-color: var(--color-primary-500);
+        }
+      }
+    }
+
+    &__buttons {
+      display: flex;
+      column-gap: 10px;
+      height: fit-content;
+      vertical-align: middle;
+      padding: 0 30px;
+      margin-block: auto;
+
+      .barrage-button {
+        background-color: var(--transfer-button-background-color);
+        border-color: var(--button-border-color);
+        .barrage-icon {
+          svg {
+            color: var(--color-primary-500);
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+      &__button {
+        &[aria-disabled='true'] {
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}

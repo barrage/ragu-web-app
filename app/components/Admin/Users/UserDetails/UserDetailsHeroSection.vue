@@ -22,7 +22,7 @@ const userData = computed(() => {
     email: props.user?.email || t('users.user_card.unknown_email'),
     status: props.user?.active ? t('users.user_card.active_status') : t('users.user_card.inactive_status'),
     statusType: props.user?.active ? StatusType.Success : StatusType.Danger,
-    role: props.user?.role === 'ADMIN' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
+    role: props.user?.role === 'admin' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
     updatedAt: props.user?.updatedAt ? formatDate(props.user.updatedAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
     createdAt: props.user?.updatedAt ? formatDate(props.user.createdAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
   }

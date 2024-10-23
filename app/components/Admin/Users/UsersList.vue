@@ -40,6 +40,7 @@ const handleDeleteUser = async (user: User) => {
   try {
     await usersStore.DELETE_User(user.id)
     deleteUserModalVisible.value = false
+    usersStore.GET_AllUsers()
   }
   catch (error) {
     console.error('Error deleting user:', error)

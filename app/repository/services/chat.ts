@@ -13,7 +13,7 @@ export default class ChatServise extends FetchFactory {
    */
   async GetAllChats(): Promise<ChatsResponse> {
     try {
-      return await this.$fetch<ChatsResponse>(`/${this.chatEndpoint}?page=1&perPage=100&sortBy=createdAt`, {
+      return await this.$fetch<ChatsResponse>(`${this.chatEndpoint}?page=1&perPage=100&sortBy=createdAt`, {
         credentials: 'include',
       })
     }

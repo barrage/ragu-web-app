@@ -7,9 +7,6 @@ useThemeStore()
 definePageMeta({
   layout: 'login-layout',
 })
-
-// API CALLS
-/* const { error } = await useAsyncData(() => authStore.handleOAuthLogin()) */
 </script>
 
 <template>
@@ -19,10 +16,13 @@ definePageMeta({
         width="110px"
         height="48px"
       />
-
-      <LocalizationSelector />
-      <ThemeSelector />
-      <LightDarkModeSelector />
+      <div class="header-right">
+        <ThemeSelector />
+        <div class="vertical-divider" />
+        <LightDarkModeSelector />
+        <div class="vertical-divider" />
+        <LocalizationSelector />
+      </div>
     </header>
     <div class="login-wrapper">
       <div class="login-header">
@@ -37,7 +37,6 @@ definePageMeta({
           {{ $t('login.description') }}
         </p>
       </div>
-
       <LlmOauthLogin />
     </div>
   </div>
@@ -51,20 +50,31 @@ definePageMeta({
 
   & header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     grid-area: header;
     position: sticky;
     top: 0;
-
+    gap: clamp(4.375rem, -6.699rem + 47.2492vw, 50rem);
     padding: 1rem;
     background-color: transparent;
     min-height: fit-content;
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      column-gap: 0.75rem;
+    }
+    .vertical-divider {
+      width: 1px;
+      height: 1.75rem;
+      background: var(--color-primary-300);
+    }
   }
 
   & .login-wrapper {
-    max-width: fit-content;
-    min-width: 400px;
+    max-width: 400px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -106,18 +116,25 @@ definePageMeta({
   padding: 0.5rem;
   border-radius: 15%;
 }
+
 .typing-effect {
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid black;
+  border-right: 2px solid var(--color-primary-900);
   display: inline-block;
-  font-family: 'Roboto', sans-serif;
   max-width: max-content;
-  color: var(--color-primary-800);
-  font-weight: 600;
   animation:
-    typing 1.75s steps(30, end) forwards,
-    blink 0.75s step-end infinite;
+    typing 1s steps(30, end) forwards,
+    blink 0.1s step-end infinite;
+}
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+    border: none;
+  }
 }
 
 .dark {
@@ -138,16 +155,6 @@ definePageMeta({
     border: 1px solid var(--color-primary-600);
     background: var(--color-primary-700);
     color: var(--color-primary-100);
-  }
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-    border: none;
   }
 }
 </style>
