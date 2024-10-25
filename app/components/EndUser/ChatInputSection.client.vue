@@ -1,25 +1,34 @@
-// In your component
 <script lang="ts" setup>
+import { computed, onMounted, ref, watch } from 'vue'
 import ArrowUp from '~/assets/icons/svg/arrow-up.svg'
 import { useNuxtApp } from '#app'
 
+/* SETUP */
+/* Ws plugin */
+const { $getWs, $wsConnect, $wsSendChatMessage, $wsCloseChat, $wsDisconnect, $wsConnectionState, $wsSendInitialMessage, $wsStopStream, $wsAddMessageHandler } = useNuxtApp()
+
+/* Stores */
 const agentStore = useAgentStore()
 const chatStore = useChatStore()
-const { $getWs, $wsConnect, $wsSendMessage, $wsConnectionState } = useNuxtApp()
+
+/* Data */
+const isTokenFetching = ref(false)
 const message = ref('')
-const route = useRoute()
 const router = useRouter()
-const chatId = route.params.chatId || null
+
+const currentChatId = computed(() => {
+  return chatStore.currentChatId
+})
 
 const handleServerMessage = (data: string) => {
   const assistantMessage = chatStore?.messages?.find(
     msg => msg.id === 'currentlyStreaming',
   )
   if (chatStore.isWebSocketStreaming && assistantMessage) {
-    if (assistantMessage && data !== '##STOP##') {
+    if (data !== '##STOP##') {
       assistantMessage.content += data
     }
-    else if (data === '##STOP##') {
+    else {
       chatStore.isWebSocketStreaming = false
       assistantMessage.id = ''
     }
@@ -27,50 +36,73 @@ const handleServerMessage = (data: string) => {
   else {
     const jsonObject = JSON.parse(data)
 
-    if (chatId) {
-      if (jsonObject?.body?.chatId) {
-        chatStore.GET_ChatMessages(jsonObject?.body?.chatId)
-      }
-    }
-    else {
-      if (jsonObject?.body?.chatId && jsonObject?.header === 'chat_response') {
-        router.push(`c/${jsonObject?.body?.chatId}`)
-        chatStore.GET_AllChats()
-      }
+    if (jsonObject?.chatId && jsonObject?.type === 'finish_event') {
+      chatStore.GET_AllChats()
+      chatStore.GET_ChatMessages(jsonObject.chatId)
+      router.push(`/c/${jsonObject.chatId}`)
     }
   }
 }
 
 const agentId = computed(() => {
-  if (chatId) {
-    const selectedChatAgent = chatStore.getChatById(chatId.toString())
-    return selectedChatAgent?.agentId
+  if (currentChatId.value) {
+    return ''
   }
   else {
     return agentStore.selectedAgent?.id
   }
 })
 
-watch(
-  agentId,
-  () => {
-    $wsConnect(chatId, agentId.value)
-    const ws = $getWs()
-    ws.onmessage = (event) => {
-      handleServerMessage(event.data)
+const handleAgentOrChatChange = async (newAgentId: string | null | undefined, newChatId: string | null | undefined) => {
+  if ($wsConnectionState.value === 'open') {
+    await $wsSendInitialMessage(currentChatId?.value, agentId.value)
+  }
+  else {
+    await ensureWsTokenAndConnect()
+  }
+}
+
+const ensureWsTokenAndConnect = async () => {
+  if (isTokenFetching.value) { return }
+  if ($wsConnectionState.value !== 'open') {
+    try {
+      isTokenFetching.value = true
+      await chatStore.GET_WsToken()
+
+      await $wsConnect(chatStore.wsToken)
+
+      $getWs().onmessage = event => handleServerMessage(event.data)
+      $getWs().onclose = async () => {
+        console.warn('WebSocket closed unexpectedly. Clearing token and attempting reconnection...')
+        $wsConnectionState.value = 'closed'
+        isTokenFetching.value = false
+        chatStore.wsToken = ''
+        await ensureWsTokenAndConnect()
+      }
+      await handleAgentOrChatChange(currentChatId?.value, agentId.value)
     }
-  },
-  { immediate: true, deep: true },
-)
+    catch (error) {
+      isTokenFetching.value = false
+      console.error('Error fetching WebSocket token or connecting:', error)
+    }
+    finally {
+      isTokenFetching.value = false
+    }
+  }
+  else {
+    handleAgentOrChatChange(currentChatId.value, agentId.value)
+  }
+}
 
 const sendMessage = () => {
-  chatStore.isWebSocketStreaming = true
+  if (!message.value.trim()) { return }
+
   const userMessage = {
     id: '',
     sender: '1',
     senderType: 'user',
     content: message.value,
-    chatId: chatId || '',
+    chatId: currentChatId.value || '',
     responseTo: '',
     evaluation: null,
     createdAt: '',
@@ -81,18 +113,38 @@ const sendMessage = () => {
     sender: '1',
     senderType: 'assistant',
     content: '',
-    chatId: chatId || '',
+    chatId: currentChatId.value || '',
     responseTo: '',
     evaluation: null,
     createdAt: '',
     updatedAt: '',
   }
-  chatStore.messages?.unshift(userMessage)
-  chatStore.messages?.unshift(assistantMessage)
 
-  $wsSendMessage(message.value)
+  if (chatStore?.messages) {
+    chatStore?.messages.push(userMessage)
+    chatStore?.messages.push(assistantMessage)
+  }
+
+  $wsSendChatMessage(message.value)
+  chatStore.isWebSocketStreaming = true
   message.value = ''
 }
+
+watch(
+  [agentId, currentChatId],
+  async ([newAgentId, newChatId], [oldAgentId, oldChatId]) => {
+    if (newAgentId !== oldAgentId || newChatId !== oldChatId) {
+      await handleAgentOrChatChange(currentChatId.value, agentId.value)
+    }
+  },
+  { immediate: true },
+)
+
+onMounted(async () => {
+  await ensureWsTokenAndConnect()
+
+  $wsAddMessageHandler(handleServerMessage)
+})
 </script>
 
 <template>

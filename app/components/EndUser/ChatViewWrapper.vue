@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const chatStore = useChatStore()
 const messages = computed(() => {
-  return [...(chatStore.messages || [])].reverse()
+  return [...(chatStore.messages || [])]
 })
 
 const selectedChat = computed(() => {

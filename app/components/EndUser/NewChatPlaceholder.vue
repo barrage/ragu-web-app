@@ -67,6 +67,7 @@ agentStore.GET_AllAgents()
 
 .about-container {
   text-align: center;
+  max-width: 100%;
 
   p {
     margin-bottom: 1.25rem;

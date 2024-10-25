@@ -50,6 +50,11 @@ export function groupChatsByTime(chats: Chat[]): GroupedChats {
       addChatToGroup(chat, 'lastYear')
     }
   })
+  groupedChats.today.reverse()
+  groupedChats.yesterday.reverse()
+  groupedChats.last7days.reverse()
+  groupedChats.last30days.reverse()
+  groupedChats.lastYear.reverse()
 
   return groupedChats
 }

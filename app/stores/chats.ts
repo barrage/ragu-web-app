@@ -15,7 +15,11 @@ export const useChatStore = defineStore('chat', () => {
   const error = ref<string | null>(null)
 
   const isWebSocketStreaming = ref(false)
-
+  const route = useRoute()
+  const currentChatId = computed(() => {
+    const chatId = route.params.chatId
+    return Array.isArray(chatId) ? chatId[0] : chatId || null
+  })
   const hasChats = computed(() => chats.value.length > 0)
   const { $api } = useNuxtApp()
 
@@ -35,11 +39,25 @@ export const useChatStore = defineStore('chat', () => {
   async function GET_AllChats(): Promise<ChatsResponse | null> {
     const data = await $api.chat.GetAllChats()
 
-    if (data.items) {
+    if (data) {
+      chats.value = data.items
       return chatsResponse.value = data
     }
     else {
       return chatsResponse.value = null
+    }
+  }
+
+  const wsToken = ref<string | null>(null)
+
+  async function GET_WsToken(): Promise<string | null> {
+    const token = await $api.chat.GetWsToken()
+
+    if (token) {
+      return wsToken.value = token
+    }
+    else {
+      return wsToken.value = null
     }
   }
 
@@ -58,5 +76,8 @@ export const useChatStore = defineStore('chat', () => {
     GET_ChatMessages,
     GET_AllChats,
     getChatById,
+    wsToken,
+    currentChatId,
+    GET_WsToken,
   }
 })
