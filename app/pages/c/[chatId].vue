@@ -5,6 +5,7 @@ const router = useRouter()
 const chatId = Array.isArray(route.params.chatId) ? route.params.chatId[0] : route.params.chatId
 
 if (chatId) {
+  chatStore.messages = []
   chatStore.GET_ChatMessages(chatId)
 }
 else {

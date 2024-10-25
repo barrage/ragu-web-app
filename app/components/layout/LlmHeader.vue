@@ -8,7 +8,6 @@ import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
       width="110px"
       height="40px"
     />
-
     <div class="header-right">
       <ThemeSelector />
       <div class="vertical-divider" />

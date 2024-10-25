@@ -98,7 +98,7 @@ const switchRole = () => {
             <span class="user-mail">{{ user.email }}</span>
           </div>
         </div>
-        <template v-if="oAuthStore.selectedRole === 'ADMIN'">
+        <template v-if="oAuthStore.selectedRole === 'admin'">
           <div class="horizontal-divider" />
           <el-dropdown-item @click="switchRole">
             <div class="dropdown-item">

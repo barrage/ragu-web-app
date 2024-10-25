@@ -5,7 +5,7 @@ import type { OAuthPayload, OAuthProvider, User } from '~/types/auth'
 
 export const useAuthStore = defineStore('auth', () => {
   // TYPES
-  type UserRole = 'USER' | 'ADMIN'
+  type UserRole = 'user' | 'admin'
 
   // CONSTANTS
   const { $api } = useNuxtApp()
