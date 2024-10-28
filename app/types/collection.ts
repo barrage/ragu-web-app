@@ -18,5 +18,4 @@ export interface CollectionDetail {
   model: string
   vectorProvider: string
   embeddingProvider: string
-
 }

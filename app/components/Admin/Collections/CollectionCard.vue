@@ -1,27 +1,34 @@
 <script lang="ts" setup>
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import type { Collection } from '~/types/collection'
+import EyeIcon from '~/assets/icons/svg/eye.svg'
 
+// PROPS
 const props = defineProps<{
   collection: Collection | null
 }>()
 
 const emit = defineEmits(['openDeleteModal'])
-
+// CONSTANTS
+const router = useRouter()
 const { t } = useI18n()
-
+// HELPERS
 const collectionData = computed(() => {
   return {
-    collectionId: props.collection?.id,
+
     name: props.collection?.name || 'Unknown name',
     updatedAt: props.collection?.updatedAt || 'Unknown date',
     createdAt: props.collection?.createdAt || 'Unknown date',
-    model: props.collection?.model || 'Unknown model',
+
   }
 })
 
 const openDeleteModal = () => {
   emit('openDeleteModal', props.collection)
+}
+
+const redirectToCollectionDetails = () => {
+  return router.push(`/admin/collections/${props.collection?.id}`)
 }
 </script>
 
@@ -45,14 +52,21 @@ const openDeleteModal = () => {
       size="small"
       centered
     />
-    <LabelDescriptionItem
-      :label="t('collections.labels.model')"
-      :description="collectionData.model"
-      size="small"
-      centered
-    />
 
     <div class="action-links">
+      <ElTooltip
+        :content="t('agents.agent_card.view_more')"
+        :enterable="false"
+        placement="top"
+      >
+        <el-button
+          plain
+          type="primary"
+          @click="redirectToCollectionDetails()"
+        >
+          <EyeIcon />
+        </el-button>
+      </ElTooltip>
       <ElButton
         type="danger"
         plain
@@ -67,7 +81,7 @@ const openDeleteModal = () => {
 <style lang="scss" scoped>
 .collection-card {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   border: 0.5px solid var(--color-primary-300);
   background: var(--color-primary-0);
@@ -78,6 +92,7 @@ const openDeleteModal = () => {
 
 .action-links {
   display: flex;
+  gap: 0.75rem;
   align-items: center;
   justify-content: end;
 

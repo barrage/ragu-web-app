@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { CollectionDetail, CollectionListResponse } from '~/types/collection'
+import type { Collection, CollectionDetail, CollectionListResponse } from '~/types/collection'
 
 export default class CollectionService extends FetchFactory {
   // Endpoint for collections-related API requests.
@@ -22,6 +22,26 @@ export default class CollectionService extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to fetch collections with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Fetches single collection for a specific collections by its ID.
+   * @param id - The ID of the collection.
+   * @returns A promise that resolves to an collection object.
+   * @throws Will throw an error if the request fails.
+   */
+  async GetSingleCollection(collectionId: string): Promise<Collection> {
+    try {
+      return await this.$fetch<Collection>(`${this.endpoint}/${collectionId}`,
+
+      )
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch product with code ${error?.statusCode}`,
       })
     }
   }

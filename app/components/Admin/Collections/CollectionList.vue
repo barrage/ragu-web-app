@@ -32,6 +32,15 @@ const changePage = (page: number) => {
   emits('pageChange', pagination.value.currentPage)
 }
 
+watch(
+  () => collectionStore.collectionResponse?.total,
+  (newTotal) => {
+    if (newTotal !== undefined) {
+      pagination.value.total = newTotal
+    }
+  },
+)
+
 onMounted(() => {
   nextTick(() => {
     props.collections?.forEach((_, index) => {

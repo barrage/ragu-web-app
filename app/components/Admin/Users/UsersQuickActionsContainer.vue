@@ -10,7 +10,7 @@ const scrollIntoViewOptions = {
   block: 'center',
 }
 const usersStore = useUsersStore()
-
+const { t } = useI18n()
 const inviteUserModalOpen = ref(false)
 
 const toggleInviteUserModal = () => {
@@ -58,19 +58,50 @@ const rules = reactive<FormRules<CreateUserPayload>>({
   ],
 })
 
-const { execute } = await useAsyncData(() => usersStore.GET_AllUsers(), { immediate: false })
-
 const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
     return
   }
-  await formEl.validate((valid, __) => {
-    if (valid) {
-      usersStore.POST_CreateUser(inviteUserform)
-      execute()
-      inviteUserModalOpen.value = false
-    }
-  })
+  try {
+    await formEl.validate(async (valid, __) => {
+      if (valid) {
+        await usersStore.POST_CreateUser(inviteUserform)
+        ElNotification({
+          title: t('users.notifications.update_title'),
+          message: t('users.notifications.create_message', { name: usersStore.selectedUser?.fullName }),
+          type: 'success',
+          customClass: 'success',
+          duration: 2500,
+        })
+        await usersStore.GET_AllUsers()
+        inviteUserModalOpen.value = false
+
+        inviteUserform.email = ''
+        inviteUserform.firstName = ''
+        inviteUserform.lastName = ''
+        inviteUserform.role = ''
+      }
+
+      else {
+        ElNotification({
+          title: t('users.notifications.form_title'),
+          message: t('users.notifications.form_message'),
+          type: 'error',
+          customClass: 'error',
+          duration: 2500,
+        })
+      }
+    })
+  }
+  catch (error) {
+    console.error('Validation error:', error)
+    ElNotification({
+      message: t('users.notifications.invalid_user'),
+      type: 'error',
+      customClass: 'error',
+      duration: 2500,
+    })
+  }
 }
 const userRoles = [{
   label: 'Admin',

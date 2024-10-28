@@ -5,6 +5,7 @@ export const useUsersStore = defineStore('user', () => {
   // State
 
   const usersResponse = ref<UsersResponse | null >()
+  const userAdded = ref(false)
   const { $api } = useNuxtApp()
 
   /* API */
@@ -30,6 +31,7 @@ export const useUsersStore = defineStore('user', () => {
       // Store the fetched data in `usersResponse` and return it
       if (data) {
         usersResponse.value = data
+        userAdded.value = false
         return data
       }
       else {
@@ -59,7 +61,18 @@ export const useUsersStore = defineStore('user', () => {
   }
 
   async function POST_CreateUser(newUserPayload: CreateUserPayload): Promise<User | null > {
-    return await $api.user.PostCreateUser(newUserPayload)
+    try {
+      const createdUser = await $api.user.PostCreateUser(newUserPayload)
+      if (createdUser) {
+        userAdded.value = true
+        return createdUser
+      }
+      return null
+    }
+    catch (error) {
+      console.error('Error creating user:', error)
+      return null
+    }
   }
 
   async function DELETE_User(userId: string): Promise<void> {
@@ -67,6 +80,7 @@ export const useUsersStore = defineStore('user', () => {
   }
 
   return {
+    userAdded,
     usersResponse,
     GET_AllUsers,
 

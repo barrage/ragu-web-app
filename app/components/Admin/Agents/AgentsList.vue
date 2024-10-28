@@ -24,6 +24,15 @@ const changePage = (page: number) => {
   emits('pageChange', pagination.value.currentPage)
 }
 
+watch(
+  () => agentStore.agentsResponse?.total,
+  (newTotal) => {
+    if (newTotal !== undefined) {
+      pagination.value.total = newTotal
+    }
+  },
+)
+
 onMounted(() => {
   nextTick(() => {
     props.agents?.forEach((_, index) => {

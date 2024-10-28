@@ -13,15 +13,22 @@ const emits = defineEmits<{
 
 const cardClasses = ref<string[]>([])
 
-onMounted(() => {
-  nextTick(() => {
-    props.users?.forEach((_, index) => {
-      setTimeout(() => {
-        cardClasses.value[index] = 'list-item-visible'
-      }, index * 100)
-    })
+const applyCardClasses = () => {
+  cardClasses.value = []
+  props.users?.forEach((_, index) => {
+    setTimeout(() => {
+      cardClasses.value[index] = 'list-item-visible'
+    }, index * 100)
   })
-})
+}
+
+watch(
+  () => props.users,
+  () => {
+    nextTick(applyCardClasses)
+  },
+  { immediate: true },
+)
 
 const selectedUser = ref<User | null>(null)
 const deleteUserModalVisible = ref(false)
@@ -41,9 +48,21 @@ const handleDeleteUser = async (user: User) => {
     await usersStore.DELETE_User(user.id)
     deleteUserModalVisible.value = false
     usersStore.GET_AllUsers()
+    ElNotification({
+      title: 'Success',
+      message: `User ${selectedUser.value?.fullName} deleted successfully!`,
+      type: 'success',
+      customClass: 'success',
+      duration: 2500,
+    })
   }
-  catch (error) {
-    console.error('Error deleting user:', error)
+  catch {
+    ElNotification({
+      title: 'Error',
+      message: 'Failed to delete the user.',
+      type: 'error',
+      duration: 2500,
+    })
   }
 }
 
@@ -58,6 +77,15 @@ const changePage = (page: number) => {
   pagination.value.currentPage = page
   emits('pageChange', pagination.value.currentPage)
 }
+
+watch(
+  () => usersStore.usersResponse?.total,
+  (newTotal) => {
+    if (newTotal !== undefined) {
+      pagination.value.total = newTotal
+    }
+  },
+)
 </script>
 
 <template>

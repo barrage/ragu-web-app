@@ -9,6 +9,7 @@ export const useCollectionsStore = defineStore('collection', () => {
   // Constants
 
   const collectionResponse = ref<CollectionListResponse | null >()
+  const singleCollection = ref<Collection | null>()
   const collections = computed<Collection[]>(() => {
     return collectionResponse.value?.items || []
   })
@@ -25,6 +26,19 @@ export const useCollectionsStore = defineStore('collection', () => {
     }
     else {
       return collectionResponse.value = null
+    }
+  }
+
+  async function GET_SingleCollection(collectionId: string): Promise<Collection | null | undefined> {
+    const data = await $api.collection.GetSingleCollection(collectionId)
+
+    if (data) {
+      singleCollection.value = data
+      return data
+    }
+
+    else {
+      singleCollection.value = null
     }
   }
 
@@ -56,10 +70,12 @@ export const useCollectionsStore = defineStore('collection', () => {
 
   return {
     collectionResponse,
+    singleCollection,
     collections,
     newCollection,
     listEmbeddingsModels,
     GET_AllCollections,
+    GET_SingleCollection,
     DELETE_Collection,
     POST_CreateCollection,
     GET_ListEmbeddingModels,

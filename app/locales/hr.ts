@@ -235,14 +235,25 @@ export default {
       embeddingPlaceholder: 'Odaberi davatelja ugrađivanja',
       modelPlaceholder: 'Odaberi model',
     },
-    labels: {
-      name: 'Naziv kolekcije',
-      vectorProvider: 'Davatelj vektora',
-      embeddingProvider: 'Davatelj ugrađivanja',
-      model: 'Model',
-      updated_at: 'Ažurirano',
-      created_at: 'Kreirano',
+    collection_card: {
+      unknown_id: 'Nepoznati ID kolekcije',
+      unknown_collectin_name: 'Nepoznato ime kolekcije',
+      unknown_provider: 'Nepoznati davatelj usluga',
+      unknown_embedder: 'Nepoznati pružatelj ugrađivanja',
+      unknown_model: 'Nepoznati model',
+      unknown_date: 'Nepoznati datum',
     },
+
+    labels: {
+      id: 'ID kolekcije',
+      name: 'Naziv kolekcije',
+      created_at: 'Stvoreno',
+      updated_at: 'Ažurirano',
+      provider: 'Pružatelj usluga',
+      model: 'Model',
+      embedder: 'Ugraditelj',
+    },
+
     deleteModal: {
       title: 'Izbriši kolekciju',
       text: 'Jeste li sigurni da želite izbrisati ovu kolekciju?',

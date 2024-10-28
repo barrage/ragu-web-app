@@ -53,7 +53,6 @@ const redirectToAgentDetails = () => {
       :label="t('agents.labels.name')"
       size="small"
       :description="agentData?.name"
-      class="agent-name"
     />
 
     <LabelDescriptionItem
@@ -76,6 +75,7 @@ const redirectToAgentDetails = () => {
       :label="t('agents.labels.context')"
       :description="agentData?.context"
       size="small"
+      class="context"
     />
 
     <div class="action-links">
@@ -112,7 +112,7 @@ const redirectToAgentDetails = () => {
 <style lang="scss" scoped>
 .agent-card {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   border: 0.5px solid var(--color-primary-300);
   background: var(--color-primary-0);
@@ -133,8 +133,14 @@ const redirectToAgentDetails = () => {
   }
 }
 
-.agent-name {
-  grid-column: span 2;
+.context {
+  &:deep(.description) {
+    display: inline-block;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 .dark {
   .agent-card {

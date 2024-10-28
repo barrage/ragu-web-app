@@ -196,14 +196,25 @@ export default {
       embeddingPlaceholder: 'Wählen Sie den Einbettungsanbieter',
       modelPlaceholder: 'Modell auswählen',
     },
-    labels: {
-      name: 'Sammlungsname',
-      vectorProvider: 'Vektor-Anbieter',
-      embeddingProvider: 'Einbettungsanbieter',
-      model: 'Modell',
-      updated_at: 'Aktualisiert am',
-      created_at: 'Erstellt am',
+    collection_card: {
+      unknown_id: 'Unbekannte Sammlungs-ID',
+      unknown_collectin_name: 'Unbekannter Sammlungsname',
+      unknown_provider: 'Unbekannter Anbieter',
+      unknown_embedder: 'Unbekannter Einbettungsanbieter',
+      unknown_model: 'Unbekanntes Modell',
+      unknown_date: 'Unbekanntes Datum',
     },
+
+    labels: {
+      id: 'Sammlungs-ID',
+      name: 'Sammlungsname',
+      created_at: 'Erstellt am',
+      updated_at: 'Aktualisiert am',
+      provider: 'Anbieter',
+      model: 'Modell',
+      embedder: 'Einbettung',
+    },
+
     deleteModal: {
       title: 'Sammlung löschen',
       text: 'Sind Sie sicher, dass Sie diese Sammlung löschen möchten?',

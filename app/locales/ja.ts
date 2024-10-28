@@ -194,14 +194,25 @@ export default {
       embeddingPlaceholder: '埋め込みプロバイダーを選択',
       modelPlaceholder: 'モデルを選択',
     },
-    labels: {
-      name: 'コレクション名',
-      vectorProvider: 'ベクタープロバイダー',
-      embeddingProvider: '埋め込みプロバイダー',
-      model: 'モデル',
-      updated_at: '更新日',
-      created_at: '作成日',
+    collection_card: {
+      unknown_id: '不明なコレクションID',
+      unknown_collectin_name: '不明なコレクション名',
+      unknown_provider: '不明なプロバイダー',
+      unknown_embedder: '不明な埋め込みプロバイダー',
+      unknown_model: '不明なモデル',
+      unknown_date: '不明な日付',
     },
+
+    labels: {
+      id: 'コレクションID',
+      name: 'コレクション名',
+      created_at: '作成日',
+      updated_at: '更新日',
+      provider: 'プロバイダー',
+      model: 'モデル',
+      embedder: '埋め込みツール',
+    },
+
     deleteModal: {
       title: 'コレクションを削除',
       text: 'このコレクションを削除してもよろしいですか？',
