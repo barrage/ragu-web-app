@@ -23,26 +23,19 @@ export const useUsersStore = defineStore('user', () => {
     perPage: number = 10,
     sortBy: string = 'firstName',
     sortOrder: 'asc' | 'desc' = 'asc',
-  ): Promise<UsersResponse | null> {
-    try {
-      // Call the service method with pagination and sorting parameters
-      const data = await $api.user.GetAllUsers(page, perPage, sortBy, sortOrder)
+  ): Promise<UsersResponse | null | undefined> {
+    // Call the service method with pagination and sorting parameters
+    const data = await $api.user.GetAllUsers(page, perPage, sortBy, sortOrder)
 
-      // Store the fetched data in `usersResponse` and return it
-      if (data) {
-        usersResponse.value = data
-        userAdded.value = false
-        return data
-      }
-      else {
-        usersResponse.value = null
-        return null
-      }
+    // Store the fetched data in `usersResponse` and return it
+    if (data) {
+      usersResponse.value = data
+      userAdded.value = false
+      return data
     }
-    catch (error) {
-      // Handle errors and reset `usersResponse` to null if necessary
+    else {
       usersResponse.value = null
-      throw error
+      return null
     }
   }
 

@@ -43,6 +43,7 @@ watch(
 )
 onMounted(() => {
   scrollToBottom()
+  chatStore.GET_AllChats()
 })
 onBeforeUnmount(() => {
   chatViewWrapper.value = null

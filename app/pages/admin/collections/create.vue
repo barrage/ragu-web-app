@@ -122,13 +122,13 @@ errorHandler(createError)
         :label="t('collections.labels.name')"
         prop="name"
       >
-        <ElInput v-model="form.name" />
+        <ElInput v-model="form.name" placeholder="Enter collection name" />
       </ElFormItem>
 
       <!-- Vector Provider Dropdown -->
       <ElFormItem
         class="group"
-        :label="t('collections.labels.vectorProvider')"
+        :label="t('collections.labels.provider')"
         prop="vectorProvider"
       >
         <ElSelect
@@ -147,7 +147,7 @@ errorHandler(createError)
       <!-- Embedding Provider Dropdown -->
       <ElFormItem
         class="group"
-        :label="t('collections.labels.embeddingProvider')"
+        :label="t('collections.labels.embedder')"
         prop="embeddingProvider"
       >
         <ElSelect v-model="form.embeddingProvider" :placeholder="t('collections.placeholders.embeddingPlaceholder')">

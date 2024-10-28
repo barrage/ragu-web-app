@@ -12,15 +12,12 @@ definePageMeta({
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
-const fetchCollections = async (page: number = 1) => {
-  const { error: getError } = await useAsyncData(() => collectionStore.GET_AllCollections(page, itemsPerPage.value))
-  errorHandler(getError)
-}
-
-await fetchCollections(currentPage.value)
+const { error: getError, execute } = await useAsyncData(() => collectionStore.GET_AllCollections(currentPage.value, itemsPerPage.value))
+errorHandler(getError)
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
+  execute()
 }
 </script>
 

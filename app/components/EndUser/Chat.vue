@@ -146,13 +146,13 @@ watch(isModalVisible, (newVal) => {
     flex-direction: column;
     gap: 36px;
     width: 100%;
+    z-index: -1;
   }
 }
 
 .chat-title {
   position: sticky;
   top: 0;
-  z-index: 2;
   display: flex;
   align-items: center;
   gap: 22px;

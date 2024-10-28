@@ -86,12 +86,14 @@ const handleUploadSuccess: UploadProps['onSuccess'] = () => {
   upload()
 }
 
+const { error, execute } = await useAsyncData(() => documentStore.GET_SyncFs())
+
 const loading = ref(false)
 const syncDocuments = async () => {
   try {
     loading.value = true
-    const { error } = await useAsyncData(() => documentStore.GET_SyncFs())
-    errorHandler(error)
+    execute()
+
     ElNotification({
       title: 'Success',
       message: 'Sync docs',
@@ -119,6 +121,8 @@ const setEmptyList = () => {
   fileList.value = []
   isUploadModalVisible.value = false
 }
+
+errorHandler(error)
 </script>
 
 <template>

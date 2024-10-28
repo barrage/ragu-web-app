@@ -286,4 +286,15 @@ export default {
 
   },
 
+  error_notifications: {
+    default: 'Došlo je do nepoznate greške.',
+    status_400: 'Nevažeća zahtjev: Pokušajte ponovo.',
+    status_401: 'Nema ovlasti: Morate biti prijavljeni za pristup ovome.',
+    status_403: 'Zabranjeno: Nemate dozvolu za pristup ovoj resursu.',
+    status_404: 'Nema nađeno: Resurs koji tražite ne postoji.',
+    status_422: 'Neobradiva entiteta: Došlo je do problema s unesenim podacima.',
+    status_500: 'Greška poslužitelja: Nešto je pošlo po zlu s naše strane. Pokušajte ponovo kasnije.',
+    status_503: 'Usluga nije dostupna: Poslužitelj trenutno ne može obraditi zahtjev.',
+  },
+
 }

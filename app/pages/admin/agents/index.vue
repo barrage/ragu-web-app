@@ -13,18 +13,14 @@ definePageMeta({
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
-const fetchAgents = async (page: number = 1) => {
-  const { error } = await useAsyncData(() => agentStore.GET_AllAgents(page, itemsPerPage.value))
-
-  errorHandler(error)
-}
-
-await fetchAgents(currentPage.value)
+const { error, execute } = await useAsyncData(() => agentStore.GET_AllAgents(currentPage.value, itemsPerPage.value))
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
-  await fetchAgents(page)
+  execute()
 }
+
+errorHandler(error)
 </script>
 
 <template>

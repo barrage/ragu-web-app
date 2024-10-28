@@ -61,6 +61,7 @@ const handleDeleteUser = async (user: User) => {
       title: 'Error',
       message: 'Failed to delete the user.',
       type: 'error',
+      customClass: 'error',
       duration: 2500,
     })
   }
