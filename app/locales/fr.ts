@@ -195,14 +195,25 @@ export default {
       embeddingPlaceholder: 'Sélectionnez le fournisseur d\'embedding',
       modelPlaceholder: 'Sélectionnez le modèle',
     },
-    labels: {
-      name: 'Nom de la collection',
-      vectorProvider: 'Fournisseur de vecteurs',
-      embeddingProvider: 'Fournisseur d\'embedding',
-      model: 'Modèle',
-      updated_at: 'Mis à jour le',
-      created_at: 'Créé le',
+    collection_card: {
+      unknown_id: 'ID de collection inconnu',
+      unknown_collectin_name: 'Nom de collection inconnu',
+      unknown_provider: 'Fournisseur inconnu',
+      unknown_embedder: 'Fournisseur d\'intégration inconnu',
+      unknown_model: 'Modèle inconnu',
+      unknown_date: 'Date inconnue',
     },
+
+    labels: {
+      id: 'ID de la collection',
+      name: 'Nom de la collection',
+      created_at: 'Créé le',
+      updated_at: 'Mis à jour le',
+      provider: 'Fournisseur',
+      model: 'Modèle',
+      embedder: 'Intégrateur',
+    },
+
     deleteModal: {
       title: 'Supprimer la collection',
       text: 'Êtes-vous sûr de vouloir supprimer cette collection?',

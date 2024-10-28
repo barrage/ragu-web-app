@@ -81,6 +81,17 @@ export default {
       username: 'Username',
       email: 'Email',
     },
+
+    notifications: {
+      delete_title: 'Success',
+      update_title: 'Success',
+      delete_message: 'User {name} is deleted!',
+      create_title: 'Success',
+      create_message: 'User {name} is created!',
+      form_title: 'Form Error',
+      form_message: 'Please fix the highlighted errors in the form.',
+      invalid_user: 'Oops! Something went wrong. The user you are trying to delete doesn’t seem to exist.',
+    },
   },
   dashboard: {
     title: 'Dashboard',
@@ -231,14 +242,23 @@ export default {
       modelPlaceholder: 'Select Model',
     },
 
-    labels: {
-      name: 'Collection Name',
-      vectorProvider: 'Vector Provider',
-      embeddingProvider: 'Embedding Provider',
-      model: 'Model',
-      updated_at: 'Updated At',
-      created_at: 'Ceated At',
+    collection_card: {
+      unknown_id: 'Unknown collection id',
+      unknown_collectin_name: 'Unknown collection name',
+      unknown_provider: 'Unknown provider',
+      unknown_embedder: 'Unknown embeddingProvider',
+      unknown_model: 'Unknown model',
+      unknown_date: 'Unknown date',
+    },
 
+    labels: {
+      id: 'Collection ID',
+      name: 'Collection Name',
+      created_at: 'Created At',
+      updated_at: 'Updated At',
+      provider: 'Provider',
+      model: 'Model',
+      embedder: 'Embedder',
     },
 
     deleteModal: {

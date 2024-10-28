@@ -58,69 +58,68 @@ interface Emits {
           <span class="user-mail">{{ userData.email }}</span>
         </div>
       </div>
-      <div class="user-informations">
-        <LabelDescriptionItem
-          :label="t('users.user_card.role')"
-          size="small"
-          :description="userData.role"
-        />
-        <LabelDescriptionItem
-          :label="t('users.user_card.status')"
-          size="small"
-          :description="userData?.status"
+
+      <LabelDescriptionItem
+        :label="t('users.user_card.role')"
+        size="small"
+        :description="userData.role"
+      />
+      <LabelDescriptionItem
+        :label="t('users.user_card.status')"
+        size="small"
+        :description="userData?.status"
+      >
+        <template #customDescription>
+          <el-tag :type="userData.statusType" size="small">
+            <span class="status-dot" />  {{ userData?.status }}
+          </el-tag>
+        </template>
+      </LabelDescriptionItem>
+
+      <LabelDescriptionItem
+        :label="t('users.user_card.created_at')"
+        size="small"
+        :description="userData.createdAt"
+      />
+      <div class="user-actions">
+        <ElTooltip
+          :content="t('users.user_card.view_more')"
+          :enterable="false"
+          placement="top"
         >
-          <template #customDescription>
-            <el-tag :type="userData.statusType" size="small">
-              <span class="status-dot" />  {{ userData?.status }}
-            </el-tag>
-          </template>
-        </LabelDescriptionItem>
-
-        <LabelDescriptionItem
-          :label="t('users.user_card.created_at')"
-          size="small"
-          :description="userData.createdAt"
-        />
-        <div class="user-actions">
-          <ElTooltip
-            :content="t('users.user_card.view_more')"
-            :enterable="false"
-            placement="top"
+          <el-button
+            plain
+            type="primary"
+            @click="redirectToUserDetails()"
           >
-            <el-button
-              plain
-              type="primary"
-              @click="redirectToUserDetails()"
-            >
-              <EyeIcon />
-            </el-button>
-          </ElTooltip>
+            <EyeIcon />
+          </el-button>
+        </ElTooltip>
 
-          <ElTooltip
-            :content="t('users.user_card.edit_user')"
-            :enterable="false"
-            placement="top"
-          >
-            <el-button plain>
-              <EditIcon />
-            </el-button>
-          </ElTooltip>
+        <ElTooltip
+          :content="t('users.user_card.edit_user')"
+          :enterable="false"
+          placement="top"
+        >
+          <el-button plain>
+            <EditIcon />
+          </el-button>
+        </ElTooltip>
 
-          <ElTooltip
-            :content="t('users.user_card.delete_user')"
-            :enterable="false"
-            placement="top"
+        <ElTooltip
+          :content="t('users.user_card.delete_user')"
+          :enterable="false"
+          placement="top"
+        >
+          <el-button
+            plain
+            type="danger"
+            class="delete-action"
+            @click="emits('delete-user', props.user)"
           >
-            <el-button
-              plain
-              type="danger"
-              class="delete-action"
-              @click="emits('delete-user', props.user)"
-            >
-              <DeleteIcon />
-            </el-button>
-          </ElTooltip>
-        </div>
+            <DeleteIcon />
+          </el-button>
+        </ElTooltip>
       </div>
     </div>
   </div>
@@ -128,10 +127,9 @@ interface Emits {
 
 <style lang="scss" scoped>
 .user-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 22px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
   border: 0.5px solid var(--color-primary-300);
   background: var(--color-primary-0);
   box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
@@ -167,6 +165,10 @@ interface Emits {
   text-overflow: ellipsis;
   flex: 0 0 calc(30% - 22px);
   color: var(--color-primary-900);
+
+  svg {
+    flex-shrink: 0;
+  }
 
   &:hover {
     opacity: 0.8;

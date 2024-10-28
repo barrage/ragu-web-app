@@ -196,14 +196,25 @@ export default {
       embeddingPlaceholder: 'Seleziona il fornitore di embeddings',
       modelPlaceholder: 'Seleziona il modello',
     },
-    labels: {
-      name: 'Nome della collezione',
-      vectorProvider: 'Fornitore di vettori',
-      embeddingProvider: 'Fornitore di embeddings',
-      model: 'Modello',
-      updated_at: 'Aggiornato il',
-      created_at: 'Creato il',
+    collection_card: {
+      unknown_id: 'ID della collezione sconosciuto',
+      unknown_collectin_name: 'Nome della collezione sconosciuto',
+      unknown_provider: 'Provider sconosciuto',
+      unknown_embedder: 'Provider di embedding sconosciuto',
+      unknown_model: 'Modello sconosciuto',
+      unknown_date: 'Data sconosciuta',
     },
+
+    labels: {
+      id: 'ID della collezione',
+      name: 'Nome della collezione',
+      created_at: 'Creato il',
+      updated_at: 'Aggiornato il',
+      provider: 'Provider',
+      model: 'Modello',
+      embedder: 'Incorporatore',
+    },
+
     deleteModal: {
       title: 'Elimina collezione',
       text: 'Sei sicuro di voler eliminare questa collezione?',

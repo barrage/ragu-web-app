@@ -38,6 +38,7 @@ const confirmDelete = async () => {
       title: 'Success',
       message: `Collection ${props.collection.name} deleted successfully!`,
       type: 'success',
+      customClass: 'success',
       duration: 2500,
     })
   }

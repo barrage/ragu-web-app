@@ -14,8 +14,7 @@ const itemsPerPage = ref(10)
 
 const fetchUsers = async (page: number = 1) => {
   const { error } = await useAsyncData(() =>
-    usersStore.GET_AllUsers(page, itemsPerPage.value),
-  )
+    usersStore.GET_AllUsers(page, itemsPerPage.value))
   errorHandler(error)
 }
 

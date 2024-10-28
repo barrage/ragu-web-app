@@ -119,6 +119,7 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
 }
 
 const cancelUpdate = (agent: Agent | null | undefined): void => {
+  agentStore.setEditMode(false)
   router.push(`/admin/agents/${agent?.id}`)
 }
 
