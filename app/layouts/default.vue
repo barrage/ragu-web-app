@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 // CONSTANTS
 const navigationStore = useNavigationStore()
-
-const chatStore = useChatStore()
-
-chatStore.GET_AllChats()
 </script>
 
 <template>

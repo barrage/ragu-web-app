@@ -263,4 +263,15 @@ export default {
 
   },
 
+  error_notifications: {
+    default: 'Ocurrió un error desconocido.',
+    status_400: 'Solicitud incorrecta: Por favor, inténtalo de nuevo.',
+    status_401: 'No autorizado: Necesitas estar conectado para acceder a esto.',
+    status_403: 'Prohibido: No tienes permiso para acceder a este recurso.',
+    status_404: 'No encontrado: El recurso que buscas no existe.',
+    status_422: 'Entidad no procesable: Hubo un problema con los datos proporcionados.',
+    status_500: 'Error del servidor: Algo salió mal de nuestra parte. Por favor, inténtalo de nuevo más tarde.',
+    status_503: 'Servicio no disponible: El servidor no puede manejar la solicitud en este momento.',
+  },
+
 }

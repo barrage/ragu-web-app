@@ -264,4 +264,15 @@ export default {
 
   },
 
+  error_notifications: {
+    default: 'Une erreur inconnue s\'est produite.',
+    status_400: 'Mauvaise demande : Veuillez réessayer.',
+    status_401: 'Non autorisé : Vous devez être connecté pour accéder à cela.',
+    status_403: 'Interdit : Vous n\'avez pas la permission d\'accéder à cette ressource.',
+    status_404: 'Non trouvé : La ressource que vous recherchez n\'existe pas.',
+    status_422: 'Entité non traitable : Il y avait un problème avec les données fournies.',
+    status_500: 'Erreur serveur : Un problème est survenu de notre côté. Veuillez réessayer plus tard.',
+    status_503: 'Service indisponible : Le serveur est actuellement incapable de traiter la demande.',
+  },
+
 }

@@ -1,6 +1,7 @@
 import { textProps } from 'element-plus'
 
 export default {
+
   details: 'Details',
   chatDock: 'Chat panel',
   login: {
@@ -294,4 +295,16 @@ export default {
     },
 
   },
+
+  error_notifications: {
+    default: 'An unknown error occurred',
+    status_400: 'Bad Request: Please try again.',
+    status_401: 'Unauthorized: You need to be logged in to access this.',
+    status_403: 'Forbidden: You do not have permission to access this resource.',
+    status_404: 'Not Found: The resource you’re looking for doesn’t exist.',
+    status_422: 'Unprocessable Entity: There was an issue with the provided data.',
+    status_500: 'Server Error: Something went wrong on our end. Please try again later.',
+    status_503: 'Service Unavailable: The server is currently unable to handle the request.',
+  },
+
 }

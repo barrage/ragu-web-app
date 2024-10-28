@@ -11,19 +11,16 @@ const chatsStore = useChatStore()
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
-const fetchChats = async (page: number = 1) => {
-  const { error } = await useAsyncData(() =>
-    chatsStore.GET_AllAdminChats(page, itemsPerPage.value),
-  )
-  errorHandler(error)
-}
-
-await fetchChats(currentPage.value)
+const { error, execute } = await useAsyncData(() =>
+  chatsStore.GET_AllAdminChats(currentPage.value, itemsPerPage.value),
+)
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
-  await fetchChats(page)
+  execute()
 }
+
+errorHandler(error)
 </script>
 
 <template>

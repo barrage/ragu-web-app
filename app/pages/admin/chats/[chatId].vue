@@ -17,14 +17,10 @@ const selectedChatId = computed(() => {
 /* const currentPage = ref(1)
 const itemsPerPage = ref(10) */
 
-const fetchMessages = async (page: number = 1) => {
-  const { error } = await useAsyncData(() =>
-    chatStore.GET_AllChatMessagesAdmin(selectedChatId.value),
-  )
-  errorHandler(error)
-}
-
-await fetchMessages()
+const { error } = await useAsyncData(() =>
+  chatStore.GET_AllChatMessagesAdmin(selectedChatId.value),
+)
+errorHandler(error)
 
 /* const handlePageChange = async (page: number) => {
   currentPage.value = page

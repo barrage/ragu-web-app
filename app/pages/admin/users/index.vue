@@ -12,20 +12,16 @@ const usersStore = useUsersStore()
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
-const fetchUsers = async (page: number = 1) => {
-  const { error } = await useAsyncData(() =>
-    usersStore.GET_AllUsers(page, itemsPerPage.value))
-  errorHandler(error)
-}
-
-// Fetch users initially with the first page
-await fetchUsers(currentPage.value)
+const { error, execute } = await useAsyncData(() =>
+  usersStore.GET_AllUsers(currentPage.value, itemsPerPage.value))
 
 // Method to handle page change
 const handlePageChange = async (page: number) => {
   currentPage.value = page
-  await fetchUsers(page)
+  execute()
 }
+
+errorHandler(error)
 </script>
 
 <template>

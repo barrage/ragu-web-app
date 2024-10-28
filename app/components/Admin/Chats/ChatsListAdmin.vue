@@ -31,21 +31,7 @@ const openDeleteUserModal = (chat: Chat) => {
   deleteUserModalVisible.value = true
 }
 
-const toggleModal = () => {
-  deleteUserModalVisible.value = !deleteUserModalVisible.value
-}
-
 const chatsStore = useChatStore()
-/* const handleDeleteUser = async (chat: Chat) => {
-  try {
-    await chatsStore.DELETE_User(chat.id)
-    deleteUserModalVisible.value = false
-    chatsStore.GET_Allchats()
-  }
-  catch (error) {
-    console.error('Error deleting user:', error)
-  }
-} */
 
 const pagination = ref<Pagination>({
   currentPage: 1,
@@ -78,13 +64,6 @@ const changePage = (page: number) => {
         @page-change="(page:number) => changePage(page)"
       />
     </div>
-
-    <!-- <DeleteUserModal
-      :is-open="deleteUserModalVisible"
-      :selected-user="selectedUser"
-      @toggle-modal="toggleModal"
-      @delete-user-confirm="handleDeleteUser"
-    /> -->
   </div>
 </template>
 

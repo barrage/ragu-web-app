@@ -18,8 +18,8 @@ onMounted(async () => {
 <template>
   <div>
     <ElConfigProvider namespace="barrage">
-      <NuxtLayout />
       <LlmOverlayLoader v-if="authStore.iscurrentUserLoading" />
+      <NuxtLayout />
     </ElConfigProvider>
   </div>
 </template>

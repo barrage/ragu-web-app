@@ -264,4 +264,15 @@ export default {
     },
   },
 
+  error_notifications: {
+    default: 'Ein unbekannter Fehler ist aufgetreten.',
+    status_400: 'Schlechte Anfrage: Bitte versuchen Sie es erneut.',
+    status_401: 'Nicht autorisiert: Sie müssen angemeldet sein, um darauf zuzugreifen.',
+    status_403: 'Verboten: Sie haben keine Berechtigung, auf diese Ressource zuzugreifen.',
+    status_404: 'Nicht gefunden: Die gesuchte Ressource existiert nicht.',
+    status_422: 'Nicht verarbeitbare Entität: Es gab ein Problem mit den bereitgestellten Daten.',
+    status_500: 'Serverfehler: Etwas ist bei uns schiefgelaufen. Bitte versuchen Sie es später erneut.',
+    status_503: 'Dienst nicht verfügbar: Der Server kann die Anfrage derzeit nicht bearbeiten.',
+  },
+
 }

@@ -265,4 +265,15 @@ export default {
 
   },
 
+  error_notifications: {
+    default: 'Si è verificato un errore sconosciuto.',
+    status_400: 'Richiesta non valida: Per favore riprova.',
+    status_401: 'Non autorizzato: Devi essere connesso per accedere a questo.',
+    status_403: 'Proibito: Non hai il permesso di accedere a questa risorsa.',
+    status_404: 'Non trovato: La risorsa che stai cercando non esiste.',
+    status_422: 'Entità non elaborabile: Si è verificato un problema con i dati forniti.',
+    status_500: 'Errore del server: Qualcosa è andato storto da parte nostra. Per favore riprova più tardi.',
+    status_503: 'Servizio non disponibile: Il server non è attualmente in grado di gestire la richiesta.',
+  },
+
 }
