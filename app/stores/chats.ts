@@ -48,6 +48,58 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
+  /**
+   * Fetches a paginated and sorted list of chats.
+   * @param page - The page number to fetch.
+   * @param perPage - The number of chats per page.
+   * @param sortBy - The field to sort by (e.g., 'title').
+   * @param sortOrder - The order of sorting ('asc' or 'desc').
+   * @returns A promise that resolves to an ChatsResponse type or null.
+   */
+  const adminAllChatsResponse = ref<ChatsResponse | null>(null)
+  const adminAllChatsData = ref<Chat[]>([])
+  async function GET_AllAdminChats(
+    page: number = 1,
+    perPage: number = 10,
+    sortBy: string = 'firstName',
+    sortOrder: 'asc' | 'desc' = 'asc',
+  ): Promise<ChatsResponse | null> {
+    const data = await $api.chat.GetAllAdminChats(page, perPage, sortBy, sortOrder)
+
+    if (data) {
+      adminAllChatsData.value = data.items
+      return adminAllChatsResponse.value = data
+    }
+    else {
+      return adminAllChatsResponse.value = null
+    }
+  }
+
+  /**
+   * Fetches a paginated and sorted list of chats.
+   * @param page - The page number to fetch.
+   * @param perPage - The number of chats per page.
+   * @param sortBy - The field to sort by (e.g., 'title').
+   * @param sortOrder - The order of sorting ('asc' or 'desc').
+   * @returns A promise that resolves to an ChatsResponse type or null.
+   */
+  const adminChatMessagesResponse = ref<Message[] | null>(null)
+  const adminChatMessagesData = ref<Message[]>([])
+  async function GET_AllChatMessagesAdmin(
+
+    chatId: string,
+  ): Promise<Message[] | null> {
+    const data = await $api.chat.GetAllChatMessagesAdmin(chatId)
+
+    if (data) {
+      adminChatMessagesData.value = data
+      return adminChatMessagesResponse.value = data
+    }
+    else {
+      return adminChatMessagesResponse.value = null
+    }
+  }
+
   const wsToken = ref<string | null>(null)
 
   async function GET_WsToken(): Promise<string | null> {
@@ -79,5 +131,10 @@ export const useChatStore = defineStore('chat', () => {
     wsToken,
     currentChatId,
     GET_WsToken,
+    GET_AllAdminChats,
+    adminAllChatsData,
+    adminAllChatsResponse,
+    GET_AllChatMessagesAdmin,
+    adminChatMessagesData,
   }
 })

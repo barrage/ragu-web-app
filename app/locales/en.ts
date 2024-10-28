@@ -28,6 +28,23 @@ export default {
     title: 'Get help',
   },
   chat: {
+    user: 'User',
+    assistant: 'Assistant',
+    admin: {
+      title: 'Chats',
+      description: 'Manage all your chats in one place',
+      chat_card: {
+        created_at: 'Created At',
+        updated_at: 'Updated At',
+        view_details: 'View Details',
+        edit_chat: 'Edit Chat',
+        delete_chat: 'Delete Chat',
+      },
+      chat_details: {
+        title: 'Chat Details',
+        description: 'View all details related to this chat',
+      },
+    },
     editTitle: 'Edit title',
     deleteChat: 'Delete chat',
     chatInputPlaceholder: 'Send a message',

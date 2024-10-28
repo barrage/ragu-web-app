@@ -3,6 +3,7 @@ import PanelIcon from '~/assets/icons/svg/panel.svg'
 import LayoutIcon from '~/assets/icons/svg/layout.svg'
 import QuestionIcon from '~/assets/icons/svg/question.svg'
 import TeamIcon from '~/assets/icons/svg/team.svg'
+import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import CollectionIcon from '~/assets/icons/svg/collection.svg'
@@ -36,6 +37,11 @@ const menuList = computed<MenuCategory[]>(() => ([
         label: t('users.title'),
         link: '/admin/users',
         icon: TeamIcon,
+      },
+      {
+        label: t('chat.admin.title'),
+        link: '/admin/chats',
+        icon: ChatsIcon,
       },
       {
         label: t('agents.title'),

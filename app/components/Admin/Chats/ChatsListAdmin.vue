@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { nextTick, onMounted, ref } from 'vue'
-import type { User } from '~/types/users'
+import type { Chat } from '~/types/chat'
 import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
-  users: User[] | null | undefined
+  chats: Chat[] | null | undefined
 }>()
 
 const emits = defineEmits<{
@@ -15,7 +15,7 @@ const cardClasses = ref<string[]>([])
 
 onMounted(() => {
   nextTick(() => {
-    props.users?.forEach((_, index) => {
+    props.chats?.forEach((_, index) => {
       setTimeout(() => {
         cardClasses.value[index] = 'list-item-visible'
       }, index * 100)
@@ -23,11 +23,11 @@ onMounted(() => {
   })
 })
 
-const selectedUser = ref<User | null>(null)
+const selectedUser = ref<Chat | null>(null)
 const deleteUserModalVisible = ref(false)
 
-const openDeleteUserModal = (user: User) => {
-  selectedUser.value = user
+const openDeleteUserModal = (chat: Chat) => {
+  selectedUser.value = chat
   deleteUserModalVisible.value = true
 }
 
@@ -35,22 +35,22 @@ const toggleModal = () => {
   deleteUserModalVisible.value = !deleteUserModalVisible.value
 }
 
-const usersStore = useUsersStore()
-const handleDeleteUser = async (user: User) => {
+const chatsStore = useChatStore()
+/* const handleDeleteUser = async (chat: Chat) => {
   try {
-    await usersStore.DELETE_User(user.id)
+    await chatsStore.DELETE_User(chat.id)
     deleteUserModalVisible.value = false
-    usersStore.GET_AllUsers()
+    chatsStore.GET_Allchats()
   }
   catch (error) {
     console.error('Error deleting user:', error)
   }
-}
+} */
 
 const pagination = ref<Pagination>({
   currentPage: 1,
   pageSize: 10,
-  total: usersStore.usersResponse?.total || 0,
+  total: chatsStore.adminAllChatsResponse?.total || 0,
   disabled: false,
 })
 
@@ -61,15 +61,15 @@ const changePage = (page: number) => {
 </script>
 
 <template>
-  <div class="users-list-container">
-    <div class="users-list">
+  <div class="chats-list-container">
+    <div class="chats-list">
       <div
-        v-for="(user, index) in props.users"
-        :key="user.id"
+        v-for="(chat, index) in props.chats"
+        :key="chat.id"
         class="list-item"
         :class="[cardClasses[index]]"
       >
-        <UserCard :user="user" @delete-user="openDeleteUserModal(user)" />
+        <ChatCardAdmin :chat="chat" @delete-user="openDeleteUserModal(chat)" />
       </div>
       <Pagination
         :current-page="pagination.currentPage"
@@ -79,23 +79,23 @@ const changePage = (page: number) => {
       />
     </div>
 
-    <DeleteUserModal
+    <!-- <DeleteUserModal
       :is-open="deleteUserModalVisible"
       :selected-user="selectedUser"
       @toggle-modal="toggleModal"
       @delete-user-confirm="handleDeleteUser"
-    />
+    /> -->
   </div>
 </template>
 
 <style lang="scss" scoped>
-.users-list-container {
+.chats-list-container {
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
 }
 
-.users-list {
+.chats-list {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
