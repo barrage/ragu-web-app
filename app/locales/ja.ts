@@ -26,6 +26,23 @@ export default {
     title: '助けを求める',
   },
   chat: {
+    user: 'ユーザー',
+    assistant: 'アシスタント',
+    admin: {
+      title: 'チャット',
+      description: 'すべてのチャットを一箇所で管理',
+      chat_card: {
+        created_at: '作成日',
+        updated_at: '更新日',
+        view_details: '詳細を見る',
+        edit_chat: 'チャットを編集',
+        delete_chat: 'チャットを削除',
+      },
+      chat_details: {
+        title: 'チャットの詳細',
+        description: 'このチャットに関するすべての詳細を表示',
+      },
+    },
     editTitle: 'タイトルを編集',
     deleteChat: 'チャットを削除',
     chatInputPlaceholder: 'メッセージを送信',

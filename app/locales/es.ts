@@ -26,6 +26,23 @@ export default {
     title: 'Obtener ayuda',
   },
   chat: {
+    user: 'Usuario',
+    assistant: 'Asistente',
+    admin: {
+      title: 'Chats',
+      description: 'Gestiona todos tus chats en un solo lugar',
+      chat_card: {
+        created_at: 'Creado el',
+        updated_at: 'Actualizado el',
+        view_details: 'Ver detalles',
+        edit_chat: 'Editar chat',
+        delete_chat: 'Eliminar chat',
+      },
+      chat_details: {
+        title: 'Detalles del chat',
+        description: 'Ver todos los detalles relacionados con este chat',
+      },
+    },
     editTitle: 'Editar título',
     deleteChat: 'Eliminar chat',
     chatInputPlaceholder: 'Enviar mensaje',

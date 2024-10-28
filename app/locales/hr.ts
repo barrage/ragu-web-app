@@ -28,6 +28,23 @@ export default {
   },
 
   chat: {
+    user: 'Korisnik',
+    assistant: 'Asistent',
+    admin: {
+      title: 'Razgovori',
+      description: 'Upravljajte svim razgovorima na jednom mjestu',
+      chat_card: {
+        created_at: 'Kreirano',
+        updated_at: 'Ažurirano',
+        view_details: 'Pogledaj detalje',
+        edit_chat: 'Uredi razgovor',
+        delete_chat: 'Obriši razgovor',
+      },
+      chat_details: {
+        title: 'Detalji razgovora',
+        description: 'Pregledajte sve detalje vezane za ovaj razgovor',
+      },
+    },
     editTitle: 'Uredi naslov',
     deleteChat: 'Izbriši chat',
     chatInputPlaceholder: 'Pošalji poruku',
