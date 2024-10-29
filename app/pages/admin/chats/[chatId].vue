@@ -25,6 +25,7 @@ errorHandler(error)
 /* const handlePageChange = async (page: number) => {
   currentPage.value = page
   await fetchMessages(page)
+
 } */
 </script>
 
