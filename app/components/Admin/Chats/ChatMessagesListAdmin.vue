@@ -51,6 +51,9 @@ const changePage = (page: number) => {
 
 <template>
   <div class="messages-list-container">
+    <h6 class="messages-title">
+      Messages
+    </h6>
     <template v-if="props.messages?.length">
       <div class="messages-list">
         <div
@@ -82,7 +85,10 @@ const changePage = (page: number) => {
   border-radius: 10px;
   overflow: hidden;
 }
-
+.messages-title {
+  color: var(--color-primary-800);
+  margin: 2rem 0rem 1rem;
+}
 .messages-list {
   display: flex;
   flex-direction: column;
@@ -100,5 +106,10 @@ const changePage = (page: number) => {
 .list-item-visible {
   opacity: 1;
   transform: translateY(0);
+}
+.dark {
+  .messages-title {
+    color: var(--color-primary-100);
+  }
 }
 </style>

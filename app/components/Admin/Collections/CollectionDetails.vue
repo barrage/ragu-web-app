@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import CollectionIcon from '~/assets/icons/svg/collection.svg'
+import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
@@ -171,7 +171,6 @@ const collectionData = computed(() => {
   gap: 8px;
   flex: 0 0 calc(30% - 0.5rem);
   color: var(--color-primary-900);
-  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-fluid-3);
 
   svg {
@@ -190,7 +189,6 @@ const collectionData = computed(() => {
     font-size: var(--font-size-fluid-3);
     line-height: normal;
     color: var(--color-primary-900);
-    font-weight: var(--font-weight-bold);
   }
   & .description {
     line-height: normal;

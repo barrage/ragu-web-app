@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // IMPORTS
-import CollectionIcon from '~/assets/icons/svg/collection.svg'
+import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
 // CONSTANTS
 const collectionStore = useCollectionsStore()
 const { t } = useI18n()

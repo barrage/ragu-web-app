@@ -79,7 +79,6 @@ agentStore.GET_AllAgents()
 .suggestions-container {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
   gap: 1rem;
   overflow-x: auto;
   overflow-y: hidden;

@@ -277,7 +277,6 @@ const editClick = (): void => {
   gap: 8px;
   flex: 0 0 calc(30% - 0.5rem);
   color: var(--color-primary-900);
-  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-fluid-3);
 
   svg {
@@ -296,7 +295,6 @@ const editClick = (): void => {
     font-size: var(--font-size-fluid-3);
     line-height: normal;
     color: var(--color-primary-900);
-    font-weight: var(--font-weight-bold);
   }
   & .description {
     line-height: normal;

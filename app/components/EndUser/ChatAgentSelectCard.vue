@@ -16,10 +16,13 @@ const agentStore = useAgentStore()
     @click="agentStore.setSelectedAgent(props.agent?.id)"
   >
     <div class="agent-body-wrapper">
-      <ChatAgentIcon size="32" class="chat-agent-icon" />
-      <p class="agent-select-text">
-        {{ props.agent?.name }}
-      </p>
+      <div class="agent-name-wrapper">
+        <ChatAgentIcon size="32" class="chat-agent-icon" />
+        <p class="agent-select-text">
+          {{ props.agent?.name }}
+        </p>
+      </div>
+      <span class="agent-description">{{ props.agent?.description }}</span>
     </div>
   </div>
 </template>
@@ -40,22 +43,34 @@ const agentStore = useAgentStore()
       font-weight: var(--font-weight-medium);
     }
   }
+
   & .agent-body-wrapper {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 1rem;
-
-    & .chat-agent-icon {
-      min-width: max-content;
-    }
-  }
-
-  & .agent-select-text {
-    font-size: var(--font-size-desktop-3);
     text-align: left;
-    line-height: 1.5rem;
-    color: var(--color-primary-700);
-    font-weight: var(--font-weight-medium);
+
+    & .agent-name-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      & .chat-agent-icon {
+        min-width: max-content;
+      }
+      & .agent-select-text {
+        font-size: var(--font-size-desktop-3);
+        gap: 1rem;
+        font-weight: var(--font-weight-bold);
+        text-align: left;
+        line-height: 1.5rem;
+        color: var(--color-primary-700);
+      }
+    }
+
+    & .agent-description {
+      font-size: var(--font-size-fluid-2);
+    }
   }
 
   &:hover {

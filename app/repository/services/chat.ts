@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { Chat, ChatsResponse, Message } from '~/types/chat.ts'
+import type { AdminChatDetails, Chat, ChatsResponse, Message } from '~/types/chat.ts'
 
 export default class ChatServise extends FetchFactory {
   // Endpoint for chat-related API requests.
@@ -79,6 +79,25 @@ export default class ChatServise extends FetchFactory {
         sortOrder,
       }).toString()
       return await this.$fetch<ChatsResponse>(`${this.adminChatsEndpoint}?${queryParams}`, {
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch chats with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Fetches a single chat for the Admin from the API.
+   * @returns A promise that resolves to an Chat object.
+   * @throws Will throw an error if the request fails.
+   */
+  async GetAdminSingleChat(chatId: string): Promise<AdminChatDetails> {
+    try {
+      return await this.$fetch<AdminChatDetails>(`${this.adminChatsEndpoint}/${chatId}`, {
         credentials: 'include',
       })
     }
