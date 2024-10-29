@@ -5,7 +5,7 @@ import type { Agent } from '~/types/agent'
 import { useAgentStore } from '~/stores/agents'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
-
+import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 // PROPS
 const props = defineProps<{
   agent: Agent | null
@@ -48,37 +48,33 @@ const redirectToAgentDetails = () => {
 </script>
 
 <template>
-  <div class="agent-card">
-    <LabelDescriptionItem
-      :label="t('agents.labels.name')"
-      size="small"
-      :description="agentData?.name"
-    />
+  <div class="agent-card grid">
+    <div class="agent-name-type-wrapper" @click="redirectToAgentDetails()">
+      <AgentIcon size="36" />
+      <div class="agent-name-wrapper">
+        <h6>{{ agentData.name }}</h6>
+      </div>
+    </div>
+    <div class="agent-informations">
+      <LabelDescriptionItem
+        :label="t('agents.labels.status')"
+        size="small"
+        :description="agentData?.status"
+      >
+        <template #customDescription>
+          <el-tag :type="agentData.statusType" size="small">
+            <span class="status-dot" />  {{ agentData?.status }}
+          </el-tag>
+        </template>
+      </LabelDescriptionItem>
+      <LabelDescriptionItem
+        :label="t('agents.labels.created_at')"
+        :description="agentData.createdAt"
+        size="small"
+      />
+    </div>
 
-    <LabelDescriptionItem
-      :label="t('agents.labels.status')"
-      size="small"
-      :description="agentData?.status"
-    >
-      <template #customDescription>
-        <el-tag :type="agentData.statusType" size="small">
-          <span class="status-dot" />  {{ agentData?.status }}
-        </el-tag>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.created_at')"
-      :description="agentData.createdAt"
-      size="small"
-    />
-    <LabelDescriptionItem
-      :label="t('agents.labels.context')"
-      :description="agentData?.context"
-      size="small"
-      class="context"
-    />
-
-    <div class="action-links">
+    <div class="agent-actions">
       <ElTooltip
         :content="t('agents.agent_card.view_more')"
         :enterable="false"
@@ -111,25 +107,52 @@ const redirectToAgentDetails = () => {
 
 <style lang="scss" scoped>
 .agent-card {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
   border: 0.5px solid var(--color-primary-300);
   background: var(--color-primary-0);
-  box-shadow: 0 0.2rem 0.3rem var(--color-primary-200);
+  box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
   border-radius: 16px;
   padding: 1rem;
-}
+  & .agent-name-type-wrapper {
+    grid-column: span 5;
+    align-items: center;
+    text-overflow: ellipsis;
+    display: flex;
+    min-width: fit-content;
+    gap: 6px;
+    color: var(--color-primary-800);
 
-.action-links {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  justify-content: end;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
 
-  button {
-    font-size: var(--font-size-fluid-3);
-    line-height: normal;
+    & .agent-name-wrapper {
+      h6 {
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-fluid-3);
+        color: var(--color-primary-800);
+        line-height: normal;
+        margin-bottom: 0;
+      }
+      & span {
+        line-height: normal;
+        font-size: var(--font-size-fluid-2);
+        color: var(--color-primary-700);
+      }
+    }
+  }
+  & .agent-informations {
+    grid-column: span 5;
+    display: flex;
+    gap: 42px;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+  }
+  & .agent-actions {
+    grid-column: span 2;
+    display: flex;
+    gap: 12px;
   }
 }
 
@@ -144,14 +167,19 @@ const redirectToAgentDetails = () => {
 }
 .dark {
   .agent-card {
-    border: 0.5px solid var(--color-primary-500);
-    background: var(--color-primary-900);
-    box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
-  }
-  .agentname-title-wrapper {
-    color: var(--color-primary-0);
-    & .agentname {
-      color: var(--color-primary-0);
+    border: 0.5px solid var(--color-primary-700);
+    background-color: var(--color-primary-900);
+    box-shadow: 0px 2px 6px 0px var(--color-primary-800);
+    & .agent-name-type-wrapper {
+      color: var(--color-primary-100);
+    }
+    & .agent-name-wrapper {
+      h6 {
+        color: var(--color-primary-0);
+      }
+      & span {
+        color: var(--color-primary-200);
+      }
     }
   }
 }
