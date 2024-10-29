@@ -33,6 +33,7 @@ const agentData = computed(() => {
     status: props.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
     statusType: props.agent?.active ? StatusType.Success : StatusType.Danger,
     createdAt: props.agent?.createdAt || t('agents.agent_card.created_at'),
+    model: props.agent?.model || '-',
   }
 })
 
@@ -70,6 +71,11 @@ const redirectToAgentDetails = () => {
       <LabelDescriptionItem
         :label="t('agents.labels.created_at')"
         :description="agentData.createdAt"
+        size="small"
+      />
+      <LabelDescriptionItem
+        label="Model"
+        :description="agentData.model"
         size="small"
       />
     </div>
@@ -113,7 +119,7 @@ const redirectToAgentDetails = () => {
   border-radius: 16px;
   padding: 1rem;
   & .agent-name-type-wrapper {
-    grid-column: span 5;
+    grid-column: span 4;
     align-items: center;
     text-overflow: ellipsis;
     display: flex;
@@ -142,7 +148,7 @@ const redirectToAgentDetails = () => {
     }
   }
   & .agent-informations {
-    grid-column: span 5;
+    grid-column: span 6;
     display: flex;
     gap: 42px;
     justify-content: space-around;

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Chat, ChatsResponse, Message } from '~/types/chat.ts'
+import type { AdminChatDetails, Chat, ChatsResponse, Message } from '~/types/chat.ts'
 
 export const useChatStore = defineStore('chat', () => {
   // State
@@ -100,6 +100,18 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
+  const selectedChatAdmin = ref<AdminChatDetails | null>(null)
+  async function GET_SingleChatAdmin(chatId: string): Promise<AdminChatDetails | null> {
+    const data = await $api.chat.GetAdminSingleChat(chatId)
+
+    if (data) {
+      return selectedChatAdmin.value = data
+    }
+    else {
+      return null
+    }
+  }
+
   const wsToken = ref<string | null>(null)
 
   async function GET_WsToken(): Promise<string | null> {
@@ -136,5 +148,7 @@ export const useChatStore = defineStore('chat', () => {
     adminAllChatsResponse,
     GET_AllChatMessagesAdmin,
     adminChatMessagesData,
+    selectedChatAdmin,
+    GET_SingleChatAdmin,
   }
 })

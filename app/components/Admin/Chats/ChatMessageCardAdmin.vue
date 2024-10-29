@@ -12,28 +12,42 @@ const { t } = useI18n()
 
 const relativeCreatedDate = ref(props.message?.createdAt ? useRelativeDate(props.message.createdAt) : '-')
 
+const chatStore = useChatStore()
+const selectedAgent = computed(() => {
+  return chatStore.selectedChatAdmin?.agent || null
+})
+const selectedUser = computed(() => {
+  return chatStore.selectedChatAdmin?.user || null
+})
+
 const messageData = computed(() => {
   return {
     senderType: props.message?.senderType === 'user' ? t('chat.user') : t('chat.assistant'),
     iconType: props.message?.senderType === 'user' ? 'user' : 'assistant',
-    createdAt: props.message.createdAt || '-',
+    createdAt: props.message.createdAt ? formatDate(props.message.createdAt, 'dddd, MMMM D, YYYY h:mm A') : '-',
     createdAtRealtiveTime: relativeCreatedDate.value,
     content: props.message.content,
+    sender: props.message?.senderType === 'user' ? selectedUser.value?.fullName : selectedAgent.value?.name,
   }
 })
+
+const router = useRouter()
+const redirectToDetails = () => {
+  return props.message?.senderType === 'user' ? router.push(`/admin/users/${props.message?.sender}`) : router.push(`/admin/agents/${props.message?.sender}`)
+}
 </script>
 
 <template>
   <div>
     <div class="message-card">
-      <div class="message-profile-item">
+      <div class="message-profile-item" @click="redirectToDetails()">
         <ProfileIcon v-if="messageData.iconType === 'user'" size="36" />
         <BrainIcon v-else-if="messageData.iconType === 'assistant'" size="36" />
         <div class="messagename-mail-wrapper">
           <p class="messagename">
-            {{ `${messageData.senderType}` }}
+            {{ `${messageData.sender}` }}
           </p>
-          <span class="message-mail">{{ messageData.createdAtRealtiveTime }}</span>
+          <span class="message-mail">{{ messageData.createdAt }}</span>
         </div>
       </div>
       <div class="message-content">

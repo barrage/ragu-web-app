@@ -6,7 +6,7 @@ import TeamIcon from '~/assets/icons/svg/team.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
-import CollectionIcon from '~/assets/icons/svg/collection.svg'
+import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
 
 interface MenuItem {
   label: string

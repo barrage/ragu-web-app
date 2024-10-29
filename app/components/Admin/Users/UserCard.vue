@@ -128,7 +128,7 @@ interface Emits {
 <style lang="scss" scoped>
 .user-card {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 16px;
   border: 0.5px solid var(--color-primary-300);
   background: var(--color-primary-0);
@@ -137,6 +137,7 @@ interface Emits {
   padding: 1rem;
 
   & .user-informations {
+    grid-column: span 2;
     display: flex;
     gap: 2.5rem;
     flex: 1 0 calc(70% - 22px);
@@ -157,6 +158,7 @@ interface Emits {
 }
 
 .user-profile-item {
+  grid-column: span 2;
   display: flex;
   gap: 0.5rem;
   align-items: center;

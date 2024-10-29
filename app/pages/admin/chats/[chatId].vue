@@ -27,6 +27,22 @@ errorHandler(error)
   await fetchMessages(page)
 
 } */
+const fetchChat = async () => {
+  const { error } = await useAsyncData(() =>
+    chatStore.GET_SingleChatAdmin(selectedChatId.value),
+  )
+  errorHandler(error)
+}
+await fetchChat()
+const selectedAgent = computed(() => {
+  return chatStore.selectedChatAdmin?.agent || null
+})
+const selectedUser = computed(() => {
+  return chatStore.selectedChatAdmin?.user || null
+})
+const selectedChat = computed(() => {
+  return chatStore.selectedChatAdmin?.chat || null
+})
 </script>
 
 <template>
@@ -46,6 +62,12 @@ errorHandler(error)
         </AdminPageTitleContainer>
       </template>
     </AdminPageHeadingTemplate>
+    <ChatGeneralInfoAdmin
+      :agent="selectedAgent"
+      :chat="selectedChat"
+      :user="selectedUser"
+    />
+
     <ChatMessagesListAdmin :messages="chatStore.adminChatMessagesData" />
   </AdminPageContainer>
 </template>

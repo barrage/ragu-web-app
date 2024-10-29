@@ -1,3 +1,6 @@
+import type { Agent } from '~/types/agent.ts'
+import type { User } from '~/types/users'
+
 export interface Message {
   id: string
   sender: string
@@ -43,4 +46,10 @@ export interface GroupedChats {
 export interface ChatsResponse {
   items: Chat[]
   total: number
+}
+
+export interface AdminChatDetails {
+  agent: Agent
+  chat: Chat
+  user: User
 }
