@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import AgentsIcon from '~/assets/icons/svg/agents.svg'
 import { useAgentStore } from '~/stores/agents'
 
 const agentStore = useAgentStore()
@@ -32,7 +32,7 @@ errorHandler(error)
           :description="t('agents.titles.description')"
         >
           <template #icon>
-            <AgentIcon size="52" />
+            <AgentsIcon size="52" />
           </template>
         </AdminPageTitleContainer>
       </template>
