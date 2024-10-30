@@ -102,6 +102,7 @@ const redirectToCollectionDetails = () => {
   grid-column: span 5;
   display: flex;
   gap: 3rem;
+  justify-content: space-around;
 }
 
 .action-links {

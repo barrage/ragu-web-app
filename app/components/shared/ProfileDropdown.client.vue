@@ -71,6 +71,8 @@ const user = computed(() => {
   }
 })
 
+const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/admin'))
+
 const switchRole = () => {
   const currentPath = router.currentRoute.value.path
   if (currentPath.includes('/admin')) {
@@ -102,7 +104,7 @@ const switchRole = () => {
           <div class="horizontal-divider" />
           <el-dropdown-item @click="switchRole">
             <div class="dropdown-item">
-              <AdminIcon /> <p>  {{ router.currentRoute.value.path === '/' ? $t('profileDropdown.switchToAdmin') : $t('profileDropdown.switchToUser') }}</p>
+              <AdminIcon /> <p>  {{ isAdminRoute ? $t('profileDropdown.switchToUser') : $t('profileDropdown.switchToAdmin') }}</p>
             </div>
           </el-dropdown-item>
         </template>

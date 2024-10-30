@@ -18,7 +18,7 @@ const { error, execute } = await useAsyncData(() =>
 // Method to handle page change
 const handlePageChange = async (page: number) => {
   currentPage.value = page
-  execute()
+  await execute()
 }
 
 errorHandler(error)

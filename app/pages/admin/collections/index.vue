@@ -17,7 +17,7 @@ errorHandler(getError)
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
-  execute()
+  await execute()
 }
 </script>
 
