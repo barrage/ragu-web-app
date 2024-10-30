@@ -14,26 +14,15 @@ const selectedChatId = computed(() => {
   return chatId || ''
 })
 
-/* const currentPage = ref(1)
-const itemsPerPage = ref(10) */
-
 const { error } = await useAsyncData(() =>
   chatStore.GET_AllChatMessagesAdmin(selectedChatId.value),
 )
 errorHandler(error)
 
-/* const handlePageChange = async (page: number) => {
-  currentPage.value = page
-  await fetchMessages(page)
+const { error: SingleChatError } = await useAsyncData(() => chatStore.GET_SingleChatAdmin(selectedChatId.value))
 
-} */
-const fetchChat = async () => {
-  const { error } = await useAsyncData(() =>
-    chatStore.GET_SingleChatAdmin(selectedChatId.value),
-  )
-  errorHandler(error)
-}
-await fetchChat()
+errorHandler(SingleChatError)
+
 const selectedAgent = computed(() => {
   return chatStore.selectedChatAdmin?.agent || null
 })

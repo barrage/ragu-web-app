@@ -127,7 +127,7 @@ export default {
     },
     labels: {
       id: 'Agent ID',
-      name: 'Ime agenta',
+      name: 'Ime',
       context: 'Kontekst',
       created_at: 'Stvoren',
       updated_at: 'Ažuriran',
@@ -141,7 +141,7 @@ export default {
       embeddingProvider: 'Davatelj ugrađivanja',
       embeddingModel: 'Model ugrađivanja',
       active: 'aktivan',
-      status: 'Status agenta',
+      status: 'Status',
     },
     buttons: {
       create: 'Stvori agenta',
@@ -242,6 +242,7 @@ export default {
       unknown_embedder: 'Nepoznati pružatelj ugrađivanja',
       unknown_model: 'Nepoznati model',
       unknown_date: 'Nepoznati datum',
+      view_more: 'Pogledaj detalje kolekcije',
     },
 
     labels: {
