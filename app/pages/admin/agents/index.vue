@@ -17,7 +17,7 @@ const { error, execute } = await useAsyncData(() => agentStore.GET_AllAgents(cur
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
-  execute()
+  await execute()
 }
 
 errorHandler(error)

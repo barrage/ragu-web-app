@@ -53,6 +53,17 @@ export default {
       choseFrom: 'エージェント:',
     },
   },
+  documents: {
+    title: 'ドキュメント',
+    description: 'AIの学習を支援するすべてのドキュメントを管理および整理します。',
+    name: '名前',
+    extension: '形式',
+    path: '場所',
+    source: 'ソース',
+    id: 'ドキュメントID',
+    hash: 'ハッシュ',
+  },
+
   agents: {
     title: 'エージェント',
     titles: {

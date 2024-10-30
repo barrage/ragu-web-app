@@ -54,6 +54,17 @@ export default {
       choseFrom: 'Agenten:',
     },
   },
+  documents: {
+    title: 'Dokumente',
+    description: 'Verwalten und organisieren Sie alle Dokumente, die der KI beim Lernen helfen.',
+    name: 'Name',
+    extension: 'Format',
+    path: 'Speicherort',
+    source: 'Quelle',
+    id: 'Dokument-ID',
+    hash: 'Hash',
+  },
+
   agents: {
     title: 'Agenten',
     titles: {

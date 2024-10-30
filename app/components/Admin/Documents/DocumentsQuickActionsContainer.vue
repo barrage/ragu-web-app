@@ -85,20 +85,25 @@ const upload = async () => {
 const handleUploadSuccess: UploadProps['onSuccess'] = () => {
   upload()
 }
-const { execute } = await useAsyncData(() => documentStore.GET_SyncFs(), { immediate: false })
+
+const { error, execute, status } = await useAsyncData(() => documentStore.GET_SyncFs(), { immediate: false })
+
+errorHandler(error)
 
 const loading = ref(false)
 const syncDocuments = async () => {
   try {
     loading.value = true
     await execute()
-    ElNotification({
-      title: 'Success',
-      message: 'Sync docs',
-      type: 'success',
-      customClass: 'success',
-      duration: 2500,
-    })
+    if (status.value !== 'error') {
+      ElNotification({
+        title: 'Success',
+        message: 'Sync docs',
+        type: 'success',
+        customClass: 'success',
+        duration: 2500,
+      })
+    }
   }
   catch (error) {
     ElNotification({

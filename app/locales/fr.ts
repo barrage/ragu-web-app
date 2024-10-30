@@ -53,6 +53,16 @@ export default {
       choseFrom: 'Agents :',
     },
   },
+  documents: {
+    title: 'Documents',
+    description: 'Gérez et organisez tous les documents qui aident l\'IA dans son apprentissage.',
+    name: 'Nom',
+    extension: 'Format',
+    path: 'Emplacement',
+    source: 'Source',
+    id: 'ID Document',
+    hash: 'Hash',
+  },
 
   agents: {
     title: 'Agents',

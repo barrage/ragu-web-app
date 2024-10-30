@@ -32,7 +32,7 @@ const confirmDelete = async () => {
   try {
     deleteStatus.value = 'pending'
     await collectionStore.DELETE_Collection(props.collection.id)
-    execute()
+    await execute()
     deleteCollectionModalVisible.value = false
     ElNotification({
       title: 'Success',

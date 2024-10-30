@@ -58,7 +58,13 @@ export default {
   },
   documents: {
     title: 'Documents',
-    description: 'Organize and manage all documents that contribute to the AI\'s learning.',
+    description: 'Manage and organize all documents that help AI in learning.',
+    name: 'Name',
+    extension: 'Format',
+    path: 'Location',
+    source: 'Source',
+    id: 'Document ID',
+    hash: 'Hash',
   },
   users: {
     title: 'Users',

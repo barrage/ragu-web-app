@@ -54,6 +54,17 @@ export default {
     },
   },
 
+  documents: {
+    title: 'Documentos',
+    description: 'Gerencie e organize todos os documentos que ajudam a IA a aprender.',
+    name: 'Nome',
+    extension: 'Formato',
+    path: 'Localização',
+    source: 'Fonte',
+    id: 'ID do Documento',
+    hash: 'Hash',
+  },
+
   agents: {
     title: 'Agentes',
     titles: {
