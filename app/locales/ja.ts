@@ -253,6 +253,11 @@ export default {
     title: 'ユーザー',
     description: 'チームメンバーを管理し、アクセスレベルを設定します。',
     invite_user: 'ユーザーを招待',
+    notifications: {
+      create_error_title: 'ユーザー追加エラー',
+      create_error_description: '新しいユーザーの追加に失敗しました。',
+      create_error_existing_user_description: 'ユーザーはすでに存在します。',
+    },
     user_card: {
       role: '役割',
       status: '状態',

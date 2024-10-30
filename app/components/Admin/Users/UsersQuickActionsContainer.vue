@@ -57,51 +57,53 @@ const rules = reactive<FormRules<CreateUserPayload>>({
     { required: true, message: 'Required', trigger: 'change' },
   ],
 })
+const { execute: AddNewUser, error } = await useAsyncData(() => usersStore.POST_CreateUser(inviteUserform), { immediate: false })
 
 const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
     return
   }
-  try {
-    await formEl.validate(async (valid, __) => {
-      if (valid) {
-        await usersStore.POST_CreateUser(inviteUserform)
+
+  await formEl.validate(async (valid, __) => {
+    if (valid) {
+      await AddNewUser()
+      inviteUserModalOpen.value = false
+      if (error.value) {
+        if (error.value?.statusCode === 409) {
+          ElNotification({
+            title: t('users.notifications.create_error_title'),
+            message: t('users.notifications.create_error_existing_user_description'),
+            type: 'error',
+            customClass: 'error',
+            duration: 2500,
+          })
+        }
+        else {
+          ElNotification({
+            title: t('users.notifications.create_error_title'),
+            message: t('users.notifications.create_error_description'),
+            type: 'error',
+            customClass: 'error',
+            duration: 2500,
+          })
+        }
+      }
+      else {
+        await usersStore.GET_AllUsers()
+        inviteUserform.email = ''
+        inviteUserform.firstName = ''
+        inviteUserform.lastName = ''
+        inviteUserform.role = ''
         ElNotification({
-          title: t('users.notifications.update_title'),
+          title: t('users.notifications.create_title'),
           message: t('users.notifications.create_message', { name: usersStore.selectedUser?.fullName }),
           type: 'success',
           customClass: 'success',
           duration: 2500,
         })
-        await usersStore.GET_AllUsers()
-        inviteUserModalOpen.value = false
-
-        inviteUserform.email = ''
-        inviteUserform.firstName = ''
-        inviteUserform.lastName = ''
-        inviteUserform.role = ''
       }
-
-      else {
-        ElNotification({
-          title: t('users.notifications.form_title'),
-          message: t('users.notifications.form_message'),
-          type: 'error',
-          customClass: 'error',
-          duration: 2500,
-        })
-      }
-    })
-  }
-  catch (error) {
-    console.error('Validation error:', error)
-    ElNotification({
-      message: t('users.notifications.invalid_user'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-  }
+    }
+  })
 }
 const userRoles = [{
   label: 'Admin',

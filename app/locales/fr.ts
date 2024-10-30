@@ -253,6 +253,11 @@ export default {
     title: 'Utilisateurs',
     description: 'Gérez les membres de votre équipe et définissez leurs niveaux d\'accès.',
     invite_user: 'Inviter un utilisateur',
+    notifications: {
+      create_error_title: 'Erreur d\'ajout d\'utilisateur',
+      create_error_description: 'Échec de l\'ajout d\'un nouvel utilisateur.',
+      create_error_existing_user_description: 'L\'utilisateur existe déjà.',
+    },
     user_card: {
       role: 'Rôle',
       status: 'Statut',

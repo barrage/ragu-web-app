@@ -70,6 +70,11 @@ export default {
     title: 'Korisnici',
     description: 'Upravljajte članovima svog tima i postavite njihove razine pristupa.',
     invite_user: 'Dodaj korisnika',
+    notifications: {
+      create_error_title: 'Greška prilikom dodavanja korisnika',
+      create_error_description: 'Nije moguće dodati novog korisnika.',
+      create_error_existing_user_description: 'Korisnik već postoji.',
+    },
     user_card: {
       role: 'Uloga',
       status: 'Status',
