@@ -255,6 +255,11 @@ export default {
     title: 'Benutzer',
     description: 'Verwalten Sie die Mitglieder Ihres Teams und legen Sie deren Zugriffsrechte fest.',
     invite_user: 'Benutzer einladen',
+    notifications: {
+      create_error_title: 'Fehler beim Hinzufügen eines Benutzers',
+      create_error_description: 'Das Hinzufügen eines neuen Benutzers ist fehlgeschlagen.',
+      create_error_existing_user_description: 'Benutzer existiert bereits.',
+    },
     user_card: {
       role: 'Rolle',
       status: 'Status',

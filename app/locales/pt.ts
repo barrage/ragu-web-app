@@ -253,6 +253,11 @@ export default {
     title: 'Usuários',
     description: 'Gerencie os membros da sua equipe e defina seus níveis de acesso.',
     invite_user: 'Convidar usuário',
+    notifications: {
+      create_error_title: 'Erro ao adicionar usuário',
+      create_error_description: 'Não foi possível adicionar um novo usuário.',
+      create_error_existing_user_description: 'O usuário já existe.',
+    },
     user_card: {
       role: 'Função',
       status: 'Status',

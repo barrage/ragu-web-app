@@ -255,6 +255,12 @@ export default {
     title: 'Utenti',
     description: 'Gestisci i membri del tuo team e imposta i loro livelli di accesso.',
     invite_user: 'Invita utente',
+    notifications: {
+      create_error_title: 'Errore nell\'aggiunta dell\'utente',
+      create_error_description: 'Impossibile aggiungere un nuovo utente.',
+      create_error_existing_user_description: 'L\'utente esiste già.',
+    },
+
     user_card: {
       role: 'Ruolo',
       status: 'Stato',

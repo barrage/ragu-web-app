@@ -70,6 +70,19 @@ export default {
     title: 'Users',
     description: 'Manage team members of your organization and set their access level',
     invite_user: 'Invite user',
+    notifications: {
+      create_error_title: 'User Addition Error',
+      create_error_description: 'Failed to add a new user.',
+      create_error_existing_user_description: 'User already exists.',
+      delete_title: 'Success',
+      update_title: 'Success',
+      delete_message: 'User {name} is deleted!',
+      create_title: 'Success',
+      create_message: 'User {name} is created!',
+      form_title: 'Form Error',
+      form_message: 'Please fix the highlighted errors in the form.',
+      invalid_user: 'Oops! Something went wrong. The user you are trying to delete doesn’t seem to exist.',
+    },
     user_card: {
       role: 'Role',
       status: 'Status',
@@ -87,17 +100,6 @@ export default {
       last_name: 'Last Name',
       username: 'Username',
       email: 'Email',
-    },
-
-    notifications: {
-      delete_title: 'Success',
-      update_title: 'Success',
-      delete_message: 'User {name} is deleted!',
-      create_title: 'Success',
-      create_message: 'User {name} is created!',
-      form_title: 'Form Error',
-      form_message: 'Please fix the highlighted errors in the form.',
-      invalid_user: 'Oops! Something went wrong. The user you are trying to delete doesn’t seem to exist.',
     },
   },
   dashboard: {
