@@ -257,6 +257,22 @@ export default {
     title: 'Utenti',
     description: 'Gestisci i membri del tuo team e imposta i loro livelli di accesso.',
     invite_user: 'Invita utente',
+    form: {
+      first_name: 'Nome',
+      first_name_placeholder: 'Inserisci il nome',
+      last_name: 'Cognome',
+      last_name_placeholder: 'Inserisci il cognome',
+      email: 'Email',
+      email_placeholder: 'Inserisci l\'indirizzo email',
+      role: 'Ruolo',
+      role_placeholder: 'Seleziona un ruolo per l\'utente',
+      submit: 'Conferma',
+      cancel: 'Annulla',
+      rules: {
+        required: 'Questo campo è obbligatorio',
+        invalid_email: 'Formato e-mail non valido',
+      },
+    },
     notifications: {
       create_error_title: 'Errore nell\'aggiunta dell\'utente',
       create_error_description: 'Impossibile aggiungere un nuovo utente.',

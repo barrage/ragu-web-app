@@ -22,3 +22,11 @@ export interface CreateUserPayload {
   lastName: string
   role: string
 }
+export interface EditUserPayload {
+  active: boolean
+  email: string
+  fullName: string
+  firstName: string
+  lastName: string
+  role: string
+}

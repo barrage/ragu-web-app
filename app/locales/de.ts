@@ -257,6 +257,23 @@ export default {
     title: 'Benutzer',
     description: 'Verwalten Sie die Mitglieder Ihres Teams und legen Sie deren Zugriffsrechte fest.',
     invite_user: 'Benutzer einladen',
+    form: {
+      first_name: 'Vorname',
+      first_name_placeholder: 'Vornamen eingeben',
+      last_name: 'Nachname',
+      last_name_placeholder: 'Nachnamen eingeben',
+      email: 'E-Mail',
+      email_placeholder: 'E-Mail-Adresse eingeben',
+      role: 'Rolle',
+      role_placeholder: 'Wählen Sie eine Rolle für den Benutzer',
+      submit: 'Bestätigen',
+      cancel: 'Abbrechen',
+      rules: {
+        required: 'Dieses Feld ist erforderlich',
+        invalid_email: 'Ungültiges E-Mail-Format',
+      },
+    },
+
     notifications: {
       create_error_title: 'Fehler beim Hinzufügen eines Benutzers',
       create_error_description: 'Das Hinzufügen eines neuen Benutzers ist fehlgeschlagen.',

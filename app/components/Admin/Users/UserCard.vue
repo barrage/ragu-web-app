@@ -3,19 +3,17 @@ import { useI18n } from 'vue-i18n'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
+import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
+import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import type { User } from '~/types/users'
 
+/* Props & Emits */
 const props = defineProps<{
   user: User
 }>()
 
 const emits = defineEmits<Emits>()
-
-const { t } = useI18n()
-const router = useRouter()
-
-const relativeCreatedDate = ref(props.user?.createdAt ? useRelativeDate(props.user.createdAt) : t('users.user_card.unknown_date'))
 
 enum StatusType {
   Primary = 'primary',
@@ -24,6 +22,18 @@ enum StatusType {
   Warning = 'warning',
   Danger = 'danger',
 }
+
+interface Emits {
+  (event: 'delete-user', user: User): void
+  (event: 'edit-user', user: User): void
+  (event: 'activate-user', user: User): void
+  (event: 'deactivate-user', user: User): void
+}
+
+/* Setup */
+const { t } = useI18n()
+const router = useRouter()
+const relativeCreatedDate = ref(props.user?.createdAt ? useRelativeDate(props.user.createdAt) : t('users.user_card.unknown_date'))
 
 const userData = computed(() => {
   return {
@@ -39,10 +49,6 @@ const userData = computed(() => {
 
 const redirectToUserDetails = () => {
   return router.push(`/admin/users/${props.user?.id}`)
-}
-
-interface Emits {
-  (event: 'delete-user', user: User): void
 }
 </script>
 
@@ -101,8 +107,29 @@ interface Emits {
           :enterable="false"
           placement="top"
         >
-          <el-button plain>
+          <el-button plain @click="emits('edit-user', props.user)">
             <EditIcon />
+          </el-button>
+        </ElTooltip>
+
+        <ElTooltip
+          v-if="props.user.active"
+          :content="t('users.user_card.deactivate_user')"
+          :enterable="false"
+          placement="top"
+        >
+          <el-button plain @click="emits('deactivate-user', props.user)">
+            <PersonLockIcon />
+          </el-button>
+        </ElTooltip>
+        <ElTooltip
+          v-if="!props.user.active"
+          :content="t('users.user_card.activate_user')"
+          :enterable="false"
+          placement="top"
+        >
+          <el-button plain @click="emits('activate-user', props.user)">
+            <PersonPasskeyIcon />
           </el-button>
         </ElTooltip>
 

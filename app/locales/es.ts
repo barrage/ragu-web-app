@@ -254,6 +254,22 @@ export default {
     title: 'Usuarios',
     description: 'Administra los miembros de tu equipo y establece sus niveles de acceso.',
     invite_user: 'Invitar usuario',
+    form: {
+      first_name: 'Nombre',
+      first_name_placeholder: 'Introduce el nombre',
+      last_name: 'Apellido',
+      last_name_placeholder: 'Introduce el apellido',
+      email: 'Correo electrónico',
+      email_placeholder: 'Introduce la dirección de correo',
+      role: 'Rol',
+      role_placeholder: 'Seleccione un rol para el usuario',
+      submit: 'Confirmar',
+      cancel: 'Cancelar',
+      rules: {
+        required: 'Este campo es obligatorio',
+        invalid_email: 'Formato de correo no válido',
+      },
+    },
     notifications: {
       create_error_title: 'Error al agregar usuario',
       create_error_description: 'No se pudo agregar un nuevo usuario.',

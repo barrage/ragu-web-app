@@ -70,6 +70,23 @@ export default {
     title: 'Users',
     description: 'Manage team members of your organization and set their access level',
     invite_user: 'Invite user',
+    form: {
+      first_name: 'First Name',
+      first_name_placeholder: 'Enter first name',
+      last_name: 'Last Name',
+      last_name_placeholder: 'Enter last name',
+      email: 'Email',
+      email_placeholder: 'Enter email address',
+      role: 'Role',
+      role_placeholder: 'Select a role for the user',
+      submit: 'Submit',
+      cancel: 'Cancel',
+      rules: {
+        required: 'This field is required',
+        invalid_email: 'Invalid email format',
+      },
+    },
+
     notifications: {
       create_error_title: 'User Addition Error',
       create_error_description: 'Failed to add a new user.',

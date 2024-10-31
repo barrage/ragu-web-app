@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { nextTick, onMounted, ref } from 'vue'
-import type { User } from '~/types/users'
+import { nextTick } from 'vue'
+import type { EditUserPayload, User } from '~/types/users'
 import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
@@ -11,6 +11,7 @@ const emits = defineEmits<{
   (event: 'pageChange', page: number): number
 }>()
 
+const usersStore = useUsersStore()
 const cardClasses = ref<string[]>([])
 
 const applyCardClasses = () => {
@@ -29,43 +30,6 @@ watch(
   },
   { immediate: true },
 )
-
-const selectedUser = ref<User | null>(null)
-const deleteUserModalVisible = ref(false)
-
-const openDeleteUserModal = (user: User) => {
-  selectedUser.value = user
-  deleteUserModalVisible.value = true
-}
-
-const toggleModal = () => {
-  deleteUserModalVisible.value = !deleteUserModalVisible.value
-}
-
-const usersStore = useUsersStore()
-const handleDeleteUser = async (user: User) => {
-  try {
-    await usersStore.DELETE_User(user.id)
-    deleteUserModalVisible.value = false
-    usersStore.GET_AllUsers()
-    ElNotification({
-      title: 'Success',
-      message: `User ${selectedUser.value?.fullName} deleted successfully!`,
-      type: 'success',
-      customClass: 'success',
-      duration: 2500,
-    })
-  }
-  catch {
-    ElNotification({
-      title: 'Error',
-      message: 'Failed to delete the user.',
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-  }
-}
 
 const pagination = ref<Pagination>({
   currentPage: 1,
@@ -87,6 +51,57 @@ watch(
     }
   },
 )
+/* Edit User */
+const selectedUserEdit = ref<User | null>(null)
+const editUserModalVisible = ref(false)
+
+const openEditUserModal = (user: User) => {
+  selectedUserEdit.value = user
+  editUserModalVisible.value = true
+}
+
+const closeEditModal = () => {
+  editUserModalVisible.value = false
+}
+
+/* Delete User */
+const selectedUserDelete = ref<User | null>(null)
+const deleteUserModalVisible = ref(false)
+
+const openDeleteUserModal = (user: User) => {
+  selectedUserDelete.value = user
+  deleteUserModalVisible.value = true
+}
+
+const closeDeleteModal = () => {
+  deleteUserModalVisible.value = false
+}
+
+/* Activate User */
+const selectedUserActivate = ref<User | null>(null)
+const activateUserModalVisible = ref(false)
+
+const openActivateUserModal = (user: User) => {
+  selectedUserActivate.value = user
+  activateUserModalVisible.value = true
+}
+
+const closeActivateModal = () => {
+  activateUserModalVisible.value = false
+}
+
+/* Dectivate User */
+const selectedUserDeactivate = ref<User | null>(null)
+const deactivateUserModalVisible = ref(false)
+
+const openDeactivateUserModal = (user: User) => {
+  selectedUserDeactivate.value = user
+  deactivateUserModalVisible.value = true
+}
+
+const closeDeactivateModal = () => {
+  deactivateUserModalVisible.value = false
+}
 </script>
 
 <template>
@@ -98,7 +113,13 @@ watch(
         class="list-item"
         :class="[cardClasses[index]]"
       >
-        <UserCard :user="user" @delete-user="openDeleteUserModal(user)" />
+        <UserCard
+          :user="user"
+          @delete-user="openDeleteUserModal(user)"
+          @edit-user="openEditUserModal(user)"
+          @activate-user="openActivateUserModal(user)"
+          @deactivate-user="openDeactivateUserModal(user)"
+        />
       </div>
       <Pagination
         :current-page="pagination.currentPage"
@@ -110,9 +131,26 @@ watch(
 
     <DeleteUserModal
       :is-open="deleteUserModalVisible"
-      :selected-user="selectedUser"
-      @toggle-modal="toggleModal"
-      @delete-user-confirm="handleDeleteUser"
+      :selected-user="selectedUserDelete"
+      @close-modal="closeDeleteModal"
+    />
+
+    <EditUserModal
+      :is-open="editUserModalVisible"
+      :selected-user="selectedUserEdit"
+      @close-modal="closeEditModal"
+    />
+
+    <ActivateUserModal
+      :is-open="activateUserModalVisible"
+      :selected-user="selectedUserActivate"
+      @close-modal="closeActivateModal"
+    />
+
+    <DeactivateUserModal
+      :is-open="deactivateUserModalVisible"
+      :selected-user="selectedUserDeactivate"
+      @close-modal="closeDeactivateModal"
     />
   </div>
 </template>
