@@ -239,6 +239,7 @@ export default {
       vectorPlaceholder: 'Odaberi davatelja vektora',
       embeddingPlaceholder: 'Odaberi davatelja ugrađivanja',
       modelPlaceholder: 'Odaberi model',
+      collectionName: 'Unesite naziv kolekcije',
     },
     collection_card: {
       unknown_id: 'Nepoznati ID kolekcije',
@@ -268,7 +269,7 @@ export default {
       name: {
         required_message: 'Unesite naziv kolekcije',
         length_message: 'Naziv bi trebao imati između {min} i {max} znakova',
-        ascii_alphanumeric_underscored_message_hr: 'Molimo unesite ime koje počinje slovom i sadrži samo slova, brojeve ili podvlake ( _ ).',
+        ascii_alphanumeric_underscored_message: 'Molimo unesite ime koje počinje velikim slovom i sadrži samo slova, brojeve ili podvlake ( _ ).',
 
       },
       vectorProvider: 'Odaberite davatelja vektora',

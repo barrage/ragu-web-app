@@ -204,6 +204,7 @@ export default {
       vectorPlaceholder: 'ベクタープロバイダーを選択',
       embeddingPlaceholder: '埋め込みプロバイダーを選択',
       modelPlaceholder: 'モデルを選択',
+      collectionName: 'コレクション名を入力してください'
     },
     collection_card: {
       unknown_id: '不明なコレクションID',
@@ -232,7 +233,7 @@ export default {
       name: {
         required_message: 'コレクション名を入力してください',
         length_message: '名前は{min}〜{max}文字である必要があります',
-        ascii_alphanumeric_underscored_message_ja: '名前は文字で始まり、文字、数字、またはアンダースコア ( _ ) のみを含めてください。',
+        ascii_alphanumeric_underscored_message: '最初に大文字を使用し、文字、数字、またはアンダースコア（ _ ）のみを含む名前を入力してください。',
       },
       vectorProvider: 'ベクタープロバイダーを選択してください',
       embeddingProvider: '埋め込みプロバイダーを選択してください',
