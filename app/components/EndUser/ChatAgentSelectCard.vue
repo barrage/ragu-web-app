@@ -49,6 +49,7 @@ const agentStore = useAgentStore()
     flex-direction: column;
     gap: 1rem;
     text-align: left;
+    overflow: hidden;
 
     & .agent-name-wrapper {
       display: flex;
@@ -70,6 +71,10 @@ const agentStore = useAgentStore()
 
     & .agent-description {
       font-size: var(--font-size-fluid-2);
+      max-width: 30ch;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 
