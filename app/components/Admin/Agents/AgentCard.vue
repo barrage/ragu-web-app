@@ -62,12 +62,13 @@ const redirectToAgentDetails = () => {
         <span class="agent-provider">{{ agentData.llmProvider }}</span>
       </div>
     </div>
+    <LabelDescriptionItem
+      :label="t('agents.labels.model')"
+      :description="agentData.model"
+      size="small"
+      class="agent-model"
+    />
     <div class="agent-informations">
-      <LabelDescriptionItem
-        :label="t('agents.labels.model')"
-        :description="agentData.model"
-        size="small"
-      />
       <LabelDescriptionItem
         :label="t('agents.labels.status')"
         size="small"
@@ -163,18 +164,22 @@ const redirectToAgentDetails = () => {
       }
     }
   }
+  &.agent-model {
+    grid-column: 4/6;
+  }
+
   & .agent-informations {
-    grid-column: span 7;
+    grid-column: 6/11;
     display: flex;
-    gap: 42px;
     justify-content: space-around;
     width: 100%;
     align-items: center;
   }
   & .agent-actions {
-    grid-column: span 2;
+    grid-column: 11/-1;
     display: flex;
     gap: 12px;
+    justify-content: flex-end;
   }
 }
 
