@@ -10,7 +10,6 @@ definePageMeta({
 
 // CONSTANTS
 const collectionStore = useCollectionsStore()
-const providerStore = useProviderStore()
 const { t } = useI18n()
 const localePath = useLocalePath()
 
@@ -53,6 +52,7 @@ watch(
   () => form.embeddingProvider,
   async (newProvider) => {
     if (newProvider) {
+      form.model = ''
       await collectionStore.GET_ListEmbeddingModels(newProvider)
       listEmbeddingsModels.value = collectionStore.listEmbeddingsModels
     }
@@ -100,6 +100,8 @@ const createCollection = async (formEl: FormInstance | undefined) => {
 const cancelCreate = () => {
   navigateTo({ path: localePath('/admin/collections') })
 }
+
+const isModelDisabled = computed(() => !form.embeddingProvider)
 
 // ERROR HANDLERS
 errorHandler(createError)
@@ -178,7 +180,7 @@ errorHandler(createError)
           <ElSelect
             v-model="form.model"
             :placeholder="t('collections.placeholders.modelPlaceholder')"
-            :disabled="providerStore?.availableLlmList?.length === 0"
+            :disabled="isModelDisabled"
           >
             <ElOption
               v-for="(dimension, model) in collectionStore?.listEmbeddingsModels"
