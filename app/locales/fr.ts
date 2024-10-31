@@ -232,6 +232,7 @@ export default {
       name: {
         required_message: 'Veuillez entrer le nom de la collection',
         length_message: 'Le nom doit comporter entre {min} et {max} caractères',
+        ascii_alphanumeric_underscored_message_fr: 'Veuillez entrer un nom qui commence par une lettre et contient uniquement des lettres, des chiffres ou des underscores ( _ ).',
       },
       vectorProvider: 'Veuillez sélectionner un fournisseur de vecteurs',
       embeddingProvider: 'Veuillez sélectionner un fournisseur d\'embedding',

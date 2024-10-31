@@ -28,10 +28,14 @@ const listEmbeddingsModels = ref<Record<string, number>>({})
 
 // FORM VALIDATION RULES
 const rules = reactive<FormRules<CollectionDetail>>({
-
   name: [
     { required: true, message: t('collections.rules.name.required_message'), trigger: 'blur' },
-    { min: 3, max: 50, message: t('collections.rules.name.length_message', { min: 3, max: 50 }), trigger: 'blur' },
+    { min: 1, message: t('collections.rules.name.length_message', { min: 3, max: 50 }), trigger: 'blur' },
+    {
+      validator: (rule, value) => /^[A-Z][\w ]*$/i.test(value),
+      message: t('collections.rules.name.ascii_alphanumeric_underscored_message'),
+      trigger: 'blur',
+    },
   ],
   vectorProvider: [
     { required: true, message: t('collections.rules.vectorProvider'), trigger: 'change' },

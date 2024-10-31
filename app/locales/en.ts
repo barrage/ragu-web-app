@@ -279,6 +279,7 @@ export default {
       name: {
         required_message: 'Please input Collection name',
         length_message: 'Name should be {min} to {max} charaters long',
+        ascii_alphanumeric_underscored_message: 'Please enter a name that starts with a letter and contains only letters, numbers, or underscores ( _ ).',
       },
       vectorProvider: 'Please select Vector provider',
       embeddingProvider: 'Please select Embedding provider',
@@ -286,6 +287,7 @@ export default {
     },
 
     notifications: {
+
       delete_title: 'Success',
       delete_message: 'Collection {name} is deleted!',
       delete_error: 'Collection is not deleted',
