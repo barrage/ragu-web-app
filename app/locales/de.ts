@@ -206,6 +206,7 @@ export default {
       vectorPlaceholder: 'Wählen Sie den Vektor-Anbieter',
       embeddingPlaceholder: 'Wählen Sie den Einbettungsanbieter',
       modelPlaceholder: 'Modell auswählen',
+      collectionName: 'Bitte geben Sie den Namen der Sammlung ein',
     },
     collection_card: {
       unknown_id: 'Unbekannte Sammlungs-ID',
@@ -234,7 +235,7 @@ export default {
       name: {
         required_message: 'Bitte geben Sie den Sammlungsnamen ein',
         length_message: 'Der Name sollte zwischen {min} und {max} Zeichen lang sein',
-        ascii_alphanumeric_underscored_message_de: 'Bitte geben Sie einen Namen ein, der mit einem Buchstaben beginnt und nur Buchstaben, Zahlen oder Unterstriche ( _ ) enthält.',
+        ascii_alphanumeric_underscored_message: 'Bitte geben Sie einen Namen ein, der mit einem Großbuchstaben beginnt und nur Buchstaben, Zahlen oder Unterstriche ( _ ) enthält.',
       },
       vectorProvider: 'Bitte wählen Sie einen Vektor-Anbieter',
       embeddingProvider: 'Bitte wählen Sie einen Einbettungsanbieter',
