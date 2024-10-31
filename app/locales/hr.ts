@@ -70,6 +70,23 @@ export default {
     title: 'Korisnici',
     description: 'Upravljajte članovima svog tima i postavite njihove razine pristupa.',
     invite_user: 'Dodaj korisnika',
+    form: {
+      first_name: 'Ime',
+      first_name_placeholder: 'Unesite ime',
+      last_name: 'Prezime',
+      last_name_placeholder: 'Unesite prezime',
+      email: 'E-mail',
+      email_placeholder: 'Unesite e-mail adresu',
+      role: 'Uloga',
+      role_placeholder: 'Odaberite ulogu za korisnika',
+      submit: 'Potvrdi',
+      cancel: 'Odustani',
+      rules: {
+        required: 'Ovo polje je obavezno',
+        invalid_email: 'Neispravan format e-mail adrese',
+      },
+    },
+
     notifications: {
       create_error_title: 'Greška prilikom dodavanja korisnika',
       create_error_description: 'Nije moguće dodati novog korisnika.',
@@ -84,6 +101,8 @@ export default {
       view_more: 'Pogledaj detalje korisnika',
       edit_user: 'Uredi korisnika',
       delete_user: 'Obrisi korisnika',
+      activate_user: 'Aktiviraj korisnika',
+      deactivate_user: 'Deaktiviraj korisnika',
       adminRole: 'Administrator',
       userRole: 'Korisnik',
       updated_at: 'Ažurirano',

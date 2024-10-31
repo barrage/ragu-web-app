@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import type { User } from '~/types/users'
-import DeletePersonIcon from '~/assets/icons/svg/delete-person.svg'
+import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 
 const props = defineProps<{
   selectedUser: User | null
@@ -9,29 +9,29 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
-const deleteUserModalVisible = ref(props.isOpen)
+const activateUserModalVisible = ref(props.isOpen)
 const usersStore = useUsersStore()
 const closeModal = () => {
-  deleteUserModalVisible.value = false
+  activateUserModalVisible.value = false
   emits('closeModal')
 }
 
 watch(() => props.isOpen, (newVal) => {
-  deleteUserModalVisible.value = newVal
+  activateUserModalVisible.value = newVal
 })
 interface Emits {
   (event: 'closeModal'): void
 }
-const { execute: deleteUser, error } = await useAsyncData(() => usersStore.DELETE_User(props.selectedUser!.id), { immediate: false })
+const { execute: activateUser, error } = await useAsyncData(() => usersStore.PUT_ActivateUser(props.selectedUser!.id), { immediate: false })
 
-const submitDeleteUser = async () => {
+const submitActivateUser = async () => {
   if (props.selectedUser?.id) {
-    deleteUser()
-    deleteUserModalVisible.value = false
+    activateUser()
+    activateUserModalVisible.value = false
     if (error.value) {
       ElNotification({
         title: 'Error',
-        message: 'Failed to delete the user.',
+        message: 'Failed to activate the user.',
         type: 'error',
         customClass: 'error',
         duration: 2500,
@@ -41,7 +41,7 @@ const submitDeleteUser = async () => {
       usersStore.GET_AllUsers()
       ElNotification({
         title: 'Success',
-        message: `User ${props.selectedUser?.fullName} deleted successfully!`,
+        message: `User ${props.selectedUser?.fullName} activated successfully!`,
         type: 'success',
         customClass: 'success',
         duration: 2500,
@@ -54,7 +54,7 @@ const submitDeleteUser = async () => {
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="deleteUserModalVisible"
+      v-model="activateUserModalVisible"
       destroy-on-close
       align-center
       class="barrage-dialog--small"
@@ -62,14 +62,14 @@ const submitDeleteUser = async () => {
       @close="closeModal"
     >
       <template #header>
-        <div class="delete-user-modal-header">
-          <DeletePersonIcon size="42px" />
-          <h5> {{ $t('users.user_card.delete_user') }}</h5>
+        <div class="activate-user-modal-header">
+          <PersonPasskeyIcon size="42px" />
+          <h5> {{ $t('users.user_card.activate_user') }}</h5>
         </div>
       </template>
       <div>
         <p>
-          Are you sure you want to delete user:  <br> <b>{{ props.selectedUser?.fullName }}</b>
+          Are you sure you want to activate user:  <br> <b>{{ props.selectedUser?.fullName }}</b>
         </p>
       </div>
 
@@ -77,8 +77,8 @@ const submitDeleteUser = async () => {
         <el-button @click="closeModal">
           Cancel
         </el-button>
-        <el-button type="danger" @click="submitDeleteUser()">
-          Delete
+        <el-button type="danger" @click="submitActivateUser()">
+          Activate
         </el-button>
       </template>
     </ElDialog>
@@ -86,7 +86,7 @@ const submitDeleteUser = async () => {
 </template>
 
 <style lang="scss" scoped>
-.delete-user-modal-header {
+.activate-user-modal-header {
   display: flex;
   gap: 1rem;
   align-items: center;

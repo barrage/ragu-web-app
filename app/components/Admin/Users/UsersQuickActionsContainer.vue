@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import AddIcon from '~/assets/icons/svg/add.svg'
 import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 import type { CreateUserPayload } from '~/types/users.ts'
 
@@ -20,10 +19,10 @@ const validateEmail = (_rule: any, value: string, callback: (error?: Error) => v
   const emailRegex = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/
 
   if (!value) {
-    callback(new Error('Email is required'))
+    callback(new Error(t('users.form.rules.invalid_email')))
   }
   else if (!emailRegex.test(value)) {
-    callback(new Error('Invalid email address'))
+    callback(new Error(t('users.form.rules.invalid_email')))
   }
   else {
     callback()
@@ -40,23 +39,21 @@ const inviteUserform = reactive<CreateUserPayload>({
   role: '',
 })
 
-const rules = reactive<FormRules<CreateUserPayload>>({
+const rules = computed<FormRules<CreateUserPayload>>(() => ({
   email: [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('users.form.rules.required'), trigger: 'blur' },
     { validator: validateEmail, trigger: 'blur' },
   ],
   firstName: [
-    { required: true, message: 'Required', trigger: 'change' },
-
+    { required: true, message: t('users.form.rules.required'), trigger: 'blur' },
   ],
   lastName: [
-    { required: true, message: 'Required', trigger: 'change' },
-
+    { required: true, message: t('users.form.rules.required'), trigger: 'blur' },
   ],
   role: [
-    { required: true, message: 'Required', trigger: 'change' },
+    { required: true, message: t('users.form.rules.required'), trigger: 'blur' },
   ],
-})
+}))
 const { execute: AddNewUser, error } = await useAsyncData(() => usersStore.POST_CreateUser(inviteUserform), { immediate: false })
 
 const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
@@ -105,13 +102,16 @@ const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
     }
   })
 }
-const userRoles = [{
-  label: 'Admin',
-  value: 'admin',
-}, {
-  label: 'User',
-  value: 'user',
-}]
+const userRoles = computed(() => [
+  {
+    label: t('users.user_card.adminRole'),
+    value: 'admin',
+  },
+  {
+    label: t('users.user_card.userRole'),
+    value: 'user',
+  },
+])
 
 watch(
   () => [inviteUserform.firstName, inviteUserform.lastName],
@@ -119,6 +119,10 @@ watch(
     inviteUserform.fullName = `${newFirstName} ${newLastName}`.trim()
   },
 )
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) { return }
+  formEl.resetFields()
+}
 </script>
 
 <template>
@@ -136,9 +140,13 @@ watch(
         destroy-on-close
         class="barrage-dialog--small"
         :close-icon="CloseCircleIcon"
+        @close="resetForm(inviteUserformRef)"
       >
         <template #header>
-          <h5> {{ $t('users.invite_user') }}</h5>
+          <div class="add-user-modal-header">
+            <AddPersonIcon size="42px" />
+            <h5> {{ $t('users.invite_user') }}</h5>
+          </div>
         </template>
         <ElForm
           ref="inviteUserformRef"
@@ -149,32 +157,32 @@ watch(
         >
           <div class="start-end-form-items-wrapper">
             <ElFormItem
-              label="First Name"
+              :label="t('users.form.first_name')"
               prop="firstName"
             >
-              <ElInput v-model="inviteUserform.firstName" placeholder="Enter first name" />
+              <ElInput v-model="inviteUserform.firstName" :placeholder="t('users.form.first_name_placeholder')" />
             </ElFormItem>
             <ElFormItem
-              label="Last Name"
+              :label="t('users.form.last_name')"
               prop="lastName"
             >
-              <ElInput v-model="inviteUserform.lastName" placeholder="Enter last name" />
+              <ElInput v-model="inviteUserform.lastName" :placeholder="t('users.form.last_name_placeholder')" />
             </ElFormItem>
 
             <ElFormItem
-              label="Email"
+              :label="t('users.form.email')"
               prop="email"
             >
-              <ElInput v-model="inviteUserform.email" placeholder="Enter email" />
+              <ElInput v-model="inviteUserform.email" :placeholder="t('users.form.email_placeholder')" />
             </ElFormItem>
 
             <ElFormItem
-              label="Role"
+              :label="t('users.form.role')"
               prop="role"
             >
               <ElSelect
                 v-model="inviteUserform.role"
-                placeholder="Select role"
+                :placeholder="t('users.form.role_placeholder')"
               >
                 <ElOption
                   v-for="userRole in userRoles"
@@ -188,14 +196,14 @@ watch(
             <ElFormItem>
               <div class="form-actions">
                 <el-button @click="toggleInviteUserModal()">
-                  Cancel
+                  {{ t('users.form.cancel') }}
                 </el-button>
 
                 <ElButton
                   type="primary"
                   @click="submitInviteUserForm(inviteUserformRef)"
                 >
-                  Submit
+                  {{ t('users.form.submit') }}
                 </ElButton>
               </div>
             </ElFormItem>
@@ -222,6 +230,12 @@ watch(
     align-items: center;
     margin-bottom: 1.5rem;
   }
+}
+
+.add-user-modal-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 .form-actions {
   display: flex;

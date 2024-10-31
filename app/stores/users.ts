@@ -1,32 +1,21 @@
 import { defineStore } from 'pinia'
-import type { CreateUserPayload, User, UsersResponse } from '~/types/users.ts'
+import type { CreateUserPayload, EditUserPayload, User, UsersResponse } from '~/types/users.ts'
 
 export const useUsersStore = defineStore('user', () => {
-  // State
-
-  const usersResponse = ref<UsersResponse | null >()
-  const { $api } = useNuxtApp()
+  /* State */
+  const usersResponse = ref<UsersResponse | null>()
+  const selectedUser = ref<User | null>(null)
 
   /* API */
+  const { $api } = useNuxtApp()
 
-  /**
-   * Fetches a paginated and sorted list of users.
-   * @param page - The page number to fetch.
-   * @param perPage - The number of users per page.
-   * @param sortBy - The field to sort by (e.g., 'firstName').
-   * @param sortOrder - The order of sorting ('asc' or 'desc').
-   * @returns A promise that resolves to an UsersResponse type or null.
-   */
   async function GET_AllUsers(
     page: number = 1,
     perPage: number = 10,
     sortBy: string = 'firstName',
     sortOrder: 'asc' | 'desc' = 'asc',
   ): Promise<UsersResponse | null | undefined> {
-    // Call the service method with pagination and sorting parameters
     const data = await $api.user.GetAllUsers(page, perPage, sortBy, sortOrder)
-
-    // Store the fetched data in `usersResponse` and return it
     if (data) {
       usersResponse.value = data
       return data
@@ -36,9 +25,6 @@ export const useUsersStore = defineStore('user', () => {
       return null
     }
   }
-
-  /* SINGLE USER */
-  const selectedUser = ref<User | null>(null)
 
   async function GET_SingleUser(userId: string): Promise<User | null > {
     const data = await $api.user.GetSingleUser(userId)
@@ -55,19 +41,31 @@ export const useUsersStore = defineStore('user', () => {
     return await $api.user.PostCreateUser(newUserPayload)
   }
 
+  async function PUT_UpdateUser(userId: string, updatedUserPayload: EditUserPayload): Promise<User | null > {
+    return await $api.user.PutEditUser(userId, updatedUserPayload)
+  }
+
+  async function PUT_ActivateUser(userId: string): Promise<void> {
+    await $api.user.PutActivateUser(userId)
+  }
+
+  async function PUT_DectivateUser(userId: string): Promise<void> {
+    await $api.user.PutDeactivateUser(userId)
+  }
+
   async function DELETE_User(userId: string): Promise<void> {
     await $api.user.DeleteUser(userId)
   }
 
   return {
     usersResponse,
-    GET_AllUsers,
-
     selectedUser,
+    GET_AllUsers,
     GET_SingleUser,
-
     POST_CreateUser,
-
+    PUT_UpdateUser,
+    PUT_ActivateUser,
+    PUT_DectivateUser,
     DELETE_User,
   }
 })

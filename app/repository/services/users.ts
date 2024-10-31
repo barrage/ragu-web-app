@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { CreateUserPayload, User, UsersResponse } from '~/types/users.ts'
+import type { CreateUserPayload, EditUserPayload, User, UsersResponse } from '~/types/users.ts'
 
 export default class usersService extends FetchFactory {
   // Endpoint for agent-related API requests.
@@ -80,6 +80,74 @@ export default class usersService extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to create user with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Updates existing user.
+   * @param user - The updated user data containing email, fullName, firstName, lastName, and role.
+   * @returns A promise that resolves to the user type.
+   * @throws Will throw an error if the request fails.
+   */
+  async PutEditUser(userId: string, user: EditUserPayload): Promise<User> {
+    try {
+      console.log('user->', user)
+      return await this.$fetch<User>(`${this.endpoint}/${userId}`, {
+        method: 'PUT',
+        body: JSON.stringify(user),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to update user with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Activates a user by unique ID.
+   * @param userId - The ID of the user to activate.
+   * @returns A promise that resolves when the user is successfully activated.
+   * @throws Will throw an error if the request fails.
+   */
+  async PutActivateUser(userId: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.endpoint}/${userId}/activate`, {
+        method: 'PUT',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete user with ID: ${userId}`,
+      })
+    }
+  }
+
+  /**
+   * Deactivates a user by unique ID.
+   * @param userId - The ID of the user to deactivate.
+   * @returns A promise that resolves when the user is successfully deactivated.
+   * @throws Will throw an error if the request fails.
+   */
+  async PutDeactivateUser(userId: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.endpoint}/${userId}/deactivate`, {
+        method: 'PUT',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete user with ID: ${userId}`,
       })
     }
   }

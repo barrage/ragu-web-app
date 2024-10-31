@@ -255,6 +255,22 @@ export default {
     title: 'Utilisateurs',
     description: 'Gérez les membres de votre équipe et définissez leurs niveaux d\'accès.',
     invite_user: 'Inviter un utilisateur',
+    form: {
+      first_name: 'Prénom',
+      first_name_placeholder: 'Entrez le prénom',
+      last_name: 'Nom',
+      last_name_placeholder: 'Entrez le nom',
+      email: 'E-mail',
+      email_placeholder: 'Entrez l\'adresse e-mail',
+      role: 'Rôle',
+      role_placeholder: 'Sélectionnez un rôle pour l\'utilisateur',
+      submit: 'Valider',
+      cancel: 'Annuler',
+      rules: {
+        required: 'Ce champ est requis',
+        invalid_email: 'Format d\'e-mail invalide',
+      },
+    },
     notifications: {
       create_error_title: 'Erreur d\'ajout d\'utilisateur',
       create_error_description: 'Échec de l\'ajout d\'un nouvel utilisateur.',

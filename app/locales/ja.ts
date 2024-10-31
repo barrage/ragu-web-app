@@ -255,6 +255,23 @@ export default {
     title: 'ユーザー',
     description: 'チームメンバーを管理し、アクセスレベルを設定します。',
     invite_user: 'ユーザーを招待',
+    form: {
+      first_name: '名前',
+      first_name_placeholder: '名前を入力してください',
+      last_name: '苗字',
+      last_name_placeholder: '苗字を入力してください',
+      email: 'メール',
+      email_placeholder: 'メールアドレスを入力してください',
+      role: '役割',
+      role_placeholder: 'ユーザーの役割を選択してください',
+      submit: '確認',
+      cancel: 'キャンセル',
+      rules: {
+        required: 'このフィールドは必須です',
+        invalid_email: '無効なメール形式です',
+      },
+    },
+
     notifications: {
       create_error_title: 'ユーザー追加エラー',
       create_error_description: '新しいユーザーの追加に失敗しました。',
