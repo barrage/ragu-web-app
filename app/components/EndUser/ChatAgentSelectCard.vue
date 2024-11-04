@@ -11,6 +11,7 @@ const agentStore = useAgentStore()
 
 <template>
   <div
+    v-if="agent?.active"
     class="agent-select-card"
     :class="{ selected: agent?.id === agentStore.selectedAgent?.id }"
     @click="agentStore.setSelectedAgent(props.agent?.id)"

@@ -2,7 +2,11 @@
 import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
 const agentStore = useAgentStore()
-agentStore.GET_AllAgents()
+/* agentStore.GET_AllAgents() */
+
+const { error } = await useAsyncData(() => agentStore.GET_AllAgents())
+
+errorHandler(error)
 
 const allAgents = computed(() => {
   return agentStore.agentsResponse?.items
@@ -25,6 +29,7 @@ watch(
     <div class="agents-names-wrapper">
       <template v-for="agent in allAgents" :key="agent.id">
         <div
+          v-if="agent?.active"
           class="agent-name"
           :class="{ selected: agent.id === selectedAgent?.id }"
           @click="selectAgent(agent)"

@@ -4,7 +4,14 @@
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 
 const agentStore = useAgentStore()
-agentStore.GET_AllAgents()
+
+const { error } = await useAsyncData(() => agentStore.GET_AllAgents())
+
+errorHandler(error)
+
+const activeAgentLength = computed(() => {
+  return agentStore.agents.filter(agent => agent.active).length
+})
 </script>
 
 <template>
@@ -20,7 +27,13 @@ agentStore.GET_AllAgents()
     </p>
     <div class="about-container">
       <p> {{ $t('chat.newChat.choseFrom') }}</p>
-      <div class="suggestions-container scrollable-element">
+      <div
+        class="suggestions-container scrollable-element"
+        :class="
+
+          { 'centered-content': activeAgentLength > 3 }
+        "
+      >
         <template v-for="(agent, index) in agentStore.agents" :key="index">
           <ChatAgentSelectCard :agent="agent" />
         </template>
@@ -82,13 +95,17 @@ agentStore.GET_AllAgents()
   gap: 1rem;
   overflow-x: auto;
   overflow-y: hidden;
-
+  justify-content: center;
   padding-bottom: 2rem;
   color: var(--color-primary-800);
   & .agent-select-card {
     flex: 0 0 calc(25% - 1rem);
     min-width: 180px;
   }
+}
+
+.centered-content {
+  justify-content: start;
 }
 
 .dark {
