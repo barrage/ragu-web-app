@@ -65,6 +65,21 @@ export default {
     source: 'Izvor',
     id: 'Dokument ID',
     hash: 'Hash',
+    notifications: {
+      create: {
+        success_title: 'Novi Dokument',
+        success_description: 'Uspješno kreiran novi dokument',
+        error_title: 'Novi Dokument',
+        error_description: 'Greška prilikom dodavanja',
+        error_existing_document_title: 'Postojeći Dokument',
+        error_existing_document_description: 'Ovaj dokument već postoji',
+        error_file_size_title: 'Problem s Veličinom Datoteke',
+        error_file_size_description: 'Veličina datoteke ne smije prelaziti 50 MB!',
+        error_file_type_title: 'Problem s Formatom Datoteke',
+        error_file_type_description: 'Datoteka mora biti u PDF, TXT, JSON ili DOCX formatu!',
+      },
+    },
+
   },
   users: {
     title: 'Korisnici',

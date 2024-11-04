@@ -62,6 +62,21 @@ export default {
     source: 'ソース',
     id: 'ドキュメントID',
     hash: 'ハッシュ',
+    notifications: {
+      create: {
+        success_title: '新しいドキュメント',
+        success_description: '新しいドキュメントが正常に作成されました',
+        error_title: '新しいドキュメント',
+        error_description: '追加中にエラーが発生しました',
+        error_existing_document_title: '既存のドキュメント',
+        error_existing_document_description: 'このドキュメントはすでに存在します',
+        error_file_size_title: 'ファイルサイズの問題',
+        error_file_size_description: 'ファイルサイズは50 MBを超えてはいけません！',
+        error_file_type_title: 'ファイル形式の問題',
+        error_file_type_description: 'ファイルはPDF、TXT、JSON、またはDOCX形式である必要があります！',
+      },
+    },
+
   },
 
   agents: {
@@ -204,7 +219,7 @@ export default {
       vectorPlaceholder: 'ベクタープロバイダーを選択',
       embeddingPlaceholder: '埋め込みプロバイダーを選択',
       modelPlaceholder: 'モデルを選択',
-      collectionName: 'コレクション名を入力してください'
+      collectionName: 'コレクション名を入力してください',
     },
     collection_card: {
       unknown_id: '不明なコレクションID',

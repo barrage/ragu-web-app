@@ -66,9 +66,6 @@ const redirectToAgentDetails = () => {
 <template>
   <div class="chat-general-info-container grid">
     <div class="chat-general-info-card">
-      <h5 class="chat-title">
-        <b>{{ props.chat?.title }}</b>
-      </h5>
       <div class="chat-informations-wrapper grid">
         <LabelDescriptionItem label="Id:" :description="chatData.chat?.id" />
         <LabelDescriptionItem label="Created at:" :description="chatData.chat?.createdAt" />
@@ -192,10 +189,7 @@ const redirectToAgentDetails = () => {
     padding: 1rem;
   }
 }
-.chat-title {
-  color: var(--color-primary-800);
-  margin: 2rem 0rem 1rem;
-}
+
 .user-informations {
   display: flex;
   gap: 32px;
@@ -276,9 +270,6 @@ const redirectToAgentDetails = () => {
     & .user-mail {
       color: var(--color-primary-100);
     }
-  }
-  .chat-title {
-    color: var(--color-primary-100);
   }
 }
 </style>

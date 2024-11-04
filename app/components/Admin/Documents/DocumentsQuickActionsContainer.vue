@@ -21,8 +21,8 @@ const beforeUploadCheck: UploadProps['beforeUpload'] = (rawFile) => {
 
   if (!allowedTypes.includes(rawFile.type)) {
     ElNotification({
-      title: 'File Format Issue',
-      message: 'File must be in PDF, TXT, JSON, or DOCX format!',
+      title: t('documents.notifications.create.error_file_type_title'),
+      message: t('documents.notifications.create.error_file_type_description'),
       type: 'error',
       customClass: 'error',
       duration: 3500,
@@ -33,8 +33,8 @@ const beforeUploadCheck: UploadProps['beforeUpload'] = (rawFile) => {
   }
   else if (rawFile.size / 1024 / 1024 > 50) {
     ElNotification({
-      title: 'File Size Issue',
-      message: 'File size cannot exceed 50 MB!',
+      title: t('documents.notifications.create.error_file_size_title'),
+      message: t('documents.notifications.create.error_file_size_description'),
       type: 'error',
       customClass: 'error',
       duration: 3500,
@@ -53,33 +53,42 @@ const upload = async () => {
     return
   }
   for (const file of files) {
-    try {
-      await documentStore.POST_UploadDocument(file)
-
+    const { execute: uploadDocument, error } = await useAsyncData(() => documentStore.POST_UploadDocument(file), { immediate: false })
+    uploadDocument()
+    console.log('error', error)
+    if (error.value) {
+      if (error.value?.statusCode === 409) {
+        ElNotification({
+          title: t('documents.notifications.create.error_existing_document_title'),
+          message: t('documents.notifications.create.error_existing_document_description'),
+          type: 'error',
+          customClass: 'error',
+          duration: 2500,
+        })
+      }
+      else {
+        ElNotification({
+          title: t('documents.notifications.create.error_title'),
+          message: t('documents.notifications.create.error_description'),
+          type: 'error',
+          customClass: 'error',
+          duration: 2500,
+        })
+      }
+    }
+    else {
       ElNotification({
-        title: 'Success',
-        message: 'Uploaded new document',
+        title: t('documents.notifications.create.success_title'),
+        message: t('documents.notifications.create.success_description'),
         type: 'success',
         customClass: 'success',
         duration: 5500,
       })
-    }
-    catch (error) {
-      console.error('Error uploading file:', file.name, error)
-      ElNotification({
-        title: t('agents.notifications.form_title'),
-        message: 'Faild to upload',
-        type: 'error',
-        customClass: 'error',
-        duration: 2500,
-      })
-    }
-    finally {
       isUploadModalVisible.value = false
-      documentStore.GET_AllDocuments()
       fileList.value = []
-      isUploadLoading.value = false
+      documentStore.GET_AllDocuments()
     }
+    isUploadLoading.value = false
   }
 }
 const handleUploadSuccess: UploadProps['onSuccess'] = () => {

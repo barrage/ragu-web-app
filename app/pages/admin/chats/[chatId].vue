@@ -42,7 +42,7 @@ const selectedChat = computed(() => {
     <AdminPageHeadingTemplate>
       <template #title>
         <AdminPageTitleContainer
-          :title="t('chat.admin.chat_details.title')"
+          :title="selectedChat?.title"
           :description="t('chat.admin.chat_details.description')"
         >
           <template #icon>

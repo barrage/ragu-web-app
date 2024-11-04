@@ -62,6 +62,22 @@ export default {
     source: 'Fonte',
     id: 'ID Documento',
     hash: 'Hash',
+
+    notifications: {
+      create: {
+        success_title: 'Nuovo Documento',
+        success_description: 'Nuovo documento creato con successo',
+        error_title: 'Nuovo Documento',
+        error_description: 'Errore durante l\'aggiunta',
+        error_existing_document_title: 'Documento Esistente',
+        error_existing_document_description: 'Questo documento esiste già',
+        error_file_size_title: 'Problema di Dimensione del File',
+        error_file_size_description: 'La dimensione del file non può superare i 50 MB!',
+        error_file_type_title: 'Problema di Formato del File',
+        error_file_type_description: 'Il file deve essere in formato PDF, TXT, JSON o DOCX!',
+      },
+    },
+
   },
 
   agents: {

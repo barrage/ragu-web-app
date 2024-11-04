@@ -63,6 +63,21 @@ export default {
     source: 'Fonte',
     id: 'ID do Documento',
     hash: 'Hash',
+    notifications: {
+      create: {
+        success_title: 'Novo Documento',
+        success_description: 'Documento criado com sucesso',
+        error_title: 'Novo Documento',
+        error_description: 'Erro ao adicionar',
+        error_existing_document_title: 'Documento Existente',
+        error_existing_document_description: 'Este documento já existe',
+        error_file_size_title: 'Problema de Tamanho do Arquivo',
+        error_file_size_description: 'O tamanho do arquivo não pode exceder 50 MB!',
+        error_file_type_title: 'Problema de Formato do Arquivo',
+        error_file_type_description: 'O arquivo deve estar no formato PDF, TXT, JSON ou DOCX!',
+      },
+    },
+
   },
 
   agents: {
@@ -204,7 +219,7 @@ export default {
       vectorPlaceholder: 'Selecione o fornecedor de vetores',
       embeddingPlaceholder: 'Selecione o fornecedor de embeddings',
       modelPlaceholder: 'Selecione o modelo',
-      collectionName: 'Por favor, insira o nome da coleção'
+      collectionName: 'Por favor, insira o nome da coleção',
     },
     collection_card: {
       unknown_id: 'ID de coleção desconhecido',
