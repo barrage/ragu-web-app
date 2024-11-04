@@ -43,7 +43,17 @@ export default {
         description: 'このチャットに関するすべての詳細を表示',
       },
     },
-    editTitle: 'タイトルを編集',
+    edit_title: {
+      title: 'タイトルを編集',
+      title_label: 'タイトル',
+      title_placeholder: '新しいタイトルを入力してください',
+      notifications: {
+        success_title: 'タイトルが正常に更新されました',
+        success_description: 'チャットのタイトルが正常に更新されました。',
+        error_title: 'エラー',
+        error_description: '新しいチャットのタイトルの設定中にエラーが発生しました。',
+      },
+    },
     delete_chat: {
       title: 'チャットを削除',
       description: 'チャットを削除してもよろしいですか？',

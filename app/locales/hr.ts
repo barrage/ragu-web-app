@@ -45,7 +45,17 @@ export default {
         description: 'Pregledajte sve detalje vezane za ovaj razgovor',
       },
     },
-    editTitle: 'Uredi naslov',
+    edit_title: {
+      title: 'Uredi naslov',
+      title_label: 'Naslov',
+      title_placeholder: 'Molimo unesite novi naslov',
+      notifications: {
+        success_title: 'Uspješno uređen naslov',
+        success_description: 'Chat je uspješno uređen.',
+        error_title: 'Greška',
+        error_description: 'Došlo je do greške pri postavljanju novog naslova chata.',
+      },
+    },
     delete_chat: {
       title: 'Izbriši chat',
       description: 'Da li ste sigurni da želite obrisati chat?',

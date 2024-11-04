@@ -177,4 +177,60 @@ export default class ChatServise extends FetchFactory {
       })
     }
   }
+
+  /**
+   * Updates chat title by unique chat ID.
+   * @param chatId - The ID of the chat to update title.
+   * @param newChatTitle - New chat title string.
+   * @returns A promise that resolves when the chat title is successfully updated.
+   * @throws Will throw an error if the request fails.
+   */
+  async PutUpdateChatTitleBackoffice(chatId: string, newChatTitle: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.adminChatsEndpoint}/${chatId}`, {
+        method: 'PUT',
+        credentials: 'include',
+        body: {
+          title: newChatTitle,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to update chat title with ID: ${chatId}`,
+      })
+    }
+  }
+
+  /**
+   * Updates chat title by unique chat ID.
+   * @param chatId - The ID of the chat to update title.
+   * @param newChatTitle - New chat title string.
+   * @returns A promise that resolves when the chat title is successfully updated.
+   * @throws Will throw an error if the request fails.
+   */
+  async PutUpdateChatTitle(chatId: string, newChatTitle: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.chatsEndpoint}/${chatId}`, {
+        method: 'PUT',
+        credentials: 'include',
+        body: {
+          title: newChatTitle,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to update chat title with ID: ${chatId}`,
+      })
+    }
+  }
 }
