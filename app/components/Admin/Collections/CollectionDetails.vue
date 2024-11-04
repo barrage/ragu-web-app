@@ -4,23 +4,89 @@ import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
-import type { Collection } from '~/types/collection'
+import DocumentIcon from '~/assets/icons/svg/document.svg'
+import type { CollectionResponse } from '~/types/collection'
 
 const props = defineProps<{
-  collection: Collection | null | undefined
+  singleCollection: CollectionResponse | null | undefined
 }>()
+
+const route = useRoute()
+
+const documetStore = useDocumentsStore()
+const collectionStore = useCollectionsStore()
+const selectedDocumentIds = ref<string[]>([])
+const existingDocumentIds = props.singleCollection?.documents.map(doc => doc.id) || []
+const collectionId = ref(route.params.collectionId as string)
+const rightValue = ref<string[]>([])
+
+const payload = computed(() => ({
+  collection: collectionId.value,
+  documents: selectedDocumentIds.value,
+}))
+
+const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDocuments())
+
+errorHandler(documentError)
+
+const { execute: updateCollection, error: collectionError } = await useAsyncData(() => collectionStore.POST_UpdateCollection(payload.value), { immediate: false })
+const { error, execute: getCollection } = await useAsyncData(() => collectionStore.GET_SingleCollection(collectionId?.value), { immediate: false })
+
+errorHandler(error)
+
+const handleTransferChange = (newValue: string[]) => {
+  selectedDocumentIds.value = newValue
+}
+
+const transformedDocuments = ref(
+  documetStore.documentResponse?.items
+    .filter(doc => !existingDocumentIds.includes(doc.id))
+    .map(doc => ({
+      key: doc.id,
+      label: doc.name,
+    })),
+)
+
+const submitSelection = async () => {
+  if (!collectionId.value || !selectedDocumentIds.value.length) {
+    return
+  }
+  await updateCollection()
+
+  if (collectionError.value) {
+    ElNotification({
+      title: 'Error',
+      message: 'Failed to update collection.',
+      type: 'error',
+      customClass: 'error',
+      duration: 2500,
+    })
+  }
+  else {
+    ElNotification({
+      title: 'Success',
+      message: 'Collection updated successfully!',
+      type: 'success',
+      customClass: 'success',
+      duration: 2500,
+    })
+
+    rightValue.value = []
+    await getCollection()
+  }
+}
 
 const { t } = useI18n()
 
 const collectionData = computed(() => {
   return {
-    id: props.collection?.id || t('collections.collection_card.unknown_id'),
-    name: props.collection?.name || t('collections.collection_card.unknown_collectin_name'),
-    provider: props.collection?.provider || t('collections.collection_card.unknown_llmProvider'),
-    embedder: props.collection?.embedder || t('collections.collection_card.unknown_llmProvider'),
-    model: props.collection?.model || t('collections.collection_card.unknown_model'),
-    updatedAt: props.collection?.updatedAt ? formatDate(props.collection.updatedAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
-    createdAt: props.collection?.createdAt ? formatDate(props.collection.createdAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
+    id: props.singleCollection?.collection?.id || t('collections.collection_card.unknown_id'),
+    name: props.singleCollection?.collection?.name || t('collections.collection_card.unknown_collectin_name'),
+    provider: props.singleCollection?.collection?.provider || t('collections.collection_card.unknown_llmProvider'),
+    embedder: props.singleCollection?.collection?.embedder || t('collections.collection_card.unknown_llmProvider'),
+    model: props.singleCollection?.collection?.model || t('collections.collection_card.unknown_model'),
+    updatedAt: props.singleCollection?.collection?.updatedAt ? formatDate(props.singleCollection?.collection.updatedAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
+    createdAt: props.singleCollection?.collection?.createdAt ? formatDate(props.singleCollection?.collection.createdAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
   }
 })
 </script>
@@ -125,6 +191,30 @@ const collectionData = computed(() => {
       </template>
     </LabelDescriptionItem>
   </div>
+  <div class="add-documents-container">
+    <div class="label">
+      <DocumentIcon size="18px" />
+      <span>  {{ t('collections.labels.addDocument') }}</span>
+    </div>
+    <el-transfer
+      v-model="rightValue"
+      :titles="['Documents', 'Collection']"
+      filterable
+      filter-placeholder="Search for documents..."
+      :data="transformedDocuments"
+      @change="handleTransferChange"
+    >
+      <template #right-footer>
+        <el-button
+          type="primary"
+          style="margin-top: 16px;"
+          @click="submitSelection"
+        >
+          Add documents
+        </el-button>
+      </template>
+    </el-transfer>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -201,6 +291,22 @@ const collectionData = computed(() => {
 .collectionname {
   font-weight: var(--font-weight-bold);
   color: var(--color-primary-900);
+}
+
+.add-documents-container {
+  margin-top: 1.5rem;
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary-900);
+    font-size: var(--font-size-fluid-3);
+  }
+
+  .barrage-transfer {
+    border: 0;
+    margin-top: 1.5rem;
+  }
 }
 
 .dark {

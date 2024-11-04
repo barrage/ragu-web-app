@@ -1,11 +1,22 @@
+export interface CollectionResponse {
+  collection: Collection
+  totalDocuments: number
+  documents: Document[]
+}
+
 export interface Collection {
   id: string
   name: string
   model: string
   embedder: string
   provider: string
-  createdAt: string
-  updatedAt: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface Document {
+  id: string
+  name: string
 }
 
 export interface CollectionListResponse {

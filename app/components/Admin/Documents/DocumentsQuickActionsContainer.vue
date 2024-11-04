@@ -54,7 +54,7 @@ const upload = async () => {
   }
   for (const file of files) {
     const { execute: uploadDocument, error } = await useAsyncData(() => documentStore.POST_UploadDocument(file), { immediate: false })
-    uploadDocument()
+    await uploadDocument()
     if (error.value) {
       if (error.value?.statusCode === 409) {
         ElNotification({
@@ -85,7 +85,7 @@ const upload = async () => {
       })
       isUploadModalVisible.value = false
       fileList.value = []
-      documentStore.GET_AllDocuments()
+      await documentStore.GET_AllDocuments()
     }
     isUploadLoading.value = false
   }

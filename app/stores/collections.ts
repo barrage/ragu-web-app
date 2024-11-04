@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import type { Collection, CollectionDetail, CollectionListResponse } from '~/types/collection'
+import type { Collection, CollectionDetail, CollectionListResponse, CollectionResponse } from '~/types/collection'
+import type { CollectionWithDocuments } from '~/types/embedding'
 
 export const useCollectionsStore = defineStore('collection', () => {
   // State
@@ -9,12 +10,13 @@ export const useCollectionsStore = defineStore('collection', () => {
   // Constants
 
   const collectionResponse = ref<CollectionListResponse | null >()
-  const singleCollection = ref<Collection | null>()
+  const singleCollection = ref<CollectionResponse | null>()
   const collections = computed<Collection[]>(() => {
     return collectionResponse.value?.items || []
   })
   const newCollection = ref()
   const listEmbeddingsModels = ref<Record<string, number>>({})
+  const embeddedCollection = ref<any>()
 
   /* API */
 
@@ -29,11 +31,12 @@ export const useCollectionsStore = defineStore('collection', () => {
     }
   }
 
-  async function GET_SingleCollection(collectionId: string): Promise<Collection | null | undefined> {
+  async function GET_SingleCollection(collectionId: string): Promise<CollectionResponse | null | undefined> {
     const data = await $api.collection.GetSingleCollection(collectionId)
 
     if (data) {
       singleCollection.value = data
+
       return data
     }
 
@@ -68,6 +71,17 @@ export const useCollectionsStore = defineStore('collection', () => {
     }
   }
 
+  async function POST_UpdateCollection(body: CollectionWithDocuments): Promise<CollectionWithDocuments | null> {
+    const data = await $api.embedding.UpdateCollectionWithDocuments(body)
+
+    if (data) {
+      return embeddedCollection.value = data
+    }
+    else {
+      return embeddedCollection.value = null
+    }
+  }
+
   return {
     collectionResponse,
     singleCollection,
@@ -79,5 +93,6 @@ export const useCollectionsStore = defineStore('collection', () => {
     DELETE_Collection,
     POST_CreateCollection,
     GET_ListEmbeddingModels,
+    POST_UpdateCollection,
   }
 })
