@@ -43,7 +43,17 @@ export default {
         description: 'Visualizza tutti i dettagli relativi a questa chat',
       },
     },
-    editTitle: 'Modifica titolo',
+    edit_title: {
+      title: 'Modifica titolo',
+      title_label: 'Titolo',
+      title_placeholder: 'Inserisci un nuovo titolo',
+      notifications: {
+        success_title: 'Titolo aggiornato con successo',
+        success_description: 'Il titolo della chat è stato aggiornato con successo.',
+        error_title: 'Errore',
+        error_description: 'Si è verificato un errore durante l\'impostazione del nuovo titolo della chat.',
+      },
+    },
     delete_chat: {
       title: 'Elimina chat',
       description: 'Sei sicuro di voler eliminare la chat?',

@@ -43,7 +43,17 @@ export default {
         description: 'Voir tous les détails liés à cette conversation',
       },
     },
-    editTitle: 'Modifier le titre',
+    edit_title: {
+      title: 'Modifier le titre',
+      title_label: 'Titre',
+      title_placeholder: 'Veuillez saisir un nouveau titre',
+      notifications: {
+        success_title: 'Titre mis à jour avec succès',
+        success_description: 'Le titre du chat a été mis à jour avec succès.',
+        error_title: 'Erreur',
+        error_description: 'Une erreur s\'est produite lors de la modification du titre du chat.',
+      },
+    },
     delete_chat: {
       title: 'Supprimer la discussion',
       description: 'Êtes-vous sûr de vouloir supprimer la discussion ?',

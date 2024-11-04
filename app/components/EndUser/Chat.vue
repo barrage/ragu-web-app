@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import EditChatTitleModal from './EditChatTitleModal.vue'
 import type { Chat, Message } from '~/types/chat'
 import EditTextIcon from '~/assets/icons/svg/edit-text.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import MoreIcon from '~/assets/icons/svg/more.svg'
-import { toggleBodyOverflow } from '~/utils/useBodyOverflow'
 
 const props = defineProps<{
   chat: Chat | null
   messages: Message[] | null
 }>()
-
-const updatedTitle = ref(props.chat?.title || '')
-const isEditingTitle = ref(false)
-
-const isModalVisible = ref(false)
 
 const popperOptions = {
   placement: 'bottom-end',
@@ -34,23 +29,6 @@ const popperOptions = {
   ],
 }
 
-const startEditingTitle = () => {
-  isEditingTitle.value = true
-}
-
-const saveEditedTitle = () => {
-  if (updatedTitle.value) {
-    // pipa za updated title promijneu
-
-    // varijabla u storu = updatedTitle.value
-  }
-  isEditingTitle.value = false
-}
-
-watch(isModalVisible, (newVal) => {
-  toggleBodyOverflow(newVal)
-})
-
 /* Delete Chat */
 const selectedChatDelete = ref<Chat | null>(null)
 const deleteChatModalVisible = ref(false)
@@ -63,32 +41,36 @@ const openDeleteChatModal = (chat: Chat | null) => {
 const closeDeleteChatModal = () => {
   deleteChatModalVisible.value = false
 }
+/* Edit Chat title */
+const selectedChatEdit = ref<Chat | null>(null)
+const editChatModalVisible = ref(false)
+
+const openEditChatModal = (chat: Chat | null) => {
+  selectedChatEdit.value = chat
+  editChatModalVisible.value = true
+}
+
+const closeEditChatModal = () => {
+  editChatModalVisible.value = false
+}
 </script>
 
 <template>
   <div class="chat-container">
     <div class="chat-title">
-      <h5 v-if="!isEditingTitle">
+      <h5>
         {{ props?.chat?.title || 'Chat title' }}
       </h5>
 
-      <el-input
-        v-else
-        v-model="updatedTitle"
-        class="edit-input"
-        type="text"
-        @blur="saveEditedTitle"
-        @keyup.enter="saveEditedTitle"
-      />
       <ClientOnly>
         <el-dropdown trigger="hover" :popper-options="popperOptions">
           <MoreIcon size="20" />
 
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="startEditingTitle">
+              <el-dropdown-item @click="openEditChatModal(props.chat)">
                 <div class="dropdown-item">
-                  <EditTextIcon />  {{ $t('chat.editTitle') }}
+                  <EditTextIcon />  {{ $t('chat.edit_title.title') }}
                 </div>
               </el-dropdown-item>
               <el-dropdown-item @click="openDeleteChatModal(props.chat)">
@@ -115,6 +97,12 @@ const closeDeleteChatModal = () => {
     :is-open="deleteChatModalVisible"
     :selected-chat="selectedChatDelete"
     @close-modal="closeDeleteChatModal"
+  />
+
+  <EditChatTitleModal
+    :is-open="editChatModalVisible"
+    :selected-chat="selectedChatEdit"
+    @close-modal="closeEditChatModal"
   />
 </template>
 

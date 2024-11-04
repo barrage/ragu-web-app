@@ -136,6 +136,12 @@ export const useChatStore = defineStore('chat', () => {
   async function DELETE_ChatBackoffice(chatId: string): Promise<void> {
     await $api.chat.DeleteChatBackoffice(chatId)
   }
+  async function PUT_UpdateChatTitle(chatid: string, newChatTitle: string): Promise<void> {
+    await $api.chat.PutUpdateChatTitle(chatid, newChatTitle)
+  }
+  async function PUT_UpdateChatTitleBackoffice(chatid: string, newChatTitle: string): Promise<void> {
+    await $api.chat.PutUpdateChatTitleBackoffice(chatid, newChatTitle)
+  }
 
   return {
     chats,
@@ -160,5 +166,7 @@ export const useChatStore = defineStore('chat', () => {
     GET_SingleChatAdmin,
     DELETE_Chat,
     DELETE_ChatBackoffice,
+    PUT_UpdateChatTitle,
+    PUT_UpdateChatTitleBackoffice,
   }
 })

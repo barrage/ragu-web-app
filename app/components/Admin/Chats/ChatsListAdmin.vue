@@ -49,6 +49,19 @@ const openDeleteChatModal = (chat: Chat) => {
 const closeDeleteChatModal = () => {
   deleteChatModalVisible.value = false
 }
+
+/* Edit Chat title */
+const selectedChatEdit = ref<Chat | null>(null)
+const editChatModalVisible = ref(false)
+
+const openEditChatModal = (chat: Chat) => {
+  selectedChatEdit.value = chat
+  editChatModalVisible.value = true
+}
+
+const closeEditChatModal = () => {
+  editChatModalVisible.value = false
+}
 </script>
 
 <template>
@@ -60,7 +73,11 @@ const closeDeleteChatModal = () => {
         class="list-item"
         :class="[cardClasses[index]]"
       >
-        <ChatCardAdmin :chat="chat" @delete-chat="openDeleteChatModal(chat)" />
+        <ChatCardAdmin
+          :chat="chat"
+          @delete-chat="openDeleteChatModal(chat)"
+          @edit-chat-title="openEditChatModal"
+        />
       </div>
       <Pagination
         :current-page="pagination.currentPage"
@@ -74,6 +91,12 @@ const closeDeleteChatModal = () => {
       :is-open="deleteChatModalVisible"
       :selected-chat="selectedChatDelete"
       @close-modal="closeDeleteChatModal"
+    />
+
+    <EditChatTitleModalBackoffice
+      :is-open="editChatModalVisible"
+      :selected-chat="selectedChatEdit"
+      @close-modal="closeEditChatModal"
     />
   </div>
 </template>

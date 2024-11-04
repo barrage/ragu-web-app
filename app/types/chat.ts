@@ -53,3 +53,7 @@ export interface AdminChatDetails {
   chat: Chat
   user: User
 }
+
+export interface EditChatTitlePayload {
+  title: string
+}

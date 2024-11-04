@@ -33,6 +33,7 @@ const redirectToChatDetails = () => {
 
 interface Emits {
   (event: 'delete-chat', chat: Chat): void
+  (event: 'edit-chat-title', chat: Chat): void
 }
 </script>
 
@@ -80,7 +81,7 @@ interface Emits {
           :enterable="false"
           placement="top"
         >
-          <el-button plain>
+          <el-button plain @click="emits('edit-chat-title', props.chat)">
             <EditIcon />
           </el-button>
         </ElTooltip>
@@ -130,11 +131,10 @@ interface Emits {
   }
 
   & .chat-informations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
     grid-column: span 4;
-    display: flex;
-    gap: 2.5rem;
-    flex: 1 0 calc(70% - 22px);
-    justify-content: space-between;
     width: 100%;
     margin-right: 1.5rem;
   }
