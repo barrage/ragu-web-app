@@ -7,7 +7,18 @@ definePageMeta({
 const { t } = useI18n()
 const documentStore = useDocumentsStore()
 
-documentStore.GET_AllDocuments()
+const currentPage = ref(1)
+const itemsPerPage = ref(10)
+
+const { error, execute } = await useAsyncData(() =>
+  documentStore.GET_AllDocuments(currentPage.value, itemsPerPage.value))
+
+const handlePageChange = async (page: number) => {
+  currentPage.value = page
+  await execute()
+}
+
+errorHandler(error)
 </script>
 
 <template>
@@ -35,7 +46,7 @@ documentStore.GET_AllDocuments()
           <DocumentStatistics :documents="documentStore.documentResponse?.items" />
         </div>
         <div class="documents-overview">
-          <DocumentList :documents="documentStore.documentResponse?.items" />
+          <DocumentList :documents="documentStore.documentResponse?.items" @page-change="handlePageChange" />
         </div>
       </div>
     </template>

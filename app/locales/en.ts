@@ -65,6 +65,23 @@ export default {
     source: 'Source',
     id: 'Document ID',
     hash: 'Hash',
+
+    notifications: {
+      create: {
+        success_title: 'New Document',
+        success_description: 'Successfully created a new document',
+        error_title: 'New Document',
+        error_description: 'Error occurred while adding',
+        error_existing_document_title: 'Existing Document',
+        error_existing_document_description: 'This document already exists',
+        error_file_size_title: 'File Size Issue',
+        error_file_size_description: 'File size cannot exceed 50 MB!',
+        error_file_type_title: 'File Format Issue',
+        error_file_type_description: 'File must be in PDF, TXT, JSON, or DOCX format!',
+      },
+    }
+    ,
+
   },
   users: {
     title: 'Users',

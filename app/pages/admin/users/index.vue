@@ -8,14 +8,12 @@ definePageMeta({
 const { t } = useI18n()
 const usersStore = useUsersStore()
 
-// Define pagination state
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
 const { error, execute } = await useAsyncData(() =>
   usersStore.GET_AllUsers(currentPage.value, itemsPerPage.value))
 
-// Method to handle page change
 const handlePageChange = async (page: number) => {
   currentPage.value = page
   await execute()

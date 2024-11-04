@@ -6,13 +6,23 @@ export default class DocumentServise extends FetchFactory {
   private readonly endpoint: string = '/documents'
 
   /**
-   * Fetches a list of all documents.
+   * Fetches a paginated and sorted list of documents.
+   * @param page - The page number to fetch.
+   * @param perPage - The number of users per page.
+   * @param sortBy - The field to sort by (e.g., 'createdAt').
+   * @param sortOrder - The order of sorting ('asc' or 'desc').
    * @returns A promise that resolves to an DocumentListResponse type.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllDocuments(): Promise<DocumentListResponse> {
+  async GetAllDocuments(page: number = 1, perPage: number = 10, sortBy: string = 'createdAt', sortOrder: 'asc' | 'desc' = 'asc'): Promise<DocumentListResponse> {
     try {
-      return await this.$fetch<DocumentListResponse>(`${this.endpoint}`)
+      const queryParams = new URLSearchParams({
+        page: page.toString(),
+        perPage: perPage.toString(),
+        sortBy,
+        sortOrder,
+      }).toString()
+      return await this.$fetch<DocumentListResponse>(`${this.endpoint}?${queryParams}`)
     }
     catch (error: any) {
       throw createError({

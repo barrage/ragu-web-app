@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { nextTick } from 'vue'
-import type { EditUserPayload, User } from '~/types/users'
+import type { User } from '~/types/users'
 import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
