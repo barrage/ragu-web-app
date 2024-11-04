@@ -71,21 +71,23 @@ const rules = reactive<FormRules<AgentDetail>>({
   ],
 })
 
-// DYNAMIC MODELS STATE
+// WATCHERs
 
-// WATCHER FOR LLM PROVIDER
-watch(() => form.llmProvider, async (newProvider) => {
-  if (newProvider) {
-    await providerStore.GET_AvailableListLlms(newProvider)
-  }
-})
+watch(
+  () => form.llmProvider,
+  async (newProvider) => {
+    if (newProvider) {
+      form.model = ''
+      await providerStore.GET_AvailableListLlms(newProvider)
+    }
+  },
+)
+
 watch(() => form.embeddingProvider, async (newModel) => {
-  if (newModel === 'azure') {
-    await collectionStore.GET_ListEmbeddingModels('openai')
-  }
-  else {
-    await collectionStore.GET_ListEmbeddingModels(newModel)
-  }
+  form.embeddingModel = ''
+
+  const provider = newModel === 'azure' ? 'openai' : newModel
+  await collectionStore.GET_ListEmbeddingModels(provider)
 })
 
 // API CALLS
