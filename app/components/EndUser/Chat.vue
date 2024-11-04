@@ -16,14 +16,6 @@ const isEditingTitle = ref(false)
 
 const isModalVisible = ref(false)
 
-const openModal = () => {
-  isModalVisible.value = true
-}
-
-const closeModal = () => {
-  isModalVisible.value = false
-}
-
 const popperOptions = {
   placement: 'bottom-end',
   modifiers: [
@@ -58,6 +50,19 @@ const saveEditedTitle = () => {
 watch(isModalVisible, (newVal) => {
   toggleBodyOverflow(newVal)
 })
+
+/* Delete Chat */
+const selectedChatDelete = ref<Chat | null>(null)
+const deleteChatModalVisible = ref(false)
+
+const openDeleteChatModal = (chat: Chat | null) => {
+  selectedChatDelete.value = chat
+  deleteChatModalVisible.value = true
+}
+
+const closeDeleteChatModal = () => {
+  deleteChatModalVisible.value = false
+}
 </script>
 
 <template>
@@ -86,9 +91,9 @@ watch(isModalVisible, (newVal) => {
                   <EditTextIcon />  {{ $t('chat.editTitle') }}
                 </div>
               </el-dropdown-item>
-              <el-dropdown-item @click="openModal">
+              <el-dropdown-item @click="openDeleteChatModal(props.chat)">
                 <div class="dropdown-item">
-                  <DeleteIcon /> {{ $t('chat.deleteChat') }}
+                  <DeleteIcon /> {{ $t('chat.delete_chat.title') }}
                 </div>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -106,32 +111,11 @@ watch(isModalVisible, (newVal) => {
       </template>
     </div>
   </div>
-  <LlmModal
-    v-if="isModalVisible"
-    size="md"
-    :show-close-button="true"
-    @close="closeModal"
-  >
-    <template #header>
-      Delete chat?
-    </template>
-    <template #content>
-      <p class="delete-text">
-        This will delete <strong>{{ props?.chat?.title || 'Chat title' }}</strong>.
-      </p>
-      <p class="action-text">
-        Are you sure you want to delete this chat?
-      </p>
-      <div class="buttons-container">
-        <el-button class="delete" @click="closeModal">
-          Delete
-        </el-button>
-        <el-button class="cancel" @click="closeModal">
-          Cancel
-        </el-button>
-      </div>
-    </template>
-  </LlmModal>
+  <DeleteChatModal
+    :is-open="deleteChatModalVisible"
+    :selected-chat="selectedChatDelete"
+    @close-modal="closeDeleteChatModal"
+  />
 </template>
 
 <style lang="scss" scoped>

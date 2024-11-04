@@ -44,7 +44,16 @@ export default {
       },
     },
     editTitle: 'Editar título',
-    deleteChat: 'Excluir chat',
+    delete_chat: {
+      title: 'Excluir conversa',
+      description: 'Tem certeza de que deseja excluir a conversa?',
+      notifications: {
+        success_title: 'Excluído com sucesso',
+        success_description: 'A conversa foi excluída com sucesso.',
+        error_title: 'Erro',
+        error_description: 'Ocorreu um erro ao excluir a conversa.',
+      },
+    },
     chatInputPlaceholder: 'Enviar uma mensagem',
     chatHistory: 'Histórico de chat',
     newChat: {

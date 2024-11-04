@@ -133,4 +133,48 @@ export default class ChatServise extends FetchFactory {
       })
     }
   }
+
+  /**
+   * END USER APP
+   * Deletes a chat by unique ID.
+   * @param chatId - The ID of the chat to delete.
+   * @returns A promise that resolves when the chat is successfully deleted.
+   * @throws Will throw an error if the request fails.
+   */
+  async DeleteChat(chatId: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.chatsEndpoint}/${chatId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete user with ID: ${chatId}`,
+      })
+    }
+  }
+
+  /**
+   * Backoffice APP
+   * Deletes a chat by unique ID.
+   * @param chatId - The ID of the chat to delete.
+   * @returns A promise that resolves when the chat is successfully deleted.
+   * @throws Will throw an error if the request fails.
+   */
+  async DeleteChatBackoffice(chatId: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.adminChatsEndpoint}/${chatId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete user with ID: ${chatId}`,
+      })
+    }
+  }
 }

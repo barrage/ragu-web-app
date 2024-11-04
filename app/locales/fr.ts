@@ -44,7 +44,16 @@ export default {
       },
     },
     editTitle: 'Modifier le titre',
-    deleteChat: 'Supprimer le chat',
+    delete_chat: {
+      title: 'Supprimer la discussion',
+      description: 'Êtes-vous sûr de vouloir supprimer la discussion ?',
+      notifications: {
+        success_title: 'Supprimé avec succès',
+        success_description: 'La discussion a été supprimée avec succès.',
+        error_title: 'Erreur',
+        error_description: 'Une erreur est survenue lors de la suppression de la discussion.',
+      },
+    },
     chatInputPlaceholder: 'Envoyer un message',
     chatHistory: 'Historique de chat',
     newChat: {

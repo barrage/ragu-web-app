@@ -46,7 +46,16 @@ export default {
       },
     },
     editTitle: 'Uredi naslov',
-    deleteChat: 'Izbriši chat',
+    delete_chat: {
+      title: 'Izbriši chat',
+      description: 'Da li ste sigurni da želite obrisati chat?',
+      notifications: {
+        success_title: 'Uspješno izbrisano',
+        success_description: 'Chat je uspješno izbrisan.',
+        error_title: 'Greška',
+        error_description: 'Došlo je do greške pri brisanju chata.',
+      },
+    },
     chatInputPlaceholder: 'Pošalji poruku',
     chatHistory: 'Povijest chata',
 

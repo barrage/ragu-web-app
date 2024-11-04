@@ -23,14 +23,6 @@ onMounted(() => {
   })
 })
 
-const selectedUser = ref<Chat | null>(null)
-const deleteUserModalVisible = ref(false)
-
-const openDeleteUserModal = (chat: Chat) => {
-  selectedUser.value = chat
-  deleteUserModalVisible.value = true
-}
-
 const chatsStore = useChatStore()
 
 const pagination = ref<Pagination>({
@@ -44,6 +36,19 @@ const changePage = (page: number) => {
   pagination.value.currentPage = page
   emits('pageChange', pagination.value.currentPage)
 }
+
+/* Delete Chat */
+const selectedChatDelete = ref<Chat | null>(null)
+const deleteChatModalVisible = ref(false)
+
+const openDeleteChatModal = (chat: Chat) => {
+  selectedChatDelete.value = chat
+  deleteChatModalVisible.value = true
+}
+
+const closeDeleteChatModal = () => {
+  deleteChatModalVisible.value = false
+}
 </script>
 
 <template>
@@ -55,7 +60,7 @@ const changePage = (page: number) => {
         class="list-item"
         :class="[cardClasses[index]]"
       >
-        <ChatCardAdmin :chat="chat" @delete-user="openDeleteUserModal(chat)" />
+        <ChatCardAdmin :chat="chat" @delete-chat="openDeleteChatModal(chat)" />
       </div>
       <Pagination
         :current-page="pagination.currentPage"
@@ -64,6 +69,12 @@ const changePage = (page: number) => {
         @page-change="(page:number) => changePage(page)"
       />
     </div>
+
+    <DeleteChatModalBackoffice
+      :is-open="deleteChatModalVisible"
+      :selected-chat="selectedChatDelete"
+      @close-modal="closeDeleteChatModal"
+    />
   </div>
 </template>
 
