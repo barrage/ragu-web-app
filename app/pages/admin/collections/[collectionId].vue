@@ -26,7 +26,7 @@ errorHandler(error)
     >
       <ArrowLeftIcon /> {{ t('collections.title') }}
     </NuxtLink>
-    <CollectionDetails :collection="collectionStore.singleCollection" />
+    <CollectionDetails :single-collection="collectionStore.singleCollection" />
   </AdminPageContainer>
 </template>
 

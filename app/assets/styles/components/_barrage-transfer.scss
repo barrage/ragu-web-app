@@ -6,17 +6,16 @@
     --transfer-panel-header-height: 40px;
     --transfer-panel-header-bg-color: var(--color-primary-200);
     --transfer-panel-footer-height: 40px;
-    --transfer-panel-body-height: 278px;
+    --transfer-panel-body-height: 100%;
     --transfer-item-height: 30px;
     --transfer-filter-height: 32px;
-    --transfer-background-color: var(--color-primary-100);
+    --transfer-background-color: transparent;
     --transfer-button-background-color: var(--color-primary-200);
     --transfer-checkbox-background-color: var(--color-primary-800);
   }
 
   html.dark {
-    --transfer-button-background-color: var(--color-primary-700);
-    --transfer-background-color: var(--color-primary-800);
+    --transfer-background-color: transparent;
     --transfer-checkbox-background-color: var(--color-primary-100);
     --transfer-border-color: var(--color-primary-500);
   }
@@ -30,11 +29,12 @@
     &-panel {
       overflow: hidden;
       background: var(--transfer-background-color);
-      display: inline-block;
+      display: flex;
+      flex-direction: column;
       text-align: left;
       vertical-align: middle;
       width: var(--transfer-panel-width);
-      max-height: 100%;
+      max-height: 400px;
       box-sizing: border-box;
       position: relative;
 
@@ -81,6 +81,7 @@
 
       &__body {
         height: var(--transfer-panel-body-height);
+        min-height: 279px;
         border-left: 1px solid var(--transfer-border-color);
         border-right: 1px solid var(--transfer-border-color);
         border-bottom: 1px solid var(--transfer-border-color);
@@ -98,7 +99,7 @@
             height: var(--transfer-item-height);
             align-items: center;
             padding-left: 15px;
-            display: block !important;
+            display: flex;
             position: relative;
             font-size: 14px;
             line-height: var(--transfer-item-height);
@@ -124,6 +125,72 @@
           padding: 6px 15px 0;
           color: var(--color-red-600);
           text-align: center;
+        }
+        .barrage-input {
+          padding: 15px;
+          &__default {
+            // Styles for the default state of the input
+          }
+
+          &__prefix {
+            right: auto;
+            display: inline-block;
+            white-space: nowrap;
+            flex-shrink: 0;
+            flex-wrap: nowrap;
+            height: 100%;
+            text-align: center;
+            margin-left: 5px;
+          }
+
+          &__suffix {
+            width: 18px;
+            height: 18px;
+            margin-right: 5px;
+          }
+
+          &__wrapper {
+            width: 100%;
+            display: inline-flex;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+            padding: 1px 11px;
+            cursor: text;
+            transition: var(--el-transition-box-shadow);
+            transform: translateZ(0);
+            box-shadow: 0 0 0 1px
+              var(--el-input-border-color, var(--el-border-color)) inset;
+
+            &__prefix {
+            }
+
+            .barrage-input__prefix {
+              // Styles for the prefix icon container within the input wrapper
+              width: 18px;
+              height: 18px;
+
+              .barrage-input__prefix-inner {
+                // Styles for the inner part of the prefix icon
+              }
+
+              .barrage-icon {
+                // Styles for the icon itself
+
+                svg {
+                  // Styles for the SVG icon
+                }
+              }
+            }
+
+            .barrage-input__inner {
+              height: 32px;
+              width: 100%;
+              font-size: 14px;
+              display: inline-block;
+              padding-left: 25px;
+            }
+          }
         }
       }
     }

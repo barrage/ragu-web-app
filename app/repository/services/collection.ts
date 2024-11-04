@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { Collection, CollectionDetail, CollectionListResponse } from '~/types/collection'
+import type { Collection, CollectionDetail, CollectionListResponse, CollectionResponse } from '~/types/collection'
 
 export default class CollectionService extends FetchFactory {
   // Endpoint for collections-related API requests.
@@ -32,9 +32,9 @@ export default class CollectionService extends FetchFactory {
    * @returns A promise that resolves to an collection object.
    * @throws Will throw an error if the request fails.
    */
-  async GetSingleCollection(collectionId: string): Promise<Collection> {
+  async GetSingleCollection(collectionId: string): Promise<CollectionResponse> {
     try {
-      return await this.$fetch<Collection>(`${this.endpoint}/${collectionId}`,
+      return await this.$fetch<CollectionResponse>(`display${this.endpoint}/${collectionId}`,
 
       )
     }

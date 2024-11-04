@@ -313,7 +313,6 @@ export default {
       unknown_model: 'Unknown model',
       unknown_date: 'Unknown date',
     },
-
     labels: {
       id: 'Collection ID',
       name: 'Collection Name',
@@ -322,13 +321,13 @@ export default {
       provider: 'Provider',
       model: 'Model',
       embedder: 'Embedder',
+      addDocument: 'Add documents to collection',
     },
 
     deleteModal: {
       title: 'Delete Collection',
       text: 'Are you sure you want to delete this collection?',
     },
-
     rules: {
       name: {
         required_message: 'Please input Collection name',
@@ -339,9 +338,7 @@ export default {
       embeddingProvider: 'Please select Embedding provider',
       model: 'Please select Model',
     },
-
     notifications: {
-
       delete_title: 'Success',
       delete_message: 'Collection {name} is deleted!',
       delete_error: 'Collection is not deleted',
