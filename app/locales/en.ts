@@ -47,7 +47,16 @@ export default {
       },
     },
     editTitle: 'Edit title',
-    deleteChat: 'Delete chat',
+    delete_chat: {
+      title: 'Delete Chat',
+      description: 'Are you sure you want to delete the chat?',
+      notifications: {
+        success_title: 'Successfully deleted',
+        success_description: 'The chat has been successfully deleted.',
+        error_title: 'Error',
+        error_description: 'An error occurred while deleting the chat.',
+      },
+    },
     chatInputPlaceholder: 'Send a message',
     chatHistory: 'Chat history',
     newChat: {

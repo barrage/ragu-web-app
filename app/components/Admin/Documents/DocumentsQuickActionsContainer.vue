@@ -55,7 +55,6 @@ const upload = async () => {
   for (const file of files) {
     const { execute: uploadDocument, error } = await useAsyncData(() => documentStore.POST_UploadDocument(file), { immediate: false })
     uploadDocument()
-    console.log('error', error)
     if (error.value) {
       if (error.value?.statusCode === 409) {
         ElNotification({

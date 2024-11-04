@@ -92,7 +92,6 @@ export default class usersService extends FetchFactory {
    */
   async PutEditUser(userId: string, user: EditUserPayload): Promise<User> {
     try {
-      console.log('user->', user)
       return await this.$fetch<User>(`${this.endpoint}/${userId}`, {
         method: 'PUT',
         body: JSON.stringify(user),
@@ -147,7 +146,7 @@ export default class usersService extends FetchFactory {
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to delete user with ID: ${userId}`,
+        statusMessage: error?.message || `Failed to deactivate user with ID: ${userId}`,
       })
     }
   }

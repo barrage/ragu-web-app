@@ -129,6 +129,14 @@ export const useChatStore = defineStore('chat', () => {
     return chats.value?.find(chat => chat.id === (chatId)) || null
   }
 
+  async function DELETE_Chat(chatId: string): Promise<void> {
+    await $api.chat.DeleteChat(chatId)
+  }
+
+  async function DELETE_ChatBackoffice(chatId: string): Promise<void> {
+    await $api.chat.DeleteChatBackoffice(chatId)
+  }
+
   return {
     chats,
     messages,
@@ -150,5 +158,7 @@ export const useChatStore = defineStore('chat', () => {
     adminChatMessagesData,
     selectedChatAdmin,
     GET_SingleChatAdmin,
+    DELETE_Chat,
+    DELETE_ChatBackoffice,
   }
 })

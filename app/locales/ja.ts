@@ -44,7 +44,16 @@ export default {
       },
     },
     editTitle: 'タイトルを編集',
-    deleteChat: 'チャットを削除',
+    delete_chat: {
+      title: 'チャットを削除',
+      description: 'チャットを削除してもよろしいですか？',
+      notifications: {
+        success_title: '削除が成功しました',
+        success_description: 'チャットが正常に削除されました。',
+        error_title: 'エラー',
+        error_description: 'チャットの削除中にエラーが発生しました。',
+      },
+    },
     chatInputPlaceholder: 'メッセージを送信',
     chatHistory: 'チャット履歴',
     newChat: {
