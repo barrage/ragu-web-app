@@ -56,7 +56,7 @@ const navigationStore = useNavigationStore()
 
 .dark {
   .main-layout {
-    background: var(--color-primary-900);
+    background: var(--color-primary-1000);
   }
 }
 </style>

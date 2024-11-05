@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 const chatStore = useChatStore()
 const messages = computed(() => {
-  return [...(chatStore.messages || [])]
+  return [...(chatStore?.messages || [])]
 })
 
 const selectedChat = computed(() => {
-  return chatStore.selectedChat
+  return chatStore?.selectedChat
 })
 </script>
 
@@ -31,6 +31,7 @@ const selectedChat = computed(() => {
     align-items: center;
     background: transparent;
     position: relative;
+    z-index: 0;
   }
 }
 </style>

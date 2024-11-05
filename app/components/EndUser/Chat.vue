@@ -118,7 +118,7 @@ const closeEditChatModal = () => {
     flex-direction: column;
     gap: 36px;
     width: 100%;
-    z-index: -1;
+    z-index: 1;
   }
 }
 
@@ -130,6 +130,7 @@ const closeEditChatModal = () => {
   gap: 22px;
   justify-content: center;
   width: 100%;
+  z-index: 2;
   background: var(--color-primary-subtle);
   padding: var(--spacing-fluid-5-xs);
 
@@ -204,7 +205,7 @@ const closeEditChatModal = () => {
 
 .dark {
   & .chat-title {
-    background: var(--color-primary-900);
+    background: var(--color-primary-1000);
     & h5 {
       margin-bottom: 4px;
       color: var(--color-primary-0);
@@ -212,7 +213,7 @@ const closeEditChatModal = () => {
     &::after {
       background: linear-gradient(
         to bottom,
-        var(--color-primary-900),
+        var(--color-primary-1000),
         transparent
       );
     }

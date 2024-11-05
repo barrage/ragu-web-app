@@ -229,7 +229,7 @@ const redirectToUserDetails = () => {
   .user-card {
     border: 0.5px solid var(--color-primary-700);
     background: var(--color-primary-900);
-    box-shadow: 0 0.2rem 0.3rem var(--color-primary-800);
+    box-shadow: 0 0.15rem 0.25rem var(--color-primary-800);
   }
   .username-title-wrapper {
     color: var(--color-primary-0);

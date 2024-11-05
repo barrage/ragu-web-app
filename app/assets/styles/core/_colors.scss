@@ -10,6 +10,7 @@
     --color-darkmode-700: #181818;
     --color-darkmode-800: #131313;
     --color-darkmode-900: #070707;
+    --color-darkmode-1000: #000000;
 
     --color-lightmode-0: #ffffff;
     --color-lightmode-100: #f7f8f9;
@@ -21,6 +22,7 @@
     --color-lightmode-700: #626f86;
     --color-lightmode-800: #44546f;
     --color-lightmode-900: #2c3e5d;
+    --color-lightmode-1000: #25324a;
 
     --color-gray-50: #f9f9f9;
     --color-gray-100: #ededed;
@@ -32,6 +34,7 @@
     --color-gray-700: #454545;
     --color-gray-800: #222222;
     --color-gray-900: #111111;
+    --color-gray-1000: #020202;
 
     --color-blue-subtle: #d3d7f9;
     --color-blue-0: #d9e2ff;
@@ -44,6 +47,7 @@
     --color-blue-700: #0819bd;
     --color-blue-800: #0311ab;
     --color-blue-900: #000d99;
+    --color-blue-1000: #09105f;
 
     --color-violet-subtle: #e4dbfb;
     --color-violet-0: #e2d9ff;
@@ -56,6 +60,7 @@
     --color-violet-700: #5e2ec6;
     --color-violet-800: #5024ab;
     --color-violet-900: #411c8c;
+    --color-violet-1000: #301860;
 
     --color-green-subtle: #d3f4e6;
     --color-green-0: #cff9e4;
@@ -68,6 +73,7 @@
     --color-green-700: #017547;
     --color-green-800: #055134;
     --color-green-900: #203930;
+    --color-green-1000: #1c2f28;
 
     --color-orange-subtle: #fee2d0;
     --color-orange-0: #ffe6cc;
@@ -80,6 +86,7 @@
     --color-orange-700: #792d01;
     --color-orange-800: #481d05;
     --color-orange-900: #402d24;
+    --color-orange-1000: #2e221c;
 
     --color-red-subtle: #fad2cf;
     --color-red-0: #ffcabf;
@@ -92,6 +99,7 @@
     --color-red-700: #c30a03;
     --color-red-800: #a70401;
     --color-red-900: #870000;
+    --color-red-1000: #441313;
 
     --color-magenta-subtle: #ffecf8;
     --color-magenta-0: #f5d8ea;
@@ -104,6 +112,7 @@
     --color-magenta-700: #943d73;
     --color-magenta-800: #50253f;
     --color-magenta-900: #3d2232;
+    --color-magenta-1000: #311d29;
 
     --color-yellow-subtle: #f6f0d6;
     --color-yellow-0: #fff7d6;
@@ -116,6 +125,7 @@
     --color-yellow-700: #7f5f01;
     --color-yellow-800: #533f04;
     --color-yellow-900: #332e1b;
+    --color-yellow-1000: #272417;
 
     --color-lime-subtle: #eaf7d5;
     --color-lime-0: #efffd6;
@@ -128,6 +138,7 @@
     --color-lime-700: #4c6b1f;
     --color-lime-800: #37471f;
     --color-lime-900: #28311b;
+    --color-lime-1000: #202616;
 
     --color-teal-subtle: #e2f2f7;
     --color-teal-0: #e7f9ff;
@@ -140,6 +151,7 @@
     --color-teal-700: #206a83;
     --color-teal-800: #164555;
     --color-teal-900: #1e3137;
+    --color-teal-1000: #182529;
 
     --color-brown-subtle: #efdbcb;
     --color-brown-0: #e3c7b3;
@@ -152,6 +164,7 @@
     --color-brown-700: #3a2f24;
     --color-brown-800: #272019;
     --color-brown-900: #1e1813;
+    --color-brown-1000: #15110e;
 
     --color-sage-subtle: #f4f7f0;
     --color-sage-0: #ebf0e0;
@@ -164,6 +177,7 @@
     --color-sage-700: #4d5450;
     --color-sage-800: #353b35;
     --color-sage-900: #2a2d2a;
+    --color-sage-1000: #202220;
 
     // Main font colors
     --shade-0: #ffffff;
@@ -179,6 +193,7 @@
     --color-primary-700: #626f86;
     --color-primary-800: #44546f;
     --color-primary-900: #2c3e5d;
+    --color-primary-1000: #25324a;
   }
 
   /* PRIMARY THEME COLOR DEFINITIONS */
@@ -195,6 +210,7 @@
     --color-primary-700: #222a72;
     --color-primary-800: #212656;
     --color-primary-900: #21233d;
+    --color-primary-1000: #21233d;
   }
   .theme-violet {
     --color-primary-subtle: #e4dbfb;
@@ -208,6 +224,7 @@
     --color-primary-700: #5e2ec6;
     --color-primary-800: #5024ab;
     --color-primary-900: #411c8c;
+    --color-primary-1000: #33186a;
   }
 
   .theme-red {
@@ -222,6 +239,7 @@
     --color-primary-700: #a51111;
     --color-primary-800: #6c1313;
     --color-primary-900: #5a0505;
+    --color-primary-1000: #460808;
   }
   .theme-green {
     --color-primary-subtle: #ccf0e1;
@@ -235,6 +253,7 @@
     --color-primary-700: #017547;
     --color-primary-800: #055134;
     --color-primary-900: #203930;
+    --color-primary-1000: #1f332c;
   }
   .theme-orange {
     --color-primary-subtle: #fee2d0;
@@ -248,6 +267,7 @@
     --color-primary-700: #792d01;
     --color-primary-800: #481d05;
     --color-primary-900: #402d24;
+    --color-primary-1000: #392922;
   }
   .theme-magenta {
     --color-primary-subtle: #ffecf8;
@@ -261,6 +281,7 @@
     --color-primary-700: #9b276f;
     --color-primary-800: #64244a;
     --color-primary-900: #3d2232;
+    --color-primary-1000: #321f2a;
   }
   .theme-yellow {
     --color-primary-subtle: #f6f0d6;
@@ -274,6 +295,7 @@
     --color-primary-700: #7f5f01;
     --color-primary-800: #533f04;
     --color-primary-900: #332e1b;
+    --color-primary-1000: #2c2819;
   }
   .theme-lime {
     --color-primary-subtle: #eaf7d5;
@@ -287,6 +309,7 @@
     --color-primary-700: #4c6b1f;
     --color-primary-800: #37471f;
     --color-primary-900: #28311b;
+    --color-primary-1000: #252d1b;
   }
   .theme-teal {
     --color-primary-subtle: #e2f2f7;
@@ -300,6 +323,7 @@
     --color-primary-700: #206a83;
     --color-primary-800: #164555;
     --color-primary-900: #1e3137;
+    --color-primary-1000: #192529;
   }
   .theme-brown {
     --color-primary-subtle: #fcf7f1;
@@ -313,6 +337,7 @@
     --color-primary-700: #704b1f;
     --color-primary-800: #543818;
     --color-primary-900: #3b2711;
+    --color-primary-1000: #2e1f10;
   }
   .theme-sage {
     --color-primary-subtle: #f7f8f6;
@@ -326,9 +351,11 @@
     --color-primary-700: #3e4a40;
     --color-primary-800: #2b3a2c;
     --color-primary-900: #1a2a1b;
+    --color-primary-1000: #182419;
   }
 
   .dark {
+    --color-primary-1000: #171717;
     --color-primary-900: #1a1a1a;
     --color-primary-800: #262626;
     --color-primary-700: #333333;
@@ -352,6 +379,7 @@
       --color-primary-700: #123f67;
       --color-primary-800: #132d49;
       --color-primary-900: #1d2837;
+      --color-primary-1000: #171f2a;
     }
     &.theme-violet {
       --color-primary-0: #cfbee8;
@@ -364,6 +392,7 @@
       --color-primary-700: #55188e;
       --color-primary-800: #39204e;
       --color-primary-900: #302539;
+      --color-primary-1000: #271e2e;
     }
     &.theme-red {
       --color-primary-0: #ffe6e6;
@@ -376,6 +405,7 @@
       --color-primary-700: #722525;
       --color-primary-800: #5a1c1c;
       --color-primary-900: #3a1616;
+      --color-primary-1000: #321414;
     }
     &.theme-green {
       --color-primary-0: #e6f2e6;
@@ -388,6 +418,7 @@
       --color-primary-700: #1f4d1f;
       --color-primary-800: #133a13;
       --color-primary-900: #152915;
+      --color-primary-1000: #122012;
     }
     &.theme-orange {
       --color-primary-0: #ffece0;
@@ -400,6 +431,7 @@
       --color-primary-700: #5f2905;
       --color-primary-800: #522707;
       --color-primary-900: #351e0e;
+      --color-primary-1000: #2b1a0e;
     }
     &.theme-magenta {
       --color-primary-subtle: #ffecf8;
@@ -413,6 +445,7 @@
       --color-primary-700: #943d73;
       --color-primary-800: #50253f;
       --color-primary-900: #3d2232;
+      --color-primary-1000: #321e2a;
     }
     &.theme-yellow {
       --color-primary-subtle: #f6f0d6;
@@ -426,6 +459,7 @@
       --color-primary-700: #615015;
       --color-primary-800: #4b3f1a;
       --color-primary-900: #383321;
+      --color-primary-1000: #322e1f;
     }
     &.theme-lime {
       --color-primary-subtle: #eaf7d5;
@@ -439,6 +473,7 @@
       --color-primary-700: #4c6b1f;
       --color-primary-800: #37471f;
       --color-primary-900: #28311b;
+      --color-primary-1000: #222918;
     }
     &.theme-teal {
       --color-primary-subtle: #e2f2f7;
@@ -452,6 +487,7 @@
       --color-primary-700: #206a83;
       --color-primary-800: #164555;
       --color-primary-900: #1e3137;
+      --color-primary-1000: #19262b;
     }
     &.theme-brown {
       --color-primary-subtle: #efdbcb;
@@ -465,6 +501,7 @@
       --color-primary-700: #3a2f24;
       --color-primary-800: #272019;
       --color-primary-900: #1e1813;
+      --color-primary-1000: #17130f;
     }
     &.theme-sage {
       --color-primary-subtle: #f4f7f0;
@@ -478,6 +515,7 @@
       --color-primary-700: #4d5450;
       --color-primary-800: #353b35;
       --color-primary-900: #2a2d2a;
+      --color-primary-1000: #212321;
     }
   }
 }

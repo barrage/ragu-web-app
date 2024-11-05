@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue'
-import ArrowUp from '~/assets/icons/svg/arrow-up.svg'
+import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
+import StopStreamIcon from '~/assets/icons/svg/stop-stream.svg'
 import { useNuxtApp } from '#app'
 
 /* SETUP */
@@ -34,12 +34,16 @@ const handleServerMessage = (data: string) => {
     }
   }
   else {
-    const jsonObject = JSON.parse(data)
+    const jsonObject = JSON?.parse(data)
 
     if (jsonObject?.chatId && jsonObject?.type === 'finish_event') {
-      chatStore.GET_AllChats()
-      chatStore.GET_ChatMessages(jsonObject.chatId)
-      router.push(`/c/${jsonObject.chatId}`)
+      if (currentChatId.value) {
+        chatStore.GET_ChatMessages(jsonObject.chatId)
+      }
+      else {
+        chatStore.GET_AllChats()
+        router.push(`/c/${jsonObject.chatId}`)
+      }
     }
   }
 }
@@ -145,21 +149,40 @@ onMounted(async () => {
 
   $wsAddMessageHandler(handleServerMessage)
 })
+
+const stopStream = () => {
+  if (chatStore.isWebSocketStreaming) {
+    $wsStopStream()
+    chatStore.isWebSocketStreaming = false
+  }
+}
 </script>
 
 <template>
   <section class="chat-input-section">
+    {{ }}
     <el-input
       v-model="message"
       size="large"
       :placeholder="$t('chat.chatInputPlaceholder')"
-      :disabled="!($wsConnectionState === 'open')"
+      :disabled="!($wsConnectionState === 'open') || chatStore.isWebSocketStreaming"
       class="barrage-chat-input"
       @keyup.enter="sendMessage"
     >
       <template #suffix>
-        <div class="suffix-icon" @click="sendMessage">
-          <ArrowUp size="32" />
+        <div
+          v-if="chatStore.isWebSocketStreaming"
+          class="suffix-icon"
+          @click="stopStream"
+        >
+          <StopStreamIcon size="32" />
+        </div>
+        <div
+          v-else
+          class="suffix-icon"
+          @click="sendMessage"
+        >
+          <ArrowUpIcon size="32" />
         </div>
       </template>
     </el-input>

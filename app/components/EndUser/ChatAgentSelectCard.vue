@@ -30,7 +30,7 @@ const agentStore = useAgentStore()
 
 <style lang="scss" scoped>
 .agent-select-card {
-  border: 1px solid var(--color-primary-400);
+  border: 0.5px solid var(--color-primary-400);
   padding: 0.75rem;
   padding-bottom: 1rem;
   border-radius: 1rem;
@@ -38,7 +38,7 @@ const agentStore = useAgentStore()
   display: flex;
   &.selected {
     background: var(--color-primary-100);
-    border: 1.5px solid var(--color-primary-500);
+    border: 0.5px solid var(--color-primary-500);
     & .agent-select-text {
       color: var(--color-primary-900);
       font-weight: var(--font-weight-medium);
@@ -63,7 +63,6 @@ const agentStore = useAgentStore()
       & .agent-select-text {
         font-size: var(--font-size-desktop-3);
         gap: 1rem;
-        font-weight: var(--font-weight-bold);
         text-align: left;
         line-height: 1.5rem;
         color: var(--color-primary-700);
@@ -80,7 +79,7 @@ const agentStore = useAgentStore()
   }
 
   &:hover {
-    border: 1.5px solid var(--color-primary-500);
+    border: 0.5px solid var(--color-primary-500);
     background: var(--color-primary-100);
     cursor: pointer;
 
@@ -93,7 +92,7 @@ const agentStore = useAgentStore()
 .dark {
   & .agent-select-card {
     &.selected {
-      border: 1.5px solid var(--color-primary-300);
+      border: 0.5px solid var(--color-primary-300);
       background: var(--color-primary-800);
       & .agent-select-text {
         color: var(--color-primary-0);
@@ -106,7 +105,7 @@ const agentStore = useAgentStore()
     }
 
     &:hover {
-      border: 1.5px solid var(--color-primary-300);
+      border: 0.5px solid var(--color-primary-300);
       background: var(--color-primary-800);
 
       & .agent-select-text {

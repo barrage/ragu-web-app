@@ -2,11 +2,9 @@
 const chatStore = useChatStore()
 const route = useRoute()
 const router = useRouter()
-const chatId = Array.isArray(route.params.chatId) ? route.params.chatId[0] : route.params.chatId
 
-if (chatId) {
-  chatStore.messages = []
-  chatStore.GET_ChatMessages(chatId)
+if (route?.params?.chatId) {
+  chatStore.GET_ChatMessages(route.params.chatId.toString())
 }
 else {
   router.push('/')
