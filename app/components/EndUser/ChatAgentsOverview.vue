@@ -43,7 +43,7 @@ watch(
       <ChatAgentIcon size="52" />
       <h6>{{ selectedAgent?.name }}</h6>
       <span>Updated: {{ formatDate(selectedAgent?.createdAt) }}</span>
-      <p>{{ selectedAgent?.context }}</p>
+      <p>{{ selectedAgent?.description }}</p>
     </div>
   </div>
 </template>

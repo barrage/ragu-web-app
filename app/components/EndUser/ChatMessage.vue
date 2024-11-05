@@ -114,7 +114,7 @@ const copyItem = () => {
         <ProfileIcon v-else size="32" />
       </div>
       <template v-if="props.message.senderType === 'assistant' && chatStore.isWebSocketStreaming && !props.message.content">
-        <LlmLoader class="assistant-message-loader" />
+        <MeetUpLoader class="assistant-message-loader" />
       </template>
       <p
         v-else
@@ -204,6 +204,8 @@ const copyItem = () => {
   align-items: center;
   color: var(--color-primary-600);
   padding-left: 2px;
+  position: absolute;
+  pointer-events: visible;
   & svg {
     &:hover {
       color: var(--color-primary-900);
