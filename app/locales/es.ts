@@ -13,6 +13,12 @@ export default {
     last30days: 'Últimos 30 días',
     lastYear: 'El año pasado',
   },
+  sort: {
+    title: 'Opciones de ordenación',
+    description: 'Ordenar por',
+    asc: 'Ascendente',
+    desc: 'Descendente',
+  },
   profileDropdown: {
     switchToAdmin: 'Cambiar a Admin',
     switchToUser: 'Cambiar a Usuario',
@@ -32,6 +38,7 @@ export default {
       title: 'Chats',
       description: 'Gestiona todos tus chats en un solo lugar',
       chat_card: {
+        title: 'Título',
         created_at: 'Creado el',
         updated_at: 'Actualizado el',
         view_details: 'Ver detalles',
@@ -287,6 +294,18 @@ export default {
     title: 'Usuarios',
     description: 'Administra los miembros de tu equipo y establece sus niveles de acceso.',
     invite_user: 'Invitar usuario',
+    delete_user: {
+      title: 'Eliminar Usuario',
+      description: '¿Está seguro de que desea eliminar este usuario? Esta acción no se puede deshacer.',
+      confirm: 'Eliminar',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Usuario Eliminado',
+        success_description: 'El usuario se ha eliminado correctamente.',
+        error_title: 'Error en la Eliminación',
+        error_description: 'Ocurrió un error. No se pudo eliminar el usuario.',
+      },
+    },
     form: {
       first_name: 'Nombre',
       first_name_placeholder: 'Introduce el nombre',

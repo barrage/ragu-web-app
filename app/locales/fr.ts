@@ -13,6 +13,12 @@ export default {
     last30days: 'Les 30 derniers jours',
     lastYear: 'L\'année dernière',
   },
+  sort: {
+    title: 'Options de tri',
+    description: 'Trier par',
+    asc: 'Ascendant',
+    desc: 'Descendant',
+  },
   profileDropdown: {
     switchToAdmin: 'Passer à Admin',
     switchToUser: 'Passer à Utilisateur',
@@ -32,6 +38,7 @@ export default {
       title: 'Conversations',
       description: 'Gérez toutes vos conversations à un seul endroit',
       chat_card: {
+        title: 'Titre',
         created_at: 'Créé le',
         updated_at: 'Mis à jour le',
         view_details: 'Voir les détails',
@@ -289,6 +296,18 @@ export default {
     title: 'Utilisateurs',
     description: 'Gérez les membres de votre équipe et définissez leurs niveaux d\'accès.',
     invite_user: 'Inviter un utilisateur',
+    delete_user: {
+      title: 'Supprimer l\'Utilisateur',
+      description: 'Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.',
+      confirm: 'Supprimer',
+      cancel: 'Annuler',
+      notifications: {
+        success_title: 'Utilisateur Supprimé',
+        success_description: 'L\'utilisateur a été supprimé avec succès.',
+        error_title: 'Échec de la Suppression',
+        error_description: 'Une erreur est survenue. L\'utilisateur n\'a pas pu être supprimé.',
+      },
+    },
     form: {
       first_name: 'Prénom',
       first_name_placeholder: 'Entrez le prénom',

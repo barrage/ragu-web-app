@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import ProfileIcon from '~/assets/icons/svg/account.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
@@ -55,14 +54,8 @@ const redirectToUserDetails = () => {
 <template>
   <div>
     <div class="user-card">
-      <div class="user-profile-item" @click="redirectToUserDetails">
-        <ProfileIcon size="36" />
-        <div class="username-mail-wrapper">
-          <p class="username">
-            {{ `${userData.fullname}` }}
-          </p>
-          <span class="user-mail">{{ userData.email }}</span>
-        </div>
+      <div class="user-profile-item-wrapper" @click="redirectToUserDetails">
+        <UserProfileOverview :user="props.user" />
       </div>
 
       <LabelDescriptionItem
@@ -184,45 +177,8 @@ const redirectToUserDetails = () => {
   }
 }
 
-.user-profile-item {
+.user-profile-item-wrapper {
   grid-column: span 2;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: flex-start;
-  margin-right: 1rem;
-  text-overflow: ellipsis;
-  flex: 0 0 calc(30% - 22px);
-  color: var(--color-primary-900);
-
-  svg {
-    flex-shrink: 0;
-  }
-
-  &:hover {
-    opacity: 0.8;
-    cursor: pointer;
-  }
-}
-
-.username-mail-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  & .username {
-    margin: 0;
-    font-size: var(--font-size-fluid-2);
-    line-height: normal;
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary-900);
-  }
-  & .user-mail {
-    margin: 0;
-    line-height: normal;
-    font-size: var(--font-size-fluid-1);
-    color: var(--color-primary-800);
-  }
 }
 
 .dark {

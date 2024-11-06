@@ -33,13 +33,27 @@ watch(
     }
   },
 )
+const cardClasses = ref<string[]>([])
+const applyCardClasses = () => {
+  cardClasses.value = []
+  props.documents?.forEach((_, index) => {
+    setTimeout(() => {
+      cardClasses.value[index] = 'list-item-visible'
+    }, index * 100)
+  })
+}
+
+watch(
+  () => props.documents,
+  () => {
+    nextTick(applyCardClasses)
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
   <div class="document-list">
-    <h6 class="list-title">
-      All documents
-    </h6>
     <!--    <div class="document-list-actions">
       <DocumentsListActions />
     </div> -->
@@ -60,7 +74,7 @@ watch(
 </template>
 
   <style lang="scss"  scoped>
-  .document-list {
+.document-list {
   padding-left: var(--spacing-desktop-m);
 }
 .list-title {

@@ -4,11 +4,12 @@ import type { User } from '~/types/users'
 import DeletePersonIcon from '~/assets/icons/svg/delete-person.svg'
 
 const props = defineProps<{
-  selectedUser: User | null
+  selectedUser: User | undefined
   isOpen: boolean
 }>()
 
 const emits = defineEmits<Emits>()
+const { t } = useI18n()
 const deleteUserModalVisible = ref(props.isOpen)
 const usersStore = useUsersStore()
 const closeModal = () => {
@@ -30,8 +31,8 @@ const submitDeleteUser = async () => {
     deleteUserModalVisible.value = false
     if (error.value) {
       ElNotification({
-        title: 'Error',
-        message: 'Failed to delete the user.',
+        title: t('users.delete_user.notifications.error_title'),
+        message: t('users.delete_user.notifications.error_description'),
         type: 'error',
         customClass: 'error',
         duration: 2500,
@@ -40,8 +41,8 @@ const submitDeleteUser = async () => {
     else {
       usersStore.GET_AllUsers()
       ElNotification({
-        title: 'Success',
-        message: `User ${props.selectedUser?.fullName} deleted successfully!`,
+        title: t('users.delete_user.notifications.success_title'),
+        message: t('users.delete_user.notifications.success_description'),
         type: 'success',
         customClass: 'success',
         duration: 2500,
@@ -64,21 +65,24 @@ const submitDeleteUser = async () => {
       <template #header>
         <div class="delete-user-modal-header">
           <DeletePersonIcon size="42px" />
-          <h5> {{ $t('users.user_card.delete_user') }}</h5>
+          <h5> {{ $t('users.delete_user.title') }}</h5>
         </div>
       </template>
-      <div>
-        <p>
-          Are you sure you want to delete user:  <br> <b>{{ props.selectedUser?.fullName }}</b>
-        </p>
+      <div class="delete-user-modal-body">
+        <span class="delete-user-description">
+          {{ $t('users.delete_user.description') }}
+        </span>
+        <template v-if="props.selectedUser">
+          <UserProfileOverview :user="props.selectedUser" />
+        </template>
       </div>
 
       <template #footer>
         <el-button @click="closeModal">
-          Cancel
+          {{ $t('users.delete_user.cancel') }}
         </el-button>
         <el-button type="danger" @click="submitDeleteUser()">
-          Delete
+          {{ $t('users.delete_user.confirm') }}
         </el-button>
       </template>
     </ElDialog>
@@ -90,5 +94,30 @@ const submitDeleteUser = async () => {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+.delete-user-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-bottom: 12px;
+
+  & .delete-user-description {
+    color: var(--color-primary-800);
+    font-size: var(--font-size-fluid-3);
+    line-height: normal;
+  }
+
+  & .user-profile-item {
+    border: 0.5px solid var(--color-primary-300);
+    border-radius: 16px;
+    padding: 1rem;
+  }
+}
+.dark {
+  .delete-user-description {
+    color: var(--color-primary-100);
+    font-size: var(--font-size-fluid-3);
+    line-height: normal;
+  }
 }
 </style>

@@ -13,6 +13,12 @@ export default {
     last30days: '過去30日間',
     lastYear: '昨年',
   },
+  sort: {
+    title: '並べ替えオプション',
+    description: '並べ替え',
+    asc: '昇順',
+    desc: '降順',
+  },
   profileDropdown: {
     switchToAdmin: '管理者に切り替える',
     switchToUser: 'ユーザーに切り替える',
@@ -32,6 +38,7 @@ export default {
       title: 'チャット',
       description: 'すべてのチャットを一箇所で管理',
       chat_card: {
+        title: 'タイトル',
         created_at: '作成日',
         updated_at: '更新日',
         view_details: '詳細を見る',
@@ -289,6 +296,18 @@ export default {
     title: 'ユーザー',
     description: 'チームメンバーを管理し、アクセスレベルを設定します。',
     invite_user: 'ユーザーを招待',
+    delete_user: {
+      title: 'ユーザーを削除',
+      description: 'このユーザーを削除してもよろしいですか？この操作は取り消せません。',
+      confirm: '削除',
+      cancel: 'キャンセル',
+      notifications: {
+        success_title: 'ユーザーが削除されました',
+        success_description: 'ユーザーは正常に削除されました。',
+        error_title: '削除に失敗しました',
+        error_description: 'エラーが発生しました。ユーザーを削除できませんでした。',
+      },
+    },
     form: {
       first_name: '名前',
       first_name_placeholder: '名前を入力してください',

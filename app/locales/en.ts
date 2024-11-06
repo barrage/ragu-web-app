@@ -16,6 +16,12 @@ export default {
     last30days: 'Last 30 days',
     lastYear: 'Last year',
   },
+  sort: {
+    title: 'Sort Options',
+    description: 'Sort by',
+    asc: 'Ascending',
+    desc: 'Descending',
+  },
   profileDropdown: {
     switchToAdmin: 'Switch to Admin',
     switchToUser: 'Switch to User',
@@ -35,6 +41,7 @@ export default {
       title: 'Chats',
       description: 'Manage all your chats in one place',
       chat_card: {
+        title: 'Title',
         created_at: 'Created At',
         updated_at: 'Updated At',
         view_details: 'View Details',
@@ -106,6 +113,18 @@ export default {
     title: 'Users',
     description: 'Manage team members of your organization and set their access level',
     invite_user: 'Invite user',
+    delete_user: {
+      title: 'Delete User',
+      description: 'Are you sure you want to delete this user? This action cannot be undone.',
+      confirm: 'Delete',
+      cancel: 'Cancel',
+      notifications: {
+        success_title: 'User Deleted',
+        success_description: 'The user has been deleted successfully.',
+        error_title: 'Deletion Failed',
+        error_description: 'An error occurred. The user could not be deleted.',
+      },
+    },
     form: {
       first_name: 'First Name',
       first_name_placeholder: 'Enter first name',

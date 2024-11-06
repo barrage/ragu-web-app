@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import DocumentIcon from '~/assets/icons/svg/document.svg'
+import type { SortingValues } from '~/types/sort'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -10,14 +11,22 @@ const documentStore = useDocumentsStore()
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
+const sort = ref<SortingValues>({
+  direction: 'desc',
+  sortProperty: { name: '', value: '' },
+})
 const { error, execute } = await useAsyncData(() =>
-  documentStore.GET_AllDocuments(currentPage.value, itemsPerPage.value))
+  documentStore.GET_AllDocuments(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction))
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
   await execute()
 }
-
+const handleSortChange = async (sortingValues: SortingValues) => {
+  sort.value.direction = sortingValues.direction
+  sort.value.sortProperty = sortingValues.sortProperty
+  await execute()
+}
 errorHandler(error)
 </script>
 
@@ -46,6 +55,7 @@ errorHandler(error)
           <DocumentStatistics :documents="documentStore.documentResponse?.items" />
         </div>
         <div class="documents-overview">
+          <DocumentsListActions @sort-change="handleSortChange" />
           <DocumentList :documents="documentStore.documentResponse?.items" @page-change="handlePageChange" />
         </div>
       </div>

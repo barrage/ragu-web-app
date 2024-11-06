@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import TeamIcon from '~/assets/icons/svg/team.svg'
+import type { SortingValues } from '~/types/sort'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -10,12 +11,21 @@ const usersStore = useUsersStore()
 
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
+const sort = ref<SortingValues>({
+  direction: 'desc',
+  sortProperty: { name: '', value: '' },
+})
 
-const { error, execute } = await useAsyncData(() =>
-  usersStore.GET_AllUsers(currentPage.value, itemsPerPage.value))
+const { error, execute } = await useAsyncData(() => usersStore.GET_AllUsers(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction))
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
+  await execute()
+}
+
+const handleSortChange = async (sortingValues: SortingValues) => {
+  sort.value.direction = sortingValues.direction
+  sort.value.sortProperty = sortingValues.sortProperty
   await execute()
 }
 
@@ -39,7 +49,7 @@ errorHandler(error)
         <UsersQuickActionsContainer />
       </template>
     </AdminPageHeadingTemplate>
-    <!--  <UsersListActions /> -->
+    <UsersListActions @sort-change="handleSortChange" />
     <UsersList
       :users="usersStore.usersResponse?.items"
       @page-change="handlePageChange"

@@ -13,6 +13,12 @@ export default {
     last30days: 'Últimos 30 dias',
     lastYear: 'Ano passado',
   },
+  sort: {
+    title: 'Opções de ordenação',
+    description: 'Ordenar por',
+    asc: 'Crescente',
+    desc: 'Decrescente',
+  },
   profileDropdown: {
     switchToAdmin: 'Mudar para Admin',
     switchToUser: 'Mudar para Usuário',
@@ -32,6 +38,7 @@ export default {
       title: 'Conversas',
       description: 'Gerencie todas as suas conversas em um só lugar',
       chat_card: {
+        title: 'Título',
         created_at: 'Criado em',
         updated_at: 'Atualizado em',
         view_details: 'Ver detalhes',
@@ -289,6 +296,18 @@ export default {
     title: 'Usuários',
     description: 'Gerencie os membros da sua equipe e defina seus níveis de acesso.',
     invite_user: 'Convidar usuário',
+    delete_user: {
+      title: 'Excluir Usuário',
+      description: 'Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita.',
+      confirm: 'Excluir',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Usuário Excluído',
+        success_description: 'O usuário foi excluído com sucesso.',
+        error_title: 'Falha na Exclusão',
+        error_description: 'Ocorreu um erro. Não foi possível excluir o usuário.',
+      },
+    },
     form: {
       first_name: 'Primeiro Nome',
       first_name_placeholder: 'Insira o primeiro nome',
