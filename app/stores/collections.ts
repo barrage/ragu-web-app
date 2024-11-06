@@ -20,8 +20,8 @@ export const useCollectionsStore = defineStore('collection', () => {
 
   /* API */
 
-  async function GET_AllCollections(page: number = 1, perPage: number = 20): Promise<CollectionListResponse | null> {
-    const data = await $api.collection.GetAllCollections(page, perPage)
+  async function GET_AllCollections(page: number = 1, perPage: number = 10, sortBy: string = 'createdAt', sortOrder: 'asc' | 'desc' = 'asc'): Promise<CollectionListResponse | null> {
+    const data = await $api.collection.GetAllCollections(page, perPage, sortBy, sortOrder)
 
     if (data) {
       return collectionResponse.value = data

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
+import type { SortingValues } from '~/types/sort'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -10,16 +11,24 @@ const chatsStore = useChatStore()
 
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
+const sort = ref<SortingValues>({
+  direction: 'desc',
+  sortProperty: { name: '', value: '' },
+})
 
 const { error, execute } = await useAsyncData(() =>
-  chatsStore.GET_AllAdminChats(currentPage.value, itemsPerPage.value),
+  chatsStore.GET_AllAdminChats(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction),
 )
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
   await execute()
 }
-
+const handleSortChange = async (sortingValues: SortingValues) => {
+  sort.value.direction = sortingValues.direction
+  sort.value.sortProperty = sortingValues.sortProperty
+  await execute()
+}
 errorHandler(error)
 </script>
 
@@ -40,7 +49,7 @@ errorHandler(error)
         <!--     <ChatsQuickActionsContainer /> -->
       </template>
     </AdminPageHeadingTemplate>
-
+    <ChatsListAdminActions @sort-change="handleSortChange" />
     <ChatsListAdmin
       :chats="chatsStore?.adminAllChatsData"
       @page-change="handlePageChange"

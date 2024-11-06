@@ -13,15 +13,22 @@ const emits = defineEmits<{
 
 const cardClasses = ref<string[]>([])
 
-onMounted(() => {
-  nextTick(() => {
-    props.chats?.forEach((_, index) => {
-      setTimeout(() => {
-        cardClasses.value[index] = 'list-item-visible'
-      }, index * 100)
-    })
+const applyCardClasses = () => {
+  cardClasses.value = []
+  props.chats?.forEach((_, index) => {
+    setTimeout(() => {
+      cardClasses.value[index] = 'list-item-visible'
+    }, index * 100)
   })
-})
+}
+
+watch(
+  () => props.chats,
+  () => {
+    nextTick(applyCardClasses)
+  },
+  { immediate: true },
+)
 
 const chatsStore = useChatStore()
 

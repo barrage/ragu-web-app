@@ -1,46 +1,36 @@
 <script lang="ts" setup>
-import FilterIcon from '~/assets/icons/svg/filter.svg'
+import type { SortingValues } from '~/types/sort'
 
-// CONSTANTS
-const agentStore = useAgentStore()
+const emits = defineEmits<{
+  (event: 'sortChange', sort: SortingValues): void
+}>()
 const { t } = useI18n()
+
+const sortOptions = computed(() => [
+  { name: t('agents.labels.status'), value: 'active' },
+  { name: t('agents.labels.name'), value: 'name' },
+  { name: t('agents.labels.created_at'), value: 'createdAt' },
+  { name: t('agents.labels.updated_at'), value: 'updatedAt' },
+
+])
+
+const updateSort = (sortingValues: SortingValues) => {
+  emits('sortChange', sortingValues)
+}
 </script>
 
 <template>
   <div class="agents-actions-container">
-    <div class="agents-actions-wrapper">
-      <SearchInput :placeholder="t('agents.placeholder.search')" />
-      <h6> <b>{{ agentStore?.getMappedAgents?.length || 0 }}</b> {{ t('agents.title') }}</h6>
-    </div>
-    <el-button>
-      <FilterIcon />
-      {{ t('agents.buttons.filter') }}
-    </el-button>
+    <SortSelect :options="sortOptions" @sort-updated="updateSort" />
   </div>
 </template>
 
 <style lang="scss" scoped>
   .agents-actions-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding-inline: 1rem;
   margin-bottom: 1.5rem;
-
-  & h6 {
-    color: var(--color-primary-800);
-  }
-  & .agents-actions-wrapper {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-  }
-}
-.dark {
-  .agents-actions-container {
-    & h6 {
-      color: var(--color-primary-100);
-    }
-  }
 }
 </style>

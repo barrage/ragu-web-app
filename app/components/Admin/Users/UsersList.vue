@@ -65,7 +65,7 @@ const closeEditModal = () => {
 }
 
 /* Delete User */
-const selectedUserDelete = ref<User | null>(null)
+const selectedUserDelete = ref<User>()
 const deleteUserModalVisible = ref(false)
 
 const openDeleteUserModal = (user: User) => {

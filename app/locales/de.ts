@@ -13,6 +13,12 @@ export default {
     last30days: 'Letzte 30 Tage',
     lastYear: 'Letztes Jahr',
   },
+  sort: {
+    title: 'Sortieroptionen',
+    description: 'Sortieren nach',
+    asc: 'Aufsteigend',
+    desc: 'Absteigend',
+  },
   profileDropdown: {
     switchToAdmin: 'Wechseln zu Admin',
     switchToUser: 'Wechseln zu Benutzer',
@@ -33,6 +39,7 @@ export default {
       title: 'Chats',
       description: 'Verwalten Sie alle Ihre Chats an einem Ort',
       chat_card: {
+        title: 'Titel',
         created_at: 'Erstellt am',
         updated_at: 'Aktualisiert am',
         view_details: 'Details anzeigen',
@@ -291,6 +298,18 @@ export default {
     title: 'Benutzer',
     description: 'Verwalten Sie die Mitglieder Ihres Teams und legen Sie deren Zugriffsrechte fest.',
     invite_user: 'Benutzer einladen',
+    delete_user: {
+      title: 'Benutzer löschen',
+      description: 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
+      confirm: 'Löschen',
+      cancel: 'Abbrechen',
+      notifications: {
+        success_title: 'Benutzer gelöscht',
+        success_description: 'Der Benutzer wurde erfolgreich gelöscht.',
+        error_title: 'Löschen fehlgeschlagen',
+        error_description: 'Ein Fehler ist aufgetreten. Der Benutzer konnte nicht gelöscht werden.',
+      },
+    },
     form: {
       first_name: 'Vorname',
       first_name_placeholder: 'Vornamen eingeben',

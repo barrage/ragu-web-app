@@ -1,41 +1,34 @@
 <script lang="ts" setup>
-import FilterIcon from '~/assets/icons/svg/filter.svg'
+import type { SortingValues } from '~/types/sort'
+
+const emits = defineEmits<{
+  (event: 'sortChange', sort: SortingValues): void
+}>()
+
+const { t } = useI18n()
+
+const sortOptions = computed(() => [
+  { name: t('documents.name'), value: 'name' },
+  { name: t('documents.extension'), value: 'extension' },
+])
+
+const updateSort = (sortingValues: SortingValues) => {
+  emits('sortChange', sortingValues)
+}
 </script>
 
 <template>
   <div class="documents-actions-container">
-    <div class="documents-actions-wrapper">
-      <SearchInput placeholder="Search documents" />
-    </div>
-    <el-button>
-      <FilterIcon />
-      Filter
-    </el-button>
+    <SortSelect :options="sortOptions" @sort-updated="updateSort" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .documents-actions-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 1.5rem;
   margin-top: 1rem;
-
-  & h6 {
-    color: var(--color-primary-800);
-  }
-  & .documents-actions-wrapper {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-  }
-}
-.dark {
-  .documents-actions-container {
-    & h6 {
-      color: var(--color-primary-100);
-    }
-  }
 }
 </style>

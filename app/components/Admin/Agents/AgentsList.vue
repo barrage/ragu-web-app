@@ -33,15 +33,22 @@ watch(
   },
 )
 
-onMounted(() => {
-  nextTick(() => {
-    props.agents?.forEach((_, index) => {
-      setTimeout(() => {
-        cardClasses.value[index] = 'list-item-visible'
-      }, index * 100)
-    })
+const applyCardClasses = () => {
+  cardClasses.value = []
+  props.agents?.forEach((_, index) => {
+    setTimeout(() => {
+      cardClasses.value[index] = 'list-item-visible'
+    }, index * 100)
   })
-})
+}
+
+watch(
+  () => props.agents,
+  () => {
+    nextTick(applyCardClasses)
+  },
+  { immediate: true },
+)
 </script>
 
 <template>

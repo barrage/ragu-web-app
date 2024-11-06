@@ -13,6 +13,12 @@ export default {
     last30days: 'Posljednjih 30 dana',
     lastYear: 'Prošle godine',
   },
+  sort: {
+    title: 'Opcije sortiranja',
+    description: 'Sortiraj po',
+    asc: 'Uzlazno',
+    desc: 'Silazno',
+  },
 
   profileDropdown: {
     switchToAdmin: 'Prebaci se na Administratora',
@@ -34,6 +40,7 @@ export default {
       title: 'Razgovori',
       description: 'Upravljajte svim razgovorima na jednom mjestu',
       chat_card: {
+        title: 'Naslov',
         created_at: 'Kreirano',
         updated_at: 'Ažurirano',
         view_details: 'Pogledaj detalje',
@@ -104,6 +111,18 @@ export default {
     title: 'Korisnici',
     description: 'Upravljajte članovima svog tima i postavite njihove razine pristupa.',
     invite_user: 'Dodaj korisnika',
+    delete_user: {
+      title: 'Izbriši Korisnika',
+      description: 'Jeste li sigurni da želite izbrisati ovog korisnika? Ova radnja se ne može poništiti.',
+      confirm: 'Izbriši',
+      cancel: 'Odustani',
+      notifications: {
+        success_title: 'Korisnik Izbrisan',
+        success_description: 'Korisnik je uspješno izbrisan.',
+        error_title: 'Neuspješno Brisanje',
+        error_description: 'Došlo je do pogreške. Korisnik nije mogao biti izbrisan.',
+      },
+    },
     form: {
       first_name: 'Ime',
       first_name_placeholder: 'Unesite ime',

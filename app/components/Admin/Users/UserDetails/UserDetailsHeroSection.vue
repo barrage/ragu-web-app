@@ -96,6 +96,7 @@ const closeDeactivateModal = () => {
       <el-button
         size="small"
         type="primary"
+        plain
         @click="openEditUserModal"
       >
         <EditIcon />  Edit
@@ -104,6 +105,7 @@ const closeDeactivateModal = () => {
         v-if="!props.user?.active"
         size="small"
         type="primary"
+        plain
         @click="openActivateUserModal"
       >
         <PersonPasskeyIcon />  Activate
@@ -112,6 +114,7 @@ const closeDeactivateModal = () => {
         v-if="props.user?.active"
         size="small"
         type="primary"
+        plain
         @click="openDeactivateUserModal"
       >
         <PersonLockIcon />  Deactivate

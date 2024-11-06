@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 // IMPORTS
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
-// CONSTANTS
+import type { SortingValues } from '~/types/sort'
+
 const collectionStore = useCollectionsStore()
 const { t } = useI18n()
 
@@ -12,11 +13,20 @@ definePageMeta({
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
-const { error: getError, execute } = await useAsyncData(() => collectionStore.GET_AllCollections(currentPage.value, itemsPerPage.value))
+const sort = ref<SortingValues>({
+  direction: 'desc',
+  sortProperty: { name: '', value: '' },
+})
+const { error: getError, execute } = await useAsyncData(() => collectionStore.GET_AllCollections(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction))
 errorHandler(getError)
 
 const handlePageChange = async (page: number) => {
   currentPage.value = page
+  await execute()
+}
+const handleSortChange = async (sortingValues: SortingValues) => {
+  sort.value.direction = sortingValues.direction
+  sort.value.sortProperty = sortingValues.sortProperty
   await execute()
 }
 </script>
@@ -38,7 +48,7 @@ const handlePageChange = async (page: number) => {
         <CollectionQuickActionsContainer />
       </template>
     </AdminPageHeadingTemplate>
-    <CollectionListActions />
+    <CollectionListActions @sort-change="handleSortChange" />
     <CollectionList :collections="collectionStore.collections" @page-change="handlePageChange" />
   </AdminPageContainer>
 </template>

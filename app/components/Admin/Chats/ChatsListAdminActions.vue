@@ -8,10 +8,9 @@ const emits = defineEmits<{
 const { t } = useI18n()
 
 const sortOptions = computed(() => [
-  { name: t('users.user_card.username'), value: 'fullName' },
-  { name: t('users.user_card.created_at'), value: 'createdAt' },
-  { name: t('users.user_card.status'), value: 'active' },
-  { name: t('users.user_card.email'), value: 'email' },
+  { name: t('chat.admin.chat_card.created_at'), value: 'createdAt' },
+  { name: t('chat.admin.chat_card.title'), value: 'title' },
+  { name: t('chat.admin.chat_card.updated_at'), value: 'updatedAt' },
 ])
 
 const updateSort = (sortingValues: SortingValues) => {
@@ -20,24 +19,17 @@ const updateSort = (sortingValues: SortingValues) => {
 </script>
 
 <template>
-  <div class="users-actions-container">
+  <div class="chats-actions-container">
     <SortSelect :options="sortOptions" @sort-updated="updateSort" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.users-actions-container {
+.chats-actions-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding-inline: 1rem;
-  margin-bottom: 1.5rem;
-}
-.dark {
-  .users-actions-container {
-    & h6 {
-      color: var(--color-primary-100);
-    }
-  }
+  margin-bottom: 1rem;
 }
 </style>
