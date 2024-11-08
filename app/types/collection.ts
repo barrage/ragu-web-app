@@ -30,3 +30,15 @@ export interface CollectionDetail {
   vectorProvider: string
   embeddingProvider: string
 }
+
+export interface AssignCollectionPayload {
+  provider?: string
+  add?: AddCollection[]
+  remove?: string[]
+}
+
+export interface AddCollection {
+  name: string
+  amount: number
+  instruction: string
+}

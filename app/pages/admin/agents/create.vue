@@ -139,6 +139,7 @@ errorHandler(createError)
 </script>
 
 <template>
+  {{ agentStore.selectedAgent }}
   <section class="agent-section">
     <h4 class="page-title">
       {{ t('agents.titles.create') }}

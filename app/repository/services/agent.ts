@@ -1,5 +1,6 @@
 import FetchFactory from '../fetchFactory'
-import type { Agent, AgentDetail, AgentListResponse, SelectedAgent } from '~/types/agent'
+import type { AssignCollectionPayload } from '~/types/collection'
+import type { Agent, AgentDetail, AllAgentResponse, SingleAgent } from '~/types/agent'
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
@@ -25,7 +26,7 @@ export default class AgentService extends FetchFactory {
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
     showDeactivated: boolean = true,
-  ): Promise<AgentListResponse> {
+  ): Promise<AllAgentResponse> {
     try {
       // Build query parameters using function arguments
       const queryParams = new URLSearchParams({
@@ -37,7 +38,7 @@ export default class AgentService extends FetchFactory {
       }).toString()
 
       // Make the API request with the constructed URL
-      return await this.$fetch<AgentListResponse>(`${this.endpoint}?${queryParams}`, {
+      return await this.$fetch<AllAgentResponse>(`${this.endpoint}?${queryParams}`, {
         credentials: 'include',
       })
     }
@@ -56,9 +57,9 @@ export default class AgentService extends FetchFactory {
    * @returns A promise that resolves to an Agent object.
    * @throws Will throw an error if the request fails.
    */
-  async GetSingleAgent(agentId: string): Promise<SelectedAgent> {
+  async GetSingleAgent(agentId: string): Promise<Agent> {
     try {
-      return await this.$fetch<SelectedAgent>(`${this.endpoint}/${agentId}`, {
+      return await this.$fetch<Agent>(`${this.endpoint}/${agentId}`, {
         credentials: 'include',
       })
     }
@@ -76,7 +77,7 @@ export default class AgentService extends FetchFactory {
    * @returns A promise that resolves to Agent object
    * @throws Will throw an error if request fails
    */
-  async CreateAgent(body: AgentDetail): Promise<Agent> {
+  async CreateAgent(body: AgentDetail): Promise<SingleAgent> {
     try {
       return await this.$fetch(this.endpoint, {
         credentials: 'include',
@@ -99,7 +100,7 @@ export default class AgentService extends FetchFactory {
    * @returns A promise that resolves to Agent object
    * @throws Will throw an error if request fails
    */
-  async UpdateAgent(id: string, body: AgentDetail): Promise<Agent> {
+  async UpdateAgent(id: string, body: AgentDetail): Promise<SingleAgent> {
     try {
       return await this.$fetch(`${this.endpoint}/${id}`, {
         credentials: 'include',
@@ -133,6 +134,23 @@ export default class AgentService extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to delete agent with id ${id}`,
+      })
+    }
+  }
+
+  async UpdateAgentCollection(id: string, body: AssignCollectionPayload): Promise<any> {
+    const plainPayload = toRaw(body)
+    try {
+      await this.$fetch(`${this.endpoint}/${id}/collections`, {
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify(plainPayload),
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to update collection to agent with id ${id}`,
       })
     }
   }

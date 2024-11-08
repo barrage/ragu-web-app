@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import type { Agent, AgentDetail, AgentListResponse, SelectedAgent } from '~/types/agent'
+import type { Agent, AgentDetail, AgentListResponse, AllAgentResponse, SingleAgent } from '~/types/agent'
+import type { AssignCollectionPayload } from '~/types/collection'
 
 export const useAgentStore = defineStore('agent', () => {
   // CONSTANTS
@@ -8,11 +9,11 @@ export const useAgentStore = defineStore('agent', () => {
   // STATE
 
   const editMode = ref<boolean>(false)
-  const agentsResponse = ref<AgentListResponse | null >()
-  const selectedAgent = ref<Agent | null | undefined>()
+  const agentsResponse = ref<AllAgentResponse | null >()
+  const selectedAgent = ref<SingleAgent | AllAgentResponse | null | undefined>()
   const singleAgent = ref<Agent | null | undefined>()
 
-  const agents = computed<Agent[]>(() => {
+  const agents = computed<SingleAgent[]>(() => {
     return agentsResponse.value?.items || [] // Return agents array or empty array if null
   })
 
@@ -20,8 +21,8 @@ export const useAgentStore = defineStore('agent', () => {
     editMode.value = value
   }
 
-  const setSelectedAgent = (agentId: string) => {
-    selectedAgent.value = agentsResponse.value?.items.find(agent => agent.id === agentId) || null
+  const setSelectedAgent = (agentId: string | undefined) => {
+    selectedAgent.value = agentsResponse.value?.items.find((agent: SingleAgent) => agent.id === agentId) || null
   }
 
   // API
@@ -31,7 +32,7 @@ export const useAgentStore = defineStore('agent', () => {
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
     showDeactivated: boolean = true,
-  ): Promise<AgentListResponse | null> {
+  ): Promise<AllAgentResponse | null> {
     try {
       const data = await $api.agent.GetAllAgents(page, perPage, sortBy, sortOrder, showDeactivated)
 
@@ -52,12 +53,12 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function GET_SingleAgent(agentId: string | null | undefined): Promise<SelectedAgent | null> {
+  async function GET_SingleAgent(agentId: string | null | undefined): Promise<Agent | null> {
     if (agentId) {
       const data = await $api.agent.GetSingleAgent(agentId)
 
       if (data) {
-        singleAgent.value = data.agent
+        singleAgent.value = data
         return data
       }
     }
@@ -66,11 +67,10 @@ export const useAgentStore = defineStore('agent', () => {
     return null
   }
 
-  async function POST_CreateAgent(body: AgentDetail): Promise<Agent | null> {
+  async function POST_CreateAgent(body: AgentDetail): Promise<SingleAgent | null | undefined> {
     const data = await $api.agent.CreateAgent(body)
     if (data) {
       selectedAgent.value = data
-      return data
     }
     else {
       selectedAgent.value = null
@@ -78,15 +78,17 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function PUT_UpdateAgent(id: string, body: AgentDetail): Promise<Agent | null> {
+  async function PUT_UpdateAgent(id: string, body: AgentDetail): Promise<void> {
     const data = await $api.agent.UpdateAgent(id, body)
+
     if (data) {
-      singleAgent.value = data
-      return data
+      singleAgent.value = {
+        ...singleAgent.value,
+        agent: data,
+      }
     }
     else {
       singleAgent.value = null
-      return null
     }
   }
 
@@ -94,9 +96,13 @@ export const useAgentStore = defineStore('agent', () => {
     await $api.agent.DeleteAgent(id)
   }
 
+  async function PUT_UpdateAgentCollection(id: string, body: AssignCollectionPayload): Promise<any | null> {
+    await $api.agent.UpdateAgentCollection(id, body)
+  }
+
   // COMPUTEDS
-  const getMappedAgents = computed<Agent[]>(() => {
-    return agentsResponse.value?.items.map((agent: Agent) => {
+  const getMappedAgents = computed<SingleAgent[]>(() => {
+    return agentsResponse.value?.items.map((agent: SingleAgent) => {
       return {
         ...agent,
         context: `${agent.context.split(' ').slice(0, 5).join(' ')}...`,
@@ -120,6 +126,7 @@ export const useAgentStore = defineStore('agent', () => {
     POST_CreateAgent,
     PUT_UpdateAgent,
     DELETE_DeleteAgent,
+    PUT_UpdateAgentCollection,
 
   }
 })

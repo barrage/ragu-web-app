@@ -288,6 +288,31 @@ export default {
       form_message: 'Por favor, corrige los errores resaltados en el formulario.',
       invalid_collection: '¡Vaya! Algo salió mal. Parece que la colección que intentas eliminar no existe.',
     },
+
+    assign_collection: {
+      title: 'Asignar Colección',
+      rules: {
+        collection_name: 'Por favor seleccione una colección',
+        amount: 'Por favor ingrese una cantidad',
+        instruction: 'Por favor ingrese una instrucción',
+      },
+      placeholder: {
+        select: 'Seleccione colección',
+        instruction: 'Ingrese instrucción',
+        amount: 'Ingrese cantidad',
+      },
+      labels: {
+        name: 'Nombre de colección',
+        instructions: 'Instrucciones',
+        amount: 'Cantidad',
+      },
+      notification: {
+        error_title: 'Error',
+        assign_error_title: 'Error al asignar la colección al agente!',
+        assign_cuccess_title: '¡Colección asignada!',
+        delete_collection: 'No tienes colección para eliminar, ¡por favor asigna una nueva colección!',
+      },
+    },
   },
 
   users: {

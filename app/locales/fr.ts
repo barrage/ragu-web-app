@@ -290,6 +290,31 @@ export default {
       form_message: 'Veuillez corriger les erreurs surlignées dans le formulaire.',
       invalid_collection: 'Oups! Quelque chose a mal tourné. La collection que vous essayez de supprimer semble ne pas exister.',
     },
+
+    assign_collection: {
+      title: 'Attribuer la Collection',
+      rules: {
+        collection_name: 'Veuillez sélectionner une collection',
+        amount: 'Veuillez entrer une quantité',
+        instruction: 'Veuillez entrer une instruction',
+      },
+      placeholder: {
+        select: 'Sélectionner une collection',
+        instruction: 'Entrer une instruction',
+        amount: 'Entrer une quantité',
+      },
+      labels: {
+        name: 'Nom de la collection',
+        instructions: 'Instructions',
+        amount: 'Quantité',
+      },
+      notification: {
+        error_title: 'Erreur',
+        assign_error_title: 'Échec de l\'attribution de la collection à l\'agent!',
+        assign_cuccess_title: 'Collection assignée!',
+        delete_collection: 'Vous n\'avez pas de collection à supprimer, veuillez en assigner une nouvelle!',
+      },
+    },
   },
 
   users: {

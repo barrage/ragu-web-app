@@ -358,6 +358,31 @@ export default {
       form_message: 'Molimo popravite označene greške u obrascu.',
       invalid_collection: 'Ups! Nešto je pošlo po zlu. Čini se da kolekcija koju pokušavate izbrisati ne postoji.',
     },
+
+    assign_collection: {
+      title: 'Dodijeli Kolekciju',
+      rules: {
+        collection_name: 'Molimo odaberite kolekciju',
+        amount: 'Molimo unesite količinu',
+        instruction: 'Molimo unesite uputu',
+      },
+      placeholder: {
+        select: 'Odaberite kolekciju',
+        instruction: 'Unesite uputu',
+        amount: 'Unesite količinu',
+      },
+      labels: {
+        name: 'Naziv kolekcije',
+        instructions: 'Upute',
+        amount: 'Količina',
+      },
+      notification: {
+        error_title: 'Greška',
+        assign_error_title: 'Neuspješno dodjeljivanje kolekcije agentu!',
+        assign_cuccess_title: 'Kolekcija je dodijeljena!',
+        delete_collection: 'Nemate kolekciju za brisanje, molimo dodajte novu kolekciju!',
+      },
+    },
   },
 
   auth: {

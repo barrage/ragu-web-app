@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
-import type { Agent } from '~/types/agent.ts'
+import type { SingleAgent } from '~/types/agent.ts'
 
 const props = defineProps<{
-  agent: Agent | null
+  agent: SingleAgent | null
 }>()
 
 const agentStore = useAgentStore()

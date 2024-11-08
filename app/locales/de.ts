@@ -292,6 +292,30 @@ export default {
       form_message: 'Bitte beheben Sie die hervorgehobenen Fehler im Formular.',
       invalid_collection: 'Hoppla! Etwas ist schiefgelaufen. Die Sammlung, die Sie löschen möchten, scheint nicht zu existieren.',
     },
+    assign_collection: {
+      title: 'Sammlung Zuweisen',
+      rules: {
+        collection_name: 'Bitte wählen Sie eine Sammlung aus',
+        amount: 'Bitte geben Sie eine Menge ein',
+        instruction: 'Bitte geben Sie eine Anweisung ein',
+      },
+      placeholder: {
+        select: 'Sammlung auswählen',
+        instruction: 'Anweisung eingeben',
+        amount: 'Menge eingeben',
+      },
+      labels: {
+        name: 'Sammlungsname',
+        instructions: 'Anweisungen',
+        amount: 'Menge',
+      },
+      notification: {
+        error_title: 'Fehler',
+        assign_error_title: 'Zuweisung der Sammlung an Agent fehlgeschlagen!',
+        assign_cuccess_title: 'Sammlung zugewiesen!',
+        delete_collection: 'Keine Sammlung zum Löschen, bitte neue Sammlung hinzufügen!',
+      },
+    },
   },
 
   users: {

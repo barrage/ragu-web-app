@@ -5,8 +5,8 @@
     --barrage-tag-gap: var(--spacing-mobile-5-xs);
     --barrage-tag-font-size: var(--font-size-fluid-2);
     --barrage-tag-font-weight: var(--font-weight-medium);
-    --barrage-tag-color: var(--color-gray-0);
-    --barrage-tag-background-color: var(--color-red-100);
+    --barrage-tag-color: var(--color-primary-0);
+    --barrage-tag-background-color: var(--color-primary-100);
     --barrage-tag-border-radius: var(--radius-2);
     --barrage-tag-padding-block: var(--spacing-fluid-7-xs);
     --barrage-tag-padding-inline: var(--spacing-fluid-5-xs);
@@ -27,17 +27,17 @@
       &__content {
         .barrage-icon--fill-success,
         .barrage-icon--fill-success * {
-          fill: var(--color-green-300);
+          fill: var(--color-primary-300);
         }
 
         .barrage-icon--fill-info,
         .barrage-icon--fill-info * {
-          fill: var(--color-blue-200);
+          fill: var(--color-primary-200);
         }
 
         .barrage-icon--fill-inactive,
         .barrage-icon--fill-inactive * {
-          fill: var(--color-gray-500);
+          fill: var(--color-primary-500);
         }
       }
 
@@ -56,10 +56,10 @@
       }
 
       &--info {
-        --barrage-tag-dot-color: var(--color-blue-600);
-        --barrage-tag-background-color: var(--color-blue-400);
-        --barrage-tag-border-color: var(--color-blue-600);
-        --barrage-tag-color: var(--color-blue-0);
+        --barrage-tag-dot-color: var(--color-primary-600);
+        --barrage-tag-background-color: var(--color-primary-400);
+        --barrage-tag-border-color: var(--color-primary-600);
+        --barrage-tag-color: var(--color-primary-0);
       }
 
       &--warning {
@@ -161,10 +161,10 @@
     }
 
     &--info {
-      --barrage-tag-dot-color: var(--color-blue-500);
-      --barrage-tag-background-color: var(--color-blue-100);
-      --barrage-tag-border-color: var(--color-blue-400);
-      --barrage-tag-color: var(--color-blue-900);
+      --barrage-tag-dot-color: var(--color-primary-500);
+      --barrage-tag-background-color: var(--color-primary-100);
+      --barrage-tag-border-color: var(--color-primary-400);
+      --barrage-tag-color: var(--color-primary-900);
     }
 
     &--warning {
