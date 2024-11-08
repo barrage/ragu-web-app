@@ -7,12 +7,15 @@ import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
+import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 
 const props = defineProps<{
-  agent: Agent | null | undefined
+  singleAgent: Agent | null | undefined
 }>()
 
 const agentStore = useAgentStore()
+const assignCollectionModalVisible = ref(false)
+const deleteCollectionModalVisible = ref(false)
 
 const { t } = useI18n()
 enum StatusType {
@@ -25,26 +28,42 @@ enum StatusType {
 
 const agentData = computed(() => {
   return {
-    id: props.agent?.id || t('agents.agent_card.unknown_id'),
-    name: props.agent?.name || t('agents.agent_card.unknown_agentname'),
-    context: props.agent?.context || t('agents.agent_card.unknown_agentcontext'),
-    description: props.agent?.description || t('agents.agent_card.unknown_description'),
-    statusType: props.agent?.active ? StatusType.Success : StatusType.Danger,
-    status: props.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
-    llmProvider: props.agent?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
-    model: props.agent?.model || t('agents.agent_card.unknown_model'),
-    language: props.agent?.language || t('agents.agent_card.unknown_language'),
-    temperature: props.agent?.temperature || t('agents.agent_card.unknown_temperature'),
-    vectorProvider: props.agent?.vectorProvider || t('agents.agent_card.unknown_vectorProvider'),
-    embeddingProvider: props.agent?.embeddingProvider || t('agents.agent_card.unknown_embeddingProvider'),
-    embeddingModel: props.agent?.embeddingModel || t('agents.agent_card.unknown_embeddingModel'),
-    updatedAt: props.agent?.updatedAt ? formatDate(props.agent.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    createdAt: props.agent?.updatedAt ? formatDate(props.agent.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    id: props.singleAgent?.agent?.id || t('agents.agent_card.unknown_id'),
+    name: props.singleAgent?.agent?.name || t('agents.agent_card.unknown_agentname'),
+    context: props.singleAgent?.agent?.context || t('agents.agent_card.unknown_agentcontext'),
+    description: props.singleAgent?.agent?.description || t('agents.agent_card.unknown_description'),
+    statusType: props.singleAgent?.agent?.active ? StatusType.Success : StatusType.Danger,
+    status: props.singleAgent?.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
+    llmProvider: props.singleAgent?.agent?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
+    model: props.singleAgent?.agent?.model || t('agents.agent_card.unknown_model'),
+    language: props.singleAgent?.agent?.language || t('agents.agent_card.unknown_language'),
+    temperature: props.singleAgent?.agent?.temperature || t('agents.agent_card.unknown_temperature'),
+    vectorProvider: props.singleAgent?.agent?.vectorProvider || t('agents.agent_card.unknown_vectorProvider'),
+    embeddingProvider: props.singleAgent?.agent?.embeddingProvider || t('agents.agent_card.unknown_embeddingProvider'),
+    embeddingModel: props.singleAgent?.agent?.embeddingModel || t('agents.agent_card.unknown_embeddingModel'),
+    updatedAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    createdAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
   }
 })
 
 const editClick = (): void => {
   agentStore.setEditMode(true)
+}
+
+const openAssignCollectionModal = () => {
+  assignCollectionModalVisible.value = true
+}
+
+const closeAssignCollectionModal = () => {
+  assignCollectionModalVisible.value = false
+}
+
+const openDeleteCollectionModal = () => {
+  deleteCollectionModalVisible.value = true
+}
+
+const closeDeleteCollectionModal = () => {
+  deleteCollectionModalVisible.value = false
 }
 </script>
 
@@ -66,9 +85,33 @@ const editClick = (): void => {
         size="small"
         type="primary"
         plain
+        @click="openAssignCollectionModal()"
+      >
+        <CollectionIcon /> {{ t('collections.assign_collection.title') }}
+      </el-button>
+      <ElTooltip
+        :disabled="!(agentStore.singleAgent?.collections?.length === 0)"
+        :content="t('collections.assign_collection.notification.delete_collection')"
+        :enterable="false"
+        placement="top"
+      >
+        <el-button
+          size="small"
+          type="primary"
+          plain
+          :disabled="agentStore.singleAgent?.collections?.length === 0"
+          @click="openDeleteCollectionModal()"
+        >
+          <CollectionIcon />  {{ t('collections.deleteModal.title') }}
+        </el-button>
+      </ElTooltip>
+      <el-button
+        size="small"
+        type="primary"
+        plain
         @click="editClick()"
       >
-        <EditIcon />  Edit
+        <EditIcon />  {{ t('agents.buttons.edit') }}
       </el-button>
     </div>
   </div>
@@ -231,6 +274,14 @@ const editClick = (): void => {
       </span>
     </div>
   </div>
+  <AssignCollectionModal
+    :is-open="assignCollectionModalVisible"
+    @close-modal="closeAssignCollectionModal"
+  />
+  <DeleteCollectionModal
+    :is-open="deleteCollectionModalVisible"
+    @close-modal="closeDeleteCollectionModal"
+  />
 </template>
 
 <style lang="scss" scoped>

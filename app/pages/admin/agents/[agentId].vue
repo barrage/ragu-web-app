@@ -26,7 +26,7 @@ errorHandler(error)
     >
       <ArrowLeftIcon /> {{ t('agents.title') }}
     </NuxtLink>
-    <AgentDetails v-if="!agentStore.editMode" :agent="agentStore.singleAgent" />
+    <AgentDetails v-if="!agentStore.editMode" :single-agent="agentStore.singleAgent" />
     <AgentEdit v-else :agent="agentStore.singleAgent" />
   </AdminPageContainer>
 </template>

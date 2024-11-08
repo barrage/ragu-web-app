@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { Agent } from '~/types/agent'
+import type { SingleAgent } from '~/types/agent'
 import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
-  agents: Agent[] | null | undefined
+  agents: SingleAgent[] | null | undefined
 }>()
 
 const emits = defineEmits<{
@@ -59,7 +59,7 @@ watch(
       class="list-item"
       :class="[cardClasses[index]]"
     >
-      <AgentCard :agent="agent" />
+      <AgentCard :single-agent="agent" />
     </div>
     <Pagination
       :current-page="pagination.currentPage"

@@ -2,11 +2,11 @@ import type { Collection } from '~/types/collection'
 
 export type EmbeddingProvider = 'azure' | 'openai' | 'ollama'
 
-export interface Agent {
+export interface SingleAgent {
   active: boolean
   context: string
   createdAt: string
-  description: string
+  description: string | undefined
   embeddingModel: string
   embeddingProvider: string
   id: string
@@ -19,8 +19,28 @@ export interface Agent {
   vectorProvider: string
 }
 
+export interface AgentCollection {
+  id: string
+  agentId: string
+  instruction: string
+  collection: string
+  amount: number
+  createdAt: Date | string
+  updatedAt: Date | string
+}
+
+export interface Agent {
+  agent?: SingleAgent
+  instructions?: Instructions
+  collections?: AgentCollection[]
+}
+
 export interface AgentListResponse {
   items: Agent[]
+  total: number
+}
+export interface AllAgentResponse {
+  items: SingleAgent[]
   total: number
 }
 export interface AgentDetail {
@@ -45,11 +65,6 @@ export interface Instructions {
   titleInstruction: string
 }
 
-export interface AgentsWithCount {
-  count: number
-  agents: Agent[]
-}
-
 export interface AgentPayload {
   page?: number
   sortOrder?: 'asc' | 'desc'
@@ -59,10 +74,4 @@ export interface Instructions {
   titleInstruction: string
   languageInstruction: string
   summaryInstruction: string
-}
-
-export interface SelectedAgent {
-  agent: Agent
-  instructions?: Instructions
-  collections?: Collection[]
 }

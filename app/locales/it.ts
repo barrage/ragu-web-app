@@ -293,6 +293,30 @@ export default {
       form_message: 'Correggi gli errori evidenziati nel modulo.',
       invalid_collection: 'Oops! Qualcosa è andato storto. Sembra che la collezione che stai cercando di eliminare non esista.',
     },
+    assign_collection: {
+      title: 'Assegna Collezione',
+      rules: {
+        collection_name: 'Per favore seleziona una collezione',
+        amount: 'Per favore inserisci una quantità',
+        instruction: 'Per favore inserisci un’istruzione',
+      },
+      placeholder: {
+        select: 'Seleziona collezione',
+        instruction: 'Inserisci istruzione',
+        amount: 'Inserisci quantità',
+      },
+      labels: {
+        name: 'Nome della collezione',
+        instructions: 'Istruzioni',
+        amount: 'Quantità',
+      },
+      notification: {
+        error_title: 'Errore',
+        assign_error_title: 'Errore nell’assegnazione della collezione all’agente!',
+        assign_cuccess_title: 'Collezione assegnata!',
+        delete_collection: 'Non ci sono collezioni da eliminare, per favore assegna una nuova collezione!',
+      },
+    },
   },
 
   users: {

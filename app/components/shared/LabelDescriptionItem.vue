@@ -9,7 +9,7 @@ interface Slots {
 
 const props = defineProps<{
   label: string | undefined | number
-  description: string | undefined
+  description: string | undefined | number
   reversed?: boolean
   horizontal?: boolean
   canCopy?: boolean

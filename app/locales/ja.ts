@@ -290,6 +290,31 @@ export default {
       form_message: 'フォームの強調表示されたエラーを修正してください。',
       invalid_collection: 'おっと！ 何かがうまくいかなかったようです。削除しようとしているコレクションは存在しないようです。',
     },
+
+    assign_collection: {
+      title: 'コレクションの割り当て',
+      rules: {
+        collection_name: 'コレクションを選択してください',
+        amount: '数量を入力してください',
+        instruction: '指示を入力してください',
+      },
+      placeholder: {
+        select: 'コレクションを選択',
+        instruction: '指示を入力',
+        amount: '数量を入力',
+      },
+      labels: {
+        name: 'コレクション名',
+        instructions: '指示',
+        amount: '数量',
+      },
+      notification: {
+        error_title: 'エラー',
+        assign_error_title: 'エージェントにコレクションの割り当てに失敗しました！',
+        assign_cuccess_title: 'コレクションが割り当てられました！',
+        delete_collection: '削除するコレクションがありません。新しいコレクションを割り当ててください！',
+      },
+    },
   },
 
   users: {

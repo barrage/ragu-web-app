@@ -345,7 +345,8 @@ export default {
 
     deleteModal: {
       title: 'Delete Collection',
-      text: 'Are you sure you want to delete this collection?',
+      text: 'Please select collections to delete',
+
     },
     rules: {
       name: {
@@ -367,6 +368,34 @@ export default {
       form_message: 'Please fix the highlighted errors in the form.',
       invalid_collection: 'Oops! Something went wrong. The agent you are trying to delete doesn’t seem to exist.',
     },
+
+    assign_collection: {
+      title: 'Assign Collection',
+      rules: {
+        collection_name: 'Please select a collection',
+        amount: 'Please enter an amount',
+        instruction: 'Please enter an amount',
+      },
+      placeholder: {
+        select: 'Select collection',
+        instruction: 'Enter instruction',
+        amount: 'Enter amount',
+      },
+
+      labels: {
+        name: 'Collection name',
+        instructions: 'Instructions',
+        amount: 'Amount',
+      },
+      notification: {
+        error_title: 'Error',
+        assign_error_title: 'Collection faild to assigned on agent!',
+        assign_cuccess_title: 'Collection is assigned!',
+        delete_collection: 'You dont have collection to delete, please asigned new collection!',
+      },
+
+    },
+
   },
 
   auth: {

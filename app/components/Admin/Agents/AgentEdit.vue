@@ -2,7 +2,7 @@
 // IMPORTS
 import type { FormInstance, FormRules } from 'element-plus'
 import { useAgentStore } from '~/stores/agents'
-import type { Agent, AgentDetail, EmbeddingProvider } from '~/types/agent'
+import type { AgentDetail, EmbeddingProvider } from '~/types/agent'
 
 // LAYOUT
 definePageMeta({
@@ -13,7 +13,6 @@ definePageMeta({
 const agentStore = useAgentStore()
 const providerStore = useProviderStore()
 const collectionStore = useCollectionsStore()
-const router = useRouter()
 
 const route = useRoute()
 const { t } = useI18n()
@@ -91,10 +90,11 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
     await formEl.validate(async (valid) => {
       if (valid) {
         await updateExecute()
+
         if (updateStatus.value === 'success') {
           ElNotification({
             title: t('agents.notifications.update_title'),
-            message: t('agents.notifications.update_message', { name: agentStore.singleAgent?.name }),
+            message: t('agents.notifications.update_message', { name: agentStore.singleAgent?.agent?.name }),
             type: 'success',
             customClass: 'success',
             duration: 2500,
@@ -118,9 +118,8 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
   }
 }
 
-const cancelUpdate = (agent: Agent | null | undefined): void => {
+const cancelUpdate = (): void => {
   agentStore.setEditMode(false)
-  router.push(`/admin/agents/${agent?.id}`)
 }
 
 // ERROR HANDLERS
@@ -142,17 +141,17 @@ watch(() => form.embeddingProvider, async (newModel) => {
 })
 
 onMounted(async () => {
-  form.name = agentStore?.singleAgent?.name ?? ''
-  form.context = agentStore.singleAgent?.context ?? ''
-  form.description = agentStore.singleAgent?.description ?? ''
-  form.llmProvider = agentStore.singleAgent?.llmProvider ?? ''
-  form.model = agentStore.singleAgent?.model ?? ''
-  form.language = agentStore.singleAgent?.language ?? ''
-  form.temperature = agentStore.singleAgent?.temperature ?? 0.1
-  form.vectorProvider = agentStore.singleAgent?.vectorProvider ?? ''
-  form.embeddingProvider = agentStore.singleAgent?.embeddingProvider ?? ''
-  form.embeddingModel = agentStore.singleAgent?.embeddingModel ?? ''
-  form.active = agentStore.singleAgent?.active ?? true
+  form.name = agentStore?.singleAgent?.agent?.name ?? ''
+  form.context = agentStore.singleAgent?.agent?.context ?? ''
+  form.description = agentStore.singleAgent?.agent?.description ?? ''
+  form.llmProvider = agentStore.singleAgent?.agent?.llmProvider ?? ''
+  form.model = agentStore.singleAgent?.agent?.model ?? ''
+  form.language = agentStore.singleAgent?.agent?.language ?? ''
+  form.temperature = agentStore.singleAgent?.agent?.temperature ?? 0.1
+  form.vectorProvider = agentStore.singleAgent?.agent?.vectorProvider ?? ''
+  form.embeddingProvider = agentStore.singleAgent?.agent?.embeddingProvider ?? ''
+  form.embeddingModel = agentStore.singleAgent?.agent?.embeddingModel ?? ''
+  form.active = agentStore.singleAgent?.agent?.active ?? true
 },
 )
 
@@ -325,7 +324,7 @@ onUnmounted(() => {
           <ElButton
             type="primary"
             class="left-button"
-            @click="cancelUpdate(agentStore.singleAgent)"
+            @click="cancelUpdate"
           >
             {{ t('agents.buttons.cancel') }}
           </ElButton>

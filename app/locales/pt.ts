@@ -290,6 +290,30 @@ export default {
       form_message: 'Corrija os erros destacados no formulário.',
       invalid_collection: 'Ops! Algo deu errado. A coleção que você está tentando excluir parece não existir.',
     },
+    assign_collection: {
+      title: 'Atribuir Coleção',
+      rules: {
+        collection_name: 'Por favor selecione uma coleção',
+        amount: 'Por favor insira uma quantidade',
+        instruction: 'Por favor insira uma instrução',
+      },
+      placeholder: {
+        select: 'Selecione a coleção',
+        instruction: 'Insira a instrução',
+        amount: 'Insira a quantidade',
+      },
+      labels: {
+        name: 'Nome da coleção',
+        instructions: 'Instruções',
+        amount: 'Quantidade',
+      },
+      notification: {
+        error_title: 'Erro',
+        assign_error_title: 'Falha ao atribuir a coleção ao agente!',
+        assign_cuccess_title: 'Coleção atribuída!',
+        delete_collection: 'Você não tem coleção para excluir, por favor atribua uma nova coleção!',
+      },
+    },
   },
 
   users: {

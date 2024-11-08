@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // IMPORTS
-import type { Agent } from '~/types/agent'
+import type { SingleAgent } from '~/types/agent'
 
 import { useAgentStore } from '~/stores/agents'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
@@ -8,7 +8,7 @@ import EyeIcon from '~/assets/icons/svg/eye.svg'
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 // PROPS
 const props = defineProps<{
-  agent: Agent | null
+  singleAgent: SingleAgent | null
 }>()
 
 // CONSTANTS
@@ -27,27 +27,27 @@ enum StatusType {
 // HELPERS
 const agentData = computed(() => {
   return {
-    id: props.agent?.id,
-    name: props.agent?.name || t('agents.agent_card.unknown_agentname'),
-    context: props.agent?.context || t('agents.agent_card.unknown_agentcontext'),
-    status: props.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
-    statusType: props.agent?.active ? StatusType.Success : StatusType.Danger,
-    createdAt: props.agent?.createdAt || t('agents.agent_card.created_at'),
-    model: props.agent?.model || '-',
-    llmProvider: props.agent?.llmProvider || '-',
-    embeddingModel: props.agent?.embeddingModel || '-',
-    temperature: props.agent?.temperature || '-',
+    id: props.singleAgent?.id,
+    name: props.singleAgent?.name || t('agents.agent_card.unknown_agentname'),
+    context: props.singleAgent?.context || t('agents.agent_card.unknown_agentcontext'),
+    status: props.singleAgent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
+    statusType: props.singleAgent?.active ? StatusType.Success : StatusType.Danger,
+    createdAt: props.singleAgent?.createdAt || t('agents.agent_card.created_at'),
+    model: props.singleAgent?.model || '-',
+    llmProvider: props.singleAgent?.llmProvider || '-',
+    embeddingModel: props.singleAgent?.embeddingModel || '-',
+    temperature: props.singleAgent?.temperature || '-',
   }
 })
 
 const editClick = (): void => {
   agentStore.setEditMode(true)
 
-  router.push(`/admin/agents/${props.agent?.id}`)
+  router.push(`/admin/agents/${props.singleAgent?.id}`)
 }
 
 const redirectToAgentDetails = () => {
-  return router.push(`/admin/agents/${props.agent?.id}`)
+  return router.push(`/admin/agents/${props.singleAgent?.id}`)
 }
 </script>
 
