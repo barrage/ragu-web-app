@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import PersonMessageIcon from '~/assets/icons/svg/person-message.svg'
-import EmptyChatIcon from '~/assets/icons/svg/chat-empty.svg'
+import EmptyChatIcon from '~/assets/icons/svg/chat-warning.svg'
 import type { User } from '~/types/users'
 import type { SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'

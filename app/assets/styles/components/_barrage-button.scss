@@ -79,6 +79,10 @@
         --button-background-color: var(--color-green-700);
         --button-border-color: var(--color-green-900);
 
+        &.is-plain {
+          border-color: var(--color-green-700);
+        }
+
         &:hover {
           --button-text-color: var(--color-gray-50);
           --button-background-color: var(--color-green-600);
@@ -313,6 +317,10 @@
       --button-text-color: var(--color-gray-50);
       --button-background-color: var(--color-green-400);
       --button-border-color: var(--color-green-700);
+
+      &.is-plain {
+        border-color: var(--color-green-400);
+      }
 
       &:hover {
         --button-text-color: var(--color-gray-50);

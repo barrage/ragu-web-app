@@ -116,6 +116,7 @@ export default {
       good_answer: 'Buona risposta',
       bad_answer: 'Cattiva risposta',
     },
+    new_chat_tooltip: 'Avvia una nuova chat',
     admin: {
       title: 'Chat',
       description: 'Gestisci tutte le tue chat in un unico posto',
@@ -133,7 +134,8 @@ export default {
       chat_details: {
         title: 'Dettagli della chat',
         description: 'Visualizza tutti i dettagli relativi a questa chat',
-        empty_messages: 'Attualmente non ci sono messaggi in questa chat',
+        empty_messages: 'Nessun messaggio WhatsApp disponibile',
+        empty_description: 'Attualmente, non ci sono messaggi WhatsApp in questa chat.',
       },
     },
     edit_title: {
@@ -165,6 +167,127 @@ export default {
       choseFrom: 'Agenti:',
       empty: 'Attualmente non ci sono agenti disponibili per la conversazione. Per avviare una chat, è necessario aggiungere o abilitare almeno un agente. Si prega di contattare l\'amministratore di sistema o verificare le impostazioni degli agenti per continuare.',
     },
+  },
+  settings: {
+    title: 'Impostazioni',
+    description: 'Gestisci le tue impostazioni e scegli le opzioni più adatte alle tue esigenze',
+    whatsapp_numbers_management: 'Gestione Numeri WhatsApp',
+    labels: {
+      mobile_number: 'Numero di cellulare WhatsApp',
+      mobile_number_info: 'Aggiungi un numero di cellulare che utilizza WhatsApp per poter utilizzare gli agenti WhatsApp.',
+    },
+    placeholders: {
+      mobile_number: '012 12 3456 789',
+    },
+    rules: {
+      mobile: {
+        wrong_number: 'Numero di cellulare errato',
+      },
+    },
+    notification: {
+      success_title: 'Dati modificati con successo',
+      success_description: 'Hai modificato con successo i tuoi dati.',
+      error_title: 'Errore',
+      error_description: 'Si è verificato un errore durante il salvataggio dei dati.',
+    },
+    cancel: 'Annulla',
+    save: 'Salva',
+    edit: 'Modifica',
+    delete: 'Elimina',
+  },
+  whatsapp_chat: {
+    user: 'Utente',
+    whatsapp_chat: 'Chat di WhatsApp',
+    assistant: 'Assistente',
+    whatsapp_agent_description: 'Visualizza la tua conversazione con un agente WhatsApp.',
+    you: 'Tu',
+    agent: 'Agente',
+    empty_state_title_details: 'Chat WhatsApp non trovata',
+    empty_state_desc_details: 'La chat WhatsApp che stai cercando non esiste o non è attualmente disponibile. Controlla le informazioni della chat WhatsApp o prova una ricerca diversa.',
+    empty_title_chats: 'Nessuna chat WhatsApp disponibile',
+    empty_description_chats: 'Attualmente, non ci sono chat WhatsApp da visualizzare qui.',
+    admin: {
+      title: 'Chat di WhatsApp',
+      description: 'Gestisci tutte le tue chat WhatsApp in un unico posto',
+      all_whatsapp_chats: 'Tutte le chat WhatsApp',
+      sort_by_user_name: 'Nome utente',
+      whatsapp_agent: 'Agente WhatsApp',
+      chat_card: {
+        title: 'Titolo',
+        created_at: 'Creato il',
+        updated_at: 'Aggiornato il',
+        view_details: 'Visualizza dettagli',
+        edit_chat: 'Modifica chat',
+        delete_chat: 'Elimina chat',
+      },
+      chat_details: {
+        title: 'Dettagli della chat',
+        description: 'Visualizza tutti i dettagli relativi a questa chat di WhatsApp',
+      },
+    },
+    edit_title: {
+      title: 'Modifica titolo',
+      title_label: 'Titolo',
+      title_placeholder: 'Inserisci un nuovo titolo',
+      notifications: {
+        success_title: 'Titolo aggiornato con successo',
+        success_description: 'Il titolo della chat è stato aggiornato con successo.',
+        error_title: 'Errore',
+        error_description: 'Si è verificato un errore durante l\'impostazione del nuovo titolo della chat.',
+      },
+    },
+    delete_chat: {
+      title: 'Elimina chat',
+      description: 'Sei sicuro di voler eliminare la chat?',
+      notifications: {
+        success_title: 'Eliminato con successo',
+        success_description: 'La chat è stata eliminata con successo.',
+        error_title: 'Errore',
+        error_description: 'Si è verificato un errore durante l\'eliminazione della chat.',
+      },
+    },
+    chat_input_placeholder: 'Invia un messaggio',
+    chat_history: 'Cronologia chat',
+    new_chat: {
+      title: 'Nuova chat',
+      description: 'Scegli un agente per avviare la chat',
+      choseFrom: 'Agenti:',
+    },
+  },
+  whatsapp_agents: {
+    title: 'Agenti WhatsApp',
+    description: 'Gestisci gli agenti WhatsApp responsabili dell\'interazione con l\'IA',
+    empty_state_title_details: 'Agente WhatsApp non trovato',
+    empty_state_desc_details: 'L\'agente WhatsApp che stai cercando non esiste o non è attualmente disponibile. Controlla le informazioni dell\'agente WhatsApp o prova una ricerca diversa.',
+    empty_title_agents: 'Nessun agente WhatsApp disponibile',
+    empty_description_agents: 'Attualmente, non ci sono agenti WhatsApp da visualizzare qui.',
+    buttons: {
+      create: 'Crea Agente WhatsApp',
+    },
+    create: {
+      title: 'Crea Agente WhatsApp',
+      description: 'Crea il tuo nuovo agente WhatsApp fornendo il nome e il contesto per iniziare!',
+    },
+    edit: {
+      title: 'Modifica Agente WhatsApp',
+    },
+    set_as_active: {
+      label: 'Imposta come attivo',
+      success_notification_title: 'L’agente WhatsApp è stato impostato come attivo',
+      success_notification_message: 'L’agente WhatsApp attivo è stato cambiato con successo.',
+      already_active_message: 'Questo agente è già attivo',
+      dialog_title: 'Imposta l’agente WhatsApp come attivo',
+      dialog_description: 'Sei sicuro di voler impostare questo agente WhatsApp come attivo?',
+    },
+    delete: {
+      label: 'Elimina',
+      success_notification_title: 'L’agente WhatsApp è stato eliminato',
+      success_notification_message: 'L’agente WhatsApp è stato eliminato con successo.',
+      dialog_title: 'Elimina l’agente WhatsApp',
+      dialog_description: 'Sei sicuro di voler eliminare questo agente WhatsApp? Questa azione non può essere annullata.',
+      active_agent_tooltip: 'L’agente attivo non può essere eliminato',
+    },
+    close: 'Chiudi',
   },
   documents: {
     title: 'Documenti',
@@ -532,6 +655,7 @@ export default {
       languageInstruction: 'Inserisci Istruzioni Lingua Agente',
       summaryInstruction: 'Inserisci Istruzioni Sommario Agente',
       titleInstruction: 'Inserisci Istruzioni Titolo Agente',
+      embeddingModel: 'Seleziona modello di incorporamento',
     },
 
     notifications: {
@@ -838,7 +962,43 @@ export default {
       username: 'Nome utente',
       email: 'Email',
     },
-
+    phone_numbers: {
+      title: 'Numeri WhatsApp',
+      add_btn_label: 'Aggiungi numero WhatsApp',
+      add: {
+        title: 'Aggiungi numero WhatsApp',
+        btn_label: 'Aggiungi numero',
+        error_409_title: 'Impossibile aggiungere un nuovo numero WhatsApp',
+        error_409_description: 'Il numero WhatsApp esiste già.',
+        error_title: 'Impossibile aggiungere un nuovo numero WhatsApp',
+        error_description: 'Si è verificato un errore. Non è stato possibile aggiungere il numero WhatsApp.',
+        success_title: 'Numero WhatsApp aggiunto',
+        success_description: 'Numero WhatsApp aggiunto con successo.',
+      },
+      edit: {
+        title: 'Modifica numero WhatsApp',
+        description: 'Modifica un numero di cellulare che utilizza WhatsApp.',
+        btn_label: 'Modifica',
+        error_409_title: 'Impossibile modificare il numero WhatsApp',
+        error_409_description: 'Il numero WhatsApp esiste già.',
+        error_title: 'Impossibile modificare il numero WhatsApp',
+        error_description: 'Si è verificato un errore. Non è stato possibile modificare il numero WhatsApp.',
+        success_title: 'Numero WhatsApp modificato',
+        success_description: 'Numero WhatsApp modificato con successo.',
+      },
+      delete: {
+        title: 'Elimina numero WhatsApp',
+        description: 'Sei sicuro di voler eliminare questo numero? Questa azione non può essere annullata.',
+        btn_label: 'Elimina',
+        error_title: 'Impossibile eliminare il numero WhatsApp',
+        error_description: 'Si è verificato un errore. Non è stato possibile eliminare il numero WhatsApp.',
+        success_title: 'Numero WhatsApp eliminato',
+        success_description: 'Numero WhatsApp eliminato con successo.',
+      },
+      empty_data: 'Nessun numero WhatsApp disponibile',
+      empty_data_description: 'Attualmente, non ci sono numeri WhatsApp da visualizzare qui.',
+      cancel: 'Annulla',
+    },
   },
 
   error_notifications: {

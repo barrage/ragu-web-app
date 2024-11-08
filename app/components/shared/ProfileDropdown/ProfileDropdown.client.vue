@@ -28,6 +28,11 @@ const isProfileModelVisible = ref(false)
 const openProfileModal = () => {
   isProfileModelVisible.value = true
 }
+// Settings
+const isSettingsModalVisible = ref(false)
+const openSettingsModal = () => {
+  isSettingsModalVisible.value = !isSettingsModalVisible.value
+}
 
 const { execute, error } = await useAsyncData(() => oAuthStore.POST_Logout(), {
   immediate: false,
@@ -117,7 +122,7 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
             <ProfileIcon size="20px" /> <p> {{ t('profileDropdown.profile') }}</p>
           </div>
         </el-dropdown-item>
-        <el-dropdown-item>
+        <el-dropdown-item @click="openSettingsModal">
           <div class="dropdown-item">
             <SettingsIcon size="20px" /> <p>{{ t('profileDropdown.settings') }}</p>
           </div>
@@ -189,6 +194,8 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
     </template>
     <ProfileOverview />
   </ElDialog>
+
+  <ProfileDropdownSettings v-model="isSettingsModalVisible" />
 </template>
 
 <style lang="scss" scoped>

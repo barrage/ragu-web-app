@@ -88,26 +88,26 @@ const closeDeactivateModal = () => {
 <template>
   <section class="user-details-hero-section">
     <div class="profile-avatar-wrapper">
-      <ProfileIcon size="80px" />
-      <div class="username-status-wrapper">
+      <ProfileIcon size="80px" class="profile-icon" />
+      <div>
         <h5 class="username">
           {{ `${userData.fullName}` }}
         </h5>
-        <el-tag :type="userData.statusType" size="small">
+        <ElTag :type="userData.statusType" size="small">
           <span class="status-dot" />  {{ userData?.status }}
-        </el-tag>
+        </ElTag>
       </div>
     </div>
     <div class="user-details-actions-wrapper">
-      <el-button
+      <ElButton
         size="small"
         type="primary"
         plain
         @click="openEditUserModal"
       >
         <EditIcon size="20px" />  {{ t('users.user_card.edit_user_title') }}
-      </el-button>
-      <el-button
+      </ElButton>
+      <ElButton
         v-if="!props.user?.active"
         size="small"
         type="primary"
@@ -115,8 +115,8 @@ const closeDeactivateModal = () => {
         @click="openActivateUserModal"
       >
         <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
-      </el-button>
-      <el-button
+      </ElButton>
+      <ElButton
         v-if="props.user?.active"
         size="small"
         type="primary"
@@ -124,15 +124,15 @@ const closeDeactivateModal = () => {
         @click="openDeactivateUserModal"
       >
         <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
-      </el-button>
-      <el-button
+      </ElButton>
+      <ElButton
         plain
         type="danger"
         size="small"
         @click="openDeleteUserModal"
       >
         <DeleteIcon size="20px" />  {{ t('users.user_card.delete_user_title') }}
-      </el-button>
+      </ElButton>
     </div>
     <DeleteUserModalBackoffice
       :is-open="deleteUserModalVisible"
@@ -177,6 +177,9 @@ const closeDeactivateModal = () => {
     justify-content: flex-start;
     margin-right: 1rem;
     text-overflow: ellipsis;
+    .profile-icon {
+      color: var(--color-primary-900);
+    }
   }
 
   & .user-details-actions-wrapper {
@@ -187,6 +190,20 @@ const closeDeactivateModal = () => {
   & .username {
     font-weight: var(--font-weight-bold);
     line-height: normal;
+    color: var(--color-primary-900);
+  }
+}
+
+.dark {
+  .user-details-hero-section {
+    .profile-avatar-wrapper {
+      .profile-icon {
+        color: var(--color-primary-0);
+      }
+    }
+    .username {
+      color: var(--color-primary-0);
+    }
   }
 }
 </style>

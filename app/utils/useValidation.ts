@@ -52,11 +52,13 @@ export function isValidEmail(email: string): boolean {
  * ```typescript
  * isValidPhoneNumber('1234567890'); // returns true
  * isValidPhoneNumber('123-456-7890'); // returns false
+ * isValidPhoneNumber('12345'); // returns true
+ * isValidPhoneNumber('1234567890123456789'); // returns false (too long - max 15 chars)
  * ```
  */
 export function isValidPhoneNumber(phoneNumber: string): boolean {
-  const phonePattern = /^\d+$/
-  return phonePattern.test(phoneNumber)
+  const phonePattern = /^\+?[1-9]\d{1,14}(?:\s?[-()\d\s])*$/
+  return phonePattern.test(phoneNumber) && phoneNumber.replace(/\D/g, '').length <= 15
 }
 
 /**

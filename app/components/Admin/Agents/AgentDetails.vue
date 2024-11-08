@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ProfileIcon from '~/assets/icons/svg/account.svg'
+import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import type { Agent, Agents } from '~/types/agent'
 import PersonKeyIcon from '~/assets/icons/svg/person-key.svg'
@@ -91,8 +91,8 @@ const agentDeactivated = () => {
 <template>
   <div class="agent-details-hero-section">
     <div class="profile-avatar-wrapper">
-      <ProfileIcon size="80px" />
-      <div class="agentname-status-wrapper">
+      <ChatAgentIcon size="80px" class="agent-icon" />
+      <div>
         <h6 class="agentname">
           {{ `${agentData.name}` }}
         </h6>
@@ -377,6 +377,9 @@ const agentDeactivated = () => {
     justify-content: flex-start;
     margin-right: 1rem;
     text-overflow: ellipsis;
+    .agent-icon {
+      color: var(--color-primary-900);
+    }
   }
 
   & .agent-details-actions-wrapper {
@@ -432,6 +435,14 @@ const agentDeactivated = () => {
 }
 
 .dark {
+  .agent-details-hero-section {
+    .profile-avatar-wrapper {
+      .agent-icon {
+        color: var(--color-primary-0);
+      }
+    }
+  }
+
   & .agent-details-custom-label {
     color: var(--color-primary-100);
   }
