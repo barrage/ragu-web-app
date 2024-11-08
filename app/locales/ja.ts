@@ -116,6 +116,7 @@ export default {
       good_answer: '良い回答',
       bad_answer: '悪い回答',
     },
+    new_chat_tooltip: '新しいチャットを開始',
     admin: {
       title: 'チャット',
       description: 'すべてのチャットを一箇所で管理',
@@ -133,7 +134,8 @@ export default {
       chat_details: {
         title: 'チャットの詳細',
         description: 'このチャットに関するすべての詳細を表示',
-        empty_messages: '現在、このチャットにはメッセージがありません。',
+        empty_messages: '利用可能なWhatsAppメッセージがありません',
+        empty_description: '現在、このチャットにはWhatsAppメッセージがありません。',
       },
     },
     edit_title: {
@@ -165,6 +167,127 @@ export default {
       choseFrom: 'エージェント:',
       empty: '現在、会話可能なエージェントは利用できません。チャットを開始するには、少なくとも1人のエージェントを追加または有効にする必要があります。システム管理者に連絡するか、エージェントの設定を確認してください。',
     },
+  },
+  settings: {
+    title: '設定',
+    description: '設定を管理し、自分のニーズに最適なオプションを選択してください',
+    whatsapp_numbers_management: 'WhatsApp番号管理',
+    labels: {
+      mobile_number: 'WhatsApp携帯番号',
+      mobile_number_info: 'WhatsAppを利用する携帯番号を追加して、WhatsAppエージェントを利用できるようにしてください。',
+    },
+    placeholders: {
+      mobile_number: '012 12 3456 789',
+    },
+    rules: {
+      mobile: {
+        wrong_number: '無効な携帯番号',
+      },
+    },
+    notification: {
+      success_title: 'データが正常に編集されました',
+      success_description: 'データを正常に編集しました。',
+      error_title: 'エラー',
+      error_description: 'データ保存中にエラーが発生しました。',
+    },
+    cancel: 'キャンセル',
+    save: '保存',
+    edit: '編集',
+    delete: '削除',
+  },
+  whatsapp_chat: {
+    user: 'ユーザー',
+    whatsapp_chat: 'WhatsAppチャット',
+    assistant: 'アシスタント',
+    whatsapp_agent_description: 'WhatsAppエージェントとの会話を表示します。',
+    you: 'あなた',
+    agent: 'エージェント',
+    empty_state_title_details: 'WhatsAppチャットが見つかりません',
+    empty_state_desc_details: '探しているWhatsAppチャットは存在しないか、現在利用できません。WhatsAppチャットの情報を再確認するか、別の検索を試してください。',
+    empty_title_chats: '利用可能なWhatsAppチャットがありません',
+    empty_description_chats: '現在、表示できるWhatsAppチャットはありません。',
+    admin: {
+      title: 'WhatsAppチャット',
+      description: 'すべての WhatsApp チャットを 1 か所で管理',
+      all_whatsapp_chats: 'すべてのWhatsAppチャット',
+      sort_by_user_name: 'ユーザー名',
+      whatsapp_agent: 'WhatsAppエージェント',
+      chat_card: {
+        title: 'タイトル',
+        created_at: '作成日',
+        updated_at: '更新日',
+        view_details: '詳細を見る',
+        edit_chat: 'チャットを編集',
+        delete_chat: 'チャットを削除',
+      },
+      chat_details: {
+        title: 'チャットの詳細',
+        description: 'このWhatsAppチャットに関連するすべての詳細を表示する',
+      },
+    },
+    edit_title: {
+      title: 'タイトルを編集',
+      title_label: 'タイトル',
+      title_placeholder: '新しいタイトルを入力してください',
+      notifications: {
+        success_title: 'タイトルが正常に更新されました',
+        success_description: 'チャットのタイトルが正常に更新されました。',
+        error_title: 'エラー',
+        error_description: '新しいチャットのタイトルの設定中にエラーが発生しました。',
+      },
+    },
+    delete_chat: {
+      title: 'チャットを削除',
+      description: 'チャットを削除してもよろしいですか？',
+      notifications: {
+        success_title: '削除が成功しました',
+        success_description: 'チャットが正常に削除されました。',
+        error_title: 'エラー',
+        error_description: 'チャットの削除中にエラーが発生しました。',
+      },
+    },
+    chat_input_placeholder: 'メッセージを送信',
+    chat_history: 'チャット履歴',
+    new_chat: {
+      title: '新しいチャット',
+      description: 'チャットを開始するエージェントを選択してください',
+      choseFrom: 'エージェント:',
+    },
+  },
+  whatsapp_agents: {
+    title: 'WhatsAppエージェント',
+    description: 'AIとのやり取りを担当するWhatsAppエージェントを管理します。',
+    empty_state_title_details: 'WhatsAppエージェントが見つかりません',
+    empty_state_desc_details: '探しているWhatsAppエージェントは存在しないか、現在利用できません。WhatsAppエージェントの情報を再確認するか、別の検索を試してください。',
+    empty_title_agents: '利用可能なWhatsAppエージェントがありません',
+    empty_description_agents: '現在、表示できるWhatsAppエージェントはありません。',
+    buttons: {
+      create: 'WhatsAppエージェントを作成',
+    },
+    create: {
+      title: 'WhatsAppエージェントを作成',
+      description: '名前とコンテキストを入力して、新しいWhatsAppエージェントを作成しましょう！',
+    },
+    edit: {
+      title: 'WhatsAppエージェントを編集',
+    },
+    set_as_active: {
+      label: 'アクティブに設定',
+      success_notification_title: 'WhatsAppエージェントがアクティブに設定されました',
+      success_notification_message: 'アクティブなWhatsAppエージェントが正常に変更されました。',
+      already_active_message: 'このエージェントはすでにアクティブです',
+      dialog_title: 'WhatsAppエージェントをアクティブとして設定',
+      dialog_description: 'このWhatsAppエージェントをアクティブとして設定してもよろしいですか？',
+    },
+    delete: {
+      label: '削除',
+      success_notification_title: 'WhatsAppエージェントが削除されました',
+      success_notification_message: 'WhatsAppエージェントが正常に削除されました。',
+      dialog_title: 'WhatsAppエージェントを削除',
+      dialog_description: 'このWhatsAppエージェントを削除してもよろしいですか？この操作は元に戻せません。',
+      active_agent_tooltip: 'アクティブなエージェントは削除できません',
+    },
+    close: '閉じる',
   },
   documents: {
     title: 'ドキュメント',
@@ -530,6 +653,7 @@ export default {
       languageInstruction: 'エージェントの言語指示を入力',
       summaryInstruction: 'エージェントの概要指示を入力',
       titleInstruction: 'エージェントのタイトル指示を入力',
+      embeddingModel: '埋め込みモデルを選択',
     },
 
     notifications: {
@@ -836,7 +960,43 @@ export default {
       username: 'ユーザー名',
       email: 'メール',
     },
-
+    phone_numbers: {
+      title: 'WhatsApp番号',
+      add_btn_label: 'WhatsApp番号を追加',
+      add: {
+        title: 'WhatsApp番号を追加',
+        btn_label: '番号を追加',
+        error_409_title: '新しいWhatsApp番号の追加に失敗しました',
+        error_409_description: 'WhatsApp番号は既に存在します。',
+        error_title: '新しいWhatsApp番号の追加に失敗しました',
+        error_description: 'エラーが発生しました。WhatsApp番号を追加できませんでした。',
+        success_title: 'WhatsApp番号が追加されました',
+        success_description: 'WhatsApp番号が正常に追加されました。',
+      },
+      edit: {
+        title: 'WhatsApp番号を編集',
+        description: 'WhatsAppを使用する携帯番号を編集します。',
+        btn_label: '編集',
+        error_409_title: 'WhatsApp番号の編集に失敗しました',
+        error_409_description: 'WhatsApp番号は既に存在します。',
+        error_title: 'WhatsApp番号の編集に失敗しました',
+        error_description: 'エラーが発生しました。WhatsApp番号を編集できませんでした。',
+        success_title: 'WhatsApp番号が編集されました',
+        success_description: 'WhatsApp番号が正常に編集されました。',
+      },
+      delete: {
+        title: 'WhatsApp番号を削除',
+        description: 'この番号を削除してもよろしいですか？この操作は元に戻せません。',
+        btn_label: '削除',
+        error_title: 'WhatsApp番号の削除に失敗しました',
+        error_description: 'エラーが発生しました。WhatsApp番号を削除できませんでした。',
+        success_title: 'WhatsApp番号が削除されました',
+        success_description: 'WhatsApp番号が正常に削除されました。',
+      },
+      empty_data: '利用可能なWhatsApp番号がありません',
+      empty_data_description: '現在、表示できるWhatsApp番号はありません。',
+      cancel: 'キャンセル',
+    },
   },
 
   error_notifications: {

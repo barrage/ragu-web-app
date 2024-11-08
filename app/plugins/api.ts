@@ -9,6 +9,7 @@ import CollectionService from '~/repository/services/collection'
 import ProviderService from '~/repository/services/provider'
 import EmbeddingService from '~/repository/services/embedding'
 import StatisticService from '~/repository/services/statistic'
+import WhatsAppService from '~/repository/services/whatsapp.js'
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig()
@@ -30,6 +31,7 @@ export default defineNuxtPlugin(() => {
   const providerService = new ProviderService(baseApiFetcher)
   const embeddingService = new EmbeddingService(baseApiChucker)
   const statisticService = new StatisticService(baseApiFetcher)
+  const whatsAppService = new WhatsAppService(baseApiFetcher)
 
   return {
     provide: {
@@ -44,6 +46,7 @@ export default defineNuxtPlugin(() => {
         provider: providerService,
         embedding: embeddingService,
         statistic: statisticService,
+        whatsApp: whatsAppService,
       },
     },
   }

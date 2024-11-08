@@ -5,8 +5,10 @@ import QuestionIcon from '~/assets/icons/svg/question.svg'
 import TeamIcon from '~/assets/icons/svg/team.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
+import WhatsAppAgentsIcon from '~/assets/icons/svg/whatsapp-agents.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
+import WhatsAppIcon from '~/assets/icons/svg/whatsapp-chat-multiple.svg'
 
 interface MenuItem {
   label: string
@@ -14,6 +16,7 @@ interface MenuItem {
   icon: string
 }
 const navigationStore = useNavigationStore()
+const { isWhatsAppActive } = storeToRefs(useWhatsAppStore())
 interface MenuCategory {
   title: string
   category: 'menu' | 'options'
@@ -61,6 +64,25 @@ const menuList = computed<MenuCategory[]>(() => ([
   },
 ]))
 
+const whatsAppMenuList = computed<MenuCategory[]>(() => ([
+  {
+    title: '',
+    category: 'menu',
+    items: [
+      {
+        label: t('whatsapp_chat.admin.title'),
+        link: '/admin/whatsapp-chats',
+        icon: WhatsAppIcon,
+      },
+      {
+        label: t('whatsapp_agents.title'),
+        link: '/admin/whatsapp-agents',
+        icon: WhatsAppAgentsIcon,
+      },
+    ],
+  },
+]))
+
 const selectedFeature = ref<{ label: string, category: 'menu' | 'options' } | null>(null)
 
 const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
@@ -81,9 +103,36 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
       </div>
       <div class="horizontal-divider" />
 
-      <div class="feature-container scrollable-element">
+      <div class="feature-container">
         <div v-for="menuItem in menuList" :key="menuItem.category">
           <p v-if="menuItem.title" class="feature-group-title">
+            {{ menuItem.title }}
+          </p>
+          <div class="feature-list">
+            <LlmLink
+              v-for="(item, index2) in menuItem.items"
+              :key="index2"
+              :to="item.link"
+              class="feature-item"
+              :class="{ selected: item.link === route.path }"
+              @click="selectFeature(item, menuItem.category)"
+            >
+              <div class="item-content">
+                <component :is="item.icon" size="20px" />
+                <p v-if="!navigationStore.isAdminSidebarCollapsed" class="item-title">
+                  {{ item.label }}
+                </p>
+              </div>
+            </LlmLink>
+          </div>
+        </div>
+      </div>
+
+      <div class="horizontal-divider" />
+
+      <div v-if="isWhatsAppActive" class="feature-container">
+        <div v-for="menuItem in whatsAppMenuList" :key="menuItem.category">
+          <p v-if="menuItem.title && !navigationStore.isAdminSidebarCollapsed" class="feature-group-title typing-effect">
             {{ menuItem.title }}
           </p>
           <div class="feature-list">
@@ -138,6 +187,8 @@ aside {
     position: relative;
     padding: 0.75rem;
     height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
   }
 }
 
@@ -161,7 +212,6 @@ aside {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 0.5rem;
 }
 
 .sidebar-collapsed {
@@ -230,9 +280,7 @@ aside {
   display: flex;
   flex-direction: column;
   max-height: 100%;
-  overflow-y: auto;
   margin-top: 1rem;
-  margin-bottom: 0.5rem;
   padding-bottom: 1rem;
 }
 

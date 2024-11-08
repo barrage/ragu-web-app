@@ -1,18 +1,25 @@
 <script lang="ts" setup>
 import type { User } from '~/types/users'
 
-const props = defineProps<{
+defineProps<{
   user: User | null
 }>()
+
+const { isWhatsAppActive } = storeToRefs(useWhatsAppStore())
 </script>
 
 <template>
   <div class="user-details-wrapper">
-    <UserDetailsHeroSection :user="props.user" />
+    <UserDetailsHeroSection :user="user" />
     <div class="horizontal-divider" />
-    <UserDetailsInformationsSection :user="props.user" />
+    <UserDetailsInformationsSection :user="user" />
     <div class="horizontal-divider" />
-    <UserChats :user="props.user" />
+    <UserChats :user="user" />
+    <div class="horizontal-divider" />
+    <template v-if="isWhatsAppActive">
+      <UserWhatsAppNumbersSection :user="user" />
+      <div class="horizontal-divider" />
+    </template>
   </div>
 </template>
 
