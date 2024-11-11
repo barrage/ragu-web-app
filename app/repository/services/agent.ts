@@ -4,7 +4,8 @@ import type { Agent, AgentDetail, AllAgentResponse, SingleAgent } from '~/types/
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
-  private readonly endpoint: string = 'admin/agents'
+  private readonly adminEndpoint: string = 'admin/agents'
+  private readonly endUserendpoint: string = '/agents'
 
   /**
    * Fetches a list of agents with optional filtering, sorting, and pagination.
@@ -38,7 +39,7 @@ export default class AgentService extends FetchFactory {
       }).toString()
 
       // Make the API request with the constructed URL
-      return await this.$fetch<AllAgentResponse>(`${this.endpoint}?${queryParams}`, {
+      return await this.$fetch<AllAgentResponse>(`${this.adminEndpoint}?${queryParams}`, {
         credentials: 'include',
       })
     }
@@ -59,7 +60,7 @@ export default class AgentService extends FetchFactory {
    */
   async GetSingleAgent(agentId: string): Promise<Agent> {
     try {
-      return await this.$fetch<Agent>(`${this.endpoint}/${agentId}`, {
+      return await this.$fetch<Agent>(`${this.adminEndpoint}/${agentId}`, {
         credentials: 'include',
       })
     }
@@ -79,7 +80,7 @@ export default class AgentService extends FetchFactory {
    */
   async CreateAgent(body: AgentDetail): Promise<SingleAgent> {
     try {
-      return await this.$fetch(this.endpoint, {
+      return await this.$fetch(this.adminEndpoint, {
         credentials: 'include',
         method: 'POST',
         body: JSON.stringify(body),
@@ -102,7 +103,7 @@ export default class AgentService extends FetchFactory {
    */
   async UpdateAgent(id: string, body: AgentDetail): Promise<SingleAgent> {
     try {
-      return await this.$fetch(`${this.endpoint}/${id}`, {
+      return await this.$fetch(`${this.adminEndpoint}/${id}`, {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(body),
@@ -124,7 +125,7 @@ export default class AgentService extends FetchFactory {
    */
   async DeleteAgent(id: number): Promise<number> {
     try {
-      await this.$fetch(`${this.endpoint}/${id}`, {
+      await this.$fetch(`${this.adminEndpoint}/${id}`, {
         credentials: 'include',
         method: 'DELETE',
       })
@@ -141,7 +142,7 @@ export default class AgentService extends FetchFactory {
   async UpdateAgentCollection(id: string, body: AssignCollectionPayload): Promise<any> {
     const plainPayload = toRaw(body)
     try {
-      await this.$fetch(`${this.endpoint}/${id}/collections`, {
+      await this.$fetch(`${this.adminEndpoint}/${id}/collections`, {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(plainPayload),
