@@ -99,14 +99,14 @@ const redirectToCollectionDetails = () => {
 }
 
 .collection-informations-wrapper {
-  grid-column: span 5;
+  grid-column: 5/9;
   display: flex;
   gap: 3rem;
   justify-content: space-around;
 }
 
 .action-links {
-  grid-column: span 3;
+  grid-column: 9/-1;
   display: flex;
   gap: 0.75rem;
   align-items: center;

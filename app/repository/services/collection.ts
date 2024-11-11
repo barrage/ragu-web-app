@@ -12,13 +12,13 @@ export default class CollectionService extends FetchFactory {
    * @returns A promise that resolves to the collections list response.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllCollections(page: number = 1, perPage: number = 20, sortBy: string = 'createdAt', sortOrder: 'asc' | 'desc' = 'asc'): Promise<CollectionListResponse> {
+  async GetAllCollections(page: number = 1, perPage: number = 20, sortBy?: string, sortDir: 'asc' | 'desc' = 'asc'): Promise<CollectionListResponse> {
     try {
       const queryParams = new URLSearchParams({
         page: page.toString(),
         perPage: perPage.toString(),
-        sortBy,
-        sortOrder,
+        ...(sortBy && { sortBy }),
+        sortDir,
       }).toString()
 
       return await this.$fetch<CollectionListResponse>(`${this.endpoint}?${queryParams}`)

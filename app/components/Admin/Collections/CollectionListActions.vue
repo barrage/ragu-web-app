@@ -8,9 +8,9 @@ const emits = defineEmits<{
 const { t } = useI18n()
 
 const sortOptions = computed(() => [
-  { name: t('collections.labels.created_at'), value: 'createdAt' },
+  { name: t('collections.labels.created_at'), value: 'created_at' },
   { name: t('collections.labels.name'), value: 'name' },
-  { name: t('collections.labels.updated_at'), value: 'updatedAt' },
+  { name: t('collections.labels.updated_at'), value: 'updated_at' },
 ])
 
 const updateSort = (sortingValues: SortingValues) => {
