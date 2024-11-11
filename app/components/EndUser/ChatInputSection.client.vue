@@ -53,7 +53,7 @@ const agentId = computed(() => {
     return ''
   }
   else {
-    return agentStore.selectedAgent?.id
+    return agentStore.selectedAgent?.agent?.id
   }
 })
 
