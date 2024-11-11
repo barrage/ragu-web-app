@@ -104,7 +104,86 @@ export default {
     },
 
   },
-
+  dashboard: {
+    title: 'Tableau de bord',
+    description: 'Gérez l\'application d\'administration LLMAO.',
+    service_widgets: {
+      agents: {
+        title: 'Total des agents',
+        description: 'agents actifs',
+        view_more: 'Voir plus',
+      },
+      users: {
+        title: 'Total des utilisateurs',
+        description: 'utilisateurs actifs',
+        view_more: 'Voir plus',
+      },
+      documents: {
+        title: 'Documents',
+        description: 'Total des documents',
+        view_more: 'Voir plus',
+      },
+      collections: {
+        title: 'Collections',
+        description: 'Total des collections',
+        view_more: 'Voir plus',
+      },
+    },
+    chat_usage_line_chart: {
+      title: 'Utilisation du chat',
+      period: {
+        week: 'Semaine',
+        month: 'Mois',
+        year: 'Année',
+      },
+    },
+    chats: {
+      most_recent: {
+        title: 'Chats récents',
+        description: 'Affiche votre historique de chat le plus récent',
+      },
+      all_chat_usage: {
+        title: 'Utilisation de tous les chats',
+        description: 'Les chats les plus courants par l\'utilisation de tous les agents',
+        series_name: 'Agent',
+        pie_chart_subtext: 'Total des chats',
+      },
+      available_agents: {
+        title: 'Agents disponibles',
+        description: 'Affichez et interagissez avec les agents disponibles alimentés par l\'IA.',
+      },
+    },
+    agents: {
+      total_widget: {
+        active: 'Actif',
+      },
+      providers: {
+        title: 'Fournisseurs',
+        description: 'Affiche le fournisseur des agents actifs',
+        series_name: 'Fournisseur',
+      },
+      most_used_agent: {
+        title: 'Agent le plus utilisé',
+        description: 'Agent le plus utilisé par tous les chats',
+        chats: 'Chats',
+      },
+    },
+    users: {
+      total_widget: {
+        total: 'Total',
+      },
+      most_recent_users: {
+        title: 'Utilisateurs les plus récents',
+        description: 'Trouvez vos utilisateurs les plus récents',
+      },
+      user_roles: {
+        admins: 'Administrateurs',
+        users: 'Utilisateurs',
+        active: 'Actif',
+        inactive: 'Inactif',
+      },
+    },
+  },
   agents: {
     title: 'Agents',
     titles: {

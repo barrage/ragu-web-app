@@ -105,7 +105,86 @@ export default {
     },
 
   },
-
+  dashboard: {
+    title: 'Painel de controle',
+    description: 'Gerencie o aplicativo de administração LLMAO.',
+    service_widgets: {
+      agents: {
+        title: 'Total de agentes',
+        description: 'agentes ativos',
+        view_more: 'Ver mais',
+      },
+      users: {
+        title: 'Total de usuários',
+        description: 'usuários ativos',
+        view_more: 'Ver mais',
+      },
+      documents: {
+        title: 'Documentos',
+        description: 'Total de documentos',
+        view_more: 'Ver mais',
+      },
+      collections: {
+        title: 'Coleções',
+        description: 'Total de coleções',
+        view_more: 'Ver mais',
+      },
+    },
+    chat_usage_line_chart: {
+      title: 'Uso de chat',
+      period: {
+        week: 'Semana',
+        month: 'Mês',
+        year: 'Ano',
+      },
+    },
+    chats: {
+      most_recent: {
+        title: 'Chats recentes',
+        description: 'Exibe seu histórico de chat mais recente',
+      },
+      all_chat_usage: {
+        title: 'Uso de todos os chats',
+        description: 'Chats mais comuns por uso de todos os agentes',
+        series_name: 'Agente',
+        pie_chart_subtext: 'Total de chats',
+      },
+      available_agents: {
+        title: 'Agentes disponíveis',
+        description: 'Visualize e interaja com agentes disponíveis baseados em IA.',
+      },
+    },
+    agents: {
+      total_widget: {
+        active: 'Ativo',
+      },
+      providers: {
+        title: 'Provedores',
+        description: 'Exibe o provedor dos agentes ativos',
+        series_name: 'Fornecedor',
+      },
+      most_used_agent: {
+        title: 'Agente mais usado',
+        description: 'Agente mais comum pelo uso de todos os chats',
+        chats: 'Chats',
+      },
+    },
+    users: {
+      total_widget: {
+        total: 'Total',
+      },
+      most_recent_users: {
+        title: 'Usuários mais recentes',
+        description: 'Encontre seus usuários mais recentes',
+      },
+      user_roles: {
+        admins: 'Administradores',
+        users: 'Usuários',
+        active: 'Ativo',
+        inactive: 'Inativo',
+      },
+    },
+  },
   agents: {
     title: 'Agentes',
     titles: {

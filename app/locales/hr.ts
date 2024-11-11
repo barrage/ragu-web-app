@@ -168,7 +168,83 @@ export default {
   },
   dashboard: {
     title: 'Nadzorna ploča',
-    description: '',
+    description: 'Upravljajte LLMAO aplikacijom za administraciju.',
+    service_widgets: {
+      agents: {
+        title: 'Ukupno agenata',
+        description: 'aktivni agenti',
+        view_more: 'Prikaži više',
+      },
+      users: {
+        title: 'Ukupno korisnika',
+        description: 'aktivni korisnici',
+        view_more: 'Prikaži više',
+      },
+      documents: {
+        title: 'Dokumenti',
+        description: 'Ukupno dokumenata',
+        view_more: 'Prikaži više',
+      },
+      collections: {
+        title: 'Kolekcije',
+        description: 'Ukupno kolekcija',
+        view_more: 'Prikaži više',
+      },
+    },
+    chat_usage_line_chart: {
+      title: 'Upotreba razgovora',
+      period: {
+        week: 'Tjedan',
+        month: 'Mjesec',
+        year: 'Godina',
+      },
+    },
+    chats: {
+      most_recent: {
+        title: 'Nedavni razgovori',
+        description: 'Prikazuje vašu posljednju povijest razgovora',
+      },
+      all_chat_usage: {
+        title: 'Upotreba svih razgovora',
+        description: 'Najčešći razgovori prema korištenju svih agenata',
+        series_name: 'Agent',
+        pie_chart_subtext: 'Ukupno razgovora',
+      },
+      available_agents: {
+        title: 'Dostupni agenti',
+        description: 'Prikažite i komunicirajte s dostupnim agentima temeljenim na AI-u.',
+      },
+    },
+    agents: {
+      total_widget: {
+        active: 'Aktivan',
+      },
+      providers: {
+        title: 'Pružatelji',
+        description: 'Prikazuje pružatelje aktivnih agenata',
+        series_name: 'Pružatelj',
+      },
+      most_used_agent: {
+        title: 'Najkorišteniji agent',
+        description: 'Najčešći agent prema upotrebi svih razgovora',
+        chats: 'Razgovori',
+      },
+    },
+    users: {
+      total_widget: {
+        total: 'Ukupno',
+      },
+      most_recent_users: {
+        title: 'Najnoviji korisnici',
+        description: 'Pronađite svoje najnovije korisnike',
+      },
+      user_roles: {
+        admins: 'Administratori',
+        users: 'Korisnici',
+        active: 'Aktivan',
+        inactive: 'Neaktivan',
+      },
+    },
   },
   agents: {
     title: 'Agenti',

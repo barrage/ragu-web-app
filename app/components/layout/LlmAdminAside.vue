@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import PanelIcon from '~/assets/icons/svg/panel.svg'
-import LayoutIcon from '~/assets/icons/svg/layout.svg'
+import DashboardIcon from '~/assets/icons/svg/dashboard-icon.svg'
 import QuestionIcon from '~/assets/icons/svg/question.svg'
 import TeamIcon from '~/assets/icons/svg/team.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
@@ -31,7 +31,7 @@ const menuList = computed<MenuCategory[]>(() => ([
       {
         label: t('dashboard.title'),
         link: '/admin',
-        icon: LayoutIcon,
+        icon: DashboardIcon,
       },
       {
         label: t('users.title'),
@@ -97,7 +97,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
               @click="selectFeature(item, menuItem.category)"
             >
               <div class="item-content">
-                <component :is="item.icon" size="20" />
+                <component :is="item.icon" size="20px" />
                 <p v-if="!navigationStore.isAdminSidebarCollapsed" class="item-title">
                   {{ item.label }}
                 </p>

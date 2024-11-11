@@ -176,7 +176,83 @@ export default {
   },
   dashboard: {
     title: 'Dashboard',
-    description: '',
+    description: 'Manage the LLMAO administration app.',
+    service_widgets: {
+      agents: {
+        title: 'Total Agents',
+        description: 'active agents',
+        view_more: 'View more',
+      },
+      users: {
+        title: 'Total Users',
+        description: 'active users',
+        view_more: 'View more',
+      },
+      documents: {
+        title: 'Documents',
+        description: 'Total documents',
+        view_more: 'View more',
+      },
+      collections: {
+        title: 'Collections',
+        description: 'Total collections',
+        view_more: 'View more',
+      },
+    },
+    chat_usage_line_chart: {
+      title: 'Chat usage',
+      period: {
+        week: 'Week',
+        month: 'Month',
+        year: 'Year',
+      },
+    },
+    chats: {
+      most_recent: {
+        title: 'Recent chats',
+        description: 'Displays your latest chat history',
+      },
+      all_chat_usage: {
+        title: 'All chats usage',
+        description: 'Most common chats by all agents usage',
+        series_name: 'Agent',
+        pie_chart_subtext: 'Total chats',
+      },
+      available_agents: {
+        title: 'Available Agents',
+        description: 'View and interact with available AI-powered agents.',
+      },
+    },
+    agents: {
+      total_widget: {
+        active: 'Active',
+      },
+      providers: {
+        title: 'Providers',
+        description: 'Displays active agents provider',
+        series_name: 'Provider',
+      },
+      most_used_agent: {
+        title: 'Most used agent',
+        description: 'Most common agent by all chats usage',
+        chats: 'Chats',
+      },
+    },
+    users: {
+      total_widget: {
+        total: 'Total',
+      },
+      most_recent_users: {
+        title: 'Most recent users',
+        description: 'Find your most recent users',
+      },
+      user_roles: {
+        admins: 'Admins',
+        users: 'Users',
+        active: 'Active',
+        inactive: 'Inactive',
+      },
+    },
   },
   agents: {
     title: 'Agents',

@@ -105,7 +105,86 @@ export default {
 
     },
   },
-
+  dashboard: {
+    title: 'Dashboard',
+    description: 'Verwalten Sie die LLMAO-Administrationsanwendung.',
+    service_widgets: {
+      agents: {
+        title: 'Agenten',
+        description: 'aktive Agenten',
+        view_more: 'Mehr anzeigen',
+      },
+      users: {
+        title: 'Benutzer',
+        description: 'aktive Benutzer',
+        view_more: 'Mehr anzeigen',
+      },
+      documents: {
+        title: 'Dokumente',
+        description: 'Gesamte Dokumente',
+        view_more: 'Mehr anzeigen',
+      },
+      collections: {
+        title: 'Sammlungen',
+        description: 'Gesamte Sammlungen',
+        view_more: 'Mehr anzeigen',
+      },
+    },
+    chat_usage_line_chart: {
+      title: 'Chat-Nutzung',
+      period: {
+        week: 'Woche',
+        month: 'Monat',
+        year: 'Jahr',
+      },
+    },
+    chats: {
+      most_recent: {
+        title: 'Neueste Chats',
+        description: 'Zeigt Ihren letzten Chatverlauf an',
+      },
+      all_chat_usage: {
+        title: 'Gesamte Chat-Nutzung',
+        description: 'Die häufigsten Chats durch die Nutzung aller Agenten',
+        series_name: 'Agent',
+        pie_chart_subtext: 'Gesamte Chats',
+      },
+      available_agents: {
+        title: 'Verfügbare Agenten',
+        description: 'Anzeigen und Interagieren mit verfügbaren KI-Agenten.',
+      },
+    },
+    agents: {
+      total_widget: {
+        active: 'Aktiv',
+      },
+      providers: {
+        title: 'Anbieter',
+        description: 'Zeigt den aktiven Agentenanbieter an',
+        series_name: 'Anbieter',
+      },
+      most_used_agent: {
+        title: 'Meistgenutzter Agent',
+        description: 'Am häufigsten verwendeter Agent durch alle Chats',
+        chats: 'Chats',
+      },
+    },
+    users: {
+      total_widget: {
+        total: 'Gesamt',
+      },
+      most_recent_users: {
+        title: 'Neueste Benutzer',
+        description: 'Finden Sie Ihre neuesten Benutzer',
+      },
+      user_roles: {
+        admins: 'Administratoren',
+        users: 'Benutzer',
+        active: 'Aktiv',
+        inactive: 'Inaktiv',
+      },
+    },
+  },
   agents: {
     title: 'Agenten',
     titles: {
