@@ -9,7 +9,7 @@ const { t } = useI18n()
 
 const sortOptions = computed(() => [
   { name: t('documents.name'), value: 'name' },
-  { name: t('documents.extension'), value: 'extension' },
+  { name: t('documents.extension'), value: 'ext' },
 ])
 
 const updateSort = (sortingValues: SortingValues) => {

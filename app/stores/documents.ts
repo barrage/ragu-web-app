@@ -9,7 +9,7 @@ export const useDocumentsStore = defineStore('document', () => {
 
   /* API */
 
-  async function GET_AllDocuments(page: number = 1, perPage: number = 10, sortBy: string = 'createdAt', sortOrder: 'asc' | 'desc' = 'asc'): Promise<DocumentListResponse | null > {
+  async function GET_AllDocuments(page: number = 1, perPage: number = 10, sortBy?: string, sortOrder: 'asc' | 'desc' = 'asc'): Promise<DocumentListResponse | null > {
     const data = await $api.document.GetAllDocuments(page, perPage, sortBy, sortOrder)
 
     if (data) {

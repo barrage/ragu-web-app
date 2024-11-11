@@ -14,13 +14,13 @@ export default class DocumentServise extends FetchFactory {
    * @returns A promise that resolves to an DocumentListResponse type.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllDocuments(page: number = 1, perPage: number = 10, sortBy: string = 'createdAt', sortOrder: 'asc' | 'desc' = 'asc'): Promise<DocumentListResponse> {
+  async GetAllDocuments(page: number = 1, perPage: number = 10, sortBy?: string, sortDir: 'asc' | 'desc' = 'asc'): Promise<DocumentListResponse> {
     try {
       const queryParams = new URLSearchParams({
         page: page.toString(),
         perPage: perPage.toString(),
-        sortBy,
-        sortOrder,
+        ...(sortBy && { sortBy }),
+        sortDir,
       }).toString()
       return await this.$fetch<DocumentListResponse>(`${this.endpoint}?${queryParams}`)
     }

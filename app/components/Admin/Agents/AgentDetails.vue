@@ -278,7 +278,7 @@ const closeDeleteCollectionModal = () => {
     :is-open="assignCollectionModalVisible"
     @close-modal="closeAssignCollectionModal"
   />
-  <DeleteCollectionModal
+  <DeleteAgentCollectionModal
     :is-open="deleteCollectionModalVisible"
     @close-modal="closeDeleteCollectionModal"
   />
