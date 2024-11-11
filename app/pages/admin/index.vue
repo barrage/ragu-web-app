@@ -1,47 +1,189 @@
 <script lang="ts" setup>
+import DashboardIcon from '~/assets/icons/svg/dashboard-icon.svg'
+import DashboardHeroOverview from '~/components/Admin/Dashboard/DashboardHeroOverview.vue'
+import type { AgentStatistic, ChatStatistic, StatisticItem, UserStatistic } from '~/types/statistic'
+
 definePageMeta({
   layout: 'admin-layout',
 })
-const appConfigStore = useAppConfigStore()
+const { t } = useI18n()
+const statisticStore = useStatisticStore()
 
-appConfigStore.GET_AppConfig()
+const currentPeriod = ref('WEEK')
 
-const currentAppConfig = computed(() => {
-  return appConfigStore.appConfig
+statisticStore.GET_ChatHistoryStatistic(currentPeriod.value)
+statisticStore.GET_DashboardCount()
+
+const updatePeriod = (newPeriod: string) => {
+  currentPeriod.value = newPeriod
+  statisticStore.GET_ChatHistoryStatistic(currentPeriod.value)
+}
+
+const chatHistory = computed(() => {
+  return statisticStore.chatHistoryStats
+})
+const chatCount = computed<ChatStatistic>(() => {
+  return statisticStore.dashboardCount?.chat || { agents: [], total: 0 }
+})
+
+const usersData = computed<UserStatistic>(() => {
+  return statisticStore.dashboardCount?.user || { active: 0, admin: 0, inactive: 0, total: 0, user: 0 }
+})
+
+const agentsData = computed<AgentStatistic>(() => {
+  return statisticStore.dashboardCount?.agent || { active: 0, inactive: 0, providers: [], total: 0 }
+})
+
+const userStore = useUsersStore()
+
+const recentUsers = ref()
+const getRecentUsers = async () => {
+  recentUsers.value = await userStore.GET_AllUsers(1, 5, 'createdAt', 'desc')
+  return recentUsers.value
+}
+
+const mostRecentUser = computed(() => {
+  return recentUsers.value?.items ? recentUsers.value.items : []
+})
+
+const chatStore = useChatStore()
+const recentChats = ref()
+const getRecentChats = async () => {
+  recentChats.value = await chatStore.GET_AllAdminChats(1, 10, 'updatedAt', 'desc')
+  return recentChats.value
+}
+const mostRecentChats = computed(() => {
+  return recentChats.value?.items ? recentChats.value.items : []
+})
+
+const agentsStore = useAgentStore()
+const activeAgents = ref()
+const getRecentAgents = async () => {
+  activeAgents.value = await agentsStore.GET_AllAgents(1, 20, 'updatedAt', 'desc', false)
+  return activeAgents.value
+}
+const allActiveAgents = computed(() => {
+  return activeAgents.value?.items ? activeAgents.value.items : []
+})
+
+onMounted(() => {
+  getRecentUsers()
+  getRecentChats()
+  getRecentAgents()
+})
+
+function findMostUsedAgent(chatData: ChatStatistic) {
+  const agents = chatData?.agents || []
+
+  if (agents.length === 0) {
+    return { name: 'None', stats: { used: 0, total: chatData?.total || 0 } }
+  }
+
+  const mostUsedAgent = agents.reduce((max, agent) => {
+    return agent.value > max.value ? agent : max
+  }, { name: '-', value: 0 })
+
+  const result = {
+    name: mostUsedAgent?.name || 'Unknown',
+    stats: {
+      used: mostUsedAgent?.value || 0,
+      total: chatData?.total || 0,
+    },
+  }
+
+  return result
+}
+
+const mostUsedAgentData = computed(() => {
+  return findMostUsedAgent(chatCount?.value)
 })
 </script>
 
 <template>
-  <div class="admin-dashboard-page-container">
-    <h4 class="page-title">
-      Dashboard
-    </h4>
-    <p class="description">
-      Manage app features, user roles, and analytics seamlessly
-    </p>
-    <AppConfig :app-config="currentAppConfig" />
-  </div>
+  <AdminPageContainer>
+    <AdminPageHeadingTemplate>
+      <template #title>
+        <AdminPageTitleContainer
+          :title="t('dashboard.title')"
+          :description="t('dashboard.description')"
+        >
+          <template #icon>
+            <DashboardIcon size="52" />
+          </template>
+        </AdminPageTitleContainer>
+      </template>
+    </AdminPageHeadingTemplate>
+
+    <div class="dashboard-templates-wrapper grid">
+      <div class="dashboard-hero-section-template">
+        <DashboardHeroOverview
+          :agents-stats="agentsData"
+          :users-stats="usersData"
+          :chat-history="chatHistory"
+          @change-period="updatePeriod"
+        />
+      </div>
+      <div class="dashboard-chats-template">
+        <DashboardChatsInfo
+          :chat-history="chatHistory"
+          :chat-count="chatCount"
+          :recent-chats="mostRecentChats"
+          :active-agents="allActiveAgents"
+        />
+      </div>
+      <div class="dashboard-agents-template">
+        <DashboardAgents
+          :count-data-agents="agentsData"
+          :recent-users="mostRecentUser"
+          :most-used-agent="mostUsedAgentData"
+        />
+      </div>
+      <div class="dashboard-users-template">
+        <DashboardUsers :count-data-user="usersData" :recent-users="mostRecentUser" />
+      </div>
+    </div>
+  </AdminPageContainer>
 </template>
 
 <style lang="scss" scoped>
-.admin-dashboard-page-container {
-  padding: 1rem 2rem;
+.dashboard-templates-wrapper {
+  grid-row-gap: var(--spacing-fluid-xl);
+}
+.dashboard-hero-section-template {
+  grid-column: span 12;
+}
 
-  & .page-title {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--color-primary-900);
+.dashboard-users-template {
+  padding-top: 12px;
+  grid-column: span 4;
+  @include viewport-s {
+    grid-column: span 8;
   }
-  & .description {
-    color: var(--color-primary-700);
+
+  @include viewport-m {
+    grid-column: span 12;
+  }
+  @include viewport-xl {
+    grid-column: span 6;
   }
 }
-.dark {
-  & .page-title {
-    color: var(--color-primary-100);
+.dashboard-agents-template {
+  padding-top: 12px;
+  grid-column: span 4;
+  @include viewport-s {
+    grid-column: span 8;
   }
-  & .description {
-    color: var(--color-primary-300);
+
+  @include viewport-m {
+    grid-column: span 12;
   }
+  @include viewport-xl {
+    grid-column: span 6;
+    padding-right: 32px;
+  }
+}
+.dashboard-chats-template {
+  grid-column: span 12;
+  padding-top: 12px;
 }
 </style>

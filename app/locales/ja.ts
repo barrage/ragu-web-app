@@ -104,7 +104,86 @@ export default {
     },
 
   },
-
+  dashboard: {
+    title: 'ダッシュボード',
+    description: 'LLMAO管理アプリを管理します。',
+    service_widgets: {
+      agents: {
+        title: '合計エージェント',
+        description: 'アクティブなエージェント',
+        view_more: 'もっと見る',
+      },
+      users: {
+        title: '合計ユーザー',
+        description: 'アクティブなユーザー',
+        view_more: 'もっと見る',
+      },
+      documents: {
+        title: 'ドキュメント',
+        description: '合計ドキュメント',
+        view_more: 'もっと見る',
+      },
+      collections: {
+        title: 'コレクション',
+        description: '合計コレクション',
+        view_more: 'もっと見る',
+      },
+    },
+    chat_usage_line_chart: {
+      title: 'チャットの使用',
+      period: {
+        week: '週間',
+        month: '月',
+        year: '年',
+      },
+    },
+    chats: {
+      most_recent: {
+        title: '最近のチャット',
+        description: '最新のチャット履歴を表示します',
+      },
+      all_chat_usage: {
+        title: 'すべてのチャットの使用',
+        description: 'すべてのエージェントの使用による最も一般的なチャット',
+        series_name: 'エージェント',
+        pie_chart_subtext: '合計チャット',
+      },
+      available_agents: {
+        title: '利用可能なエージェント',
+        description: '利用可能なAIエージェントを表示して操作します。',
+      },
+    },
+    agents: {
+      total_widget: {
+        active: 'アクティブ',
+      },
+      providers: {
+        title: 'プロバイダー',
+        description: 'アクティブなエージェントのプロバイダーを表示します',
+        series_name: 'プロバイダー',
+      },
+      most_used_agent: {
+        title: '最も使用されているエージェント',
+        description: 'すべてのチャットの使用による最も一般的なエージェント',
+        chats: 'チャット',
+      },
+    },
+    users: {
+      total_widget: {
+        total: '合計',
+      },
+      most_recent_users: {
+        title: '最新のユーザー',
+        description: '最新のユーザーを見つけます',
+      },
+      user_roles: {
+        admins: '管理者',
+        users: 'ユーザー',
+        active: 'アクティブ',
+        inactive: '非アクティブ',
+      },
+    },
+  },
   agents: {
     title: 'エージェント',
     titles: {

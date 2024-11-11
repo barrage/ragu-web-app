@@ -99,6 +99,7 @@ export const useEChart = () => {
       icon: 'circle',
       itemWidth: 8,
       itemHeight: 8,
+      type: 'scroll',
       textStyle: {
         fontSize: 10,
       },
@@ -352,17 +353,17 @@ export const useEChart = () => {
       nameTextStyle: {
         align: 'left',
         fontSize: 11.5,
-        fontFamily: 'TeleNeo',
+        fontFamily: 'sans-serif',
         lineHeight: 13.8,
         fontWeight: 400,
       },
       axisLabel: {
         hideOverlap: true,
         fontSize: 11.5,
-        fontFamily: 'TeleNeo',
+        fontFamily: 'sans-serif',
         lineHeight: 13.8,
         fontWeight: 400,
-        color: '#8A8A8A',
+        color: 'var(--color-primary-800)',
         showMaxLabel: true,
       },
       axisTick: {
@@ -380,13 +381,24 @@ export const useEChart = () => {
       axisPointer: {
         snap: true,
       },
+      splitLine: {
+        lineStyle: {
+          color: 'var(--color-primary-300)',
+        },
+      },
+      axisLine: {
+        lineStyle: {
+          color: 'red',
+        },
+
+      },
       axisLabel: {
         hideOverlap: true,
         fontSize: 11.5,
-        fontFamily: 'TeleNeo',
+        fontFamily: 'sans-serif',
         lineHeight: 13.8,
         fontWeight: 400,
-        color: '#8A8A8A',
+        color: 'var(--color-primary-800)',
         showMaxLabel: true,
       },
       nameLocation: 'middle',
@@ -397,7 +409,7 @@ export const useEChart = () => {
         fontFamily: 'TeleNeo',
         lineHeight: 13.8,
         fontWeight: 400,
-        color: '#F9F9F9',
+        color: 'var(--color-primary-900)',
       },
     },
     legend: {
@@ -405,9 +417,10 @@ export const useEChart = () => {
       width: '100%',
       itemWidth: 8,
       itemHeight: 8,
+      type: 'scroll',
       textStyle: {
         fontSize: 11.5,
-        fontFamily: 'TeleNeo',
+        fontFamily: 'sans-serif',
         lineHeight: 13.8,
         fontWeight: 500,
       },

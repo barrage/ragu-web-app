@@ -21,16 +21,16 @@ const props = defineProps<{
 }>()
 
 use(SVGRenderer)
-const chartWidth = computed(() => (props.small ? '128px' : '100%'))
-const chartHeight = computed(() => (props.small ? '128px' : '348px'))
-const radius = computed(() => (props.small ? ['50%', '80%'] : [80, 125]))
+const chartWidth = computed(() => (props.small ? '100%' : '100%'))
+const chartHeight = computed(() => (props.small ? '148px' : '300px'))
+const radius = computed(() => (props.small ? ['25%', '60%'] : [80, 125]))
 
 const predefinedColors = [
-  '#8B181A',
-  '#F9CA07',
-  '#9BEC00',
-  '#fac858',
-  '#ee6666',
+  '#03346E',
+  '#4E9F3D',
+  '#FFD700',
+  '#FBA834',
+  '#FF0000',
   '#73c0de',
   '#3ba272',
   '#fc8452',
@@ -84,6 +84,17 @@ const updateChartOptions = (data: DataEntry[]) => {
       textStyle: {
         color: isDark.value ? 'var(--color-primary-0)' : 'var(--color-primary-900)',
         fontSize: 14.5,
+      },
+      pageIconColor: isDark.value
+        ? 'var(--color-primary-100)'
+        : 'var(--color-primary-800)',
+      pageIconInactiveColor: isDark.value
+        ? 'var(--color-primary-200)'
+        : 'var(--color-primary-700)',
+      pageTextStyle: {
+        color: isDark.value
+          ? 'var(--color-primary-200)'
+          : 'var(--color-primary-700)',
       },
     },
     tooltip: {

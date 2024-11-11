@@ -34,9 +34,9 @@ const isMounted = ref(false)
 
 type GaugeColorBreakpoint = [number, string]
 const gaugeColorMapBlue: GaugeColorBreakpoint[] = [
-  [0.8, '#1EADC6'],
-  [0.9, '#0894B0'],
-  [1, '#008099'],
+  [0.5, 'var(--color-primary-400)'],
+  [0.9, 'var(--color-primary-500)'],
+  [1, 'var(--color-primary-600)'],
 ]
 const gaugeColorMapGreen: GaugeColorBreakpoint[] = [
   [0.8, '#8EB83A'],
@@ -105,7 +105,7 @@ const updateChartOptions = () => {
         },
         data: [
           {
-            name: 'Absolute used space',
+            name: '',
             value: props.data.used,
           },
         ],
@@ -115,8 +115,8 @@ const updateChartOptions = () => {
           fontSize: 11.5,
           fontWeight: 'normal',
           color: isDark.value
-            ? 'var(--t-ht-color-gray-400)'
-            : 'var(--t-ht-color-gray-700)',
+            ? 'var(--color-primary-300)'
+            : 'var(--color-primary-900)',
           formatter: _ => `${props.usedText}`,
         },
       },
@@ -151,9 +151,9 @@ const updateChartOptions = () => {
           offsetCenter: [0, -30],
           valueAnimation: true,
           color: isDark.value
-            ? 'var(--t-ht-shade-0)'
-            : 'var(--t-ht-shade-1000)',
-          formatter: value => `${value.toFixed(0)}%`,
+            ? 'var(--color-primary-100)'
+            : 'var(--color-primary-900)',
+          formatter: value => `${value ? value.toFixed(0) : 0}%`,
         },
         pointer: {
           show: false,
@@ -174,7 +174,7 @@ const updateChartOptions = () => {
       },
       {
         silent: false,
-        name: 'Absolute value of used space',
+        name: '',
         type: 'gauge',
         radius: '100%',
         axisLine: {
@@ -200,8 +200,8 @@ const updateChartOptions = () => {
           fontSize: 11.5,
           formatter: _ => `${props.usedText}`,
           color: isDark.value
-            ? 'var(--t-ht-color-gray-400)'
-            : 'var(--t-ht-color-gray-700)',
+            ? 'var(--color-primary-200)'
+            : 'var(--color-primary-800)',
           fontWeight: 'normal',
         },
         data: [
@@ -239,10 +239,10 @@ const updateChartOptions = () => {
           offsetCenter: ['-70%', 20],
           fontSize: 18,
           valueAnimation: true,
-          formatter: value => `${value} GB`,
+          formatter: value => `${value}`,
           color: isDark.value
-            ? 'var(--t-ht-shade-0)'
-            : 'var(--t-ht-shade-1000)',
+            ? 'var(--color-primary-200)'
+            : 'var(--color-primary-800)',
         },
         data: [
           {
@@ -280,10 +280,10 @@ const updateChartOptions = () => {
           offsetCenter: ['70%', 20],
           fontSize: 18,
           valueAnimation: true,
-          formatter: value => `${value} GB`,
+          formatter: value => `${value}`,
           color: isDark.value
-            ? 'var(--t-ht-shade-0)'
-            : 'var(--t-ht-shade-1000)',
+            ? 'var(--color-primary-200)'
+            : 'var(--color-primary-800)',
         },
         data: [
           {
@@ -322,8 +322,8 @@ const updateChartOptions = () => {
           fontWeight: 'normal',
           formatter: _ => `${props.totalText}`,
           color: isDark.value
-            ? 'var(--t-ht-color-gray-400)'
-            : 'var(--t-ht-color-gray-700)',
+            ? 'var(--color-primary-200)'
+            : 'var(--color-primary-800)',
         },
         data: [
           {
@@ -336,12 +336,16 @@ const updateChartOptions = () => {
     tooltip: {
       ...gaugeChartOptions.tooltip,
       extraCssText: 'width:200px',
-      backgroundColor: isDark
-        ? 'var(--t-ht-shade-1000)'
-        : 'var(--t-ht-shade-0)',
-      borderColor: isDark ? 'var(--t-ht-shade-1000)' : 'var(--t-ht-shade-0)',
+      backgroundColor: isDark.value
+        ? 'var(--color-primary-800)'
+        : 'var(--color-primary-0)',
+      borderColor: isDark.value
+        ? 'var(--color-primary-1000)'
+        : 'var(--color-primary-100)',
       textStyle: {
-        color: isDark ? 'var(--t-ht-shade-0)' : 'var(--t-ht-shade-1000)',
+        color: isDark.value
+          ? 'var(--color-primary-0)'
+          : 'var(--color-primary-900)',
       },
     },
   }

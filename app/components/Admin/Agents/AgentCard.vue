@@ -88,7 +88,7 @@ const redirectToAgentDetails = () => {
 
       <LabelDescriptionItem
         :label="t('agents.labels.temperature')"
-        :description="agentData.temperature"
+        :description="agentData?.temperature.toString()"
         size="small"
       />
     </div>
