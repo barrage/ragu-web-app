@@ -2,21 +2,10 @@ import type { Collection } from '~/types/collection'
 
 export type EmbeddingProvider = 'azure' | 'openai' | 'ollama'
 
-export interface SingleAgent {
-  active: boolean
-  context: string
-  createdAt: string
-  description: string | undefined
-  embeddingModel: string
-  embeddingProvider: string
-  id: string
-  language: string
-  llmProvider: string
-  model: string
-  name: string
-  temperature: number
-  updatedAt: string
-  vectorProvider: string
+export interface Agent {
+  agent?: Partial<SingleAgent>
+  configuration?: Partial <Configuration>
+  collections?: Array<Partial<AgentCollection>>
 }
 
 export interface AgentCollection {
@@ -29,40 +18,64 @@ export interface AgentCollection {
   updatedAt: Date | string
 }
 
-export interface Agent {
-  agent?: SingleAgent
-  instructions?: Instructions
-  collections?: AgentCollection[]
-}
-
-export interface AgentListResponse {
-  items: Agent[]
-  total: number
-}
 export interface AllAgentResponse {
-  items: SingleAgent[]
+  items: Agents[]
   total: number
 }
-export interface AgentDetail {
-
+export interface Agents {
+  agent: SingleAgent
+  configuration: Configuration
+}
+export interface SingleAgent {
   active: boolean
-  context: string
+  activeConfigurationId: string
+  createdAt: Date
   description: string
   embeddingModel: string
   embeddingProvider: string
-  instructions?: Instructions
+  id: string
   language: string
+  name: string
+  updatedAt: Date
+  vectorProvider: string
+}
+
+export interface Configuration {
+  agentId: string
+  agentInstructions: Instructions
+  context: string
+  createdAt: Date
+  id: string
   llmProvider: string
   model: string
-  name: string
   temperature: number
-  vectorProvider: string
+  updatedAt: Date
+  version: number
 }
 
 export interface Instructions {
   languageInstruction: string
   summaryInstruction: string
   titleInstruction: string
+}
+
+export interface AgentDetail {
+  active: boolean
+  configuration: AgentConfiguration
+  description: string
+  embeddingModel: string
+  embeddingProvider: string
+  language: string
+  name: string
+  vectorProvider: string
+}
+
+export interface AgentConfiguration {
+  context: string
+  instructions: Instructions
+  llmProvider: string
+  model: string
+  temperature: number
 }
 
 export interface AgentPayload {

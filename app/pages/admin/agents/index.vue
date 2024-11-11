@@ -50,7 +50,7 @@ errorHandler(error)
       </template>
     </AdminPageHeadingTemplate>
     <AgentsListActions @sort-change="handleSortChange" />
-    <AgentsList :agents="agentStore.getMappedAgents" @page-change="handlePageChange" />
+    <AgentsList :agents="agentStore.agentsResponse?.items" @page-change="handlePageChange" />
   </AdminPageContainer>
 </template>
 

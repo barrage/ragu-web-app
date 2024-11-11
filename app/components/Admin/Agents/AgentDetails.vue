@@ -30,19 +30,22 @@ const agentData = computed(() => {
   return {
     id: props.singleAgent?.agent?.id || t('agents.agent_card.unknown_id'),
     name: props.singleAgent?.agent?.name || t('agents.agent_card.unknown_agentname'),
-    context: props.singleAgent?.agent?.context || t('agents.agent_card.unknown_agentcontext'),
+    context: props.singleAgent?.configuration?.context || t('agents.agent_card.unknown_agentcontext'),
     description: props.singleAgent?.agent?.description || t('agents.agent_card.unknown_description'),
     statusType: props.singleAgent?.agent?.active ? StatusType.Success : StatusType.Danger,
     status: props.singleAgent?.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
-    llmProvider: props.singleAgent?.agent?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
-    model: props.singleAgent?.agent?.model || t('agents.agent_card.unknown_model'),
+    llmProvider: props.singleAgent?.configuration?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
+    model: props.singleAgent?.configuration?.model || t('agents.agent_card.unknown_model'),
     language: props.singleAgent?.agent?.language || t('agents.agent_card.unknown_language'),
-    temperature: props.singleAgent?.agent?.temperature || t('agents.agent_card.unknown_temperature'),
+    temperature: props.singleAgent?.configuration?.temperature || t('agents.agent_card.unknown_temperature'),
     vectorProvider: props.singleAgent?.agent?.vectorProvider || t('agents.agent_card.unknown_vectorProvider'),
     embeddingProvider: props.singleAgent?.agent?.embeddingProvider || t('agents.agent_card.unknown_embeddingProvider'),
     embeddingModel: props.singleAgent?.agent?.embeddingModel || t('agents.agent_card.unknown_embeddingModel'),
-    updatedAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    createdAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    updatedAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    languageInstruction: props.singleAgent?.configuration?.agentInstructions?.languageInstruction || t('agents.agent_card.unknown_instruction'),
+    summaryInstruction: props.singleAgent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
+    titleInstruction: props.singleAgent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
+    createdAt: props.singleAgent?.agent?.createdAt ? formatDate(props.singleAgent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
   }
 })
 
@@ -260,6 +263,45 @@ const closeDeleteCollectionModal = () => {
         <div class="agent-details-custom-label">
           <PersonClockIcon size="18px" />
           <span>  {{ t('agents.labels.updated_at') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      v-if="props.singleAgent?.configuration?.agentInstructions?.languageInstruction"
+      :label="t('agents.labels.languageInstruction')"
+      :description="agentData.languageInstruction"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonClockIcon size="18px" />
+          <span>  {{ t('agents.labels.languageInstruction') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      v-if="props.singleAgent?.configuration?.agentInstructions?.summaryInstruction"
+      :label="t('agents.labels.summaryInstruction')"
+      :description="agentData.summaryInstruction"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonClockIcon size="18px" />
+          <span>  {{ t('agents.labels.summaryInstruction') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      v-if="props.singleAgent?.configuration?.agentInstructions?.titleInstruction"
+      :label="t('agents.labels.titleInstruction')"
+      :description="agentData.titleInstruction"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonClockIcon size="18px" />
+          <span>  {{ t('agents.labels.titleInstruction') }}</span>
         </div>
       </template>
     </LabelDescriptionItem>

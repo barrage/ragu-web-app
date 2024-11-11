@@ -280,6 +280,7 @@ export default {
       unknown_embeddingProvider: 'Unknown embeddingProvider',
       unknown_embeddingModel: 'Unknown embeddingModel',
       unknown_date: 'Unknown date',
+      unknown_instruction: 'Unknown instruction',
       active_status: 'Active',
       inactive_status: 'Inactive',
       created_at: 'Unknown Date',
@@ -304,6 +305,10 @@ export default {
       embeddingModel: 'Embedding Model',
       active: 'active',
       status: 'Agent Status',
+      languageInstruction: 'Language Instruction',
+      summaryInstruction: 'Summary Instruction',
+      titleInstruction: 'Title Instruction',
+
     },
     buttons: {
       create: 'Create Agent',
@@ -321,6 +326,13 @@ export default {
       vecotrProvider: 'Select Vector Provider',
       embeddingProvider: 'Select Embedding Provider',
       search: 'Search Agents',
+      agentName: 'Enter Agent Name',
+      context: 'Enter Agent Context...',
+      description: 'Enter Agent Description',
+      language: 'Enter Agent Language',
+      languageInstruction: 'Enter Agent Language Instructions',
+      summaryInstruction: 'Enter Agent Summary Instructions',
+      titleInstruction: 'Enter Agent Title Instructions',
     },
 
     notifications: {

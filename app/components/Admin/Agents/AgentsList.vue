@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { SingleAgent } from '~/types/agent'
+import type { Agents } from '~/types/agent'
 import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
-  agents: SingleAgent[] | null | undefined
+  agents: Agents[] | null | undefined
 }>()
 
 const emits = defineEmits<{
@@ -55,7 +55,7 @@ watch(
   <div class="agents-list-container">
     <div
       v-for="(agent, index) in props.agents"
-      :key="agent.id"
+      :key="agent.agent.id"
       class="list-item"
       :class="[cardClasses[index]]"
     >

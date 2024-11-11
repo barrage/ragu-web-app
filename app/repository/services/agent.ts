@@ -1,6 +1,6 @@
 import FetchFactory from '../fetchFactory'
 import type { AssignCollectionPayload } from '~/types/collection'
-import type { Agent, AgentDetail, AllAgentResponse, SingleAgent } from '~/types/agent'
+import type { Agent, AgentDetail, Agents, AllAgentResponse } from '~/types/agent'
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
@@ -16,7 +16,7 @@ export default class AgentService extends FetchFactory {
    * @param {'asc' | 'desc'} [sortOrder='asc'] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
    * @param {boolean} [showDeactivated=true] - Whether to include deactivated agents in the results. Defaults to true.
    *
-   * @returns {Promise<AgentListResponse>} - A promise that resolves to the list of agents.
+
    *
    * @throws {Error} - Throws an error if the request fails, including a status code and error message.
    */
@@ -123,7 +123,7 @@ export default class AgentService extends FetchFactory {
    * @returns A promise that resolves to Agent object
    * @throws Will throw an error if request fails
    */
-  async CreateAgent(body: AgentDetail): Promise<SingleAgent> {
+  async CreateAgent(body: AgentDetail): Promise<Agents> {
     try {
       return await this.$fetch(this.adminEndpoint, {
         credentials: 'include',
@@ -146,7 +146,7 @@ export default class AgentService extends FetchFactory {
    * @returns A promise that resolves to Agent object
    * @throws Will throw an error if request fails
    */
-  async UpdateAgent(id: string, body: AgentDetail): Promise<SingleAgent> {
+  async UpdateAgent(id: string, body: Agent): Promise<Agent> {
     try {
       return await this.$fetch(`${this.adminEndpoint}/${id}`, {
         credentials: 'include',
