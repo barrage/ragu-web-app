@@ -2,7 +2,7 @@
 // IMPORTS
 import type { FormInstance, FormRules } from 'element-plus'
 import { useAgentStore } from '~/stores/agents'
-import type { AgentDetail, EmbeddingProvider } from '~/types/agent'
+import type { Agent, AgentDetail, EmbeddingProvider } from '~/types/agent'
 
 // LAYOUT
 definePageMeta({
@@ -12,7 +12,6 @@ definePageMeta({
 // CONSTANTS
 const agentStore = useAgentStore()
 const providerStore = useProviderStore()
-const collectionStore = useCollectionsStore()
 
 const route = useRoute()
 const { t } = useI18n()
@@ -22,53 +21,49 @@ const agentId = ref(route.params.agentId as string)
 
 // STATE
 const formRef = ref<FormInstance>()
-const form = reactive<AgentDetail>({
-  name: '',
-  context: '',
-  description: '',
-  llmProvider: '',
-  model: '',
-  language: '',
-  temperature: 0.1,
-  vectorProvider: '',
-  embeddingProvider: '',
-  embeddingModel: '',
+const form = reactive({
   active: true,
+  description: '',
+  language: '',
+  name: '',
+  configuration: {
+    context: '',
+    llmProvider: '',
+    model: '',
+    temperature: 0.1,
+    instructions: {
+      titleInstructions: '',
+      language: '',
+      summaryInstructions: '',
+    },
+  },
 })
-const rules = reactive<FormRules<AgentDetail>>({
-  name: [
+
+const rules = reactive<FormRules>({
+  'name': [
     { required: true, message: t('agents.rules.name.required_message'), trigger: 'blur' },
     { min: 3, max: 50, message: t('agents.rules.name.length_message', { min: 3, max: 50 }), trigger: 'blur' },
   ],
-  context: [
+  'configuration.context': [
     { required: true, message: t('agents.rules.context.required_message'), trigger: 'blur' },
     { min: 30, max: maxContext, message: t('agents.rules.context.length_message', { min: 30, max: maxContext }), trigger: 'blur' },
   ],
-  description: [
+  'description': [
     { required: true, message: t('agents.rules.description.required_message'), trigger: 'blur' },
   ],
-  llmProvider: [
+  'configuration.llmProvider': [
     { required: true, message: t('agents.rules.llmProvider.required_message'), trigger: 'change' },
   ],
-  model: [
+  'configuration.model': [
     { required: true, message: t('agents.rules.model.required_message'), trigger: 'blur' },
   ],
-  language: [
+  'language': [
     { required: true, message: t('agents.rules.language.required_message'), trigger: 'blur' },
   ],
-  temperature: [
+  'configuration.temperature': [
     { required: true, message: t('agents.rules.temperature.required_message'), trigger: 'change' },
   ],
-  vectorProvider: [
-    { required: true, message: t('agents.rules.vectorProvider.required_message'), trigger: 'change' },
-  ],
-  embeddingProvider: [
-    { required: true, message: t('agents.rules.embeddingProvider.required_message'), trigger: 'change' },
-  ],
-  embeddingModel: [
-    { required: true, message: t('agents.rules.embeddingModel.required_message'), trigger: 'blur' },
-  ],
-  active: [
+  'active': [
     { required: true, message: t('agents.rules.active.required_message'), trigger: 'change' },
   ],
 })
@@ -126,34 +121,25 @@ const cancelUpdate = (): void => {
 errorHandler(updateError)
 
 // WATCHER FOR LLM PROVIDER
-watch(() => form.llmProvider, async (newProvider) => {
+watch(() => form.configuration?.llmProvider, async (newProvider) => {
   if (newProvider) {
     await providerStore.GET_AvailableListLlms(newProvider)
   }
 })
-watch(() => form.embeddingProvider, async (newModel) => {
-  if (newModel === 'azure') {
-    await collectionStore.GET_ListEmbeddingModels('openai')
-  }
-  else {
-    await collectionStore.GET_ListEmbeddingModels(newModel)
-  }
-})
 
 onMounted(async () => {
-  form.name = agentStore?.singleAgent?.agent?.name ?? ''
-  form.context = agentStore.singleAgent?.agent?.context ?? ''
+  form.name = agentStore.singleAgent?.agent?.name ?? ''
+  form.configuration.context = agentStore.singleAgent?.configuration?.context ?? ''
   form.description = agentStore.singleAgent?.agent?.description ?? ''
-  form.llmProvider = agentStore.singleAgent?.agent?.llmProvider ?? ''
-  form.model = agentStore.singleAgent?.agent?.model ?? ''
+  form.configuration.llmProvider = agentStore.singleAgent?.configuration?.llmProvider ?? ''
+  form.configuration.model = agentStore.singleAgent?.configuration?.model ?? ''
   form.language = agentStore.singleAgent?.agent?.language ?? ''
-  form.temperature = agentStore.singleAgent?.agent?.temperature ?? 0.1
-  form.vectorProvider = agentStore.singleAgent?.agent?.vectorProvider ?? ''
-  form.embeddingProvider = agentStore.singleAgent?.agent?.embeddingProvider ?? ''
-  form.embeddingModel = agentStore.singleAgent?.agent?.embeddingModel ?? ''
+  form.configuration.temperature = agentStore.singleAgent?.configuration?.temperature ?? 0.1
+  form.configuration.instructions.titleInstructions = agentStore.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
+  form.configuration.instructions.language = agentStore.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
+  form.configuration.instructions.summaryInstructions = agentStore.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
   form.active = agentStore.singleAgent?.agent?.active ?? true
-},
-)
+})
 
 onUnmounted(() => {
   agentStore.setEditMode(false)
@@ -166,7 +152,6 @@ onUnmounted(() => {
       {{ agentStore.editMode ? t('agents.titles.edit') : t('agents.titles.details') }}
     </h4>
 
-    <!-- EDIT FORM -->
     <div v-if="agentStore.editMode" class="edit-form">
       <ElForm
         ref="formRef"
@@ -187,9 +172,9 @@ onUnmounted(() => {
         <ElFormItem
           class="group context"
           :label="t('agents.labels.context')"
-          prop="context"
+          prop="configuration.context"
         >
-          <ElInput v-model="form.context" type="textarea" />
+          <ElInput v-model="form.configuration.context" type="textarea" />
         </ElFormItem>
 
         <!-- Description -->
@@ -205,9 +190,9 @@ onUnmounted(() => {
         <ElFormItem
           class="group"
           :label="t('agents.labels.llmProvider')"
-          prop="llmProvider"
+          prop="configuration.llmProvider"
         >
-          <ElSelect v-model="form.llmProvider" placeholder="Select LLM Provider">
+          <ElSelect v-model="form.configuration.llmProvider" placeholder="Select LLM Provider">
             <ElOption
               v-for="provider in embeddingProviders"
               :key="provider"
@@ -221,10 +206,10 @@ onUnmounted(() => {
         <ElFormItem
           class="group"
           :label="t('agents.labels.model')"
-          prop="model"
+          prop="configuration.model"
         >
           <ElSelect
-            v-model="form.model"
+            v-model="form.configuration.model"
             placeholder="Select Model"
             :disabled="providerStore?.availableLlmList?.length === 0"
           >
@@ -250,73 +235,45 @@ onUnmounted(() => {
         <ElFormItem
           class="group"
           :label="t('agents.labels.temperature')"
-          prop="temperature"
+          prop="configuration.temperature"
         >
           <ElSlider
-            v-model="form.temperature"
+            v-model="form.configuration.temperature"
             :min="0"
             :max="1"
             :step="0.1"
           />
         </ElFormItem>
 
-        <!-- Vector Provider -->
+        <!-- Title Instruction -->
         <ElFormItem
           class="group"
-          :label="t('agents.labels.vectorProvider')"
-          prop="vectorProvider"
+          :label="t('agents.labels.titleInstruction')"
+          prop="configuration.instructions.titleInstructions"
         >
-          <ElSelect v-model="form.vectorProvider" placeholder="Select Vector Provider">
-            <ElOption
-              v-for="provider in providerStore?.listProviders?.vector"
-              :key="provider"
-              :label="provider"
-              :value="provider"
-            />
-          </ElSelect>
+          <ElInput v-model="form.configuration.instructions.titleInstructions" />
         </ElFormItem>
 
-        <!-- Embedding Provider -->
+        <!-- Language Instruction -->
         <ElFormItem
           class="group"
-          :label="t('agents.labels.embeddingProvider')"
-          prop="embeddingProvider"
+          :label="t('agents.labels.languageInstruction')"
+          prop="configuration.instructions.language"
         >
-          <ElSelect v-model="form.embeddingProvider" placeholder="Select Embedding Provider">
-            <ElOption
-              v-for="provider in providerStore.listProviders?.embedding"
-              :key="provider"
-              :label="provider"
-              :value="provider"
-            />
-          </ElSelect>
+          <ElInput v-model="form.configuration.instructions.language" />
         </ElFormItem>
 
-        <!-- Embedding Model -->
+        <!-- Summary Instruction -->
         <ElFormItem
           class="group"
-          :label="t('agents.labels.model')"
-          prop="embeddingModel"
+          :label="t('agents.labels.summaryInstruction')"
+          prop="configuration.instructions.summaryInstructions"
         >
-          <ElSelect
-            v-model="form.embeddingModel"
-            placeholder="Select Model"
-            :disabled="collectionStore?.listEmbeddingsModels?.length === 0"
-          >
-            <ElOption
-              v-for="(dimension, model) in collectionStore?.listEmbeddingsModels"
-              :key="model"
-              :label="`${model} - ${dimension}`"
-              :value="model"
-            />
-          </ElSelect>
+          <ElInput v-model="form.configuration.instructions.summaryInstructions" />
         </ElFormItem>
 
-        <ElFormItem
-          :label="t('agents.labels.status')"
-          prop="range"
-          class="range-checkbox"
-        >
+        <!-- Active Status -->
+        <ElFormItem :label="t('agents.labels.status')" class="range-checkbox">
           <el-switch v-model="form.active" />
         </ElFormItem>
 

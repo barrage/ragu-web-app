@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Agent, AgentDetail, AgentListResponse, AllAgentResponse, SingleAgent } from '~/types/agent'
+import type { Agent, AgentDetail, Agents, AllAgentResponse, SingleAgent } from '~/types/agent'
 import type { AssignCollectionPayload } from '~/types/collection'
 
 export const useAgentStore = defineStore('agent', () => {
@@ -13,7 +13,7 @@ export const useAgentStore = defineStore('agent', () => {
   const selectedAgent = ref<SingleAgent | null >()
   const singleAgent = ref<Agent | null | undefined>()
 
-  const agents = computed<SingleAgent[]>(() => {
+  const agents = computed<Agents[]>(() => {
     return agentsResponse.value?.items || [] // Return agents array or empty array if null
   })
 
@@ -96,25 +96,15 @@ export const useAgentStore = defineStore('agent', () => {
     return null
   }
 
-  async function POST_CreateAgent(body: AgentDetail): Promise<SingleAgent | null | undefined> {
-    const data = await $api.agent.CreateAgent(body)
-    if (data) {
-      selectedAgent.value = data
-    }
-    else {
-      selectedAgent.value = null
-      return null
-    }
+  async function POST_CreateAgent(body: AgentDetail): Promise<Agents | null | undefined> {
+    return await $api.agent.CreateAgent(body)
   }
 
-  async function PUT_UpdateAgent(id: string, body: AgentDetail): Promise<void> {
+  async function PUT_UpdateAgent(id: string, body: Agent): Promise<void> {
     const data = await $api.agent.UpdateAgent(id, body)
 
     if (data) {
-      singleAgent.value = {
-        ...singleAgent.value,
-        agent: data,
-      }
+      singleAgent.value = data
     }
     else {
       singleAgent.value = null
@@ -129,23 +119,10 @@ export const useAgentStore = defineStore('agent', () => {
     await $api.agent.UpdateAgentCollection(id, body)
   }
 
-  // COMPUTEDS
-  const getMappedAgents = computed<SingleAgent[]>(() => {
-    return agentsResponse.value?.items.map((agent: SingleAgent) => {
-      return {
-        ...agent,
-        context: `${agent.context.split(' ').slice(0, 5).join(' ')}...`,
-        createdAt: formatDate(agent.createdAt),
-        updatedAt: formatDate(agent.updatedAt),
-      }
-    }) || []
-  })
-
   return {
     agents,
     agentsResponse,
     selectedAgent,
-    getMappedAgents,
     editMode,
     singleAgent,
     setEditMode,
