@@ -12,6 +12,7 @@ export default {
     last7days: 'Les 7 derniers jours',
     last30days: 'Les 30 derniers jours',
     lastYear: 'L\'année dernière',
+    unknown_date: 'Date inconnue',
   },
   sort: {
     title: 'Options de tri',

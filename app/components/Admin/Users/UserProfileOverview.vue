@@ -26,11 +26,11 @@ const userData = computed(() => {
 const iconSize = computed(() => {
   switch (props.size) {
     case 'medium':
-      return 48
+      return '48px'
     case 'large':
-      return 60
+      return '60px'
     default:
-      return 36
+      return '36px'
   }
 })
 
