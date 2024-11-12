@@ -11,19 +11,19 @@ const agentStore = useAgentStore()
 
 <template>
   <div
-    v-if="agent?.agent?.active"
+    v-if="agent?.active"
     class="agent-select-card"
-    :class="{ selected: agent?.agent?.id === agentStore.selectedAgent?.agent?.id }"
-    @click="agentStore.setSelectedAgent(props.agent?.agent?.id)"
+    :class="{ selected: agent?.id === agentStore.selectedAgent?.id }"
+    @click="agentStore.setSelectedAgent(props.agent)"
   >
     <div class="agent-body-wrapper">
       <div class="agent-name-wrapper">
         <ChatAgentIcon size="32" class="chat-agent-icon" />
         <p class="agent-select-text">
-          {{ props.agent?.agent?.name }}
+          {{ props.agent?.name }}
         </p>
       </div>
-      <span class="agent-description">{{ props.agent?.agent?.description }}</span>
+      <span class="agent-description">{{ props.agent?.description }}</span>
     </div>
   </div>
 </template>

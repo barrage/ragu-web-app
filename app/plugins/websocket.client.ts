@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
+  const config = useRuntimeConfig()
   let ws: WebSocket | null = null
   const messages = ref<any[]>([])
   const connectionState = ref<'closed' | 'opening' | 'open' | 'closing'>('closed')
@@ -12,7 +13,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       return
     }
 
-    ws = new WebSocket(`wss://llmao-kotlin-api-staging.m2.barrage.beer?token=${webSocketToken}`)
+    ws = new WebSocket(`${config.public.wsUrl}?token=${webSocketToken}`)
     connectionState.value = 'opening'
 
     ws.onopen = () => {

@@ -5,7 +5,7 @@ import BrainIcon from '~/assets/icons/svg/brain.svg'
 
 const agentStore = useAgentStore()
 
-const { error } = await useAsyncData(() => agentStore.GET_AllAgents())
+const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
 
 errorHandler(error)
 
@@ -34,7 +34,7 @@ const activeAgentLength = computed(() => {
           { 'centered-content': activeAgentLength > 3 }
         "
       >
-        <template v-for="(agent, index) in agentStore.agents" :key="index">
+        <template v-for="(agent, index) in agentStore.appAgents" :key="index">
           <ChatAgentSelectCard :agent="agent" />
         </template>
       </div>

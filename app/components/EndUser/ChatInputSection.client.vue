@@ -53,7 +53,7 @@ const agentId = computed(() => {
     return ''
   }
   else {
-    return agentStore.selectedAgent?.agent?.id
+    return agentStore.selectedAgent?.id
   }
 })
 
@@ -99,6 +99,7 @@ const ensureWsTokenAndConnect = async () => {
 }
 
 const sendMessage = () => {
+  if (!($wsConnectionState.value === 'open') || chatStore.isWebSocketStreaming) { return }
   if (!message.value.trim()) { return }
 
   const userMessage = {
@@ -165,7 +166,6 @@ const stopStream = () => {
       v-model="message"
       size="large"
       :placeholder="$t('chat.chatInputPlaceholder')"
-      :disabled="!($wsConnectionState === 'open') || chatStore.isWebSocketStreaming"
       class="barrage-chat-input"
       @keyup.enter="sendMessage"
     >
