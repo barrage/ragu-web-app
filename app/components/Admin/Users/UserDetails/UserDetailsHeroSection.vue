@@ -9,7 +9,7 @@ import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 const props = defineProps<{
   user: User | null
 }>()
-const { t } = useI18n()
+
 enum StatusType {
   Primary = 'primary',
   Success = 'success',
@@ -29,7 +29,17 @@ const userData = computed(() => {
     createdAt: props.user?.updatedAt ? formatDate(props.user.createdAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
   }
 })
+const { t } = useI18n()
+const route = useRoute()
+const usersStore = useUsersStore()
+const selectedUserId = computed(() => {
+  const userId = Array.isArray(route.params.userId) ? route.params.userId[0] : route.params.userId
+  return userId || ''
+})
 
+const { error, execute: GetUserDetails } = await useAsyncData(() => usersStore.GET_SingleUser(selectedUserId.value), { immediate: false })
+
+errorHandler(error)
 /* Edit User */
 const selectedUserEdit = ref<User | null >(props.user)
 const editUserModalVisible = ref(false)
@@ -99,7 +109,7 @@ const closeDeactivateModal = () => {
         plain
         @click="openEditUserModal"
       >
-        <EditIcon />  Edit
+        <EditIcon />  {{ t('users.user_card.edit_user_title') }}
       </el-button>
       <el-button
         v-if="!props.user?.active"
@@ -108,7 +118,7 @@ const closeDeactivateModal = () => {
         plain
         @click="openActivateUserModal"
       >
-        <PersonPasskeyIcon />  Activate
+        <PersonPasskeyIcon />   {{ t('users.user_card.activate_user_title') }}
       </el-button>
       <el-button
         v-if="props.user?.active"
@@ -117,7 +127,7 @@ const closeDeactivateModal = () => {
         plain
         @click="openDeactivateUserModal"
       >
-        <PersonLockIcon />  Deactivate
+        <PersonLockIcon />   {{ t('users.user_card.deactivate_user_title') }}
       </el-button>
       <el-button
         plain
@@ -125,31 +135,35 @@ const closeDeactivateModal = () => {
         size="small"
         @click="openDeleteUserModal"
       >
-        <DeleteIcon /> Delete
+        <DeleteIcon />  {{ t('users.user_card.delete_user_title') }}
       </el-button>
     </div>
     <DeleteUserModal
       :is-open="deleteUserModalVisible"
       :selected-user="selectedUserDelete"
       @close-modal="closeDeleteModal"
+      @user-deleted="GetUserDetails"
     />
 
     <EditUserModal
       :is-open="editUserModalVisible"
       :selected-user="selectedUserEdit"
       @close-modal="closeEditModal"
+      @user-edited="GetUserDetails"
     />
 
     <ActivateUserModal
       :is-open="activateUserModalVisible"
       :selected-user="selectedUserActivate"
       @close-modal="closeActivateModal"
+      @user-activated="GetUserDetails"
     />
 
     <DeactivateUserModal
       :is-open="deactivateUserModalVisible"
       :selected-user="selectedUserDeactivate"
       @close-modal="closeDeactivateModal"
+      @user-deactivated="GetUserDetails"
     />
   </section>
 </template>

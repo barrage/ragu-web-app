@@ -26,7 +26,9 @@ watch(() => props.isOpen, (newVal) => {
 })
 interface Emits {
   (event: 'closeModal'): void
+  (event: 'userEdited'): void
   (event: 'editUserConfirm', user: EditUserPayload): void
+
 }
 
 const validateEmail = (_rule: any, value: string, callback: (error?: Error) => void) => {
@@ -92,7 +94,7 @@ const submitEditUserForm = async (formEl: FormInstance | undefined) => {
       }
 
       else {
-        usersStore.GET_AllUsers()
+        emits('userEdited')
         ElNotification({
           title: 'Success',
           message: `User ${props.selectedUser?.fullName} edited successfully!`,

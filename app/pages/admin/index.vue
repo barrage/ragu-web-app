@@ -179,28 +179,16 @@ const mostUsedAgentData = computed(() => {
 
 .dashboard-users-template {
   padding-top: 12px;
-  grid-column: span 4;
-  @include viewport-s {
-    grid-column: span 8;
-  }
+  grid-column: span 12;
 
-  @include viewport-m {
-    grid-column: span 12;
-  }
   @include viewport-xl {
     grid-column: span 6;
   }
 }
 .dashboard-agents-template {
   padding-top: 12px;
-  grid-column: span 4;
-  @include viewport-s {
-    grid-column: span 8;
-  }
+  grid-column: span 12;
 
-  @include viewport-m {
-    grid-column: span 12;
-  }
   @include viewport-xl {
     grid-column: span 6;
     padding-right: 32px;

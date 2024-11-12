@@ -4,7 +4,7 @@ import type { User } from '~/types/users'
 import DeletePersonIcon from '~/assets/icons/svg/delete-person.svg'
 
 const props = defineProps<{
-  selectedUser: User | undefined
+  selectedUser: User | null
   isOpen: boolean
 }>()
 
@@ -22,6 +22,7 @@ watch(() => props.isOpen, (newVal) => {
 })
 interface Emits {
   (event: 'closeModal'): void
+  (event: 'userDeleted'): void
 }
 const { execute: deleteUser, error } = await useAsyncData(() => usersStore.DELETE_User(props.selectedUser!.id), { immediate: false })
 
@@ -39,7 +40,7 @@ const submitDeleteUser = async () => {
       })
     }
     else {
-      usersStore.GET_AllUsers()
+      emits('userDeleted')
       ElNotification({
         title: t('users.delete_user.notifications.success_title'),
         message: t('users.delete_user.notifications.success_description'),

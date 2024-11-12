@@ -155,22 +155,28 @@ const redirectToUserDetails = () => {
   box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
   border-radius: 16px;
   padding: 1rem;
-
-  & .user-informations {
+  & .label-description-item-container {
     grid-column: span 2;
-    display: flex;
-    gap: 2.5rem;
-    flex: 1 0 calc(70% - 22px);
-    justify-content: space-around;
-    width: 100%;
-    margin-right: 1.5rem;
+    @include viewport-s {
+      grid-column: span 1;
+    }
+    @include viewport-ml {
+      grid-column: span 1;
+    }
   }
 }
 
 .user-actions {
+  grid-column: span 6;
+  justify-self: flex-end;
+  @include viewport-s {
+    grid-column: span 3;
+  }
+  @include viewport-ml {
+    grid-column: span 1;
+  }
   display: flex;
   gap: 12px;
-  justify-self: flex-end;
 
   & .delete-action {
     margin-left: 2rem;
@@ -178,7 +184,11 @@ const redirectToUserDetails = () => {
 }
 
 .user-profile-item-wrapper {
-  grid-column: span 2;
+  grid-column: span 6;
+
+  @include viewport-ml {
+    grid-column: span 2;
+  }
 }
 
 .dark {

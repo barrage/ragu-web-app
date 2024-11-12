@@ -2,7 +2,7 @@
 import type { User } from '~/types/users'
 
 const props = defineProps<{
-  user: User | null | undefined
+  user: User | null
 }>()
 </script>
 

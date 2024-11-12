@@ -21,12 +21,13 @@ watch(() => props.isOpen, (newVal) => {
 })
 interface Emits {
   (event: 'closeModal'): void
+  (event: 'userDeactivated'): void
 }
 const { execute: deactivateUser, error } = await useAsyncData(() => usersStore.PUT_DectivateUser(props.selectedUser!.id), { immediate: false })
 
 const submitDeactivateUser = async () => {
   if (props.selectedUser?.id) {
-    deactivateUser()
+    await deactivateUser()
     deactivateUserModalVisible.value = false
     if (error.value) {
       ElNotification({
@@ -38,7 +39,7 @@ const submitDeactivateUser = async () => {
       })
     }
     else {
-      usersStore.GET_AllUsers()
+      emits('userDeactivated')
       ElNotification({
         title: 'Success',
         message: `User ${props.selectedUser?.fullName} deactivated successfully!`,

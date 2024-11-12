@@ -8,6 +8,7 @@ const scrollIntoViewOptions = {
   behavior: 'smooth',
   block: 'center',
 }
+const router = useRouter()
 const usersStore = useUsersStore()
 const { t } = useI18n()
 const inviteUserModalOpen = ref(false)
@@ -54,7 +55,7 @@ const rules = computed<FormRules<CreateUserPayload>>(() => ({
     { required: true, message: t('users.form.rules.required'), trigger: 'blur' },
   ],
 }))
-const { execute: AddNewUser, error } = await useAsyncData(() => usersStore.POST_CreateUser(inviteUserform), { immediate: false })
+const { execute: AddNewUser, error, data: newUserData } = await useAsyncData(() => usersStore.POST_CreateUser(inviteUserform), { immediate: false })
 
 const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
@@ -86,7 +87,7 @@ const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
         }
       }
       else {
-        await usersStore.GET_AllUsers()
+        router.push(`/admin/users/${newUserData.value?.id}`)
         inviteUserform.email = ''
         inviteUserform.firstName = ''
         inviteUserform.lastName = ''

@@ -452,6 +452,12 @@ export default {
       view_more: 'Ver detalhes do usuário',
       edit_user: 'Editar usuário',
       delete_user: 'Excluir usuário',
+      delete_user_title: 'Excluir',
+      activate_user_title: 'Ativar',
+      deactivate_user_title: 'Desativar',
+      edit_user_title: 'Editar',
+      activate_user: 'Ativar usuário',
+      deactivate_user: 'Desativar usuário',
       adminRole: 'Administrador',
       userRole: 'Usuário',
       updated_at: 'Atualizado em',
@@ -460,8 +466,7 @@ export default {
       last_name: 'Sobrenome',
       username: 'Nome de usuário',
       email: 'Email',
-      activate_user: 'Ativar usuário',
-      deactivate_user: 'Desativar usuário',
+
     },
 
   },

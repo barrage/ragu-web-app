@@ -189,6 +189,10 @@ const redirectToAgentDetails = (id: string) => {
       grid-column: span 8;
     }
 
+    @include viewport-ml {
+      grid-column: span 12;
+    }
+
     @include viewport-m {
       grid-column: span 12;
     }
