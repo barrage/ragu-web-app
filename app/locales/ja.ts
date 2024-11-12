@@ -364,7 +364,7 @@ export default {
       name: {
         required_message: 'コレクション名を入力してください',
         length_message: '名前は{min}〜{max}文字である必要があります',
-        ascii_alphanumeric_underscored_message: '最初に大文字を使用し、文字、数字、またはアンダースコア（ _ ）のみを含む名前を入力してください。',
+        ascii_alphanumeric_underscored_message: '名前は大文字で始まり、文字、数字、およびスペースとしてのアンダースコア（ _ ）のみを含むように入力してください。',
       },
       vectorProvider: 'ベクタープロバイダーを選択してください',
       embeddingProvider: '埋め込みプロバイダーを選択してください',
@@ -462,6 +462,8 @@ export default {
       last_name: '姓',
       username: 'ユーザー名',
       email: 'メール',
+      activate_user: 'ユーザーを有効化する',
+      deactivate_user: 'ユーザーを無効化する',
     },
 
   },

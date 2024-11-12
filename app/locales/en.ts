@@ -173,6 +173,8 @@ export default {
       last_name: 'Last Name',
       username: 'Username',
       email: 'Email',
+      activate_user: 'Activate user',
+      deactivate_user: 'Deactivate user',
     },
   },
   dashboard: {
@@ -441,7 +443,7 @@ export default {
       name: {
         required_message: 'Please input Collection name',
         length_message: 'Name should be {min} to {max} charaters long',
-        ascii_alphanumeric_underscored_message: 'Please enter a name that starts with a capital letter and contains only letters, numbers, or underscores ( _ ).',
+        ascii_alphanumeric_underscored_message: 'Please enter a name that starts with a capital letter and contains only letters, numbers and underscores for space( _ ).',
       },
       vectorProvider: 'Please select Vector provider',
       embeddingProvider: 'Please select Embedding provider',

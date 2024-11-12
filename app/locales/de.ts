@@ -365,7 +365,7 @@ export default {
       name: {
         required_message: 'Bitte geben Sie den Sammlungsnamen ein',
         length_message: 'Der Name sollte zwischen {min} und {max} Zeichen lang sein',
-        ascii_alphanumeric_underscored_message: 'Bitte geben Sie einen Namen ein, der mit einem Großbuchstaben beginnt und nur Buchstaben, Zahlen oder Unterstriche ( _ ) enthält.',
+        ascii_alphanumeric_underscored_message: 'Bitte geben Sie einen Namen ein, der mit einem Großbuchstaben beginnt und nur Buchstaben, Zahlen und Unterstriche für Leerzeichen ( _ ) enthält.',
       },
       vectorProvider: 'Bitte wählen Sie einen Vektor-Anbieter',
       embeddingProvider: 'Bitte wählen Sie einen Einbettungsanbieter',
@@ -462,6 +462,8 @@ export default {
       last_name: 'Nachname',
       username: 'Benutzername',
       email: 'E-Mail',
+      activate_user: 'Benutzer aktivieren',
+      deactivate_user: 'Benutzer deaktivieren',
     },
   },
 
