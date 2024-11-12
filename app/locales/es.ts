@@ -362,7 +362,7 @@ export default {
       name: {
         required_message: 'Por favor, introduce el nombre de la colección',
         length_message: 'El nombre debe tener entre {min} y {max} caracteres',
-        ascii_alphanumeric_underscored_message: 'Por favor, introduzca un nombre que comience con una letra mayúscula y contenga solo letras, números o guiones bajos ( _ ).',
+        ascii_alphanumeric_underscored_message: 'Por favor, ingrese un nombre que comience con una letra mayúscula y contenga solo letras, números y guiones bajos para espacios ( _ ).',
       },
       vectorProvider: 'Selecciona un proveedor de vectores',
       embeddingProvider: 'Selecciona un proveedor de embeddings',
@@ -460,6 +460,8 @@ export default {
       last_name: 'Apellido',
       username: 'Nombre de usuario',
       email: 'Correo electrónico',
+      activate_user: 'Activar usuario',
+      deactivate_user: 'Desactivar usuario',
     },
 
   },

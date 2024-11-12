@@ -31,7 +31,7 @@ const rules = reactive<FormRules<CollectionDetail>>({
     { required: true, message: t('collections.rules.name.required_message'), trigger: 'blur' },
     { min: 1, message: t('collections.rules.name.length_message', { min: 3, max: 50 }), trigger: 'blur' },
     {
-      validator: (rule, value) => /^[A-Z][\w ]*$/.test(value), // Enforce the first character as uppercase with no case-insensitive flag
+      validator: (rule, value) => /^[A-Z]\w*$/.test(value), // Enforce the first character as uppercase with no case-insensitive flag
       message: t('collections.rules.name.ascii_alphanumeric_underscored_message'),
       trigger: 'blur',
     },
