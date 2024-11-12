@@ -21,12 +21,13 @@ watch(() => props.isOpen, (newVal) => {
 })
 interface Emits {
   (event: 'closeModal'): void
+  (event: 'userActivated'): void
 }
 const { execute: activateUser, error } = await useAsyncData(() => usersStore.PUT_ActivateUser(props.selectedUser!.id), { immediate: false })
 
 const submitActivateUser = async () => {
   if (props.selectedUser?.id) {
-    activateUser()
+    await activateUser()
     activateUserModalVisible.value = false
     if (error.value) {
       ElNotification({
@@ -38,7 +39,7 @@ const submitActivateUser = async () => {
       })
     }
     else {
-      usersStore.GET_AllUsers()
+      emits('userActivated')
       ElNotification({
         title: 'Success',
         message: `User ${props.selectedUser?.fullName} activated successfully!`,

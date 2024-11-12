@@ -117,9 +117,12 @@ export default class usersService extends FetchFactory {
    */
   async PutActivateUser(userId: string): Promise<void> {
     try {
-      await this.$fetch<void>(`${this.endpoint}/${userId}/activate`, {
+      await this.$fetch<void>(`${this.endpoint}/${userId}`, {
         method: 'PUT',
         credentials: 'include',
+        body: {
+          active: true,
+        },
       })
     }
     catch (error: any) {
@@ -138,9 +141,12 @@ export default class usersService extends FetchFactory {
    */
   async PutDeactivateUser(userId: string): Promise<void> {
     try {
-      await this.$fetch<void>(`${this.endpoint}/${userId}/deactivate`, {
+      await this.$fetch<void>(`${this.endpoint}/${userId}`, {
         method: 'PUT',
         credentials: 'include',
+        body: {
+          active: false,
+        },
       })
     }
     catch (error: any) {

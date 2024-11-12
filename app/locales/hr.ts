@@ -154,7 +154,11 @@ export default {
       created_at: 'Kreiran',
       view_more: 'Pogledaj detalje korisnika',
       edit_user: 'Uredi korisnika',
-      delete_user: 'Obrisi korisnika',
+      delete_user: 'Obriši korisnika',
+      delete_user_title: 'Obriši',
+      activate_user_title: 'Aktiviraj',
+      deactivate_user_title: 'Deaktiviraj',
+      edit_user_title: 'Uredi',
       activate_user: 'Aktiviraj korisnika',
       deactivate_user: 'Deaktiviraj korisnika',
       adminRole: 'Administrator',
@@ -172,12 +176,12 @@ export default {
     description: 'Upravljajte LLMAO aplikacijom za administraciju.',
     service_widgets: {
       agents: {
-        title: 'Ukupno agenata',
+        title: 'Agenti',
         description: 'aktivni agenti',
         view_more: 'Prikaži više',
       },
       users: {
-        title: 'Ukupno korisnika',
+        title: 'Korisnici',
         description: 'aktivni korisnici',
         view_more: 'Prikaži više',
       },

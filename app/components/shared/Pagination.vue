@@ -25,9 +25,24 @@ const emits = defineEmits<{
 }>()
 
 const page = ref<number>(props.currentPage)
+const total = ref<number>(props.total)
+
 const size = computed(() => {
   return props.pageSize
 })
+
+watch(
+  () => props.currentPage,
+  (newCurrentPage) => {
+    page.value = newCurrentPage
+  },
+)
+watch(
+  () => props.total,
+  (newTotal) => {
+    total.value = newTotal
+  },
+)
 
 const paginationSearchValue = computed(() => {
   const firstNumber = props.currentPage * props.pageSize - props.pageSize + 1
@@ -66,7 +81,6 @@ const goToLastPageDisabled = computed(() => {
   <ElPagination
     v-model:page-size="size"
     v-model:current-page="page"
-
     :disabled="disabled"
     :total="total"
     class="pagination"

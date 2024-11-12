@@ -5,13 +5,18 @@ import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
   users: User[] | null | undefined
+  pagination: Pagination
 }>()
 
 const emits = defineEmits<{
   (event: 'pageChange', page: number): number
+  (event: 'userDeleted'): void
+  (event: 'userEdited'): void
+  (event: 'userDeactivated'): void
+  (event: 'userActivated'): void
+
 }>()
 
-const usersStore = useUsersStore()
 const cardClasses = ref<string[]>([])
 
 const applyCardClasses = () => {
@@ -31,26 +36,10 @@ watch(
   { immediate: true },
 )
 
-const pagination = ref<Pagination>({
-  currentPage: 1,
-  pageSize: 10,
-  total: usersStore.usersResponse?.total || 0,
-  disabled: false,
-})
-
 const changePage = (page: number) => {
-  pagination.value.currentPage = page
-  emits('pageChange', pagination.value.currentPage)
+  emits('pageChange', page)
 }
 
-watch(
-  () => usersStore.usersResponse?.total,
-  (newTotal) => {
-    if (newTotal !== undefined) {
-      pagination.value.total = newTotal
-    }
-  },
-)
 /* Edit User */
 const selectedUserEdit = ref<User | null>(null)
 const editUserModalVisible = ref(false)
@@ -62,6 +51,9 @@ const openEditUserModal = (user: User) => {
 
 const closeEditModal = () => {
   editUserModalVisible.value = false
+}
+const userEdited = () => {
+  emits('userEdited')
 }
 
 /* Delete User */
@@ -77,6 +69,10 @@ const closeDeleteModal = () => {
   deleteUserModalVisible.value = false
 }
 
+const userDeleted = () => {
+  emits('userDeleted')
+}
+
 /* Activate User */
 const selectedUserActivate = ref<User | null>(null)
 const activateUserModalVisible = ref(false)
@@ -89,7 +85,9 @@ const openActivateUserModal = (user: User) => {
 const closeActivateModal = () => {
   activateUserModalVisible.value = false
 }
-
+const userActivated = () => {
+  emits('userActivated')
+}
 /* Dectivate User */
 const selectedUserDeactivate = ref<User | null>(null)
 const deactivateUserModalVisible = ref(false)
@@ -101,6 +99,10 @@ const openDeactivateUserModal = (user: User) => {
 
 const closeDeactivateModal = () => {
   deactivateUserModalVisible.value = false
+}
+
+const userDeactivated = () => {
+  emits('userDeactivated')
 }
 </script>
 
@@ -121,10 +123,11 @@ const closeDeactivateModal = () => {
           @deactivate-user="openDeactivateUserModal(user)"
         />
       </div>
+
       <Pagination
-        :current-page="pagination.currentPage"
-        :page-size="pagination.pageSize"
-        :total="pagination.total"
+        :current-page="props.pagination.currentPage"
+        :page-size="props.pagination.pageSize"
+        :total="props.pagination.total"
         @page-change="(page:number) => changePage(page)"
       />
     </div>
@@ -133,24 +136,28 @@ const closeDeactivateModal = () => {
       :is-open="deleteUserModalVisible"
       :selected-user="selectedUserDelete"
       @close-modal="closeDeleteModal"
+      @user-deleted="userDeleted"
     />
 
     <EditUserModal
       :is-open="editUserModalVisible"
       :selected-user="selectedUserEdit"
       @close-modal="closeEditModal"
+      @user-edited="userEdited"
     />
 
     <ActivateUserModal
       :is-open="activateUserModalVisible"
       :selected-user="selectedUserActivate"
       @close-modal="closeActivateModal"
+      @user-activated="userActivated"
     />
 
     <DeactivateUserModal
       :is-open="deactivateUserModalVisible"
       :selected-user="selectedUserDeactivate"
       @close-modal="closeDeactivateModal"
+      @user-deactivated="userDeactivated"
     />
   </div>
 </template>
