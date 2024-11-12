@@ -44,7 +44,7 @@ const chatData = computed(() => {
       provider: props.agent?.llmProvider || '-',
       id: props.agent?.id || '-',
       model: props.agent?.model || '-',
-      temperature: props.agent?.temperature.toString() || '-',
+      temperature: props.agent?.temperature?.toString() || '-',
       vectorProvider: props.agent?.vectorProvider || '-',
       status: props.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
       statusType: props.agent?.active ? StatusType.Success : StatusType.Danger,

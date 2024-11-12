@@ -117,7 +117,10 @@ const updateChartOptions = () => {
           color: isDark.value
             ? 'var(--color-primary-300)'
             : 'var(--color-primary-900)',
-          formatter: _ => `${props.usedText}`,
+          formatter: (_) => {
+            const text = props.usedText || ''
+            return text.length > 12 ? `${text.slice(0, 12)}...` : text
+          },
         },
       },
       {
@@ -198,7 +201,10 @@ const updateChartOptions = () => {
         detail: {
           offsetCenter: ['-70%', 40],
           fontSize: 11.5,
-          formatter: _ => `${props.usedText}`,
+          formatter: (_) => {
+            const text = props.usedText || ''
+            return text.length > 12 ? `${text.slice(0, 22)}...` : text
+          },
           color: isDark.value
             ? 'var(--color-primary-200)'
             : 'var(--color-primary-800)',
@@ -241,7 +247,7 @@ const updateChartOptions = () => {
           valueAnimation: true,
           formatter: value => `${value}`,
           color: isDark.value
-            ? 'var(--color-primary-200)'
+            ? 'var(--color-primary-100)'
             : 'var(--color-primary-800)',
         },
         data: [
@@ -282,7 +288,7 @@ const updateChartOptions = () => {
           valueAnimation: true,
           formatter: value => `${value}`,
           color: isDark.value
-            ? 'var(--color-primary-200)'
+            ? 'var(--color-primary-100)'
             : 'var(--color-primary-800)',
         },
         data: [
@@ -335,7 +341,7 @@ const updateChartOptions = () => {
     ],
     tooltip: {
       ...gaugeChartOptions.tooltip,
-      extraCssText: 'width:200px',
+      extraCssText: 'width:fit-content',
       backgroundColor: isDark.value
         ? 'var(--color-primary-800)'
         : 'var(--color-primary-0)',

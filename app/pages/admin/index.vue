@@ -66,10 +66,32 @@ const allActiveAgents = computed(() => {
   return activeAgents.value?.items ? activeAgents.value.items : []
 })
 
+const collectionsStore = useCollectionsStore()
+const collections = ref()
+const getCollectionsTotal = async () => {
+  collections.value = await collectionsStore.GET_AllCollections(1, 1, 'updated_at', 'desc')
+  return collections.value
+}
+const collectionsCount = computed(() => {
+  return collections.value?.total ? collections.value.total : 0
+})
+
+const documentsStore = useDocumentsStore()
+const documents = ref()
+const getDocumentsTotal = async () => {
+  documents.value = await documentsStore.GET_AllDocuments(1, 1, 'updated_at', 'desc')
+  return documents.value
+}
+const documentsCount = computed(() => {
+  return documents.value?.total ? documents.value.total : 0
+})
+
 onMounted(() => {
   getRecentUsers()
   getRecentChats()
   getRecentAgents()
+  getDocumentsTotal()
+  getCollectionsTotal()
 })
 
 function findMostUsedAgent(chatData: ChatStatistic) {
@@ -119,6 +141,8 @@ const mostUsedAgentData = computed(() => {
         <DashboardHeroOverview
           :agents-stats="agentsData"
           :users-stats="usersData"
+          :collections-count="collectionsCount"
+          :documents-count="documentsCount"
           :chat-history="chatHistory"
           @change-period="updatePeriod"
         />

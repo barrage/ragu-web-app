@@ -15,7 +15,7 @@ dayjs.extend(relativeTime)
 
 export function useRelativeDate(date?: string | Date | null) {
   const { t, locale } = useI18n()
-  const relativeDate = ref<string>(t('unknown_date'))
+  const relativeDate = ref<string>(t('timePeriod.unknown_date'))
 
   const calculateRelativeDate = () => {
     if (date) {

@@ -12,6 +12,7 @@ export default {
     last7days: '過去7日間',
     last30days: '過去30日間',
     lastYear: '昨年',
+    unknown_date: '不明な日付',
   },
   sort: {
     title: '並べ替えオプション',

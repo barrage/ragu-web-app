@@ -12,6 +12,7 @@ export default {
     last7days: 'Posljednjih 7 dana',
     last30days: 'Posljednjih 30 dana',
     lastYear: 'Prošle godine',
+    unknown_date: 'Nepoznati datum',
   },
   sort: {
     title: 'Opcije sortiranja',
