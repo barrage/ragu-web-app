@@ -27,10 +27,14 @@ const openProfileModal = () => {
   isProfileModelVisible.value = true
 }
 
+const { execute } = await useAsyncData(() => oAuthStore.POST_Logout(), {
+  immediate: false,
+})
+
 // Helpers
 async function handleSignOut() {
   try {
-    await oAuthStore.POST_Logout()
+    await execute()
     isSignOutModalVisible.value = false
     await router.push('/login')
   }

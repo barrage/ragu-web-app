@@ -71,7 +71,7 @@ export default class AgentService extends FetchFactory {
     perPage: number = 10,
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
-    showDeactivated: boolean = true,
+
   ): Promise<AllAgentResponse> {
     try {
       // Build query parameters using function arguments
@@ -80,7 +80,6 @@ export default class AgentService extends FetchFactory {
         perPage: perPage.toString(),
         sortBy,
         sortOrder,
-        showDeactivated: showDeactivated.toString(),
       }).toString()
 
       // Make the API request with the constructed URL

@@ -1,4 +1,6 @@
 export interface CollectionWithDocuments {
+  add: string[]
   collection: string
-  documents: string[]
+  remove: string[]
+
 }

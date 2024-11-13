@@ -10,7 +10,7 @@ import { useDateFormat } from '@vueuse/core'
  * @returns A computed ref containing the formatted date string.
  */
 export function formatDate(
-  date: Date | number | string,
+  date: Date | number | string | undefined,
   format: string = 'DD/MMMM/YYYY',
   locales?: string,
 ): string {

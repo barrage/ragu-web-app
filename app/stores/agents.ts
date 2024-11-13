@@ -61,10 +61,9 @@ export const useAgentStore = defineStore('agent', () => {
     perPage: number = 10,
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
-    showDeactivated: boolean = true,
   ): Promise<AllAgentResponse | null> {
     try {
-      const data = await $api.agent.GetAllAppAgents(page, perPage, sortBy, sortOrder, showDeactivated)
+      const data = await $api.agent.GetAllAppAgents(page, perPage, sortBy, sortOrder)
 
       if (data) {
         selectedAgent.value = data.items[0]

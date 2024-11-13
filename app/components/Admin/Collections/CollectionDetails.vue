@@ -13,19 +13,24 @@ const props = defineProps<{
 
 const route = useRoute()
 
+const { t } = useI18n()
 const documetStore = useDocumentsStore()
 const collectionStore = useCollectionsStore()
 const selectedDocumentIds = ref<string[]>([])
-const existingDocumentIds = props.singleCollection?.documents.map(doc => doc.id) || []
 const collectionId = ref(route.params.collectionId as string)
 const rightValue = ref<string[]>([])
 
-const payload = computed(() => ({
-  collection: collectionId.value,
-  documents: selectedDocumentIds.value,
-}))
+const payload = computed(() => {
+  const add = rightValue.value.filter(id => !selectedDocumentIds.value.includes(id))
+  const remove = selectedDocumentIds.value.filter(id => !rightValue.value.includes(id))
 
-const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDocuments())
+  return {
+    add,
+    collection: collectionId.value,
+    remove,
+  }
+})
+const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDocuments(undefined, undefined, undefined, undefined, true))
 
 errorHandler(documentError)
 
@@ -35,22 +40,39 @@ const { error, execute: getCollection } = await useAsyncData(() => collectionSto
 errorHandler(error)
 
 const handleTransferChange = (newValue: string[]) => {
-  selectedDocumentIds.value = newValue
+  const addedDocs = newValue.filter(id => !rightValue.value.includes(id))
+  const removedDocs = rightValue.value.filter(id => !newValue.includes(id))
+
+  addedDocs.forEach((id) => {
+    if (!payload.value.remove.includes(id)) { payload.value.add.push(id) }
+    payload.value.remove = payload.value.remove.filter(removeId => removeId !== id)
+  })
+
+  removedDocs.forEach((id) => {
+    if (!payload.value.add.includes(id)) { payload.value.remove.push(id) }
+    payload.value.add = payload.value.add.filter(addId => addId !== id)
+  })
+
+  rightValue.value = newValue // Update right column selection
 }
 
-const transformedDocuments = ref(
-  documetStore.documentResponse?.items
-    .filter(doc => !existingDocumentIds.includes(doc.id))
-    .map(doc => ({
-      key: doc.id,
-      label: doc.name,
-    })),
-)
+const transformedDocuments = computed(() => {
+  const availableDocuments = documetStore.documentResponse?.items || []
+  return availableDocuments.map(doc => ({
+    key: doc.id,
+    label: doc.name,
+  }))
+})
 
 const submitSelection = async () => {
-  if (!collectionId.value || !selectedDocumentIds.value.length) {
-    return
-  }
+  if (!collectionId.value) { return } // No collection ID, no update
+
+  // Filter `payload.add` to remove any documents that already exist in `props.singleCollection.documents`
+  const existingDocIds = props.singleCollection?.documents.map(doc => doc.id) || []
+  payload.value.add = payload.value.add.filter(id => !existingDocIds.includes(id))
+
+  // Only proceed if there's something to add or remove
+  if (!payload.value.add.length && !payload.value.remove.length) { return }
   await updateCollection()
 
   if (collectionError.value) {
@@ -71,12 +93,9 @@ const submitSelection = async () => {
       duration: 2500,
     })
 
-    rightValue.value = []
     await getCollection()
   }
 }
-
-const { t } = useI18n()
 
 const collectionData = computed(() => {
   return {
@@ -87,6 +106,13 @@ const collectionData = computed(() => {
     model: props.singleCollection?.collection?.model || t('collections.collection_card.unknown_model'),
     updatedAt: props.singleCollection?.collection?.updatedAt ? formatDate(props.singleCollection?.collection.updatedAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
     createdAt: props.singleCollection?.collection?.createdAt ? formatDate(props.singleCollection?.collection.createdAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
+  }
+})
+
+onMounted(() => {
+  if (props.singleCollection?.documents) {
+    rightValue.value = props.singleCollection.documents.map(doc => doc.id)
+    selectedDocumentIds.value = props.singleCollection.documents.map(doc => doc.id) // Set initial right side with existing collection documents
   }
 })
 </script>
@@ -210,7 +236,7 @@ const collectionData = computed(() => {
           style="margin-top: 16px;"
           @click="submitSelection"
         >
-          Add documents
+          Submit
         </el-button>
       </template>
     </el-transfer>
