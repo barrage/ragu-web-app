@@ -4,22 +4,19 @@ import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 const agentStore = useAgentStore()
 /* agentStore.GET_AllAgents() */
 
-const { error } = await useAsyncData(() => agentStore.GET_AllAgents())
+const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
 
 errorHandler(error)
 
-const allAgents = computed(() => {
-  return agentStore.agentsResponse?.items
-})
-const selectedAgent = ref(allAgents.value?.[0])
+const selectedAgent = ref(agentStore.appAgents?.[0])
 const selectAgent = (agent: any) => {
   return selectedAgent.value = agent
 }
 
 watch(
-  () => allAgents.value,
+  () => agentStore.appAgents,
   () => {
-    selectAgent(allAgents.value?.[0])
+    selectAgent(agentStore.appAgents?.[0])
   },
 )
 </script>
@@ -27,7 +24,7 @@ watch(
 <template>
   <div class="agents-overview-container">
     <div class="agents-names-wrapper">
-      <template v-for="agent in allAgents" :key="agent.id">
+      <template v-for="agent in agentStore.appAgents" :key="agent.id">
         <div
           v-if="agent?.active"
           class="agent-name"
@@ -42,7 +39,7 @@ watch(
     <div class="selected-agent-wrapper">
       <ChatAgentIcon size="52" />
       <h6>{{ selectedAgent?.name }}</h6>
-      <span>Updated: {{ formatDate(selectedAgent?.createdAt) }}</span>
+      <span>Updated: {{ formatDate(selectedAgent?.updatedAt) }}</span>
       <p>{{ selectedAgent?.description }}</p>
     </div>
   </div>

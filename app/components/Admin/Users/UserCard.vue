@@ -169,14 +169,14 @@ const redirectToUserDetails = () => {
 .user-actions {
   grid-column: span 6;
   justify-self: flex-end;
+  display: flex;
+  gap: 12px;
   @include viewport-s {
     grid-column: span 3;
   }
   @include viewport-ml {
     grid-column: span 1;
   }
-  display: flex;
-  gap: 12px;
 
   & .delete-action {
     margin-left: 2rem;

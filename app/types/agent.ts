@@ -1,5 +1,3 @@
-import type { Collection } from '~/types/collection'
-
 export type EmbeddingProvider = 'azure' | 'openai' | 'ollama'
 
 export interface Agent {
@@ -29,14 +27,14 @@ export interface Agents {
 export interface SingleAgent {
   active: boolean
   activeConfigurationId: string
-  createdAt: Date
+  createdAt: Date | string
   description: string
   embeddingModel: string
   embeddingProvider: string
   id: string
   language: string
   name: string
-  updatedAt: Date
+  updatedAt: Date | string
   vectorProvider: string
 }
 
