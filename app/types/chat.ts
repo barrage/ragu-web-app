@@ -1,4 +1,4 @@
-import type { Agent } from '~/types/agent.ts'
+import type { SingleAgent } from '~/types/agent.ts'
 import type { User } from '~/types/users'
 
 export interface Message {
@@ -48,8 +48,13 @@ export interface ChatsResponse {
   total: number
 }
 
+export interface AdminChatsResponse {
+  items: AdminChatDetails[]
+  total: number
+}
+
 export interface AdminChatDetails {
-  agent: Agent
+  agent: SingleAgent
   chat: Chat
   user: User
 }

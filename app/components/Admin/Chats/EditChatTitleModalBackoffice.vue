@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import type { Chat, EditChatTitlePayload } from '~/types/chat'
+import type { AdminChatDetails, EditChatTitlePayload } from '~/types/chat'
 import EditIcon from '~/assets/icons/svg/edit-text.svg'
 
 const props = defineProps<{
-  selectedChat: Chat | null
+  selectedChat: AdminChatDetails | null
   isOpen: boolean
 }>()
 
@@ -41,7 +41,7 @@ const rules = computed<FormRules<EditChatTitlePayload>>(() => ({
   ],
 }))
 
-const { execute: updateChatTitle, error } = await useAsyncData(() => chatStore.PUT_UpdateChatTitleBackoffice(props.selectedChat!.id, editChatTitleForm.title), { immediate: false })
+const { execute: updateChatTitle, error } = await useAsyncData(() => chatStore.PUT_UpdateChatTitleBackoffice(props.selectedChat!.chat?.id, editChatTitleForm.title), { immediate: false })
 
 const submiteditChatTitleForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
@@ -78,7 +78,7 @@ const submiteditChatTitleForm = async (formEl: FormInstance | undefined) => {
 
 const prefilleditChatTitleForm = () => {
   if (props.selectedChat) {
-    editChatTitleForm.title = props.selectedChat.title
+    editChatTitleForm.title = props.selectedChat?.chat?.title
   }
 }
 watch(

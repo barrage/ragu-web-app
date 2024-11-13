@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { nextTick, onMounted, ref } from 'vue'
-import type { Chat } from '~/types/chat'
+import { nextTick } from 'vue'
+import type { AdminChatDetails, AdminChatsResponse } from '~/types/chat'
 import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
-  chats: Chat[] | null | undefined
+  chats: AdminChatDetails[] | null | undefined
 }>()
 
 const emits = defineEmits<{
@@ -45,10 +45,10 @@ const changePage = (page: number) => {
 }
 
 /* Delete Chat */
-const selectedChatDelete = ref<Chat | null>(null)
+const selectedChatDelete = ref<AdminChatDetails | null>(null)
 const deleteChatModalVisible = ref(false)
 
-const openDeleteChatModal = (chat: Chat) => {
+const openDeleteChatModal = (chat: AdminChatDetails) => {
   selectedChatDelete.value = chat
   deleteChatModalVisible.value = true
 }
@@ -58,10 +58,10 @@ const closeDeleteChatModal = () => {
 }
 
 /* Edit Chat title */
-const selectedChatEdit = ref<Chat | null>(null)
+const selectedChatEdit = ref<AdminChatDetails | null>(null)
 const editChatModalVisible = ref(false)
 
-const openEditChatModal = (chat: Chat) => {
+const openEditChatModal = (chat: AdminChatDetails) => {
   selectedChatEdit.value = chat
   editChatModalVisible.value = true
 }
@@ -76,14 +76,14 @@ const closeEditChatModal = () => {
     <div class="chats-list">
       <div
         v-for="(chat, index) in props.chats"
-        :key="chat.id"
+        :key="chat?.chat?.id"
         class="list-item"
         :class="[cardClasses[index]]"
       >
         <ChatCardAdmin
           :chat="chat"
           @delete-chat="openDeleteChatModal(chat)"
-          @edit-chat-title="openEditChatModal"
+          @edit-chat-title="openEditChatModal(chat)"
         />
       </div>
       <Pagination

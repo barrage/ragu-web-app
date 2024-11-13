@@ -13,7 +13,7 @@ const currentPage = ref(1)
 const itemsPerPage = ref(10)
 const sort = ref<SortingValues>({
   direction: 'desc',
-  sortProperty: { name: '', value: '' },
+  sortProperty: { name: '', value: 'updatedAt' },
 })
 
 const { error, execute } = await useAsyncData(() =>

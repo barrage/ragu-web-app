@@ -40,6 +40,7 @@ export default {
       description: 'すべてのチャットを一箇所で管理',
       chat_card: {
         title: 'タイトル',
+        unknown_title: '不明',
         created_at: '作成日',
         updated_at: '更新日',
         view_details: '詳細を見る',

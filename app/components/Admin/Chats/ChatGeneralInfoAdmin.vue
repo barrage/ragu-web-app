@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Chat } from '~/types/chat.ts'
-import type { Agent } from '~/types/agent.ts'
+import type { SingleAgent } from '~/types/agent.ts'
 import type { User } from '~/types/users'
 import LabelDescriptionItem from '~/components/shared/LabelDescriptionItem.vue'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
@@ -8,7 +8,7 @@ import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
 const props = defineProps<{
   chat: Chat | null
-  agent: Agent | null
+  agent: SingleAgent | null
   user: User | null
 }>()
 
@@ -41,10 +41,8 @@ const chatData = computed(() => {
     },
     agent: {
       username: props.agent?.name || '-',
-      provider: props.agent?.llmProvider || '-',
       id: props.agent?.id || '-',
-      model: props.agent?.model || '-',
-      temperature: props.agent?.temperature?.toString() || '-',
+      language: props.agent?.language || '',
       vectorProvider: props.agent?.vectorProvider || '-',
       status: props.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
       statusType: props.agent?.active ? StatusType.Success : StatusType.Danger,
@@ -114,7 +112,7 @@ const redirectToAgentDetails = () => {
           <p class="username">
             {{ `${chatData.agent.username}` }}
           </p>
-          <span class="user-mail">{{ chatData.agent.provider }}</span>
+          <span class="user-mail">{{ chatData.agent.language }}</span>
         </div>
       </div>
       <div class="user-informations">
@@ -129,22 +127,13 @@ const redirectToAgentDetails = () => {
             </el-tag>
           </template>
         </LabelDescriptionItem>
-        <LabelDescriptionItem
-          label="Model"
-          size="small"
-          :description="chatData.agent.model"
-        />
 
         <LabelDescriptionItem
           label="Vector provider"
           size="small"
           :description="chatData.agent.vectorProvider"
         />
-        <LabelDescriptionItem
-          label="Temperature"
-          size="small"
-          :description="chatData.agent.temperature"
-        />
+
         <LabelDescriptionItem
           label="Embedding model"
           size="small"

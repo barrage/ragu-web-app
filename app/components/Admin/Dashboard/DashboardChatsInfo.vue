@@ -2,13 +2,13 @@
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
 import type { ChatStatistic, StatisticItem } from '~/types/statistic'
-import type { Chat } from '~/types/chat'
+import type { AdminChatDetails } from '~/types/chat'
 import type { Agent } from '~/types/agent'
 import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 
 const props = defineProps<{
   chatCount: ChatStatistic | undefined
-  recentChats: Array<Chat>
+  recentChats: Array<AdminChatDetails>
   activeAgents: Array<Agent>
 }>()
 const router = useRouter()
@@ -47,13 +47,13 @@ const redirectToAgentDetails = (id: string) => {
         <div class="recent-chat-list">
           <template v-for="chat in props.recentChats" :key="chat.id">
             <div class="recent-chat-card">
-              <div class="chat-profile-item" @click="redirectToChatDetails(chat.id)">
-                <ChatIcon size="36" />
+              <div class="chat-profile-item" @click="redirectToChatDetails(chat.chat.id)">
+                <ChatIcon size="36" class="chat-icon" />
                 <div class="chat-wrapper">
                   <p class="chat-name">
-                    {{ `${chat?.title || '-'}` }}
+                    {{ `${chat?.chat.title || t('chat.admin.chat_card.unknown_title')}` }}
                   </p>
-                  <span class="chat-time-update">{{ chat?.updatedAt ? useRelativeDate(chat.updatedAt) : '' }}</span>
+                  <span class="chat-time-update">{{ chat?.chat?.updatedAt ? useRelativeDate(chat.chat.updatedAt) : '' }}</span>
                 </div>
               </div>
             </div>
@@ -148,12 +148,16 @@ const redirectToAgentDetails = (id: string) => {
   gap: 1rem;
   max-height: 300px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .recent-chat-card {
   & .chat-profile-item {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    & .chat-icon {
+      min-width: fit-content;
+    }
 
     & .chat-wrapper {
       display: flex;
@@ -167,6 +171,10 @@ const redirectToAgentDetails = (id: string) => {
       line-height: normal;
       font-weight: var(--font-weight-bold);
       color: var(--color-primary-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
     & .chat-time-update {
       line-height: normal;

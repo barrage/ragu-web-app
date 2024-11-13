@@ -8,9 +8,9 @@ const emits = defineEmits<{
 const { t } = useI18n()
 
 const sortOptions = computed(() => [
+  { name: t('chat.admin.chat_card.updated_at'), value: 'updatedAt' },
   { name: t('chat.admin.chat_card.created_at'), value: 'createdAt' },
   { name: t('chat.admin.chat_card.title'), value: 'title' },
-  { name: t('chat.admin.chat_card.updated_at'), value: 'updatedAt' },
 ])
 
 const updateSort = (sortingValues: SortingValues) => {

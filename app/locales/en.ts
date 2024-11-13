@@ -43,6 +43,7 @@ export default {
       description: 'Manage all your chats in one place',
       chat_card: {
         title: 'Title',
+        unknown_title: 'Unknown',
         created_at: 'Created At',
         updated_at: 'Updated At',
         view_details: 'View Details',

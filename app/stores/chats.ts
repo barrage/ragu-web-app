@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { AdminChatDetails, Chat, ChatsResponse, Message } from '~/types/chat.ts'
+import type { AdminChatDetails, AdminChatsResponse, Chat, ChatsResponse, Message } from '~/types/chat.ts'
 
 export const useChatStore = defineStore('chat', () => {
   // State
@@ -56,14 +56,14 @@ export const useChatStore = defineStore('chat', () => {
    * @param sortOrder - The order of sorting ('asc' or 'desc').
    * @returns A promise that resolves to an ChatsResponse type or null.
    */
-  const adminAllChatsResponse = ref<ChatsResponse | null>(null)
-  const adminAllChatsData = ref<Chat[]>([])
+  const adminAllChatsResponse = ref<AdminChatsResponse | null>(null)
+  const adminAllChatsData = ref<AdminChatDetails[]>([])
   async function GET_AllAdminChats(
     page: number = 1,
     perPage: number = 10,
     sortBy: string = 'firstName',
     sortOrder: 'asc' | 'desc' = 'asc',
-  ): Promise<ChatsResponse | null> {
+  ): Promise<AdminChatsResponse | null> {
     const data = await $api.chat.GetAllAdminChats(page, perPage, sortBy, sortOrder)
 
     if (data) {

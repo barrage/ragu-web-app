@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { AdminChatDetails, Chat, ChatsResponse, Message } from '~/types/chat.ts'
+import type { AdminChatDetails, AdminChatsResponse, Chat, ChatsResponse, Message } from '~/types/chat.ts'
 
 export default class ChatServise extends FetchFactory {
   // Endpoint for chat-related API requests.
@@ -70,7 +70,7 @@ export default class ChatServise extends FetchFactory {
    * @returns A promise that resolves to an array of Chat objects.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllAdminChats(page: number = 1, perPage: number = 10, sortBy: string = 'firstName', sortOrder: 'asc' | 'desc' = 'asc'): Promise<ChatsResponse> {
+  async GetAllAdminChats(page: number = 1, perPage: number = 10, sortBy: string = 'firstName', sortOrder: 'asc' | 'desc' = 'asc'): Promise<AdminChatsResponse> {
     try {
       const queryParams = new URLSearchParams({
         page: page.toString(),
@@ -78,7 +78,7 @@ export default class ChatServise extends FetchFactory {
         sortBy,
         sortOrder,
       }).toString()
-      return await this.$fetch<ChatsResponse>(`${this.adminChatsEndpoint}?${queryParams}`, {
+      return await this.$fetch<AdminChatsResponse>(`${this.adminChatsEndpoint}?${queryParams}`, {
         credentials: 'include',
       })
     }
