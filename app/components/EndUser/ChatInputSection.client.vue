@@ -161,7 +161,6 @@ const stopStream = () => {
 
 <template>
   <section class="chat-input-section">
-    {{ }}
     <el-input
       v-model="message"
       size="large"

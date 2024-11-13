@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import EditChatTitleModal from './EditChatTitleModal.vue'
 import type { Chat, Message } from '~/types/chat'
 import EditTextIcon from '~/assets/icons/svg/edit-text.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
@@ -10,6 +9,12 @@ const props = defineProps<{
   chat: Chat | null
   messages: Message[] | null
 }>()
+
+const emits = defineEmits<Emits>()
+interface Emits {
+  (event: 'delete-chat'): void
+  (event: 'edit-chat-title'): void
+}
 
 const popperOptions = {
   placement: 'bottom-end',
@@ -28,31 +33,6 @@ const popperOptions = {
     },
   ],
 }
-
-/* Delete Chat */
-const selectedChatDelete = ref<Chat | null>(null)
-const deleteChatModalVisible = ref(false)
-
-const openDeleteChatModal = (chat: Chat | null) => {
-  selectedChatDelete.value = chat
-  deleteChatModalVisible.value = true
-}
-
-const closeDeleteChatModal = () => {
-  deleteChatModalVisible.value = false
-}
-/* Edit Chat title */
-const selectedChatEdit = ref<Chat | null>(null)
-const editChatModalVisible = ref(false)
-
-const openEditChatModal = (chat: Chat | null) => {
-  selectedChatEdit.value = chat
-  editChatModalVisible.value = true
-}
-
-const closeEditChatModal = () => {
-  editChatModalVisible.value = false
-}
 </script>
 
 <template>
@@ -68,12 +48,12 @@ const closeEditChatModal = () => {
 
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="openEditChatModal(props.chat)">
+              <el-dropdown-item @click="emits('edit-chat-title')">
                 <div class="dropdown-item">
                   <EditTextIcon />  {{ $t('chat.edit_title.title') }}
                 </div>
               </el-dropdown-item>
-              <el-dropdown-item @click="openDeleteChatModal(props.chat)">
+              <el-dropdown-item @click="emits('delete-chat')">
                 <div class="dropdown-item">
                   <DeleteIcon /> {{ $t('chat.delete_chat.title') }}
                 </div>
@@ -93,17 +73,6 @@ const closeEditChatModal = () => {
       </template>
     </div>
   </div>
-  <DeleteChatModal
-    :is-open="deleteChatModalVisible"
-    :selected-chat="selectedChatDelete"
-    @close-modal="closeDeleteChatModal"
-  />
-
-  <EditChatTitleModal
-    :is-open="editChatModalVisible"
-    :selected-chat="selectedChatEdit"
-    @close-modal="closeEditChatModal"
-  />
 </template>
 
 <style lang="scss" scoped>

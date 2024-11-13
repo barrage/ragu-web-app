@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { Chat } from '~/types/chat'
+
 const chatStore = useChatStore()
 const messages = computed(() => {
   return [...(chatStore?.messages || [])]
@@ -7,6 +9,31 @@ const messages = computed(() => {
 const selectedChat = computed(() => {
   return chatStore?.selectedChat
 })
+
+/* Delete Chat */
+const selectedChatDelete = ref<Chat | null>(null)
+const deleteChatModalVisible = ref(false)
+
+const openDeleteChatModal = () => {
+  selectedChatDelete.value = selectedChat.value
+  deleteChatModalVisible.value = true
+}
+
+const closeDeleteChatModal = () => {
+  deleteChatModalVisible.value = false
+}
+/* Edit Chat title */
+const selectedChatEdit = ref<Chat | null>(null)
+const editChatModalVisible = ref(false)
+
+const openEditChatModal = () => {
+  selectedChatEdit.value = selectedChat.value
+  editChatModalVisible.value = true
+}
+
+const closeEditChatModal = () => {
+  editChatModalVisible.value = false
+}
 </script>
 
 <template>
@@ -14,8 +41,24 @@ const selectedChat = computed(() => {
     class="chat-view-wrapper"
   >
     <div class="chat-wrapper">
-      <Chat :chat="selectedChat" :messages="messages" />
+      <Chat
+        :chat="selectedChat"
+        :messages="messages"
+        @edit-chat-title="openEditChatModal"
+        @delete-chat="openDeleteChatModal"
+      />
     </div>
+    <DeleteChatModal
+      :is-open="deleteChatModalVisible"
+      :selected-chat="selectedChatDelete"
+      @close-modal="closeDeleteChatModal"
+    />
+
+    <EditChatTitleModal
+      :is-open="editChatModalVisible"
+      :selected-chat="selectedChatEdit"
+      @close-modal="closeEditChatModal"
+    />
   </div>
 </template>
 
