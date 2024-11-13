@@ -40,6 +40,7 @@ export default {
       description: 'Gestisci tutte le tue chat in un unico posto',
       chat_card: {
         title: 'Titolo',
+        unknown_title: 'Sconosciuto',
         created_at: 'Creato il',
         updated_at: 'Aggiornato il',
         view_details: 'Visualizza dettagli',

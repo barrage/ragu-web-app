@@ -41,6 +41,7 @@ export default {
       description: 'Verwalten Sie alle Ihre Chats an einem Ort',
       chat_card: {
         title: 'Titel',
+        unknown_title: 'Unbekannt',
         created_at: 'Erstellt am',
         updated_at: 'Aktualisiert am',
         view_details: 'Details anzeigen',

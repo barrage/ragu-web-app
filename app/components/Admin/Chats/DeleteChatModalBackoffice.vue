@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import type { Chat } from '~/types/chat'
+import type { AdminChatDetails } from '~/types/chat'
 import DeleteChatIcon from '~/assets/icons/svg/chat-delete.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 
 const props = defineProps<{
-  selectedChat: Chat | null
+  selectedChat: AdminChatDetails | null
   isOpen: boolean
 }>()
 const emits = defineEmits<Emits>()
@@ -24,10 +24,10 @@ watch(() => props.isOpen, (newVal) => {
 interface Emits {
   (event: 'closeModal'): void
 }
-const { execute: deleteChat, error } = await useAsyncData(() => chatStore.DELETE_ChatBackoffice(props.selectedChat!.id), { immediate: false })
+const { execute: deleteChat, error } = await useAsyncData(() => chatStore.DELETE_ChatBackoffice(props.selectedChat!.chat?.id), { immediate: false })
 
 const submitDeleteChat = async () => {
-  if (props.selectedChat?.id) {
+  if (props.selectedChat?.chat?.id) {
     await deleteChat()
     deleteChatModalVisible.value = false
     if (error.value) {
@@ -71,7 +71,7 @@ const submitDeleteChat = async () => {
       </template>
       <div>
         <p>
-          {{ $t('chat.delete_chat.description') }}  <br> <b>{{ props.selectedChat?.title }}</b>
+          {{ $t('chat.delete_chat.description') }}  <br> <b>{{ props.selectedChat?.chat?.title }}</b>
         </p>
       </div>
 

@@ -42,6 +42,7 @@ export default {
       description: 'Upravljajte svim razgovorima na jednom mjestu',
       chat_card: {
         title: 'Naslov',
+        unknown_title: 'Nepoznato',
         created_at: 'Kreirano',
         updated_at: 'Ažurirano',
         view_details: 'Pogledaj detalje',
