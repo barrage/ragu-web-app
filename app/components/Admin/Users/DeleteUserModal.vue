@@ -28,7 +28,7 @@ const { execute: deleteUser, error } = await useAsyncData(() => usersStore.DELET
 
 const submitDeleteUser = async () => {
   if (props.selectedUser?.id) {
-    deleteUser()
+    await deleteUser()
     deleteUserModalVisible.value = false
     if (error.value) {
       ElNotification({
