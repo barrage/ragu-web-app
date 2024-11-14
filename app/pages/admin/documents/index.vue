@@ -51,12 +51,12 @@ errorHandler(error)
     <!--   <DocumentsListActions /> -->
     <template v-if="documentStore.documentResponse?.items">
       <div class="active-screen-container grid">
-        <div class="widgets">
-          <DocumentStatistics :documents="documentStore.documentResponse?.items" />
-        </div>
         <div class="documents-overview">
           <DocumentsListActions @sort-change="handleSortChange" />
           <DocumentList :documents="documentStore.documentResponse?.items" @page-change="handlePageChange" />
+        </div>
+        <div class="widgets">
+          <DocumentStatistics :documents="documentStore.documentResponse?.items" />
         </div>
       </div>
     </template>
@@ -64,10 +64,15 @@ errorHandler(error)
 </template>
 
 <style lang="scss" scoped>
-.documents-overview {
-  grid-column: span 8;
-}
-.widgets {
-  grid-column: span 4;
+.active-screen-container {
+  grid-column-gap: var(--spacing-fluid-2-xl);
+
+  & .documents-overview {
+    grid-column: span 8;
+  }
+
+  & .widgets {
+    grid-column: span 4;
+  }
 }
 </style>

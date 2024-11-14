@@ -84,9 +84,10 @@ const upload = async () => {
         duration: 5500,
       })
       isUploadModalVisible.value = false
-      fileList.value = []
+
       await documentStore.GET_AllDocuments()
     }
+    fileList.value = []
     isUploadLoading.value = false
   }
 }

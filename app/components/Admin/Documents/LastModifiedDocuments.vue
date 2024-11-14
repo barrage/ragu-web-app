@@ -62,7 +62,7 @@ const props = defineProps<{ documents: Document[] }>()
                   size="16"
                   original
                 />
-                <span>{{ doc.name }}</span>
+                <span class="document-name">{{ doc.name }}</span>
               </div>
               <span>{{ useRelativeDate(doc.updatedAt) }}</span>
             </div>
@@ -99,6 +99,13 @@ const props = defineProps<{ documents: Document[] }>()
       line-height: normal;
       color: var(--color-primary-800);
       text-overflow: ellipsis;
+      & .document-name {
+        padding-rightht: 4px;
+        max-width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
     }
   }
 }
