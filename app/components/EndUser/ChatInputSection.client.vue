@@ -198,6 +198,9 @@ const stopStream = () => {
 const hasActiveAgents = computed(() => {
   return agentStore.appAgents.filter(agent => agent.active).length > 0
 })
+
+const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
+errorHandler(error)
 </script>
 
 <template>
