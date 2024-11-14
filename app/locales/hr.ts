@@ -82,6 +82,7 @@ export default {
       title: 'Novi chat',
       description: 'Izaberite agenta s kojim želite započeti razgovor',
       choseFrom: 'Agenti:',
+      empty: 'Trenutno nema dostupnih agenata za razgovor. Kako biste započeli chat, potrebno je dodati ili omogućiti barem jednog agenta. Molimo vas da se obratite administratoru sustava ili provjerite postavke agenata kako biste nastavili.',
     },
   },
   documents: {

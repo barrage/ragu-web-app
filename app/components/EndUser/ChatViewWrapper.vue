@@ -48,13 +48,13 @@ const closeEditChatModal = () => {
         @delete-chat="openDeleteChatModal"
       />
     </div>
-    <DeleteChatModal
+    <DeleteChatModalEndUser
       :is-open="deleteChatModalVisible"
       :selected-chat="selectedChatDelete"
       @close-modal="closeDeleteChatModal"
     />
 
-    <EditChatTitleModal
+    <EditChatTitleModalEndUser
       :is-open="editChatModalVisible"
       :selected-chat="selectedChatEdit"
       @close-modal="closeEditChatModal"

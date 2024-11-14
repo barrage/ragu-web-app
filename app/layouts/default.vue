@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 // CONSTANTS
 const navigationStore = useNavigationStore()
+const agentStore = useAgentStore()
+const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
+errorHandler(error)
 </script>
 
 <template>
