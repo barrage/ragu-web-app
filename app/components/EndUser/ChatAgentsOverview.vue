@@ -2,11 +2,6 @@
 import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
 const agentStore = useAgentStore()
-/* agentStore.GET_AllAgents() */
-
-const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
-
-errorHandler(error)
 
 const selectedAgent = ref(agentStore.appAgents?.[0])
 const selectAgent = (agent: any) => {
