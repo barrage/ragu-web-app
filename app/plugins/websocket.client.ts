@@ -17,10 +17,12 @@ export default defineNuxtPlugin((nuxtApp) => {
     connectionState.value = 'opening'
 
     ws.onopen = () => {
+      console.log('WS on OPEN')
       connectionState.value = 'open'
     }
 
     ws.onmessage = (event) => {
+      console.log('WS on Message:', event)
       const data = event.data
       messages.value.push(data)
       messageHandlers.forEach(handler => handler(data))
@@ -33,6 +35,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
 
     ws.onclose = (event) => {
+      console.log('WS on Close:', event)
       connectionState.value = 'closed'
       ws = null
     }
