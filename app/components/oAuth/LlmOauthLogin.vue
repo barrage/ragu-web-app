@@ -40,7 +40,35 @@ const oAuthConfig = {
   },
 }
 
-function socialSignIn(provider: OAuthProvider) {
+async function generateCodeVerifier(): Promise<string> {
+  const array = new Uint8Array(32)
+  window.crypto.getRandomValues(array)
+
+  const base64String = String.fromCharCode.apply(null, array as any)
+
+  let base64 = btoa(base64String)
+
+  base64 = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+
+  return base64
+}
+
+async function generateCodeChallenge(codeVerifier: string): Promise<string> {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(codeVerifier)
+  const digest = await crypto.subtle.digest('SHA-256', data)
+  return btoa(String.fromCharCode(...new Uint8Array(digest)))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '')
+}
+
+async function socialSignIn(provider: OAuthProvider) {
+  const codeVerifier = await generateCodeVerifier()
+  const codeChallenge = await generateCodeChallenge(codeVerifier)
+
+  sessionStorage.setItem('pkce_code_verifier', codeVerifier)
+
   let redirectUrl = ''
   const protocol = window.location.protocol
   const hostname = window.location.hostname
@@ -50,12 +78,12 @@ function socialSignIn(provider: OAuthProvider) {
   if (provider === 'google') {
     redirectUrl = `${oAuthConfig.google.authUrl}?client_id=${oAuthConfig.google.client_id}&scope=${encodeURIComponent(
       oAuthConfig.google.scopes,
-    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code${oAuthConfig.google.additionalParams}`
+    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}${oAuthConfig.google.additionalParams}`
   }
   else if (provider === 'microsoft') {
     redirectUrl = `${oAuthConfig.microsoft.authUrl}?client_id=${oAuthConfig.microsoft.client_id}&scope=${encodeURIComponent(
       oAuthConfig.microsoft.scopes,
-    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code${oAuthConfig.microsoft.additionalParams}`
+    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}${oAuthConfig.microsoft.additionalParams}`
   }
 
   if (redirectUrl) {
