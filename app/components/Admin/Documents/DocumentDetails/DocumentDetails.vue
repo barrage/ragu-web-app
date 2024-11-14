@@ -41,9 +41,9 @@ function chunkDocument() {
 
 <template>
   <div class="admin-document-page-container">
-    <DocumentDetailsHeroSection :document="document" />
+    <DocumentDetailsHeroSection :document="props.document" />
     <div class="horizontal-divider" />
-    <DocumentDetailsInformationsSection :document="document" />
+    <DocumentDetailsInformationsSection :document="props.document" />
 
     <div class="horizontal-divider" />
 
@@ -53,10 +53,10 @@ function chunkDocument() {
     </div>
     <div class="current-configuration grid">
       <div class="parser-template">
-        <CurrentParserConfig :config="document?.parseConfig" />
+        <CurrentParserConfig :config="props.document?.parseConfig" />
       </div>
       <div class="chunker-template">
-        <CurrentChunkerConfig :config="document?.chunkConfig" />
+        <CurrentChunkerConfig :config="props.document?.chunkConfig" />
       </div>
     </div>
     <div class="icon-title-container">

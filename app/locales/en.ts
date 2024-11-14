@@ -94,7 +94,9 @@ export default {
     source: 'Source',
     id: 'Document ID',
     hash: 'Hash',
-
+    details: {
+      empty: 'This document is unavailable or no longer exists.',
+    },
     notifications: {
       create: {
         success_title: 'New Document',

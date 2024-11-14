@@ -101,6 +101,8 @@ const prefillForm = () => {
     form.semantic.config.delimiter = chunkConfig.semantic.config.delimiter || ''
     form.semantic.config.skipForward = chunkConfig.semantic.config.skipForward || []
     form.semantic.config.skipBack = chunkConfig.semantic.config.skipBack || []
+    form.semantic.config.embedModel = chunkConfig.semantic.config.embedModel
+    form.semantic.config.embedProvider = chunkConfig.semantic.config.embedProvider
   }
 }
 const embeddingProviders = ['fembed', 'openai']

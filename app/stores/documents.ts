@@ -22,14 +22,16 @@ export const useDocumentsStore = defineStore('document', () => {
 
   const selectedDocument = ref<Document | null>(null)
 
-  async function GET_SingleDocument(id: string): Promise<Document | null > {
-    const data = await $api.document.GetSingleDocument(id)
-
-    if (data) {
-      return selectedDocument.value = data
+  async function GET_SingleDocument(id: string): Promise<Document | null> {
+    try {
+      const data = await $api.document.GetSingleDocument(id)
+      selectedDocument.value = data
+      return selectedDocument.value
     }
-    else {
-      return selectedDocument.value = null
+    catch (error) {
+      console.error('Failed to fetch single document:', error)
+      selectedDocument.value = null
+      return null
     }
   }
 

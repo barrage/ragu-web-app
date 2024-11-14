@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
+import DocumentErrorIcon from '~/assets/icons/svg/document-error.svg'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -13,8 +14,7 @@ const selectedDocumentId = computed(() => {
   const documentId = Array.isArray(route.params.documentId) ? route.params.documentId[0] : route.params.documentId
   return documentId || ''
 })
-
-const { error } = await useAsyncData(() => documentStore.GET_SingleDocument(selectedDocumentId.value))
+const { error, status } = await useAsyncData(() => documentStore.GET_SingleDocument(selectedDocumentId.value))
 
 errorHandler(error)
 </script>
@@ -24,8 +24,18 @@ errorHandler(error)
     <NuxtLink to="/admin/documents" class="back-link">
       <ArrowLeftIcon /> {{ t('documents.title') }}
     </NuxtLink>
-
-    <DocumentDetails :document="documentStore.selectedDocument" />
+    <template v-if="status === 'pending'">
+      <LlmLoader />
+    </template>
+    <template v-else-if="documentStore.selectedDocument">
+      <DocumentDetails :document="documentStore.selectedDocument" />
+    </template>
+    <template v-else>
+      <div class="document-details-empty-state">
+        <DocumentErrorIcon size="44" />
+        <p> <b>{{ t('documents.details.empty') }}</b> </p>
+      </div>
+    </template>
   </AdminPageContainer>
 </template>
 
@@ -34,5 +44,12 @@ errorHandler(error)
   display: flex;
   gap: 4px;
   align-items: center;
+}
+
+.document-details-empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--spacing-fluid-3-xl);
 }
 </style>
