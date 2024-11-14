@@ -34,7 +34,7 @@ const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDo
 
 errorHandler(documentError)
 
-const { execute: updateCollection, error: collectionError } = await useAsyncData(() => collectionStore.POST_UpdateCollection(payload.value), { immediate: false })
+const { execute: updateCollection, error: collectionError, status } = await useAsyncData(() => collectionStore.POST_UpdateCollection(payload.value), { immediate: false })
 const { error, execute: getCollection } = await useAsyncData(() => collectionStore.GET_SingleCollection(collectionId?.value), { immediate: false })
 
 errorHandler(error)
@@ -53,7 +53,7 @@ const handleTransferChange = (newValue: string[]) => {
     payload.value.add = payload.value.add.filter(addId => addId !== id)
   })
 
-  rightValue.value = newValue // Update right column selection
+  rightValue.value = newValue
 }
 
 const transformedDocuments = computed(() => {
@@ -65,13 +65,11 @@ const transformedDocuments = computed(() => {
 })
 
 const submitSelection = async () => {
-  if (!collectionId.value) { return } // No collection ID, no update
+  if (!collectionId.value) { return }
 
-  // Filter `payload.add` to remove any documents that already exist in `props.singleCollection.documents`
   const existingDocIds = props.singleCollection?.documents.map(doc => doc.id) || []
   payload.value.add = payload.value.add.filter(id => !existingDocIds.includes(id))
 
-  // Only proceed if there's something to add or remove
   if (!payload.value.add.length && !payload.value.remove.length) { return }
   await updateCollection()
 
@@ -112,7 +110,7 @@ const collectionData = computed(() => {
 onMounted(() => {
   if (props.singleCollection?.documents) {
     rightValue.value = props.singleCollection.documents.map(doc => doc.id)
-    selectedDocumentIds.value = props.singleCollection.documents.map(doc => doc.id) // Set initial right side with existing collection documents
+    selectedDocumentIds.value = props.singleCollection.documents.map(doc => doc.id)
   }
 })
 </script>
@@ -234,6 +232,7 @@ onMounted(() => {
         <el-button
           type="primary"
           style="margin-top: 16px;"
+          :disabled="status === 'pending'"
           @click="submitSelection"
         >
           Submit

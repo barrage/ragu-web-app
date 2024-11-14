@@ -251,7 +251,6 @@ errorHandler(createError)
         </ElSelect>
       </ElFormItem>
 
-      <!-- Instructions Section -->
       <ElFormItem :label="t('agents.labels.languageInstruction')" prop="configuration.instructions.languageInstruction">
         <ElInput v-model="form.configuration.instructions.languageInstruction" :placeholder="t('agents.placeholder.languageInstruction')" />
       </ElFormItem>
