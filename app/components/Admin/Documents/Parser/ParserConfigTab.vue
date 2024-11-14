@@ -1,14 +1,5 @@
 <script lang="ts" setup>
 import ParseDocumentIcon from '~/assets/icons/svg/parse-document.svg'
-
-const documentStore = useDocumentsStore()
-
-const route = useRoute()
-const documentId = Array.isArray(route.params.documentId) ? route.params.documentId[0] : route.params.documentId
-
-if (documentId) {
-  await documentStore.GET_SingleDocument(documentId)
-}
 </script>
 
 <template>

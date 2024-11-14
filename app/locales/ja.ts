@@ -91,6 +91,9 @@ export default {
     source: 'ソース',
     id: 'ドキュメントID',
     hash: 'ハッシュ',
+    details: {
+      empty: 'このドキュメントは利用できないか、もはや存在しません。',
+    },
     notifications: {
       create: {
         success_title: '新しいドキュメント',

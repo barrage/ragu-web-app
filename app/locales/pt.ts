@@ -92,6 +92,9 @@ export default {
     source: 'Fonte',
     id: 'ID do Documento',
     hash: 'Hash',
+    details: {
+      empty: 'Este documento está indisponível ou não existe mais.',
+    },
     notifications: {
       create: {
         success_title: 'Novo Documento',

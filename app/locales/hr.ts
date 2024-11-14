@@ -94,6 +94,9 @@ export default {
     source: 'Izvor',
     id: 'Dokument ID',
     hash: 'Hash',
+    details: {
+      empty: 'Ovaj dokument nije dostupan ili više ne postoji.',
+    },
     notifications: {
       create: {
         success_title: 'Novi Dokument',

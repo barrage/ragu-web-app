@@ -14,7 +14,7 @@ const props = defineProps<{
   document: Document | null | undefined
 }>()
 const { t } = useI18n()
-
+const router = useRouter()
 const documentData = computed(() => {
   return {
     name: props.document?.name || t('documents.document_card.unknown_name'),
@@ -36,12 +36,19 @@ const closeDeleteDialog = () => {
   isDeleteDialogVisible.value = false
 }
 
-function deleteDocument() {
+const { error: deleteError, execute: deleteDocument } = await useAsyncData(() => documentStore.DELETE_Document(props.document!.id), { immediate: false })
+const { error, execute: getAllDocs } = await useAsyncData(() => documentStore.GET_AllDocuments(), { immediate: false })
+
+async function submitDelete() {
   if (props?.document?.id) {
-    documentStore.DELETE_Document(props.document.id)
-    documentStore.GET_AllDocuments()
+    await deleteDocument()
+    router.push('/admin/documents')
+    await getAllDocs()
   }
 }
+
+errorHandler(error)
+errorHandler(deleteError)
 </script>
 
 <template>
@@ -111,7 +118,7 @@ function deleteDocument() {
         <el-button @click="closeDeleteDialog">
           Cancel
         </el-button>
-        <el-button type="danger" @click="deleteDocument()">
+        <el-button type="danger" @click="submitDelete()">
           Delete
         </el-button>
       </template>
