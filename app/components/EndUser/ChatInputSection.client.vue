@@ -21,30 +21,90 @@ const currentChatId = computed(() => {
 })
 
 const handleServerMessage = (data: string) => {
-  const assistantMessage = chatStore?.messages?.find(
-    msg => msg.id === 'currentlyStreaming',
-  )
-  if (chatStore.isWebSocketStreaming && assistantMessage) {
-    if (data !== '##STOP##') {
-      assistantMessage.content += data
-    }
-    else {
-      chatStore.isWebSocketStreaming = false
-      assistantMessage.id = ''
-    }
-  }
-  else {
-    const jsonObject = JSON?.parse(data)
+  let parsedData
 
-    if (jsonObject?.chatId && jsonObject?.type === 'finish_event') {
-      if (currentChatId.value) {
-        chatStore.GET_ChatMessages(jsonObject.chatId)
+  try {
+    parsedData = JSON.parse(data)
+  }
+  catch (error) {
+    const assistantMessage = chatStore?.messages?.find(
+      msg => msg.id === 'currentlyStreaming',
+    )
+
+    if (chatStore.isWebSocketStreaming && assistantMessage) {
+      if (data !== '##STOP##') {
+        assistantMessage.content += data
       }
       else {
-        chatStore.GET_AllChats()
-        router.push(`/c/${jsonObject.chatId}`)
+        chatStore.isWebSocketStreaming = false
+        assistantMessage.id = ''
       }
     }
+    else {
+      console.warn('Received non-JSON data:', data)
+    }
+    return
+  }
+
+  switch (parsedData?.type) {
+    case 'chat_open':
+      if (parsedData.chatId) {
+        console.log(`Chat opened with ID: ${parsedData?.chatId}`)
+      }
+      break
+
+    case 'chat_title':
+      // Handle chat title update.
+      console.log('CHAT_TITLE')
+      if (parsedData.chatId && parsedData.title) {
+        const existingChat = chatStore.chats.find(chat => chat.id === parsedData.chatId)
+        if (existingChat) {
+          existingChat.title = parsedData.title
+        }
+        else {
+          console.warn('Received chat title update for unknown chatId:', parsedData.chatId)
+        }
+      }
+      break
+
+    case 'chat_closed':
+      // Handle chat closed message.
+      console.log('Chat closed.')
+      chatStore.isWebSocketStreaming = false
+      break
+
+    case 'finish_event':
+      console.log('fiNISH EVENT')
+      if (parsedData.chatId) {
+        if (currentChatId.value) {
+          chatStore.GET_ChatMessages(parsedData.chatId)
+        }
+        else {
+          chatStore.GET_AllChats()
+          router.push(`/c/${parsedData.chatId}`)
+        }
+
+        // Optionally handle any content sent along with the finish event.
+        if (parsedData.content) {
+          const assistantMessage = chatStore.messages?.find(
+            msg => msg.id === 'currentlyStreaming',
+          )
+          if (assistantMessage) {
+            assistantMessage.content += parsedData.content
+            chatStore.isWebSocketStreaming = false
+            assistantMessage.id = ''
+          }
+        }
+      }
+      break
+
+    case 'error':
+      console.error(`Error occurred: ${parsedData.reason}`, parsedData.description || '')
+      break
+
+    default:
+      console.warn('Received unknown message type:', parsedData)
+      break
   }
 }
 
@@ -101,7 +161,7 @@ const ensureWsTokenAndConnect = async () => {
 const sendMessage = () => {
   if (!($wsConnectionState.value === 'open') || chatStore.isWebSocketStreaming) { return }
   if (!message.value.trim()) { return }
-
+  console.log('tu sam sendo message')
   const userMessage = {
     id: '',
     sender: '1',
@@ -125,10 +185,13 @@ const sendMessage = () => {
     updatedAt: '',
   }
 
-  if (chatStore?.messages) {
-    chatStore?.messages.push(userMessage)
-    chatStore?.messages.push(assistantMessage)
+  // Ensure messages array is initialized
+  if (!Array.isArray(chatStore.messages)) {
+    chatStore.messages = []
   }
+
+  chatStore.messages.unshift(userMessage)
+  chatStore.messages.unshift(assistantMessage)
 
   $wsSendChatMessage(message.value)
   chatStore.isWebSocketStreaming = true
@@ -147,7 +210,6 @@ watch(
 
 onMounted(async () => {
   await ensureWsTokenAndConnect()
-
   $wsAddMessageHandler(handleServerMessage)
 })
 
@@ -161,30 +223,35 @@ const stopStream = () => {
 
 <template>
   <section class="chat-input-section">
-    <el-input
-      v-model="message"
-      size="large"
-      :placeholder="$t('chat.chatInputPlaceholder')"
-      class="barrage-chat-input"
-      @keyup.enter="sendMessage"
-    >
-      <template #suffix>
-        <div
-          v-if="chatStore.isWebSocketStreaming"
-          class="suffix-icon"
+    <div class="input-button-wrapper">
+      <el-input
+        v-model="message"
+        size="large"
+        :placeholder="$t('chat.chatInputPlaceholder')"
+        class="barrage-chat-input"
+        @keyup.enter="sendMessage"
+      />
+      <template v-if="chatStore.isWebSocketStreaming">
+        <el-button
+          circle
+          small
+          class="start-stop-chat-button"
           @click="stopStream"
         >
           <StopStreamIcon size="32" />
-        </div>
-        <div
-          v-else
-          class="suffix-icon"
+        </el-button>
+      </template>
+      <template v-else>
+        <el-button
+          circle
+          small
+          class="start-stop-chat-button"
           @click="sendMessage"
         >
           <ArrowUpIcon size="32" />
-        </div>
+        </el-button>
       </template>
-    </el-input>
+    </div>
   </section>
 </template>
 
@@ -194,11 +261,23 @@ const stopStream = () => {
   width: 100%;
   background: transparent;
   display: flex;
-  align-items: start;
-  justify-content: space-around;
-  & .barrage-chat-input {
+  justify-content: center;
+
+  & .input-button-wrapper {
+    display: flex;
+    align-items: center;
     width: 100%;
+    gap: 6px;
     max-width: 768px;
+    max-height: 62px;
+    & .barrage-chat-input {
+      width: 100%;
+      max-width: 768px;
+    }
+
+    & .start-stop-chat-button {
+      max-height: min-content;
+    }
   }
 }
 
