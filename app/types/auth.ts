@@ -6,6 +6,7 @@ export interface OAuthPayload {
   provider: OAuthProvider
   source: string
   grant_type: string
+  code_verifier: string | null
 }
 
 export interface tfa {

@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
   const selectedRole = ref<UserRole | null>(null)
   const isAuthenticated = ref<boolean>(false)
   const iscurrentUserLoading = ref<boolean>(true)
+  const codeVerifier = sessionStorage.getItem('pkce_code_verifier')
 
   // ACTIONS
 
@@ -52,6 +53,7 @@ export const useAuthStore = defineStore('auth', () => {
       provider,
       source,
       grant_type: 'authorization_code',
+      code_verifier: codeVerifier,
     }
 
     await $api.auth.Login(payload)
@@ -74,5 +76,6 @@ export const useAuthStore = defineStore('auth', () => {
     POST_Login,
     POST_Logout,
     GET_CurrentUser,
+
   }
 })

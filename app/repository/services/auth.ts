@@ -27,6 +27,7 @@ export default class AuthService extends FetchFactory {
             provider: payload.provider,
             source: payload.source,
             grant_type: payload.grant_type,
+            code_verifier: payload.code_verifier,
           }),
 
         },
