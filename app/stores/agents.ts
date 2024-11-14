@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Agent, AgentDetail, Agents, AllAgentResponse, SingleAgent } from '~/types/agent'
+import type { Agent, AgentDetail, Agents, AllAgentResponse, AllAppAgentsResponse, SingleAgent } from '~/types/agent'
 import type { AssignCollectionPayload } from '~/types/collection'
 
 export const useAgentStore = defineStore('agent', () => {
@@ -17,7 +17,7 @@ export const useAgentStore = defineStore('agent', () => {
     return agentsResponse.value?.items || [] // Return agents array or empty array if null
   })
 
-  const appAgentsResponse = ref<AllAgentResponse | null >()
+  const appAgentsResponse = ref<AllAppAgentsResponse | null >()
   const appAgents = computed<SingleAgent[]>(() => {
     return appAgentsResponse.value?.items || [] // Return agents array or empty array if null
   })
@@ -58,10 +58,10 @@ export const useAgentStore = defineStore('agent', () => {
   }
   async function GET_AllAppAgents(
     page: number = 1,
-    perPage: number = 10,
+    perPage: number = 20,
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
-  ): Promise<AllAgentResponse | null> {
+  ): Promise<AllAppAgentsResponse | null> {
     try {
       const data = await $api.agent.GetAllAppAgents(page, perPage, sortBy, sortOrder)
 

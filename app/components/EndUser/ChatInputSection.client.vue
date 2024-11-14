@@ -5,7 +5,7 @@ import { useNuxtApp } from '#app'
 
 /* SETUP */
 /* Ws plugin */
-const { $getWs, $wsConnect, $wsSendChatMessage, $wsCloseChat, $wsDisconnect, $wsConnectionState, $wsSendInitialMessage, $wsStopStream, $wsAddMessageHandler } = useNuxtApp()
+const { $getWs, $wsConnect, $wsSendChatMessage, $wsConnectionState, $wsSendInitialMessage, $wsStopStream, $wsAddMessageHandler } = useNuxtApp()
 
 /* Stores */
 const agentStore = useAgentStore()
@@ -19,6 +19,8 @@ const router = useRouter()
 const currentChatId = computed(() => {
   return chatStore.currentChatId
 })
+
+const route = useRoute()
 
 const handleServerMessage = (data: string) => {
   let parsedData
@@ -40,76 +42,52 @@ const handleServerMessage = (data: string) => {
         assistantMessage.id = ''
       }
     }
-    else {
-      console.warn('Received non-JSON data:', data)
-    }
     return
   }
 
   switch (parsedData?.type) {
-    case 'chat_open':
-      if (parsedData.chatId) {
-        console.log(`Chat opened with ID: ${parsedData?.chatId}`)
-      }
-      break
-
     case 'chat_title':
-      // Handle chat title update.
-      console.log('CHAT_TITLE')
-      if (parsedData.chatId && parsedData.title) {
-        const existingChat = chatStore.chats.find(chat => chat.id === parsedData.chatId)
+      if (parsedData?.chatId && parsedData?.title) {
+        const existingChat = chatStore.chats?.find(chat => chat?.id === parsedData?.chatId)
         if (existingChat) {
           existingChat.title = parsedData.title
-        }
-        else {
-          console.warn('Received chat title update for unknown chatId:', parsedData.chatId)
         }
       }
       break
 
     case 'chat_closed':
-      // Handle chat closed message.
-      console.log('Chat closed.')
       chatStore.isWebSocketStreaming = false
       break
 
+    case 'chat_stop_stream':
+      chatStore.isWebSocketStreaming = false
+      if (route.params.chatId) {
+        chatStore.GET_ChatMessages(parsedData.chatId)
+      }
+      break
+
     case 'finish_event':
-      console.log('fiNISH EVENT')
       if (parsedData.chatId) {
-        if (currentChatId.value) {
+        if (route.params.chatId) {
           chatStore.GET_ChatMessages(parsedData.chatId)
         }
         else {
           chatStore.GET_AllChats()
           router.push(`/c/${parsedData.chatId}`)
         }
-
-        // Optionally handle any content sent along with the finish event.
-        if (parsedData.content) {
-          const assistantMessage = chatStore.messages?.find(
-            msg => msg.id === 'currentlyStreaming',
-          )
-          if (assistantMessage) {
-            assistantMessage.content += parsedData.content
-            chatStore.isWebSocketStreaming = false
-            assistantMessage.id = ''
-          }
-        }
       }
       break
 
     case 'error':
-      console.error(`Error occurred: ${parsedData.reason}`, parsedData.description || '')
       break
 
     default:
-      console.warn('Received unknown message type:', parsedData)
       break
   }
 }
 
 const agentId = computed(() => {
-  if (currentChatId.value) {
+  if (route.params.chatId) {
     return ''
   }
   else {
@@ -117,7 +95,7 @@ const agentId = computed(() => {
   }
 })
 
-const handleAgentOrChatChange = async (newAgentId: string | null | undefined, newChatId: string | null | undefined) => {
+const handleAgentOrChatChange = async () => {
   if ($wsConnectionState.value === 'open') {
     await $wsSendInitialMessage(currentChatId?.value, agentId.value)
   }
@@ -143,7 +121,7 @@ const ensureWsTokenAndConnect = async () => {
         chatStore.wsToken = ''
         await ensureWsTokenAndConnect()
       }
-      await handleAgentOrChatChange(currentChatId?.value, agentId.value)
+      await handleAgentOrChatChange()
     }
     catch (error) {
       isTokenFetching.value = false
@@ -154,14 +132,13 @@ const ensureWsTokenAndConnect = async () => {
     }
   }
   else {
-    handleAgentOrChatChange(currentChatId.value, agentId.value)
+    handleAgentOrChatChange()
   }
 }
 
 const sendMessage = () => {
   if (!($wsConnectionState.value === 'open') || chatStore.isWebSocketStreaming) { return }
   if (!message.value.trim()) { return }
-  console.log('tu sam sendo message')
   const userMessage = {
     id: '',
     sender: '1',
@@ -184,8 +161,6 @@ const sendMessage = () => {
     createdAt: '',
     updatedAt: '',
   }
-
-  // Ensure messages array is initialized
   if (!Array.isArray(chatStore.messages)) {
     chatStore.messages = []
   }
@@ -202,7 +177,7 @@ watch(
   [agentId, currentChatId],
   async ([newAgentId, newChatId], [oldAgentId, oldChatId]) => {
     if (newAgentId !== oldAgentId || newChatId !== oldChatId) {
-      await handleAgentOrChatChange(currentChatId.value, agentId.value)
+      await handleAgentOrChatChange()
     }
   },
   { immediate: true },
@@ -219,6 +194,10 @@ const stopStream = () => {
     chatStore.isWebSocketStreaming = false
   }
 }
+
+const hasActiveAgents = computed(() => {
+  return agentStore.appAgents.filter(agent => agent.active).length > 0
+})
 </script>
 
 <template>
@@ -229,6 +208,7 @@ const stopStream = () => {
         size="large"
         :placeholder="$t('chat.chatInputPlaceholder')"
         class="barrage-chat-input"
+        :disabled="!hasActiveAgents"
         @keyup.enter="sendMessage"
       />
       <template v-if="chatStore.isWebSocketStreaming">
@@ -246,6 +226,7 @@ const stopStream = () => {
           circle
           small
           class="start-stop-chat-button"
+          :disabled="!hasActiveAgents"
           @click="sendMessage"
         >
           <ArrowUpIcon size="32" />

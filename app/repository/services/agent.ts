@@ -1,6 +1,6 @@
 import FetchFactory from '../fetchFactory'
 import type { AssignCollectionPayload } from '~/types/collection'
-import type { Agent, AgentDetail, Agents, AllAgentResponse } from '~/types/agent'
+import type { Agent, AgentDetail, Agents, AllAgentResponse, AllAppAgentsResponse } from '~/types/agent'
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
@@ -61,7 +61,7 @@ export default class AgentService extends FetchFactory {
    * @param {'asc' | 'desc'} [sortOrder='asc'] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
    * @param {boolean} [showDeactivated=true] - Whether to include deactivated agents in the results. Defaults to true.
    *
-   * @returns {Promise<AgentListResponse>} - A promise that resolves to the list of agents.
+   * @returns {Promise<AllAppAgentsResponse>} - A promise that resolves to the list of agents.
    *
    * @throws {Error} - Throws an error if the request fails, including a status code and error message.
    */
@@ -72,7 +72,7 @@ export default class AgentService extends FetchFactory {
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
 
-  ): Promise<AllAgentResponse> {
+  ): Promise<AllAppAgentsResponse> {
     try {
       // Build query parameters using function arguments
       const queryParams = new URLSearchParams({
@@ -83,7 +83,7 @@ export default class AgentService extends FetchFactory {
       }).toString()
 
       // Make the API request with the constructed URL
-      return await this.$fetch<AllAgentResponse>(`${this.endUserendpoint}?${queryParams}`, {
+      return await this.$fetch<AllAppAgentsResponse>(`${this.endUserendpoint}?${queryParams}`, {
         credentials: 'include',
       })
     }

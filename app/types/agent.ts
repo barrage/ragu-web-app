@@ -20,6 +20,12 @@ export interface AllAgentResponse {
   items: Agents[]
   total: number
 }
+
+export interface AllAppAgentsResponse {
+  items: SingleAgent[]
+  total: number
+}
+
 export interface Agents {
   agent: SingleAgent
   configuration: Configuration

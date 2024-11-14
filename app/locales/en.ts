@@ -82,6 +82,7 @@ export default {
       title: 'New chat',
       description: 'Choose an agent to start a chat with',
       choseFrom: 'Agents:',
+      empty: 'Currently, there are no available agents for conversation. To start a chat, it is necessary to add or enable at least one agent. Please contact your system administrator or check agent settings to continue.',
     },
   },
   documents: {

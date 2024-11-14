@@ -80,6 +80,7 @@ export default {
       title: 'Neuer Chat',
       description: 'Wählen Sie einen Agenten, um den Chat zu starten',
       choseFrom: 'Agenten:',
+      empty: 'Derzeit sind keine Agenten für das Gespräch verfügbar. Um einen Chat zu starten, muss mindestens ein Agent hinzugefügt oder aktiviert werden. Bitte wenden Sie sich an den Systemadministrator oder überprüfen Sie die Agenteneinstellungen, um fortzufahren.',
     },
   },
   documents: {

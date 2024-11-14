@@ -17,25 +17,22 @@ export default defineNuxtPlugin((nuxtApp) => {
     connectionState.value = 'opening'
 
     ws.onopen = () => {
-      console.log('WS on OPEN')
       connectionState.value = 'open'
     }
 
     ws.onmessage = (event) => {
-      console.log('WS on Message:', event)
       const data = event.data
       messages.value.push(data)
       messageHandlers.forEach(handler => handler(data))
     }
 
     ws.onerror = (error) => {
-      console.error('WebSocket error:', error)
+      console.error('WS error:', error)
       connectionState.value = 'closed'
       ws = null
     }
 
     ws.onclose = (event) => {
-      console.log('WS on Close:', event)
       connectionState.value = 'closed'
       ws = null
     }
