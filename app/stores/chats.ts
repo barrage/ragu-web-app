@@ -1,16 +1,12 @@
 import { defineStore } from 'pinia'
-import type { AdminChatDetails, AdminChatsResponse, Chat, ChatsResponse, Message } from '~/types/chat.ts'
+import type { AdminChatDetails, AdminChatsResponse, Chat, ChatsResponse, EndUserChatDetails, Message } from '~/types/chat.ts'
 
 export const useChatStore = defineStore('chat', () => {
   // State
   const chats = ref<Chat[]>([])
   const chatsResponse = ref<ChatsResponse | null>(null)
   const messages = ref<Message[]>()
-  const selectedChat = computed(() => {
-    if (!messages.value || messages.value.length === 0) { return null }
-    const chatId = messages.value[0]?.chatId
-    return chats.value.find(chat => chat.id === chatId) || null
-  })
+  const selectedChat = ref < EndUserChatDetails | null>(null)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
@@ -33,6 +29,24 @@ export const useChatStore = defineStore('chat', () => {
     }
     else {
       return []
+    }
+  }
+
+  async function GET_Chat(chatId: string): Promise<EndUserChatDetails | null> {
+    try {
+      const data = await $api.chat.GetEndUserChat(chatId)
+      if (data) {
+        return selectedChat.value = data
+      }
+      else {
+        selectedChat.value = null
+        return null
+      }
+    }
+    catch (error) {
+      console.error('Failed to fetch agents:', error)
+      selectedChat.value = null
+      return null
     }
   }
 
@@ -168,5 +182,6 @@ export const useChatStore = defineStore('chat', () => {
     DELETE_ChatBackoffice,
     PUT_UpdateChatTitle,
     PUT_UpdateChatTitleBackoffice,
+    GET_Chat,
   }
 })

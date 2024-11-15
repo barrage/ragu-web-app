@@ -39,6 +39,7 @@ export default {
     user: 'User',
     assistant: 'Assistant',
     messages: 'Messages',
+    inactive_agent: 'This agent is no longer active. Please select an active agent to begin a new conversation.',
     admin: {
       title: 'Chats',
       description: 'Manage all your chats in one place',

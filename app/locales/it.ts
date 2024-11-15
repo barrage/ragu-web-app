@@ -36,6 +36,7 @@ export default {
     user: 'Utente',
     assistant: 'Assistente',
     messages: 'Messaggi',
+    inactive_agent: 'Questo agente non è più attivo. Seleziona un agente attivo per iniziare una nuova conversazione.',
     admin: {
       title: 'Chat',
       description: 'Gestisci tutte le tue chat in un unico posto',

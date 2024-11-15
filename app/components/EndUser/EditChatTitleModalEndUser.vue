@@ -64,6 +64,10 @@ const submiteditChatTitleForm = async (formEl: FormInstance | undefined) => {
 
       else {
         chatStore.GET_AllChats()
+        if (chatStore.selectedChat?.chat.title) {
+          chatStore.selectedChat.chat.title = editChatTitleForm.title
+        }
+
         ElNotification({
           title: t('chat.edit_title.notifications.success_title'),
           message: t('chat.edit_title.notifications.success_description'),
