@@ -279,7 +279,6 @@ onUnmounted(() => {
 
         <ElFormItem class="actions">
           <ElButton
-            type="primary"
             class="left-button"
             @click="cancelUpdate"
           >

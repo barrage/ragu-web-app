@@ -45,6 +45,12 @@ const payload = computed(() => ({
 
 const filteredCollections = computed(() => {
   const vectorProvider = agentStore.singleAgent?.agent?.vectorProvider
+  let embeddingProvider = agentStore.singleAgent?.agent?.embeddingProvider
+  const embeddingModel = agentStore.singleAgent?.agent?.embeddingModel
+
+  if (embeddingProvider === 'azure') {
+    embeddingProvider = 'openai'
+  }
 
   const existingCollectionNames = new Set(
     [...agentStore.singleAgent?.collections].map(entry => entry.collection),
@@ -53,6 +59,8 @@ const filteredCollections = computed(() => {
   return collectionStore.collections.filter((collection) => {
     return (
       collection.provider === vectorProvider
+      && collection.embedder === embeddingProvider
+      && collection.model === embeddingModel
       && !existingCollectionNames.has(collection.name)
     )
   })

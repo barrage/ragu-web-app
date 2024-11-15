@@ -239,16 +239,16 @@ const redirectToAgentDetails = (id: string) => {
 
   & .chats-information {
     grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-fluid-m);
+
     @include viewport-s {
       grid-column: span 8;
     }
     @include viewport-m {
       grid-column: span 4;
     }
-
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-fluid-m);
 
     & .all-chats-usage-card {
       min-height: 100%;
