@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { AdminChatDetails, AdminChatsResponse, Chat, ChatsResponse, Message } from '~/types/chat.ts'
+import type { AdminChatDetails, AdminChatsResponse, ChatsResponse, EndUserChatDetails, Message } from '~/types/chat.ts'
 
 export default class ChatServise extends FetchFactory {
   // Endpoint for chat-related API requests.
@@ -22,6 +22,26 @@ export default class ChatServise extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to fetch chats with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Fetches chat data for a specific chat by its ID.
+   * @param id - The ID of the chat for which data are being fetched.
+   * @returns A promise that resolves to an Chat object.
+   * @throws Will throw an error if the request fails.
+   */
+  async GetEndUserChat(chatId: string): Promise<EndUserChatDetails | null> {
+    try {
+      return await this.$fetch<EndUserChatDetails>(`${this.chatsEndpoint}/${chatId}`, {
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch chat with code ${error?.statusCode}`,
       })
     }
   }

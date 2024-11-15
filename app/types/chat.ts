@@ -59,6 +59,11 @@ export interface AdminChatDetails {
   user: User
 }
 
+export interface EndUserChatDetails {
+  agent: SingleAgent
+  chat: Chat
+}
+
 export interface EditChatTitlePayload {
   title: string
 }

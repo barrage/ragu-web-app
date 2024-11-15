@@ -36,6 +36,7 @@ export default {
     user: 'ユーザー',
     assistant: 'アシスタント',
     messages: 'メッセージ',
+    inactive_agent: 'このエージェントはもうアクティブではありません。新しい会話を始めるには、アクティブなエージェントを選択してください。',
     admin: {
       title: 'チャット',
       description: 'すべてのチャットを一箇所で管理',

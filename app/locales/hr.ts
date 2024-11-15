@@ -38,6 +38,7 @@ export default {
     user: 'Korisnik',
     assistant: 'Asistent',
     messages: 'Poruke',
+    inactive_agent: 'Ovaj agent više nije aktivan. Molimo odaberite aktivnog agenta za započinjanje novog razgovora.',
     admin: {
       title: 'Razgovori',
       description: 'Upravljajte svim razgovorima na jednom mjestu',

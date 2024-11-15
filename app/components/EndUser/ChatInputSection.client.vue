@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { nextTick } from 'vue'
 import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
 import StopStreamIcon from '~/assets/icons/svg/stop-stream.svg'
 import { useNuxtApp } from '#app'
@@ -47,10 +48,9 @@ const handleServerMessage = (data: string) => {
 
   switch (parsedData?.type) {
     case 'chat_title':
-      if (parsedData?.chatId && parsedData?.title) {
-        const existingChat = chatStore.chats?.find(chat => chat?.id === parsedData?.chatId)
-        if (existingChat) {
-          existingChat.title = parsedData.title
+      if (parsedData?.chatId && parsedData?.title && chatStore.selectedChat?.chat) {
+        if (chatStore.selectedChat?.chat) {
+          chatStore.selectedChat.chat.title = parsedData.title
         }
       }
       break
@@ -68,6 +68,7 @@ const handleServerMessage = (data: string) => {
 
     case 'finish_event':
       if (parsedData.chatId) {
+        nextTick()
         if (route.params.chatId) {
           chatStore.GET_ChatMessages(parsedData.chatId)
         }
@@ -199,19 +200,32 @@ const hasActiveAgents = computed(() => {
   return agentStore.appAgents.filter(agent => agent.active).length > 0
 })
 
+const isSelectedAgentActive = computed(() => {
+  if (route.params.chatId) {
+    return chatStore.selectedChat?.agent?.active
+  }
+  else {
+    return true
+  }
+})
 const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
 errorHandler(error)
 </script>
 
 <template>
   <section class="chat-input-section">
-    <div class="input-button-wrapper">
+    <el-card v-if="chatStore.selectedChat?.chat?.id && !(chatStore?.selectedChat?.agent?.active)" class="inactive-agent-card is-accent">
+      <p>
+        {{ $t('chat.inactive_agent') }}
+      </p>
+    </el-card>
+    <div v-else class="input-button-wrapper">
       <el-input
         v-model="message"
         size="large"
         :placeholder="$t('chat.chatInputPlaceholder')"
         class="barrage-chat-input"
-        :disabled="!hasActiveAgents"
+        :disabled="!hasActiveAgents || !isSelectedAgentActive"
         @keyup.enter="sendMessage"
       />
       <template v-if="chatStore.isWebSocketStreaming">
@@ -229,7 +243,7 @@ errorHandler(error)
           circle
           small
           class="start-stop-chat-button"
-          :disabled="!hasActiveAgents"
+          :disabled="!hasActiveAgents || !isSelectedAgentActive"
           @click="sendMessage"
         >
           <ArrowUpIcon size="32" />
@@ -264,7 +278,10 @@ errorHandler(error)
     }
   }
 }
-
+.inactive-agent-card {
+  width: fit-content;
+  height: fit-content;
+}
 .suffix-icon {
   color: var(--color-primary-100);
   background: var(--color-primary-800);

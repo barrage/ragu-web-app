@@ -7,7 +7,7 @@ const messages = computed(() => {
 })
 
 const selectedChat = computed(() => {
-  return chatStore?.selectedChat
+  return chatStore?.selectedChat?.chat || null
 })
 
 /* Delete Chat */
