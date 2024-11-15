@@ -8,11 +8,16 @@ const selectAgent = (agent: any) => {
   return selectedAgent.value = agent
 }
 
+const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
+
+errorHandler(error)
+
 watch(
   () => agentStore.appAgents,
   () => {
     selectAgent(agentStore.appAgents?.[0])
   },
+  { immediate: true },
 )
 </script>
 
@@ -21,7 +26,6 @@ watch(
     <div class="agents-names-wrapper">
       <template v-for="agent in agentStore.appAgents" :key="agent.id">
         <div
-          v-if="agent?.active"
           class="agent-name"
           :class="{ selected: agent.id === selectedAgent?.id }"
           @click="selectAgent(agent)"
@@ -34,8 +38,11 @@ watch(
     <div class="selected-agent-wrapper">
       <ChatAgentIcon size="52" />
       <h6>{{ selectedAgent?.name }}</h6>
-      <span>Updated: {{ formatDate(selectedAgent?.updatedAt) }}</span>
-      <p>{{ selectedAgent?.description }}</p>
+      <div class="agent-info">
+        <span>Language: {{ selectedAgent?.language }}</span>
+        <span>Updated: {{ formatDate(selectedAgent?.updatedAt) }}</span>
+        <p>Description: {{ selectedAgent?.description }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -73,16 +80,24 @@ watch(
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
+    gap: 0.625rem;
+
     & h6 {
       color: var(--color-primary-900);
       text-align: center;
+      margin-bottom: 30px;
     }
-    & span {
-      color: var(--color-primary-600);
-    }
-    & p {
-      color: var(--color-primary-800);
+
+    .agent-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      & span {
+        color: var(--color-primary-600);
+      }
+      & p {
+        color: var(--color-primary-800);
+      }
     }
   }
 }

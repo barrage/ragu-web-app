@@ -264,7 +264,7 @@ errorHandler(createError)
       </ElFormItem>
 
       <ElFormItem class="actions">
-        <ElButton type="primary" @click="cancelCreate">
+        <ElButton @click="cancelCreate">
           {{ t('agents.buttons.cancel') }}
         </ElButton>
         <ElButton
@@ -282,6 +282,7 @@ errorHandler(createError)
 <style lang="scss" scoped>
 .agent-section {
   padding-block: var(--spacing-fluid-l);
+  padding-inline: 2.5rem;
 
   & .page-title {
     margin-bottom: 0.5rem;

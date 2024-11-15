@@ -195,7 +195,6 @@ errorHandler(createError)
       <!-- Form Actions -->
       <ElFormItem class="actions">
         <ElButton
-          type="primary"
           class="left-button"
           @click="cancelCreate"
         >
@@ -216,6 +215,7 @@ errorHandler(createError)
 <style lang="scss" scoped>
 .collection-section {
   padding-block: var(--spacing-fluid-l);
+  padding-inline: 2.5rem;
 
   & .page-title {
     margin-bottom: 0.5rem;

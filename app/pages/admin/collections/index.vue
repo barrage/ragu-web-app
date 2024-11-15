@@ -52,10 +52,3 @@ const handleSortChange = async (sortingValues: SortingValues) => {
     <CollectionList :collections="collectionStore.collections" @page-change="handlePageChange" />
   </AdminPageContainer>
 </template>
-
-<style lang="scss" scoped>
-.fufura {
-  width: max-content;
-  margin-top: 100px;
-}
-</style>
