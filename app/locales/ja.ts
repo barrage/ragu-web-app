@@ -35,6 +35,7 @@ export default {
   chat: {
     user: 'ユーザー',
     assistant: 'アシスタント',
+    messages: 'メッセージ',
     admin: {
       title: 'チャット',
       description: 'すべてのチャットを一箇所で管理',
@@ -50,6 +51,7 @@ export default {
       chat_details: {
         title: 'チャットの詳細',
         description: 'このチャットに関するすべての詳細を表示',
+        empty_messages: '現在、このチャットにはメッセージがありません。',
       },
     },
     edit_title: {

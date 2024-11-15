@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
+import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -46,7 +47,7 @@ const selectedChat = computed(() => {
           :description="t('chat.admin.chat_details.description')"
         >
           <template #icon>
-            <TeamIcon size="52" />
+            <ChatIcon size="52" />
           </template>
         </AdminPageTitleContainer>
       </template>

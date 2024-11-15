@@ -4,7 +4,7 @@ import type { User } from '~/types/users'
 import DeletePersonIcon from '~/assets/icons/svg/delete-person.svg'
 
 const props = defineProps<{
-  selectedUser: User | null
+  selectedUser: User | null | undefined
   isOpen: boolean
 }>()
 

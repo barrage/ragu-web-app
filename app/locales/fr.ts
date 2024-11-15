@@ -35,6 +35,7 @@ export default {
   chat: {
     user: 'Utilisateur',
     assistant: 'Assistant',
+    messages: 'Messages',
     admin: {
       title: 'Conversations',
       description: 'Gérez toutes vos conversations à un seul endroit',
@@ -50,6 +51,7 @@ export default {
       chat_details: {
         title: 'Détails de la conversation',
         description: 'Voir tous les détails liés à cette conversation',
+        empty_messages: 'Il n\'y a actuellement aucun message dans cette conversation',
       },
     },
     edit_title: {
