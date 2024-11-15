@@ -37,6 +37,7 @@ export default {
   chat: {
     user: 'Korisnik',
     assistant: 'Asistent',
+    messages: 'Poruke',
     admin: {
       title: 'Razgovori',
       description: 'Upravljajte svim razgovorima na jednom mjestu',
@@ -52,6 +53,7 @@ export default {
       chat_details: {
         title: 'Detalji razgovora',
         description: 'Pregledajte sve detalje vezane za ovaj razgovor',
+        empty_messages: 'Trenutno nema poruka u ovom razgovoru',
       },
     },
     edit_title: {

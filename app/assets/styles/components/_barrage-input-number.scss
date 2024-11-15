@@ -20,6 +20,7 @@
     position: relative;
     display: inline-flex;
     width: 150px;
+
     line-height: 30px;
     vertical-align: middle;
     align-items: center;
@@ -28,8 +29,7 @@
       position: relative;
       font-size: var(--el-font-size-base);
       display: inline-flex;
-      width: var(--el-input-width);
-      line-height: var(--el-input-height);
+      width: 100%;
       box-sizing: border-box;
       vertical-align: middle;
       border-radius: 6px;

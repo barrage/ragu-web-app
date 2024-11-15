@@ -23,6 +23,7 @@ watch(() => props.isOpen, (newVal) => {
 })
 interface Emits {
   (event: 'closeModal'): void
+  (event: 'chatDeleted'): void
 }
 const { execute: deleteChat, error } = await useAsyncData(() => chatStore.DELETE_ChatBackoffice(props.selectedChat!.chat?.id), { immediate: false })
 
@@ -40,7 +41,7 @@ const submitDeleteChat = async () => {
       })
     }
     else {
-      chatStore.GET_AllAdminChats()
+      emits('chatDeleted')
       ElNotification({
         title: t('chat.delete_chat.notifications.success_title'),
         message: t('chat.delete_chat.notifications.success_description'),

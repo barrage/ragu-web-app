@@ -5,10 +5,13 @@ import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
   chats: AdminChatDetails[] | null | undefined
+  pagination: Pagination
 }>()
 
 const emits = defineEmits<{
   (event: 'pageChange', page: number): number
+  (event: 'chatDeleted'): void
+  (event: 'chatTitleEdited'): void
 }>()
 
 const cardClasses = ref<string[]>([])
@@ -30,18 +33,8 @@ watch(
   { immediate: true },
 )
 
-const chatsStore = useChatStore()
-
-const pagination = ref<Pagination>({
-  currentPage: 1,
-  pageSize: 10,
-  total: chatsStore.adminAllChatsResponse?.total || 0,
-  disabled: false,
-})
-
 const changePage = (page: number) => {
-  pagination.value.currentPage = page
-  emits('pageChange', pagination.value.currentPage)
+  emits('pageChange', page)
 }
 
 /* Delete Chat */
@@ -56,7 +49,9 @@ const openDeleteChatModal = (chat: AdminChatDetails) => {
 const closeDeleteChatModal = () => {
   deleteChatModalVisible.value = false
 }
-
+const chatDeleted = () => {
+  emits('chatDeleted')
+}
 /* Edit Chat title */
 const selectedChatEdit = ref<AdminChatDetails | null>(null)
 const editChatModalVisible = ref(false)
@@ -68,6 +63,9 @@ const openEditChatModal = (chat: AdminChatDetails) => {
 
 const closeEditChatModal = () => {
   editChatModalVisible.value = false
+}
+const chatTitleEdited = () => {
+  emits('chatTitleEdited')
 }
 </script>
 
@@ -87,9 +85,9 @@ const closeEditChatModal = () => {
         />
       </div>
       <Pagination
-        :current-page="pagination.currentPage"
-        :page-size="pagination.pageSize"
-        :total="pagination.total"
+        :current-page="props.pagination.currentPage"
+        :page-size="props.pagination.pageSize"
+        :total="props.pagination.total"
         @page-change="(page:number) => changePage(page)"
       />
     </div>
@@ -98,12 +96,14 @@ const closeEditChatModal = () => {
       :is-open="deleteChatModalVisible"
       :selected-chat="selectedChatDelete"
       @close-modal="closeDeleteChatModal"
+      @chat-deleted="chatDeleted"
     />
 
     <EditChatTitleModalBackoffice
       :is-open="editChatModalVisible"
       :selected-chat="selectedChatEdit"
       @close-modal="closeEditChatModal"
+      @chat-title-edited="chatTitleEdited"
     />
   </div>
 </template>

@@ -66,8 +66,8 @@ const redirectToAgentDetails = () => {
     <div class="chat-general-info-card">
       <div class="chat-informations-wrapper grid">
         <LabelDescriptionItem label="Id:" :description="chatData.chat?.id" />
-        <LabelDescriptionItem label="Created at:" :description="chatData.chat?.createdAt" />
-        <LabelDescriptionItem label="Updated at:" :description="chatData.chat?.updatedAt" />
+        <LabelDescriptionItem :label="t('chat.admin.chat_card.created_at')" :description="chatData.chat?.createdAt" />
+        <LabelDescriptionItem :label="t('chat.admin.chat_card.updated_at')" :description="chatData.chat?.updatedAt" />
       </div>
     </div>
     <div class="user-general-info-card">

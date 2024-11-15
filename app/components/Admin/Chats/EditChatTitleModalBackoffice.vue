@@ -26,6 +26,7 @@ watch(() => props.isOpen, (newVal) => {
 })
 interface Emits {
   (event: 'closeModal'): void
+  (event: 'chatTitleEdited'): void
   (event: 'editUserConfirm', newTitle: string): void
 }
 
@@ -63,7 +64,7 @@ const submiteditChatTitleForm = async (formEl: FormInstance | undefined) => {
       }
 
       else {
-        chatStore.GET_AllAdminChats()
+        emits('chatTitleEdited')
         ElNotification({
           title: t('chat.edit_title.notifications.success_title'),
           message: t('chat.edit_title.notifications.success_description'),

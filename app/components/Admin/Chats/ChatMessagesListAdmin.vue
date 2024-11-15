@@ -1,15 +1,12 @@
 <script lang="ts" setup>
-import { nextTick, onMounted, ref } from 'vue'
+import { nextTick } from 'vue'
+import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 import type { Message } from '~/types/chat'
-import type { Pagination } from '~/types/pagination'
+/* import type { Pagination } from '~/types/pagination' */
 
 const props = defineProps<{
   messages: Message[] | null | undefined
 }>()
-
-/* const emits = defineEmits<{
-  (event: 'pageChange', page: number): number
-}>() */
 
 const cardClasses = ref<string[]>([])
 
@@ -23,17 +20,9 @@ onMounted(() => {
   })
 })
 
-const selectedUser = ref<Message | null>(null)
-const deleteUserModalVisible = ref(false)
-
-const openDeleteUserModal = (message: Message) => {
-  selectedUser.value = message
-  deleteUserModalVisible.value = true
-}
-
-/* const toggleModal = () => {
-  deleteUserModalVisible.value = !deleteUserModalVisible.value
-} */
+/* const emits = defineEmits<{
+  (event: 'pageChange', page: number): number
+}>() */
 
 /*
 const pagination = ref<Pagination>({
@@ -47,22 +36,26 @@ const changePage = (page: number) => {
   pagination.value.currentPage = page
   emits('pageChange', pagination.value.currentPage)
 } */
+
+const messagesListData = computed(() => {
+  return props.messages && props.messages.length ? [...props.messages].reverse() : []
+})
 </script>
 
 <template>
   <div class="messages-list-container">
     <h6 class="messages-title">
-      Messages
+      {{ $t('chat.messages') }}
     </h6>
     <template v-if="props.messages?.length">
       <div class="messages-list">
         <div
-          v-for="(message, index) in props.messages"
+          v-for="(message, index) in messagesListData"
           :key="message.id"
           class="list-item"
           :class="[cardClasses[index]]"
         >
-          <ChatMessageCardAdmin :message="message" @delete-user="openDeleteUserModal(message)" />
+          <ChatMessageCardAdmin :message="message" />
         </div>
 
       <!-- <Pagination
@@ -74,7 +67,10 @@ const changePage = (page: number) => {
       </div>
     </template>
     <template v-else>
-      <h6>Empty messages data</h6>
+      <div class="chat-messages-empty-state">
+        <ChatWarningIcon size="42px" />
+        <p> <b>{{ $t('chat.admin.chat_details.empty_messages') }}</b></p>
+      </div>
     </template>
   </div>
 </template>
@@ -106,6 +102,12 @@ const changePage = (page: number) => {
 .list-item-visible {
   opacity: 1;
   transform: translateY(0);
+}
+.chat-messages-empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 .dark {
   .messages-title {
