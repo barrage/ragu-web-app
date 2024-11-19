@@ -85,8 +85,8 @@ const submitEditUserForm = async (formEl: FormInstance | undefined) => {
       editUserModalVisible.value = false
       if (error.value) {
         ElNotification({
-          title: t('users.notifications.create_error_title'),
-          message: t('users.notifications.create_error_existing_user_description'),
+          title: t('users.edit_user.notifications.error_title'),
+          message: t('users.edit_user.notifications.error_description'),
           type: 'error',
           customClass: 'error',
           duration: 2500,
@@ -96,8 +96,8 @@ const submitEditUserForm = async (formEl: FormInstance | undefined) => {
       else {
         emits('userEdited')
         ElNotification({
-          title: 'Success',
-          message: `User ${props.selectedUser?.fullName} edited successfully!`,
+          title: t('users.edit_user.notifications.success_title'),
+          message: t('users.edit_user.notifications.success_description'),
           type: 'success',
           customClass: 'success',
           duration: 2500,
@@ -161,16 +161,19 @@ const closeModal = () => {
       v-model="editUserModalVisible"
       :destroy-on-close="true"
       align-center
-      class="barrage-dialog--small"
+      class="edit-user-modal-backoffice barrage-dialog--small"
       :close-icon="CloseCircleIcon"
       @close="closeModal"
     >
       <template #header>
         <div class="edit-user-modal-header">
           <EditIcon size="42px" />
-          <h5> {{ $t('users.user_card.edit_user') }}</h5>
+          <h5> {{ $t('users.edit_user.title') }}</h5>
         </div>
       </template>
+      <el-divider />
+      <UserProfileOverview :user="props.selectedUser" size="large" />
+      <p>{{ t('users.edit_user.description') }}</p>
       <ElForm
         ref="editUserFormRef"
         :model="editUserForm"
@@ -223,14 +226,14 @@ const closeModal = () => {
           <ElFormItem>
             <div class="form-actions">
               <el-button @click="closeModal">
-                {{ t('users.form.cancel') }}
+                {{ t('users.edit_user.cancel') }}
               </el-button>
 
               <ElButton
                 type="primary"
                 @click="submitEditUserForm(editUserFormRef)"
               >
-                {{ t('users.form.submit') }}
+                {{ t('users.edit_user.confirm') }}
               </ElButton>
             </div>
           </ElFormItem>
@@ -251,7 +254,8 @@ const closeModal = () => {
 
 .edit-user-modal-header {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  width: 100%;
+  gap: 1rem;
 }
 </style>

@@ -58,111 +58,110 @@ function deleteDocument() {
 </script>
 
 <template>
-  <div class="document-card grid">
-    <div class="document-name-type-wrapper" @click="navigateToDocumentDetailsPage()">
-      <PdfIcon
-        v-if="documentData.extension === 'pdf'"
-        size="36"
-        original
-      />
-      <DocxIcon v-else-if="documentData.extension === 'docx'" size="36" />
-      <MarkdownIcon
-        v-else-if="documentData.extension === 'md'"
-        size="36"
-        original
-      />
-      <CsvIcon
-        v-else-if="documentData.extension === 'csv'"
-        size="36"
-        original
-      />
-      <JsonIcon
-        v-else-if="documentData.extension === 'json'"
-        size="36"
-        original
-      />
-      <TxtIcon
-        v-else-if="documentData.extension === 'txt'"
-        size="36"
-        original
-      />
-      <UnknownDocumentIcon
-        v-else
-        size="36"
-        original
-      />
-      <div class="document-name-wrapper">
-        <h6>{{ formatName(documentData.name, 25) }}</h6>
+  <el-card class="document-card is-primary">
+    <div class="grid">
+      <div class="document-name-type-wrapper" @click="navigateToDocumentDetailsPage()">
+        <PdfIcon
+          v-if="documentData.extension === 'pdf'"
+          size="36"
+          original
+        />
+        <DocxIcon v-else-if="documentData.extension === 'docx'" size="36" />
+        <MarkdownIcon
+          v-else-if="documentData.extension === 'md'"
+          size="36"
+          original
+        />
+        <CsvIcon
+          v-else-if="documentData.extension === 'csv'"
+          size="36"
+          original
+        />
+        <JsonIcon
+          v-else-if="documentData.extension === 'json'"
+          size="36"
+          original
+        />
+        <TxtIcon
+          v-else-if="documentData.extension === 'txt'"
+          size="36"
+          original
+        />
+        <UnknownDocumentIcon
+          v-else
+          size="36"
+          original
+        />
+        <div class="document-name-wrapper">
+          <h6>{{ formatName(documentData.name, 25) }}</h6>
+        </div>
       </div>
-    </div>
-    <div class="document-inforamtions">
-      <LabelDescriptionItem
-        label="Extension"
-        size="small"
-        :description="documentData.extension "
-      />
-    </div>
-    <div class="document-actions">
-      <ElTooltip
-        content="Manage your document"
-        :show-after="100"
-        :enterable="false"
-        placement="top"
-      >
-        <el-button
-          type="primary"
-          plain
-          class="manage-document-button"
-          @click="navigateToDocumentDetailsPage"
+      <div class="document-inforamtions">
+        <LabelDescriptionItem
+          label="Extension"
+          size="small"
+          :description="documentData.extension "
+        />
+      </div>
+      <div class="document-actions">
+        <ElTooltip
+          content="Manage your document"
+          :show-after="100"
+          :enterable="false"
+          placement="top"
         >
-          <DocumentEditIcon size="24" />
-        </el-button>
-      </ElTooltip>
-      <ElTooltip
-        content="Delete your document"
-        :show-after="100"
-        :enterable="false"
-        placement="top"
-      >
-        <el-button
-          type="danger"
-          plain
-          class="manage-document-button"
-          @click="openDeleteDialog"
+          <el-button
+            type="primary"
+            plain
+            class="manage-document-button"
+            @click="navigateToDocumentDetailsPage"
+          >
+            <DocumentEditIcon size="24" />
+          </el-button>
+        </ElTooltip>
+        <ElTooltip
+          content="Delete your document"
+          :show-after="100"
+          :enterable="false"
+          placement="top"
         >
-          <DeleteIcon size="24" />
-        </el-button>
-      </ElTooltip>
+          <el-button
+            type="danger"
+            plain
+            class="manage-document-button"
+            @click="openDeleteDialog"
+          >
+            <DeleteIcon size="24" />
+          </el-button>
+        </ElTooltip>
+      </div>
+      <el-dialog
+        v-model="isDeleteDialogVisible"
+        :before-close="closeDeleteDialog"
+        :close-icon="CloseCircleIcon"
+        class="barrage-dialog--small"
+      >
+        <template #header>
+          <h6>Delete</h6>
+        </template>
+        <p>Are you sure that you want to delete: <b>{{ document?.name }} document</b> </p>
+        <template #footer>
+          <el-button @click="closeDeleteDialog">
+            Cancel
+          </el-button>
+          <el-button type="danger" @click="deleteDocument()">
+            Delete
+          </el-button>
+        </template>
+      </el-dialog>
     </div>
-    <el-dialog
-      v-model="isDeleteDialogVisible"
-      :before-close="closeDeleteDialog"
-      :close-icon="CloseCircleIcon"
-      class="barrage-dialog--small"
-    >
-      <template #header>
-        <h6>Delete</h6>
-      </template>
-      <p>Are you sure that you want to delete: <b>{{ document?.name }} document</b> </p>
-      <template #footer>
-        <el-button @click="closeDeleteDialog">
-          Cancel
-        </el-button>
-        <el-button type="danger" @click="deleteDocument()">
-          Delete
-        </el-button>
-      </template>
-    </el-dialog>
-  </div>
+  </el-card>
 </template>
 
 <style lang="scss" scoped>
 .document-card {
-  border: 0.5px solid var(--color-primary-300);
-  background: var(--color-primary-0);
-  box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
-  border-radius: 16px;
-  padding: 0.6rem;
+  padding-inline: 0.6rem;
+  padding-block: 0.8rem;
 
   & .document-name-type-wrapper {
     grid-column: span 7;
@@ -212,10 +211,6 @@ function deleteDocument() {
 }
 .dark {
   .document-card {
-    border: 0.5px solid var(--color-primary-700);
-    background-color: var(--color-primary-900);
-    box-shadow: 0px 2px 6px 0px var(--color-primary-800);
-
     & .document-name-wrapper {
       h6 {
         color: var(--color-primary-0);

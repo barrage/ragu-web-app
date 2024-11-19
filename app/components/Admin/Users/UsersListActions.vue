@@ -20,22 +20,33 @@ const updateSort = (sortingValues: SortingValues) => {
 </script>
 
 <template>
-  <div class="users-actions-container">
-    <SortSelect :options="sortOptions" @sort-updated="updateSort" />
+  <div class="users-list-actions-container">
+    <p class="user-list-title">
+      {{ $t('users.all_users') }}
+    </p>
+
+    <div class="actions-wrapper">
+      <SortSelect :options="sortOptions" @sort-updated="updateSort" />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.users-actions-container {
+.users-list-actions-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding-inline: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.7rem;
+
+  & .user-list-title {
+    font-size: var(--font-size-fluid-4);
+    color: var(--color-primary-800);
+  }
 }
 .dark {
-  .users-actions-container {
-    & h6 {
+  .users-list-actions-container {
+    & .user-list-title {
       color: var(--color-primary-100);
     }
   }

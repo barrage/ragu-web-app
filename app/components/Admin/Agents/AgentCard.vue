@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 // IMPORTS
 import type { Agents } from '~/types/agent'
-
+import { StatusType } from '~/types/statusTypes'
 import { useAgentStore } from '~/stores/agents'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
@@ -15,14 +15,6 @@ const props = defineProps<{
 const agentStore = useAgentStore()
 const { t } = useI18n()
 const router = useRouter()
-
-enum StatusType {
-  Primary = 'primary',
-  Success = 'success',
-  Info = 'info',
-  Warning = 'warning',
-  Danger = 'danger',
-}
 
 // HELPERS
 const agentData = computed(() => {

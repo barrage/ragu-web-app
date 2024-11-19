@@ -34,6 +34,12 @@ export default {
     title: 'Traži pomoć',
   },
 
+  form_rules: {
+    required: 'Ovo polje je obavezno',
+    min_length: 'Minimalan broj potrebnih znakova je {min}',
+    max_length: 'Makimalan broj znakova je {max}',
+  },
+
   chat: {
     user: 'Korisnik',
     assistant: 'Asistent',
@@ -120,6 +126,7 @@ export default {
     title: 'Korisnici',
     description: 'Upravljajte članovima svog tima i postavite njihove razine pristupa.',
     invite_user: 'Dodaj korisnika',
+    all_users: 'Svi korisnici',
     delete_user: {
       title: 'Izbriši Korisnika',
       description: 'Jeste li sigurni da želite izbrisati ovog korisnika? Ova radnja se ne može poništiti.',
@@ -130,6 +137,42 @@ export default {
         success_description: 'Korisnik je uspješno izbrisan.',
         error_title: 'Neuspješno Brisanje',
         error_description: 'Došlo je do pogreške. Korisnik nije mogao biti izbrisan.',
+      },
+    },
+    edit_user: {
+      title: 'Uredi Korisnika',
+      description: 'Izmijenite detalje korisnika u nastavku.',
+      confirm: 'Spremi Promjene',
+      cancel: 'Odustani',
+      notifications: {
+        success_title: 'Promjene Spremljene',
+        success_description: 'Podaci korisnika su uspješno ažurirani.',
+        error_title: 'Neuspješno Ažuriranje',
+        error_description: 'Došlo je do greške prilikom ažuriranja podataka korisnika. Molimo pokušajte ponovo.',
+      },
+    },
+    activate_user: {
+      title: 'Aktiviraj Korisnika',
+      description: 'Aktivirajte odabranog korisnika kako bi mu omogućili pristup.',
+      confirm: 'Aktiviraj',
+      cancel: 'Odustani',
+      notifications: {
+        success_title: 'Korisnik Aktiviran',
+        success_description: 'Korisnik je uspješno aktiviran.',
+        error_title: 'Aktivacija Neuspješna',
+        error_description: 'Došlo je do pogreške prilikom aktivacije korisnika. Molimo pokušajte ponovno.',
+      },
+    },
+    deactivate_user: {
+      title: 'Deaktiviraj Korisnika',
+      description: 'Deaktivirajte odabranog korisnika kako biste mu ograničili pristup.',
+      confirm: 'Deaktiviraj',
+      cancel: 'Odustani',
+      notifications: {
+        success_title: 'Korisnik Deaktiviran',
+        success_description: 'Korisnik je uspješno deaktiviran.',
+        error_title: 'Deaktivacija Neuspješna',
+        error_description: 'Došlo je do pogreške prilikom deaktivacije korisnika. Molimo pokušajte ponovno.',
       },
     },
     form: {
@@ -225,7 +268,7 @@ export default {
       },
       available_agents: {
         title: 'Dostupni agenti',
-        description: 'Prikažite i komunicirajte s dostupnim agentima temeljenim na AI-u.',
+        description: 'Prikaz agenta dopstupnih za komunikaciju',
       },
     },
     agents: {
@@ -426,7 +469,7 @@ export default {
       name: 'Naziv kolekcije',
       created_at: 'Stvoreno',
       updated_at: 'Ažurirano',
-      provider: 'Pružatelj usluga',
+      provider: 'Davatelj',
       model: 'Model',
       embedder: 'Ugraditelj',
     },

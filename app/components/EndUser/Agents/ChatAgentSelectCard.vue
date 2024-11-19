@@ -10,10 +10,10 @@ const agentStore = useAgentStore()
 </script>
 
 <template>
-  <div
+  <el-card
     v-if="agent?.active"
     class="agent-select-card"
-    :class="{ selected: agent?.id === agentStore.selectedAgent?.id }"
+    :class="{ 'is-accent': agent?.id === agentStore.selectedAgent?.id, 'selected': agent?.id === agentStore.selectedAgent?.id }"
     @click="agentStore.setSelectedAgent(props.agent)"
   >
     <div class="agent-body-wrapper">
@@ -25,26 +25,26 @@ const agentStore = useAgentStore()
       </div>
       <span class="agent-description">{{ props.agent?.description }}</span>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <style lang="scss" scoped>
 .agent-select-card {
-  border: 0.5px solid var(--color-primary-400);
   padding: 0.75rem;
   padding-bottom: 1rem;
-  border-radius: 1rem;
-  min-height: 100px;
+
+  min-height: 150px;
   display: flex;
   &.selected {
-    background: var(--color-primary-100);
-    border: 0.5px solid var(--color-primary-500);
     & .agent-select-text {
       color: var(--color-primary-900);
       font-weight: var(--font-weight-medium);
     }
   }
-
+  &:deep(.barrage-card__body) {
+    min-height: 100%;
+    max-width: 100%;
+  }
   & .agent-body-wrapper {
     display: flex;
     flex-direction: column;
@@ -55,7 +55,7 @@ const agentStore = useAgentStore()
     & .agent-name-wrapper {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0.5rem;
 
       & .chat-agent-icon {
         min-width: max-content;
@@ -72,8 +72,7 @@ const agentStore = useAgentStore()
     & .agent-description {
       font-size: var(--font-size-fluid-2);
       max-width: 30ch;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      line-height: normal;
       overflow: hidden;
     }
   }
@@ -91,25 +90,23 @@ const agentStore = useAgentStore()
 
 .dark {
   & .agent-select-card {
-    &.selected {
-      border: 0.5px solid var(--color-primary-300);
+    &:hover {
+      border: 0.5px solid var(--color-primary-500);
       background: var(--color-primary-800);
+
       & .agent-select-text {
-        color: var(--color-primary-0);
-        font-weight: var(--font-weight-medium);
+        color: var(--color-primary-100);
       }
     }
-
-    & .agent-select-text {
-      color: var(--color-primary-200);
-    }
-
-    &:hover {
-      border: 0.5px solid var(--color-primary-300);
-      background: var(--color-primary-800);
-
+    & .agent-body-wrapper {
+      &.selected {
+        & .agent-select-text {
+          color: var(--color-primary-0);
+          font-weight: var(--font-weight-medium);
+        }
+      }
       & .agent-select-text {
-        color: var(--color-primary-0);
+        color: var(--color-primary-100);
       }
     }
   }

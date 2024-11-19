@@ -36,66 +36,65 @@ const redirectToCollectionDetails = () => {
 </script>
 
 <template>
-  <div class="collection-card grid">
-    <div class="collection-profile-item" @click="redirectToCollectionDetails">
-      <CollectionIcon size="36" />
-      <div class="collection-wrapper">
-        <p class="collection-name">
-          {{ `${collectionData.name}` }}
-        </p>
-        <span class="collection-embedder">{{ collectionData.embedder }}</span>
+  <el-card class="collection-card is-primary">
+    <div class=" grid">
+      <div class="collection-profile-item" @click="redirectToCollectionDetails">
+        <CollectionIcon size="36" />
+        <div class="collection-wrapper">
+          <p class="collection-name">
+            {{ `${collectionData.name}` }}
+          </p>
+          <span class="collection-embedder">{{ collectionData.embedder }}</span>
+        </div>
+      </div>
+      <div class="collection-informations-wrapper">
+        <LabelDescriptionItem
+          :label="t('collections.labels.updated_at')"
+          :description="formatDate(collectionData.updatedAt)"
+          size="small"
+        />
+        <LabelDescriptionItem
+          :label="t('collections.labels.created_at')"
+          :description="formatDate(collectionData.createdAt)"
+          size="small"
+        />
+        <LabelDescriptionItem
+          :label="t('collections.labels.provider')"
+          :description="collectionData.provider"
+          size="small"
+        />
+      </div>
+
+      <div class="action-links">
+        <ElTooltip
+          :content="t('collections.collection_card.view_more')"
+          :enterable="false"
+          placement="top"
+        >
+          <el-button
+            plain
+            type="primary"
+            @click="redirectToCollectionDetails()"
+          >
+            <EyeIcon />
+          </el-button>
+        </ElTooltip>
+        <ElButton
+          type="danger"
+          plain
+          @click.stop="openDeleteModal"
+        >
+          <DeleteIcon />
+        </ElButton>
       </div>
     </div>
-    <div class="collection-informations-wrapper">
-      <LabelDescriptionItem
-        :label="t('collections.labels.updated_at')"
-        :description="formatDate(collectionData.updatedAt)"
-        size="small"
-      />
-      <LabelDescriptionItem
-        :label="t('collections.labels.created_at')"
-        :description="formatDate(collectionData.createdAt)"
-        size="small"
-      />
-      <LabelDescriptionItem
-        :label="t('collections.labels.provider')"
-        :description="collectionData.provider"
-        size="small"
-      />
-    </div>
-
-    <div class="action-links">
-      <ElTooltip
-        :content="t('collections.collection_card.view_more')"
-        :enterable="false"
-        placement="top"
-      >
-        <el-button
-          plain
-          type="primary"
-          @click="redirectToCollectionDetails()"
-        >
-          <EyeIcon />
-        </el-button>
-      </ElTooltip>
-      <ElButton
-        type="danger"
-        plain
-        @click.stop="openDeleteModal"
-      >
-        <DeleteIcon />
-      </ElButton>
-    </div>
-  </div>
+  </el-card>
 </template>
 
 <style lang="scss" scoped>
 .collection-card {
-  border: 0.5px solid var(--color-primary-300);
-  background: var(--color-primary-0);
-  box-shadow: 0 0.2rem 0.3rem var(--color-primary-200);
-  border-radius: 16px;
-  padding: 1rem;
+  padding-inline: 0.6rem;
+  padding-block: 0.8rem;
 }
 
 .collection-informations-wrapper {
@@ -159,11 +158,6 @@ const redirectToCollectionDetails = () => {
 }
 
 .dark {
-  .collection-card {
-    border: 0.5px solid var(--color-primary-500);
-    background: var(--color-primary-900);
-    box-shadow: 0 0.25rem 0.5rem var(--color-primary-800);
-  }
   .collection-wrapper {
     color: var(--color-primary-0);
     & .collection-name {

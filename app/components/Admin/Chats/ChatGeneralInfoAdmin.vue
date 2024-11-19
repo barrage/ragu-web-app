@@ -2,6 +2,7 @@
 import type { Chat } from '~/types/chat.ts'
 import type { SingleAgent } from '~/types/agent.ts'
 import type { User } from '~/types/users'
+import { StatusType } from '~/types/statusTypes'
 import LabelDescriptionItem from '~/components/shared/LabelDescriptionItem.vue'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
@@ -11,14 +12,6 @@ const props = defineProps<{
   agent: SingleAgent | null
   user: User | null
 }>()
-
-enum StatusType {
-  Primary = 'primary',
-  Success = 'success',
-  Info = 'info',
-  Warning = 'warning',
-  Danger = 'danger',
-}
 
 const { t } = useI18n()
 const relativeChatUpdatedDate = ref(props.chat?.createdAt ? useRelativeDate(props.chat.createdAt) : '-')

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import type { User } from '~/types/users'
 import DeletePersonIcon from '~/assets/icons/svg/delete-person.svg'
+import type { User } from '~/types/users'
 
 const props = defineProps<{
   selectedUser: User | null | undefined
@@ -74,7 +74,9 @@ const submitDeleteUser = async () => {
           {{ $t('users.delete_user.description') }}
         </span>
         <template v-if="props.selectedUser">
-          <UserProfileOverview :user="props.selectedUser" />
+          <el-card class="is-primary">
+            <UserProfileOverview :user="props.selectedUser" />
+          </el-card>
         </template>
       </div>
 
@@ -106,12 +108,6 @@ const submitDeleteUser = async () => {
     color: var(--color-primary-800);
     font-size: var(--font-size-fluid-3);
     line-height: normal;
-  }
-
-  & .user-profile-item {
-    border: 0.5px solid var(--color-primary-300);
-    border-radius: 16px;
-    padding: 1rem;
   }
 }
 .dark {

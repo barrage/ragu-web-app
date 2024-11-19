@@ -28,7 +28,7 @@ const userData = computed(() => {
 </script>
 
 <template>
-  <section class="user-informations-section">
+  <section class="user-informations-section grid">
     <LabelDescriptionItem
       :label="t('users.user_card.first_name')"
       :description="userData.firstName"
@@ -132,13 +132,11 @@ const userData = computed(() => {
 
 <style lang="scss" scoped>
 .user-informations-section {
-  display: flex;
-  padding-block: 2rem;
-  row-gap: 1.5rem;
   max-width: 100%;
-  flex-wrap: wrap;
+  padding-inline: var(--spacing-fluid-m);
+  padding-block: var(--spacing-fluid-m);
   & .label-description-item-container {
-    flex: 1 0 calc(50% - 1rem);
+    grid-column: span 6;
 
     & :deep(.label) {
       flex: 0 0 calc(20% - 0.5rem);

@@ -32,6 +32,11 @@ export default {
   getHelp: {
     title: 'Obtener ayuda',
   },
+  form_rules: {
+    required: 'Este campo es obligatorio',
+    min_length: 'El número mínimo de caracteres requeridos es {min}',
+    max_length: 'El número máximo de caracteres es {max}',
+  },
   chat: {
     user: 'Usuario',
     assistant: 'Asistente',
@@ -117,12 +122,12 @@ export default {
     description: 'Administre la aplicación de administración LLMAO.',
     service_widgets: {
       agents: {
-        title: 'Total de agentes',
+        title: 'Agentes',
         description: 'agentes activos',
         view_more: 'Ver más',
       },
       users: {
-        title: 'Total de usuarios',
+        title: 'Usuarios',
         description: 'usuarios activos',
         view_more: 'Ver más',
       },
@@ -417,6 +422,7 @@ export default {
     title: 'Usuarios',
     description: 'Administra los miembros de tu equipo y establece sus niveles de acceso.',
     invite_user: 'Invitar usuario',
+    all_users: 'Todos los usuarios',
     delete_user: {
       title: 'Eliminar Usuario',
       description: '¿Está seguro de que desea eliminar este usuario? Esta acción no se puede deshacer.',
@@ -427,6 +433,42 @@ export default {
         success_description: 'El usuario se ha eliminado correctamente.',
         error_title: 'Error en la Eliminación',
         error_description: 'Ocurrió un error. No se pudo eliminar el usuario.',
+      },
+    },
+    edit_user: {
+      title: 'Editar Usuario',
+      description: 'Realice cambios en los detalles del usuario a continuación.',
+      confirm: 'Guardar Cambios',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Cambios Guardados',
+        success_description: 'La información del usuario se ha actualizado correctamente.',
+        error_title: 'Error de Actualización',
+        error_description: 'Ocurrió un error al actualizar la información del usuario. Por favor, inténtelo de nuevo.',
+      },
+    },
+    activate_user: {
+      title: 'Activar Usuario',
+      description: 'Active al usuario seleccionado para permitir el acceso.',
+      confirm: 'Activar',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Usuario Activado',
+        success_description: 'El usuario se ha activado correctamente.',
+        error_title: 'Error de Activación',
+        error_description: 'Ocurrió un error al activar al usuario. Por favor, inténtelo de nuevo.',
+      },
+    },
+    deactivate_user: {
+      title: 'Desactivar Usuario',
+      description: 'Desactive al usuario seleccionado para restringir el acceso.',
+      confirm: 'Desactivar',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Usuario Desactivado',
+        success_description: 'El usuario se ha desactivado correctamente.',
+        error_title: 'Error de Desactivación',
+        error_description: 'Ocurrió un error al desactivar al usuario. Por favor, inténtelo de nuevo.',
       },
     },
     form: {

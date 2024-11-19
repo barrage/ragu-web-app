@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { TransitionPresets, useTransition } from '@vueuse/core'
 import ServiceOverviewWidget from '../shared/ServiceOverviewWidget.vue'
 import TeamIcon from '~/assets/icons/svg/team.svg'
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
@@ -18,33 +19,74 @@ const props = defineProps<{
 const emits = defineEmits<Emits>()
 
 const { t } = useI18n()
+const agentTotal = ref(props.agentsStats?.total || 0)
+const userTotal = ref(props.usersStats?.total || 0)
+const documentTotal = ref(props.documentsCount || 0)
+const collectionTotal = ref(props.collectionsCount || 0)
+
+const agentTotalTransition = useTransition(agentTotal, {
+  duration: 1000,
+  transition: TransitionPresets.easeInOutCubic,
+})
+
+const usersTotalTransition = useTransition(userTotal, {
+  duration: 1000,
+  transition: TransitionPresets.easeInOutCubic,
+})
+
+const documentsTotalTransition = useTransition(documentTotal, {
+  duration: 1000,
+  transition: TransitionPresets.easeInOutCubic,
+})
+
+const collectionsTotalTransition = useTransition(collectionTotal, {
+  duration: 1000,
+  transition: TransitionPresets.easeInOutCubic,
+})
+
+const roundedAgentTotal = computed(() => Math.round(agentTotalTransition.value))
+const roundedUsersTotal = computed(() => Math.round(usersTotalTransition.value))
+const roundedDocumentsTotal = computed(() => Math.round(documentsTotalTransition.value))
+const roundedCollectionsTotal = computed(() => Math.round(collectionsTotalTransition.value))
+
+watch(() => props.agentsStats?.total, (newVal) => {
+  if (newVal !== undefined) { agentTotal.value = newVal }
+})
+watch(() => props.usersStats?.total, (newVal) => {
+  if (newVal !== undefined) { userTotal.value = newVal }
+})
+watch(() => props.documentsCount, (newVal) => {
+  if (newVal !== undefined) { documentTotal.value = newVal }
+})
+watch(() => props.collectionsCount, (newVal) => {
+  if (newVal !== undefined) { collectionTotal.value = newVal }
+})
 
 const overviewWidgetsData = computed(() => {
   return [{
     name: t('dashboard.service_widgets.agents.title'),
-    value: props.agentsStats?.total || 0,
+    value: roundedAgentTotal.value,
     description: `${props.agentsStats?.active || 0} ${t('dashboard.service_widgets.agents.description')}`,
     redirectUrl: '/admin/agents',
     redirectText: t('dashboard.service_widgets.agents.view_more'),
     icon: AgentsIcon,
-
   }, {
     name: t('dashboard.service_widgets.users.title'),
-    value: props.usersStats?.total || 0,
+    value: roundedUsersTotal.value,
     description: `${props.usersStats?.active || 0} ${t('dashboard.service_widgets.users.description')}`,
     redirectUrl: '/admin/users',
     redirectText: t('dashboard.service_widgets.users.view_more'),
     icon: TeamIcon,
   }, {
     name: t('dashboard.service_widgets.documents.title'),
-    value: props.documentsCount || 0,
+    value: roundedDocumentsTotal.value,
     description: t('dashboard.service_widgets.documents.description'),
     redirectUrl: '/admin/documents',
     redirectText: t('dashboard.service_widgets.documents.view_more'),
     icon: DocumentIcon,
   }, {
     name: t('dashboard.service_widgets.collections.title'),
-    value: props.collectionsCount || 0,
+    value: roundedCollectionsTotal.value,
     description: t('dashboard.service_widgets.collections.description'),
     redirectUrl: '/admin/collections',
     redirectText: t('dashboard.service_widgets.collections.view_more'),
@@ -53,7 +95,7 @@ const overviewWidgetsData = computed(() => {
 })
 
 interface Emits {
-  (event: 'change-period', period: string): void
+  (event: 'changePeriod', period: string): void
 }
 
 const periodOptions = computed(() => {
@@ -63,7 +105,7 @@ const selectedPeriod = ref({ name: t('dashboard.chat_usage_line_chart.period.wee
 
 const selectPeriod = (newPeriod: any) => {
   selectedPeriod.value = newPeriod
-  emits('change-period', selectedPeriod.value.value)
+  emits('changePeriod', selectedPeriod.value.value)
 }
 </script>
 

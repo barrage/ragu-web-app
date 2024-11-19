@@ -32,6 +32,12 @@ export default {
   getHelp: {
     title: 'Obter ajuda',
   },
+  form_rules: {
+    required: 'Este campo é obrigatório',
+    min_length: 'O número mínimo de caracteres necessários é {min}',
+    max_length: 'O número máximo de caracteres é {max}',
+  },
+
   chat: {
     user: 'Usuário',
     assistant: 'Assistente',
@@ -119,12 +125,12 @@ export default {
     description: 'Gerencie o aplicativo de administração LLMAO.',
     service_widgets: {
       agents: {
-        title: 'Total de agentes',
+        title: 'Agentes',
         description: 'agentes ativos',
         view_more: 'Ver mais',
       },
       users: {
-        title: 'Total de usuários',
+        title: 'Usuários',
         description: 'usuários ativos',
         view_more: 'Ver mais',
       },
@@ -160,7 +166,7 @@ export default {
       },
       available_agents: {
         title: 'Agentes disponíveis',
-        description: 'Visualize e interaja com agentes disponíveis baseados em IA.',
+        description: 'Exibição de agentes disponíveis para comunicação',
       },
     },
     agents: {
@@ -418,6 +424,7 @@ export default {
     title: 'Usuários',
     description: 'Gerencie os membros da sua equipe e defina seus níveis de acesso.',
     invite_user: 'Convidar usuário',
+    all_users: 'Todos os usuários',
     delete_user: {
       title: 'Excluir Usuário',
       description: 'Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita.',
@@ -428,6 +435,42 @@ export default {
         success_description: 'O usuário foi excluído com sucesso.',
         error_title: 'Falha na Exclusão',
         error_description: 'Ocorreu um erro. Não foi possível excluir o usuário.',
+      },
+    },
+    edit_user: {
+      title: 'Editar Usuário',
+      description: 'Faça alterações nos detalhes do usuário abaixo.',
+      confirm: 'Salvar Alterações',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Alterações Salvas',
+        success_description: 'As informações do usuário foram atualizadas com sucesso.',
+        error_title: 'Falha na Atualização',
+        error_description: 'Ocorreu um erro ao atualizar as informações do usuário. Por favor, tente novamente.',
+      },
+    },
+    activate_user: {
+      title: 'Ativar Usuário',
+      description: 'Ative o usuário selecionado para permitir o acesso.',
+      confirm: 'Ativar',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Usuário Ativado',
+        success_description: 'O usuário foi ativado com sucesso.',
+        error_title: 'Falha na Ativação',
+        error_description: 'Ocorreu um erro ao ativar o usuário. Por favor, tente novamente.',
+      },
+    },
+    deactivate_user: {
+      title: 'Desativar Usuário',
+      description: 'Desative o usuário selecionado para restringir o acesso.',
+      confirm: 'Desativar',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Usuário Desativado',
+        success_description: 'O usuário foi desativado com sucesso.',
+        error_title: 'Falha na Desativação',
+        error_description: 'Ocorreu um erro ao desativar o usuário. Por favor, tente novamente.',
       },
     },
     form: {

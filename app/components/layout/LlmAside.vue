@@ -8,6 +8,7 @@ import QuestionIcon from '~/assets/icons/svg/question.svg'
 // CONSTANTS
 const navigationStore = useNavigationStore()
 const router = useRouter()
+const route = useRoute()
 </script>
 
 <template>
@@ -37,7 +38,7 @@ const router = useRouter()
       >
         <a
           class="new-chat"
-          :class="{ opened: !navigationStore.isSidebarCollapsed }"
+          :class="{ opened: !navigationStore.isSidebarCollapsed, selected: route.path === '/' }"
           @click="router.push('/')"
         >
           <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
@@ -105,6 +106,11 @@ aside {
     background-color: transparent;
     font-size: var(--font-size-fluid-3);
 
+    &.selected {
+      background: var(--color-primary-300);
+      color: var(--color-primary-900);
+    }
+
     &:hover {
       background: var(--color-primary-300);
     }
@@ -157,6 +163,10 @@ aside {
   }
   .new-chat {
     color: var(--color-primary-100);
+    &.selected {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
+    }
     &.opened {
       color: var(--color-primary-100);
     }

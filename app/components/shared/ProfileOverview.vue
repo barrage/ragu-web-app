@@ -3,19 +3,11 @@ import PersonMailIcon from '~/assets/icons/svg/person-mail.svg'
 import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
+import { StatusType } from '~/types/statusTypes'
 
 // CONSTANTS
 const userAuth = useAuthStore()
 const { t } = useI18n()
-
-// TYPES
-enum StatusType {
-  Primary = 'primary',
-  Success = 'success',
-  Info = 'info',
-  Warning = 'warning',
-  Danger = 'danger',
-}
 
 // HELPERS
 const userProfileData = computed(() => {
@@ -152,7 +144,6 @@ const userProfileData = computed(() => {
   align-items: center;
   gap: 8px;
   color: var(--color-primary-900);
-  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-fluid-3);
 
   svg {

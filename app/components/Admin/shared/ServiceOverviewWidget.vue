@@ -99,9 +99,10 @@ interface Slots {
   align-items: center;
   gap: 1rem;
   color: var(--color-primary-900);
+  margin-top: var(--spacing-fluid-3-xs);
 
   &:hover {
-    color: var(--color-primary-700);
+    color: var(--color-primary-800);
   }
 }
 
@@ -124,7 +125,7 @@ interface Slots {
     color: var(--color-primary-0);
 
     &:hover {
-      color: var(--color-primary-200);
+      color: var(--color-primary-100);
     }
   }
   .service-overview-widget-body {

@@ -32,11 +32,16 @@ export default {
   getHelp: {
     title: 'Richiedi aiuto',
   },
+  form_rules: {
+    required: 'Questo campo è obbligatorio',
+    min_length: 'Il numero minimo di caratteri richiesti è {min}',
+    max_length: 'Il numero massimo di caratteri è {max}',
+  },
   chat: {
     user: 'Utente',
     assistant: 'Assistente',
     messages: 'Messaggi',
-    inactive_agent: 'Questo agente non è più attivo. Seleziona un agente attivo per iniziare una nuova conversazione.',
+    inactive_agent: 'Questo agente non è più attivo. Seleziona un agente attivo per iniziare una nuova conversazione. ',
     admin: {
       title: 'Chat',
       description: 'Gestisci tutte le tue chat in un unico posto',
@@ -118,12 +123,12 @@ export default {
     description: 'Gestisci l\'app di amministrazione LLMAO.',
     service_widgets: {
       agents: {
-        title: 'Totale agenti',
+        title: 'Agenti',
         description: 'agenti attivi',
         view_more: 'Visualizza di più',
       },
       users: {
-        title: 'Totale utenti',
+        title: 'Utenti',
         description: 'utenti attivi',
         view_more: 'Visualizza di più',
       },
@@ -159,7 +164,7 @@ export default {
       },
       available_agents: {
         title: 'Agenti disponibili',
-        description: 'Visualizza e interagisci con agenti disponibili alimentati dall\'intelligenza artificiale.',
+        description: 'Visualizzazione degli agenti disponibili per la comunicazione',
       },
     },
     agents: {
@@ -419,6 +424,7 @@ export default {
     title: 'Utenti',
     description: 'Gestisci i membri del tuo team e imposta i loro livelli di accesso.',
     invite_user: 'Invita utente',
+    all_users: 'Tutti gli utenti',
     delete_user: {
       title: 'Elimina Utente',
       description: 'Sei sicuro di voler eliminare questo utente? Questa azione non può essere annullata.',
@@ -429,6 +435,42 @@ export default {
         success_description: 'L\'utente è stato eliminato con successo.',
         error_title: 'Eliminazione Fallita',
         error_description: 'Si è verificato un errore. L\'utente non è stato eliminato.',
+      },
+    },
+    edit_user: {
+      title: 'Modifica Utente',
+      description: 'Apporta modifiche ai dettagli dell\'utente di seguito.',
+      confirm: 'Salva Modifiche',
+      cancel: 'Annulla',
+      notifications: {
+        success_title: 'Modifiche Salvate',
+        success_description: 'Le informazioni dell\'utente sono state aggiornate con successo.',
+        error_title: 'Aggiornamento Fallito',
+        error_description: 'Si è verificato un errore durante l\'aggiornamento delle informazioni dell\'utente. Per favore riprova.',
+      },
+    },
+    activate_user: {
+      title: 'Attiva Utente',
+      description: 'Attiva l\'utente selezionato per consentire l\'accesso.',
+      confirm: 'Attiva',
+      cancel: 'Annulla',
+      notifications: {
+        success_title: 'Utente Attivato',
+        success_description: 'L\'utente è stato attivato con successo.',
+        error_title: 'Attivazione Fallita',
+        error_description: 'Si è verificato un errore durante l\'attivazione dell\'utente. Per favore riprova.',
+      },
+    },
+    deactivate_user: {
+      title: 'Disattiva Utente',
+      description: 'Disattiva l\'utente selezionato per limitare l\'accesso.',
+      confirm: 'Disattiva',
+      cancel: 'Annulla',
+      notifications: {
+        success_title: 'Utente Disattivato',
+        success_description: 'L\'utente è stato disattivato con successo.',
+        error_title: 'Disattivazione Fallita',
+        error_description: 'Si è verificato un errore durante la disattivazione dell\'utente. Per favore riprova.',
       },
     },
     form: {

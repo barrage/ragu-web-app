@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-// IMPORTS
-
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 
 const agentStore = useAgentStore()
-
 const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents())
 
 errorHandler(error)
+
 const activeAgentLength = computed(() => {
   return agentStore.appAgents.filter(agent => agent.active).length
 })

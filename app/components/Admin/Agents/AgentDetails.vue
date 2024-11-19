@@ -8,6 +8,7 @@ import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
+import { StatusType } from '~/types/statusTypes'
 
 const props = defineProps<{
   singleAgent: Agent | null | undefined
@@ -18,13 +19,6 @@ const assignCollectionModalVisible = ref(false)
 const deleteCollectionModalVisible = ref(false)
 
 const { t } = useI18n()
-enum StatusType {
-  Primary = 'primary',
-  Success = 'success',
-  Info = 'info',
-  Warning = 'warning',
-  Danger = 'danger',
-}
 
 const agentData = computed(() => {
   return {

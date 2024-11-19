@@ -1,22 +1,20 @@
 <script lang="ts" setup>
 import ProfileIcon from '~/assets/icons/svg/account.svg'
-import type { User } from '~/types/users'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import DeleteIcon from '~/assets/icons/svg/delete-person.svg'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
+import { StatusType } from '~/types/statusTypes'
+import type { User } from '~/types/users'
 
 const props = defineProps<{
   user: User | null
 }>()
 
-enum StatusType {
-  Primary = 'primary',
-  Success = 'success',
-  Info = 'info',
-  Warning = 'warning',
-  Danger = 'danger',
-}
+/* Setup */
+const { t } = useI18n()
+const route = useRoute()
+const usersStore = useUsersStore()
 
 const userData = computed(() => {
   return {
@@ -29,9 +27,7 @@ const userData = computed(() => {
     createdAt: props.user?.updatedAt ? formatDate(props.user.createdAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
   }
 })
-const { t } = useI18n()
-const route = useRoute()
-const usersStore = useUsersStore()
+
 const selectedUserId = computed(() => {
   const userId = Array.isArray(route.params.userId) ? route.params.userId[0] : route.params.userId
   return userId || ''
@@ -138,28 +134,28 @@ const closeDeactivateModal = () => {
         <DeleteIcon />  {{ t('users.user_card.delete_user_title') }}
       </el-button>
     </div>
-    <DeleteUserModal
+    <DeleteUserModalBackoffice
       :is-open="deleteUserModalVisible"
       :selected-user="selectedUserDelete"
       @close-modal="closeDeleteModal"
       @user-deleted="GetUserDetails"
     />
 
-    <EditUserModal
+    <EditUserModalBackoffice
       :is-open="editUserModalVisible"
       :selected-user="selectedUserEdit"
       @close-modal="closeEditModal"
       @user-edited="GetUserDetails"
     />
 
-    <ActivateUserModal
+    <ActivateUserModalBackoffice
       :is-open="activateUserModalVisible"
       :selected-user="selectedUserActivate"
       @close-modal="closeActivateModal"
       @user-activated="GetUserDetails"
     />
 
-    <DeactivateUserModal
+    <DeactivateUserModalBackoffice
       :is-open="deactivateUserModalVisible"
       :selected-user="selectedUserDeactivate"
       @close-modal="closeDeactivateModal"

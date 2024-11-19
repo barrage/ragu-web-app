@@ -1,0 +1,52 @@
+@layer barrage-divider {
+  :root {
+    /* Border */
+    --barrage-divider-border-color: var(--color-primary-700);
+    --barrage-border-style: var(--border-type-solid);
+    --barrage-border-height: 1px;
+
+    /* Height & width */
+    --barrage-divider-width: 100%;
+    --barrage-divider-height: 1px;
+  }
+
+  html.dark {
+    .barrage-divider {
+      --barrage-divider-border-color: var(--color-primary-300);
+
+      &.is-weak {
+        --barrage-divider-border-color: var(--color-primary-400);
+      }
+
+      &.is-strong {
+        --barrage-divider-border-color: var(--color-primary-100);
+      }
+    }
+  }
+
+  .barrage-divider {
+    display: block;
+    height: var(--barrage-divider-height);
+    width: var(--barrage-divider-width);
+    border-top: var(--barrage-border-height) var(--barrage-divider-border-color)
+      var(--barrage-border-style);
+
+    &--vertical {
+      border-top: none;
+      width: 1px;
+      height: 1em;
+      border-left: var(--barrage-border-height)
+        var(--barrage-divider-border-color) var(--barrage-border-style);
+    }
+
+    &.is-weak {
+      --barrage-border-height: 0.5px;
+      --barrage-divider-border-color: var(--color-primary-600);
+    }
+
+    &.is-strong {
+      --barrage-border-height: 1.5px;
+      --barrage-divider-border-color: var(--color-primary-900);
+    }
+  }
+}
