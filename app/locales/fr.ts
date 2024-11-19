@@ -32,6 +32,11 @@ export default {
   getHelp: {
     title: 'Obtenir de l\'aide',
   },
+  form_rules: {
+    required: 'Ce champ est obligatoire',
+    min_length: 'Le nombre minimum de caractères requis est {min}',
+    max_length: 'Le nombre maximum de caractères est {max}',
+  },
   chat: {
     user: 'Utilisateur',
     assistant: 'Assistant',
@@ -118,12 +123,12 @@ export default {
     description: 'Gérez l\'application d\'administration LLMAO.',
     service_widgets: {
       agents: {
-        title: 'Total des agents',
+        title: 'Agents',
         description: 'agents actifs',
         view_more: 'Voir plus',
       },
       users: {
-        title: 'Total des utilisateurs',
+        title: 'Utilisateurs',
         description: 'utilisateurs actifs',
         view_more: 'Voir plus',
       },
@@ -159,7 +164,7 @@ export default {
       },
       available_agents: {
         title: 'Agents disponibles',
-        description: 'Affichez et interagissez avec les agents disponibles alimentés par l\'IA.',
+        description: 'Affichage des agents disponibles pour la communication',
       },
     },
     agents: {
@@ -419,6 +424,7 @@ export default {
     title: 'Utilisateurs',
     description: 'Gérez les membres de votre équipe et définissez leurs niveaux d\'accès.',
     invite_user: 'Inviter un utilisateur',
+    all_users: 'Tous les utilisateurs',
     delete_user: {
       title: 'Supprimer l\'Utilisateur',
       description: 'Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.',
@@ -429,6 +435,42 @@ export default {
         success_description: 'L\'utilisateur a été supprimé avec succès.',
         error_title: 'Échec de la Suppression',
         error_description: 'Une erreur est survenue. L\'utilisateur n\'a pas pu être supprimé.',
+      },
+    },
+    edit_user: {
+      title: 'Modifier l\'Utilisateur',
+      description: 'Apportez des modifications aux détails de l\'utilisateur ci-dessous.',
+      confirm: 'Enregistrer les Modifications',
+      cancel: 'Annuler',
+      notifications: {
+        success_title: 'Modifications Enregistrées',
+        success_description: 'Les informations de l\'utilisateur ont été mises à jour avec succès.',
+        error_title: 'Échec de la Mise à Jour',
+        error_description: 'Une erreur s\'est produite lors de la mise à jour des informations de l\'utilisateur. Veuillez réessayer.',
+      },
+    },
+    activate_user: {
+      title: 'Activer l\'Utilisateur',
+      description: 'Activez l\'utilisateur sélectionné pour autoriser l\'accès.',
+      confirm: 'Activer',
+      cancel: 'Annuler',
+      notifications: {
+        success_title: 'Utilisateur Activé',
+        success_description: 'L\'utilisateur a été activé avec succès.',
+        error_title: 'Échec de l\'Activation',
+        error_description: 'Une erreur s\'est produite lors de l\'activation de l\'utilisateur. Veuillez réessayer.',
+      },
+    },
+    deactivate_user: {
+      title: 'Désactiver l\'Utilisateur',
+      description: 'Désactivez l\'utilisateur sélectionné pour restreindre l\'accès.',
+      confirm: 'Désactiver',
+      cancel: 'Annuler',
+      notifications: {
+        success_title: 'Utilisateur Désactivé',
+        success_description: 'L\'utilisateur a été désactivé avec succès.',
+        error_title: 'Échec de la Désactivation',
+        error_description: 'Une erreur s\'est produite lors de la désactivation de l\'utilisateur. Veuillez réessayer.',
       },
     },
     form: {

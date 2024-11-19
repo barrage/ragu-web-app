@@ -132,28 +132,28 @@ const userDeactivated = () => {
       />
     </div>
 
-    <DeleteUserModal
+    <DeleteUserModalBackoffice
       :is-open="deleteUserModalVisible"
       :selected-user="selectedUserDelete"
       @close-modal="closeDeleteModal"
       @user-deleted="userDeleted"
     />
 
-    <EditUserModal
+    <EditUserModalBackoffice
       :is-open="editUserModalVisible"
       :selected-user="selectedUserEdit"
       @close-modal="closeEditModal"
       @user-edited="userEdited"
     />
 
-    <ActivateUserModal
+    <ActivateUserModalBackoffice
       :is-open="activateUserModalVisible"
       :selected-user="selectedUserActivate"
       @close-modal="closeActivateModal"
       @user-activated="userActivated"
     />
 
-    <DeactivateUserModal
+    <DeactivateUserModalBackoffice
       :is-open="deactivateUserModalVisible"
       :selected-user="selectedUserDeactivate"
       @close-modal="closeDeactivateModal"

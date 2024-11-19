@@ -106,6 +106,7 @@ const redirectToAgentDetails = (id: string) => {
     max-height: 100%;
     gap: 1.2rem;
     max-height: 300px;
+    padding-top: var(--font-size-fluid-1);
     overflow-y: auto;
   }
 }
@@ -147,6 +148,7 @@ const redirectToAgentDetails = (id: string) => {
   flex-direction: column;
   gap: 1rem;
   max-height: 300px;
+  padding-top: var(--font-size-fluid-1);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -222,12 +224,13 @@ const redirectToAgentDetails = (id: string) => {
     @include viewport-s {
       grid-column: span 8;
     }
-
     @include viewport-m {
       grid-column: span 4;
     }
+
     & .recent-chats-card {
       min-height: 100%;
+      padding-right: var(--font-size-fluid-1);
     }
   }
   .active-agents {
@@ -236,6 +239,13 @@ const redirectToAgentDetails = (id: string) => {
 
   & .chats-information {
     grid-column: span 4;
+    @include viewport-s {
+      grid-column: span 8;
+    }
+    @include viewport-m {
+      grid-column: span 4;
+    }
+
     display: flex;
     flex-direction: column;
     gap: var(--spacing-fluid-m);

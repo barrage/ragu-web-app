@@ -37,7 +37,9 @@ const editChatTitleForm = reactive<EditChatTitlePayload>({
 
 const rules = computed<FormRules<EditChatTitlePayload>>(() => ({
   title: [
-    { required: true, message: t('users.form.rules.required'), trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
+    { min: 3, message: t('form_rules.min_length', { min: 3 }), trigger: 'blur' },
+    { max: 40, message: t('form_rules.max_length', { max: 40 }), trigger: 'blur' },
   ],
 }))
 

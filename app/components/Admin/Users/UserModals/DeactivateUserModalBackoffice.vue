@@ -9,6 +9,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
+const { t } = useI18n()
 const deactivateUserModalVisible = ref(props.isOpen)
 const usersStore = useUsersStore()
 const closeModal = () => {
@@ -31,8 +32,8 @@ const submitDeactivateUser = async () => {
     deactivateUserModalVisible.value = false
     if (error.value) {
       ElNotification({
-        title: 'Error',
-        message: 'Failed to deactivate the user.',
+        title: t('users.deactivate_user.notifications.error_title'),
+        message: t('users.deactivate_user.notifications.error_description'),
         type: 'error',
         customClass: 'error',
         duration: 2500,
@@ -41,8 +42,8 @@ const submitDeactivateUser = async () => {
     else {
       emits('userDeactivated')
       ElNotification({
-        title: 'Success',
-        message: `User ${props.selectedUser?.fullName} deactivated successfully!`,
+        title: t('users.deactivate_user.notifications.success_title'),
+        message: t('users.deactivate_user.notifications.success_description'),
         type: 'success',
         customClass: 'success',
         duration: 2500,
@@ -63,23 +64,34 @@ const submitDeactivateUser = async () => {
       @close="closeModal"
     >
       <template #header>
-        <div class="activate-user-modal-header">
+        <div class="deactivate-user-modal-header">
           <PersonLockIcon size="42px" />
-          <h5> {{ $t('users.user_card.deactivate_user') }}</h5>
+          <h5> {{ $t('users.deactivate_user.title') }}</h5>
         </div>
       </template>
-      <div>
+      <div class="deactivate-user-modal-body">
         <p>
-          Are you sure you want to deactivate user:  <br> <b>{{ props.selectedUser?.fullName }}</b>
+          {{ $t('users.deactivate_user.description') }}
         </p>
+        <el-card class="is-primary">
+          <UserProfileOverview :user="props.selectedUser" />
+        </el-card>
       </div>
 
       <template #footer>
-        <el-button @click="closeModal()">
-          Cancel
+        <el-button
+          type="primary"
+          data-testid="close-deactivate-user-modal-button"
+          @click="closeModal()"
+        >
+          {{ $t('users.deactivate_user.cancel') }}
         </el-button>
-        <el-button type="danger" @click="submitDeactivateUser()">
-          Deactivate
+        <el-button
+          data-testid="confirm-deactivate-user-modal-button"
+          type="danger"
+          @click="submitDeactivateUser()"
+        >
+          {{ $t('users.deactivate_user.confirm') }}
         </el-button>
       </template>
     </ElDialog>
@@ -87,9 +99,15 @@ const submitDeactivateUser = async () => {
 </template>
 
 <style lang="scss" scoped>
-.activate-user-modal-header {
+.deactivate-user-modal-header {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+.deactivate-user-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 </style>

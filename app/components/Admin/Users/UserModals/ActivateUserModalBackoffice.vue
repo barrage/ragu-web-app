@@ -9,6 +9,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
+const { t } = useI18n()
 const activateUserModalVisible = ref(props.isOpen)
 const usersStore = useUsersStore()
 const closeModal = () => {
@@ -31,8 +32,8 @@ const submitActivateUser = async () => {
     activateUserModalVisible.value = false
     if (error.value) {
       ElNotification({
-        title: 'Error',
-        message: 'Failed to activate the user.',
+        title: t('users.activate_user.notifications.error_title'),
+        message: t('users.activate_user.notifications.error_description'),
         type: 'error',
         customClass: 'error',
         duration: 2500,
@@ -41,8 +42,8 @@ const submitActivateUser = async () => {
     else {
       emits('userActivated')
       ElNotification({
-        title: 'Success',
-        message: `User ${props.selectedUser?.fullName} activated successfully!`,
+        title: t('users.activate_user.notifications.success_title'),
+        message: t('users.activate_user.notifications.success_description'),
         type: 'success',
         customClass: 'success',
         duration: 2500,
@@ -65,21 +66,32 @@ const submitActivateUser = async () => {
       <template #header>
         <div class="activate-user-modal-header">
           <PersonPasskeyIcon size="42px" />
-          <h5> {{ $t('users.user_card.activate_user') }}</h5>
+          <h5> {{ $t('users.activate_user.title') }}</h5>
         </div>
       </template>
-      <div>
+      <div class="activate-user-modal-body">
         <p>
-          Are you sure you want to activate user:  <br> <b>{{ props.selectedUser?.fullName }}</b>
+          {{ $t('users.activate_user.description') }}
         </p>
+        <el-card class="is-primary">
+          <UserProfileOverview :user="props.selectedUser" />
+        </el-card>
       </div>
 
       <template #footer>
-        <el-button @click="closeModal">
-          Cancel
+        <el-button
+          type="primary"
+          data-testid="close-activate-user-modal-button"
+          @click="closeModal"
+        >
+          {{ $t('users.activate_user.cancel') }}
         </el-button>
-        <el-button type="danger" @click="submitActivateUser()">
-          Activate
+        <el-button
+          type="danger"
+          data-testid="confirm-activate-user-modal-button"
+          @click="submitActivateUser()"
+        >
+          {{ $t('users.activate_user.confirm') }}
         </el-button>
       </template>
     </ElDialog>
@@ -91,5 +103,11 @@ const submitActivateUser = async () => {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+.activate-user-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 </style>

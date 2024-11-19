@@ -14,7 +14,7 @@ const selectedUserId = computed(() => {
   return userId || ''
 })
 
-const { error } = await useAsyncData(() => usersStore.GET_SingleUser(selectedUserId.value))
+const { error, status } = await useAsyncData(() => usersStore.GET_SingleUser(selectedUserId.value))
 
 errorHandler(error)
 </script>
@@ -25,11 +25,28 @@ errorHandler(error)
       <ArrowLeftIcon /> {{ t('users.title') }}
     </NuxtLink>
 
-    <UserDetails :user="usersStore.selectedUser" />
+    <template v-if="status === 'pending'">
+      <div class="user-details-loader">
+        <MeetUpLoader />
+      </div>
+    </template>
+    <template v-else-if="usersStore.selectedUser?.id">
+      <UserDetails :user="usersStore.selectedUser" />
+    </template>
+    <template v-else>
+      <UserDetailsEmptyState />
+    </template>
   </AdminPageContainer>
 </template>
 
 <style lang="scss" scoped>
+.user-details-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--spacing-fluid-3-xl);
+}
+
 .back-link {
   display: flex;
   gap: 4px;

@@ -60,14 +60,20 @@ watch(
         </ElButton>
         <template #dropdown>
           <ElDropdownMenu>
-            <ElDropdownItem
+            <template
               v-for="option in props.options"
               :key="option.value"
-              :data-testid="`sort-by-option-${option.value}`"
-              @click="sortDataByProperty(option)"
             >
-              {{ option.name }}
-            </ElDropdownItem>
+              <ElDropdownItem
+                :data-testid="`sort-by-option-${option.value}`"
+                :class="{ selected: option.value === selectedSortBy?.value }"
+                @click="sortDataByProperty(option)"
+              >
+                <p>
+                  {{ option.name }}
+                </p>
+              </ElDropdownItem>
+            </template>
           </ElDropdownMenu>
         </template>
       </ElDropdown>

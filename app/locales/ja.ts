@@ -32,6 +32,11 @@ export default {
   getHelp: {
     title: '助けを求める',
   },
+  form_rules: {
+    required: 'このフィールドは必須です',
+    min_length: '必要な最小文字数は {min} です',
+    max_length: '最大文字数は {max} です',
+  },
   chat: {
     user: 'ユーザー',
     assistant: 'アシスタント',
@@ -159,7 +164,7 @@ export default {
       },
       available_agents: {
         title: '利用可能なエージェント',
-        description: '利用可能なAIエージェントを表示して操作します。',
+        description: 'コミュニケーションに利用可能なエージェントの表示',
       },
     },
     agents: {
@@ -419,6 +424,7 @@ export default {
     title: 'ユーザー',
     description: 'チームメンバーを管理し、アクセスレベルを設定します。',
     invite_user: 'ユーザーを招待',
+    all_users: 'すべてのユーザー',
     delete_user: {
       title: 'ユーザーを削除',
       description: 'このユーザーを削除してもよろしいですか？この操作は取り消せません。',
@@ -429,6 +435,42 @@ export default {
         success_description: 'ユーザーは正常に削除されました。',
         error_title: '削除に失敗しました',
         error_description: 'エラーが発生しました。ユーザーを削除できませんでした。',
+      },
+    },
+    edit_user: {
+      title: 'ユーザーを編集',
+      description: '以下でユーザーの詳細を変更してください。',
+      confirm: '変更を保存',
+      cancel: 'キャンセル',
+      notifications: {
+        success_title: '変更が保存されました',
+        success_description: 'ユーザー情報が正常に更新されました。',
+        error_title: '更新失敗',
+        error_description: 'ユーザー情報の更新中にエラーが発生しました。再試行してください。',
+      },
+    },
+    activate_user: {
+      title: 'ユーザーを有効化',
+      description: '選択したユーザーを有効にしてアクセスを許可します。',
+      confirm: '有効化',
+      cancel: 'キャンセル',
+      notifications: {
+        success_title: 'ユーザーが有効化されました',
+        success_description: 'ユーザーが正常に有効化されました。',
+        error_title: '有効化失敗',
+        error_description: 'ユーザーを有効化中にエラーが発生しました。再試行してください。',
+      },
+    },
+    deactivate_user: {
+      title: 'ユーザーを無効化',
+      description: '選択したユーザーを無効にしてアクセスを制限します。',
+      confirm: '無効化',
+      cancel: 'キャンセル',
+      notifications: {
+        success_title: 'ユーザーが無効化されました',
+        success_description: 'ユーザーが正常に無効化されました。',
+        error_title: '無効化失敗',
+        error_description: 'ユーザーを無効化中にエラーが発生しました。再試行してください。',
       },
     },
     form: {

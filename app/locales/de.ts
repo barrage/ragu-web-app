@@ -33,6 +33,12 @@ export default {
   getHelp: {
     title: 'Hilfe erhalten',
   },
+  form_rules: {
+    required: 'Dieses Feld ist erforderlich',
+    min_length: 'Die Mindestanzahl der benötigten Zeichen beträgt {min}',
+    max_length: 'Die maximale Anzahl der Zeichen beträgt {max}',
+  },
+
   chat: {
     user: 'Benutzer',
     assistant: 'Assistent',
@@ -419,6 +425,7 @@ export default {
     title: 'Benutzer',
     description: 'Verwalten Sie die Mitglieder Ihres Teams und legen Sie deren Zugriffsrechte fest.',
     invite_user: 'Benutzer einladen',
+    all_users: 'Alle Benutzer',
     delete_user: {
       title: 'Benutzer löschen',
       description: 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
@@ -429,6 +436,42 @@ export default {
         success_description: 'Der Benutzer wurde erfolgreich gelöscht.',
         error_title: 'Löschen fehlgeschlagen',
         error_description: 'Ein Fehler ist aufgetreten. Der Benutzer konnte nicht gelöscht werden.',
+      },
+    },
+    edit_user: {
+      title: 'Benutzer Bearbeiten',
+      description: 'Ändern Sie die Benutzerdetails unten.',
+      confirm: 'Änderungen Speichern',
+      cancel: 'Abbrechen',
+      notifications: {
+        success_title: 'Änderungen Gespeichert',
+        success_description: 'Die Benutzerinformationen wurden erfolgreich aktualisiert.',
+        error_title: 'Aktualisierung Fehlgeschlagen',
+        error_description: 'Beim Aktualisieren der Benutzerinformationen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+      },
+    },
+    activate_user: {
+      title: 'Benutzer Aktivieren',
+      description: 'Aktivieren Sie den ausgewählten Benutzer, um den Zugriff zu ermöglichen.',
+      confirm: 'Aktivieren',
+      cancel: 'Abbrechen',
+      notifications: {
+        success_title: 'Benutzer Aktiviert',
+        success_description: 'Der Benutzer wurde erfolgreich aktiviert.',
+        error_title: 'Aktivierung Fehlgeschlagen',
+        error_description: 'Beim Aktivieren des Benutzers ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+      },
+    },
+    deactivate_user: {
+      title: 'Benutzer Deaktivieren',
+      description: 'Deaktivieren Sie den ausgewählten Benutzer, um den Zugriff einzuschränken.',
+      confirm: 'Deaktivieren',
+      cancel: 'Abbrechen',
+      notifications: {
+        success_title: 'Benutzer Deaktiviert',
+        success_description: 'Der Benutzer wurde erfolgreich deaktiviert.',
+        error_title: 'Deaktivierung Fehlgeschlagen',
+        error_description: 'Beim Deaktivieren des Benutzers ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
       },
     },
     form: {

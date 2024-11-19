@@ -6,6 +6,7 @@ import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import type { User } from '~/types/users'
+import { StatusType } from '~/types/statusTypes'
 
 /* Props & Emits */
 const props = defineProps<{
@@ -13,14 +14,6 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
-
-enum StatusType {
-  Primary = 'primary',
-  Success = 'success',
-  Info = 'info',
-  Warning = 'warning',
-  Danger = 'danger',
-}
 
 interface Emits {
   (event: 'delete-user', user: User): void
@@ -52,8 +45,8 @@ const redirectToUserDetails = () => {
 </script>
 
 <template>
-  <div>
-    <div class="user-card">
+  <el-card class="user-card is-primary">
+    <div class="user-card-body">
       <div class="user-profile-item-wrapper" @click="redirectToUserDetails">
         <UserProfileOverview :user="props.user" />
       </div>
@@ -142,26 +135,27 @@ const redirectToUserDetails = () => {
         </ElTooltip>
       </div>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <style lang="scss" scoped>
 .user-card {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
-  border: 0.5px solid var(--color-primary-300);
-  background: var(--color-primary-0);
-  box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
-  border-radius: 16px;
-  padding: 1rem;
-  & .label-description-item-container {
-    grid-column: span 2;
-    @include viewport-s {
-      grid-column: span 1;
-    }
-    @include viewport-ml {
-      grid-column: span 1;
+  padding-inline: 0.6rem;
+  padding-block: 0.8rem;
+
+  & .user-card-body {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+
+    & .label-description-item-container {
+      grid-column: span 2;
+      @include viewport-s {
+        grid-column: span 1;
+      }
+      @include viewport-ml {
+        grid-column: span 1;
+      }
     }
   }
 }
@@ -192,11 +186,6 @@ const redirectToUserDetails = () => {
 }
 
 .dark {
-  .user-card {
-    border: 0.5px solid var(--color-primary-700);
-    background: var(--color-primary-900);
-    box-shadow: 0 0.15rem 0.25rem var(--color-primary-800);
-  }
   .username-title-wrapper {
     color: var(--color-primary-0);
     & .username {

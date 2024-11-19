@@ -40,8 +40,8 @@ interface Emits {
 </script>
 
 <template>
-  <div>
-    <div class="chat-card grid">
+  <el-card class="chat-card is-primary">
+    <div class="grid">
       <div class="chat-profile-item" @click="redirectToChatDetails">
         <ChatIcon size="36" class="chat-icon" />
         <div class="chat-wrapper">
@@ -108,17 +108,13 @@ interface Emits {
         </ElTooltip>
       </div>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <style lang="scss" scoped>
 .chat-card {
-  border: 0.5px solid var(--color-primary-300);
-  background: var(--color-primary-0);
-  box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
-  border-radius: 16px;
-  padding: 1rem;
-
+  padding-inline: 0.6rem;
+  padding-block: 0.8rem;
   & .chat-profile-item {
     grid-column: span 3;
     display: flex;
@@ -181,11 +177,6 @@ interface Emits {
 }
 
 .dark {
-  .chat-card {
-    border: 0.5px solid var(--color-primary-700);
-    background: var(--color-primary-900);
-    box-shadow: 0 0.2rem 0.3rem var(--color-primary-800);
-  }
   .username-title-wrapper {
     color: var(--color-primary-0);
     & .chat-name {

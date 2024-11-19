@@ -35,6 +35,11 @@ export default {
   getHelp: {
     title: 'Get help',
   },
+  form_rules: {
+    required: 'This field is required',
+    min_length: 'The minimum number of required characters is {min}',
+    max_length: 'The maximum number of characters is {max}',
+  },
   chat: {
     user: 'User',
     assistant: 'Assistant',
@@ -121,6 +126,7 @@ export default {
     title: 'Users',
     description: 'Manage team members of your organization and set their access level',
     invite_user: 'Invite user',
+    all_users: 'All Users',
     delete_user: {
       title: 'Delete User',
       description: 'Are you sure you want to delete this user? This action cannot be undone.',
@@ -131,6 +137,42 @@ export default {
         success_description: 'The user has been deleted successfully.',
         error_title: 'Deletion Failed',
         error_description: 'An error occurred. The user could not be deleted.',
+      },
+    },
+    edit_user: {
+      title: 'Edit User',
+      description: 'Make changes to the user\'s details below.',
+      confirm: 'Save Changes',
+      cancel: 'Cancel',
+      notifications: {
+        success_title: 'Changes Saved',
+        success_description: 'The user\'s information has been successfully updated.',
+        error_title: 'Update Failed',
+        error_description: 'An error occurred while updating the user\'s information. Please try again.',
+      },
+    },
+    activate_user: {
+      title: 'Activate User',
+      description: 'Activate the selected user to allow access.',
+      confirm: 'Activate',
+      cancel: 'Cancel',
+      notifications: {
+        success_title: 'User Activated',
+        success_description: 'The user has been successfully activated.',
+        error_title: 'Activation Failed',
+        error_description: 'An error occurred while activating the user. Please try again.',
+      },
+    },
+    deactivate_user: {
+      title: 'Deactivate User',
+      description: 'Deactivate the selected user to restrict access.',
+      confirm: 'Deactivate',
+      cancel: 'Cancel',
+      notifications: {
+        success_title: 'User Deactivated',
+        success_description: 'The user has been successfully deactivated.',
+        error_title: 'Deactivation Failed',
+        error_description: 'An error occurred while deactivating the user. Please try again.',
       },
     },
     form: {
@@ -193,12 +235,12 @@ export default {
     description: 'Manage the LLMAO administration app.',
     service_widgets: {
       agents: {
-        title: 'Total Agents',
+        title: 'Agents',
         description: 'active agents',
         view_more: 'View more',
       },
       users: {
-        title: 'Total Users',
+        title: 'Users',
         description: 'active users',
         view_more: 'View more',
       },
@@ -234,7 +276,7 @@ export default {
       },
       available_agents: {
         title: 'Available Agents',
-        description: 'View and interact with available AI-powered agents.',
+        description: 'Display of agents available for communication',
       },
     },
     agents: {

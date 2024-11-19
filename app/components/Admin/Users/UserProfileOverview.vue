@@ -3,7 +3,7 @@ import ProfileIcon from '~/assets/icons/svg/account.svg'
 import type { User } from '~/types/users'
 
 const props = withDefaults(defineProps<{
-  user: User
+  user: User | null
   size?: 'small' | 'medium' | 'large'
 }>(), {
   size: 'small',
@@ -26,11 +26,11 @@ const userData = computed(() => {
 const iconSize = computed(() => {
   switch (props.size) {
     case 'medium':
-      return '48px'
+      return '46px'
     case 'large':
-      return '60px'
+      return '84px'
     default:
-      return '36px'
+      return '40px'
   }
 })
 
