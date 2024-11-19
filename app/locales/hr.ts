@@ -106,6 +106,17 @@ export default {
     details: {
       empty: 'Ovaj dokument nije dostupan ili više ne postoji.',
     },
+    delete_document: {
+      title: 'Brisanje dokumenta',
+      description: 'Jeste li sigurni da želite izbrisati ovaj dokument? Ova radnja se ne može poništiti.',
+      notifications: {
+        success_title: 'Dokument izbrisan',
+        success_description: 'Dokument je uspješno izbrisan.',
+        error_title: 'Neuspješno brisanje',
+        error_description: 'Došlo je do pogreške prilikom pokušaja brisanja dokumenta. Molimo pokušajte ponovno kasnije.',
+      },
+    },
+
     notifications: {
       create: {
         success_title: 'Novi Dokument',

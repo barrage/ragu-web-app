@@ -9,6 +9,8 @@ import DocumentEditIcon from '~/assets/icons/svg/document-edit.svg'
 import UnknownDocumentIcon from '~/assets/icons/svg/unknown-document-icon.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
+import DocumentDismissIcon from '~/assets/icons/svg/document-dismiss.svg'
+
 import type { Document } from '~/types/document'
 
 /* Setup */
@@ -16,7 +18,7 @@ const props = defineProps<{
   document: Document
 }>()
 /* const emits = defineEmits<Emits>() */
-
+const documentStore = useDocumentsStore()
 const router = useRouter()
 
 const navigateToDocumentDetailsPage = () => {
@@ -38,9 +40,10 @@ const documentData = computed(() => {
     createdAt: props.document?.createdAt || t('users.user_card.unknown_date'),
   }
 })
+const { execute: executeDeleteDocument, error } = await useAsyncData(() => documentStore.DELETE_Document(props.document.id), { immediate: false })
 /* Delete document */
 const isDeleteDialogVisible = ref(false)
-const documentStore = useDocumentsStore()
+
 const openDeleteDialog = () => {
   isDeleteDialogVisible.value = true
 }
@@ -49,10 +52,29 @@ const closeDeleteDialog = () => {
   isDeleteDialogVisible.value = false
 }
 
-function deleteDocument() {
+const submitDeleteDocument = async () => {
   if (props?.document?.id) {
-    documentStore.DELETE_Document(props.document.id)
-    documentStore.GET_AllDocuments()
+    await executeDeleteDocument()
+    if (error.value) {
+      ElNotification({
+        title: t('documents.delete_document.notifications.error_title'),
+        message: t('documents.delete_document.notifications.error_description'),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
+    else {
+      documentStore.GET_AllDocuments()
+      ElNotification({
+        title: t('documents.delete_document.notifications.success_title'),
+        message: t('documents.delete_document.notifications.success_description'),
+        type: 'success',
+        customClass: 'success',
+        duration: 2500,
+      })
+    }
+    isDeleteDialogVisible.value = false
   }
 }
 </script>
@@ -142,14 +164,20 @@ function deleteDocument() {
         class="barrage-dialog--small"
       >
         <template #header>
-          <h6>Delete</h6>
+          <div class="delete-document-modal-header">
+            <DocumentDismissIcon size="42px" />
+            <h6>{{ $t('documents.delete_document.title') }}</h6>
+          </div>
         </template>
-        <p>Are you sure that you want to delete: <b>{{ document?.name }} document</b> </p>
+        <div class="delete-document-modal-body">
+          <p>{{ $t('documents.delete_document.description') }} </p>
+          <b>{{ document?.name }} </b>
+        </div>
         <template #footer>
           <el-button @click="closeDeleteDialog">
             Cancel
           </el-button>
-          <el-button type="danger" @click="deleteDocument()">
+          <el-button type="danger" @click="submitDeleteDocument">
             Delete
           </el-button>
         </template>
@@ -205,6 +233,12 @@ function deleteDocument() {
     display: flex;
     gap: 12px;
   }
+}
+.delete-document-modal-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
 }
 .manage-document-button {
   margin-left: auto;

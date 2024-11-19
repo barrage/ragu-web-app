@@ -104,6 +104,17 @@ export default {
     details: {
       empty: 'Dieses Dokument ist nicht verfügbar oder existiert nicht mehr.',
     },
+    delete_document: {
+      title: 'Dokument Löschen',
+      description: 'Sind Sie sicher, dass Sie dieses Dokument löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
+      notifications: {
+        success_title: 'Dokument Gelöscht',
+        success_description: 'Das Dokument wurde erfolgreich gelöscht.',
+        error_title: 'Löschen Fehlgeschlagen',
+        error_description: 'Beim Löschen des Dokuments ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
+      },
+    },
+
     notifications: {
       create: {
         success_title: 'Neues Dokument',

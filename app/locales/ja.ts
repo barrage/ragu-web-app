@@ -102,6 +102,16 @@ export default {
     details: {
       empty: 'このドキュメントは利用できないか、もはや存在しません。',
     },
+    delete_document: {
+      title: 'ドキュメントの削除',
+      description: 'このドキュメントを削除してもよろしいですか？ この操作は元に戻せません。',
+      notifications: {
+        success_title: 'ドキュメントが削除されました',
+        success_description: 'ドキュメントは正常に削除されました。',
+        error_title: '削除に失敗しました',
+        error_description: 'ドキュメントの削除中にエラーが発生しました。後でもう一度お試しください。',
+      },
+    },
     notifications: {
       create: {
         success_title: '新しいドキュメント',

@@ -105,6 +105,17 @@ export default {
     details: {
       empty: 'This document is unavailable or no longer exists.',
     },
+    delete_document: {
+      title: 'Delete Document',
+      description: 'Are you sure you want to delete this document? This action cannot be undone.',
+      notifications: {
+        success_title: 'Document Deleted',
+        success_description: 'The document has been successfully deleted.',
+        error_title: 'Deletion Failed',
+        error_description: 'An error occurred while trying to delete the document. Please try again later.',
+      },
+    },
+
     notifications: {
       create: {
         success_title: 'New Document',
