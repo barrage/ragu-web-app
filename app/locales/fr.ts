@@ -102,6 +102,17 @@ export default {
     details: {
       empty: 'Ce document n\'est pas disponible ou n\'existe plus.',
     },
+    delete_document: {
+      title: 'Supprimer le Document',
+      description: 'Êtes-vous sûr de vouloir supprimer ce document ? Cette action est irréversible.',
+      notifications: {
+        success_title: 'Document Supprimé',
+        success_description: 'Le document a été supprimé avec succès.',
+        error_title: 'Échec de la Suppression',
+        error_description: 'Une erreur est survenue lors de la suppression du document. Veuillez réessayer plus tard.',
+      },
+    },
+
     notifications: {
       create: {
         success_title: 'Nouveau Document',

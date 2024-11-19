@@ -104,6 +104,17 @@ export default {
     details: {
       empty: 'Este documento está indisponível ou não existe mais.',
     },
+    delete_document: {
+      title: 'Excluir Documento',
+      description: 'Tem certeza de que deseja excluir este documento? Esta ação não pode ser desfeita.',
+      notifications: {
+        success_title: 'Documento Excluído',
+        success_description: 'O documento foi excluído com sucesso.',
+        error_title: 'Falha na Exclusão',
+        error_description: 'Ocorreu um erro ao tentar excluir o documento. Por favor, tente novamente mais tarde.',
+      },
+    },
+
     notifications: {
       create: {
         success_title: 'Novo Documento',

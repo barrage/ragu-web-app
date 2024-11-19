@@ -102,6 +102,17 @@ export default {
     details: {
       empty: 'Este documento no está disponible o ya no existe.',
     },
+    delete_document: {
+      title: 'Eliminar Documento',
+      description: '¿Está seguro de que desea eliminar este documento? Esta acción no se puede deshacer.',
+      notifications: {
+        success_title: 'Documento Eliminado',
+        success_description: 'El documento ha sido eliminado con éxito.',
+        error_title: 'Error al Eliminar',
+        error_description: 'Ocurrió un error al intentar eliminar el documento. Por favor, inténtelo de nuevo más tarde.',
+      },
+    },
+
     notifications: {
       create: {
         success_title: 'Nuevo Documento',
