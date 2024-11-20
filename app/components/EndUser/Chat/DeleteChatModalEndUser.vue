@@ -40,7 +40,6 @@ const submitDeleteChat = async () => {
       })
     }
     else {
-      chatStore.GET_AllChats()
       router.push('/')
       ElNotification({
         title: t('chat.delete_chat.notifications.success_title'),
