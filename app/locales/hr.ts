@@ -345,6 +345,8 @@ export default {
       edit_agent: 'Uredi agenta',
       delete_agent: 'Obriši agenta',
       view_more: 'Pogledajte detalje agenta',
+      empty_state_title: 'Agent nije pronađen',
+      empty_state_desc: 'Agent kojeg tražite ne postoji ili trenutno nije dostupan. Molimo provjerite podatke o agentu ponovno ili kreirajte novog.',
     },
     labels: {
       id: 'ID Agenta',
@@ -464,6 +466,7 @@ export default {
       embeddingPlaceholder: 'Odaberi davatelja ugrađivanja',
       modelPlaceholder: 'Odaberi model',
       collectionName: 'Unesite naziv kolekcije',
+      empty_collection: 'Nema dostupnih kolekcija',
     },
     collection_card: {
       unknown_id: 'Nepoznati ID kolekcije',
@@ -473,6 +476,8 @@ export default {
       unknown_model: 'Nepoznati model',
       unknown_date: 'Nepoznati datum',
       view_more: 'Pogledaj detalje kolekcije',
+      empty_state_title: 'Kolekcija nije pronađena',
+      empty_state_desc: 'Kolekcija kojeg tražite ne postoji ili trenutno nije dostupna. Molimo provjerite podatke o kolekciji ponovno ili pokušajte s drugačijim pretraživanjem.',
     },
 
     labels: {

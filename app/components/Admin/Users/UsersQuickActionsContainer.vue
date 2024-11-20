@@ -141,6 +141,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
         destroy-on-close
         class="barrage-dialog--small"
         :close-icon="CloseCircleIcon"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
         @close="resetForm(inviteUserformRef)"
       >
         <template #header>

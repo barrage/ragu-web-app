@@ -13,7 +13,7 @@ const collectionStore = useCollectionsStore()
 const selectedCollectionId = ref(route.params.collectionId as string)
 
 // API CALLS
-const { error } = await useAsyncData(() => collectionStore.GET_SingleCollection(selectedCollectionId?.value))
+const { error, status } = await useAsyncData(() => collectionStore.GET_SingleCollection(selectedCollectionId?.value))
 
 errorHandler(error)
 </script>
@@ -26,11 +26,26 @@ errorHandler(error)
     >
       <ArrowLeftIcon /> {{ t('collections.title') }}
     </NuxtLink>
-    <CollectionDetails :single-collection="collectionStore.singleCollection" />
+
+    <template v-if="status === 'pending'">
+      <div class="collection-details-loader">
+        <MeetUpLoader />
+      </div>
+    </template>
+    <template v-else-if="collectionStore.singleCollection">
+      <CollectionDetails :single-collection="collectionStore.singleCollection" />
+    </template>
+    <CollectionDetailEmptyState v-else />
   </AdminPageContainer>
 </template>
 
 <style lang="scss" scoped>
+.collection-details-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--spacing-fluid-3-xl);
+}
 .back-link {
   display: flex;
   gap: 4px;

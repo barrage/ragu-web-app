@@ -240,6 +240,8 @@ export default {
       edit_agent: 'エージェントを編集',
       delete_agent: 'エージェントを削除',
       view_more: 'エージェントの詳細を表示',
+      empty_state_title: 'エージェントが見つかりません',
+      empty_state_desc: 'お探しのエージェントは存在しないか、現在利用できません。エージェント情報を再度確認するか、新しいエージェントを作成してください。',
     },
     labels: {
       id: 'エージェントID',
@@ -359,6 +361,7 @@ export default {
       embeddingPlaceholder: '埋め込みプロバイダーを選択',
       modelPlaceholder: 'モデルを選択',
       collectionName: 'コレクション名を入力してください',
+      empty_collection: '利用可能なコレクションがありません',
     },
     collection_card: {
       unknown_id: '不明なコレクションID',
@@ -367,6 +370,8 @@ export default {
       unknown_embedder: '不明な埋め込みプロバイダー',
       unknown_model: '不明なモデル',
       unknown_date: '不明な日付',
+      empty_state_title: 'コレクションが見つかりません',
+      empty_state_desc: 'お探しのコレクションは存在しないか、現在利用できません。コレクション情報を再度確認するか、別の検索をお試しください。',
     },
 
     labels: {

@@ -240,6 +240,8 @@ export default {
       edit_agent: 'Editar agente',
       delete_agent: 'Eliminar agente',
       view_more: 'Ver detalles del agente',
+      empty_state_title: 'Agente no encontrado',
+      empty_state_desc: 'El agente que buscas no existe o no está disponible en este momento. Por favor, verifica los datos del agente nuevamente o crea uno nuevo.',
     },
     labels: {
       id: 'ID del Agente',
@@ -358,6 +360,7 @@ export default {
       embeddingPlaceholder: 'Selecciona proveedor de embeddings',
       modelPlaceholder: 'Selecciona modelo',
       collectionName: 'Por favor, introduzca el nombre de la colección',
+      empty_collection: 'No hay colecciones disponibles',
     },
     collection_card: {
       unknown_id: 'ID de colección desconocido',
@@ -366,6 +369,8 @@ export default {
       unknown_embedder: 'Proveedor de incrustación desconocido',
       unknown_model: 'Modelo desconocido',
       unknown_date: 'Fecha desconocida',
+      empty_state_title: 'Colección no encontrada',
+      empty_state_desc: 'La colección que buscas no existe o no está disponible en este momento. Por favor, verifica los datos de la colección nuevamente o intenta con una búsqueda diferente.',
     },
 
     labels: {

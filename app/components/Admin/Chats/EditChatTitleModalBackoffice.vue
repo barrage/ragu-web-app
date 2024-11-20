@@ -111,6 +111,8 @@ const closeModal = () => {
       align-center
       class="barrage-dialog--small"
       :close-icon="CloseCircleIcon"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
       @close="closeModal"
     >
       <template #header>

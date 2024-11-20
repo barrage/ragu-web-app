@@ -138,6 +138,8 @@ const closeModal = () => {
       align-center
       class="barrage-dialog--small"
       :close-icon="CloseCircleIcon"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
       @close="closeModal"
     >
       <template #header>
@@ -166,6 +168,12 @@ const closeModal = () => {
               :label="collection.name"
               :value="collection.name"
             />
+
+            <template #empty>
+              <div>
+                {{ t('collections.placeholders.empty_collection') || 'No collections available' }}
+              </div>
+            </template>
           </ElSelect>
         </ElFormItem>
 

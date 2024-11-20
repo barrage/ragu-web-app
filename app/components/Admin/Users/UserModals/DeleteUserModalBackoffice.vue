@@ -10,6 +10,7 @@ const props = defineProps<{
 
 const emits = defineEmits<Emits>()
 const { t } = useI18n()
+const router = useRouter()
 const deleteUserModalVisible = ref(props.isOpen)
 const usersStore = useUsersStore()
 const closeModal = () => {
@@ -41,6 +42,7 @@ const submitDeleteUser = async () => {
     }
     else {
       emits('userDeleted')
+      router.push(`/admin/users`)
       ElNotification({
         title: t('users.delete_user.notifications.success_title'),
         message: t('users.delete_user.notifications.success_description'),
