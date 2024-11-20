@@ -65,7 +65,8 @@ const submiteditChatTitleForm = async (formEl: FormInstance | undefined) => {
       }
 
       else {
-        chatStore.GET_AllChats()
+        await chatStore.GET_AllChats()
+        chatStore.GET_Chat(props.selectedChat!.id)
         if (chatStore.selectedChat?.chat.title) {
           chatStore.selectedChat.chat.title = editChatTitleForm.title
         }
@@ -97,6 +98,7 @@ watch(
 onMounted(() => {
   prefilleditChatTitleForm()
 })
+
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) { return }
   formEl.resetFields()
