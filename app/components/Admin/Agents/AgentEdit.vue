@@ -2,7 +2,7 @@
 // IMPORTS
 import type { FormInstance, FormRules } from 'element-plus'
 import { useAgentStore } from '~/stores/agents'
-import type { Agent, AgentDetail, EmbeddingProvider } from '~/types/agent'
+import type { EmbeddingProvider } from '~/types/agent'
 
 // LAYOUT
 definePageMeta({
@@ -32,9 +32,9 @@ const form = reactive({
     model: '',
     temperature: 0.1,
     instructions: {
-      titleInstructions: '',
-      language: '',
-      summaryInstructions: '',
+      titleInstruction: '',
+      languageInstruction: '',
+      summaryInstruction: '',
     },
   },
 })
@@ -135,9 +135,9 @@ onMounted(async () => {
   form.configuration.model = agentStore.singleAgent?.configuration?.model ?? ''
   form.language = agentStore.singleAgent?.agent?.language ?? ''
   form.configuration.temperature = agentStore.singleAgent?.configuration?.temperature ?? 0.1
-  form.configuration.instructions.titleInstructions = agentStore.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
-  form.configuration.instructions.language = agentStore.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
-  form.configuration.instructions.summaryInstructions = agentStore.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
+  form.configuration.instructions.titleInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
+  form.configuration.instructions.languageInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
+  form.configuration.instructions.summaryInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
   form.active = agentStore.singleAgent?.agent?.active ?? true
 })
 
@@ -251,7 +251,7 @@ onUnmounted(() => {
           :label="t('agents.labels.titleInstruction')"
           prop="configuration.instructions.titleInstructions"
         >
-          <ElInput v-model="form.configuration.instructions.titleInstructions" />
+          <ElInput v-model="form.configuration.instructions.titleInstruction" />
         </ElFormItem>
 
         <!-- Language Instruction -->
@@ -260,7 +260,7 @@ onUnmounted(() => {
           :label="t('agents.labels.languageInstruction')"
           prop="configuration.instructions.language"
         >
-          <ElInput v-model="form.configuration.instructions.language" />
+          <ElInput v-model="form.configuration.instructions.languageInstruction" />
         </ElFormItem>
 
         <!-- Summary Instruction -->
@@ -269,7 +269,7 @@ onUnmounted(() => {
           :label="t('agents.labels.summaryInstruction')"
           prop="configuration.instructions.summaryInstructions"
         >
-          <ElInput v-model="form.configuration.instructions.summaryInstructions" />
+          <ElInput v-model="form.configuration.instructions.summaryInstruction" />
         </ElFormItem>
 
         <!-- Active Status -->

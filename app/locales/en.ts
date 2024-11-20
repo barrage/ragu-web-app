@@ -353,6 +353,8 @@ export default {
       edit_agent: 'Edit agent',
       delete_agent: 'Delete agent',
       view_more: 'View agent details',
+      empty_state_title: 'Agent not found',
+      empty_state_desc: 'The agent you are looking for does not exist or is currently unavailable. Please check the agent details again or create a new one.',
     },
     labels: {
       id: 'Agent ID',
@@ -477,6 +479,7 @@ export default {
       embeddingPlaceholder: 'Select Embedding Provider',
       modelPlaceholder: 'Select Model',
       collectionName: 'Please enter the collection name',
+      empty_collection: 'No collection available',
     },
 
     collection_card: {
@@ -486,6 +489,9 @@ export default {
       unknown_embedder: 'Unknown embeddingProvider',
       unknown_model: 'Unknown model',
       unknown_date: 'Unknown date',
+      empty_state_title: 'Collection not found',
+      empty_state_desc: 'The collection you are looking for does not exist or is currently unavailable. Please check the collection details again or try a different search.',
+
     },
     labels: {
       id: 'Collection ID',

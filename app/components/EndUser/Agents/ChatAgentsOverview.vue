@@ -8,7 +8,7 @@ const selectAgent = (agent: any) => {
   return selectedAgent.value = agent
 }
 
-const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
+const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents())
 
 errorHandler(error)
 
@@ -22,32 +22,47 @@ watch(
 </script>
 
 <template>
-  <div class="agents-overview-container">
-    <div class="agents-names-wrapper">
-      <template v-for="agent in agentStore.appAgents" :key="agent.id">
-        <div
-          class="agent-name"
-          :class="{ selected: agent.id === selectedAgent?.id }"
-          @click="selectAgent(agent)"
-        >
-          <ChatAgentIcon /> {{ agent.name }}
-        </div>
-      </template>
+  <template v-if="status === 'pending'">
+    <div class="agent-details-loader">
+      <MeetUpLoader />
     </div>
+  </template>
+  <template v-else-if="agentStore.appAgents.length !== 0">
+    <div class="agents-overview-container">
+      <div class="agents-names-wrapper">
+        <template v-for="agent in agentStore.appAgents" :key="agent.id">
+          <div
+            class="agent-name"
+            :class="{ selected: agent.id === selectedAgent?.id }"
+            @click="selectAgent(agent)"
+          >
+            <ChatAgentIcon /> {{ agent.name }}
+          </div>
+        </template>
+      </div>
 
-    <div class="selected-agent-wrapper">
-      <ChatAgentIcon size="52" />
-      <h6>{{ selectedAgent?.name }}</h6>
-      <div class="agent-info">
-        <span>Language: {{ selectedAgent?.language }}</span>
-        <span>Updated: {{ formatDate(selectedAgent?.updatedAt) }}</span>
-        <p>Description: {{ selectedAgent?.description }}</p>
+      <div class="selected-agent-wrapper">
+        <ChatAgentIcon size="52" />
+        <h6>{{ selectedAgent?.name }}</h6>
+        <div class="agent-info">
+          <span>Language: {{ selectedAgent?.language }}</span>
+          <span>Updated: {{ formatDate(selectedAgent?.updatedAt) }}</span>
+          <p>Description: {{ selectedAgent?.description }}</p>
+        </div>
       </div>
     </div>
-  </div>
+  </template>
+  <AgentDetailsEmptyState v-else />
 </template>
 
 <style lang="scss" scoped>
+.agent-details-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--spacing-fluid-3-xl);
+}
+
 .agents-overview-container {
   display: flex;
 

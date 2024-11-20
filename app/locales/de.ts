@@ -243,6 +243,8 @@ export default {
       edit_agent: 'Agent bearbeiten',
       delete_agent: 'Agent löschen',
       view_more: 'Agentdetails anzeigen',
+      empty_state_title: 'Agent nicht gefunden',
+      empty_state_desc: 'Der gesuchte Agent existiert nicht oder ist derzeit nicht verfügbar. Bitte überprüfen Sie die Agentendaten erneut oder erstellen Sie einen neuen Agenten.',
     },
     labels: {
       id: 'Agenten-ID',
@@ -362,14 +364,16 @@ export default {
       embeddingPlaceholder: 'Wählen Sie den Einbettungsanbieter',
       modelPlaceholder: 'Modell auswählen',
       collectionName: 'Bitte geben Sie den Namen der Sammlung ein',
+      empty_collection: 'Keine Sammlung verfügbar',
     },
     collection_card: {
       unknown_id: 'Unbekannte Sammlungs-ID',
       unknown_collectin_name: 'Unbekannter Sammlungsname',
-      unknown_provider: 'Unbekannter Anbieter',
       unknown_embedder: 'Unbekannter Einbettungsanbieter',
       unknown_model: 'Unbekanntes Modell',
       unknown_date: 'Unbekanntes Datum',
+      empty_state_title: 'Sammlung nicht gefunden',
+      empty_state_desc: 'Die gesuchte Sammlung existiert nicht oder ist derzeit nicht verfügbar. Bitte überprüfen Sie die Sammlungsdaten erneut oder versuchen Sie eine andere Suche.',
     },
 
     labels: {

@@ -138,7 +138,6 @@ const closeDeactivateModal = () => {
       :is-open="deleteUserModalVisible"
       :selected-user="selectedUserDelete"
       @close-modal="closeDeleteModal"
-      @user-deleted="GetUserDetails"
     />
 
     <EditUserModalBackoffice

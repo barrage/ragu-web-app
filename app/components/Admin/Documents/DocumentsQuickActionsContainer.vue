@@ -158,6 +158,8 @@ const setEmptyList = () => {
         :close-icon="CloseCircleIcon"
         destroy-on-close
         :before-close="setEmptyList"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
       >
         <template #header>
           <h6>Upload file</h6>
