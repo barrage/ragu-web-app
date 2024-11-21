@@ -5,6 +5,15 @@ export default {
     title: 'ログイン',
     description: 'ログイン方法を選択してください',
     continueWith: '次で続行',
+    notifications: {
+      error_title: 'ログインに失敗しました',
+      error_description: '認証できませんでした。もう一度お試しください。',
+    },
+
+  },
+  logout: {
+    error_title: 'ログアウトに失敗しました',
+    error_description: 'ログアウトを試みる際にエラーが発生しました。もう一度お試しください。',
   },
   timePeriod: {
     today: '今日',
@@ -28,6 +37,9 @@ export default {
     agents: 'エージェント',
     support: 'サポート',
     signOut: 'ログアウト',
+    browse_agents: 'サポートする準備ができているすべてのチャットエージェントを閲覧する',
+    signout_text: 'サインアウトを進めてもよろしいですか？',
+    profile_settings: 'プロフィール設定',
   },
   getHelp: {
     title: '助けを求める',
@@ -42,6 +54,8 @@ export default {
     assistant: 'アシスタント',
     messages: 'メッセージ',
     inactive_agent: 'このエージェントはもうアクティブではありません。新しい会話を始めるには、アクティブなエージェントを選択してください。',
+    copy_title: 'コピーしました',
+    copy_message: 'クリップボードにコピーしました',
     all_chats: 'すべてのチャット',
     admin: {
       title: 'チャット',
@@ -100,6 +114,29 @@ export default {
     source: 'ソース',
     id: 'ドキュメントID',
     hash: 'ハッシュ',
+    formats: '形式',
+    total: '合計',
+    sync: '同期',
+    upload: 'アップロード',
+    most_recent: '最新',
+    specific_formats: '特定の形式',
+    series_name: '形式',
+    sync_docs: 'ドキュメントを同期する',
+
+    tooltip: {
+      delete_document: 'ドキュメントを削除します',
+      manage_document: 'ドキュメントを管理します',
+      display_total: 'ドキュメントの総数を表示します',
+      most_recent: '最近更新または作成された5つのドキュメントを表示します',
+      document_formats: '円グラフで異なるドキュメント形式の分布を表示します',
+    },
+
+    uploads: {
+      title: 'ファイルをアップロード',
+      description: 'ここにファイルをドロップするか',
+      description_link: 'クリックしてアップロード',
+    },
+
     details: {
       empty: 'このドキュメントは利用できないか、もはや存在しません。',
     },
@@ -484,6 +521,8 @@ export default {
       unknown_date: '不明な日付',
       empty_state_title: 'コレクションが見つかりません',
       empty_state_desc: 'お探しのコレクションは存在しないか、現在利用できません。コレクション情報を再度確認するか、別の検索をお試しください。',
+      view_more: 'コレクションの詳細を表示',
+      delete_collection: 'コレクションを削除',
     },
 
     labels: {
@@ -543,6 +582,8 @@ export default {
         assign_error_title: 'エージェントにコレクションの割り当てに失敗しました！',
         assign_cuccess_title: 'コレクションが割り当てられました！',
         delete_collection: '削除するコレクションがありません。新しいコレクションを割り当ててください！',
+        update_error_collection: 'コレクションの更新に失敗しました。',
+        update_collection: 'コレクションが正常に更新されました！',
       },
     },
   },

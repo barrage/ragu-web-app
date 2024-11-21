@@ -5,6 +5,15 @@ export default {
     title: 'Login',
     description: 'Scegli un metodo di accesso',
     continueWith: 'Continua con',
+    notifications: {
+      error_title: 'Accesso fallito',
+      error_description: 'Impossibile autenticarsi. Per favore riprova.',
+    },
+
+  },
+  logout: {
+    error_title: 'Disconnessione fallita',
+    error_description: 'Si è verificato un errore durante il tentativo di disconnessione. Per favore riprova.',
   },
   timePeriod: {
     today: 'Oggi',
@@ -28,6 +37,9 @@ export default {
     agents: 'Agenti',
     support: 'Supporto',
     signOut: 'Disconnetti',
+    browse_agents: 'Esplora tutti gli agenti di chat pronti ad assisterti',
+    signout_text: 'Sei sicuro di voler procedere con la disconnessione?',
+    profile_settings: 'Impostazioni del profilo',
   },
   getHelp: {
     title: 'Richiedi aiuto',
@@ -42,6 +54,8 @@ export default {
     assistant: 'Assistente',
     messages: 'Messaggi',
     inactive_agent: 'Questo agente non è più attivo. Seleziona un agente attivo per iniziare una nuova conversazione. ',
+    copy_title: 'Copiato',
+    copy_message: 'Copiato negli appunti',
     all_chats: 'Tutte le chat',
     admin: {
       title: 'Chat',
@@ -100,6 +114,29 @@ export default {
     source: 'Fonte',
     id: 'ID Documento',
     hash: 'Hash',
+    formats: 'Formati',
+    total: 'Totale',
+    sync: 'Sincronizza',
+    upload: 'Carica',
+    most_recent: 'I più recenti',
+    specific_formats: 'Formati specifici',
+    series_name: 'Formato',
+    sync_docs: 'Sincronizza documenti',
+
+    tooltip: {
+      delete_document: 'Elimina il tuo documento',
+      manage_document: 'Gestisci il tuo documento',
+      display_total: 'Mostra il numero totale di documenti',
+      most_recent: 'Mostra i 5 documenti più recentemente aggiornati o creati',
+      document_formats: 'Mostra la distribuzione dei diversi formati di documento in un grafico a torta',
+    },
+
+    uploads: {
+      title: 'Carica file',
+      description: 'Trascina qui il file oppure',
+      description_link: 'clicca per caricare',
+    },
+
     details: {
       empty: 'Questo documento non è disponibile o non esiste più.',
     },
@@ -487,6 +524,9 @@ export default {
       unknown_date: 'Data sconosciuta',
       empty_state_title: 'Collezione non trovata',
       empty_state_desc: 'La collezione che stai cercando non esiste o non è attualmente disponibile. Controlla nuovamente i dati della collezione o prova con una ricerca diversa.',
+      view_more: 'Visualizza i dettagli della collezione',
+      delete_collection: 'Elimina collezione',
+
     },
 
     labels: {
@@ -545,6 +585,8 @@ export default {
         assign_error_title: 'Errore nell’assegnazione della collezione all’agente!',
         assign_cuccess_title: 'Collezione assegnata!',
         delete_collection: 'Non ci sono collezioni da eliminare, per favore assegna una nuova collezione!',
+        update_error_collection: 'Aggiornamento della collezione non riuscito.',
+        update_collection: 'Collezione aggiornata con successo!',
       },
     },
   },

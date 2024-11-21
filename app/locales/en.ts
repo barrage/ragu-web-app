@@ -8,6 +8,15 @@ export default {
     title: 'Login',
     description: 'Choose a login method',
     continueWith: 'Continue with',
+
+    notifications: {
+      error_title: 'Login Failed',
+      error_description: 'Unable to authenticate. Please try again.',
+    },
+  },
+  logout: {
+    error_title: 'Logout failed',
+    error_description: 'An error occurred while trying to log you out. Please try again.',
   },
   timePeriod: {
     today: 'Today',
@@ -31,6 +40,9 @@ export default {
     agents: 'Agents',
     support: 'Support',
     signOut: 'Sign out',
+    browse_agents: 'Browse all chat agents ready to assist you',
+    signout_text: 'Are you sure you want to proceed with signing out?',
+    profile_settings: 'Profile Settings',
   },
   getHelp: {
     title: 'Get help',
@@ -46,6 +58,8 @@ export default {
     messages: 'Messages',
     all_chats: 'All Chats',
     inactive_agent: 'This agent is no longer active. Please select an active agent to begin a new conversation.',
+    copy_title: 'Copied',
+    copy_message: 'Copied to clipboard',
     admin: {
       title: 'Chats',
       description: 'Manage all your chats in one place',
@@ -73,6 +87,7 @@ export default {
         success_description: 'Chat title has been successfully updated.',
         error_title: 'Error',
         error_description: 'An error occurred while setting the new chat title.',
+
       },
     },
     delete_chat: {
@@ -103,6 +118,27 @@ export default {
     source: 'Source',
     id: 'Document ID',
     hash: 'Hash',
+    formats: 'Formats',
+    total: 'Total',
+    sync: 'Sync',
+    upload: 'Upload',
+    most_recent: 'Most recent',
+    specific_formats: 'Specific formats',
+    series_name: 'Format',
+    sync_docs: 'Sync docs',
+    tooltip: {
+      delete_document: 'Delete your document',
+      manage_document: 'Manage your document',
+      display_total: 'Display total number of documents',
+      most_recent: 'Shows the 5 most recently updated or created documents',
+      document_formats: 'Shows the distribution of different document formats in a pie chart',
+    },
+    uploads: {
+      title: 'Upload file',
+      description: 'Drop file here or',
+      description_link: 'click to upload',
+
+    },
     details: {
       empty: 'This document is unavailable or no longer exists.',
     },
@@ -118,6 +154,7 @@ export default {
     },
 
     notifications: {
+
       create: {
         success_title: 'New Document',
         success_description: 'Successfully created a new document',
@@ -129,6 +166,7 @@ export default {
         error_file_size_description: 'File size cannot exceed 50 MB!',
         error_file_type_title: 'File Format Issue',
         error_file_type_description: 'File must be in PDF, TXT, JSON, or DOCX format!',
+
       },
     },
     edit_configuration: 'Edit configuration',
@@ -602,6 +640,8 @@ export default {
       unknown_date: 'Unknown date',
       empty_state_title: 'Collection not found',
       empty_state_desc: 'The collection you are looking for does not exist or is currently unavailable. Please check the collection details again or try a different search.',
+      view_more: 'View collection details',
+      delete_collection: 'Delete collection',
 
     },
     labels: {
@@ -664,6 +704,8 @@ export default {
         assign_error_title: 'Collection faild to assigned on agent!',
         assign_cuccess_title: 'Collection is assigned!',
         delete_collection: 'You dont have collection to delete, please asigned new collection!',
+        update_error_collection: 'Failed to update collection.',
+        update_collection: 'Collection updated successfully!',
       },
 
     },

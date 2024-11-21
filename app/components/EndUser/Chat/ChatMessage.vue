@@ -13,6 +13,8 @@ const props = defineProps<{
   message: Message | null
 }>()
 
+const { t } = useI18n()
+
 const chatStore = useChatStore()
 const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 const displayedContent = ref('')
@@ -89,8 +91,8 @@ const copyItem = () => {
   if (props.message?.content) {
     copy(props.message.content)
     ElNotification({
-      title: 'Copied',
-      message: `Copied message to clipboard`,
+      title: t('chat.copy_title'),
+      message: t('chat.copy_message'),
       type: 'info',
       customClass: 'info',
       duration: 2500,

@@ -106,8 +106,8 @@ const syncDocuments = async () => {
     await execute()
     if (status.value !== 'error') {
       ElNotification({
-        title: 'Success',
-        message: 'Sync docs',
+        title: t('agents.notifications.create_title'),
+        message: t('documents.sync_docs'),
         type: 'success',
         customClass: 'success',
         duration: 2500,
@@ -142,13 +142,13 @@ const setEmptyList = () => {
       :disabled="loading"
       @click="syncDocuments"
     >
-      <DocumentSyncIcon v-if="!loading" /> <LlmLoader v-else />  Sync
+      <DocumentSyncIcon v-if="!loading" /> <LlmLoader v-else /> {{ t('documents.sync') }}
     </el-button>
     <el-button
       type="primary"
       @click="openUploadModal"
     >
-      <DocumentAddIcon />  Upload
+      <DocumentAddIcon />  {{ t('documents.upload') }}
     </el-button>
     <ClientOnly>
       <ElDialog
@@ -162,7 +162,7 @@ const setEmptyList = () => {
         :close-on-press-escape="false"
       >
         <template #header>
-          <h6>Upload file</h6>
+          <h6>{{ t('documents.uploads.title') }}</h6>
         </template>
         <el-upload
           v-model:file-list="fileList"
@@ -176,7 +176,7 @@ const setEmptyList = () => {
             <template v-if="!isUploadLoading">
               <UploadIcon size="55px" />
               <div class="el-upload__text">
-                Drop file here or <em class="fake-link">click to upload</em>
+                {{ t('documents.uploads.description') }} <em class="fake-link">{{ t('documents.uploads.description_link') }}</em>
               </div>
             </template>
 

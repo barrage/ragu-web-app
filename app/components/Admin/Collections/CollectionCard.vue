@@ -79,13 +79,19 @@ const redirectToCollectionDetails = () => {
             <EyeIcon />
           </el-button>
         </ElTooltip>
-        <ElButton
-          type="danger"
-          plain
-          @click.stop="openDeleteModal"
+        <ElTooltip
+          :content="t('collections.collection_card.delete_collection')"
+          :enterable="false"
+          placement="top"
         >
-          <DeleteIcon />
-        </ElButton>
+          <ElButton
+            type="danger"
+            plain
+            @click.stop="openDeleteModal"
+          >
+            <DeleteIcon />
+          </ElButton>
+        </ElTooltip>
       </div>
     </div>
   </el-card>

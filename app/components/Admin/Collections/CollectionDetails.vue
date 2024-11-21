@@ -75,8 +75,8 @@ const submitSelection = async () => {
 
   if (collectionError.value) {
     ElNotification({
-      title: 'Error',
-      message: 'Failed to update collection.',
+      title: t('collections.assign_collection.notification.error_title'),
+      message: t('collections.assign_collection.notification.update_error_collection'),
       type: 'error',
       customClass: 'error',
       duration: 2500,
@@ -84,8 +84,8 @@ const submitSelection = async () => {
   }
   else {
     ElNotification({
-      title: 'Success',
-      message: 'Collection updated successfully!',
+      title: t('collections.notifications.delete_title'),
+      message: t('collections.assign_collection.notification.update_collection'),
       type: 'success',
       customClass: 'success',
       duration: 2500,

@@ -5,6 +5,15 @@ export default {
     title: 'Login',
     description: 'Wählen Sie eine Anmeldemethode',
     continueWith: 'Weiter mit',
+    notifications: {
+      error_title: 'Anmeldung fehlgeschlagen',
+      error_description: 'Authentifizierung fehlgeschlagen. Bitte versuchen Sie es erneut.',
+    },
+
+  },
+  logout: {
+    error_title: 'Abmeldung fehlgeschlagen',
+    error_description: 'Beim Versuch, sich abzumelden, ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
   },
   timePeriod: {
     today: 'Heute',
@@ -29,6 +38,9 @@ export default {
     agents: 'Agenten',
     support: 'Support',
     signOut: 'Abmelden',
+    browse_agents: 'Durchsuchen Sie alle Chat-Agenten, die bereit sind, Ihnen zu helfen',
+    signout_text: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
+    profile_settings: 'Profileinstellungen',
   },
   getHelp: {
     title: 'Hilfe erhalten',
@@ -44,6 +56,8 @@ export default {
     assistant: 'Assistent',
     messages: 'Nachrichten',
     inactive_agent: 'Dieser Agent ist nicht mehr aktiv. Bitte wählen Sie einen aktiven Agenten, um ein neues Gespräch zu beginnen.',
+    copy_title: 'Kopiert',
+    copy_message: 'In die Zwischenablage kopiert',
     all_chats: 'Alle Chats',
     admin: {
       title: 'Chats',
@@ -102,6 +116,29 @@ export default {
     source: 'Quelle',
     id: 'Dokument-ID',
     hash: 'Hash',
+    formats: 'Formate',
+    total: 'Gesamt',
+    sync: 'Synchronisieren',
+    upload: 'Hochladen',
+    most_recent: 'Am neuesten',
+    specific_formats: 'Spezifische Formate',
+    series_name: 'Format',
+    sync_docs: 'Dokumente synchronisieren',
+
+    tooltip: {
+      delete_document: 'Löschen Sie Ihr Dokument',
+      manage_document: 'Verwalten Sie Ihr Dokument',
+      display_total: 'Gesamtanzahl der Dokumente anzeigen',
+      most_recent: 'Zeigt die 5 zuletzt aktualisierten oder erstellten Dokumente an',
+      document_formats: 'Zeigt die Verteilung der verschiedenen Dokumentformate in einem Kreisdiagramm an',
+    },
+
+    uploads: {
+      title: 'Datei hochladen',
+      description: 'Datei hier ablegen oder',
+      description_link: 'klicken, um hochzuladen',
+    },
+
     details: {
       empty: 'Dieses Dokument ist nicht verfügbar oder existiert nicht mehr.',
     },
@@ -486,6 +523,9 @@ export default {
       unknown_date: 'Unbekanntes Datum',
       empty_state_title: 'Sammlung nicht gefunden',
       empty_state_desc: 'Die gesuchte Sammlung existiert nicht oder ist derzeit nicht verfügbar. Bitte überprüfen Sie die Sammlungsdaten erneut oder versuchen Sie eine andere Suche.',
+      view_more: 'Sammlungsdetails anzeigen',
+      delete_collection: 'Sammlung löschen',
+
     },
 
     labels: {
@@ -544,6 +584,8 @@ export default {
         assign_error_title: 'Zuweisung der Sammlung an Agent fehlgeschlagen!',
         assign_cuccess_title: 'Sammlung zugewiesen!',
         delete_collection: 'Keine Sammlung zum Löschen, bitte neue Sammlung hinzufügen!',
+        update_error_collection: 'Fehler beim Aktualisieren der Sammlung.',
+        update_collection: 'Sammlung erfolgreich aktualisiert!',
       },
     },
   },

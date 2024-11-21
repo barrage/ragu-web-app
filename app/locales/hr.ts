@@ -5,7 +5,16 @@ export default {
     title: 'Prijava',
     description: 'Odaberite način prijave',
     continueWith: 'Nastavite sa',
+    notifications: {
+      error_title: 'Prijava nije uspjela',
+      error_description: 'Autentifikacija nije uspjela. Molimo pokušajte ponovno.',
+    },
   },
+  logout: {
+    error_title: 'Odjava nije uspjela',
+    error_description: 'Došlo je do pogreške prilikom pokušaja odjave. Molimo pokušajte ponovno.',
+  },
+
   timePeriod: {
     today: 'Danas',
     yesterday: 'Jučer',
@@ -29,6 +38,9 @@ export default {
     agents: 'Agenti',
     support: 'Podrška',
     signOut: 'Odjavi se',
+    browse_agents: 'Pregledajte sve chat agente spremne da vam pomognu',
+    signout_text: 'Jeste li sigurni da želite nastaviti s odjavom?',
+    profile_settings: 'Postavke profila',
   },
   getHelp: {
     title: 'Traži pomoć',
@@ -46,6 +58,8 @@ export default {
     messages: 'Poruke',
     all_chats: 'Svi razgovori',
     inactive_agent: 'Ovaj agent više nije aktivan. Molimo odaberite aktivnog agenta za započinjanje novog razgovora.',
+    copy_title: 'Kopirano',
+    copy_message: 'Kopirano u međuspremnik',
     admin: {
       title: 'Razgovori',
       description: 'Upravljajte svim razgovorima na jednom mjestu',
@@ -73,6 +87,7 @@ export default {
         success_description: 'Chat je uspješno uređen.',
         error_title: 'Greška',
         error_description: 'Došlo je do greške pri postavljanju novog naslova chata.',
+
       },
     },
     delete_chat: {
@@ -104,6 +119,29 @@ export default {
     source: 'Izvor',
     id: 'Dokument ID',
     hash: 'Hash',
+    formats: 'Formati',
+    total: 'Ukupno',
+    sync: 'Sinkronizacija',
+    upload: 'Učitaj',
+    most_recent: 'Najnovije',
+    specific_formats: 'Specifični formati',
+    series_name: 'Format',
+    sync_docs: 'Sinkroniziraj dokumente',
+
+    tooltip: {
+      delete_document: 'Izbriši svoj dokument',
+      manage_document: 'Upravljaj svojim dokumentom',
+      display_total: 'Prikaži ukupan broj dokumenata',
+      most_recent: 'Prikazuje 5 najnovije ažuriranih ili stvorenih dokumenata',
+      document_formats: 'Prikazuje distribuciju različitih formata dokumenata u tortnom grafikonu',
+    },
+
+    uploads: {
+      title: 'Učitaj datoteku',
+      description: 'Ispustite datoteku ovdje ili',
+      description_link: 'kliknite za učitavanje',
+    },
+
     details: {
       empty: 'Ovaj dokument nije dostupan ili više ne postoji.',
     },
@@ -595,6 +633,8 @@ export default {
       view_more: 'Pogledaj detalje kolekcije',
       empty_state_title: 'Kolekcija nije pronađena',
       empty_state_desc: 'Kolekcija kojeg tražite ne postoji ili trenutno nije dostupna. Molimo provjerite podatke o kolekciji ponovno ili pokušajte s drugačijim pretraživanjem.',
+      delete_collection: 'Izbriši kolekciju',
+
     },
 
     labels: {
@@ -655,6 +695,8 @@ export default {
         assign_error_title: 'Neuspješno dodjeljivanje kolekcije agentu!',
         assign_cuccess_title: 'Kolekcija je dodijeljena!',
         delete_collection: 'Nemate kolekciju za brisanje, molimo dodajte novu kolekciju!',
+        update_error_collection: 'Ažuriranje kolekcije nije uspjelo.',
+        update_collection: 'Kolekcija uspješno ažurirana!',
       },
     },
   },
