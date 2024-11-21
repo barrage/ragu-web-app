@@ -147,7 +147,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="agent-section grid">
+  <el-card class="edit-agent-card is-primary">
     <h4 class="typing-effect title-color section-title">
       {{ agentStore.editMode ? t('agents.titles.edit') : t('agents.titles.details') }}
     </h4>
@@ -167,16 +167,6 @@ onUnmounted(() => {
         >
           <ElInput v-model="form.name" />
         </ElFormItem>
-
-        <!-- Context -->
-        <ElFormItem
-          class="group context"
-          :label="t('agents.labels.context')"
-          prop="configuration.context"
-        >
-          <ElInput v-model="form.configuration.context" type="textarea" />
-        </ElFormItem>
-
         <!-- Description -->
         <ElFormItem
           class="group description"
@@ -184,6 +174,46 @@ onUnmounted(() => {
           prop="description"
         >
           <ElInput v-model="form.description" />
+        </ElFormItem>
+        <!-- Language -->
+        <ElFormItem
+          class="group"
+          :label="t('agents.labels.language')"
+          prop="language"
+        >
+          <ElInput v-model="form.language" />
+        </ElFormItem>
+        <!-- Language Instruction -->
+        <ElFormItem
+          class="group"
+          :label="t('agents.labels.languageInstruction')"
+          prop="configuration.instructions.language"
+        >
+          <ElInput v-model="form.configuration.instructions.languageInstruction" />
+        </ElFormItem>
+        <!-- Summary Instruction -->
+        <ElFormItem
+          class="group"
+          :label="t('agents.labels.summaryInstruction')"
+          prop="configuration.instructions.summaryInstructions"
+        >
+          <ElInput v-model="form.configuration.instructions.summaryInstruction" />
+        </ElFormItem>
+        <!-- Title Instruction -->
+        <ElFormItem
+          class="group"
+          :label="t('agents.labels.titleInstruction')"
+          prop="configuration.instructions.titleInstructions"
+        >
+          <ElInput v-model="form.configuration.instructions.titleInstruction" />
+        </ElFormItem>
+        <!-- Context -->
+        <ElFormItem
+          class="group context-form-item"
+          :label="t('agents.labels.context')"
+          prop="configuration.context"
+        >
+          <ElInput v-model="form.configuration.context" type="textarea" />
         </ElFormItem>
 
         <!-- LLM Provider -->
@@ -222,15 +252,6 @@ onUnmounted(() => {
           </ElSelect>
         </ElFormItem>
 
-        <!-- Language -->
-        <ElFormItem
-          class="group"
-          :label="t('agents.labels.language')"
-          prop="language"
-        >
-          <ElInput v-model="form.language" />
-        </ElFormItem>
-
         <!-- Temperature -->
         <ElFormItem
           class="group"
@@ -243,33 +264,6 @@ onUnmounted(() => {
             :max="1"
             :step="0.1"
           />
-        </ElFormItem>
-
-        <!-- Title Instruction -->
-        <ElFormItem
-          class="group"
-          :label="t('agents.labels.titleInstruction')"
-          prop="configuration.instructions.titleInstructions"
-        >
-          <ElInput v-model="form.configuration.instructions.titleInstruction" />
-        </ElFormItem>
-
-        <!-- Language Instruction -->
-        <ElFormItem
-          class="group"
-          :label="t('agents.labels.languageInstruction')"
-          prop="configuration.instructions.language"
-        >
-          <ElInput v-model="form.configuration.instructions.languageInstruction" />
-        </ElFormItem>
-
-        <!-- Summary Instruction -->
-        <ElFormItem
-          class="group"
-          :label="t('agents.labels.summaryInstruction')"
-          prop="configuration.instructions.summaryInstructions"
-        >
-          <ElInput v-model="form.configuration.instructions.summaryInstruction" />
         </ElFormItem>
 
         <!-- Active Status -->
@@ -294,15 +288,13 @@ onUnmounted(() => {
         </ElFormItem>
       </ElForm>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <style lang="scss" scoped>
-.agent-section {
-  grid-column: content-start;
-  padding-block: var(--spacing-fluid-l);
+.edit-agent-card {
+  margin-top: 32px;
 }
-
 .section-title {
   grid-column: 1/-1;
   margin-bottom: 0.5rem;
@@ -314,17 +306,32 @@ onUnmounted(() => {
   grid-column: 1/-1;
 }
 .container {
+  padding: 0.7rem;
   --container-background-color: var(--color-primary-100);
-  --lable-text-color: var(--color-gray-500);
-
-  display: flex;
-  flex-direction: column;
-  background: var(--container-background-color);
-  border: var(--border-global-transparent);
-  border-radius: var(--radius-4);
-  box-shadow: var(--shadow-3);
-  padding: var(--spacing-fluid-m);
+  --form-gap: 0;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  column-gap: var(--spacing-fluid-2-xl);
+  row-gap: var(--spacing-fluid-m);
   position: relative;
+  width: 100%;
+  @include viewport-ml {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: var(--spacing-fluid-3-xl);
+
+    & .context-form-item {
+      grid-column: span 3;
+    }
+
+    & .actions {
+      grid-column: span 3;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: var(--spacing-fluid-3-xl);
+    }
+  }
 
   .date {
     position: absolute;
@@ -357,10 +364,6 @@ onUnmounted(() => {
     }
   }
 
-  .context {
-    width: 100%;
-  }
-
   .actions {
     display: flex;
     flex-direction: row;
@@ -376,10 +379,11 @@ onUnmounted(() => {
   }
 }
 
-html.dark .container {
-  --container-background-color: var(--color-primary-800);
-  --lable-text-color: var(--color-gray-600);
-
+.dark {
+  .container {
+    --container-background-color: var(--color-primary-800);
+    --lable-text-color: var(--color-gray-600);
+  }
   .section-title {
     color: var(--color-primary-100);
   }
