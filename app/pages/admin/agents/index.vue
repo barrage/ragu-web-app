@@ -41,7 +41,7 @@ errorHandler(error)
           :description="t('agents.titles.description')"
         >
           <template #icon>
-            <AgentsIcon size="52" />
+            <AgentsIcon size="58px" />
           </template>
         </AdminPageTitleContainer>
       </template>

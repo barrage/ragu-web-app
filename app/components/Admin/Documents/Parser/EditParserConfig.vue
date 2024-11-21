@@ -15,7 +15,7 @@ const documentStore = useDocumentsStore()
 const selectedDocument = computed(() => {
   return documentStore.selectedDocument
 })
-
+const { t } = useI18n()
 const formRef = ref<FormInstance>()
 const form = reactive<ParserConfig>({
   start: 0,
@@ -25,10 +25,10 @@ const form = reactive<ParserConfig>({
 })
 const validateStartWithRange = (_rule: any, value: any, callback: any) => {
   if (form.range && form.start === 0) {
-    callback(new Error('Start cannot be 0 when using range'))
+    callback(new Error(t('documents.parser.validation.start_0_with_range')))
   }
   else if (form.range && form.start > form.end) {
-    callback(new Error('Start cannot be greater than end when using range'))
+    callback(new Error(t('documents.parser.validation.start_greater_with_range')))
   }
 
   else {
@@ -38,36 +38,69 @@ const validateStartWithRange = (_rule: any, value: any, callback: any) => {
 /* FORM */
 // STATE
 
-const rules = reactive<FormRules<ParserConfig>>({
+const rules = computed<FormRules<ParserConfig>>(() => ({
   start: [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
     { validator: validateStartWithRange, trigger: 'change' },
   ],
   end: [
-    { required: true, message: 'Required', trigger: 'change' },
+    { required: true, message: t('form_rules.required'), trigger: 'change' },
 
   ],
   range: [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
 
   ],
-  filters: [
-    { required: true, message: 'Required', trigger: 'blur' },
+  /*  filters: [
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
 
-  ],
-})
+  ], */
+}))
 
-function parseDocument() {
+const { error: parsePreviewError, status: loadingPreviewParser, execute: executeParserPreview } = await useAsyncData(() => documentStore.POST_ParseDocumentPreview(selectedDocument.value!.id, form), { immediate: false })
+
+const { error: upadteParserConfigError, status: loadingUpdateConfig, execute: executeUpdateParserConfig } = await useAsyncData(() => documentStore.PUT_UpdateDocumentConfig(selectedDocument.value!.id, { parser: form, chunker: selectedDocument.value!.chunkConfig || null }), { immediate: false })
+
+const { error: getSingleDocumentError, execute: executeGetSingleDocument } = await useAsyncData(() => documentStore.GET_SingleDocument(selectedDocument.value!.id), { immediate: false })
+
+errorHandler(getSingleDocumentError)
+async function previewDocumentParser() {
   if (selectedDocument.value?.id) {
-    documentStore.POST_ParseDocumentPreview(selectedDocument.value.id, form)
-    documentStore.GET_AllDocuments()
+    await executeParserPreview()
+    if (parsePreviewError.value) {
+      ElNotification({
+        title: t('documents.chunker.notifications.preview.error_title'),
+        message: t('documents.chunker.notifications.preview.error_description'),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
   }
 }
 
 async function saveConfig() {
   if (selectedDocument.value?.id) {
-    await documentStore.PUT_UpdateDocumentConfig(selectedDocument.value.id, { parser: form, chunker: selectedDocument.value?.chunkConfig || null })
-    await documentStore.GET_SingleDocument(selectedDocument.value.id)
+    await executeUpdateParserConfig()
+    if (upadteParserConfigError.value) {
+      ElNotification({
+        title: t('documents.chunker.notifications.update.error_title'),
+        message: t('documents.chunker.notifications.update.error_description'),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
+    else {
+      ElNotification({
+        title: t('documents.chunker.notifications.update.success_title'),
+        message: t('documents.chunker.notifications.update.success_description'),
+        type: 'success',
+        customClass: 'success',
+        duration: 2500,
+      })
+      await executeGetSingleDocument()
+    }
   }
 }
 
@@ -93,7 +126,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   }
   await formEl.validate((valid, __) => {
     if (valid) {
-      parseDocument()
+      previewDocumentParser()
     }
   })
 }
@@ -134,7 +167,7 @@ const removeFilter = (filter: string) => {
       :scroll-into-view-options="scrollIntoViewOptions"
     >
       <ElFormItem
-        label="Start"
+        :label="t('documents.parser.form.start')"
         prop="start"
       >
         <ElInputNumber
@@ -151,7 +184,7 @@ const removeFilter = (filter: string) => {
       </ElFormItem>
 
       <ElFormItem
-        label="End"
+        :label="t('documents.parser.form.end')"
         prop="end"
       >
         <ElInputNumber v-model="form.end" :min="0">
@@ -164,7 +197,7 @@ const removeFilter = (filter: string) => {
         </ElInputNumber>
       </ElFormItem>
       <ElFormItem
-        label="Range"
+        :label="t('documents.parser.form.range')"
         prop="range"
         class="range-checkbox"
       >
@@ -177,8 +210,8 @@ const removeFilter = (filter: string) => {
       </ElFormItem>
       <div class="range-filters-wrapper">
         <ElFormItem
-          label="Filters"
-          prop="end"
+          :label="t('documents.parser.form.filters')"
+          prop="filters"
         >
           <ElInput v-model="filtersString" @keyup.enter="addFilter()" />
           <div class="filter-items-wrapper">
@@ -199,26 +232,27 @@ const removeFilter = (filter: string) => {
       <ElFormItem>
         <div class="form-actions">
           <ElTooltip
-            content="Preview Parse document"
+            :content="t('documents.parser.form.actions.preview_description')"
             :show-after="100"
             :enterable="false"
             placement="top"
           >
-            <el-button @click="submitForm(formRef)">
-              Preview <ParseDocument />
+            <el-button :disabled="loadingPreviewParser === 'pending'" @click="submitForm(formRef)">
+              {{ t('documents.parser.form.actions.preview') }} <ParseDocument />
             </el-button>
           </ElTooltip>
           <ElTooltip
-            content="Save New Config"
+            :content="t('documents.parser.form.actions.save_description')"
             :show-after="100"
             :enterable="false"
             placement="top"
           >
             <ElButton
               type="primary"
+              :disabled="loadingUpdateConfig === 'pending'"
               @click="submitSaveForm(formRef)"
             >
-              <SaveIcon /> Save
+              <SaveIcon /> {{ t('documents.parser.form.actions.save') }}
             </ElButton>
           </ElTooltip>
         </div>

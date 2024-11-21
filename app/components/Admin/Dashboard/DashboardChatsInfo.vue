@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
+import LinkIcon from '~/assets/icons/svg/link.svg'
 import type { ChatStatistic, StatisticItem } from '~/types/statistic'
 import type { AdminChatDetails } from '~/types/chat'
 import type { Agent } from '~/types/agent'
@@ -33,10 +34,12 @@ const redirectToAgentDetails = (id: string) => {
         </h4>
       </div>
 
-      <NuxtLink to="/admin/chats">
-        <el-button size="small" type="primary">
-          {{ t('chat.admin.title') }}
-        </el-button>
+      <NuxtLink
+        class="barrage-button redirect-link"
+        to="/admin/chats"
+      >
+        {{ t('chat.admin.title') }}
+        <LinkIcon />
       </NuxtLink>
     </div>
 
@@ -96,7 +99,7 @@ const redirectToAgentDetails = (id: string) => {
   </section>
 </template>
 
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 .active-agents-card {
   min-height: 100%;
 
@@ -109,6 +112,11 @@ const redirectToAgentDetails = (id: string) => {
     padding-top: var(--font-size-fluid-1);
     overflow-y: auto;
   }
+}
+
+.redirect-link {
+  display: flex;
+  gap: 6px;
 }
 .agent-name-type-wrapper {
   grid-column: span 3;

@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
 import DocumentConfigurationIcon from '~/assets/icons/svg/document-configuration.svg'
 import DocumentEditIcon from '~/assets/icons/svg/document-edit.svg'
-import DocumentIcon from '~/assets/icons/svg/document.svg'
 import type { Document } from '~/types/document'
 
 const props = defineProps<{
@@ -12,31 +10,6 @@ const props = defineProps<{
 definePageMeta({
   layout: 'admin-layout',
 })
-
-/* Parse document */
-
-/* Chunk document */
-/* const isChunkDialogVisible = ref(false)
-const openChunkDialog = () => {
-  isChunkDialogVisible.value = true
-}
-
-const closeChunkDialog = () => {
-  isChunkDialogVisible.value = false
-}
-
-function chunkDocument() {
-  if (selectedDocument.value?.id) {
-    documentStore.POST_ParseDocumentPreview(selectedDocument.value.id)
-    documentStore.GET_AllDocuments()
-  }
-} */
-
-/* onUnmounted(() => {
-  documentStore.parserPreview = null
-}) */
-
-/* Tabs */
 </script>
 
 <template>
@@ -49,7 +22,7 @@ function chunkDocument() {
 
     <div class="icon-title-container">
       <DocumentConfigurationIcon size="42" />
-      <h5> Configuration</h5>
+      <h5> {{ $t('documents.configuration') }} </h5>
     </div>
     <div class="current-configuration grid">
       <div class="parser-template">
@@ -61,29 +34,12 @@ function chunkDocument() {
     </div>
     <div class="icon-title-container">
       <DocumentEditIcon size="32" />
-      <h5>Edit configuration</h5>
+      <h5> {{ $t('documents.configuration') }} </h5>
     </div>
     <div class="horizontal-divider" />
     <ParserConfigTab />
     <div class="horizontal-divider" />
     <ChunkerConfigTab />
-    <!-- ------------ -->
-
-    <!-- ------------ -->
-
-    <!-- <ParserConfigTab />
-
-    <ChunkerConfigTab /> -->
-    <!--  <ElTooltip
-            content="Chunk document"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
-            <el-button>
-              <ChunkDocument />
-            </el-button>
-          </ElTooltip> -->
   </div>
 </template>
 

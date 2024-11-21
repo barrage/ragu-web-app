@@ -130,7 +130,7 @@ const mostUsedAgentData = computed(() => {
           :description="t('dashboard.description')"
         >
           <template #icon>
-            <DashboardIcon size="52" />
+            <DashboardIcon size="58px" />
           </template>
         </AdminPageTitleContainer>
       </template>

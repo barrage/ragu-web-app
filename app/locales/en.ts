@@ -44,6 +44,7 @@ export default {
     user: 'User',
     assistant: 'Assistant',
     messages: 'Messages',
+    all_chats: 'All Chats',
     inactive_agent: 'This agent is no longer active. Please select an active agent to begin a new conversation.',
     admin: {
       title: 'Chats',
@@ -129,8 +130,115 @@ export default {
         error_file_type_title: 'File Format Issue',
         error_file_type_description: 'File must be in PDF, TXT, JSON, or DOCX format!',
       },
-    }
-    ,
+    },
+    edit_configuration: 'Edit configuration',
+    configuration: 'Configuration',
+    parser: {
+      title: 'Parser',
+      description: 'The parser allows analyzing and processing data from documents.',
+      load_more: 'Load more',
+      selected_document: 'Selected document',
+      empty_configuration: 'Configuration is not set.',
+      parser_preview: 'Parser preview',
+      parser_preview_empty_state: 'No data available for preview in the parser.',
+      form: {
+        start: 'Start',
+        end: 'End',
+        range: 'Range',
+        filters: 'Filters',
+        actions: {
+          preview: 'Preview',
+          save: 'Save',
+          save_description: 'Save the newly created parser configuration.',
+          preview_description: 'Preview the document with the current parser settings.',
+        },
+      },
+      validation: {
+        start_0_with_range: 'Start cannot be 0 when using range.',
+        start_greater_with_range: 'Start cannot be greater than end when using range.',
+      },
+    },
+    chunker: {
+      title: 'Chunker',
+      description: 'Break down the selected document into meaningful chunks for better semantic analysis and processing.',
+      chunk_preview: 'Chunk Preview',
+      chunk_preview_empty_state: 'No chunks to display. Adjust the settings and preview the results to generate chunks for this document.',
+      load_more: 'Load More',
+      chunk: 'Chunk',
+      selected_document: 'Selected document',
+      total_chunk: 'Total chunks',
+      no_parser_state: 'You need to set Parser config first',
+      empty_configuration: 'Empty Configuration',
+      unknown_configuration: 'Unknown configuration',
+      selected_type: 'Selected Type',
+      notifications: {
+        preview: {
+          success_title: 'Preview Successful',
+          success_description: 'Your preview was successfully generated. Review it below.',
+          error_title: 'Preview Failed',
+          error_description: 'We encountered an issue while generating your preview. Please try again later.',
+        },
+        update: {
+          success_title: 'Update Successful',
+          success_description: 'Your changes have been successfully saved.',
+          error_title: 'Update Failed',
+          error_description: 'An error occurred while saving your changes. Please check your connection and try again.',
+        },
+      },
+      validation: {
+        size_validation: 'Size must be greater than overlap',
+        threshold_validation: 'Threshold cannot be negative',
+      },
+
+      semantic: {
+        title: 'Configure Semantic Chunking',
+        description: 'Set up and customize the semantic chunker for this document. Preview the chunks in real time to fine-tune your configuration.',
+        name: 'Semantic',
+        form: {
+          size: 'Chunk Size (words)',
+          threshold: 'Relevance Threshold',
+          distance_function: 'Distance Function',
+          delimiter: 'Chunk Delimiter',
+          embed_model: 'Embedding Model',
+          embed_provider: 'Embedding Provider',
+          skip_foward: 'Skip Forward Chunks',
+          skip_back: 'Skip Back Chunks',
+          actions: {
+            preview: 'Preview',
+            save: 'Save',
+          },
+        },
+      },
+      sliding: {
+        title: 'Configure Sliding Chunking',
+        description: 'Set up sliding window-based chunking for precise segmentation of text with overlapping sections.',
+        name: 'Sliding',
+        form: {
+          size: 'Chunk Size',
+          overlap: 'Overlap Size',
+          actions: {
+            preview: 'Preview',
+            save: 'Save',
+          },
+        },
+      },
+      snapping: {
+        title: 'Configure Snapping Chunking',
+        description: 'Set up snapping-based chunking using predefined delimiters for structured text.',
+        name: 'Snapping',
+        form: {
+          size: 'Chunk Size',
+          overlap: 'Overlap Size',
+          delimiter: 'Chunk Delimiter',
+          skip_foward: 'Skip Forward Chunks',
+          skip_back: 'Skip Back Chunks',
+          actions: {
+            preview: 'Preview',
+            save: 'Save',
+          },
+        },
+      },
+    },
 
   },
   users: {
@@ -323,6 +431,7 @@ export default {
   },
   agents: {
     title: 'Agents',
+    all_agents: 'All Agents',
     titles: {
       mainTitle: 'Agents',
       details: 'Agent Details',
@@ -456,6 +565,8 @@ export default {
 
   collections: {
     title: 'Collections',
+    all_collections: 'All Collections',
+
     titles: {
       title: 'Collections',
       subTitle: 'Manage the content collections that guide the AI\'s knowledge base.',

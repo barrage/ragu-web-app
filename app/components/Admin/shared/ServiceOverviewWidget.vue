@@ -71,7 +71,8 @@ interface Slots {
   & .title-icon-wrapper {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    color: var(--color-primary-800);
+    gap: 0.5rem;
     & .service-overview-widget-title {
       color: var(--color-primary-800);
       font-size: var(--font-size-fluid-3);
@@ -113,8 +114,9 @@ interface Slots {
 .dark {
   .service-overview-widget-header {
     & .title-icon-wrapper {
+      color: var(--color-primary-0);
       & .service-overview-widget-title {
-        color: var(--color-primary-100);
+        color: var(--color-primary-subtle);
       }
     }
   }

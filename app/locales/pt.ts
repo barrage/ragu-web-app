@@ -43,6 +43,7 @@ export default {
     assistant: 'Assistente',
     messages: 'Mensagens',
     inactive_agent: 'Este agente não está mais ativo. Por favor, selecione um agente ativo para iniciar uma nova conversa.',
+    all_chats: 'Todas as conversas',
     admin: {
       title: 'Conversas',
       description: 'Gerencie todas as suas conversas em um só lugar',
@@ -129,6 +130,116 @@ export default {
         error_file_type_description: 'O arquivo deve estar no formato PDF, TXT, JSON ou DOCX!',
       },
     },
+    edit_configuration: 'Editar configuração',
+    configuration: 'Configuração',
+
+    parser: {
+      title: 'Parser',
+      description: 'O parser permite analisar e processar dados de documentos.',
+      load_more: 'Carregar mais',
+      selected_document: 'Documento selecionado',
+      empty_configuration: 'Configuração não definida.',
+      parser_preview: 'Visualização do parser',
+      parser_preview_empty_state: 'Nenhum dado disponível para visualização no parser.',
+      form: {
+        start: 'Início',
+        end: 'Fim',
+        range: 'Intervalo',
+        filters: 'Filtros',
+        actions: {
+          preview: 'Visualizar',
+          save: 'Salvar',
+          save_description: 'Salve a configuração do parser recém-criada.',
+          preview_description: 'Visualize o documento com as configurações atuais do parser.',
+        },
+      },
+      validation: {
+        start_0_with_range: 'O início não pode ser 0 ao usar um intervalo.',
+        start_greater_with_range: 'O início não pode ser maior que o fim ao usar um intervalo.',
+      },
+    },
+
+    chunker: {
+      title: 'Divisor de Segmentos',
+      description: 'Divida o documento selecionado em segmentos significativos para uma melhor análise e processamento semântico.',
+      chunk_preview: 'Pré-visualização dos segmentos',
+      chunk_preview_empty_state: 'Não há segmentos para exibir. Ajuste as configurações e visualize os resultados para gerar segmentos para este documento.',
+      load_more: 'Carregar mais',
+      chunk: 'Segmento',
+      selected_document: 'Documento selecionado',
+      total_chunk: 'Total de segmentos',
+      no_parser_state: 'Você precisa configurar o Parser primeiro',
+      empty_configuration: 'Configuração vazia',
+      unknown_configuration: 'Configuração desconhecida',
+      selected_type: 'Tipo selecionado',
+      notifications: {
+        preview: {
+          success_title: 'Pré-visualização bem-sucedida',
+          success_description: 'Sua pré-visualização foi gerada com sucesso. Reveja-a abaixo.',
+          error_title: 'Pré-visualização falhou',
+          error_description: 'Encontrámos um problema ao gerar sua pré-visualização. Tente novamente mais tarde.',
+        },
+        update: {
+          success_title: 'Atualização bem-sucedida',
+          success_description: 'Os dados foram atualizados com sucesso.',
+          error_title: 'Falha na atualização',
+          error_description: 'Encontrámos um problema ao atualizar. Tente novamente.',
+        },
+      },
+
+      validation: {
+        size_validation: 'O tamanho deve ser maior do que a sobreposição',
+        threshold_validation: 'O limite não pode ser negativo',
+      },
+      semantic: {
+        title: 'Configurar Segmentação Semântica',
+        description: 'Configure e personalize o divisor semântico para este documento. Visualize os segmentos em tempo real para ajustar a configuração.',
+        name: 'Semântico',
+        form: {
+          size: 'Tamanho do segmento (palavras)',
+          threshold: 'Limite de relevância',
+          distance_function: 'Função de distância',
+          delimiter: 'Delimitador de segmento',
+          embed_model: 'Modelo de incorporação',
+          embed_provider: 'Fornecedor de incorporação',
+          skip_foward: 'Pular segmentos futuros',
+          skip_back: 'Pular segmentos anteriores',
+          actions: {
+            preview: 'Pré-visualizar',
+            save: 'Salvar',
+          },
+        },
+      },
+      sliding: {
+        title: 'Configurar Segmentação Deslizante',
+        description: 'Configure uma segmentação deslizante para uma divisão precisa do texto com seções sobrepondo-se.',
+        name: 'Deslizante',
+        form: {
+          size: 'Tamanho do segmento',
+          overlap: 'Tamanho da sobreposição',
+          actions: {
+            preview: 'Pré-visualizar',
+            save: 'Salvar',
+          },
+        },
+      },
+      snapping: {
+        title: 'Configurar Segmentação com Quebra Automática',
+        description: 'Configure a segmentação baseada em delimitadores para textos estruturados.',
+        name: 'Com Quebra Automática',
+        form: {
+          size: 'Tamanho do segmento',
+          overlap: 'Tamanho da sobreposição',
+          delimiter: 'Delimitador de segmento',
+          skip_foward: 'Pular segmentos futuros',
+          skip_back: 'Pular segmentos anteriores',
+          actions: {
+            preview: 'Pré-visualizar',
+            save: 'Salvar',
+          },
+        },
+      },
+    },
 
   },
   dashboard: {
@@ -213,6 +324,8 @@ export default {
   },
   agents: {
     title: 'Agentes',
+    all_agents: 'Todos os agentes',
+
     titles: {
       mainTitle: 'Agentes',
       details: 'Detalhes do agente',
@@ -342,6 +455,8 @@ export default {
   },
   collections: {
     title: 'Coleções',
+    all_collections: 'Todas as coleções',
+
     titles: {
       title: 'Coleções',
       subTitle: 'Gerencie as coleções de conteúdo que guiam a base de conhecimento da IA.',

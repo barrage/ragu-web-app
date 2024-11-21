@@ -44,6 +44,7 @@ export default {
     user: 'Korisnik',
     assistant: 'Asistent',
     messages: 'Poruke',
+    all_chats: 'Svi razgovori',
     inactive_agent: 'Ovaj agent više nije aktivan. Molimo odaberite aktivnog agenta za započinjanje novog razgovora.',
     admin: {
       title: 'Razgovori',
@@ -129,6 +130,118 @@ export default {
         error_file_size_description: 'Veličina datoteke ne smije prelaziti 50 MB!',
         error_file_type_title: 'Problem s Formatom Datoteke',
         error_file_type_description: 'Datoteka mora biti u PDF, TXT, JSON ili DOCX formatu!',
+      },
+    },
+    edit_configuration: 'Uredi konfiguraciju',
+    configuration: 'Konfiguracija',
+    parser: {
+      title: 'Parser',
+      description: 'Parser omogućuje analizu i obradu podataka iz dokumenata.',
+      load_more: 'Učitaj više',
+      selected_document: 'Odabrani dokument',
+      empty_configuration: 'Konfiguracija nije postavljena.',
+      parser_preview: 'Pregled parsera',
+      parser_preview_empty_state: 'Nema podataka za prikaz u parseru.',
+      form: {
+        start: 'Početak',
+        end: 'Kraj',
+        range: 'Raspon',
+        filters: 'Filtri',
+        actions: {
+          preview: 'Pregledaj',
+          save: 'Spremi',
+          save_description: 'Spremite novostvorenu konfiguraciju parsera.',
+          preview_description: 'Pregledajte dokument s trenutnim postavkama parsera.',
+        },
+      },
+      validation: {
+        start_0_with_range: 'Početak ne može biti 0 kada se koristi raspon.',
+        start_greater_with_range: 'Početak ne može biti veći od kraja kada se koristi raspon.',
+      },
+
+    },
+
+    chunker: {
+      title: 'Podjeljivač Segmenata',
+      description: 'Razdvoji odabrani dokument na značenje punije segmente za bolju semantičku analizu i obradu.',
+      chunk_preview: 'Pregled segmenata',
+      chunk_preview_empty_state: 'Nema segmenata za prikazivanje. Podesite postavke i pregledajte rezultate kako biste generirali segmente za ovaj dokument.',
+      load_more: 'Učitaj više',
+      chunk: 'Segment',
+      selected_document: 'Odabrani dokument',
+      total_chunk: 'Ukupno segmenata',
+      no_parser_state: 'Prvo morate postaviti Parser',
+      empty_configuration: 'Prazna konfiguracija',
+      unknown_configuration: 'Nepoznata konfiguracija',
+      selected_type: 'Odabrani tip',
+
+      notifications: {
+        preview: {
+          success_title: 'Pregled uspješan',
+          success_description: 'Pregled je uspješno generiran. Provjerite ga u nastavku.',
+          error_title: 'Pregled nije uspio',
+          error_description: 'Došlo je do problema prilikom generiranja pregleda. Pokušajte ponovno kasnije.',
+        },
+        update: {
+          success_title: 'Ažuriranje uspješno',
+          success_description: 'Podaci su uspješno ažurirani.',
+          error_title: 'Ažuriranje nije uspjelo',
+          error_description: 'Došlo je do problema prilikom ažuriranja. Pokušajte ponovno.',
+        },
+      },
+
+      validation: {
+        size_validation: 'Veličina mora biti veća od preklapanja',
+        threshold_validation: 'Prag ne može biti negativan',
+      },
+
+      semantic: {
+        title: 'Konfigurirajte Semantičko Razdvajanje',
+        description: 'Podesite i prilagodite semantički podjeljivač za ovaj dokument. Pregledajte segmente u stvarnom vremenu kako biste finije prilagodili postavke.',
+        name: 'Semantičko',
+        form: {
+          size: 'Veličina segmenta (riječi)',
+          threshold: 'Prag relevantnosti',
+          distance_function: 'Funkcija udaljenosti',
+          delimiter: 'Razdjelnik segmenta',
+          embed_model: 'Model ugrađivanja',
+          embed_provider: 'Pružatelj ugrađivanja',
+          skip_foward: 'Preskoči buduće segmente',
+          skip_back: 'Preskoči prethodne segmente',
+          actions: {
+            preview: 'Pregled',
+            save: 'Spremi',
+          },
+        },
+      },
+      sliding: {
+        title: 'Konfigurirajte klizno razdvajanje',
+        description: 'Konfigurirajte kliznu segmentaciju koja omogućava preciznu podjelu teksta s preklapanjem sekcija.',
+        name: 'Klizno',
+        form: {
+          size: 'Veličina segmenta',
+          overlap: 'Veličina preklapanja',
+          actions: {
+            preview: 'Pregled',
+            save: 'Spremi',
+          },
+        },
+      },
+      snapping: {
+        title: 'Konfigurirajte razdvajanje prema granicama',
+        description: 'Konfigurirajte razdvajanje prema unaprijed definiranim granicama za strukturirane tekstove.',
+        name: 'Prema granicama',
+        form: {
+          size: 'Veličina segmenta',
+          overlap: 'Veličina preklapanja',
+          delimiter: 'Razdjelnik segmenta',
+          skip_foward: 'Preskoči buduće segmente',
+          skip_back: 'Preskoči prethodne segmente',
+          actions: {
+            preview: 'Pregled',
+            save: 'Spremi',
+          },
+        },
       },
     },
 
@@ -315,6 +428,8 @@ export default {
   },
   agents: {
     title: 'Agenti',
+    all_agents: 'Svi agenti',
+
     titles: {
       mainTitle: 'Agenti',
       details: 'Detalji agenta',
@@ -445,6 +560,8 @@ export default {
 
   collections: {
     title: 'Kolekcije',
+    all_collections: 'Sve kolekcije',
+
     titles: {
       title: 'Kolekcije',
       subTitle: 'Upravljajte kolekcijama sadržaja koje vode bazu znanja AI-a.',

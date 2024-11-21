@@ -11,9 +11,9 @@ const props = defineProps<{
       <div v-if="$slots.icon" class="title-icon">
         <slot name="icon" />
       </div>
-      <h3 class="admin-page-title">
+      <h1 class="admin-page-title">
         {{ props.title }}
-      </h3>
+      </h1>
     </div>
 
     <p class="admin-page-description typing-effect">
@@ -40,6 +40,7 @@ const props = defineProps<{
     & .admin-page-title {
       font-weight: 600;
       color: var(--color-primary-800);
+      font-size: var(--font-size-fluid-8);
     }
   }
 

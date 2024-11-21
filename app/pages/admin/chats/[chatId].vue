@@ -47,7 +47,7 @@ const selectedChat = computed(() => {
           :description="t('chat.admin.chat_details.description')"
         >
           <template #icon>
-            <ChatIcon size="52" />
+            <ChatIcon size="58px" />
           </template>
         </AdminPageTitleContainer>
       </template>

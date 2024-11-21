@@ -55,7 +55,7 @@ watch(
           :description="t('users.description')"
         >
           <template #icon>
-            <TeamIcon size="52" />
+            <TeamIcon size="58px" />
           </template>
         </AdminPageTitleContainer>
       </template>

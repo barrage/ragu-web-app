@@ -4,42 +4,43 @@ import type { SemanticChunker } from '~/types/document.ts'
 defineProps<{
   config: SemanticChunker
 }>()
+const { t } = useI18n()
 </script>
 
 <template>
   <div class="semantic-chunker-config-overview-container">
     <LabelDescriptionItem
-      label="Type:"
+      :label="$t('documents.chunker.selected_type')"
       description="Semantic"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Size:"
+      :label="t('documents.chunker.semantic.form.size')"
       :description="config.semantic.config.size.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Threshold:"
+      :label="t('documents.chunker.semantic.form.threshold')"
       :description="config.semantic.config.threshold.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Distance Function:"
+      :label="t('documents.chunker.semantic.form.distance_function')"
       :description="config.semantic.config.distanceFn.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Delimiter:"
+      :label="t('documents.chunker.semantic.form.delimiter')"
       :description="config.semantic.config.delimiter.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Skip Forward:"
+      :label="t('documents.chunker.semantic.form.skip_foward')"
       :description="config.semantic.config.skipForward.join(', ')"
     >
       <template #customDescription>
@@ -55,7 +56,7 @@ defineProps<{
     </LabelDescriptionItem>
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Skip Back:"
+      :label="t('documents.chunker.semantic.form.skip_back')"
       :description="config.semantic.config.skipBack.join(', ')"
     >
       <template #customDescription>
@@ -71,7 +72,7 @@ defineProps<{
     </LabelDescriptionItem>
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Embedding Model:"
+      :label="t('documents.chunker.semantic.form.embed_model')"
       :description="config.semantic.config.embedModel.toString() || '-'"
       horizontal
     />

@@ -56,7 +56,7 @@ watch(
           :description="t('chat.admin.description')"
         >
           <template #icon>
-            <ChatsIcon size="52" />
+            <ChatsIcon size="58px" />
           </template>
         </AdminPageTitleContainer>
       </template>

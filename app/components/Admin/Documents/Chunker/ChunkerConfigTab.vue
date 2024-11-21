@@ -1,21 +1,12 @@
 <script lang="ts" setup>
 import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
-/* STATE */
-/* const documentStore = useDocumentsStore()
-
-const route = useRoute()
-const documentId = Array.isArray(route.params.documentId) ? route.params.documentId[0] : route.params.documentId
-
-if (documentId) {
-  await documentStore.GET_SingleDocument(documentId)
-} */
 </script>
 
 <template>
   <section class="edit-chunker-section">
     <div class="chunk-title-wrapper">
       <ChunkDocument size="32" />
-      <h6> <b>Chunker</b> </h6>
+      <h6> <b> {{ $t('documents.chunker.title') }}</b> </h6>
     </div>
     <div class="document-parser-config-container">
       <div class="document-parser-config-wrapper">
@@ -38,6 +29,7 @@ if (documentId) {
 .chunk-title-wrapper {
   display: flex;
   gap: 6px;
+  margin-bottom: var(--spacing-fluid-l);
 }
 
 .document-parser-config-container {

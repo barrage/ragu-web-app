@@ -42,6 +42,7 @@ export default {
     assistant: 'アシスタント',
     messages: 'メッセージ',
     inactive_agent: 'このエージェントはもうアクティブではありません。新しい会話を始めるには、アクティブなエージェントを選択してください。',
+    all_chats: 'すべてのチャット',
     admin: {
       title: 'チャット',
       description: 'すべてのチャットを一箇所で管理',
@@ -124,6 +125,113 @@ export default {
         error_file_size_description: 'ファイルサイズは50 MBを超えてはいけません！',
         error_file_type_title: 'ファイル形式の問題',
         error_file_type_description: 'ファイルはPDF、TXT、JSON、またはDOCX形式である必要があります！',
+      },
+    },
+    edit_configuration: '設定を編集',
+    configuration: '設定',
+    parser: {
+      title: 'パーサー',
+      description: 'パーサーは、ドキュメントからデータを分析および処理することを可能にします。',
+      load_more: 'さらに読み込む',
+      selected_document: '選択されたドキュメント',
+      empty_configuration: '設定が未定義です。',
+      parser_preview: 'パーサーのプレビュー',
+      parser_preview_empty_state: 'パーサーにプレビューするデータがありません。',
+      form: {
+        start: '開始',
+        end: '終了',
+        range: '範囲',
+        filters: 'フィルター',
+        actions: {
+          preview: 'プレビュー',
+          save: '保存',
+          save_description: '新しく作成したパーサー設定を保存します。',
+          preview_description: '現在のパーサー設定でドキュメントをプレビューします。',
+        },
+      },
+      validation: {
+        start_0_with_range: '範囲を使用する場合、開始値を0にすることはできません。',
+        start_greater_with_range: '範囲を使用する場合、開始値が終了値より大きくなることはできません。',
+      },
+    },
+    chunker: {
+      title: 'チャンク作成ツール',
+      description: '選択したドキュメントを意味のあるチャンクに分割して、より良いセマンティック分析と処理を行います。',
+      chunk_preview: 'チャンクプレビュー',
+      chunk_preview_empty_state: '表示するチャンクがありません。設定を調整して結果をプレビューし、このドキュメントのチャンクを生成してください。',
+      load_more: 'もっと読み込む',
+      chunk: 'チャンク',
+      selected_document: '選択されたドキュメント',
+      total_chunk: '合計チャンク数',
+      no_parser_state: 'まずパーサーの設定を行う必要があります',
+      empty_configuration: '設定が空です',
+      unknown_configuration: '不明な設定',
+      selected_type: '選択されたタイプ',
+      notifications: {
+        preview: {
+          success_title: 'プレビュー成功',
+          success_description: 'プレビューが正常に生成されました。以下を確認してください。',
+          error_title: 'プレビュー失敗',
+          error_description: 'プレビューの生成中に問題が発生しました。後でもう一度お試しください。',
+        },
+        update: {
+          success_title: '更新成功',
+          success_description: 'データが正常に更新されました。',
+          error_title: '更新失敗',
+          error_description: '更新中に問題が発生しました。もう一度お試しください。',
+        },
+      },
+      validation: {
+        size_validation: 'サイズはオーバーラップより大きくなければなりません',
+        threshold_validation: '閾値は負の値にできません',
+      },
+      semantic: {
+        title: 'セマンティックチャンクの設定',
+        description: 'このドキュメントのセマンティックチャンクを設定およびカスタマイズします。リアルタイムでチャンクをプレビューして設定を微調整します。',
+        name: 'セマンティック',
+        form: {
+          size: 'チャンクサイズ（単語数）',
+          threshold: '関連性のしきい値',
+          distance_function: '距離関数',
+          delimiter: 'チャンク区切り文字',
+          embed_model: '埋め込みモデル',
+          embed_provider: '埋め込みプロバイダー',
+          skip_foward: '前方チャンクをスキップ',
+          skip_back: '後方チャンクをスキップ',
+          actions: {
+            preview: 'プレビュー',
+            save: '保存',
+          },
+        },
+      },
+      sliding: {
+        title: 'スライディングチャンクの設定',
+        description: '重複するセクションを含む正確なテキストセグメントを作成するためのスライディングウィンドウベースのチャンクを設定します。',
+        name: 'スライディング',
+        form: {
+          size: 'チャンクサイズ',
+          overlap: '重複サイズ',
+          actions: {
+            preview: 'プレビュー',
+            save: '保存',
+          },
+        },
+      },
+      snapping: {
+        title: 'スナッピングチャンクの設定',
+        description: '構造化されたテキスト用に定義済みの区切り文字を使用してスナッピングベースのチャンクを設定します。',
+        name: 'スナッピング',
+        form: {
+          size: 'チャンクサイズ',
+          overlap: '重複サイズ',
+          delimiter: 'チャンク区切り文字',
+          skip_foward: '前方チャンクをスキップ',
+          skip_back: '後方チャンクをスキップ',
+          actions: {
+            preview: 'プレビュー',
+            save: '保存',
+          },
+        },
       },
     },
 
@@ -210,6 +318,8 @@ export default {
   },
   agents: {
     title: 'エージェント',
+    all_agents: 'すべてのエージェント',
+
     titles: {
       mainTitle: 'エージェント',
       details: 'エージェントの詳細',
@@ -340,6 +450,8 @@ export default {
 
   collections: {
     title: 'コレクション',
+    all_collections: 'すべてのコレクション',
+
     titles: {
       title: 'コレクション',
       subTitle: 'AIの知識ベースを導くコンテンツコレクションを管理します。',

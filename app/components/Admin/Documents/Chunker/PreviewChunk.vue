@@ -2,10 +2,12 @@
 import FullscreenIcon from '~/assets/icons/svg/fullscreen.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
+const { t } = useI18n()
 const documentStore = useDocumentsStore()
 const isChunkerDialogVisible = ref(false)
 const isLoaderVisible = ref(false)
-const itemsPerLoad = 500
+
+const itemsPerLoad = 200
 const currentItemCount = ref(itemsPerLoad)
 
 const openChunkerDialog = () => {
@@ -42,7 +44,6 @@ function loadMoreItems() {
   }
 }
 
-// Watch for loading state
 watch(
   () => documentStore.loadingChunkPreview,
   (loading) => {
@@ -60,7 +61,7 @@ watch(
   <div class="chunker-preview-wrapper">
     <div class="chunker-preview-heading">
       <p class="chunker-preview-title">
-        Chunker preview
+        {{ t('documents.chunker.chunk_preview') }}
       </p>
       <el-button :disabled="!hasChunks" @click="openChunkerDialog">
         <FullscreenIcon />
@@ -72,9 +73,9 @@ watch(
       </div>
       <template v-else>
         <template v-if="hasChunks">
-          <span class="chunk-title">Chunk Preview</span>
+          <span class="chunk-title"> {{ t('documents.chunker.chunk_preview') }}</span>
           <template v-for="(chunk, index) in displayedChunks" :key="chunk">
-            <span class="chunk-title">{{ index + 1 }}. Chunk</span>
+            <span class="chunk-title">{{ index + 1 }}. {{ t('documents.chunker.chunk') }}</span>
             <p class="single-chunk">
               {{ chunk }}
             </p>
@@ -84,11 +85,15 @@ watch(
             class="load-more-button"
             @click="loadMoreItems"
           >
-            Load More
+            {{ t('documents.chunker.load_more') }}
           </button>
         </template>
         <template v-else>
-          <p>No chunks available to display.</p> <
+          <div class="chunk-preview-empty-state">
+            <p class="chunker-preview-empty-state-description">
+              {{ t('documents.chunker.chunk_preview_empty_state') }}
+            </p>
+          </div>
         </template>
       </template>
     </div>
@@ -101,14 +106,14 @@ watch(
     class="barrage-dialog--large"
   >
     <template #header>
-      <h6>Chunk Preview</h6>
+      <h6>        {{ t('documents.chunker.chunk_preview') }}</h6>
     </template>
-    <p>Selected document: <b>{{ selectedDocument?.name }}</b> </p>
-    <p>  Total chunks: <b>{{ chunkerResponse?.length }}</b> </p>
+    <p>        {{ t('documents.chunker.selected_document') }}: <b>{{ selectedDocument?.name }}</b> </p>
+    <p>   {{ t('documents.chunker.total_chunk') }}: <b>{{ chunkerResponse?.length }}</b> </p>
     <div class="chunker-preview-content-wrapper">
       <template v-if="hasChunks">
         <template v-for="(chunk, index) in displayedChunks" :key="chunk">
-          <span class="chunk-title">{{ index + 1 }}. Chunk</span>
+          <span class="chunk-title">{{ index + 1 }}. {{ t('documents.chunker.chunk') }}</span>
           <p class="single-chunk">
             {{ chunk }}
           </p>
@@ -118,11 +123,15 @@ watch(
           class="load-more-button"
           @click="loadMoreItems"
         >
-          Load More
+          {{ t('documents.chunker.load_more') }}
         </button>
       </template>
       <template v-else>
-        <p>No chunks available to display.</p>
+        <div class="chunk-preview-empty-state">
+          <p class="chunker-preview-empty-state-description">
+            {{ t('documents.chunker.chunk_preview_empty_state') }}
+          </p>
+        </div>
       </template>
     </div>
   </el-dialog>
@@ -152,10 +161,17 @@ watch(
     margin-top: 8px;
     height: 480px;
     overflow-y: auto;
+  }
+}
 
-    & p {
-      word-break: break-all;
-    }
+.chunk-preview-empty-state {
+  padding: 22px;
+  max-width: 100%;
+
+  & .chunker-preview-empty-state-description {
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: wrap;
   }
 }
 

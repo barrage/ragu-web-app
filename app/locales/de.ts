@@ -44,6 +44,7 @@ export default {
     assistant: 'Assistent',
     messages: 'Nachrichten',
     inactive_agent: 'Dieser Agent ist nicht mehr aktiv. Bitte wählen Sie einen aktiven Agenten, um ein neues Gespräch zu beginnen.',
+    all_chats: 'Alle Chats',
     admin: {
       title: 'Chats',
       description: 'Verwalten Sie alle Ihre Chats an einem Ort',
@@ -128,8 +129,116 @@ export default {
         error_file_type_title: 'Dateiformatproblem',
         error_file_type_description: 'Die Datei muss im PDF-, TXT-, JSON- oder DOCX-Format vorliegen!',
       },
-
     },
+    edit_configuration: 'Konfiguration bearbeiten',
+    configuration: 'Konfiguration',
+    parser: {
+      title: 'Parser',
+      description: 'Der Parser ermöglicht die Analyse und Verarbeitung von Daten aus Dokumenten.',
+      load_more: 'Mehr laden',
+      selected_document: 'Ausgewähltes Dokument',
+      empty_configuration: 'Konfiguration ist nicht festgelegt.',
+      parser_preview: 'Parser-Vorschau',
+      parser_preview_empty_state: 'Keine Daten zur Vorschau im Parser verfügbar.',
+      form: {
+        start: 'Start',
+        end: 'Ende',
+        range: 'Bereich',
+        filters: 'Filter',
+        actions: {
+          preview: 'Vorschau',
+          save: 'Speichern',
+          save_description: 'Speichern Sie die neu erstellte Parser-Konfiguration.',
+          preview_description: 'Vorschau des Dokuments mit den aktuellen Parser-Einstellungen.',
+        },
+      },
+      validation: {
+        start_0_with_range: 'Start darf nicht 0 sein, wenn ein Bereich verwendet wird.',
+        start_greater_with_range: 'Start darf nicht größer als Ende sein, wenn ein Bereich verwendet wird.',
+      },
+    },
+    chunker: {
+      title: 'Chunker',
+      description: 'Zerlegen Sie das ausgewählte Dokument in sinnvolle Abschnitte für eine bessere semantische Analyse und Verarbeitung.',
+      chunk_preview: 'Chunk-Vorschau',
+      chunk_preview_empty_state: 'Keine Chunks zum Anzeigen. Passen Sie die Einstellungen an und zeigen Sie die Ergebnisse an, um Chunks für dieses Dokument zu generieren.',
+      load_more: 'Mehr laden',
+      chunk: 'Chunk',
+      selected_document: 'Ausgewähltes Dokument',
+      total_chunk: 'Gesamtanzahl der Chunks',
+      no_parser_state: 'Parser-Konfiguration muss zuerst eingerichtet werden',
+      empty_configuration: 'Leere Konfiguration',
+      unknown_configuration: 'Unbekannte Konfiguration',
+      selected_type: 'Ausgewählter Typ',
+
+      validation: {
+        size_validation: 'Die Größe muss größer als die Überlappung sein',
+        threshold_validation: 'Der Schwellenwert darf nicht negativ sein',
+      },
+      notifications: {
+        preview: {
+          success_title: 'Vorschau erfolgreich',
+          success_description: 'Ihre Vorschau wurde erfolgreich erstellt. Überprüfen Sie sie unten.',
+          error_title: 'Vorschau fehlgeschlagen',
+          error_description: 'Bei der Erstellung Ihrer Vorschau ist ein Problem aufgetreten. Bitte versuchen Sie es später erneut.',
+        },
+        update: {
+          success_title: 'Aktualisierung erfolgreich',
+          success_description: 'Ihre Änderungen wurden erfolgreich gespeichert.',
+          error_title: 'Aktualisierung fehlgeschlagen',
+          error_description: 'Beim Speichern Ihrer Änderungen ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.',
+        },
+      },
+      semantic: {
+        title: 'Semantisches Chunking konfigurieren',
+        description: 'Richten Sie den semantischen Chunker für dieses Dokument ein und passen Sie ihn an. Vorschau der Chunks in Echtzeit, um die Konfiguration zu optimieren.',
+        name: 'Semantisch',
+        form: {
+          size: 'Chunk-Größe (Wörter)',
+          threshold: 'Relevanzschwelle',
+          distance_function: 'Distanzfunktion',
+          delimiter: 'Chunk-Trennzeichen',
+          embed_model: 'Einbettungsmodell',
+          embed_provider: 'Einbettungsanbieter',
+          skip_foward: 'Chunks überspringen (vorwärts)',
+          skip_back: 'Chunks überspringen (rückwärts)',
+          actions: {
+            preview: 'Vorschau',
+            save: 'Speichern',
+          },
+        },
+      },
+      sliding: {
+        title: 'Konfiguration des gleitenden Chunking',
+        description: 'Richten Sie ein gleitendes Chunking mit überlappenden Abschnitten ein, um den Text präzise zu segmentieren.',
+        name: 'Sliding',
+        form: {
+          size: 'Chunk-Größe',
+          overlap: 'Überlappungsgröße',
+          actions: {
+            preview: 'Vorschau',
+            save: 'Speichern',
+          },
+        },
+      },
+      snapping: {
+        title: 'Konfiguration des Snapping-Chunks',
+        description: 'Richten Sie snapping-basiertes Chunking mit vordefinierten Trennzeichen für strukturierte Texte ein.',
+        name: 'Snapping',
+        form: {
+          size: 'Chunk-Größe',
+          overlap: 'Überlappungsgröße',
+          delimiter: 'Chunk-Trennzeichen',
+          skip_foward: 'Chunks überspringen (vorwärts)',
+          skip_back: 'Chunks überspringen (rückwärts)',
+          actions: {
+            preview: 'Vorschau',
+            save: 'Speichern',
+          },
+        },
+      },
+    },
+
   },
   dashboard: {
     title: 'Dashboard',
@@ -213,6 +322,7 @@ export default {
   },
   agents: {
     title: 'Agenten',
+    all_agents: 'Alle Agenten',
     titles: {
       mainTitle: 'Agenten',
       details: 'Agentendetails',
@@ -343,6 +453,8 @@ export default {
 
   collections: {
     title: 'Sammlungen',
+    all_collections: 'Alle Sammlungen',
+
     titles: {
       title: 'Sammlungen',
       subTitle: 'Verwalten Sie die Inhaltssammlungen, die die Wissensbasis der KI leiten.',

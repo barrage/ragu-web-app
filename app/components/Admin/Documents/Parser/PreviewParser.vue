@@ -41,7 +41,7 @@ watch(
   <div class="parser-preview-wrapper">
     <div class="parser-preview-heading">
       <p class="parser-preview-title">
-        Parser preview
+        {{ $t('documents.parser.parser_preview') }}
       </p>
       <el-button :disabled="parserResponse === null" @click="openParserDialog">
         <FullscreenIcon />
@@ -65,9 +65,9 @@ watch(
     class="barrage-dialog--large"
   >
     <template #header>
-      <h6>Parse Preview</h6>
+      <h6>   {{ $t('documents.parser.parser_preview') }}</h6>
     </template>
-    <p>Selected document: <b>{{ selectedDocument?.name }}</b> </p>
+    <p>   {{ $t('documents.parser.selected_document') }}: <b>{{ selectedDocument?.name }}</b> </p>
     <div class="parser-preview-content-wrapper">
       <p>{{ parserResponse }}</p>
     </div>

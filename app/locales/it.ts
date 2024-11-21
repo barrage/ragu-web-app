@@ -42,6 +42,7 @@ export default {
     assistant: 'Assistente',
     messages: 'Messaggi',
     inactive_agent: 'Questo agente non è più attivo. Seleziona un agente attivo per iniziare una nuova conversazione. ',
+    all_chats: 'Tutte le chat',
     admin: {
       title: 'Chat',
       description: 'Gestisci tutte le tue chat in un unico posto',
@@ -125,6 +126,114 @@ export default {
         error_file_size_description: 'La dimensione del file non può superare i 50 MB!',
         error_file_type_title: 'Problema di Formato del File',
         error_file_type_description: 'Il file deve essere in formato PDF, TXT, JSON o DOCX!',
+      },
+    },
+    edit_configuration: 'Modifica configurazione',
+    configuration: 'Configurazione',
+    parser: {
+      title: 'Parser',
+      description: 'Il parser consente di analizzare e elaborare i dati dai documenti.',
+      load_more: 'Carica altro',
+      selected_document: 'Documento selezionato',
+      empty_configuration: 'Configurazione non impostata.',
+      parser_preview: 'Anteprima parser',
+      parser_preview_empty_state: 'Nessun dato disponibile per l\'anteprima nel parser.',
+      form: {
+        start: 'Inizio',
+        end: 'Fine',
+        range: 'Intervallo',
+        filters: 'Filtri',
+        actions: {
+          preview: 'Anteprima',
+          save: 'Salva',
+          save_description: 'Salva la configurazione del parser appena creata.',
+          preview_description: 'Anteprima del documento con le impostazioni attuali del parser.',
+        },
+      },
+      validation: {
+        start_0_with_range: 'L\'inizio non può essere 0 quando si utilizza un intervallo.',
+        start_greater_with_range: 'L\'inizio non può essere maggiore della fine quando si utilizza un intervallo.',
+      },
+    },
+    chunker: {
+      title: 'Divisore di Segmenti',
+      description: 'Scomponi il documento selezionato in segmenti significativi per una migliore analisi semantica e elaborazione.',
+      chunk_preview: 'Anteprima dei segmenti',
+      chunk_preview_empty_state: 'Nessun segmento da visualizzare. Regola le impostazioni e visualizza in anteprima i risultati per generare segmenti per questo documento.',
+      load_more: 'Carica altro',
+      chunk: 'Segmento',
+      selected_document: 'Documento selezionato',
+      total_chunk: 'Totale segmenti',
+      no_parser_state: 'Devi prima configurare il Parser',
+      empty_configuration: 'Configurazione vuota',
+      unknown_configuration: 'Configurazione sconosciuta',
+      selected_type: 'Tipo selezionato',
+      notifications: {
+        preview: {
+          success_title: 'Anteprima riuscita',
+          success_description: 'La tua anteprima è stata generata con successo. Controllala qui sotto.',
+          error_title: 'Anteprima non riuscita',
+          error_description: 'Si è verificato un problema durante la generazione dell\'anteprima. Riprova più tardi.',
+        },
+        update: {
+          success_title: 'Aggiornamento riuscito',
+          success_description: 'I dati sono stati aggiornati con successo.',
+          error_title: 'Aggiornamento fallito',
+          error_description: 'Si è verificato un problema durante l\'aggiornamento. Riprova.',
+        },
+      },
+      validation: {
+        size_validation: 'La dimensione deve essere maggiore della sovrapposizione',
+        threshold_validation: 'La soglia non può essere negativa',
+      },
+
+      semantic: {
+        title: 'Configura la segmentazione semantica',
+        description: 'Configura e personalizza il divisore semantico per questo documento. Visualizza i segmenti in tempo reale per perfezionare la configurazione.',
+        name: 'Semantico',
+        form: {
+          size: 'Dimensione del segmento (parole)',
+          threshold: 'Soglia di rilevanza',
+          distance_function: 'Funzione di distanza',
+          delimiter: 'Delimitatore di segmento',
+          embed_model: 'Modello di embedding',
+          embed_provider: 'Fornitore di embedding',
+          skip_foward: 'Salta segmenti successivi',
+          skip_back: 'Salta segmenti precedenti',
+          actions: {
+            preview: 'Anteprima',
+            save: 'Salva',
+          },
+        },
+      },
+      sliding: {
+        title: 'Configura segmentazione scorrevole',
+        description: 'Configura la segmentazione basata su finestre scorrevoli per una suddivisione precisa del testo con sezioni sovrapposte.',
+        name: 'Scorrevole',
+        form: {
+          size: 'Dimensione del segmento',
+          overlap: 'Dimensione della sovrapposizione',
+          actions: {
+            preview: 'Anteprima',
+            save: 'Salva',
+          },
+        },
+      },
+      snapping: {
+        title: 'Configura segmentazione a scatti',
+        description: 'Configura la segmentazione basata su delimitatori predefiniti per testi strutturati.',
+        name: 'A scatti',
+        form: {
+          size: 'Dimensione del segmento',
+          overlap: 'Dimensione della sovrapposizione',
+          delimiter: 'Delimitatore di segmento',
+          skip_foward: 'Salta segmenti successivi',
+          skip_back: 'Salta segmenti precedenti',
+          actions: {
+            preview: 'Anteprima',
+            save: 'Salva',
+          },
+        },
       },
     },
 
@@ -211,6 +320,8 @@ export default {
   },
   agents: {
     title: 'Agenti',
+    all_agents: 'Tutti gli agenti',
+
     titles: {
       mainTitle: 'Agenti',
       details: 'Dettagli agente',
@@ -342,6 +453,8 @@ export default {
 
   collections: {
     title: 'Collezioni',
+    all_collections: 'Tutte le collezioni',
+
     titles: {
       title: 'Collezioni',
       subTitle: 'Gestisci le collezioni di contenuti che guidano la base di conoscenza dell\'IA.',
