@@ -9,19 +9,19 @@ defineProps<{
 <template>
   <div class="current-sliding-chunker">
     <LabelDescriptionItem
-      label="Type:"
+      :label="$t('documents.chunker.selected_type')"
       description="Sliding"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Size:"
+      :label="$t('documents.chunker.sliding.form.size')"
       :description="config.sliding.config.size.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Overlap:"
+      :label="$t('documents.chunker.sliding.form.overlap')"
       :description="config.sliding.config.overlap.toString()"
       horizontal
     />

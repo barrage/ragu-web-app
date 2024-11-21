@@ -14,8 +14,9 @@ const scrollIntoViewOptions = {
 }
 
 const appConfigStore = useAppConfigStore()
-
 appConfigStore.GET_AppConfig()
+
+const { t } = useI18n()
 
 // Document store and selected document
 const documentStore = useDocumentsStore()
@@ -43,7 +44,7 @@ const form = reactive<SemanticChunker>({
 
 const validateThreshold = (_rule: any, value: any, callback: any) => {
   if (value < 0) {
-    callback(new Error('Threshold cannot be negative'))
+    callback(new Error(t('documents.chunker.validation.threshold_validation')))
   }
   else {
     callback()
@@ -52,43 +53,76 @@ const validateThreshold = (_rule: any, value: any, callback: any) => {
 
 const rules = reactive<FormRules<SemanticChunker>>({
   'semantic.config.size': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
   'semantic.config.threshold': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
     { validator: validateThreshold, trigger: 'change' },
   ],
   'semantic.config.distanceFn': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
   'semantic.config.delimiter': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
   'semantic.config.embedModel': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
   'semantic.config.embedProvider': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
   'semantic.config.skipForward': [
-    { type: 'array', required: true, message: 'Required', trigger: 'blur' },
+    { type: 'array', required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
   'semantic.config.skipBack': [
-    { type: 'array', required: true, message: 'Required', trigger: 'blur' },
+    { type: 'array', required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
 })
 
-function parseDocument() {
+const { error: chunkPreviewError, status: loadingPreviewChunker, execute: executeChunkPreview } = await useAsyncData(() => documentStore.POST_ChunkDocumentPreview(selectedDocument.value!.id, form), { immediate: false })
+
+const { error: upadteChunkConfigError, status: loadingUpdateConfig, execute: executeUpdateChunkConfig } = await useAsyncData(() => documentStore.PUT_UpdateDocumentConfig(selectedDocument.value!.id, { parser: selectedDocument.value!.parseConfig, chunker: form || null }), { immediate: false })
+
+const { error: getSingleDocumentError, execute: executeGetSingleDocument } = await useAsyncData(() => documentStore.GET_SingleDocument(selectedDocument.value!.id), { immediate: false })
+
+errorHandler(getSingleDocumentError)
+async function previewDocumentChunker() {
   if (selectedDocument.value?.id) {
-    documentStore.POST_ChunkDocumentPreview(selectedDocument.value.id, form, form.semantic.config.embedProvider)
-    documentStore.GET_AllDocuments()
+    await executeChunkPreview()
+    if (chunkPreviewError.value) {
+      ElNotification({
+        title: t('documents.chunker.notifications.preview.error_title'),
+        message: t('documents.chunker.notifications.preview.error_description'),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
   }
 }
 
 async function saveConfig() {
   if (selectedDocument.value?.id) {
-    await documentStore.PUT_UpdateDocumentConfig(selectedDocument.value.id, { parser: selectedDocument.value?.parseConfig, chunker: form || null })
-    await documentStore.GET_SingleDocument(selectedDocument.value.id)
+    await executeUpdateChunkConfig()
+    if (upadteChunkConfigError.value) {
+      ElNotification({
+        title: t('documents.chunker.notifications.update.error_title'),
+        message: t('documents.chunker.notifications.update.error_description'),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
+    else {
+      ElNotification({
+        title: t('documents.chunker.notifications.update.success_title'),
+        message: t('documents.chunker.notifications.update.success_description'),
+        type: 'success',
+        customClass: 'success',
+        duration: 2500,
+      })
+      await executeGetSingleDocument()
+    }
   }
 }
 
@@ -133,7 +167,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   }
   await formEl.validate((valid) => {
     if (valid) {
-      parseDocument()
+      previewDocumentChunker()
     }
   })
 }
@@ -181,7 +215,8 @@ function onProviderChange() {
 
 <template>
   <div class="edit-parser-config-wrapper">
-    <p> <b>Semantic Chunker Config</b></p>
+    <p> <b>{{ t('documents.chunker.semantic.title') }}</b></p>
+    <!--     <span>{{ t('documents.chunker.semantic.description') }}</span> -->
     <ElForm
       ref="formRef"
       :model="form"
@@ -190,7 +225,7 @@ function onProviderChange() {
       :scroll-into-view-options="scrollIntoViewOptions"
     >
       <ElFormItem
-        label="Size"
+        :label="t('documents.chunker.semantic.form.size')"
         prop="semantic.config.size"
       >
         <ElInputNumber
@@ -207,7 +242,7 @@ function onProviderChange() {
       </ElFormItem>
 
       <ElFormItem
-        label="Threshold"
+        :label="t('documents.chunker.semantic.form.threshold')"
         prop="semantic.config.threshold"
       >
         <ElInputNumber
@@ -226,20 +261,20 @@ function onProviderChange() {
       </ElFormItem>
 
       <ElFormItem
-        label="Distance Function"
+        :label="t('documents.chunker.semantic.form.distance_function')"
         prop="semantic.config.distanceFn"
       >
         <ElInput v-model="form.semantic.config.distanceFn" />
       </ElFormItem>
 
       <ElFormItem
-        label="Delimiter"
+        :label="t('documents.chunker.semantic.form.delimiter')"
         prop="semantic.config.delimiter"
       >
         <ElInput v-model="form.semantic.config.delimiter" />
       </ElFormItem>
       <ElFormItem
-        label="Embed provider"
+        :label="t('documents.chunker.semantic.form.embed_provider')"
         prop="semantic.config.embedProvider"
       >
         <ElSelect
@@ -256,7 +291,7 @@ function onProviderChange() {
         </ElSelect>
       </ElFormItem>
       <ElFormItem
-        label="Embed Model"
+        :label="t('documents.chunker.semantic.form.embed_model')"
         prop="semantic.config.embedModel"
       >
         <ElSelect
@@ -274,7 +309,7 @@ function onProviderChange() {
 
       <div class="range-filters-wrapper">
         <ElFormItem
-          label="Skip Forward"
+          :label="t('documents.chunker.semantic.form.skip_foward')"
           prop="semantic.config.skipForward"
         >
           <ElInput v-model="forwardFilterString" @keyup.enter="addForwardFilter()" />
@@ -289,16 +324,18 @@ function onProviderChange() {
         </ElFormItem>
 
         <ElFormItem
-          label="Skip Back"
+          :label="t('documents.chunker.semantic.form.skip_back')"
           prop="semantic.config.skipBack"
         >
           <ElInput v-model="backFilterString" @keyup.enter="addBackFilter()" />
-          <template v-for="filter in form.semantic.config.skipBack" :key="filter">
-            <el-tag>
-              {{ filter }}
-              <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipBack')" />
-            </el-tag>
-          </template>
+          <div class="filter-items-wrapper">
+            <template v-for="filter in form.semantic.config.skipBack" :key="filter">
+              <el-tag size="small">
+                {{ filter }}
+                <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipBack')" />
+              </el-tag>
+            </template>
+          </div>
         </ElFormItem>
       </div>
 
@@ -310,8 +347,8 @@ function onProviderChange() {
             :enterable="false"
             placement="top"
           >
-            <el-button @click="submitForm(formRef)">
-              <ChunkDocument />  Preview
+            <el-button :disabled="loadingPreviewChunker === 'pending'" @click="submitForm(formRef)">
+              <ChunkDocument />  {{ t('documents.chunker.semantic.form.actions.preview') }}
             </el-button>
           </ElTooltip>
           <ElTooltip
@@ -322,9 +359,10 @@ function onProviderChange() {
           >
             <ElButton
               type="primary"
+              :disabled="loadingUpdateConfig === 'pending'"
               @click="submitSaveForm(formRef)"
             >
-              <SaveIcon /> Save
+              <SaveIcon /> {{ t('documents.chunker.semantic.form.actions.save') }}
             </ElButton>
           </ElTooltip>
         </div>

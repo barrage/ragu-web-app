@@ -80,10 +80,10 @@ export const useDocumentsStore = defineStore('document', () => {
   const chunkPreview = ref<string | null>(null)
   const loadingChunkPreview = ref<boolean>(false)
 
-  async function POST_ChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig, embedder?: string): Promise<string | null> {
+  async function POST_ChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<string | null> {
     try {
       loadingChunkPreview.value = true
-      const response = await $api.document.PostChunkDocumentPreview(id, chunkDocumentBody, embedder)
+      const response = await $api.document.PostChunkDocumentPreview(id, chunkDocumentBody)
 
       if (response) {
         return chunkPreview.value = response
@@ -94,7 +94,7 @@ export const useDocumentsStore = defineStore('document', () => {
     }
     catch (error) {
       console.error('Error chunking document:', error)
-      return null
+      throw error
     }
     finally {
       loadingChunkPreview.value = false
@@ -103,22 +103,8 @@ export const useDocumentsStore = defineStore('document', () => {
 
   /* CONFIG */
 
-  const configUpdate = ref()
   async function PUT_UpdateDocumentConfig(id: string, documentConfig?: DocumentConfig): Promise<string | null> {
-    try {
-      const response = await $api.document.PutUpdateDocumentConfig(id, documentConfig)
-
-      if (response) {
-        return configUpdate.value = response
-      }
-      else {
-        return configUpdate.value = null
-      }
-    }
-    catch (error) {
-      console.error('Error chunking document:', error)
-      return null
-    }
+    return await $api.document.PutUpdateDocumentConfig(id, documentConfig)
   }
 
   return {

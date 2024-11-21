@@ -42,6 +42,7 @@ export default {
     assistant: 'Assistant',
     messages: 'Messages',
     inactive_agent: 'Cet agent n\'est plus actif. Veuillez sélectionner un agent actif pour commencer une nouvelle conversation.',
+    all_chats: 'Tous les chats',
     admin: {
       title: 'Conversations',
       description: 'Gérez toutes vos conversations à un seul endroit',
@@ -125,6 +126,114 @@ export default {
         error_file_size_description: 'La taille du fichier ne peut pas dépasser 50 MB!',
         error_file_type_title: 'Problème de Format de Fichier',
         error_file_type_description: 'Le fichier doit être en format PDF, TXT, JSON ou DOCX!',
+      },
+    },
+    edit_configuration: 'Modifier la configuration',
+    configuration: 'Configuration',
+    parser: {
+      title: 'Analyseur',
+      description: 'L\'analyseur permet d\'analyser et de traiter des données provenant de documents.',
+      load_more: 'Charger plus',
+      selected_document: 'Document sélectionné',
+      empty_configuration: 'Configuration non définie.',
+      parser_preview: 'Aperçu de l\'analyseur',
+      parser_preview_empty_state: 'Aucune donnée disponible pour l\'aperçu dans l\'analyseur.',
+      form: {
+        start: 'Début',
+        end: 'Fin',
+        range: 'Plage',
+        filters: 'Filtres',
+        actions: {
+          preview: 'Aperçu',
+          save: 'Enregistrer',
+          save_description: 'Enregistrez la configuration du parseur nouvellement créée.',
+          preview_description: 'Aperçu du document avec les paramètres actuels du parseur.',
+        },
+      },
+      validation: {
+        start_0_with_range: 'Le début ne peut pas être 0 lors de l\'utilisation d\'une plage.',
+        start_greater_with_range: 'Le début ne peut pas être supérieur à la fin lors de l\'utilisation d\'une plage.',
+      },
+    },
+    chunker: {
+      title: 'Diviseur de Segments',
+      description: 'Découpez le document sélectionné en segments significatifs pour une meilleure analyse et traitement sémantiques.',
+      chunk_preview: 'Aperçu des segments',
+      chunk_preview_empty_state: 'Aucun segment à afficher. Ajustez les paramètres et prévisualisez les résultats pour générer des segments pour ce document.',
+      load_more: 'Charger plus',
+      chunk: 'Segment',
+      selected_document: 'Document sélectionné',
+      total_chunk: 'Nombre total de segments',
+      no_parser_state: 'Vous devez d’abord configurer le Parser',
+      empty_configuration: 'Configuration vide',
+      unknown_configuration: 'Configuration inconnue',
+      selected_type: 'Type sélectionné',
+      notifications: {
+        preview: {
+          success_title: 'Aperçu réussi',
+          success_description: 'Votre aperçu a été généré avec succès. Consultez-le ci-dessous.',
+          error_title: 'Échec de l\'aperçu',
+          error_description: 'Nous avons rencontré un problème lors de la génération de votre aperçu. Veuillez réessayer plus tard.',
+        },
+        update: {
+          success_title: 'Mise à jour réussie',
+          success_description: 'Vos modifications ont été enregistrées avec succès.',
+          error_title: 'Échec de la mise à jour',
+          error_description: 'Une erreur s\'est produite lors de l\'enregistrement de vos modifications. Veuillez vérifier votre connexion et réessayer.',
+        },
+      },
+      validation: {
+        size_validation: 'La taille doit être supérieure à la superposition',
+        threshold_validation: 'Le seuil ne peut pas être négatif',
+      },
+
+      semantic: {
+        title: 'Configurer la segmentation sémantique',
+        description: 'Configurez et personnalisez le diviseur sémantique pour ce document. Prévisualisez les segments en temps réel pour affiner vos paramètres.',
+        name: 'Sémantique',
+        form: {
+          size: 'Taille du segment (mots)',
+          threshold: 'Seuil de pertinence',
+          distance_function: 'Fonction de distance',
+          delimiter: 'Délimiteur de segment',
+          embed_model: 'Modèle d’intégration',
+          embed_provider: 'Fournisseur d’intégration',
+          skip_foward: 'Ignorer les segments suivants',
+          skip_back: 'Ignorer les segments précédents',
+          actions: {
+            preview: 'Aperçu',
+            save: 'Enregistrer',
+          },
+        },
+      },
+      sliding: {
+        title: 'Configurer la segmentation glissante',
+        description: 'Configurez une segmentation basée sur une fenêtre glissante pour un découpage précis du texte avec des sections qui se chevauchent.',
+        name: 'Glissante',
+        form: {
+          size: 'Taille du segment',
+          overlap: 'Taille du chevauchement',
+          actions: {
+            preview: 'Aperçu',
+            save: 'Enregistrer',
+          },
+        },
+      },
+      snapping: {
+        title: 'Configurer la segmentation par délimiteurs',
+        description: 'Configurez une segmentation basée sur des délimiteurs prédéfinis pour les textes structurés.',
+        name: 'Par délimiteurs',
+        form: {
+          size: 'Taille du segment',
+          overlap: 'Taille du chevauchement',
+          delimiter: 'Délimiteur de segment',
+          skip_foward: 'Ignorer les segments suivants',
+          skip_back: 'Ignorer les segments précédents',
+          actions: {
+            preview: 'Aperçu',
+            save: 'Enregistrer',
+          },
+        },
       },
     },
 
@@ -211,6 +320,8 @@ export default {
   },
   agents: {
     title: 'Agents',
+    all_agents: 'Tous les agents',
+
     titles: {
       mainTitle: 'Agents',
       details: 'Détails de l’agent',
@@ -341,6 +452,8 @@ export default {
 
   collections: {
     title: 'Collections',
+    all_collections: 'Toutes les collections',
+
     titles: {
       title: 'Collections',
       subTitle: 'Gérer les collections de contenu qui guident la base de connaissances de l\'IA.',

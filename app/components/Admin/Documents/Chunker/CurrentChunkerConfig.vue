@@ -22,7 +22,7 @@ const isSemanticChunker = (config: ChunkerConfig | null | undefined): config is 
 <template>
   <div class="current-chunker-config-card ">
     <h6 class="current-config-title">
-      Chunker
+      {{ $t('documents.chunker.title') }}
     </h6>
     <div class="current-parser-config">
       <template v-if="props.config">
@@ -30,14 +30,14 @@ const isSemanticChunker = (config: ChunkerConfig | null | undefined): config is 
         <SlidingChunkerConfig v-else-if="isSlidingChunker(config)" :config="config" />
         <SemanticChunkerConfig v-else-if="isSemanticChunker(config)" :config="config" />
         <p v-else>
-          Unknown configuration
+          {{ $t('documents.chunker.unknown_configuration') }}
         </p>
       </template>
 
       <template v-else>
         <div class="empty-config-container">
           <OpenFolderIcon />
-          <span>Empty config</span>
+          <span>       {{ $t('documents.chunker.empty_configuration') }}</span>
         </div>
       </template>
     </div>

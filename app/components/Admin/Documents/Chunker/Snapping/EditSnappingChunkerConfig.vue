@@ -11,7 +11,7 @@ const scrollIntoViewOptions = {
   behavior: 'smooth',
   block: 'center',
 }
-
+const { t } = useI18n()
 const documentStore = useDocumentsStore()
 const selectedDocument = computed(() => {
   return documentStore.selectedDocument
@@ -32,7 +32,7 @@ const form = reactive<SnappingChunker>({
 
 const validateSize = (_rule: any, value: any, callback: any) => {
   if (value <= form.snapping.config.overlap) {
-    callback(new Error('Size must be greater than overlap'))
+    callback(new Error(t('documents.chunker.validation.size_validation')))
   }
 
   else {
@@ -43,28 +43,60 @@ const validateSize = (_rule: any, value: any, callback: any) => {
 // Validation rules
 const rules = reactive<FormRules<SnappingChunker>>({
   'snapping.config.size': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
     { validator: validateSize, trigger: 'change' },
   ],
   'snapping.config.overlap': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
   'snapping.delimiter': [
-    { required: true, message: 'Required', trigger: 'blur' },
+    { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
 })
 
-function chunkPreviewDocument() {
+const { error: chunkPreviewError, status: loadingPreviewChunker, execute: executeChunkPreview } = await useAsyncData(() => documentStore.POST_ChunkDocumentPreview(selectedDocument.value!.id, form), { immediate: false })
+
+const { error: upadteChunkConfigError, status: loadingUpdateConfig, execute: executeUpdateChunkConfig } = await useAsyncData(() => documentStore.PUT_UpdateDocumentConfig(selectedDocument.value!.id, { parser: selectedDocument.value!.parseConfig, chunker: form || null }), { immediate: false })
+
+const { error: getSingleDocumentError, execute: executeGetSingleDocument } = await useAsyncData(() => documentStore.GET_SingleDocument(selectedDocument.value!.id), { immediate: false })
+errorHandler(getSingleDocumentError)
+async function previewDocumentChunker() {
   if (selectedDocument.value?.id) {
-    documentStore.POST_ChunkDocumentPreview(selectedDocument.value.id, form)
-    documentStore.GET_AllDocuments()
+    await executeChunkPreview()
+    if (chunkPreviewError.value) {
+      ElNotification({
+        title: t('documents.chunker.notifications.preview.error_title'),
+        message: t('documents.chunker.notifications.preview.error_description'),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
   }
 }
 
 async function saveConfig() {
   if (selectedDocument.value?.id) {
-    await documentStore.PUT_UpdateDocumentConfig(selectedDocument.value.id, { parser: selectedDocument.value?.parseConfig, chunker: form || null })
-    await documentStore.GET_SingleDocument(selectedDocument.value.id)
+    await executeUpdateChunkConfig()
+    if (upadteChunkConfigError.value) {
+      ElNotification({
+        title: t('documents.chunker.notifications.update.error_title'),
+        message: t('documents.chunker.notifications.update.error_description'),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
+    else {
+      ElNotification({
+        title: t('documents.chunker.notifications.update.success_title'),
+        message: t('documents.chunker.notifications.update.success_description'),
+        type: 'success',
+        customClass: 'success',
+        duration: 2500,
+      })
+      await executeGetSingleDocument()
+    }
   }
 }
 
@@ -93,7 +125,7 @@ const submitPreviewForm = async (formEl: FormInstance | undefined) => {
   }
   await formEl.validate((valid) => {
     if (valid) {
-      chunkPreviewDocument()
+      previewDocumentChunker()
     }
   })
 }
@@ -136,7 +168,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
 
 <template>
   <div class="edit-parser-config-wrapper">
-    <h6>Snapping Chunker Config</h6>
+    <p> <b>{{ $t('documents.chunker.snapping.title') }}</b></p>
     <ElForm
       ref="formRef"
       :model="form"
@@ -145,7 +177,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
       :scroll-into-view-options="scrollIntoViewOptions"
     >
       <ElFormItem
-        label="Size"
+        :label="$t('documents.chunker.snapping.form.size')"
         prop="snapping.config.size"
       >
         <ElInputNumber
@@ -162,7 +194,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
       </ElFormItem>
 
       <ElFormItem
-        label="Overlap"
+        :label="$t('documents.chunker.snapping.form.overlap')"
         prop="snapping.config.overlap"
       >
         <ElInputNumber
@@ -179,7 +211,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
       </ElFormItem>
 
       <ElFormItem
-        label="Delimiter"
+        :label="$t('documents.chunker.snapping.form.delimiter')"
         prop="snapping.delimiter"
       >
         <ElInput v-model="form.snapping.delimiter" />
@@ -187,7 +219,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
 
       <div class="range-filters-wrapper">
         <ElFormItem
-          label="Skip Forward"
+          :label="$t('documents.chunker.snapping.form.skip_foward')"
           prop="snapping.skipForward"
         >
           <ElInput v-model="forwardFilterString" @keyup.enter="addForwardFilter()" />
@@ -206,7 +238,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
         </ElFormItem>
 
         <ElFormItem
-          label="Skip Back"
+          :label="$t('documents.chunker.snapping.form.skip_back')"
           prop="snapping.skipBack"
         >
           <ElInput v-model="backFilterString" @keyup.enter="addBackFilter()" />
@@ -233,8 +265,8 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
             :enterable="false"
             placement="top"
           >
-            <el-button @click="submitPreviewForm(formRef)">
-              Preview <ChunkDocument />
+            <el-button :disabled="loadingPreviewChunker === 'pending'" @click="submitPreviewForm(formRef)">
+              <ChunkDocument />  {{ t('documents.chunker.snapping.form.actions.preview') }}
             </el-button>
           </ElTooltip>
           <ElTooltip
@@ -245,9 +277,10 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
           >
             <ElButton
               type="primary"
+              :disabled="loadingUpdateConfig === 'pending'"
               @click="submitSaveForm(formRef)"
             >
-              <SaveIcon />  Save
+              <SaveIcon />  {{ t('documents.chunker.snapping.form.actions.save') }}
             </ElButton>
           </ElTooltip>
         </div>

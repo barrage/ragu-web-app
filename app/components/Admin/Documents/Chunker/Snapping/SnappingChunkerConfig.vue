@@ -9,31 +9,31 @@ defineProps<{
 <template>
   <div class="current-snapping-config">
     <LabelDescriptionItem
-      label="Type:"
+      :label="$t('documents.chunker.selected_type')"
       description="Snapping"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Size:"
+      :label="$t('documents.chunker.snapping.form.size')"
       :description="config.snapping.config.size.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Overlap:"
+      :label="$t('documents.chunker.snapping.form.overlap')"
       :description="config.snapping.config.overlap.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Delimiter:"
+      :label="$t('documents.chunker.snapping.form.delimiter')"
       :description="config.snapping.delimiter.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Skip Forward:"
+      :label="$t('documents.chunker.snapping.form.skip_foward')"
       :description="config.snapping.skipForward.join(', ')"
     >
       <template #customDescription>
@@ -50,7 +50,7 @@ defineProps<{
     </LabelDescriptionItem>
     <div class="horizontal-divider" />
     <LabelDescriptionItem
-      label="Skip Back:"
+      :label="$t('documents.chunker.snapping.form.skip_back')"
       :description="config.snapping.skipBack.join(', ')"
     >
       <template #customDescription>

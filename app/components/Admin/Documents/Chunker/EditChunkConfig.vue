@@ -53,7 +53,7 @@ const selectedButtonType = (name: string) => {
   <div class="edit-chunker-config-container">
     <template v-if="selectedDocument?.parseConfig">
       <div class="select-chunker-type-wrapper">
-        Selected type:
+        {{ $t('documents.chunker.selected_type') }}
         <el-button
           size="small"
           :type="selectedButtonType('semantic')"
@@ -94,7 +94,7 @@ const selectedButtonType = (name: string) => {
       <div class="empty-parser-config-information">
         <InfoIcon />
         <p>
-          You need to set Parser config first
+          {{ $t('documents.chunker.no_parser_state') }}
         </p>
       </div>
     </template>

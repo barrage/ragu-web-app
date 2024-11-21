@@ -21,16 +21,33 @@ const updateSort = (sortingValues: SortingValues) => {
 
 <template>
   <div class="agents-actions-container">
-    <SortSelect :options="sortOptions" @sort-updated="updateSort" />
+    <p class="agents-list-title">
+      {{ $t('agents.all_agents') }}
+    </p>
+    <div class="actions-wrapper">
+      <SortSelect :options="sortOptions" @sort-updated="updateSort" />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-  .agents-actions-container {
+.agents-actions-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding-inline: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.7rem;
+
+  & .agents-list-title {
+    font-size: var(--font-size-fluid-4);
+    color: var(--color-primary-800);
+  }
+}
+.dark {
+  .agents-actions-container {
+    & .agents-list-title {
+      color: var(--color-primary-100);
+    }
+  }
 }
 </style>

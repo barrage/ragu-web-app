@@ -140,14 +140,14 @@ export default class DocumentServise extends FetchFactory {
    * @returns A promise that resolves to the string response.
    * @throws Will throw an error if the upload fails.
    */
-  async PostChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig, embedder?: string): Promise<string> {
+  async PostChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<string> {
     try {
       return await this.$fetch<string>(`${this.endpoint}/${id}/chunk/preview`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: { chunker: chunkDocumentBody, embedder },
+        body: { chunker: chunkDocumentBody },
       })
     }
     catch (error: any) {

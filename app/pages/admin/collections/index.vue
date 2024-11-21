@@ -40,7 +40,7 @@ const handleSortChange = async (sortingValues: SortingValues) => {
           :description="t('collections.titles.subTitle')"
         >
           <template #icon>
-            <CollectionIcon size="52" />
+            <CollectionIcon size="58px" />
           </template>
         </AdminPageTitleContainer>
       </template>

@@ -10,32 +10,32 @@ const props = defineProps<{
 <template>
   <div class="current-parser-config-card">
     <h6 class="current-config-title">
-      Parser
+      {{ $t('documents.parser.title') }}
     </h6>
     <div class="current-parser-config">
       <template v-if="props.config">
         <div class="start-end-range-wrapper">
           <LabelDescriptionItem
-            label="Start:"
+            :label="$t('documents.parser.form.start')"
             :description="props.config.start.toString()"
             horizontal
           />
           <div class="horizontal-divider" />
           <LabelDescriptionItem
-            label="End:"
+            :label="$t('documents.parser.form.end')"
             :description="props.config.end.toString()"
             horizontal
           />
           <div class="horizontal-divider" />
           <LabelDescriptionItem
-            label="Range:"
+            :label="$t('documents.parser.form.range')"
             :description="props.config.range.toString()"
             horizontal
           />
         </div>
         <div class="horizontal-divider" />
         <LabelDescriptionItem
-          label="Filters:"
+          :label="$t('documents.parser.form.filters')"
           :description="props.config.filters.join(', ')"
         >
           <template #customDescription>
@@ -53,7 +53,7 @@ const props = defineProps<{
       <template v-else>
         <div class="empty-config-container">
           <OpenFolderIcon />
-          <span>Empty config</span>
+          <span>{{ $t('documents.parser.empty_configuration') }}</span>
         </div>
       </template>
     </div>
