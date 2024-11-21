@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { DashboardStatistic, StatisticArray } from '~/types/statistic'
+import type { DashboardStatistic, LineChartResponseData } from '~/types/statistic'
 
 export const useStatisticStore = defineStore('statistic', () => {
   // State
@@ -21,8 +21,8 @@ export const useStatisticStore = defineStore('statistic', () => {
     }
   }
 
-  const chatHistoryStats = ref<StatisticArray | null>(null)
-  async function GET_ChatHistoryStatistic(period?: string): Promise<StatisticArray | null > {
+  const chatHistoryStats = ref<LineChartResponseData | null>(null)
+  async function GET_ChatHistoryStatistic(period?: string): Promise<LineChartResponseData | null > {
     try {
       const data = await $api.statistic.GetChatHistoryStats(period)
       chatHistoryStats.value = data

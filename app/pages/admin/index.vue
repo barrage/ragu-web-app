@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import DashboardIcon from '~/assets/icons/svg/dashboard-icon.svg'
 import DashboardHeroOverview from '~/components/Admin/Dashboard/DashboardHeroOverview.vue'
-import type { AgentStatistic, ChatStatistic, StatisticItem, UserStatistic } from '~/types/statistic'
+import type { AgentStatistic, ChatStatistic, PieChartDataEntry, UserStatistic } from '~/types/statistic'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -20,10 +20,15 @@ const updatePeriod = (newPeriod: string) => {
 }
 
 const chatHistory = computed(() => {
-  return statisticStore.chatHistoryStats
+  return statisticStore?.chatHistoryStats ? formatLineChartData(statisticStore.chatHistoryStats) : null
 })
-const chatCount = computed<ChatStatistic>(() => {
-  return statisticStore.dashboardCount?.chat || { agents: [], total: 0 }
+
+const chatCount = computed<number>(() => {
+  return statisticStore.dashboardCount?.chat.total || 0
+})
+
+const chatPieChartData = computed<PieChartDataEntry[] | null>(() => {
+  return statisticStore.dashboardCount?.chat?.chats ? formatPieChartData(statisticStore.dashboardCount?.chat.chats) : null
 })
 
 const usersData = computed<UserStatistic>(() => {
@@ -32,6 +37,10 @@ const usersData = computed<UserStatistic>(() => {
 
 const agentsData = computed<AgentStatistic>(() => {
   return statisticStore.dashboardCount?.agent || { active: 0, inactive: 0, providers: [], total: 0 }
+})
+
+const agentsProviders = computed<PieChartDataEntry[] | null>(() => {
+  return statisticStore.dashboardCount?.agent?.providers ? formatPieChartDataFromObjects(statisticStore.dashboardCount?.agent?.providers) : null
 })
 
 const userStore = useUsersStore()
@@ -94,30 +103,28 @@ onMounted(() => {
   getCollectionsTotal()
 })
 
-function findMostUsedAgent(chatData: ChatStatistic) {
-  const agents = chatData?.agents || []
+function findMostUsedAgent(): { name: string, stats: { used: number, total: number } } {
+  const chatData = statisticStore.dashboardCount?.chat || { chats: [], total: 0 }
 
-  if (agents.length === 0) {
+  if (chatData?.chats.length === 0) {
     return { name: 'None', stats: { used: 0, total: chatData?.total || 0 } }
   }
 
-  const mostUsedAgent = agents.reduce((max, agent) => {
-    return agent.value > max.value ? agent : max
-  }, { name: '-', value: 0 })
+  const mostUsedAgent = chatData.chats.reduce((max, agent) => {
+    return agent.count > max.count ? agent : max
+  }, { agentName: 'Unknown', count: 0 })
 
-  const result = {
-    name: mostUsedAgent?.name || 'Unknown',
+  return {
+    name: mostUsedAgent.agentName || 'Unknown',
     stats: {
-      used: mostUsedAgent?.value || 0,
-      total: chatData?.total || 0,
+      used: mostUsedAgent.count || 0,
+      total: chatData.total || 0,
     },
   }
-
-  return result
 }
 
 const mostUsedAgentData = computed(() => {
-  return findMostUsedAgent(chatCount?.value)
+  return findMostUsedAgent()
 })
 </script>
 
@@ -135,7 +142,6 @@ const mostUsedAgentData = computed(() => {
         </AdminPageTitleContainer>
       </template>
     </AdminPageHeadingTemplate>
-
     <div class="dashboard-templates-wrapper grid">
       <div class="dashboard-hero-section-template">
         <DashboardHeroOverview
@@ -149,14 +155,15 @@ const mostUsedAgentData = computed(() => {
       </div>
       <div class="dashboard-chats-template">
         <DashboardChatsInfo
-          :chat-history="chatHistory"
           :chat-count="chatCount"
+          :chat-pie-chart-data="chatPieChartData"
           :recent-chats="mostRecentChats"
           :active-agents="allActiveAgents"
         />
       </div>
       <div class="dashboard-agents-template">
         <DashboardAgents
+          :agent-providers-pie-chart-data="agentsProviders"
           :count-data-agents="agentsData"
           :recent-users="mostRecentUser"
           :most-used-agent="mostUsedAgentData"

@@ -2,13 +2,14 @@
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
 import LinkIcon from '~/assets/icons/svg/link.svg'
-import type { ChatStatistic, StatisticItem } from '~/types/statistic'
+import type { PieChartDataEntry } from '~/types/statistic'
 import type { AdminChatDetails } from '~/types/chat'
 import type { Agent } from '~/types/agent'
 import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 
 const props = defineProps<{
-  chatCount: ChatStatistic | undefined
+  chatCount: number
+  chatPieChartData: PieChartDataEntry[] | null
   recentChats: Array<AdminChatDetails>
   activeAgents: Array<Agent>
 }>()
@@ -19,7 +20,8 @@ const redirectToChatDetails = (id: string) => {
   return router.push(`/admin/chats/${id}`)
 }
 
-const redirectToAgentDetails = (id: string) => {
+const redirectToAgentDetails = (id: string | undefined) => {
+  if (!id) { return }
   return router.push(`/admin/agents/${id}`)
 }
 </script>
@@ -69,9 +71,9 @@ const redirectToAgentDetails = (id: string) => {
       <el-card class="is-primary all-chats-usage-card">
         <TitleDescription :title="t('dashboard.chats.all_chat_usage.title')" :description="t('dashboard.chats.all_chat_usage.description')" />
         <PieChart
-          :data="chatCount?.agents"
+          :data="props.chatPieChartData || []"
           :series-name="t('dashboard.chats.all_chat_usage.series_name')"
-          :title-text="chatCount?.total ? chatCount.total.toString() : '0'"
+          :title-text="props.chatCount ? props.chatCount.toString() : '0'"
           :title-subtext="t('dashboard.chats.all_chat_usage.pie_chart_subtext')"
         />
       </el-card>
