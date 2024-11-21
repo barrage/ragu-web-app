@@ -5,7 +5,7 @@ import TeamIcon from '~/assets/icons/svg/team.svg'
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
-import type { AgentStatistic, StatisticItem, UserStatistic } from '~/types/statistic'
+import type { AgentStatistic, LineChartSeriesData, UserStatistic } from '~/types/statistic'
 import TitleDescription from '~/components/shared/TitleDescription.vue'
 
 const props = defineProps<{
@@ -13,7 +13,7 @@ const props = defineProps<{
   usersStats: UserStatistic
   documentsCount: number
   collectionsCount: number
-  chatHistory: StatisticItem | null
+  chatHistory: LineChartSeriesData[] | null
 }>()
 
 const emits = defineEmits<Emits>()

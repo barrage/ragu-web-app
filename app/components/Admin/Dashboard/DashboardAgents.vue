@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
-import type { AgentStatistic } from '~/types/statistic'
+import type { AgentStatistic, PieChartDataEntry } from '~/types/statistic'
 
 const props = defineProps<{
+  agentProvidersPieChartData: PieChartDataEntry[] | null
   countDataAgents: AgentStatistic
   mostUsedAgent: any
 }>()
@@ -46,7 +47,7 @@ const { t } = useI18n()
     <el-card class="agent-providers-widget-card is-primary">
       <TitleDescription :title="t('dashboard.agents.providers.title')" :description="t('dashboard.agents.providers.description')" />
       <PieChart
-        :data="countDataAgents?.providers"
+        :data="agentProvidersPieChartData"
         :series-name="t('dashboard.agents.providers.series_name')"
         small
       />

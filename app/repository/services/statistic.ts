@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { DashboardStatistic, StatisticArray } from '~/types/statistic'
+import type { DashboardStatistic, LineChartResponseData } from '~/types/statistic'
 
 export default class StatisticService extends FetchFactory {
   // Endpoint for statistic-related API requests.
@@ -29,9 +29,9 @@ export default class StatisticService extends FetchFactory {
    * @returns A promise that resolves to an collection object.
    * @throws Will throw an error if the request fails.
    */
-  async GetChatHistoryStats(period: string = 'WEEK'): Promise<StatisticArray> {
+  async GetChatHistoryStats(period: string = 'WEEK'): Promise<LineChartResponseData> {
     try {
-      return await this.$fetch<StatisticArray>(`${this.dashboardEndpoint}/chat/history?period=${period}`, {
+      return await this.$fetch<LineChartResponseData>(`${this.dashboardEndpoint}/chat/history?period=${period}`, {
         credentials: 'include',
       })
     }
