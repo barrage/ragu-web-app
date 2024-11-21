@@ -3,6 +3,8 @@ import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
 const agentStore = useAgentStore()
 
+const { t } = useI18n()
+
 const selectedAgent = ref(agentStore.appAgents?.[0])
 const selectAgent = (agent: any) => {
   return selectedAgent.value = agent
@@ -45,9 +47,9 @@ watch(
         <ChatAgentIcon size="52" />
         <h6>{{ selectedAgent?.name }}</h6>
         <div class="agent-info">
-          <span>Language: {{ selectedAgent?.language }}</span>
-          <span>Updated: {{ formatDate(selectedAgent?.updatedAt) }}</span>
-          <p>Description: {{ selectedAgent?.description }}</p>
+          <span>{{ t('agents.labels.language') }}: {{ selectedAgent?.language }}</span>
+          <span>{{ t('agents.labels.updated_at') }}: {{ formatDate(selectedAgent?.updatedAt) }}</span>
+          <p>{{ t('agents.labels.description') }}: {{ selectedAgent?.description }}</p>
         </div>
       </div>
     </div>

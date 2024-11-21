@@ -3,6 +3,8 @@ import { defineProps } from 'vue'
 
 const props = defineProps<{ formats: { value: number, name: string }[] }>()
 
+const { t } = useI18n()
+
 const customTitle = computed(() => {
   return props.formats.length.toString()
 })
@@ -10,19 +12,19 @@ const customTitle = computed(() => {
 
 <template>
   <ElTooltip
-    content="Shows the distribution of different document formats in a pie chart"
+    :content="t('documents.tooltip.document_formats')"
     :show-after="3000"
     :enterable="false"
     placement="top"
   >
     <div class="document-formats-count">
-      <h6>Formats</h6>
+      <h6>{{ t('documents.formats') }}</h6>
 
       <PieChart
         :data="formats"
-        series-name="Format"
+        :series-name="t('documents.series_name')"
         :title-text="customTitle"
-        title-subtext="Specific formats"
+        :title-subtext="t('documents.specific_formats')"
       />
     </div>
   </ElTooltip>

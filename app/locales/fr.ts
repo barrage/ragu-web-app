@@ -5,6 +5,15 @@ export default {
     title: 'Se connecter',
     description: 'Choisissez une méthode de connexion',
     continueWith: 'Continuer avec',
+    notifications: {
+      error_title: 'Échec de la connexion',
+      error_description: 'Impossible de s’authentifier. Veuillez réessayer.',
+    },
+
+  },
+  logout: {
+    error_title: 'Échec de la déconnexion',
+    error_description: 'Une erreur est survenue lors de la tentative de déconnexion. Veuillez réessayer.',
   },
   timePeriod: {
     today: 'Aujourd\'hui',
@@ -28,6 +37,9 @@ export default {
     agents: 'Agents',
     support: 'Support',
     signOut: 'Se déconnecter',
+    browse_agents: 'Parcourez tous les agents de chat prêts à vous aider',
+    signout_text: 'Êtes-vous sûr de vouloir vous déconnecter ?',
+    profile_settings: 'Paramètres du profil',
   },
   getHelp: {
     title: 'Obtenir de l\'aide',
@@ -42,6 +54,8 @@ export default {
     assistant: 'Assistant',
     messages: 'Messages',
     inactive_agent: 'Cet agent n\'est plus actif. Veuillez sélectionner un agent actif pour commencer une nouvelle conversation.',
+    copy_title: 'Copié',
+    copy_message: 'Copié dans le presse-papiers',
     all_chats: 'Tous les chats',
     admin: {
       title: 'Conversations',
@@ -100,6 +114,29 @@ export default {
     source: 'Source',
     id: 'ID Document',
     hash: 'Hash',
+    formats: 'Formats',
+    total: 'Total',
+    sync: 'Synchroniser',
+    upload: 'Téléverser',
+    most_recent: 'Les plus récents',
+    specific_formats: 'Formats spécifiques',
+    series_name: 'Format',
+    sync_docs: 'Synchroniser les documents',
+
+    tooltip: {
+      delete_document: 'Supprimez votre document',
+      manage_document: 'Gérez votre document',
+      display_total: 'Afficher le nombre total de documents',
+      most_recent: 'Affiche les 5 documents les plus récemment mis à jour ou créés',
+      document_formats: 'Affiche la répartition des différents formats de documents dans un graphique circulaire',
+    },
+
+    uploads: {
+      title: 'Téléverser un fichier',
+      description: 'Déposez le fichier ici ou',
+      description_link: 'cliquez pour téléverser',
+    },
+
     details: {
       empty: 'Ce document n\'est pas disponible ou n\'existe plus.',
     },
@@ -486,6 +523,8 @@ export default {
       unknown_date: 'Date inconnue',
       empty_state_title: 'Collection introuvable',
       empty_state_desc: 'La collection que vous recherchez n\'existe pas ou n\'est pas disponible actuellement. Veuillez vérifier les informations de la collection ou essayer une recherche différente.',
+      view_more: 'Afficher les détails de la collection',
+      delete_collection: 'Supprimer la collection',
     },
 
     labels: {
@@ -545,6 +584,8 @@ export default {
         assign_error_title: 'Échec de l\'attribution de la collection à l\'agent!',
         assign_cuccess_title: 'Collection assignée!',
         delete_collection: 'Vous n\'avez pas de collection à supprimer, veuillez en assigner une nouvelle!',
+        update_error_collection: 'Échec de la mise à jour de la collection.',
+        update_collection: 'Collection mise à jour avec succès !',
       },
     },
   },

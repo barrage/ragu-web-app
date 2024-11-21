@@ -36,7 +36,7 @@ const confirmDelete = async () => {
     deleteCollectionModalVisible.value = false
     ElNotification({
       title: 'Success',
-      message: `Collection ${props.collection.name} deleted successfully!`,
+      message: t('collections.notifications.delete_message'),
       type: 'success',
       customClass: 'success',
       duration: 2500,
@@ -45,7 +45,7 @@ const confirmDelete = async () => {
   catch {
     ElNotification({
       title: 'Error',
-      message: 'Failed to delete the collection.',
+      message: t('collections.notifications.delete_error'),
       type: 'error',
       duration: 2500,
     })

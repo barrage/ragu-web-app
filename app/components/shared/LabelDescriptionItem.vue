@@ -19,14 +19,16 @@ const props = defineProps<{
 
 const slots = defineSlots<Slots>()
 
+const { t } = useI18n()
+
 const { copy } = useClipboard()
 
 const copyItem = () => {
   if (props.canCopy && props.description) {
     copy(props.description)
     ElNotification({
-      title: 'Copied',
-      message: `Copied to clipboard`,
+      title: t('chat.copy_title'),
+      message: t('chat.copy_message'),
       type: 'info',
       customClass: 'info',
       duration: 2500,

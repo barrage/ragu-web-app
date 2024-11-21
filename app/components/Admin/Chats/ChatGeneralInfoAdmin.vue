@@ -122,13 +122,13 @@ const redirectToAgentDetails = () => {
         </LabelDescriptionItem>
 
         <LabelDescriptionItem
-          label="Vector provider"
+          :label="t('agents.labels.vectorProvider')"
           size="small"
           :description="chatData.agent.vectorProvider"
         />
 
         <LabelDescriptionItem
-          label="Embedding model"
+          :label="t('agents.labels.embeddingModel')"
           size="small"
           :description="chatData.agent.embeddingModel"
         />

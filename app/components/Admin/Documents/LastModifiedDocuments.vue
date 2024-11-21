@@ -11,17 +11,19 @@ import UnknownDocumentIcon from '~/assets/icons/svg/unknown-document-icon.svg'
 import type { Document } from '~/types/document'
 
 const props = defineProps<{ documents: Document[] }>()
+
+const { t } = useI18n()
 </script>
 
 <template>
   <ElTooltip
-    content="Shows the 5 most recently updated or created documents"
+    :content="t('documents.tooltip.most_recent')"
     :show-after="2000"
     :enterable="false"
     placement="top"
   >
     <div class="last-modified-documents">
-      <h6>Most recent</h6>
+      <h6>{{ t('documents.most_recent') }}</h6>
       <ul>
         <li
           v-for="doc in props.documents"

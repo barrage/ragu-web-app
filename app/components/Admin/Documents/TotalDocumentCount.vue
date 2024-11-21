@@ -2,17 +2,19 @@
 import DocumentDatabaseIcon from '~/assets/icons/svg/document-database.svg'
 
 const props = defineProps<{ total: number }>()
+
+const { t } = useI18n()
 </script>
 
 <template>
   <ElTooltip
-    content="Displays the total number of documents,"
+    :content="t('documents.tooltip.display_total')"
     :show-after="1000"
     :enterable="false"
     placement="top"
   >
     <div class="total-document-count">
-      <h6>Total</h6>
+      <h6>{{ t('documents.total') }}</h6>
       <div class="total-count-info">
         <h4> {{ props.total }}</h4>
         <DocumentDatabaseIcon size="32" />

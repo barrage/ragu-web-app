@@ -5,6 +5,7 @@ import type { OAuthProvider } from '~/types/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const { t } = useI18n()
 
 onMounted(async () => {
   const code = router.currentRoute.value.query.code as string
@@ -22,8 +23,8 @@ onMounted(async () => {
     catch (error) {
       console.error('OAuth login failed:', error)
       ElNotification({
-        title: 'Login Failed',
-        message: 'Unable to authenticate. Please try again.',
+        title: t('login.notifications.error_title'),
+        message: t('login.notifications.error_description'),
         type: 'error',
         customClass: 'error',
         duration: 2500,

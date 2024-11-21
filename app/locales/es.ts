@@ -5,6 +5,15 @@ export default {
     title: 'Acceso',
     description: 'Elige un método de inicio de sesión',
     continueWith: 'Continuar con',
+    notifications: {
+      error_title: 'Inicio de sesión fallido',
+      error_description: 'No se pudo autenticar. Por favor, inténtalo de nuevo.',
+    },
+
+  },
+  logout: {
+    error_title: 'Cierre de sesión fallido',
+    error_description: 'Ocurrió un error al intentar cerrar sesión. Por favor, inténtalo de nuevo.',
   },
   timePeriod: {
     today: 'Hoy',
@@ -28,6 +37,9 @@ export default {
     agents: 'Agentes',
     support: 'Soporte',
     signOut: 'Cerrar sesión',
+    browse_agents: 'Explora todos los agentes de chat listos para asistirte',
+    signout_text: '¿Estás seguro de que deseas proceder con cerrar sesión?',
+    profile_settings: 'Configuración de perfil',
   },
   getHelp: {
     title: 'Obtener ayuda',
@@ -42,6 +54,8 @@ export default {
     assistant: 'Asistente',
     messages: 'Mensajes',
     inactive_agent: 'Este agente ya no está activo. Por favor, seleccione un agente activo para comenzar una nueva conversación.',
+    copy_title: 'Copiado',
+    copy_message: 'Copiado al portapapeles',
     all_chats: 'Todos los chats',
     admin: {
       title: 'Chats',
@@ -100,6 +114,29 @@ export default {
     source: 'Fuente',
     id: 'ID del Documento',
     hash: 'Hash',
+    formats: 'Formatos',
+    total: 'Total',
+    sync: 'Sincronizar',
+    upload: 'Subir',
+    most_recent: 'Más recientes',
+    specific_formats: 'Formatos específicos',
+    series_name: 'Formato',
+    sync_docs: 'Sincronizar documentos',
+
+    tooltip: {
+      delete_document: 'Elimina tu documento',
+      manage_document: 'Administra tu documento',
+      display_total: 'Mostrar el número total de documentos',
+      most_recent: 'Muestra los 5 documentos más recientemente actualizados o creados',
+      document_formats: 'Muestra la distribución de diferentes formatos de documentos en un gráfico circular',
+    },
+
+    uploads: {
+      title: 'Subir archivo',
+      description: 'Suelta el archivo aquí o',
+      description_link: 'haz clic para subir',
+    },
+
     details: {
       empty: 'Este documento no está disponible o ya no existe.',
     },
@@ -486,6 +523,9 @@ export default {
       unknown_date: 'Fecha desconocida',
       empty_state_title: 'Colección no encontrada',
       empty_state_desc: 'La colección que buscas no existe o no está disponible en este momento. Por favor, verifica los datos de la colección nuevamente o intenta con una búsqueda diferente.',
+      view_more: 'Ver detalles de la colección',
+      delete_collection: 'Eliminar colección',
+
     },
 
     labels: {
@@ -545,6 +585,8 @@ export default {
         assign_error_title: 'Error al asignar la colección al agente!',
         assign_cuccess_title: '¡Colección asignada!',
         delete_collection: 'No tienes colección para eliminar, ¡por favor asigna una nueva colección!',
+        update_error_collection: 'Error al actualizar la colección.',
+        update_collection: '¡Colección actualizada con éxito!',
       },
     },
   },

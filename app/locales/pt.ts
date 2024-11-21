@@ -5,6 +5,14 @@ export default {
     title: 'Login',
     description: 'Escolha um método de login',
     continueWith: 'Continuar com',
+    notifications: {
+      error_title: 'Falha no login',
+      error_description: 'Não foi possível autenticar. Por favor, tente novamente.',
+    },
+  },
+  logout: {
+    error_title: 'Falha ao sair',
+    error_description: 'Ocorreu um erro ao tentar fazer logout. Por favor, tente novamente.',
   },
   timePeriod: {
     today: 'Hoje',
@@ -28,6 +36,9 @@ export default {
     agents: 'Agentes',
     support: 'Suporte',
     signOut: 'Sair',
+    browse_agents: 'Navegue por todos os agentes de chat prontos para ajudá-lo',
+    signout_text: 'Tem certeza de que deseja continuar com o logout?',
+    profile_settings: 'Configurações de perfil',
   },
   getHelp: {
     title: 'Obter ajuda',
@@ -43,6 +54,8 @@ export default {
     assistant: 'Assistente',
     messages: 'Mensagens',
     inactive_agent: 'Este agente não está mais ativo. Por favor, selecione um agente ativo para iniciar uma nova conversa.',
+    copy_title: 'Copiado',
+    copy_message: 'Copiado para a área de transferência',
     all_chats: 'Todas as conversas',
     admin: {
       title: 'Conversas',
@@ -102,6 +115,29 @@ export default {
     source: 'Fonte',
     id: 'ID do Documento',
     hash: 'Hash',
+    formats: 'Formatos',
+    total: 'Total',
+    sync: 'Sincronizar',
+    upload: 'Carregar',
+    most_recent: 'Mais recentes',
+    specific_formats: 'Formatos específicos',
+    series_name: 'Formato',
+    sync_docs: 'Sincronizar documentos',
+
+    tooltip: {
+      delete_document: 'Exclua seu documento',
+      manage_document: 'Gerencie seu documento',
+      display_total: 'Exibe o número total de documentos',
+      most_recent: 'Mostra os 5 documentos mais recentemente atualizados ou criados',
+      document_formats: 'Mostra a distribuição de diferentes formatos de documentos em um gráfico de pizza',
+    },
+
+    uploads: {
+      title: 'Carregar arquivo',
+      description: 'Solte o arquivo aqui ou',
+      description_link: 'clique para carregar',
+    },
+
     details: {
       empty: 'Este documento está indisponível ou não existe mais.',
     },
@@ -489,6 +525,8 @@ export default {
       unknown_date: 'Data desconhecida',
       empty_state_title: 'Coleção não encontrada',
       empty_state_desc: 'A coleção que você está procurando não existe ou não está disponível no momento. Por favor, verifique novamente os dados da coleção ou tente uma busca diferente.',
+      view_more: 'Ver detalhes da coleção',
+      delete_collection: 'Excluir coleção',
     },
 
     labels: {
@@ -547,6 +585,8 @@ export default {
         assign_error_title: 'Falha ao atribuir a coleção ao agente!',
         assign_cuccess_title: 'Coleção atribuída!',
         delete_collection: 'Você não tem coleção para excluir, por favor atribua uma nova coleção!',
+        update_error_collection: 'Falha ao atualizar a coleção.',
+        update_collection: 'Coleção atualizada com sucesso!',
       },
     },
   },

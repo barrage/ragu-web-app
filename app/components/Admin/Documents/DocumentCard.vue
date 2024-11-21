@@ -127,7 +127,7 @@ const submitDeleteDocument = async () => {
       </div>
       <div class="document-actions">
         <ElTooltip
-          content="Manage your document"
+          :content="t('documents.tooltip.manage_document')"
           :show-after="100"
           :enterable="false"
           placement="top"
@@ -142,7 +142,7 @@ const submitDeleteDocument = async () => {
           </el-button>
         </ElTooltip>
         <ElTooltip
-          content="Delete your document"
+          :content="t('documents.tooltip.delete_document')"
           :show-after="100"
           :enterable="false"
           placement="top"

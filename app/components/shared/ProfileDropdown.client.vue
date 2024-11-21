@@ -10,6 +10,7 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 // STATE
 const router = useRouter()
 const oAuthStore = useAuthStore()
+const { t } = useI18n()
 
 /* Agent */
 const isAgentsModalVisible = ref(false)
@@ -27,26 +28,27 @@ const openProfileModal = () => {
   isProfileModelVisible.value = true
 }
 
-const { execute } = await useAsyncData(() => oAuthStore.POST_Logout(), {
+const { execute, error } = await useAsyncData(() => oAuthStore.POST_Logout(), {
   immediate: false,
 })
 
 // Helpers
 async function handleSignOut() {
-  try {
-    await execute()
-    isSignOutModalVisible.value = false
-    await router.push('/login')
-  }
-  catch (error) {
+  await execute()
+  isSignOutModalVisible.value = false
+
+  if (error.value) {
     console.error('Logout failed:', error)
     ElNotification({
-      title: 'Logout failed',
-      message: 'An error occurred while trying to log you out. Please try again.',
+      title: t('logout.error_title'),
+      message: t('logout.error_description'),
       type: 'error',
       customClass: 'error',
       duration: 2500,
     })
+  }
+  else {
+    router.push('/login')
   }
 }
 
@@ -108,7 +110,7 @@ const switchRole = () => {
           <div class="horizontal-divider" />
           <el-dropdown-item @click="switchRole">
             <div class="dropdown-item">
-              <AdminIcon /> <p>  {{ isAdminRoute ? $t('profileDropdown.switchToUser') : $t('profileDropdown.switchToAdmin') }}</p>
+              <AdminIcon /> <p>  {{ isAdminRoute ? t('profileDropdown.switchToUser') : t('profileDropdown.switchToAdmin') }}</p>
             </div>
           </el-dropdown-item>
         </template>
@@ -116,29 +118,29 @@ const switchRole = () => {
         <div class="horizontal-divider" />
         <el-dropdown-item @click="openProfileModal">
           <div class="dropdown-item">
-            <ProfileIcon /> <p> {{ $t('profileDropdown.profile') }}</p>
+            <ProfileIcon /> <p> {{ t('profileDropdown.profile') }}</p>
           </div>
         </el-dropdown-item>
         <el-dropdown-item>
           <div class="dropdown-item">
-            <SettingsIcon /> <p>{{ $t('profileDropdown.settings') }}</p>
+            <SettingsIcon /> <p>{{ t('profileDropdown.settings') }}</p>
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
         <el-dropdown-item @click="openAgentsModal">
           <div class="dropdown-item">
-            <ChatAgentIcon />  <p>{{ $t('profileDropdown.agents') }}</p>
+            <ChatAgentIcon />  <p>{{ t('profileDropdown.agents') }}</p>
           </div>
         </el-dropdown-item>
         <el-dropdown-item disabled>
           <div class="dropdown-item">
-            <SupportIcon /> <p>{{ $t('profileDropdown.support') }}</p>
+            <SupportIcon /> <p>{{ t('profileDropdown.support') }}</p>
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
         <el-dropdown-item @click=" openSignOutModal">
           <div class="dropdown-item">
-            <LogoutIcon /> <p>{{ $t('profileDropdown.signOut') }}</p>
+            <LogoutIcon /> <p>{{ t('profileDropdown.signOut') }}</p>
           </div>
         </el-dropdown-item>
       </el-dropdown-menu>
@@ -152,9 +154,9 @@ const switchRole = () => {
     :close-icon="CloseCircleIcon"
   >
     <template #header>
-      <h5>{{ $t('profileDropdown.agents') }}</h5>
+      <h5>{{ t('profileDropdown.agents') }}</h5>
     </template>
-    <p>Browse all chat agents ready to assist you</p>
+    <p>{{ t('profileDropdown.browse_agents') }}</p>
     <ChatAgentsOverview />
   </ElDialog>
 
@@ -165,18 +167,18 @@ const switchRole = () => {
     :close-icon="CloseCircleIcon"
   >
     <template #header>
-      <h5>{{ $t('profileDropdown.signOut') }}</h5>
+      <h5>{{ t('profileDropdown.signOut') }}</h5>
     </template>
-    <p>Are you sure you want to proceed with signing out?</p>
+    <p>{{ t('profileDropdown.signout_text') }}</p>
     <template #footer>
       <el-button @click="isSignOutModalVisible = false">
-        Cancel
+        {{ t('agents.buttons.cancel') }}
       </el-button>
       <el-button
         type="primary"
         @click="handleSignOut"
       >
-        {{ $t('profileDropdown.signOut') }}
+        {{ t('profileDropdown.signOut') }}
       </el-button>
     </template>
   </ElDialog>
@@ -187,7 +189,7 @@ const switchRole = () => {
     :close-icon="CloseCircleIcon"
   >
     <template #header>
-      <h5>Profile Settings</h5>
+      <h5>{{ t('profileDropdown.profile_settings') }}</h5>
     </template>
     <ProfileOverview />
   </ElDialog>
