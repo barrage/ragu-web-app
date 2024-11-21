@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 // IMPORTS
 import { ElNotification, type FormInstance, type FormRules } from 'element-plus'
+import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
 import { useAgentStore } from '~/stores/agents'
 import type { AgentDetail, EmbeddingProvider } from '~/types/agent'
+import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -145,166 +147,183 @@ errorHandler(createError)
 </script>
 
 <template>
-  <section class="agent-section">
-    <h4 class="page-title">
-      {{ t('agents.titles.create') }}
-    </h4>
-    <p class="description">
-      {{ t('agents.titles.createDescription') }}
-    </p>
-
-    <ElForm
-      ref="formRef"
-      class="container"
-      :model="form"
-      :rules="rules"
-    >
-      <ElFormItem :label="t('agents.labels.name')" prop="name">
-        <ElInput v-model="form.name" :placeholder="t('agents.placeholder.agentName')" />
-      </ElFormItem>
-
-      <ElFormItem :label="t('agents.labels.context')" prop="configuration.context">
-        <ElInput
-          v-model="form.configuration.context"
-          type="textarea"
-          :placeholder="t('agents.placeholder.context')"
-        />
-      </ElFormItem>
-
-      <ElFormItem :label="t('agents.labels.description')" prop="description">
-        <ElInput v-model="form.description" :placeholder="t('agents.placeholder.description')" />
-      </ElFormItem>
-
-      <ElFormItem :label="t('agents.labels.llmProvider')" prop="configuration.llmProvider">
-        <ElSelect v-model="form.configuration.llmProvider" :placeholder="t('agents.placeholder.llmProvider')">
-          <ElOption
-            v-for="provider in embeddingProviders"
-            :key="provider"
-            :label="provider"
-            :value="provider"
-          />
-        </ElSelect>
-      </ElFormItem>
-
-      <ElFormItem :label="t('agents.labels.model')" prop="configuration.model">
-        <ElSelect v-model="form.configuration.model" :disabled="providerStore?.availableLlmList?.length === 0">
-          <ElOption
-            v-for="model in providerStore?.availableLlmList"
-            :key="model"
-            :label="model"
-            :value="model"
-          />
-        </ElSelect>
-      </ElFormItem>
-
-      <ElFormItem :label="t('agents.labels.language')" prop="language">
-        <ElInput v-model="form.language" :placeholder="t('agents.placeholder.language')" />
-      </ElFormItem>
-
-      <ElFormItem :label="t('agents.labels.temperature')" prop="configuration.temperature">
-        <ElSlider
-          v-model="form.configuration.temperature"
-          :min="0"
-          :max="1"
-          :step="0.1"
-        />
-      </ElFormItem>
-
-      <ElFormItem :label="t('agents.labels.vectorProvider')" prop="vectorProvider">
-        <ElSelect v-model="form.vectorProvider" :placeholder="t('agents.placeholder.vecotrProvider')">
-          <ElOption
-            v-for="provider in providerStore?.listProviders?.vector"
-            :key="provider"
-            :label="provider"
-            :value="provider"
-          />
-        </ElSelect>
-      </ElFormItem>
-
-      <ElFormItem :label="t('agents.labels.embeddingProvider')" prop="embeddingProvider">
-        <ElSelect v-model="form.embeddingProvider" :placeholder="t('agents.placeholder.embeddingProvider')">
-          <ElOption
-            v-for="provider in providerStore.listProviders?.embedding"
-            :key="provider"
-            :label="provider"
-            :value="provider"
-          />
-        </ElSelect>
-      </ElFormItem>
-      <ElFormItem
-
-        class="group"
-        :label="t('agents.labels.model')"
-        prop="embeddingModel"
+  <AdminPageContainer>
+    <NuxtLink to="/admin/agents" class="back-link">
+      <ArrowLeftIcon /> {{ t('agents.title') }}
+    </NuxtLink>
+    <AdminPageHeadingTemplate>
+      <template #title>
+        <AdminPageTitleContainer
+          :title="t('agents.titles.create')"
+          :description="t('agents.titles.createDescription')"
+        >
+          <template #icon>
+            <AddPersonIcon size="58px" />
+          </template>
+        </AdminPageTitleContainer>
+      </template>
+    </AdminPageHeadingTemplate>
+    <el-card class="is-primary">
+      <ElForm
+        ref="formRef"
+        class="container"
+        :model="form"
+        :rules="rules"
       >
-        <ElSelect
-          v-model="form.embeddingModel"
-          placeholder="Select Model"
-          :disabled="collectionStore?.listEmbeddingsModels?.length === 0"
+        <ElFormItem :label="t('agents.labels.name')" prop="name">
+          <ElInput v-model="form.name" :placeholder="t('agents.placeholder.agentName')" />
+        </ElFormItem>
+
+        <ElFormItem :label="t('agents.labels.description')" prop="description">
+          <ElInput v-model="form.description" :placeholder="t('agents.placeholder.description')" />
+        </ElFormItem>
+
+        <ElFormItem :label="t('agents.labels.language')" prop="language">
+          <ElInput v-model="form.language" :placeholder="t('agents.placeholder.language')" />
+        </ElFormItem>
+        <ElFormItem :label="t('agents.labels.languageInstruction')" prop="configuration.instructions.languageInstruction">
+          <ElInput v-model="form.configuration.instructions.languageInstruction" :placeholder="t('agents.placeholder.languageInstruction')" />
+        </ElFormItem>
+
+        <ElFormItem :label="t('agents.labels.summaryInstruction')" prop="configuration.instructions.summaryInstruction">
+          <ElInput v-model="form.configuration.instructions.summaryInstruction" :placeholder="t('agents.placeholder.summaryInstruction')" />
+        </ElFormItem>
+
+        <ElFormItem :label="t('agents.labels.titleInstruction')" prop="configuration.instructions.titleInstruction">
+          <ElInput v-model="form.configuration.instructions.titleInstruction" :placeholder="t('agents.placeholder.titleInstruction')" />
+        </ElFormItem>
+
+        <ElFormItem
+          :label="t('agents.labels.context')"
+          class="context-form-item"
+          prop="configuration.context"
         >
-          <ElOption
-            v-for="(dimension, model) in collectionStore?.listEmbeddingsModels"
-            :key="model"
-            :label="`${model} - ${dimension}`"
-            :value="model"
+          <ElInput
+            v-model="form.configuration.context"
+            type="textarea"
+            :placeholder="t('agents.placeholder.context')"
           />
-        </ElSelect>
-      </ElFormItem>
+        </ElFormItem>
 
-      <ElFormItem :label="t('agents.labels.languageInstruction')" prop="configuration.instructions.languageInstruction">
-        <ElInput v-model="form.configuration.instructions.languageInstruction" :placeholder="t('agents.placeholder.languageInstruction')" />
-      </ElFormItem>
+        <ElFormItem :label="t('agents.labels.llmProvider')" prop="configuration.llmProvider">
+          <ElSelect v-model="form.configuration.llmProvider" :placeholder="t('agents.placeholder.llmProvider')">
+            <ElOption
+              v-for="provider in embeddingProviders"
+              :key="provider"
+              :label="provider"
+              :value="provider"
+            />
+          </ElSelect>
+        </ElFormItem>
 
-      <ElFormItem :label="t('agents.labels.summaryInstruction')" prop="configuration.instructions.summaryInstruction">
-        <ElInput v-model="form.configuration.instructions.summaryInstruction" :placeholder="t('agents.placeholder.summaryInstruction')" />
-      </ElFormItem>
+        <ElFormItem :label="t('agents.labels.model')" prop="configuration.model">
+          <ElSelect v-model="form.configuration.model" :disabled="providerStore?.availableLlmList?.length === 0">
+            <ElOption
+              v-for="model in providerStore?.availableLlmList"
+              :key="model"
+              :label="model"
+              :value="model"
+            />
+          </ElSelect>
+        </ElFormItem>
 
-      <ElFormItem :label="t('agents.labels.titleInstruction')" prop="configuration.instructions.titleInstruction">
-        <ElInput v-model="form.configuration.instructions.titleInstruction" :placeholder="t('agents.placeholder.titleInstruction')" />
-      </ElFormItem>
+        <ElFormItem :label="t('agents.labels.vectorProvider')" prop="vectorProvider">
+          <ElSelect v-model="form.vectorProvider" :placeholder="t('agents.placeholder.vecotrProvider')">
+            <ElOption
+              v-for="provider in providerStore?.listProviders?.vector"
+              :key="provider"
+              :label="provider"
+              :value="provider"
+            />
+          </ElSelect>
+        </ElFormItem>
 
-      <ElFormItem class="actions">
-        <ElButton @click="cancelCreate">
-          {{ t('agents.buttons.cancel') }}
-        </ElButton>
-        <ElButton
-          type="primary"
-          :loading="createStatus === 'pending'"
-          @click="createAgent(formRef)"
+        <ElFormItem :label="t('agents.labels.embeddingProvider')" prop="embeddingProvider">
+          <ElSelect v-model="form.embeddingProvider" :placeholder="t('agents.placeholder.embeddingProvider')">
+            <ElOption
+              v-for="provider in providerStore.listProviders?.embedding"
+              :key="provider"
+              :label="provider"
+              :value="provider"
+            />
+          </ElSelect>
+        </ElFormItem>
+        <ElFormItem
+
+          class="group"
+          :label="t('agents.labels.embeddingModel')"
+          prop="embeddingModel"
         >
-          {{ t('agents.buttons.create') }}
-        </ElButton>
-      </ElFormItem>
-    </ElForm>
-  </section>
+          <ElSelect
+            v-model="form.embeddingModel"
+            placeholder="Select Model"
+            :disabled="collectionStore?.listEmbeddingsModels?.length === 0"
+          >
+            <ElOption
+              v-for="(dimension, model) in collectionStore?.listEmbeddingsModels"
+              :key="model"
+              :label="`${model} - ${dimension}`"
+              :value="model"
+            />
+          </ElSelect>
+        </ElFormItem>
+        <ElFormItem :label="t('agents.labels.temperature')" prop="configuration.temperature">
+          <ElSlider
+            v-model="form.configuration.temperature"
+            :min="0"
+            :max="1"
+            :step="0.1"
+          />
+        </ElFormItem>
+        <ElFormItem class="actions">
+          <ElButton @click="cancelCreate">
+            {{ t('agents.buttons.cancel') }}
+          </ElButton>
+          <ElButton
+            type="primary"
+            :loading="createStatus === 'pending'"
+            @click="createAgent(formRef)"
+          >
+            {{ t('agents.buttons.create') }}
+          </ElButton>
+        </ElFormItem>
+      </ElForm>
+    </el-card>
+  </AdminPageContainer>
 </template>
 
 <style lang="scss" scoped>
-.agent-section {
-  padding-block: var(--spacing-fluid-l);
-  padding-inline: 2.5rem;
-
-  & .page-title {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--color-primary-900);
-  }
-  & .description {
-    color: var(--color-primary-700);
-    margin-bottom: 1.5rem;
-  }
-}
-
 .container {
+  padding: 0.7rem;
   --container-background-color: var(--color-primary-100);
   --form-gap: 0;
-  background: var(--container-background-color);
-  border: var(--border-global-transparent);
-  border-radius: var(--radius-4);
-  box-shadow: 0 0.2rem 0.3rem var(--color-primary-200);
-  padding: var(--spacing-fluid-m);
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  column-gap: var(--spacing-fluid-2-xl);
+  row-gap: var(--spacing-fluid-m);
   position: relative;
+
   width: 100%;
+  @include viewport-ml {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: var(--spacing-fluid-3-xl);
+
+    & .context-form-item {
+      grid-column: span 3;
+    }
+
+    & .actions {
+      grid-column: span 3;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: var(--spacing-fluid-3-xl);
+    }
+  }
+  @include viewport-xl {
+    column-gap: var(--spacing-fluid-5-xl);
+  }
 
   .context {
     width: 100%;
@@ -314,7 +333,8 @@ errorHandler(createError)
     .barrage-form-item__content {
       display: flex;
       flex-direction: row;
-      gap: 20px;
+      justify-content: flex-end;
+      gap: var(--spacing-fluid-3-xl);
     }
   }
 
@@ -322,27 +342,10 @@ errorHandler(createError)
     margin-right: var(--spacing-fluid-m);
   }
 }
-
-:deep(.barrage-input__inner) {
-  background-color: var(--color-primary-200);
-  color: var(--color-primary-700);
-}
-
-html.dark {
-  & .page-title {
-    color: var(--color-primary-100);
-  }
-  & .description {
-    color: var(--color-primary-300);
-  }
-  & .users-actions-container {
-    & h6 {
-      color: var(--color-primary-100);
-    }
-  }
-
-  .container {
-    --container-background-color: var(--color-primary-800);
-  }
+.back-link {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 32px;
 }
 </style>

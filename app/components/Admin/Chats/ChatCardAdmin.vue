@@ -43,7 +43,7 @@ interface Emits {
   <el-card class="chat-card is-primary">
     <div class="grid">
       <div class="chat-profile-item" @click="redirectToChatDetails">
-        <ChatIcon size="36" class="chat-icon" />
+        <ChatIcon size="40" class="chat-icon" />
         <div class="chat-wrapper">
           <p class="chat-name">
             {{ `${chatData.title}` }}

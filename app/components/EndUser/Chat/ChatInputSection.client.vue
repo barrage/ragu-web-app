@@ -25,15 +25,14 @@ const route = useRoute()
 
 const handleServerMessage = (data: string) => {
   let parsedData
+  const assistantMessage = chatStore?.messages?.find(
+    msg => msg.id === 'currentlyStreaming',
+  )
 
   try {
     parsedData = JSON.parse(data)
   }
   catch (error) {
-    const assistantMessage = chatStore?.messages?.find(
-      msg => msg.id === 'currentlyStreaming',
-    )
-
     if (chatStore.isWebSocketStreaming && assistantMessage) {
       if (data !== '##STOP##') {
         assistantMessage.content += data
@@ -57,29 +56,40 @@ const handleServerMessage = (data: string) => {
 
     case 'chat_closed':
       chatStore.isWebSocketStreaming = false
+      if (assistantMessage) {
+        assistantMessage.id = ''
+      }
+
       break
 
     case 'chat_stop_stream':
       chatStore.isWebSocketStreaming = false
+      if (assistantMessage) {
+        assistantMessage.id = ''
+      }
       if (route.params.chatId) {
         chatStore.GET_ChatMessages(parsedData.chatId)
       }
       break
 
     case 'finish_event':
+      chatStore.isWebSocketStreaming = false
+      if (assistantMessage) {
+        assistantMessage.id = ''
+      }
       if (parsedData.chatId) {
         nextTick()
-        if (route.params.chatId) {
-          chatStore.GET_ChatMessages(parsedData.chatId)
-        }
-        else {
-          chatStore.GET_AllChats()
-          router.push(`/c/${parsedData.chatId}`)
-        }
+        chatStore.GET_ChatMessages(parsedData.chatId)
+        chatStore.GET_AllChats()
+        router.push(`/c/${parsedData.chatId}`)
       }
       break
 
     case 'error':
+      chatStore.isWebSocketStreaming = false
+      if (assistantMessage) {
+        assistantMessage.id = ''
+      }
       break
 
     default:
