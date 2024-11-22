@@ -20,6 +20,8 @@ const navigationStore = useNavigationStore()
 
 <style lang="scss" scoped>
 .main-layout {
+  max-width: 2560px;
+  margin-inline: auto;
   display: grid;
   grid-template-areas:
     'header header'
@@ -27,10 +29,8 @@ const navigationStore = useNavigationStore()
   grid-template-columns: 16.25rem 1fr;
   grid-template-rows: auto 1fr;
   min-height: 100vh;
-  max-height: 100vh;
   position: relative;
   transition: grid-template-columns 0.3s ease;
-  background: transparent;
   background: var(--color-primary-subtle);
   opacity: 0;
   animation: fadeIn 0.5s ease-out forwards;
@@ -49,6 +49,17 @@ const navigationStore = useNavigationStore()
   background-color: transparent;
   padding: 0.75rem;
   overflow-y: auto;
+  overflow-x: hidden;
+
+  @include viewport-xxl {
+  overflow: auto; 
+  scrollbar-width: none; 
+
+.wrapper::-webkit-scrollbar {
+  display: none; 
+}
+  }
+  
 }
 
 @keyframes fadeIn {

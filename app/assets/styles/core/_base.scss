@@ -26,7 +26,7 @@
     line-height: var(--body-line-height);
     letter-spacing: 0.0084rem;
     color: var(--body-color);
-    background-color: var(--body-background);
+    background: var(--color-primary-subtle);
     width: 100% !important;
   }
 
@@ -73,5 +73,9 @@ html.dark {
   $scrollbar-thumb-hover-color: var(--color-primary-800);
   & .horizontal-divider {
     background: var(--color-primary-700);
+  }
+
+  body {
+    background: var(--color-primary-1000);
   }
 }

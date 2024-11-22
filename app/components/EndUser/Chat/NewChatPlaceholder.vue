@@ -37,7 +37,7 @@ const activeAgentLength = computed(() => {
           </div>
         </template>
         <template v-else-if="agentStore.appAgents.length">
-          <template v-for="(agent, index) in agentStore.appAgents" :key="index">
+          <template v-for="(agent) in agentStore.appAgents" :key="agent.id">
             <ChatAgentSelectCard :agent="agent" />
           </template>
         </template>
@@ -109,6 +109,7 @@ const activeAgentLength = computed(() => {
   & .agent-select-card {
     flex: 0 0 calc(25% - 1rem);
     min-width: 180px;
+    min-height: 175px;
   }
 }
 
