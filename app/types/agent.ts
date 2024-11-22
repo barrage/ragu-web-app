@@ -3,7 +3,7 @@ export type EmbeddingProvider = 'azure' | 'openai' | 'ollama'
 export interface Agent {
   agent?: Partial<SingleAgent>
   configuration?: Partial <Configuration>
-  collections?: Array<Partial<AgentCollection>>
+  collections?: Array<AgentCollection>
 }
 
 export interface AgentCollection {
