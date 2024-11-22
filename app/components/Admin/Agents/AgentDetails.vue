@@ -370,6 +370,7 @@ const agentDeactivated = () => {
       </span>
     </div>
   </div>
+  <AgentCollections :agent-collections="props.singleAgent?.collections" />
   <AssignCollectionModal
     :is-open="assignCollectionModalVisible"
     @close-modal="closeAssignCollectionModal"
