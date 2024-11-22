@@ -500,6 +500,32 @@ export default {
       view_more: 'Pogledajte detalje agenta',
       empty_state_title: 'Agent nije pronađen',
       empty_state_desc: 'Agent kojeg tražite ne postoji ili trenutno nije dostupan. Molimo provjerite podatke o agentu ponovno ili kreirajte novog.',
+      deactivate_agent: 'Deaktiviraj agenta',
+      activate_agent: 'Aktiviraj agenta',
+    },
+    activate_agent: {
+      title: 'Aktiviraj agenta',
+      description: 'Aktivirajte odabranog agenta kako biste započeli razgovor s njime.',
+      confirm: 'Aktiviraj',
+      cancel: 'Otkaži',
+      notifications: {
+        success_title: 'Agent Aktiviran',
+        success_description: 'Agent je uspješno aktiviran.',
+        error_title: 'Aktivacija nije uspjela',
+        error_description: 'Došlo je do pogreške prilikom aktivacije agenta. Molimo pokušajte ponovno.',
+      },
+    },
+    deactivate_agent: {
+      title: 'Deaktiviraj agenta',
+      description: 'Deaktivirajte odabranog agenta.',
+      confirm: 'Deaktiviraj',
+      cancel: 'Otkaži',
+      notifications: {
+        success_title: 'Agent Deaktiviran',
+        success_description: 'Agent je uspješno deaktiviran.',
+        error_title: 'Deaktivacija nije uspjela',
+        error_description: 'Došlo je do pogreške prilikom deaktivacije agenta. Molimo pokušajte ponovno.',
+      },
     },
     labels: {
       id: 'ID Agenta',

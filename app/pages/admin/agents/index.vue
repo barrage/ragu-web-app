@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
 import { useAgentStore } from '~/stores/agents'
+import type { Pagination } from '~/types/pagination'
 import type { SortingValues } from '~/types/sort'
 
 const agentStore = useAgentStore()
@@ -11,17 +12,23 @@ definePageMeta({
   layout: 'admin-layout',
 })
 
-const currentPage = ref(1)
-const itemsPerPage = ref(10)
 const sort = ref<SortingValues>({
   direction: 'desc',
   sortProperty: { name: 'Status', value: 'active' },
 })
 
-const { error, execute } = await useAsyncData(() => agentStore.GET_AllAgents(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction))
+const pagination = ref<Pagination>({
+  currentPage: 1,
+  pageSize: 10,
+  total: agentStore.agentsResponse?.total || 0,
+  disabled: false,
+})
+
+const { error, execute } = await useAsyncData(() => agentStore.GET_AllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction))
 
 const handlePageChange = async (page: number) => {
-  currentPage.value = page
+  pagination.value.currentPage = page
+
   await execute()
 }
 const handleSortChange = async (sortingValues: SortingValues) => {
@@ -30,6 +37,14 @@ const handleSortChange = async (sortingValues: SortingValues) => {
   await execute()
 }
 errorHandler(error)
+
+watch(
+  () => agentStore.agentsResponse?.total,
+  () => {
+    pagination.value.total = agentStore.agentsResponse?.total || 0
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -50,7 +65,13 @@ errorHandler(error)
       </template>
     </AdminPageHeadingTemplate>
     <AgentsListActions @sort-change="handleSortChange" />
-    <AgentsList :agents="agentStore.agentsResponse?.items" @page-change="handlePageChange" />
+    <AgentsList
+      :agents="agentStore.agentsResponse?.items"
+      :pagination="pagination"
+      @page-change="handlePageChange"
+      @agent-activated="(handlePageChange(1))"
+      @agent-deactivated="(handlePageChange(1))"
+    />
   </AdminPageContainer>
 </template>
 

@@ -14,7 +14,6 @@ const emits = defineEmits<{
   (event: 'userEdited'): void
   (event: 'userDeactivated'): void
   (event: 'userActivated'): void
-
 }>()
 
 const cardClasses = ref<string[]>([])

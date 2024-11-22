@@ -392,6 +392,32 @@ export default {
       view_more: 'Agentdetails anzeigen',
       empty_state_title: 'Agent nicht gefunden',
       empty_state_desc: 'Der gesuchte Agent existiert nicht oder ist derzeit nicht verfügbar. Bitte überprüfen Sie die Agentendaten erneut oder erstellen Sie einen neuen Agenten.',
+      deactivate_agent: 'Agent deaktivieren',
+      activate_agent: 'Agent aktivieren',
+    },
+    activate_agent: {
+      title: 'Agent aktivieren',
+      description: 'Aktivieren Sie den ausgewählten Agenten, um mit ihm zu chatten.',
+      confirm: 'Aktivieren',
+      cancel: 'Abbrechen',
+      notifications: {
+        success_title: 'Agent aktiviert',
+        success_description: 'Der Agent wurde erfolgreich aktiviert.',
+        error_title: 'Aktivierung fehlgeschlagen',
+        error_description: 'Beim Aktivieren des Agenten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+      },
+    },
+    deactivate_agent: {
+      title: 'Agent deaktivieren',
+      description: 'Deaktivieren Sie den ausgewählten Agenten.',
+      confirm: 'Deaktivieren',
+      cancel: 'Abbrechen',
+      notifications: {
+        success_title: 'Agent deaktiviert',
+        success_description: 'Der Agent wurde erfolgreich deaktiviert.',
+        error_title: 'Deaktivierung fehlgeschlagen',
+        error_description: 'Beim Deaktivieren des Agenten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+      },
     },
     labels: {
       id: 'Agenten-ID',

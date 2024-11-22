@@ -391,6 +391,32 @@ export default {
       view_more: 'Voir les détails de l’agent',
       empty_state_title: 'Agent introuvable',
       empty_state_desc: 'L\'agent que vous recherchez n\'existe pas ou n\'est pas disponible actuellement. Veuillez vérifier à nouveau les informations de l\'agent ou en créer un nouveau.',
+      deactivate_agent: 'Désactiver l’agent',
+      activate_agent: 'Activer l’agent',
+    },
+    activate_agent: {
+      title: 'Activer l’Agent',
+      description: 'Activez l’agent sélectionné pour commencer à chatter avec lui.',
+      confirm: 'Activer',
+      cancel: 'Annuler',
+      notifications: {
+        success_title: 'Agent Activé',
+        success_description: 'L\'agent a été activé avec succès.',
+        error_title: 'Échec de l’Activation',
+        error_description: 'Une erreur s\'est produite lors de l\'activation de l\'agent. Veuillez réessayer.',
+      },
+    },
+    deactivate_agent: {
+      title: 'Désactiver l’Agent',
+      description: 'Désactivez l’agent sélectionné.',
+      confirm: 'Désactiver',
+      cancel: 'Annuler',
+      notifications: {
+        success_title: 'Agent Désactivé',
+        success_description: 'L\'agent a été désactivé avec succès.',
+        error_title: 'Échec de la Désactivation',
+        error_description: 'Une erreur s\'est produite lors de la désactivation de l\'agent. Veuillez réessayer.',
+      },
     },
     labels: {
       id: 'ID de l’Agent',

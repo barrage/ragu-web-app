@@ -6,15 +6,26 @@ import { useAgentStore } from '~/stores/agents'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
+import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
+
+
 // PROPS
 const props = defineProps<{
-  singleAgent: Agents | null
+  singleAgent: Agents | null | undefined
 }>()
 
 // CONSTANTS
 const agentStore = useAgentStore()
 const { t } = useI18n()
 const router = useRouter()
+const emits = defineEmits<Emits>()
+
+interface Emits {
+
+  (event: 'activate-agent', agent: Agents): void
+  (event: 'deactivate-agent', agent: Agents): void
+}
 
 // HELPERS
 const agentData = computed(() => {
@@ -113,6 +124,26 @@ const redirectToAgentDetails = () => {
           >
             <EditIcon />
           </ElButton>
+        </ElTooltip>
+        <ElTooltip
+          v-if="props.singleAgent?.agent.active"
+          :content="t('agents.agent_card.deactivate_agent')"
+          :enterable="false"
+          placement="top"
+        >
+          <el-button plain @click="emits('deactivate-agent', props.singleAgent)">
+            <PersonLockIcon />
+          </el-button>
+        </ElTooltip>
+        <ElTooltip
+          v-if="!props.singleAgent?.agent.active"
+          :content="t('agents.agent_card.activate_agent')"
+          :enterable="false"
+          placement="top"
+        >
+          <el-button plain @click="emits('activate-agent', props.singleAgent)">
+            <PersonPasskeyIcon />
+          </el-button>
         </ElTooltip>
       </div>
     </div>

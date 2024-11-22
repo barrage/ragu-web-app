@@ -118,12 +118,21 @@ export const useAgentStore = defineStore('agent', () => {
     await $api.agent.UpdateAgentCollection(id, body)
   }
 
+  async function PUT_ActivateAgent(agentId: string): Promise<void> {
+    await $api.agent.PutActiveAgent(agentId)
+  }
+
+  async function PUT_DectivateAgent(agentId: string): Promise<void> {
+    await $api.agent.PutDeactivateAgent(agentId)
+  }
+
   return {
     agents,
     agentsResponse,
     selectedAgent,
     editMode,
     singleAgent,
+    appAgents,
     setEditMode,
     setSelectedAgent,
     GET_AllAgents,
@@ -132,8 +141,9 @@ export const useAgentStore = defineStore('agent', () => {
     PUT_UpdateAgent,
     DELETE_DeleteAgent,
     PUT_UpdateAgentCollection,
-    appAgents,
     GET_AllAppAgents,
+    PUT_ActivateAgent,
+    PUT_DectivateAgent,
 
   }
 })

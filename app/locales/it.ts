@@ -391,8 +391,33 @@ export default {
       view_more: 'Visualizza dettagli agente',
       empty_state_title: 'Agente non trovato',
       empty_state_desc: 'L\'agente che stai cercando non esiste o non è attualmente disponibile. Controlla nuovamente i dati dell\'agente o crea un nuovo agente.',
+      deactivate_agent: 'Disattiva agente',
+      activate_agent: 'Attiva agente',
     },
-
+    activate_agent: {
+      title: 'Attiva agente',
+      description: 'Attiva l\'agente selezionato per iniziare a chattare con lui.',
+      confirm: 'Attiva',
+      cancel: 'Annulla',
+      notifications: {
+        success_title: 'Agente Attivato',
+        success_description: 'L\'agente è stato attivato con successo.',
+        error_title: 'Attivazione Fallita',
+        error_description: 'Si è verificato un errore durante l\'attivazione dell\'agente. Per favore riprova.',
+      },
+    },
+    deactivate_agent: {
+      title: 'Disattiva agente',
+      description: 'Disattiva l\'agente selezionato.',
+      confirm: 'Disattiva',
+      cancel: 'Annulla',
+      notifications: {
+        success_title: 'Agente Disattivato',
+        success_description: 'L\'agente è stato disattivato con successo.',
+        error_title: 'Disattivazione Fallita',
+        error_description: 'Si è verificato un errore durante la disattivazione dell\'agente. Per favore riprova.',
+      },
+    },
     labels: {
       id: 'ID Agente',
       name: 'Nome Agente',

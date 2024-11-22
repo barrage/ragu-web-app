@@ -389,6 +389,32 @@ export default {
       view_more: 'エージェントの詳細を表示',
       empty_state_title: 'エージェントが見つかりません',
       empty_state_desc: 'お探しのエージェントは存在しないか、現在利用できません。エージェント情報を再度確認するか、新しいエージェントを作成してください。',
+      deactivate_agent: 'エージェントを非アクティブにする',
+      activate_agent: 'エージェントをアクティブにする',
+    },
+    activate_agent: {
+      title: 'エージェントをアクティブにする',
+      description: '選択したエージェントをアクティブにして、チャットを開始します。',
+      confirm: 'アクティブにする',
+      cancel: 'キャンセル',
+      notifications: {
+        success_title: 'エージェントがアクティブ化されました',
+        success_description: 'エージェントが正常にアクティブ化されました。',
+        error_title: 'アクティブ化に失敗しました',
+        error_description: 'エージェントのアクティブ化中にエラーが発生しました。もう一度お試しください。',
+      },
+    },
+    deactivate_agent: {
+      title: 'エージェントを非アクティブにする',
+      description: '選択したエージェントを非アクティブにします。',
+      confirm: '非アクティブにする',
+      cancel: 'キャンセル',
+      notifications: {
+        success_title: 'エージェントが非アクティブ化されました',
+        success_description: 'エージェントが正常に非アクティブ化されました。',
+        error_title: '非アクティブ化に失敗しました',
+        error_description: 'エージェントの非アクティブ化中にエラーが発生しました。もう一度お試しください。',
+      },
     },
     labels: {
       id: 'エージェントID',

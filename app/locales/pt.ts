@@ -394,6 +394,32 @@ export default {
       view_more: 'Ver detalhes do agente',
       empty_state_title: 'Agente não encontrado',
       empty_state_desc: 'O agente que você está procurando não existe ou não está disponível no momento. Por favor, verifique novamente os dados do agente ou crie um novo.',
+      deactivate_agent: 'Desativar agente',
+      activate_agent: 'Ativar agente',
+    },
+    activate_agent: {
+      title: 'Ativar agente',
+      description: 'Ative o agente selecionado para começar a conversar com ele.',
+      confirm: 'Ativar',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Agente Ativado',
+        success_description: 'O agente foi ativado com sucesso.',
+        error_title: 'Falha na Ativação',
+        error_description: 'Ocorreu um erro ao ativar o agente. Por favor, tente novamente.',
+      },
+    },
+    deactivate_agent: {
+      title: 'Desativar agente',
+      description: 'Desative o agente selecionado.',
+      confirm: 'Desativar',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Agente Desativado',
+        success_description: 'O agente foi desativado com sucesso.',
+        error_title: 'Falha na Desativação',
+        error_description: 'Ocorreu um erro ao desativar o agente. Por favor, tente novamente.',
+      },
     },
     labels: {
       id: 'ID do Agente',
