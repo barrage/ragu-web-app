@@ -6,7 +6,7 @@ import LikeIcon from '~/assets/icons/svg/like.svg'
 import DislikeIcon from '~/assets/icons/svg/dislike.svg'
 import CopyIcon from '~/assets/icons/svg/copy.svg'
 import StopIcon from '~/assets/icons/svg/stop.svg'
-
+import { sanitizeHtml } from '~/utils/sanitizeHtml'
 import type { Message } from '~/types/chat'
 
 const props = defineProps<{
@@ -19,6 +19,10 @@ const chatStore = useChatStore()
 const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 const displayedContent = ref('')
 const pendingContent = ref('')
+const sanitizedContent = computed(() => {
+  return props.message?.content ? sanitizeHtml(props.message.content.replace(/\n/g, '<br>')) : ''
+})
+
 const isAnimating = ref(false)
 let animationTimeout: number | null = null
 
@@ -37,10 +41,11 @@ const animateNextLetter = () => {
 }
 
 watch(
-  () => props.message?.content,
+  () => sanitizedContent.value,
   (newContent, oldContent) => {
     if (isAssistantMessage.value && newContent && oldContent) {
-      pendingContent.value += newContent.slice(oldContent.length)
+      const additionalContent = newContent.slice(oldContent.length)
+      pendingContent.value += additionalContent
 
       if (!isAnimating.value) {
         animateNextLetter()
@@ -53,6 +58,7 @@ watch(
   },
   { immediate: true },
 )
+
 const isSpeaking = ref(false)
 
 /* VOICE */
@@ -78,6 +84,7 @@ const readText = () => {
     }
   }
 }
+
 onBeforeUnmount(() => {
   if (animationTimeout) {
     clearTimeout(animationTimeout)
@@ -127,7 +134,7 @@ const copyItem = () => {
         }"
         class="content"
       >
-        {{ displayedContent }}
+        <span v-html="displayedContent" />
         <span v-if="isAnimating" class="cursor" />
       </p>
     </div>

@@ -169,78 +169,83 @@ const closeModal = () => {
     >
       <template #header>
         <div class="edit-user-modal-header">
-          <EditIcon size="42px" />
-          <h5> {{ $t('users.edit_user.title') }}</h5>
+          <EditIcon size="56px" />
+          <div class="title-description-wrapper">
+            <h1> {{ $t('users.edit_user.title') }}</h1>
+            <p>{{ t('users.edit_user.description') }}</p>
+          </div>
         </div>
       </template>
-      <el-divider />
-      <UserProfileOverview :user="props.selectedUser" size="large" />
-      <p>{{ t('users.edit_user.description') }}</p>
-      <ElForm
-        ref="editUserFormRef"
-        :model="editUserForm"
-        :rules="rules"
-        :scroll-to-error="true"
-        :scroll-into-view-options="scrollIntoViewOptions"
-      >
-        <div class="start-end-form-items-wrapper">
-          <ElFormItem
-            :label="t('users.form.first_name')"
-            prop="firstName"
-          >
-            <ElInput v-model="editUserForm.firstName" :placeholder="t('users.form.first_name_placeholder')" />
-          </ElFormItem>
-          <ElFormItem
-            :label="t('users.form.last_name')"
-            prop="lastName"
-          >
-            <ElInput v-model="editUserForm.lastName" :placeholder="t('users.form.last_name_placeholder')" />
-          </ElFormItem>
 
-          <!-- <ElFormItem
-            :label="t('users.form.email')"
-            prop="email"
-          >
-            <ElInput
-              v-model="editUserForm.email"
-              :placeholder="t('users.form.email_placeholder')"
-              disabled
-            />
-          </ElFormItem> -->
-
-          <ElFormItem
-            :label="t('users.form.role')"
-            prop="role"
-          >
-            <ElSelect
-              v-model="editUserForm.role"
-              :placeholder="t('users.form.role_placeholder')"
+      <div class="edit-user-modal-body">
+        <el-divider class="is-weak" />
+        <UserProfileOverview :user="props.selectedUser" size="medium" />
+        <el-divider class="is-weak" />
+        <ElForm
+          ref="editUserFormRef"
+          :model="editUserForm"
+          :rules="rules"
+          :scroll-to-error="true"
+          :scroll-into-view-options="scrollIntoViewOptions"
+        >
+          <div class="start-end-form-items-wrapper">
+            <ElFormItem
+              :label="t('users.form.first_name')"
+              prop="firstName"
             >
-              <ElOption
-                v-for="userRole in userRoles"
-                :key="userRole.value"
-                :label="userRole.label"
-                :value="userRole.value"
+              <ElInput v-model="editUserForm.firstName" :placeholder="t('users.form.first_name_placeholder')" />
+            </ElFormItem>
+            <ElFormItem
+              :label="t('users.form.last_name')"
+              prop="lastName"
+            >
+              <ElInput v-model="editUserForm.lastName" :placeholder="t('users.form.last_name_placeholder')" />
+            </ElFormItem>
+
+            <ElFormItem
+              :label="t('users.form.email')"
+              prop="email"
+            >
+              <ElInput
+                v-model="editUserForm.email"
+                :placeholder="t('users.form.email_placeholder')"
               />
-            </ElSelect>
-          </ElFormItem>
+            </ElFormItem>
 
-          <ElFormItem>
-            <div class="form-actions">
-              <el-button @click="closeModal">
-                {{ t('users.edit_user.cancel') }}
-              </el-button>
-
-              <ElButton
-                type="primary"
-                @click="submitEditUserForm(editUserFormRef)"
+            <ElFormItem
+              :label="t('users.form.role')"
+              prop="role"
+            >
+              <ElSelect
+                v-model="editUserForm.role"
+                :placeholder="t('users.form.role_placeholder')"
               >
-                {{ t('users.edit_user.confirm') }}
-              </ElButton>
-            </div>
-          </ElFormItem>
-        </div>
-      </ElForm>
+                <ElOption
+                  v-for="userRole in userRoles"
+                  :key="userRole.value"
+                  :label="userRole.label"
+                  :value="userRole.value"
+                />
+              </ElSelect>
+            </ElFormItem>
+
+            <ElFormItem>
+              <div class="form-actions">
+                <el-button @click="closeModal">
+                  {{ t('users.edit_user.cancel') }}
+                </el-button>
+
+                <ElButton
+                  type="primary"
+                  @click="submitEditUserForm(editUserFormRef)"
+                >
+                  {{ t('users.edit_user.confirm') }}
+                </ElButton>
+              </div>
+            </ElFormItem>
+          </div>
+        </ElForm>
+      </div>
     </ElDialog>
   </ClientOnly>
 </template>
@@ -259,5 +264,37 @@ const closeModal = () => {
   align-items: center;
   width: 100%;
   gap: 1rem;
+  & .title-description-wrapper {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    & h1 {
+      font-size: var(--font-size-fluid-5);
+      color: var(--color-primary-900);
+    }
+    & p {
+      font-size: var(--font-size-fluid-3);
+      color: var(--color-primary-700);
+    }
+  }
+}
+
+.edit-user-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dark {
+  .edit-user-modal-header {
+    & .title-description-wrapper {
+      & h1 {
+        color: var(--color-primary-0);
+      }
+      & p {
+        color: var(--color-primary-200);
+      }
+    }
+  }
 }
 </style>

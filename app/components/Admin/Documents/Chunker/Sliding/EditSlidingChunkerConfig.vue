@@ -37,7 +37,7 @@ const validateSize = (_rule: any, value: any, callback: any) => {
   }
 }
 // Validation rules
-const rules = reactive<FormRules<SlidingChunker>>({
+const rules = computed<FormRules<SlidingChunker>>(() => ({
   'sliding.config.size': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
     { validator: validateSize, trigger: 'change' },
@@ -45,7 +45,7 @@ const rules = reactive<FormRules<SlidingChunker>>({
   'sliding.config.overlap': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
-})
+}))
 
 const { error: chunkPreviewError, status: loadingPreviewChunker, execute: executeChunkPreview } = await useAsyncData(() => documentStore.POST_ChunkDocumentPreview(selectedDocument.value!.id, form), { immediate: false })
 

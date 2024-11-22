@@ -645,6 +645,7 @@ export default {
       provider: 'Davatelj',
       model: 'Model',
       embedder: 'Ugraditelj',
+      add_document: 'Dodaj Dokument',
     },
 
     deleteModal: {
