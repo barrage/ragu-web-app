@@ -51,7 +51,7 @@ const validateThreshold = (_rule: any, value: any, callback: any) => {
   }
 }
 
-const rules = reactive<FormRules<SemanticChunker>>({
+const rules = computed<FormRules<SemanticChunker>>(() => ({
   'semantic.config.size': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
@@ -77,7 +77,7 @@ const rules = reactive<FormRules<SemanticChunker>>({
   'semantic.config.skipBack': [
     { type: 'array', required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
-})
+}))
 
 const { error: chunkPreviewError, status: loadingPreviewChunker, execute: executeChunkPreview } = await useAsyncData(() => documentStore.POST_ChunkDocumentPreview(selectedDocument.value!.id, form), { immediate: false })
 

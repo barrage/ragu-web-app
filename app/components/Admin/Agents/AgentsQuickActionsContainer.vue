@@ -1,21 +1,14 @@
 <script lang="ts" setup>
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
-// CONSTANTS
-
 const { t } = useI18n()
-const localePath = useLocalePath()
 </script>
 
 <template>
   <div class="agents-quick-actions-container">
-    <ElButton
-      type="primary"
-      class="create-button"
-      @click="navigateTo({ path: localePath('/admin/agents/create') })"
-    >
+    <NuxtLink to="/admin/agents/create" class="barrage-button create-user-redirect">
       <AgentIcon size="24" />  {{ t('agents.buttons.create') }}
-    </ElButton>
+    </NuxtLink>
   </div>
 </template>
 
@@ -25,6 +18,11 @@ const localePath = useLocalePath()
   justify-content: space-between;
   align-items: center;
   padding-left: 1.5rem;
+
+  .create-user-redirect {
+    display: flex;
+    gap: 8px;
+  }
 }
 .dark {
   .agents-quick-actions-container {

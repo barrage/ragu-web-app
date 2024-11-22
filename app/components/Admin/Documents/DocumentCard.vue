@@ -26,9 +26,6 @@ const navigateToDocumentDetailsPage = () => {
     router.push(`documents/${props.document.id}`)
   }
 }
-const formatName = (str: string, n: number) => {
-  return str.length > n ? `${str.slice(0, n)}...` : str
-}
 
 const { t } = useI18n()
 
@@ -85,37 +82,43 @@ const submitDeleteDocument = async () => {
       <div class="document-name-type-wrapper" @click="navigateToDocumentDetailsPage()">
         <PdfIcon
           v-if="documentData.extension === 'pdf'"
-          size="36"
+          size="40px"
           original
+          class="document-icon"
         />
-        <DocxIcon v-else-if="documentData.extension === 'docx'" size="36" />
+        <DocxIcon v-else-if="documentData.extension === 'docx'" size="40px" />
         <MarkdownIcon
           v-else-if="documentData.extension === 'md'"
-          size="36"
+          size="40px"
           original
+          class="document-icon"
         />
         <CsvIcon
           v-else-if="documentData.extension === 'csv'"
-          size="36"
+          size="40px"
           original
+          class="document-icon"
         />
         <JsonIcon
           v-else-if="documentData.extension === 'json'"
-          size="36"
+          size="40px"
           original
+          class="document-icon"
         />
         <TxtIcon
           v-else-if="documentData.extension === 'txt'"
-          size="36"
+          size="40px"
           original
+          class="document-icon"
         />
         <UnknownDocumentIcon
           v-else
-          size="36"
+          size="40px"
           original
+          class="document-icon"
         />
         <div class="document-name-wrapper">
-          <h6>{{ formatName(documentData.name, 25) }}</h6>
+          <h6>{{ documentData.name }}</h6>
         </div>
       </div>
       <div class="document-inforamtions">
@@ -196,7 +199,8 @@ const submitDeleteDocument = async () => {
     align-items: center;
     text-overflow: ellipsis;
     display: flex;
-    min-width: fit-content;
+    white-space: nowrap;
+    overflow: hidden;
     gap: 6px;
 
     &:hover {
@@ -204,18 +208,26 @@ const submitDeleteDocument = async () => {
       opacity: 0.8;
     }
 
+    & .document-icon {
+      min-width: fit-content;
+    }
+
     & .document-name-wrapper {
       h6 {
-        font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-fluid-3);
+        font-weight: var(--font-weight-semibold);
+        font-size: var(--font-size-fluid-);
         color: var(--color-primary-900);
         line-height: normal;
         margin-bottom: 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       & span {
         line-height: normal;
         font-size: var(--font-size-fluid-2);
         color: var(--color-primary-700);
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }

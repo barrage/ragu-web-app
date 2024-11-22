@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// IMPORTS
 import { ElNotification, type FormInstance, type FormRules } from 'element-plus'
 import { reactive, ref, watch } from 'vue'
 import type { CollectionDetail } from '~/types/collection'
@@ -8,12 +7,10 @@ definePageMeta({
   layout: 'admin-layout',
 })
 
-// CONSTANTS
 const collectionStore = useCollectionsStore()
 const { t } = useI18n()
 const localePath = useLocalePath()
 
-// STATE
 const vectorProviders = ['qdrant', 'weaviate']
 const embeddingProviders = ['fembed', 'openai']
 const formRef = ref<FormInstance>()
@@ -25,13 +22,12 @@ const form = reactive<CollectionDetail>({
 })
 const listEmbeddingsModels = ref<Record<string, number>>({})
 
-// FORM VALIDATION RULES
-const rules = reactive<FormRules<CollectionDetail>>({
+const rules = computed<FormRules<CollectionDetail>>(() => ({
   name: [
     { required: true, message: t('collections.rules.name.required_message'), trigger: 'blur' },
     { min: 1, message: t('collections.rules.name.length_message', { min: 3, max: 50 }), trigger: 'blur' },
     {
-      validator: (rule, value) => /^[A-Z]\w*$/.test(value), // Enforce the first character as uppercase with no case-insensitive flag
+      validator: (rule, value) => /^[A-Z]\w*$/.test(value),
       message: t('collections.rules.name.ascii_alphanumeric_underscored_message'),
       trigger: 'blur',
     },
@@ -45,7 +41,7 @@ const rules = reactive<FormRules<CollectionDetail>>({
   model: [
     { required: true, message: t('collections.rules.model'), trigger: 'change' },
   ],
-})
+}))
 
 // WATCHER
 watch(

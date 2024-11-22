@@ -25,6 +25,8 @@
         .barrage-icon--fill,
         .svg-icon--fill * {
           fill: var(--color-primary-200);
+          width: var(--icon-width);
+          height: var(--icon-height);
         }
       }
     }
@@ -97,14 +99,16 @@
       cursor: pointer;
 
       .barrage-icon {
-        --icon-width: 1.5rem;
-        --icon-height: 1.5rem;
+        --icon-width: 1.75rem;
+        --icon-height: 1.75rem;
         &:hover {
           opacity: 0.6;
         }
       }
       .svg-icon--fill * {
         fill: var(--color-primary-800);
+        width: var(--icon-width);
+        height: var(--icon-height);
       }
     }
 

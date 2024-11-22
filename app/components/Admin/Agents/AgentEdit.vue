@@ -39,7 +39,7 @@ const form = reactive({
   },
 })
 
-const rules = reactive<FormRules>({
+const rules = computed<FormRules>(() => ({
   'name': [
     { required: true, message: t('agents.rules.name.required_message'), trigger: 'blur' },
     { min: 3, max: 50, message: t('agents.rules.name.length_message', { min: 3, max: 50 }), trigger: 'blur' },
@@ -66,7 +66,7 @@ const rules = reactive<FormRules>({
   'active': [
     { required: true, message: t('agents.rules.active.required_message'), trigger: 'change' },
   ],
-})
+}))
 
 // API CALLS
 

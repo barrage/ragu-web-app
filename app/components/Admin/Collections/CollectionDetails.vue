@@ -12,7 +12,6 @@ const props = defineProps<{
 }>()
 
 const route = useRoute()
-
 const { t } = useI18n()
 const documetStore = useDocumentsStore()
 const collectionStore = useCollectionsStore()
@@ -218,7 +217,7 @@ onMounted(() => {
   <div class="add-documents-container">
     <div class="label">
       <DocumentIcon size="18px" />
-      <span>  {{ t('collections.labels.addDocument') }}</span>
+      <span>  {{ t('collections.labels.add_document') }}</span>
     </div>
     <el-transfer
       v-model="rightValue"
@@ -331,6 +330,11 @@ onMounted(() => {
   .barrage-transfer {
     border: 0;
     margin-top: 1.5rem;
+    width: 100%;
+
+    &:deep(.barrage-transfer-panel) {
+      flex: 1;
+    }
   }
 }
 

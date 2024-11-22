@@ -2,6 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
+import { sanitizeHtml } from '~/utils/sanitizeHtml'
 import type { Message } from '~/types/chat'
 
 const props = defineProps<{
@@ -21,12 +22,16 @@ const selectedUser = computed(() => {
 })
 
 const messageData = computed(() => {
+  const rawContent = props.message.content || ''
+  const formattedContent = rawContent.replace(/\n/g, '<br>')
+  const sanitizedContent = sanitizeHtml(formattedContent)
+
   return {
     senderType: props.message?.senderType === 'user' ? t('chat.user') : t('chat.assistant'),
     iconType: props.message?.senderType === 'user' ? 'user' : 'assistant',
     createdAt: props.message.createdAt ? formatDate(props.message.createdAt, 'dddd, MMMM D, YYYY h:mm A') : '-',
     createdAtRealtiveTime: relativeCreatedDate.value,
-    content: props.message.content,
+    content: sanitizedContent,
     sender: props.message?.senderType === 'user' ? selectedUser.value?.fullName : selectedAgent.value?.name,
   }
 })
@@ -50,9 +55,7 @@ const redirectToDetails = () => {
           <span class="message-mail">{{ messageData.createdAt }}</span>
         </div>
       </div>
-      <div class="message-content">
-        {{ messageData.content }}
-      </div>
+      <div class="message-content" v-html="messageData.content" />
     </div>
   </div>
 </template>
@@ -75,6 +78,7 @@ const redirectToDetails = () => {
     background: var(--color-primary-100);
     padding: 22px;
     border-radius: 10px;
+    white-space: pre-wrap;
   }
 }
 
