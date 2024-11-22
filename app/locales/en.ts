@@ -502,6 +502,32 @@ export default {
       view_more: 'View agent details',
       empty_state_title: 'Agent not found',
       empty_state_desc: 'The agent you are looking for does not exist or is currently unavailable. Please check the agent details again or create a new one.',
+      deactivate_agent: 'Deactivate agent',
+      activate_agent: 'Activate agent',
+    },
+    activate_agent: {
+      title: 'Activate Agent',
+      description: 'Activate the selected agent to start chat with them.',
+      confirm: 'Activate',
+      cancel: 'Cancel',
+      notifications: {
+        success_title: 'Agent Activated',
+        success_description: 'The agent has been successfully activated.',
+        error_title: 'Activation Failed',
+        error_description: 'An error occurred while activating the agent. Please try again.',
+      },
+    },
+    deactivate_agent: {
+      title: 'Deactivate Agent',
+      description: 'Deactivate the selected agent.',
+      confirm: 'Deactivate',
+      cancel: 'Cancel',
+      notifications: {
+        success_title: 'Agent Deactivated',
+        success_description: 'The agent has been successfully deactivated.',
+        error_title: 'Deactivation Failed',
+        error_description: 'An error occurred while deactivating the agent. Please try again.',
+      },
     },
     labels: {
       id: 'Agent ID',

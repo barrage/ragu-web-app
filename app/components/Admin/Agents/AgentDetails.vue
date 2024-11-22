@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
-import type { Agent } from '~/types/agent'
+import type { Agent, Agents } from '~/types/agent'
 import PersonKeyIcon from '~/assets/icons/svg/person-key.svg'
 import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
@@ -9,9 +9,17 @@ import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 import { StatusType } from '~/types/statusTypes'
+import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
+import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 
 const props = defineProps<{
   singleAgent: Agent | null | undefined
+}>()
+
+const emits = defineEmits<{
+
+  (event: 'agentDeactivated'): void
+  (event: 'agentActivated'): void
 }>()
 
 const agentStore = useAgentStore()
@@ -43,6 +51,8 @@ const agentData = computed(() => {
   }
 })
 
+const { execute: getAgent } = await useAsyncData(() => agentStore.GET_SingleAgent(props.singleAgent?.agent?.id), { immediate: false })
+
 const editClick = (): void => {
   agentStore.setEditMode(true)
 }
@@ -61,6 +71,38 @@ const openDeleteCollectionModal = () => {
 
 const closeDeleteCollectionModal = () => {
   deleteCollectionModalVisible.value = false
+}
+
+/* Activate Agent */
+const activateAgentModalVisible = ref(false)
+
+const openActivateAgentModal = () => {
+  activateAgentModalVisible.value = true
+}
+
+const closeActivateModal = () => {
+  activateAgentModalVisible.value = false
+}
+
+const agentActivated = () => {
+  emits('agentActivated')
+  getAgent()
+}
+
+/* Deactivate Agent */
+const deactivateAgentModalVisible = ref(false)
+
+const openDeactivateAgentModal = () => {
+  deactivateAgentModalVisible.value = true
+}
+
+const closeDeactivateModal = () => {
+  deactivateAgentModalVisible.value = false
+}
+
+const agentDeactivated = () => {
+  emits('agentDeactivated')
+  getAgent()
 }
 </script>
 
@@ -102,6 +144,24 @@ const closeDeleteCollectionModal = () => {
           <CollectionIcon />  {{ t('collections.deleteModal.title') }}
         </el-button>
       </ElTooltip>
+      <el-button
+        v-if="!props.singleAgent?.agent?.active"
+        size="small"
+        type="primary"
+        plain
+        @click="openActivateAgentModal()"
+      >
+        <PersonPasskeyIcon />   {{ t('users.user_card.activate_user_title') }}
+      </el-button>
+      <el-button
+        v-if="props.singleAgent?.agent?.active"
+        size="small"
+        type="primary"
+        plain
+        @click="openDeactivateAgentModal()"
+      >
+        <PersonLockIcon />   {{ t('users.user_card.deactivate_user_title') }}
+      </el-button>
       <el-button
         size="small"
         type="primary"
@@ -317,6 +377,21 @@ const closeDeleteCollectionModal = () => {
   <DeleteAgentCollectionModal
     :is-open="deleteCollectionModalVisible"
     @close-modal="closeDeleteCollectionModal"
+  />
+  <ActivateAgentModalBackoffice
+    :is-open="activateAgentModalVisible"
+    :selected-agent="props.singleAgent"
+    source="details"
+    @close-modal="closeActivateModal"
+    @agent-activated="agentActivated"
+  />
+
+  <DeactivateAgentModalBackoffice
+    :is-open="deactivateAgentModalVisible"
+    :selected-agent="props.singleAgent"
+    source="details"
+    @close-modal="closeDeactivateModal"
+    @agent-deactivated="agentDeactivated"
   />
 </template>
 

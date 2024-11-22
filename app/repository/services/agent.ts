@@ -199,4 +199,52 @@ export default class AgentService extends FetchFactory {
       })
     }
   }
+
+  /**
+   * Activates a user by unique ID.
+   * @param agentId - The ID of the agent to activate.
+   * @returns A promise that resolves when the agent is successfully activated.
+   * @throws Will throw an error if the request fails.
+   */
+  async PutActiveAgent(agentId: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.adminEndpoint}/${agentId}`, {
+        method: 'PUT',
+        credentials: 'include',
+        body: {
+          active: true,
+        },
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to activate agent with ID: ${agentId}`,
+      })
+    }
+  }
+
+  /**
+   * Deactivates a user by unique ID.
+   * @param agentId - The ID of the agent to deactivate.
+   * @returns A promise that resolves when the agent is successfully deactivated.
+   * @throws Will throw an error if the request fails.
+   */
+  async PutDeactivateAgent(agentId: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.adminEndpoint}/${agentId}`, {
+        method: 'PUT',
+        credentials: 'include',
+        body: {
+          active: false,
+        },
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to deactivate user with ID: ${agentId}`,
+      })
+    }
+  }
 }
