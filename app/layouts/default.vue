@@ -15,6 +15,8 @@ const navigationStore = useNavigationStore()
 
 <style lang="scss" scoped>
 .main-layout {
+  max-width: 2560px;
+  margin-inline: auto;
   display: grid;
   grid-template-areas:
     'header header'

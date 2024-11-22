@@ -89,6 +89,8 @@
         border-bottom-right-radius: var(--transfer-border-radius);
         overflow: hidden;
         .barrage-checkbox-group {
+          display: flex;
+          flex-direction: column;
           margin: 0;
           padding: 6px 0;
           list-style: none;
@@ -99,7 +101,7 @@
             height: var(--transfer-item-height);
             align-items: center;
             padding-left: 15px;
-            display: flex;
+            display: inline-block;
             position: relative;
             font-size: 14px;
             line-height: var(--transfer-item-height);

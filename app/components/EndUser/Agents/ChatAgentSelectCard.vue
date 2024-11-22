@@ -32,8 +32,6 @@ const agentStore = useAgentStore()
 .agent-select-card {
   padding: 0.75rem;
   padding-bottom: 1rem;
-
-  min-height: 150px;
   display: flex;
   &.selected {
     & .agent-select-text {
@@ -51,6 +49,7 @@ const agentStore = useAgentStore()
     gap: 1rem;
     text-align: left;
     overflow: hidden;
+    height: 100%;
 
     & .agent-name-wrapper {
       display: flex;
@@ -72,8 +71,14 @@ const agentStore = useAgentStore()
     & .agent-description {
       font-size: var(--font-size-fluid-2);
       max-width: 30ch;
-      line-height: normal;
+      height: 100%;
+      line-height: 1.5rem;
       overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      white-space: normal;
     }
   }
 
