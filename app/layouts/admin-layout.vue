@@ -29,6 +29,7 @@ const navigationStore = useNavigationStore()
   grid-template-columns: 16.25rem 1fr;
   grid-template-rows: auto 1fr;
   min-height: 100vh;
+  max-height: 100vh;
   position: relative;
   transition: grid-template-columns 0.3s ease;
   background: var(--color-primary-subtle);
@@ -48,18 +49,15 @@ const navigationStore = useNavigationStore()
   grid-area: main;
   background-color: transparent;
   padding: 0.75rem;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
 
   @include viewport-xxl {
-  overflow: auto; 
-  scrollbar-width: none; 
+    scrollbar-width: none;
 
-.wrapper::-webkit-scrollbar {
-  display: none; 
-}
+    .wrapper::-webkit-scrollbar {
+      display: none;
+    }
   }
-  
 }
 
 @keyframes fadeIn {
