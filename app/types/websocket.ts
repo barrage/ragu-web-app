@@ -1,10 +1,8 @@
-/* Chat messages */
 export interface WsChatMessage {
   type: 'chat'
   text: string
 }
 
-/* System messages */
 export interface WsPayload {
   type: 'chat_open_new' | 'chat_open_existing' | 'chat_close' | 'chat_stop_stream'
   agentId?: string
@@ -16,7 +14,6 @@ export interface WsSystemMessage {
   payload: WsPayload
 }
 
-/* Server responses */
 export interface WsResponseChatOpen {
   type: 'chat_open'
   chatId: string

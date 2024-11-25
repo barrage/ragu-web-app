@@ -226,11 +226,6 @@ const copyItem = () => {
 .assistantmessage {
   max-width: max-content;
   position: relative;
-
-  & span {
-    opacity: 0;
-    animation: fadeInChar 0.5s forwards;
-  }
 }
 
 .cursor {
@@ -252,15 +247,6 @@ const copyItem = () => {
   padding: 8px;
   font-size: var(--font-size-fluid-3);
   line-height: var(--font-line-height-base);
-}
-
-@keyframes fadeInChar {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @keyframes blink {
