@@ -102,7 +102,7 @@ const agentId = computed(() => {
 
 const handleAgentOrChatChange = async () => {
   if ($wsConnectionState.value === 'open') {
-    await $wsSendInitialMessage(currentChatId?.value, agentId.value)
+    await $wsSendInitialMessage(route.params.chatId, agentId.value)
   }
   else {
     await ensureWsTokenAndConnect()

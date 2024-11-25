@@ -711,19 +711,36 @@ export default {
       title: 'Assign Collection',
       rules: {
         collection_name: 'Please select a collection',
-        amount: 'Please enter an amount',
-        instruction: 'Please enter an amount',
+        amount: 'Please enter an response depth',
+        instruction: 'Please enter an instruction',
       },
       placeholder: {
         select: 'Select collection',
         instruction: 'Enter instruction',
-        amount: 'Enter amount',
+        amount: 'Enter response depth',
       },
 
       labels: {
         name: 'Collection name',
         instructions: 'Instructions',
-        amount: 'Amount',
+        amount: 'Response depth',
+      },
+      descriptions: {
+        response_depth: {
+          low_depth: {
+            title: 'Low Depth (1-2 chunks)',
+            description: 'Ideal for concise and precise answers. Suitable when you want brief responses or have a narrowly focused collection.',
+          },
+          high_depth: {
+            title: 'High Depth (6+ chunks)',
+            description: 'Retrieves extensive context for comprehensive answers. Best for large or complex collections where queries require a deep dive into the material.',
+          },
+          moderate_depth: {
+            title: 'Moderate Depth (3-5 chunks)',
+            description: 'Provides more context for nuanced or detailed queries. Recommended for collections with mid-sized documents or varied topics.',
+          },
+          note: 'Note: Adjusting this setting impacts both the response detail and the speed of the agent’s processing. Choose a depth that balances your need for detail with the performance of the agent.',
+        },
       },
       notification: {
         error_title: 'Error',

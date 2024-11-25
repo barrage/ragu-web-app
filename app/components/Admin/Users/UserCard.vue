@@ -25,7 +25,6 @@ interface Emits {
 /* Setup */
 const { t } = useI18n()
 const router = useRouter()
-const relativeCreatedDate = ref(props.user?.createdAt ? useRelativeDate(props.user.createdAt) : t('users.user_card.unknown_date'))
 
 const userData = computed(() => {
   return {
@@ -35,7 +34,7 @@ const userData = computed(() => {
     statusType: props.user?.active ? StatusType.Success : StatusType.Danger,
     role: props.user?.role === 'admin' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
     updatedAt: props.user?.updatedAt ? useRelativeDate(props.user.updatedAt) : t('users.user_card.unknown_date'),
-    createdAt: relativeCreatedDate.value,
+    createdAt: props.user?.createdAt ? useRelativeDate(props.user.createdAt) : t('users.user_card.unknown_date'),
   }
 })
 
