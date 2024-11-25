@@ -4,15 +4,10 @@ import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
 import StopStreamIcon from '~/assets/icons/svg/stop-stream.svg'
 import { useNuxtApp } from '#app'
 
-/* SETUP */
-/* Ws plugin */
 const { $getWs, $wsConnect, $wsSendChatMessage, $wsConnectionState, $wsSendInitialMessage, $wsStopStream, $wsAddMessageHandler } = useNuxtApp()
 
-/* Stores */
 const agentStore = useAgentStore()
 const chatStore = useChatStore()
-
-/* Data */
 const isTokenFetching = ref(false)
 const message = ref('')
 const router = useRouter()
@@ -47,11 +42,7 @@ const handleServerMessage = (data: string) => {
 
   switch (parsedData?.type) {
     case 'chat_title':
-      if (parsedData?.chatId && parsedData?.title && chatStore.selectedChat?.chat) {
-        if (chatStore.selectedChat?.chat) {
-          chatStore.selectedChat.chat.title = parsedData.title
-        }
-      }
+      handleChatTitleEvent(parsedData)
       break
 
     case 'chat_closed':
@@ -84,7 +75,12 @@ const handleServerMessage = (data: string) => {
         router.push(`/c/${parsedData.chatId}`)
       }
       break
-
+    case 'API':
+      chatStore.isWebSocketStreaming = false
+      if (assistantMessage) {
+        assistantMessage.id = ''
+      }
+      break
     case 'error':
       chatStore.isWebSocketStreaming = false
       if (assistantMessage) {
@@ -124,6 +120,10 @@ const ensureWsTokenAndConnect = async () => {
 
       await $wsConnect(chatStore.wsToken)
 
+      $getWs().onopen = async () => {
+        $wsConnectionState.value = 'open'
+        await handleAgentOrChatChange()
+      }
       $getWs().onmessage = event => handleServerMessage(event.data)
       $getWs().onclose = async () => {
         console.warn('WebSocket closed unexpectedly. Clearing token and attempting reconnection...')
@@ -132,7 +132,6 @@ const ensureWsTokenAndConnect = async () => {
         chatStore.wsToken = ''
         await ensureWsTokenAndConnect()
       }
-      await handleAgentOrChatChange()
     }
     catch (error) {
       isTokenFetching.value = false
@@ -184,9 +183,12 @@ const sendMessage = () => {
   message.value = ''
 }
 
+const isWatcherActive = ref(false)
+
 watch(
   [agentId, currentChatId],
   async ([newAgentId, newChatId], [oldAgentId, oldChatId]) => {
+    if (!isWatcherActive.value) { return }
     if (newAgentId !== oldAgentId || newChatId !== oldChatId) {
       await handleAgentOrChatChange()
     }
@@ -194,9 +196,10 @@ watch(
   { immediate: true },
 )
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await ensureWsTokenAndConnect()
   $wsAddMessageHandler(handleServerMessage)
+  isWatcherActive.value = true
 })
 
 const stopStream = () => {
@@ -220,6 +223,25 @@ const isSelectedAgentActive = computed(() => {
 })
 const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
 errorHandler(error)
+
+function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
+  const { chatId, title } = parsedData
+
+  if (!chatId || !title) {
+    console.error('Invalid data for chat_title event:', parsedData)
+    return
+  }
+
+  const selectedChat = chatStore.selectedChat?.chat
+  if (selectedChat && selectedChat.id === chatId) {
+    selectedChat.title = title
+  }
+
+  const chatToUpdate = chatStore.chats.find(chat => chat.id === chatId)
+  if (chatToUpdate) {
+    chatToUpdate.title = title
+  }
+}
 </script>
 
 <template>

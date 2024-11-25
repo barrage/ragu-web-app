@@ -59,9 +59,6 @@ onBeforeUnmount(() => {
     >
       <slot name="default" />
     </div>
-    <div class="chat-page-footer">
-      <ChatInputSection />
-    </div>
   </div>
 </template>
 
@@ -72,14 +69,9 @@ onBeforeUnmount(() => {
   height: 100%;
 
   & .chat-page-content {
-    flex: 1 0 calc(90%);
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 100%;
-  }
-
-  & .chat-page-footer {
-    flex: 1 0 calc(10%);
+    height: 100%;
   }
 }
 

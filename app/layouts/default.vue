@@ -8,7 +8,13 @@ const navigationStore = useNavigationStore()
     <LlmHeader />
     <LlmAside />
     <main class="main">
-      <NuxtPage />
+      <div class="page-wrapper">
+        <NuxtPage />
+      </div>
+
+      <div class="chat-page-footer">
+        <ChatInputSection />
+      </div>
     </main>
   </div>
 </template>
@@ -45,6 +51,19 @@ const navigationStore = useNavigationStore()
   background-color: transparent;
   padding: 0.75rem;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  & .page-wrapper {
+    flex: 1 0 calc(90%);
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100%;
+  }
+
+  & .chat-page-footer {
+    flex: 1 0 calc(10%);
+  }
 }
 
 @keyframes fadeIn {

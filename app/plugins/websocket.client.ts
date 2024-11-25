@@ -40,7 +40,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   const addMessageHandler = (handler: (data: string) => void) => {
     messageHandlers.push(handler)
   }
-  // SEND MESSAGE TO WS
   const sendSocketMessage = (message: any) => {
     if (ws && ws?.readyState === WebSocket.OPEN) {
       try {
@@ -55,7 +54,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
   }
 
-  // CLOSE CHAT
   const closeChat = () => {
     sendSocketMessage({
       type: 'system',
@@ -65,7 +63,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     })
   }
 
-  // SEND MESSAGE TO OPEN NEW/EXISTING CHAT
   const sendInitialMessage = (chatId: string | null, agentId: string | number) => {
     closeChat()
     const message = chatId
@@ -83,11 +80,9 @@ export default defineNuxtPlugin((nuxtApp) => {
             agentId,
           },
         }
-
     sendSocketMessage(message)
   }
 
-  // SEND CHAT MESSAGE
   const sendChatMessage = (text: string) => {
     sendSocketMessage({
       type: 'chat',
@@ -95,7 +90,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     })
   }
 
-  // STOP STREAM
   const stopStream = () => {
     sendSocketMessage({
       type: 'system',
@@ -105,7 +99,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     })
   }
 
-  // DISCONNECT WS
   const disconnect = () => {
     if (ws) {
       connectionState.value = 'closing'

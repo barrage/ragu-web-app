@@ -33,13 +33,56 @@ const popperOptions = {
     },
   ],
 }
+
+/* -------- */
+
+const displayedTitle = ref('')
+const pendingTitle = ref('')
+const isAnimatingTitle = ref(false)
+let titleAnimationTimeout: number | null = null
+
+const animateNextTitleLetter = () => {
+  if (pendingTitle.value.length > 0) {
+    displayedTitle.value += pendingTitle.value[0]
+    pendingTitle.value = pendingTitle.value.slice(1)
+    isAnimatingTitle.value = true
+    titleAnimationTimeout = window.setTimeout(() => {
+      animateNextTitleLetter()
+    }, 50) // Adjust typing speed if needed
+  }
+  else {
+    isAnimatingTitle.value = false
+  }
+}
+watch(
+  () => props.chat?.title,
+  (newTitle, oldTitle) => {
+    if (newTitle && newTitle !== oldTitle) {
+      displayedTitle.value = ''
+      pendingTitle.value = newTitle
+      if (!isAnimatingTitle.value) {
+        animateNextTitleLetter()
+      }
+    }
+    else if (newTitle) {
+      displayedTitle.value = newTitle
+      pendingTitle.value = ''
+    }
+  },
+  { immediate: true },
+)
+onBeforeUnmount(() => {
+  if (titleAnimationTimeout) {
+    clearTimeout(titleAnimationTimeout)
+  }
+})
 </script>
 
 <template>
   <div class="chat-container">
     <div class="chat-title">
       <h5>
-        {{ props?.chat?.title || 'Chat title' }}
+        {{ displayedTitle || 'Chat title' }}
       </h5>
 
       <ClientOnly>
@@ -108,6 +151,10 @@ const popperOptions = {
     color: var(--color-primary-900);
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-fluid-5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
   &::after {
     content: '';
