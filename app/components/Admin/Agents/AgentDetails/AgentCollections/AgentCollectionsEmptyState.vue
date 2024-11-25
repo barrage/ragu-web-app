@@ -1,17 +1,35 @@
 <script lang="ts" setup>
-import PersonQuestionMarkIcon from '~/assets/icons/svg/person-question-mark.svg'
+import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
+import OpenFolderIcon from '~/assets/icons/svg/open-folder.svg'
+
+const { t } = useI18n()
+const assignCollectionModalVisible = ref(false)
+const openAssignCollectionModal = () => {
+  assignCollectionModalVisible.value = true
+}
+
+const closeAssignCollectionModal = () => {
+  assignCollectionModalVisible.value = false
+}
 </script>
 
 <template>
   <div class="user-details-empty-state">
     <div class="empty-state-content">
-      <PersonQuestionMarkIcon size="44px" />
+      <OpenFolderIcon size="44px" />
       <p><b>No Collections Assigned</b></p>
       <span>
         This agent currently doesn’t have any collections associated with them.
       </span>
+      <el-button @click="openAssignCollectionModal()">
+        <CollectionIcon /> {{ t('collections.assign_collection.title') }}
+      </el-button>
     </div>
   </div>
+  <AssignCollectionModal
+    :is-open="assignCollectionModalVisible"
+    @close-modal="closeAssignCollectionModal"
+  />
 </template>
 
 <style lang="scss" scoped>

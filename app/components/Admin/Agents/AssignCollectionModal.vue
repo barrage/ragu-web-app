@@ -136,7 +136,7 @@ const closeModal = () => {
       v-model="assignCollectionModalVisible"
       :destroy-on-close="true"
       align-center
-      class="barrage-dialog--small"
+      class="barrage-dialog--large"
       :close-icon="CloseCircleIcon"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -176,12 +176,16 @@ const closeModal = () => {
             </template>
           </ElSelect>
         </ElFormItem>
-
+        <el-divider class="is-weak" />
         <!-- Instruction (Text Input) -->
         <ElFormItem :label="t('collections.assign_collection.labels.instructions')" prop="instruction">
-          <ElInput v-model="assignCollectionForm.instruction" :placeholder="t('collections.assign_collection.placeholder.instruction')" />
+          <ElInput
+            v-model="assignCollectionForm.instruction"
+            type="textarea"
+            :placeholder="t('collections.assign_collection.placeholder.instruction')"
+          />
         </ElFormItem>
-
+        <el-divider class="is-weak" />
         <!-- Amount (Number Input) -->
         <ElFormItem :label="t('collections.assign_collection.labels.amount')" prop="amount">
           <ElInputNumber
@@ -197,7 +201,25 @@ const closeModal = () => {
             </template>
           </ElInputNumber>
         </ElFormItem>
-
+        <div class="response-depth-info-wrapper">
+          <LabelDescriptionItem
+            size="small"
+            :label="t('collections.assign_collection.descriptions.response_depth.low_depth.title')"
+            :description="t('collections.assign_collection.descriptions.response_depth.low_depth.description')"
+          />
+          <LabelDescriptionItem
+            size="small"
+            :label="t('collections.assign_collection.descriptions.response_depth.moderate_depth.title')"
+            :description="t('collections.assign_collection.descriptions.response_depth.moderate_depth.description')"
+          />
+          <LabelDescriptionItem
+            size="small"
+            :label="t('collections.assign_collection.descriptions.response_depth.high_depth.title')"
+            :description="t('collections.assign_collection.descriptions.response_depth.high_depth.description')"
+          />
+          <span class="response-depth-note"> {{ t('collections.assign_collection.descriptions.response_depth.note') }}</span>
+        </div>
+        <el-divider class="is-weak" />
         <!-- Form Actions -->
         <ElFormItem>
           <div class="form-actions">
@@ -227,5 +249,14 @@ const closeModal = () => {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+.response-depth-info-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  & .response-depth-note {
+    font-size: var(--font-size-fluid-2);
+  }
 }
 </style>

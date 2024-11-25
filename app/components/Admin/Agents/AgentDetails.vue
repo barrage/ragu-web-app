@@ -23,8 +23,6 @@ const emits = defineEmits<{
 }>()
 
 const agentStore = useAgentStore()
-const assignCollectionModalVisible = ref(false)
-const deleteCollectionModalVisible = ref(false)
 
 const { t } = useI18n()
 
@@ -57,7 +55,7 @@ const editClick = (): void => {
   agentStore.setEditMode(true)
 }
 
-const openAssignCollectionModal = () => {
+/* const openAssignCollectionModal = () => {
   assignCollectionModalVisible.value = true
 }
 
@@ -120,7 +118,7 @@ const agentDeactivated = () => {
       </div>
     </div>
     <div class="agent-details-actions-wrapper">
-      <el-button
+      <!--  <el-button
         size="small"
         type="primary"
         plain
@@ -143,7 +141,7 @@ const agentDeactivated = () => {
         >
           <CollectionIcon />  {{ t('collections.deleteModal.title') }}
         </el-button>
-      </ElTooltip>
+      </ElTooltip> -->
       <el-button
         v-if="!props.singleAgent?.agent?.active"
         size="small"
@@ -371,14 +369,14 @@ const agentDeactivated = () => {
     </div>
   </div>
   <AgentCollections :agent-collections="props.singleAgent?.collections" />
-  <AssignCollectionModal
+  <!--  <AssignCollectionModal
     :is-open="assignCollectionModalVisible"
     @close-modal="closeAssignCollectionModal"
   />
   <DeleteAgentCollectionModal
     :is-open="deleteCollectionModalVisible"
     @close-modal="closeDeleteCollectionModal"
-  />
+  /> -->
   <ActivateAgentModalBackoffice
     :is-open="activateAgentModalVisible"
     :selected-agent="props.singleAgent"
