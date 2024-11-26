@@ -5,18 +5,16 @@ import type { LineChartResponseData, LineChartSeriesData, PieChartDataEntry } fr
  * @param response The API response containing series and legend data.
  * @returns Formatted series data compatible with the line chart component.
  */
-export function formatLineChartData(response: LineChartResponseData): LineChartSeriesData[] {
+export function formatLineChartData(
+  response: { series: Record<string, { data: Record<string, number> }>, legend: Record<string, string> },
+): { name: string, data: { name: string, value: number }[] }[] {
   if (!response || typeof response !== 'object') {
     return []
   }
 
   const { series, legend } = response
 
-  if (!series || typeof series !== 'object') {
-    return []
-  }
-
-  if (!legend || typeof legend !== 'object') {
+  if (!series || typeof series !== 'object' || !legend || typeof legend !== 'object') {
     return []
   }
 
@@ -27,14 +25,12 @@ export function formatLineChartData(response: LineChartResponseData): LineChartS
         data: [],
       }
     }
+    const sortedKeys = Object.keys(seriesData.data).sort()
 
-    const formattedData = Object.entries(seriesData.data).map(([date, value]) => {
-      if (typeof value !== 'number') {
-        return { name: date, value: 0 }
-      }
-
-      return { name: date, value }
-    })
+    const formattedData = sortedKeys.map(key => ({
+      name: key,
+      value: seriesData.data[key] ?? 0,
+    }))
 
     return {
       name: legend[id] || 'Unknown Series',
