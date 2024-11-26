@@ -218,6 +218,9 @@ onBeforeUnmount(() => {
     }
   }
 }
+.barrage-dropdown {
+  flex-shrink: 0;
+}
 
 .dark {
   & .chat-title {

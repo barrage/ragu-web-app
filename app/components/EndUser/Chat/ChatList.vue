@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import type { Chat } from '~/types/chat'
-import MoreIcon from '~/assets/icons/svg/more.svg'
 
 const props = defineProps<{
   chats: Chat[]
@@ -36,7 +35,6 @@ const chatId = computed(() => {
         </template>
         <div class="chat-content">
           <span class="chat-title">{{ chat.title || 'Chat' }}</span>
-          <MoreIcon class="more-icon icon-container" size="26" />
         </div>
       </ElTooltip>
     </div>
@@ -67,28 +65,6 @@ const chatId = computed(() => {
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
-    .chat-title::after {
-      background: linear-gradient(
-        to left,
-        var(--color-primary-300),
-        transparent
-      );
-    }
-  }
-
-  &:hover {
-    background: var(--color-primary-300);
-    color: var(--color-primary-900);
-  }
-
-  &:hover .icon-container {
-    opacity: 1;
-    transform: translateX(6px);
-  }
-  &:hover .chat-title {
-    &::after {
-      display: none;
-    }
   }
 }
 .chat-tooltip {
@@ -108,19 +84,8 @@ const chatId = computed(() => {
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-  padding-right: 2rem;
   transition: color 0.3s ease;
-
-  &::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 2rem;
-    background: linear-gradient(to left, var(--color-primary-200), transparent);
-    pointer-events: none;
-  }
+  text-overflow: ellipsis;
 }
 
 .more-icon {
@@ -146,34 +111,6 @@ const chatId = computed(() => {
 }
 
 .dark {
-  .chat-item {
-    color: var(--color-primary-100);
-
-    &:hover {
-      background: var(--color-primary-700);
-      color: var(--color-primary-0);
-    }
-    &.selected {
-      background: var(--color-primary-700);
-      color: var(--color-primary-0);
-      .chat-title::after {
-        background: linear-gradient(
-          to left,
-          var(--color-primary-700),
-          transparent
-        );
-      }
-    }
-  }
-
-  .chat-title::after {
-    background: linear-gradient(to left, var(--color-primary-800), transparent);
-  }
-
-  .icon-container {
-    background: var(--color-primary-700);
-  }
-
   .more-icon {
     color: var(--color-primary-100);
   }

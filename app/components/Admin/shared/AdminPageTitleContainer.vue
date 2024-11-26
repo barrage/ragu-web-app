@@ -35,12 +35,14 @@ const props = defineProps<{
 
     & .title-icon {
       color: var(--color-primary-800);
+      flex-shrink: 0;
     }
 
     & .admin-page-title {
       font-weight: 600;
       color: var(--color-primary-800);
       font-size: var(--font-size-fluid-8);
+      line-height: normal;
     }
   }
 
