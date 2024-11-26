@@ -23,36 +23,36 @@ const handleServerMessage = (data: string) => {
   const assistantMessage = chatStore?.messages?.find(
     msg => msg.id === 'currentlyStreaming',
   )
-
   try {
     parsedData = JSON.parse(data)
   }
   catch (error) {
     if (chatStore.isWebSocketStreaming && assistantMessage) {
-      if (data !== '##STOP##') {
-        assistantMessage.content += data
-      }
-      else {
-        chatStore.isWebSocketStreaming = false
-        assistantMessage.id = ''
-      }
+      assistantMessage.content += data
     }
     return
+  }
+  if (parsedData) {
+    if (chatStore.isWebSocketStreaming && assistantMessage) {
+      if (typeof parsedData === 'number' || !Number.isNaN(Number(parsedData))) {
+        assistantMessage.content += String(parsedData)
+      }
+      else if (parsedData.content) {
+        assistantMessage.content += parsedData.content
+      }
+    }
   }
 
   switch (parsedData?.type) {
     case 'chat_title':
       handleChatTitleEvent(parsedData)
       break
-
     case 'chat_closed':
       chatStore.isWebSocketStreaming = false
       if (assistantMessage) {
         assistantMessage.id = ''
       }
-
       break
-
     case 'chat_stop_stream':
       chatStore.isWebSocketStreaming = false
       if (assistantMessage) {
@@ -62,7 +62,6 @@ const handleServerMessage = (data: string) => {
         chatStore.GET_ChatMessages(parsedData.chatId)
       }
       break
-
     case 'finish_event':
       chatStore.isWebSocketStreaming = false
       if (assistantMessage) {
@@ -87,7 +86,6 @@ const handleServerMessage = (data: string) => {
         assistantMessage.id = ''
       }
       break
-
     default:
       break
   }
