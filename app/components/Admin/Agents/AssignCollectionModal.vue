@@ -259,4 +259,8 @@ const closeModal = () => {
     font-size: var(--font-size-fluid-2);
   }
 }
+
+.barrage-form-item {
+  padding-block: 32px;
+}
 </style>

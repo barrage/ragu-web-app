@@ -678,7 +678,7 @@ export default {
       provider: 'Provider',
       model: 'Model',
       embedder: 'Embedder',
-      addDocument: 'Add documents to collection',
+      add_document: 'Add documents to collection',
     },
 
     deleteModal: {
@@ -708,6 +708,7 @@ export default {
     },
 
     assign_collection: {
+      agent_collections: 'Agent Collections',
       title: 'Assign Collection',
       rules: {
         collection_name: 'Please select a collection',

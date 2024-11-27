@@ -562,6 +562,7 @@ export default {
       provider: 'Anbieter',
       model: 'Modell',
       embedder: 'Einbettung',
+      add_document: 'Dokumente zur Sammlung hinzufügen',
     },
 
     deleteModal: {
@@ -589,28 +590,47 @@ export default {
       invalid_collection: 'Hoppla! Etwas ist schiefgelaufen. Die Sammlung, die Sie löschen möchten, scheint nicht zu existieren.',
     },
     assign_collection: {
-      title: 'Sammlung Zuweisen',
+      agent_collections: 'Agenten-Sammlungen',
+      title: 'Sammlung zuweisen',
       rules: {
-        collection_name: 'Bitte wählen Sie eine Sammlung aus',
-        amount: 'Bitte geben Sie eine Menge ein',
+        collection_name: 'Bitte wählen Sie eine Sammlung',
+        amount: 'Bitte geben Sie eine Anzahl ein',
         instruction: 'Bitte geben Sie eine Anweisung ein',
       },
       placeholder: {
         select: 'Sammlung auswählen',
         instruction: 'Anweisung eingeben',
-        amount: 'Menge eingeben',
+        amount: 'Anzahl eingeben',
       },
       labels: {
         name: 'Sammlungsname',
         instructions: 'Anweisungen',
-        amount: 'Menge',
+        amount: 'Anzahl',
       },
+      descriptions: {
+        response_depth: {
+          low_depth: {
+            title: 'Niedrige Tiefe (1-2 Chunks)',
+            description: 'Ideal für präzise und präzise Antworten. Geeignet, wenn Sie kurze Antworten oder eine eng fokussierte Sammlung haben möchten.',
+          },
+          high_depth: {
+            title: 'Hohe Tiefe (6+ Chunks)',
+            description: 'Ruft ausführlichen Kontext für umfassende Antworten ab. Beste für große oder komplexe Sammlungen, in denen Abfragen einen tiefen Einblick in das Material erfordern.',
+          },
+          moderate_depth: {
+            title: 'Mittlere Tiefe (3-5 Chunks)',
+            description: 'Bietet mehr Kontext für abgestimmte oder detaillierte Abfragen. Empfohlen für Sammlungen mit mittelgroßen Dokumenten oder unterschiedlichen Themen.',
+          },
+          note: 'Hinweis: Das Anpassen dieser Einstellung hat sowohl Auswirkungen auf die Detailtiefe der Antwort als auch auf die Geschwindigkeit der Verarbeitung des Agenten. Wählen Sie eine Tiefe, die Ihren Bedarf an Detail mit der Leistung des Agenten abgleicht.',
+        },
+      },
+
       notification: {
         error_title: 'Fehler',
-        assign_error_title: 'Zuweisung der Sammlung an Agent fehlgeschlagen!',
+        assign_error_title: 'Fehler beim Zuweisen der Sammlung zum Agenten!',
         assign_cuccess_title: 'Sammlung zugewiesen!',
-        delete_collection: 'Keine Sammlung zum Löschen, bitte neue Sammlung hinzufügen!',
-        update_error_collection: 'Fehler beim Aktualisieren der Sammlung.',
+        delete_collection: 'Sie haben keine Sammlung zum Löschen, bitte weisen Sie eine neue Sammlung zu!',
+        update_error_collection: 'Aktualisierung der Sammlung fehlgeschlagen.',
         update_collection: 'Sammlung erfolgreich aktualisiert!',
       },
     },

@@ -562,6 +562,7 @@ export default {
       provider: 'Proveedor',
       model: 'Modelo',
       embedder: 'Incrustador',
+      add_document: 'Agregar documentos a la colección',
     },
 
     deleteModal: {
@@ -590,6 +591,7 @@ export default {
     },
 
     assign_collection: {
+      agent_collections: 'Colecciones de agentes',
       title: 'Asignar Colección',
       rules: {
         collection_name: 'Por favor seleccione una colección',
@@ -605,6 +607,23 @@ export default {
         name: 'Nombre de colección',
         instructions: 'Instrucciones',
         amount: 'Cantidad',
+      },
+      descriptions: {
+        response_depth: {
+          low_depth: {
+            title: 'Baja profundidad (1-2 Chunks)',
+            description: 'Ideal para respuestas precisas y precisas. Útil si desea respuestas cortas o una colección centrada en un tema.',
+          },
+          high_depth: {
+            title: 'Profundidad alta (6+ Chunks)',
+            description: 'Recupera contexto extenso para respuestas completas. Ideal para colecciones grandes o complejas donde las consultas requieren un análisis profundo del material.',
+          },
+          moderate_depth: {
+            title: 'Profundidad moderada (3-5 Chunks)',
+            description: 'Proporciona más contexto para consultas equilibradas o detalladas. Recomendado para colecciones con documentos de tamaño medio o temas variados.',
+          },
+          note: 'Nota: Ajustar esta configuración afecta tanto al detalle de la respuesta como la velocidad de procesamiento del agente. Elige una profundidad que equilibre tu necesidad de detalle con el rendimiento del agente.',
+        },
       },
       notification: {
         error_title: 'Error',

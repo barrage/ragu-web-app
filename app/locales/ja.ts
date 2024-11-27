@@ -559,6 +559,7 @@ export default {
       provider: 'プロバイダー',
       model: 'モデル',
       embedder: '埋め込みツール',
+      add_document: 'コレクションにドキュメントを追加',
     },
 
     deleteModal: {
@@ -587,6 +588,7 @@ export default {
     },
 
     assign_collection: {
+      agent_collections: 'エージェントのコレクション',
       title: 'コレクションの割り当て',
       rules: {
         collection_name: 'コレクションを選択してください',
@@ -602,6 +604,23 @@ export default {
         name: 'コレクション名',
         instructions: '指示',
         amount: '数量',
+      },
+      descriptions: {
+        response_depth: {
+          low_depth: {
+            title: '低い深さ（1〜2チャンク）',
+            description: '簡潔で正確な回答に最適です。短い回答または狭い焦点のコレクションが必要な場合に便利です。',
+          },
+          high_depth: {
+            title: '高い深さ（6〜6チャンク）',
+            description: '包括的な回答のための広範なコンテキストを取得します。大規模または複雑なコレクションで、クエリがマテリアルに深く掘り下げる必要がある場合に最適です。',
+          },
+          moderate_depth: {
+            title: '適度な深さ（3〜5チャンク）',
+            description: '均衡または詳細なクエリのためのより多くのコンテキストを提供します。中程度のサイズのドキュメントまたはさまざまなトピックを持つコレクションに推奨されます。',
+          },
+          note: '注：この設定を調整すると、応答の詳細とエージェントの処理速度の両方に影響します。エージェントのパフォーマンスと詳細のニーズをバランスさせる深さを選択してください。',
+        },
       },
       notification: {
         error_title: 'エラー',

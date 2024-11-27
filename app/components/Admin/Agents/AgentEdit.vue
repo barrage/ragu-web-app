@@ -167,14 +167,6 @@ onUnmounted(() => {
         >
           <ElInput v-model="form.name" />
         </ElFormItem>
-        <!-- Description -->
-        <ElFormItem
-          class="group description"
-          :label="t('agents.labels.description')"
-          prop="description"
-        >
-          <ElInput v-model="form.description" />
-        </ElFormItem>
         <!-- Language -->
         <ElFormItem
           class="group"
@@ -183,6 +175,7 @@ onUnmounted(() => {
         >
           <ElInput v-model="form.language" />
         </ElFormItem>
+
         <!-- Language Instruction -->
         <ElFormItem
           class="group"
@@ -191,22 +184,41 @@ onUnmounted(() => {
         >
           <ElInput v-model="form.configuration.instructions.languageInstruction" />
         </ElFormItem>
-        <!-- Summary Instruction -->
         <ElFormItem
-          class="group"
-          :label="t('agents.labels.summaryInstruction')"
-          prop="configuration.instructions.summaryInstructions"
+          :label="t('agents.labels.description')"
+          class="context-form-item"
+          prop="description"
         >
-          <ElInput v-model="form.configuration.instructions.summaryInstruction" />
+          <ElInput
+            v-model="form.description"
+            type="textarea"
+            :placeholder="t('agents.placeholder.description')"
+          />
         </ElFormItem>
-        <!-- Title Instruction -->
+
         <ElFormItem
-          class="group"
           :label="t('agents.labels.titleInstruction')"
-          prop="configuration.instructions.titleInstructions"
+          prop="configuration.instructions.titleInstruction"
+          class="context-form-item"
         >
-          <ElInput v-model="form.configuration.instructions.titleInstruction" />
+          <ElInput
+            v-model="form.configuration.instructions.titleInstruction"
+            :placeholder="t('agents.placeholder.titleInstruction')"
+            type="textarea"
+          />
         </ElFormItem>
+        <ElFormItem
+          :label="t('agents.labels.summaryInstruction')"
+          prop="configuration.instructions.summaryInstruction"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.configuration.instructions.summaryInstruction"
+            :placeholder="t('agents.placeholder.summaryInstruction')"
+            type="textarea"
+          />
+        </ElFormItem>
+
         <!-- Context -->
         <ElFormItem
           class="group context-form-item"
@@ -371,6 +383,7 @@ onUnmounted(() => {
     :deep(div) {
       display: flex;
       flex-direction: row;
+      gap: var(--spacing-fluid-m);
     }
   }
 

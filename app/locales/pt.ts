@@ -563,6 +563,7 @@ export default {
       provider: 'Fornecedor',
       model: 'Modelo',
       embedder: 'Incorporador',
+      add_document: 'Adicionar documentos à coleção',
     },
 
     deleteModal: {
@@ -590,6 +591,7 @@ export default {
       invalid_collection: 'Ops! Algo deu errado. A coleção que você está tentando excluir parece não existir.',
     },
     assign_collection: {
+      agent_collections: 'Coleções de agentes',
       title: 'Atribuir Coleção',
       rules: {
         collection_name: 'Por favor selecione uma coleção',
@@ -605,6 +607,23 @@ export default {
         name: 'Nome da coleção',
         instructions: 'Instruções',
         amount: 'Quantidade',
+      },
+      descriptions: {
+        response_depth: {
+          low_depth: {
+            title: 'Baixa profundidade (1-2 Chunks)',
+            description: 'Ideal para respostas concisas e precisas. Útil se você quiser respostas curtas ou uma coleção focada em um tópico.',
+          },
+          high_depth: {
+            title: 'Profundidade alta (6+ Chunks)',
+            description: 'Recupera contexto extensivo para respostas completas. Ideal para coleções grandes ou complexas onde as consultas exigem uma análise aprofundada do material.',
+          },
+          moderate_depth: {
+            title: 'Profundidade moderada (3-5 Chunks)',
+            description: 'Fornece mais contexto para consultas equilibradas ou detalhadas. Recomendado para coleções com documentos de tamanho médio ou tópicos variados.',
+          },
+          note: 'Nota: Ajustar esta configuração afeta tanto o detalhamento da resposta quanto a velocidade de processamento do agente. Escolha uma profundidade que equilibre a necessidade de detalhes com o desempenho do agente.',
+        },
       },
       notification: {
         error_title: 'Erro',

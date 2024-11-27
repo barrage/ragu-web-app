@@ -561,6 +561,7 @@ export default {
       provider: 'Fournisseur',
       model: 'Modèle',
       embedder: 'Intégrateur',
+      add_document: 'Ajouter des documents à la collection',
     },
 
     deleteModal: {
@@ -589,6 +590,7 @@ export default {
     },
 
     assign_collection: {
+      assign_collection: 'Collections de l\'agent',
       title: 'Attribuer la Collection',
       rules: {
         collection_name: 'Veuillez sélectionner une collection',
@@ -605,6 +607,24 @@ export default {
         instructions: 'Instructions',
         amount: 'Quantité',
       },
+      descriptions: {
+        response_depth: {
+          low_depth: {
+            title: 'Faible profondeur (1-2 Chunks)',
+            description: 'Idéal pour des réponses précises et précises. Utile si vous souhaitez des réponses courtes ou une collection centrée sur un sujet.',
+          },
+          high_depth: {
+            title: 'Profondeur élevée (6+ Chunks)',
+            description: 'Récupère un contexte étendu pour des réponses complètes. Idéal pour des collections volumineuses ou complexes où les requêtes nécessitent une approche approfondie du matériel.',
+          },
+          moderate_depth: {
+            title: 'Profondeur modérée (3-5 Chunks)',
+            description: 'Fournit plus de contexte pour des requêtes équilibrées ou détaillées. Recommandé pour des collections avec des documents de taille moyenne ou des sujets variés.',
+          },
+          note: 'Remarque : Ajustez cette configuration pour affecter à la fois le détail de la réponse et la vitesse de traitement de l\'agent. Choisissez une profondeur qui équilibre vos besoins en détail avec les performances de l\'agent.',
+        },
+      },
+
       notification: {
         error_title: 'Erreur',
         assign_error_title: 'Échec de l\'attribution de la collection à l\'agent!',

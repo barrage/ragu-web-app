@@ -2,6 +2,7 @@
 import type { AgentCollection } from '~/types/agent'
 import FolderPersonIcon from '~/assets/icons/svg/folder-person.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
+import CollectionDelete from '~/assets/icons/svg/folder-remove.svg'
 
 const props = defineProps<{
   agentCollections: AgentCollection[] | undefined
@@ -33,7 +34,7 @@ const closeDeleteCollectionModal = () => {
     <div class="agent-collections-header-container">
       <h3 class="agent-collections-title">
         <FolderPersonIcon size="42px" />
-        Agent Collections
+        {{ t('collections.assign_collection.agent_collections') }}
       </h3>
       <div v-if="agentCollections?.length" class="agent-collections-header-actions-container">
         <el-button
@@ -57,7 +58,7 @@ const closeDeleteCollectionModal = () => {
             :disabled="agentStore.singleAgent?.collections?.length === 0"
             @click="openDeleteCollectionModal()"
           >
-            <CollectionIcon />  {{ t('collections.deleteModal.title') }}
+            <CollectionDelete />  {{ t('collections.deleteModal.title') }}
           </el-button>
         </ElTooltip>
       </div>

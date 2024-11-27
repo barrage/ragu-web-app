@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
-import DeletePersonIcon from '~/assets/icons/svg/delete-person.svg'
+import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 
 const props = defineProps<{
 
@@ -24,6 +24,7 @@ const agentId = route.params.agentId as string
 const closeModal = () => {
   deleteCollectionModalVisible.value = false
   emits('closeModal')
+  deleteCollections.value = []
 }
 
 watch(() => props.isOpen, (newVal) => {
@@ -57,6 +58,7 @@ const submitDeleteCollection = async () => {
       customClass: 'success',
       duration: 2500,
     })
+    deleteCollections.value = []
   }
 }
 </script>
@@ -73,7 +75,7 @@ const submitDeleteCollection = async () => {
     >
       <template #header>
         <div class="delete-user-modal-header">
-          <DeletePersonIcon size="42px" />
+          <CollectionIcon size="42px" />
           <h5> {{ $t('collections.deleteModal.title') }}</h5>
         </div>
       </template>
