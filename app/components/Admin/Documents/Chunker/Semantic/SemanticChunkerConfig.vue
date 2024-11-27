@@ -17,36 +17,36 @@ const { t } = useI18n()
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="t('documents.chunker.semantic.form.size')"
-      :description="config.semantic.config.size.toString()"
+      :description="config.semantic.size.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="t('documents.chunker.semantic.form.threshold')"
-      :description="config.semantic.config.threshold.toString()"
+      :description="config.semantic.threshold.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="t('documents.chunker.semantic.form.distance_function')"
-      :description="config.semantic.config.distanceFn.toString()"
+      :description="config.semantic.distanceFn.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="t('documents.chunker.semantic.form.delimiter')"
-      :description="config.semantic.config.delimiter.toString()"
+      :description="config.semantic.delimiter.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="t('documents.chunker.semantic.form.skip_foward')"
-      :description="config.semantic.config.skipForward.join(', ')"
+      :description="config.semantic.skipF.join(', ')"
     >
       <template #customDescription>
         <div class="tag-list">
           <el-tag
-            v-for="item in config.semantic.config.skipForward"
+            v-for="item in config.semantic.skipF"
             :key="item"
           >
             {{ item }}
@@ -57,12 +57,12 @@ const { t } = useI18n()
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="t('documents.chunker.semantic.form.skip_back')"
-      :description="config.semantic.config.skipBack.join(', ')"
+      :description="config.semantic.skipB.join(', ')"
     >
       <template #customDescription>
         <div class="tag-list">
           <el-tag
-            v-for="item in config.semantic.config.skipBack"
+            v-for="item in config.semantic.skipB"
             :key="item"
           >
             {{ item }}
@@ -73,7 +73,7 @@ const { t } = useI18n()
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="t('documents.chunker.semantic.form.embed_model')"
-      :description="config.semantic.config.embedModel.toString() || '-'"
+      :description="config.semantic.embeddingModel.toString() || '-'"
       horizontal
     />
   </div>

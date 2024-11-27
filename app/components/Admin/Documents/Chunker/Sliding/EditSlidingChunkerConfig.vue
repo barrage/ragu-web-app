@@ -21,14 +21,12 @@ const selectedDocument = computed(() => {
 const formRef = ref<FormInstance>()
 const form = reactive<SlidingChunker>({
   sliding: {
-    config: {
-      size: 0,
-      overlap: 0,
-    },
+    size: 0,
+    overlap: 0,
   },
 })
 const validateSize = (_rule: any, value: any, callback: any) => {
-  if (value <= form.sliding.config.overlap) {
+  if (value <= form.sliding.overlap) {
     callback(new Error(t('documents.chunker.validation.size_validation')))
   }
 
@@ -38,11 +36,11 @@ const validateSize = (_rule: any, value: any, callback: any) => {
 }
 // Validation rules
 const rules = computed<FormRules<SlidingChunker>>(() => ({
-  'sliding.config.size': [
+  'sliding.size': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
     { validator: validateSize, trigger: 'change' },
   ],
-  'sliding.config.overlap': [
+  'sliding.overlap': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
 }))
@@ -96,8 +94,8 @@ async function saveConfig() {
 const prefillForm = () => {
   const chunkConfig = selectedDocument.value?.chunkConfig
   if (chunkConfig && 'sliding' in chunkConfig) {
-    form.sliding.config.size = chunkConfig.sliding.config.size || 0
-    form.sliding.config.overlap = chunkConfig.sliding.config.overlap || 0
+    form.sliding.size = chunkConfig.sliding.size || 0
+    form.sliding.overlap = chunkConfig.sliding.overlap || 0
   }
 }
 
@@ -145,10 +143,10 @@ const submitSaveForm = async (formEl: FormInstance | undefined) => {
       <div class="form-items-wrapper">
         <ElFormItem
           :label="t('documents.chunker.sliding.form.size')"
-          prop="sliding.config.size"
+          prop="sliding.size"
         >
           <ElInputNumber
-            v-model="form.sliding.config.size"
+            v-model="form.sliding.size"
             :min="0"
           >
             <template #increase-icon>
@@ -162,10 +160,10 @@ const submitSaveForm = async (formEl: FormInstance | undefined) => {
 
         <ElFormItem
           :label="t('documents.chunker.sliding.form.overlap')"
-          prop="sliding.config.overlap"
+          prop="sliding.overlap"
         >
           <ElInputNumber
-            v-model="form.sliding.config.overlap"
+            v-model="form.sliding.overlap"
             :min="0"
           >
             <template #increase-icon>

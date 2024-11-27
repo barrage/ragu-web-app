@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import type { SnappingChunker, SnappingChunkerConfig } from '~/types/document.ts'
+import type { SnappingChunker } from '~/types/document.ts'
 import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
 import AddIcon from '~/assets/icons/svg/add.svg'
 import MinusIcon from '~/assets/icons/svg/minus.svg'
@@ -20,18 +20,16 @@ const selectedDocument = computed(() => {
 const formRef = ref<FormInstance>()
 const form = reactive<SnappingChunker>({
   snapping: {
-    config: {
-      size: 0,
-      overlap: 0,
-    },
+    size: 0,
+    overlap: 0,
     delimiter: '',
-    skipForward: [],
-    skipBack: [],
+    skipF: [],
+    skipB: [],
   },
 })
 
 const validateSize = (_rule: any, value: any, callback: any) => {
-  if (value <= form.snapping.config.overlap) {
+  if (value <= form.snapping.overlap) {
     callback(new Error(t('documents.chunker.validation.size_validation')))
   }
 
@@ -42,11 +40,11 @@ const validateSize = (_rule: any, value: any, callback: any) => {
 
 // Validation rules
 const rules = computed<FormRules<SnappingChunker>>(() => ({
-  'snapping.config.size': [
+  'snapping.size': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
     { validator: validateSize, trigger: 'change' },
   ],
-  'snapping.config.overlap': [
+  'snapping.overlap': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
   'snapping.delimiter': [
@@ -103,11 +101,11 @@ async function saveConfig() {
 const prefillForm = () => {
   const chunkConfig = selectedDocument.value?.chunkConfig
   if (chunkConfig && 'snapping' in chunkConfig) {
-    form.snapping.config.size = chunkConfig.snapping.config.size || 0
-    form.snapping.config.overlap = chunkConfig.snapping.config.overlap || 0
+    form.snapping.size = chunkConfig.snapping.size || 0
+    form.snapping.overlap = chunkConfig.snapping.overlap || 0
     form.snapping.delimiter = chunkConfig.snapping.delimiter || '.'
-    form.snapping.skipForward = chunkConfig.snapping.skipForward || []
-    form.snapping.skipBack = chunkConfig.snapping.skipBack || []
+    form.snapping.skipF = chunkConfig.snapping.skipF || []
+    form.snapping.skipB = chunkConfig.snapping.skipB || []
   }
 }
 
@@ -145,20 +143,20 @@ const forwardFilterString = ref('')
 const backFilterString = ref('')
 
 const addForwardFilter = () => {
-  if (!form.snapping.skipForward.includes(forwardFilterString.value) && forwardFilterString.value) {
-    form.snapping.skipForward.push(forwardFilterString.value)
+  if (!form.snapping.skipF.includes(forwardFilterString.value) && forwardFilterString.value) {
+    form.snapping.skipF.push(forwardFilterString.value)
   }
   forwardFilterString.value = ''
 }
 
 const addBackFilter = () => {
-  if (!form.snapping.skipBack.includes(backFilterString.value) && backFilterString.value) {
-    form.snapping.skipBack.push(backFilterString.value)
+  if (!form.snapping.skipB.includes(backFilterString.value) && backFilterString.value) {
+    form.snapping.skipB.push(backFilterString.value)
   }
   backFilterString.value = ''
 }
 
-const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
+const removeFilter = (filter: string, type: 'skipF' | 'skipB') => {
   const index = form.snapping[type].indexOf(filter)
   if (index !== -1) {
     form.snapping[type].splice(index, 1)
@@ -178,10 +176,10 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
     >
       <ElFormItem
         :label="$t('documents.chunker.snapping.form.size')"
-        prop="snapping.config.size"
+        prop="snapping.size"
       >
         <ElInputNumber
-          v-model="form.snapping.config.size"
+          v-model="form.snapping.size"
           :min="0"
         >
           <template #increase-icon>
@@ -198,7 +196,7 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
         prop="snapping.config.overlap"
       >
         <ElInputNumber
-          v-model="form.snapping.config.overlap"
+          v-model="form.snapping.overlap"
           :min="0"
         >
           <template #increase-icon>
@@ -220,17 +218,17 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
       <div class="range-filters-wrapper">
         <ElFormItem
           :label="$t('documents.chunker.snapping.form.skip_foward')"
-          prop="snapping.skipForward"
+          prop="snapping.skipF"
         >
           <ElInput v-model="forwardFilterString" @keyup.enter="addForwardFilter()" />
           <div class="filter-items-wrapper">
-            <template v-for="filter in form.snapping.skipForward" :key="filter">
+            <template v-for="filter in form.snapping.skipF" :key="filter">
               <el-tag size="small">
                 <span> {{ filter }}  </span>
                 <CloseIcon
                   size="12"
                   class="delete-filter-icon"
-                  @click="removeFilter(filter, 'skipForward')"
+                  @click="removeFilter(filter, 'skipF')"
                 />
               </el-tag>
             </template>
@@ -239,17 +237,17 @@ const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
 
         <ElFormItem
           :label="$t('documents.chunker.snapping.form.skip_back')"
-          prop="snapping.skipBack"
+          prop="snapping.skipB"
         >
           <ElInput v-model="backFilterString" @keyup.enter="addBackFilter()" />
           <div class="filter-items-wrapper">
-            <template v-for="filter in form.snapping.skipBack" :key="filter">
+            <template v-for="filter in form.snapping.skipB" :key="filter">
               <el-tag size="small">
                 <span> {{ filter }}  </span>
                 <CloseIcon
                   size="12"
                   class="delete-filter-icon"
-                  @click="removeFilter(filter, 'skipBack')"
+                  @click="removeFilter(filter, 'skipB')"
                 />
               </el-tag>
             </template>

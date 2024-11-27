@@ -52,11 +52,11 @@ const chunkerConfig = (chunker: ChunkerConfig) => {
             <li v-if="chunkerConfig(chunker).distanceFn">
               Distance Function: {{ chunkerConfig(chunker).distanceFn }}
             </li>
-            <li v-if="chunkerConfig(chunker).embedModel">
-              Embedding Model: {{ chunkerConfig(chunker).embedModel }}
+            <li v-if="chunkerConfig(chunker).embeddingModel">
+              Embedding Model: {{ chunkerConfig(chunker).embeddingModel }}
             </li>
-            <li v-if="chunkerConfig(chunker).embedProvider">
-              Embedding Provider: {{ chunkerConfig(chunker).embedProvider }}
+            <li v-if="chunkerConfig(chunker).embeddingProvider">
+              Embedding Provider: {{ chunkerConfig(chunker).embeddingProvider }}
             </li>
           </ul>
         </div>
