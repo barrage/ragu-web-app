@@ -562,6 +562,7 @@ export default {
       provider: 'Provider',
       model: 'Modello',
       embedder: 'Incorporatore',
+      add_document: 'Aggiungi documenti alla collezione',
     },
 
     deleteModal: {
@@ -589,6 +590,7 @@ export default {
       invalid_collection: 'Oops! Qualcosa è andato storto. Sembra che la collezione che stai cercando di eliminare non esista.',
     },
     assign_collection: {
+      agent_collections: 'Collezioni degli agenti',
       title: 'Assegna Collezione',
       rules: {
         collection_name: 'Per favore seleziona una collezione',
@@ -604,6 +606,23 @@ export default {
         name: 'Nome della collezione',
         instructions: 'Istruzioni',
         amount: 'Quantità',
+      },
+      descriptions: {
+        response_depth: {
+          low_depth: {
+            title: 'Bassa profondità (1-2 Chunks)',
+            description: 'Ideale per risposte precise e concise. Utile se si desiderano risposte brevi o una raccolta con un focus limitato.',
+          },
+          high_depth: {
+            title: 'Profondità alta (6+ Chunks)',
+            description: 'Recupera un contesto esteso per risposte complete. Ideale per raccolte di grandi dimensioni o complesse dove le query richiedono un approfondimento approfondito del materiale.',
+          },
+          moderate_depth: {
+            title: 'Profondità moderata (3-5 Chunks)',
+            description: 'Fornisce più contesto per query equilibrate o dettagliate. Consigliato per raccolte con documenti di dimensioni medie o argomenti variati.',
+          },
+          note: 'Nota: Regolare questa impostazione influisce sia sul dettaglio della risposta che sulla velocità di elaborazione dell\'agente. Scegliere una profondità che bilancia i tuoi requisiti di dettaglio con le prestazioni dell\'agente.',
+        },
       },
       notification: {
         error_title: 'Errore',

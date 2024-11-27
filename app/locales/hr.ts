@@ -701,6 +701,7 @@ export default {
     },
 
     assign_collection: {
+      agent_collections: 'Kolekcije Agenta',
       title: 'Dodijeli Kolekciju',
       rules: {
         collection_name: 'Molimo odaberite kolekciju',
@@ -716,6 +717,24 @@ export default {
         name: 'Naziv kolekcije',
         instructions: 'Upute',
         amount: 'Količina',
+      },
+      descriptions: {
+        response_depth: {
+          low_depth: {
+            title: 'Niska dubina (1-2 Chunks)',
+            description: 'Idealno za precizne i precizne odgovore. Korisno ako želite kratke odgovore ili kolekciju usmjerenu na temu.',
+          },
+          high_depth: {
+            title: 'Visoka dubina (6+ Chunks)',
+            description: 'Dohvaća prošireni kontekst za kompletne odgovore. Najbolje za velike ili komplicirane kolekcije gdje upite zahtijevaju dublje istraživanje materijala.',
+          },
+          moderate_depth: {
+            title: 'Srednja dubina (3-5 Chunks)',
+            description: 'Omogućuje više konteksta za usklađene ili detaljne upite. Preporučeno za kolekcije srednje veličine ili raznolikih tema.',
+          },
+          note: 'Napomena: Podešavanje ovog parametra utječe na detaljnost odgovora i brzinu obrade agenta. Odaberite dubinu koja ravnoteži vaše potrebe za detaljima s performansama agenta.',
+        },
+
       },
       notification: {
         error_title: 'Greška',

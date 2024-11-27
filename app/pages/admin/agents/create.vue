@@ -174,23 +174,48 @@ errorHandler(createError)
           <ElInput v-model="form.name" :placeholder="t('agents.placeholder.agentName')" />
         </ElFormItem>
 
-        <ElFormItem :label="t('agents.labels.description')" prop="description">
-          <ElInput v-model="form.description" :placeholder="t('agents.placeholder.description')" />
-        </ElFormItem>
-
         <ElFormItem :label="t('agents.labels.language')" prop="language">
           <ElInput v-model="form.language" :placeholder="t('agents.placeholder.language')" />
         </ElFormItem>
+
         <ElFormItem :label="t('agents.labels.languageInstruction')" prop="configuration.instructions.languageInstruction">
           <ElInput v-model="form.configuration.instructions.languageInstruction" :placeholder="t('agents.placeholder.languageInstruction')" />
         </ElFormItem>
 
-        <ElFormItem :label="t('agents.labels.summaryInstruction')" prop="configuration.instructions.summaryInstruction">
-          <ElInput v-model="form.configuration.instructions.summaryInstruction" :placeholder="t('agents.placeholder.summaryInstruction')" />
+        <ElFormItem
+          :label="t('agents.labels.description')"
+          class="context-form-item"
+          prop="description"
+        >
+          <ElInput
+            v-model="form.description"
+            type="textarea"
+            :placeholder="t('agents.placeholder.description')"
+          />
         </ElFormItem>
 
-        <ElFormItem :label="t('agents.labels.titleInstruction')" prop="configuration.instructions.titleInstruction">
-          <ElInput v-model="form.configuration.instructions.titleInstruction" :placeholder="t('agents.placeholder.titleInstruction')" />
+        <ElFormItem
+          :label="t('agents.labels.titleInstruction')"
+          prop="configuration.instructions.titleInstruction"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.configuration.instructions.titleInstruction"
+            :placeholder="t('agents.placeholder.titleInstruction')"
+            type="textarea"
+          />
+        </ElFormItem>
+
+        <ElFormItem
+          :label="t('agents.labels.summaryInstruction')"
+          prop="configuration.instructions.summaryInstruction"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.configuration.instructions.summaryInstruction"
+            :placeholder="t('agents.placeholder.summaryInstruction')"
+            type="textarea"
+          />
         </ElFormItem>
 
         <ElFormItem
