@@ -25,17 +25,13 @@ export interface ParserConfig {
   filters: string[]
 }
 
-export interface SnappingChunkerConfig {
-  size: number
-  overlap: number
-}
-
 export interface SnappingChunker {
   snapping: {
-    config: SnappingChunkerConfig
-    skipForward: string[]
-    skipBack: string[]
+    size: number
+    overlap: number
     delimiter: string
+    skipF: string[]
+    skipB: string[]
   }
 }
 export interface SlidingChunkerConfig {
@@ -44,9 +40,8 @@ export interface SlidingChunkerConfig {
 }
 
 export interface SlidingChunker {
-  sliding: {
-    config: SlidingChunkerConfig
-  }
+  sliding: SlidingChunkerConfig
+
 }
 
 export interface SemanticChunkerConfig {
@@ -54,16 +49,15 @@ export interface SemanticChunkerConfig {
   threshold: number
   distanceFn: string
   delimiter: string
-  skipForward: string[]
-  skipBack: string[]
-  embedModel: string
-  embedProvider: string
+  skipF: string[]
+  skipB: string[]
+  embeddingModel: string
+  embeddingProvider: string
 }
 
 export interface SemanticChunker {
-  semantic: {
-    config: SemanticChunkerConfig
-  }
+  semantic: SemanticChunkerConfig
+
 }
 
 export type ChunkerConfig = SlidingChunker | SnappingChunker | SemanticChunker

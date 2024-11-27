@@ -28,16 +28,14 @@ const selectedDocument = computed(() => {
 const formRef = ref<FormInstance>()
 const form = reactive<SemanticChunker>({
   semantic: {
-    config: {
-      size: 0,
-      threshold: 0,
-      distanceFn: '',
-      delimiter: '',
-      skipForward: [],
-      skipBack: [],
-      embedModel: '',
-      embedProvider: '',
-    },
+    size: 0,
+    threshold: 0,
+    distanceFn: '',
+    delimiter: '',
+    skipF: [],
+    skipB: [],
+    embeddingModel: '',
+    embeddingProvider: '',
   },
 
 })
@@ -52,29 +50,29 @@ const validateThreshold = (_rule: any, value: any, callback: any) => {
 }
 
 const rules = computed<FormRules<SemanticChunker>>(() => ({
-  'semantic.config.size': [
+  'semantic.size': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
-  'semantic.config.threshold': [
+  'semantic.threshold': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
     { validator: validateThreshold, trigger: 'change' },
   ],
-  'semantic.config.distanceFn': [
+  'semantic.distanceFn': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
-  'semantic.config.delimiter': [
+  'semantic.delimiter': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
-  'semantic.config.embedModel': [
+  'semantic.emeddingModel': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
-  'semantic.config.embedProvider': [
+  'semantic.embeddingProvider': [
     { required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
-  'semantic.config.skipForward': [
+  'semantic.skipF': [
     { type: 'array', required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
-  'semantic.config.skipBack': [
+  'semantic.skipB': [
     { type: 'array', required: true, message: t('form_rules.required'), trigger: 'blur' },
   ],
 }))
@@ -129,14 +127,14 @@ async function saveConfig() {
 const prefillForm = () => {
   const chunkConfig = selectedDocument.value?.chunkConfig
   if (chunkConfig && 'semantic' in chunkConfig) {
-    form.semantic.config.size = chunkConfig.semantic.config.size || 0
-    form.semantic.config.threshold = chunkConfig.semantic.config.threshold || 0
-    form.semantic.config.distanceFn = chunkConfig.semantic.config.distanceFn || ''
-    form.semantic.config.delimiter = chunkConfig.semantic.config.delimiter || ''
-    form.semantic.config.skipForward = chunkConfig.semantic.config.skipForward || []
-    form.semantic.config.skipBack = chunkConfig.semantic.config.skipBack || []
-    form.semantic.config.embedModel = chunkConfig.semantic.config.embedModel
-    form.semantic.config.embedProvider = chunkConfig.semantic.config.embedProvider
+    form.semantic.size = chunkConfig.semantic.size || 0
+    form.semantic.threshold = chunkConfig.semantic.threshold || 0
+    form.semantic.distanceFn = chunkConfig.semantic.distanceFn || ''
+    form.semantic.delimiter = chunkConfig.semantic.delimiter || ''
+    form.semantic.skipF = chunkConfig.semantic.skipF || []
+    form.semantic.skipB = chunkConfig.semantic.skipB || []
+    form.semantic.embeddingModel = chunkConfig.semantic.embeddingModel
+    form.semantic.embeddingProvider = chunkConfig.semantic.embeddingProvider
   }
 }
 const embeddingProviders = ['fembed', 'openai']
@@ -187,29 +185,29 @@ const forwardFilterString = ref('')
 const backFilterString = ref('')
 
 const addForwardFilter = () => {
-  if (!form.semantic.config.skipForward.includes(forwardFilterString.value) && forwardFilterString.value) {
-    form.semantic.config.skipForward.push(forwardFilterString.value)
+  if (!form.semantic.skipF.includes(forwardFilterString.value) && forwardFilterString.value) {
+    form.semantic.skipF.push(forwardFilterString.value)
   }
   forwardFilterString.value = ''
 }
 
 const addBackFilter = () => {
-  if (!form.semantic.config.skipBack.includes(backFilterString.value) && backFilterString.value) {
-    form.semantic.config.skipBack.push(backFilterString.value)
+  if (!form.semantic.skipB.includes(backFilterString.value) && backFilterString.value) {
+    form.semantic.skipB.push(backFilterString.value)
   }
   backFilterString.value = ''
 }
 
-const removeFilter = (filter: string, type: 'skipForward' | 'skipBack') => {
-  const index = form.semantic.config[type].indexOf(filter)
+const removeFilter = (filter: string, type: 'skipF' | 'skipB') => {
+  const index = form.semantic[type].indexOf(filter)
   if (index !== -1) {
-    form.semantic.config[type].splice(index, 1)
+    form.semantic[type].splice(index, 1)
   }
 }
 
 function onProviderChange() {
-  form.semantic.config.embedModel = ''
-  availableModels.value = getModelsByProvider(form.semantic.config.embedProvider)
+  form.semantic.embeddingModel = ''
+  availableModels.value = getModelsByProvider(form.semantic.embeddingProvider)
 }
 </script>
 
@@ -226,10 +224,10 @@ function onProviderChange() {
     >
       <ElFormItem
         :label="t('documents.chunker.semantic.form.size')"
-        prop="semantic.config.size"
+        prop="semantic.size"
       >
         <ElInputNumber
-          v-model="form.semantic.config.size"
+          v-model="form.semantic.size"
           :min="0"
         >
           <template #increase-icon>
@@ -243,10 +241,10 @@ function onProviderChange() {
 
       <ElFormItem
         :label="t('documents.chunker.semantic.form.threshold')"
-        prop="semantic.config.threshold"
+        prop="semantic.threshold"
       >
         <ElInputNumber
-          v-model="form.semantic.config.threshold"
+          v-model="form.semantic.threshold"
           :min="0"
           :step="0.1"
           :max="1"
@@ -262,23 +260,23 @@ function onProviderChange() {
 
       <ElFormItem
         :label="t('documents.chunker.semantic.form.distance_function')"
-        prop="semantic.config.distanceFn"
+        prop="semantic.distanceFn"
       >
-        <ElInput v-model="form.semantic.config.distanceFn" />
+        <ElInput v-model="form.semantic.distanceFn" />
       </ElFormItem>
 
       <ElFormItem
         :label="t('documents.chunker.semantic.form.delimiter')"
-        prop="semantic.config.delimiter"
+        prop="semantic.delimiter"
       >
-        <ElInput v-model="form.semantic.config.delimiter" />
+        <ElInput v-model="form.semantic.delimiter" />
       </ElFormItem>
       <ElFormItem
         :label="t('documents.chunker.semantic.form.embed_provider')"
-        prop="semantic.config.embedProvider"
+        prop="semantic.embeddingProvider"
       >
         <ElSelect
-          v-model="form.semantic.config.embedProvider"
+          v-model="form.semantic.embeddingProvider"
           placeholder="Select provider"
           @change="onProviderChange"
         >
@@ -292,10 +290,10 @@ function onProviderChange() {
       </ElFormItem>
       <ElFormItem
         :label="t('documents.chunker.semantic.form.embed_model')"
-        prop="semantic.config.embedModel"
+        prop="semantic.embeddingModel"
       >
         <ElSelect
-          v-model="form.semantic.config.embedModel"
+          v-model="form.semantic.embeddingModel"
           placeholder="Select model"
         >
           <ElOption
@@ -310,14 +308,14 @@ function onProviderChange() {
       <div class="range-filters-wrapper">
         <ElFormItem
           :label="t('documents.chunker.semantic.form.skip_foward')"
-          prop="semantic.config.skipForward"
+          prop="semantic.skipF"
         >
           <ElInput v-model="forwardFilterString" @keyup.enter="addForwardFilter()" />
           <div class="filter-items-wrapper">
-            <template v-for="filter in form.semantic.config.skipForward" :key="filter">
+            <template v-for="filter in form.semantic.skipF" :key="filter">
               <el-tag size="small">
                 {{ filter }}
-                <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipForward')" />
+                <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipF')" />
               </el-tag>
             </template>
           </div>
@@ -325,14 +323,14 @@ function onProviderChange() {
 
         <ElFormItem
           :label="t('documents.chunker.semantic.form.skip_back')"
-          prop="semantic.config.skipBack"
+          prop="semantic.skipB"
         >
           <ElInput v-model="backFilterString" @keyup.enter="addBackFilter()" />
           <div class="filter-items-wrapper">
-            <template v-for="filter in form.semantic.config.skipBack" :key="filter">
+            <template v-for="filter in form.semantic.skipB" :key="filter">
               <el-tag size="small">
                 {{ filter }}
-                <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipBack')" />
+                <CloseIcon class="delete-filter-icon" @click="removeFilter(filter, 'skipB')" />
               </el-tag>
             </template>
           </div>

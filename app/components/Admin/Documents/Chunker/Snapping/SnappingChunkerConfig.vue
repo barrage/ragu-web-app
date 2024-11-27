@@ -16,13 +16,13 @@ defineProps<{
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="$t('documents.chunker.snapping.form.size')"
-      :description="config.snapping.config.size.toString()"
+      :description="config.snapping.size.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="$t('documents.chunker.snapping.form.overlap')"
-      :description="config.snapping.config.overlap.toString()"
+      :description="config.snapping.overlap.toString()"
       horizontal
     />
     <div class="horizontal-divider" />
@@ -34,12 +34,12 @@ defineProps<{
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="$t('documents.chunker.snapping.form.skip_foward')"
-      :description="config.snapping.skipForward.join(', ')"
+      :description="config.snapping.skipF.join(', ')"
     >
       <template #customDescription>
         <div class="tag-list">
           <el-tag
-            v-for="item in config.snapping.skipForward"
+            v-for="item in config.snapping.skipB"
             :key="item"
             size="small"
           >
@@ -51,12 +51,12 @@ defineProps<{
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="$t('documents.chunker.snapping.form.skip_back')"
-      :description="config.snapping.skipBack.join(', ')"
+      :description="config.snapping.skipB.join(', ')"
     >
       <template #customDescription>
         <div class="tag-list">
           <el-tag
-            v-for="item in config.snapping.skipBack"
+            v-for="item in config.snapping.skipB"
             :key="item"
             size="small"
           >
