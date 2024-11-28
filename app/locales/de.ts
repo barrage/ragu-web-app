@@ -1,4 +1,6 @@
 export default {
+  empty_title: 'Hier gibt es noch nichts zu sehen',
+  empty_description: 'Hier gibt es keine Elemente, die angezeigt werden sollen.',
   details: 'Details',
   chatDock: 'Chat-Panel',
   login: {
@@ -70,6 +72,8 @@ export default {
         view_details: 'Details anzeigen',
         edit_chat: 'Chat bearbeiten',
         delete_chat: 'Chat löschen',
+        empty_state_title: 'Keine Chats',
+        empty_state_desc: 'Derzeit gibt es keine Chats, die angezeigt werden sollen.',
       },
       chat_details: {
         title: 'Chat-Details',
@@ -518,6 +522,10 @@ export default {
   collections: {
     title: 'Sammlungen',
     all_collections: 'Alle Sammlungen',
+    empty_state: {
+      title: 'Keine Sammlungen zugewiesen',
+      description: 'Dieser Agent hat derzeit keine Sammlungen zugewiesen.',
+    },
 
     titles: {
       title: 'Sammlungen',
@@ -638,6 +646,8 @@ export default {
   },
 
   users: {
+    empty_title: 'Benutzer nicht gefunden.',
+    empty_description: 'Der Benutzer, den Sie suchen, existiert nicht oder ist derzeit nicht verfügbar. Bitte überprüfen Sie die Benutzerinformationen erneut oder versuchen Sie eine andere Suche.',
     title: 'Benutzer',
     description: 'Verwalten Sie die Mitglieder Ihres Teams und legen Sie deren Zugriffsrechte fest.',
     invite_user: 'Benutzer einladen',

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import CollectionQuestionMarkIcon from '~/assets/icons/svg/collection-question-mark.svg'
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
 
 definePageMeta({
@@ -35,7 +36,15 @@ errorHandler(error)
     <template v-else-if="collectionStore.singleCollection">
       <CollectionDetails :single-collection="collectionStore.singleCollection" />
     </template>
-    <CollectionDetailEmptyState v-else />
+    <EmptyState
+      v-else
+      :title="t('collections.collection_card.empty_state_title')"
+      :description="t('collections.collection_card.empty_state_desc')"
+    >
+      <template #icon>
+        <CollectionQuestionMarkIcon size="44px" />
+      </template>
+    </EmptyState>
   </AdminPageContainer>
 </template>
 

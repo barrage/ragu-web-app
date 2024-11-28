@@ -3,6 +3,7 @@ import type { AgentCollection } from '~/types/agent'
 import FolderPersonIcon from '~/assets/icons/svg/folder-person.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
 import CollectionDelete from '~/assets/icons/svg/folder-remove.svg'
+import OpenFolderIcon from '~/assets/icons/svg/open-folder.svg'
 
 const props = defineProps<{
   agentCollections: AgentCollection[] | undefined
@@ -70,7 +71,21 @@ const closeDeleteCollectionModal = () => {
         </template>
       </template>
       <template v-else>
-        <AgentCollectionsEmptyState />
+        <EmptyState
+          :title="t('collections.empty_state.title')"
+          :description="t('collections.empty_state.description')"
+          :cta-text="t('collections.assign_collection.title')"
+          @cta-click="openAssignCollectionModal"
+        >
+          <template #icon>
+            <OpenFolderIcon size="44px" />
+          </template>
+          <template #cta>
+            <el-button @click="openAssignCollectionModal">
+              <CollectionIcon /> {{ t('collections.assign_collection.title') }}
+            </el-button>
+          </template>
+        </EmptyState>
       </template>
     </div>
   </section>

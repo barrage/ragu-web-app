@@ -1,7 +1,8 @@
 import { textProps } from 'element-plus'
 
 export default {
-
+  empty_title: 'Nothing to see here yet',
+  empty_description: 'There are no items to display here.',
   details: 'Details',
   chatDock: 'Chat panel',
   login: {
@@ -71,6 +72,8 @@ export default {
         view_details: 'View Details',
         edit_chat: 'Edit Chat',
         delete_chat: 'Delete Chat',
+        empty_state_title: 'No chats yet',
+        empty_state_desc: 'There are no chats to display here.',
       },
       chat_details: {
         title: 'Chat Details',
@@ -280,6 +283,8 @@ export default {
 
   },
   users: {
+    empty_title: 'User not found.',
+    empty_description: 'The user you are looking for does not exist or is currently unavailable. Please check the user\'s information again or try a different search.',
     title: 'Users',
     description: 'Manage team members of your organization and set their access level',
     invite_user: 'Invite user',
@@ -631,6 +636,11 @@ export default {
   collections: {
     title: 'Collections',
     all_collections: 'All Collections',
+
+    empty_state: {
+      title: 'No Collections Assigned',
+      description: 'This agent currently doesn’t have any collections associated with them.',
+    },
 
     titles: {
       title: 'Collections',

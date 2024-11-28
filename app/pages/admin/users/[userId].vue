@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
+import PersonQuestionMarkIcon from '~/assets/icons/svg/person-question-mark.svg'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -34,7 +35,14 @@ errorHandler(error)
       <UserDetails :user="usersStore.selectedUser" />
     </template>
     <template v-else>
-      <UserDetailsEmptyState />
+      <EmptyState
+        :title="t('users.empty_title')"
+        :description="t('users.empty_description')"
+      >
+        <template #icon>
+          <PersonQuestionMarkIcon size="44px" />
+        </template>
+      </EmptyState>
     </template>
   </AdminPageContainer>
 </template>

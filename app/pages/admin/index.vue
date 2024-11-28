@@ -1,34 +1,33 @@
 <script lang="ts" setup>
 import DashboardIcon from '~/assets/icons/svg/dashboard-icon.svg'
 import DashboardHeroOverview from '~/components/Admin/Dashboard/DashboardHeroOverview.vue'
-import type { AgentStatistic, ChatStatistic, PieChartDataEntry, UserStatistic } from '~/types/statistic'
+import type { AgentStatistic, PieChartDataEntry, UserStatistic } from '~/types/statistic'
 
 definePageMeta({
   layout: 'admin-layout',
 })
 const { t } = useI18n()
 const statisticStore = useStatisticStore()
-
+const userStore = useUsersStore()
+const collectionsStore = useCollectionsStore()
+const documentsStore = useDocumentsStore()
 const currentPeriod = ref('WEEK')
 
-statisticStore.GET_ChatHistoryStatistic(currentPeriod.value)
-statisticStore.GET_DashboardCount()
+const { execute: refreshChatHistory, error: chatHistoryError } = useAsyncData(() => statisticStore.GET_ChatHistoryStatistic(currentPeriod.value))
 
-const updatePeriod = (newPeriod: string) => {
+const { error: dashboardCountError } = useAsyncData(() => statisticStore.GET_DashboardCount())
+
+errorHandler(chatHistoryError)
+errorHandler(dashboardCountError)
+
+const updatePeriod = async (newPeriod: string) => {
   currentPeriod.value = newPeriod
-  statisticStore.GET_ChatHistoryStatistic(currentPeriod.value)
+  await refreshChatHistory()
 }
 
+// Computed
 const chatHistory = computed(() => {
   return statisticStore?.chatHistoryStats ? formatLineChartData(statisticStore.chatHistoryStats) : null
-})
-
-const chatCount = computed<number>(() => {
-  return statisticStore.dashboardCount?.chat.total || 0
-})
-
-const chatPieChartData = computed<PieChartDataEntry[] | null>(() => {
-  return statisticStore.dashboardCount?.chat?.chats ? formatPieChartData(statisticStore.dashboardCount?.chat.chats) : null
 })
 
 const usersData = computed<UserStatistic>(() => {
@@ -43,65 +42,34 @@ const agentsProviders = computed<PieChartDataEntry[] | null>(() => {
   return statisticStore.dashboardCount?.agent?.providers ? formatPieChartDataFromObjects(statisticStore.dashboardCount?.agent?.providers) : null
 })
 
-const userStore = useUsersStore()
-
-const recentUsers = ref()
-const getRecentUsers = async () => {
-  recentUsers.value = await userStore.GET_AllUsers(1, 5, 'createdAt', 'desc')
-  return recentUsers.value
-}
-
-const mostRecentUser = computed(() => {
-  return recentUsers.value?.items ? recentUsers.value.items : []
+const mostUsedAgentData = computed(() => {
+  return findMostUsedAgent()
 })
 
-const chatStore = useChatStore()
-const recentChats = ref()
-const getRecentChats = async () => {
-  recentChats.value = await chatStore.GET_AllAdminChats(1, 10, 'updatedAt', 'desc')
-  return recentChats.value
-}
-const mostRecentChats = computed(() => {
-  return recentChats.value?.items ? recentChats.value.items : []
-})
+// Recent users
 
-const agentsStore = useAgentStore()
-const activeAgents = ref()
-const getRecentAgents = async () => {
-  activeAgents.value = await agentsStore.GET_AllAgents(1, 20, 'updatedAt', 'desc', false)
-  return activeAgents.value
-}
-const allActiveAgents = computed(() => {
-  return activeAgents.value?.items ? activeAgents.value.items : []
-})
+const { data: recentUsers, error: recentUsersError, status } = useAsyncData('recentUsers', () =>
+  userStore.GET_AllUsers(1, 5, 'createdAt', 'desc'))
 
-const collectionsStore = useCollectionsStore()
-const collections = ref()
-const getCollectionsTotal = async () => {
-  collections.value = await collectionsStore.GET_AllCollections(1, 1, 'updated_at', 'desc')
-  return collections.value
-}
-const collectionsCount = computed(() => {
-  return collections.value?.total ? collections.value.total : 0
-})
+const mostRecentUser = computed(() => recentUsers.value?.items || [])
+const isLoading = computed(() => status.value === 'pending')
+const hasError = computed(() => !!dashboardCountError.value || !!recentUsersError.value)
 
-const documentsStore = useDocumentsStore()
-const documents = ref()
-const getDocumentsTotal = async () => {
-  documents.value = await documentsStore.GET_AllDocuments(1, 1, 'updated_at', 'desc')
-  return documents.value
-}
-const documentsCount = computed(() => {
-  return documents.value?.total ? documents.value.total : 0
-})
+// Collections
 
-onMounted(() => {
-  getRecentUsers()
-  getRecentChats()
-  getRecentAgents()
-  getDocumentsTotal()
-  getCollectionsTotal()
-})
+const { data: collections } = useAsyncData('collections', () =>
+  collectionsStore.GET_AllCollections(1, 1, 'updated_at', 'desc'))
+
+const collectionsCount = computed(() => collections.value?.total || 0)
+
+// Documents
+
+const { data: documents } = useAsyncData('documents', () =>
+  documentsStore.GET_AllDocuments(1, 1, 'updated_at', 'desc'))
+
+const documentsCount = computed(() => documents.value?.total || 0)
+
+// Helpers
 
 function findMostUsedAgent(): { name: string, stats: { used: number, total: number } } {
   const chatData = statisticStore.dashboardCount?.chat || { chats: [], total: 0 }
@@ -122,10 +90,6 @@ function findMostUsedAgent(): { name: string, stats: { used: number, total: numb
     },
   }
 }
-
-const mostUsedAgentData = computed(() => {
-  return findMostUsedAgent()
-})
 </script>
 
 <template>
@@ -154,12 +118,7 @@ const mostUsedAgentData = computed(() => {
         />
       </div>
       <div class="dashboard-chats-template">
-        <DashboardChatsInfo
-          :chat-count="chatCount"
-          :chat-pie-chart-data="chatPieChartData"
-          :recent-chats="mostRecentChats"
-          :active-agents="allActiveAgents"
-        />
+        <DashboardChatsInfo />
       </div>
       <div class="dashboard-agents-template">
         <DashboardAgents
@@ -170,7 +129,12 @@ const mostUsedAgentData = computed(() => {
         />
       </div>
       <div class="dashboard-users-template">
-        <DashboardUsers :count-data-user="usersData" :recent-users="mostRecentUser" />
+        <DashboardUsers
+          :count-data-user="usersData"
+          :recent-users="mostRecentUser"
+          :loading="isLoading"
+          :error="hasError"
+        />
       </div>
     </div>
   </AdminPageContainer>

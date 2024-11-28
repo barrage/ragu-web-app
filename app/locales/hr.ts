@@ -1,4 +1,6 @@
 export default {
+  empty_title: 'Ovdje još nema ništa za prikaz',
+  empty_description: 'Trenutno nema elemenata za prikaz.',
   details: 'Detalji',
   chatDock: 'Chat panel',
   login: {
@@ -71,6 +73,8 @@ export default {
         view_details: 'Pogledaj detalje',
         edit_chat: 'Uredi razgovor',
         delete_chat: 'Obriši razgovor',
+        empty_state_title: 'Nema razgovora',
+        empty_state_desc: 'Trenutno nema razgovora za prikaz.',
       },
       chat_details: {
         title: 'Detalji razgovora',
@@ -285,6 +289,8 @@ export default {
 
   },
   users: {
+    empty_title: 'Korisnik nije pronađen.',
+    empty_description: 'Korisnik kojeg tražite ne postoji ili trenutno nije dostupan. Molimo provjerite podatke o korisniku ponovno ili pokušajte s drugačijim pretraživanjem.',
     title: 'Korisnici',
     description: 'Upravljajte članovima svog tima i postavite njihove razine pristupa.',
     invite_user: 'Dodaj korisnika',
@@ -626,6 +632,10 @@ export default {
   collections: {
     title: 'Kolekcije',
     all_collections: 'Sve kolekcije',
+    empty_state: {
+      title: 'Nema dodjeljenih kolekcija',
+      description: 'Ovaj agent trenutno nema nijednu kolekciju povezanu sa njim.',
+    },
 
     titles: {
       title: 'Kolekcije',

@@ -54,7 +54,15 @@ watch(
       </div>
     </div>
   </template>
-  <AgentDetailsEmptyState v-else />
+  <EmptyState
+    v-else
+    :title="t('agents.agent_card.empty_state_title')"
+    :description="t('agents.agent_card.empty_state_desc')"
+  >
+    <template #icon>
+      <ChatAgentIcon size="44px" />
+    </template>
+  </EmptyState>
 </template>
 
 <style lang="scss" scoped>

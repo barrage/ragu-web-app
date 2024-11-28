@@ -1,4 +1,6 @@
 export default {
+  empty_title: 'まだ何も見ることができません',
+  empty_description: 'ここには表示するアイテムはありません。',
   details: '詳細',
   chatDock: 'チャットパネル',
   login: {
@@ -68,6 +70,8 @@ export default {
         view_details: '詳細を見る',
         edit_chat: 'チャットを編集',
         delete_chat: 'チャットを削除',
+        empty_state_title: 'チャットはありません',
+        empty_state_desc: '現在、表示するチャットはありません。',
       },
       chat_details: {
         title: 'チャットの詳細',
@@ -516,6 +520,11 @@ export default {
     title: 'コレクション',
     all_collections: 'すべてのコレクション',
 
+    empty_state: {
+      title: 'コレクションが割り当てられていません',
+      description: 'このエージェントには現在、関連付けられたコレクションはありません。',
+    },
+
     titles: {
       title: 'コレクション',
       subTitle: 'AIの知識ベースを導くコンテンツコレクションを管理します。',
@@ -635,6 +644,8 @@ export default {
   },
 
   users: {
+    empty_title: 'ユーザーが見つかりません。',
+    empty_description: '探しているユーザーは存在しないか、現在利用できません。ユーザー情報を再度確認するか、別の検索をお試しください。',
     title: 'ユーザー',
     description: 'チームメンバーを管理し、アクセスレベルを設定します。',
     invite_user: 'ユーザーを招待',
