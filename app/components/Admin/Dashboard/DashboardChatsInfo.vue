@@ -45,7 +45,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
   <section class="dashboard-chats-info-section grid">
     <div class="section-heading-wrapper">
       <div class="title-wrapper">
-        <ChatsIcon size="42" />
+        <ChatsIcon size="42px" />
         <h4 class="section-title">
           {{ t('chat.admin.title') }}
         </h4>
@@ -74,7 +74,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
             <template v-for="chat in mostRecentChats" :key="chat.id">
               <div class="recent-chat-card">
                 <div class="chat-profile-item" @click="redirectToChatDetails(chat.chat.id)">
-                  <ChatIcon size="36" class="chat-icon" />
+                  <ChatIcon size="36px" class="chat-icon" />
                   <div class="chat-wrapper">
                     <p class="chat-name">
                       {{ `${chat?.chat.title || t('chat.admin.chat_card.unknown_title')}` }}
@@ -123,7 +123,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
           <template v-else-if="activeAgentsStatus === 'success'">
             <template v-for="agent in allActiveAgents" :key="agent.agent.id">
               <div class="agent-name-type-wrapper" @click="redirectToAgentDetails(agent?.agent?.id)">
-                <AgentIcon size="36" />
+                <AgentIcon size="36px" />
                 <div class="agent-name-wrapper">
                   <p class="agent-name">
                     {{ agent?.agent?.name }}

@@ -21,7 +21,7 @@ definePageMeta({
     <div class="horizontal-divider" />
 
     <div class="icon-title-container">
-      <DocumentConfigurationIcon size="42" />
+      <DocumentConfigurationIcon size="42px" />
       <h5> {{ $t('documents.configuration') }} </h5>
     </div>
     <div class="current-configuration grid">
@@ -33,7 +33,7 @@ definePageMeta({
       </div>
     </div>
     <div class="icon-title-container">
-      <DocumentEditIcon size="32" />
+      <DocumentEditIcon size="32px" />
       <h5> {{ $t('documents.configuration') }} </h5>
     </div>
     <div class="horizontal-divider" />

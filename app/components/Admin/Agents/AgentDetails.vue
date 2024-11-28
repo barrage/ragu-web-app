@@ -91,7 +91,7 @@ const agentDeactivated = () => {
 <template>
   <div class="agent-details-hero-section">
     <div class="profile-avatar-wrapper">
-      <ProfileIcon size="80" />
+      <ProfileIcon size="80px" />
       <div class="agentname-status-wrapper">
         <h6 class="agentname">
           {{ `${agentData.name}` }}

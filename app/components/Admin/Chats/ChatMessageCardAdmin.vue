@@ -46,8 +46,8 @@ const redirectToDetails = () => {
   <div>
     <div class="message-card">
       <div class="message-profile-item" @click="redirectToDetails()">
-        <ProfileIcon v-if="messageData.iconType === 'user'" size="36" />
-        <BrainIcon v-else-if="messageData.iconType === 'assistant'" size="36" />
+        <ProfileIcon v-if="messageData.iconType === 'user'" size="36px" />
+        <BrainIcon v-else-if="messageData.iconType === 'assistant'" size="36px" />
         <div class="messagename-mail-wrapper">
           <p class="messagename">
             {{ `${messageData.sender}` }}

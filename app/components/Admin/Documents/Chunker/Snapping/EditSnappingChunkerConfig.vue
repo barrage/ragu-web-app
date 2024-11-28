@@ -226,7 +226,7 @@ const removeFilter = (filter: string, type: 'skipF' | 'skipB') => {
               <el-tag size="small">
                 <span> {{ filter }}  </span>
                 <CloseIcon
-                  size="12"
+                  size="12px"
                   class="delete-filter-icon"
                   @click="removeFilter(filter, 'skipF')"
                 />
@@ -245,7 +245,7 @@ const removeFilter = (filter: string, type: 'skipF' | 'skipB') => {
               <el-tag size="small">
                 <span> {{ filter }}  </span>
                 <CloseIcon
-                  size="12"
+                  size="12px"
                   class="delete-filter-icon"
                   @click="removeFilter(filter, 'skipB')"
                 />

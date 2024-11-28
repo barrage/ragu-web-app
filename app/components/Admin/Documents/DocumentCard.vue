@@ -141,7 +141,7 @@ const submitDeleteDocument = async () => {
             class="manage-document-button"
             @click="navigateToDocumentDetailsPage"
           >
-            <DocumentEditIcon size="24" />
+            <DocumentEditIcon size="24px" />
           </el-button>
         </ElTooltip>
         <ElTooltip
@@ -156,7 +156,7 @@ const submitDeleteDocument = async () => {
             class="manage-document-button"
             @click="openDeleteDialog"
           >
-            <DeleteIcon size="24" />
+            <DeleteIcon size="24px" />
           </el-button>
         </ElTooltip>
       </div>

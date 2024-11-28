@@ -27,7 +27,7 @@ definePageMeta({
     <div class="login-wrapper">
       <div class="login-header">
         <div class="logo-icon-wrapper">
-          <BrainIcon size="42" />
+          <BrainIcon size="42px" />
         </div>
 
         <h4 class="login-title typing-effect">

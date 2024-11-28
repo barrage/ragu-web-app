@@ -118,9 +118,9 @@ const copyItem = () => {
       <div class="sender">
         <BrainIcon
           v-if="props.message.senderType === 'assistant'"
-          size="32"
+          size="32px"
         />
-        <ProfileIcon v-else size="32" />
+        <ProfileIcon v-else size="32px" />
       </div>
       <template v-if="props.message.senderType === 'assistant' && chatStore.isWebSocketStreaming && !props.message.content">
         <MeetUpLoader class="assistant-message-loader" />
@@ -146,7 +146,7 @@ const copyItem = () => {
         :enterable="false"
         placement="top"
       >
-        <MicrophoneIcon size="18" @click="readText" />
+        <MicrophoneIcon size="18px" @click="readText" />
       </ElTooltip>
       <ElTooltip
         v-else
@@ -155,7 +155,7 @@ const copyItem = () => {
         :enterable="false"
         placement="top"
       >
-        <StopIcon size="18" @click="stopReading" />
+        <StopIcon size="18px" @click="stopReading" />
       </ElTooltip>
       <ElTooltip
         content="Copy message"
@@ -163,7 +163,7 @@ const copyItem = () => {
         :enterable="false"
         placement="top"
       >
-        <CopyIcon size="18" @click="copyItem()" />
+        <CopyIcon size="18px" @click="copyItem()" />
       </ElTooltip>
       <ElTooltip
         content="Good answer"
@@ -171,7 +171,7 @@ const copyItem = () => {
         :enterable="false"
         placement="top"
       >
-        <LikeIcon size="18" />
+        <LikeIcon size="18px" />
       </ElTooltip>
       <ElTooltip
         content="Bad answer"
@@ -179,7 +179,7 @@ const copyItem = () => {
         :enterable="false"
         placement="top"
       >
-        <DislikeIcon size="18" />
+        <DislikeIcon size="18px" />
       </ElTooltip>
     </div>
   </div>

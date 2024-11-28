@@ -39,7 +39,7 @@ const redirectToCollectionDetails = () => {
   <el-card class="collection-card is-primary">
     <div class=" grid">
       <div class="collection-profile-item" @click="redirectToCollectionDetails">
-        <CollectionIcon size="36" />
+        <CollectionIcon size="36px" />
         <div class="collection-wrapper">
           <p class="collection-name">
             {{ `${collectionData.name}` }}

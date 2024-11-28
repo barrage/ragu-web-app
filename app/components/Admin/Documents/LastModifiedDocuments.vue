@@ -35,33 +35,33 @@ const { t } = useI18n()
               <div class="document-name-wrapper">
                 <PdfIcon
                   v-if="doc.ext === 'pdf'"
-                  size="16"
+                  size="16px"
                   original
                 />
-                <DocxIcon v-else-if="doc.ext === 'docx'" size="16" />
+                <DocxIcon v-else-if="doc.ext === 'docx'" size="16px" />
                 <MarkdownIcon
                   v-else-if="doc.ext === 'md'"
-                  size="16"
+                  size="16px"
                   original
                 />
                 <CsvIcon
                   v-else-if="doc.ext === 'csv'"
-                  size="16"
+                  size="16px"
                   original
                 />
                 <JsonIcon
                   v-else-if="doc.ext === 'json'"
-                  size="16"
+                  size="16px"
                   original
                 />
                 <TxtIcon
                   v-else-if="doc.ext === 'txt'"
-                  size="16"
+                  size="16px"
                   original
                 />
                 <UnknownDocumentIcon
                   v-else
-                  size="16"
+                  size="16px"
                   original
                 />
                 <span class="document-name">{{ doc.name }}</span>

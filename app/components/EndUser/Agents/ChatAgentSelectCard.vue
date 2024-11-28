@@ -18,7 +18,7 @@ const agentStore = useAgentStore()
   >
     <div class="agent-body-wrapper">
       <div class="agent-name-wrapper">
-        <ChatAgentIcon size="32" class="chat-agent-icon" />
+        <ChatAgentIcon size="32px" class="chat-agent-icon" />
         <p class="agent-select-text">
           {{ props.agent?.name }}
         </p>

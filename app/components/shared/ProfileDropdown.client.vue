@@ -93,12 +93,12 @@ const switchRole = () => {
 <template>
   <el-dropdown trigger="hover" :popper-options="popperOptions">
     <el-button class="profile-toggle-button" size="small">
-      <ProfileIcon size="36" />
+      <ProfileIcon size="36px" />
     </el-button>
     <template #dropdown>
       <el-dropdown-menu class="dropdown-menu">
         <div class="user-profile-item">
-          <ProfileIcon size="42" />
+          <ProfileIcon size="42px" />
           <div class="username-mail-wrapper">
             <p class="username">
               {{ user.fullname }}

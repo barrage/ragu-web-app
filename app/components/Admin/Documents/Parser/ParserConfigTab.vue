@@ -5,7 +5,7 @@ import ParseDocumentIcon from '~/assets/icons/svg/parse-document.svg'
 <template>
   <section class="edit-parser-section">
     <div class="parse-title-wrapper">
-      <ParseDocumentIcon size="32" />
+      <ParseDocumentIcon size="32px" />
       <h6> <b>{{ $t('documents.parser.title') }}</b> </h6>
     </div>
 

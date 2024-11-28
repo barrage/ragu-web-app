@@ -117,7 +117,7 @@ onMounted(() => {
 <template>
   <div class="collection-details-hero-section">
     <div class="profile-avatar-wrapper">
-      <CollectionIcon size="80" />
+      <CollectionIcon size="80px" />
       <div class="collectionname-status-wrapper">
         <h6 class="collectionname">
           {{ `${collectionData.name}` }}
