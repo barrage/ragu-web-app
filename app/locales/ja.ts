@@ -1,4 +1,11 @@
 export default {
+  seo: {
+    defaultTitle: 'LLMAO - 独自のAIエージェントとの対話',
+    titleTemplate: 'LLMAO - {title}',
+    description: 'AIエージェントと会話を管理する',
+    ogTitle: 'LLMAO - Site Title',
+    ogDescription: 'AIエージェントと会話を管理する',
+  },
   empty_title: 'まだ何も見ることができません',
   empty_description: 'ここには表示するアイテムはありません。',
   details: '詳細',
@@ -111,6 +118,7 @@ export default {
   },
   documents: {
     title: 'ドキュメント',
+    document_details: 'ドキュメントの詳細',
     description: 'AIの学習を支援するすべてのドキュメントを管理および整理します。',
     name: '名前',
     extension: '形式',
@@ -532,6 +540,7 @@ export default {
       deleteDescription: 'コレクションを削除してもよろしいですか？',
       create: 'コレクションを作成',
       createDescription: 'あなたのニーズに合わせて新しいコレクションを作成してください！',
+      details: 'コレクションの詳細',
     },
     buttons: {
       create: 'コレクションを作成',
@@ -644,6 +653,7 @@ export default {
   },
 
   users: {
+    details: 'ユーザーの詳細',
     empty_title: 'ユーザーが見つかりません。',
     empty_description: '探しているユーザーは存在しないか、現在利用できません。ユーザー情報を再度確認するか、別の検索をお試しください。',
     title: 'ユーザー',

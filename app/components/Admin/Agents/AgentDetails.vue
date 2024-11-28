@@ -109,7 +109,7 @@ const agentDeactivated = () => {
         plain
         @click="openActivateAgentModal()"
       >
-        <PersonPasskeyIcon />   {{ t('users.user_card.activate_user_title') }}
+        <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
       </el-button>
       <el-button
         v-if="props.singleAgent?.agent?.active"
@@ -118,7 +118,7 @@ const agentDeactivated = () => {
         plain
         @click="openDeactivateAgentModal()"
       >
-        <PersonLockIcon />   {{ t('users.user_card.deactivate_user_title') }}
+        <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
       </el-button>
       <el-button
         size="small"
@@ -126,7 +126,7 @@ const agentDeactivated = () => {
         plain
         @click="editClick()"
       >
-        <EditIcon />  {{ t('agents.buttons.edit') }}
+        <EditIcon size="20px" />  {{ t('agents.buttons.edit') }}
       </el-button>
     </div>
   </div>

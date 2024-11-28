@@ -14,8 +14,8 @@ const activeAgentLength = computed(() => {
 <template>
   <div class="new-chat-placeholder-container">
     <BrainIcon
-      width="64"
-      height="64"
+      width="64px"
+      height="64px"
       class="ai-logo"
     />
     <h5>LLM Chat</h5>

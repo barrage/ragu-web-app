@@ -84,7 +84,7 @@ watch(
           class="sorting-arrow"
           :class="{ 'sorting-arrow-desc': sortOrder === 'desc' }"
         >
-          <ArrowUpIcon /></span>
+          <ArrowUpIcon size="20px" /></span>
       </el-button>
     </div>
   </div>

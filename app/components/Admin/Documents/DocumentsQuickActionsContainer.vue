@@ -142,13 +142,13 @@ const setEmptyList = () => {
       :disabled="loading"
       @click="syncDocuments"
     >
-      <DocumentSyncIcon v-if="!loading" /> <LlmLoader v-else /> {{ t('documents.sync') }}
+      <DocumentSyncIcon v-if="!loading" size="20px" /> <LlmLoader v-else /> {{ t('documents.sync') }}
     </el-button>
     <el-button
       type="primary"
       @click="openUploadModal"
     >
-      <DocumentAddIcon />  {{ t('documents.upload') }}
+      <DocumentAddIcon size="20px" />  {{ t('documents.upload') }}
     </el-button>
     <ClientOnly>
       <ElDialog
@@ -220,6 +220,13 @@ const setEmptyList = () => {
 
   & .fake-link {
     color: var(--color-blue-300);
+  }
+}
+
+:deep(.barrage-dialog__close) {
+  svg {
+    width: 20px;
+    height: 20px;
   }
 }
 .dark {

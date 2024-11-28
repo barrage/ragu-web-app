@@ -41,14 +41,18 @@ const route = useRoute()
           :class="{ opened: !navigationStore.isSidebarCollapsed, selected: route.path === '/' }"
           @click="router.push('/')"
         >
-          <BrainIcon size="24px" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
+          <BrainIcon size="24px" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon
+            v-if="!navigationStore.isSidebarCollapsed"
+            size="24px"
+            class="add-icon"
+          />
         </a>
       </ElTooltip>
 
       <ChatsDisplay v-if="!navigationStore.isSidebarCollapsed" />
       <div class="get-help-section">
         <div class="gel-help-content" @click="router.push(`/login`)">
-          <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('getHelp.title') }}</span> <QuestionIcon size="24" />
+          <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('getHelp.title') }}</span> <QuestionIcon size="24px" />
         </div>
       </div>
     </nav>

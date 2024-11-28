@@ -1,4 +1,11 @@
 export default {
+  seo: {
+    defaultTitle: 'LLMAO - Interakcija s prilagođenim AI agentima',
+    titleTemplate: 'LLMAO - {title}',
+    description: 'Upravljajte svojim AI agentima i razgovorima',
+    ogTitle: 'LLMAO - Site Title',
+    ogDescription: 'Upravljajte svojim AI agentima i razgovorima',
+  },
   empty_title: 'Ovdje još nema ništa za prikaz',
   empty_description: 'Trenutno nema elemenata za prikaz.',
   details: 'Detalji',
@@ -116,6 +123,7 @@ export default {
   },
   documents: {
     title: 'Dokumenti',
+    document_details: 'Detalji Dokumenta',
     description: 'Upravljajte i organizirajte sve dokumente koji pomažu AI-ju u učenju.',
     name: 'Naziv',
     extension: 'Format',
@@ -289,6 +297,7 @@ export default {
 
   },
   users: {
+    details: 'Detalji korisnika',
     empty_title: 'Korisnik nije pronađen.',
     empty_description: 'Korisnik kojeg tražite ne postoji ili trenutno nije dostupan. Molimo provjerite podatke o korisniku ponovno ili pokušajte s drugačijim pretraživanjem.',
     title: 'Korisnici',
@@ -649,6 +658,7 @@ export default {
       deleteDescription: 'Jeste li sigurni da želite izbrisati kolekciju?',
       create: 'Kreiraj kolekciju',
       createDescription: 'Kreirajte novu kolekciju prema vašim potrebama!',
+      details: 'Detalji kolekcije',
     },
     buttons: {
       create: 'Kreiraj kolekciju',

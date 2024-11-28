@@ -38,7 +38,7 @@ watch(
             :class="{ selected: agent.id === selectedAgent?.id }"
             @click="selectAgent(agent)"
           >
-            <ChatAgentIcon /> {{ agent.name }}
+            <ChatAgentIcon size="20px" /> {{ agent.name }}
           </div>
         </template>
       </div>

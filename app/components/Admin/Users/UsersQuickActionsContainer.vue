@@ -132,7 +132,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
       type="primary"
       @click="toggleInviteUserModal()"
     >
-      <AddPersonIcon />  {{ $t('users.invite_user') }}
+      <AddPersonIcon size="20px" />  {{ $t('users.invite_user') }}
     </el-button>
     <ClientOnly>
       <ElDialog

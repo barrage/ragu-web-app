@@ -12,7 +12,7 @@ const localePath = useLocalePath()
       class="create-button"
       @click="navigateTo({ path: localePath('/admin/collections/create') })"
     >
-      <AddCollectionIcon /> {{ t('collections.buttons.create') }}
+      <AddCollectionIcon size="20px" /> {{ t('collections.buttons.create') }}
     </ElButton>
   </div>
 </template>

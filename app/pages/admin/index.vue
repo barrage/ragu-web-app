@@ -7,6 +7,10 @@ definePageMeta({
   layout: 'admin-layout',
 })
 const { t } = useI18n()
+
+useHead({
+  title: computed(() => t('dashboard.title')),
+})
 const statisticStore = useStatisticStore()
 const userStore = useUsersStore()
 const collectionsStore = useCollectionsStore()

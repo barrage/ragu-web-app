@@ -98,7 +98,7 @@ const goToLastPageDisabled = computed(() => {
         data-testid="pagination-go-to-first-page-button"
         @click="changePage(1)"
       >
-        <DoubleLeftIcon />
+        <DoubleLeftIcon size="20px" />
       </button>
       <div class="barrage-pagination-data">
         <span
@@ -119,7 +119,7 @@ const goToLastPageDisabled = computed(() => {
         data-testid="pagination-go-to-last-page-button"
         @click="goToLastPage"
       >
-        <DoubleRightIcon />
+        <DoubleRightIcon size="20px" />
       </button>
     </template>
   </ElPagination>
@@ -129,5 +129,12 @@ const goToLastPageDisabled = computed(() => {
 .pagination {
   padding-top: 22px;
   margin: auto;
+
+  :deep(.barrage-icon) {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
 </style>

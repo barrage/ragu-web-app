@@ -10,6 +10,10 @@ definePageMeta({
   layout: 'admin-layout',
 })
 
+useHead({
+  title: computed(() => t('collections.titles.title')),
+})
+
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 

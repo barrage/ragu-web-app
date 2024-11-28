@@ -46,7 +46,7 @@ interface Slots {
 
         <div class="horizontal-divider" />
         <NuxtLink :to="props.redirectUrl" class="service-overview-widget-redirect-link">
-          {{ props.redirectText }} <ArrowRightIcon />
+          {{ props.redirectText }} <ArrowRightIcon size="20px" />
         </NuxtLink>
       </div>
     </div>

@@ -3,12 +3,17 @@ import { ElNotification, type FormInstance, type FormRules } from 'element-plus'
 import { reactive, ref, watch } from 'vue'
 import type { CollectionDetail } from '~/types/collection'
 
+const { t } = useI18n()
+
 definePageMeta({
   layout: 'admin-layout',
 })
 
+useHead({
+  title: computed(() => t('collections.titles.create')),
+})
+
 const collectionStore = useCollectionsStore()
-const { t } = useI18n()
 const localePath = useLocalePath()
 
 const vectorProviders = ['qdrant', 'weaviate']

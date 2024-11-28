@@ -7,6 +7,10 @@ useThemeStore()
 definePageMeta({
   layout: 'login-layout',
 })
+const { t } = useI18n()
+useHead({
+  title: computed(() => t('login.title')),
+})
 </script>
 
 <template>

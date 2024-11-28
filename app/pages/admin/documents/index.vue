@@ -6,6 +6,11 @@ definePageMeta({
   layout: 'admin-layout',
 })
 const { t } = useI18n()
+
+useHead({
+  title: computed(() => t('documents.title')),
+})
+
 const documentStore = useDocumentsStore()
 
 const currentPage = ref(1)

@@ -1,6 +1,14 @@
 import { textProps } from 'element-plus'
 
 export default {
+  seo: {
+    defaultTitle: 'LLMAO - Interact with Custom AI Agents',
+    titleTemplate: 'LLMAO - {title}',
+    description: 'Manage your AI agents and conversations',
+    ogTitle: 'LLMAO - Site Title',
+    ogDescription: 'Manage your AI agents and conversations',
+  },
+
   empty_title: 'Nothing to see here yet',
   empty_description: 'There are no items to display here.',
   details: 'Details',
@@ -114,6 +122,7 @@ export default {
   },
   documents: {
     title: 'Documents',
+    document_details: 'Document Details',
     description: 'Manage and organize all documents that help AI in learning.',
     name: 'Name',
     extension: 'Format',
@@ -283,6 +292,7 @@ export default {
 
   },
   users: {
+    details: 'User Details',
     empty_title: 'User not found.',
     empty_description: 'The user you are looking for does not exist or is currently unavailable. Please check the user\'s information again or try a different search.',
     title: 'Users',
@@ -652,6 +662,7 @@ export default {
       deleteDescription: 'Are you sure you want to delete collection?',
       create: 'Create Collection',
       createDescription: 'Create a new collection according to your needs!',
+      details: 'Collection Details',
     },
 
     buttons: {

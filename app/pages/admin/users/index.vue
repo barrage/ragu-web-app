@@ -8,6 +8,10 @@ definePageMeta({
 })
 
 const { t } = useI18n()
+
+useHead({
+  title: computed(() => t('users.title')),
+})
 const usersStore = useUsersStore()
 
 const pagination = ref<Pagination>({

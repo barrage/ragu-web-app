@@ -76,7 +76,7 @@ const redirectToCollectionDetails = () => {
             type="primary"
             @click="redirectToCollectionDetails()"
           >
-            <EyeIcon />
+            <EyeIcon size="20px" />
           </el-button>
         </ElTooltip>
         <ElTooltip
@@ -89,7 +89,7 @@ const redirectToCollectionDetails = () => {
             plain
             @click.stop="openDeleteModal"
           >
-            <DeleteIcon />
+            <DeleteIcon size="20px" />
           </ElButton>
         </ElTooltip>
       </div>
