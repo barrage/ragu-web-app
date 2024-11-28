@@ -363,6 +363,7 @@ export default {
     titles: {
       mainTitle: 'Agenten',
       details: 'Agentendetails',
+      configuration: 'Konfiguration',
       description: 'Verwalten Sie die Agenten, die für die Interaktion mit der KI verantwortlich sind',
       edit: 'Agent bearbeiten',
       create: 'Agent erstellen',
@@ -594,18 +595,18 @@ export default {
       title: 'Sammlung zuweisen',
       rules: {
         collection_name: 'Bitte wählen Sie eine Sammlung',
-        amount: 'Bitte geben Sie eine Anzahl ein',
+        amount: 'Bitte geben Sie eine Antworttiefe ein',
         instruction: 'Bitte geben Sie eine Anweisung ein',
       },
       placeholder: {
         select: 'Sammlung auswählen',
         instruction: 'Anweisung eingeben',
-        amount: 'Anzahl eingeben',
+        amount: 'Geben Sie die Antworttiefe ein',
       },
       labels: {
         name: 'Sammlungsname',
         instructions: 'Anweisungen',
-        amount: 'Anzahl',
+        amount: 'Antworttiefe',
       },
       descriptions: {
         response_depth: {
