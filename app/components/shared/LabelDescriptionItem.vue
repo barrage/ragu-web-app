@@ -58,7 +58,7 @@ const copyItem = () => {
       :class="{ canCopy }"
       @click="copyItem"
     >
-      {{ props.description }}  <CopyIcon v-if="canCopy" />
+      {{ props.description }}  <CopyIcon v-if="canCopy" size="20px" />
     </span>
   </div>
 </template>

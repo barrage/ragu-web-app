@@ -3,11 +3,16 @@ import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
 import type { SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
 
+const { t } = useI18n()
+
 definePageMeta({
   layout: 'admin-layout',
 })
 
-const { t } = useI18n()
+useHead({
+  title: computed(() => t('chat.admin.title')),
+})
+
 const chatsStore = useChatStore()
 
 const pagination = ref<Pagination>({

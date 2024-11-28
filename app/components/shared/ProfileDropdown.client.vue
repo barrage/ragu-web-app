@@ -110,7 +110,7 @@ const switchRole = () => {
           <div class="horizontal-divider" />
           <el-dropdown-item @click="switchRole">
             <div class="dropdown-item">
-              <AdminIcon /> <p>  {{ isAdminRoute ? t('profileDropdown.switchToUser') : t('profileDropdown.switchToAdmin') }}</p>
+              <AdminIcon size="20px" /> <p>  {{ isAdminRoute ? t('profileDropdown.switchToUser') : t('profileDropdown.switchToAdmin') }}</p>
             </div>
           </el-dropdown-item>
         </template>
@@ -118,29 +118,29 @@ const switchRole = () => {
         <div class="horizontal-divider" />
         <el-dropdown-item @click="openProfileModal">
           <div class="dropdown-item">
-            <ProfileIcon /> <p> {{ t('profileDropdown.profile') }}</p>
+            <ProfileIcon size="20px" /> <p> {{ t('profileDropdown.profile') }}</p>
           </div>
         </el-dropdown-item>
         <el-dropdown-item>
           <div class="dropdown-item">
-            <SettingsIcon /> <p>{{ t('profileDropdown.settings') }}</p>
+            <SettingsIcon size="20px" /> <p>{{ t('profileDropdown.settings') }}</p>
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
         <el-dropdown-item @click="openAgentsModal">
           <div class="dropdown-item">
-            <ChatAgentIcon />  <p>{{ t('profileDropdown.agents') }}</p>
+            <ChatAgentIcon size="20px" />  <p>{{ t('profileDropdown.agents') }}</p>
           </div>
         </el-dropdown-item>
         <el-dropdown-item disabled>
           <div class="dropdown-item">
-            <SupportIcon /> <p>{{ t('profileDropdown.support') }}</p>
+            <SupportIcon size="20px" /> <p>{{ t('profileDropdown.support') }}</p>
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
         <el-dropdown-item @click=" openSignOutModal">
           <div class="dropdown-item">
-            <LogoutIcon /> <p>{{ t('profileDropdown.signOut') }}</p>
+            <LogoutIcon size="20px" /> <p>{{ t('profileDropdown.signOut') }}</p>
           </div>
         </el-dropdown-item>
       </el-dropdown-menu>

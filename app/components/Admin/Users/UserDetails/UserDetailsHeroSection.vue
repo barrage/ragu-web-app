@@ -105,7 +105,7 @@ const closeDeactivateModal = () => {
         plain
         @click="openEditUserModal"
       >
-        <EditIcon />  {{ t('users.user_card.edit_user_title') }}
+        <EditIcon size="20px" />  {{ t('users.user_card.edit_user_title') }}
       </el-button>
       <el-button
         v-if="!props.user?.active"
@@ -114,7 +114,7 @@ const closeDeactivateModal = () => {
         plain
         @click="openActivateUserModal"
       >
-        <PersonPasskeyIcon />   {{ t('users.user_card.activate_user_title') }}
+        <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
       </el-button>
       <el-button
         v-if="props.user?.active"
@@ -123,7 +123,7 @@ const closeDeactivateModal = () => {
         plain
         @click="openDeactivateUserModal"
       >
-        <PersonLockIcon />   {{ t('users.user_card.deactivate_user_title') }}
+        <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
       </el-button>
       <el-button
         plain
@@ -131,7 +131,7 @@ const closeDeactivateModal = () => {
         size="small"
         @click="openDeleteUserModal"
       >
-        <DeleteIcon />  {{ t('users.user_card.delete_user_title') }}
+        <DeleteIcon size="20px" />  {{ t('users.user_card.delete_user_title') }}
       </el-button>
     </div>
     <DeleteUserModalBackoffice

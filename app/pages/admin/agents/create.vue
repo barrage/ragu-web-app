@@ -6,15 +6,21 @@ import { useAgentStore } from '~/stores/agents'
 import type { AgentDetail, EmbeddingProvider } from '~/types/agent'
 import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 
+const { t } = useI18n()
+
 definePageMeta({
   layout: 'admin-layout',
+})
+
+useHead({
+  title: computed(() => t('agents.titles.create')),
 })
 
 // CONSTANTS
 const agentStore = useAgentStore()
 const providerStore = useProviderStore()
 const collectionStore = useCollectionsStore()
-const { t } = useI18n()
+
 const localePath = useLocalePath()
 
 // STATE
@@ -149,7 +155,7 @@ errorHandler(createError)
 <template>
   <AdminPageContainer>
     <NuxtLink to="/admin/agents" class="back-link">
-      <ArrowLeftIcon /> {{ t('agents.title') }}
+      <ArrowLeftIcon size="20px" /> {{ t('agents.title') }}
     </NuxtLink>
     <AdminPageHeadingTemplate>
       <template #title>

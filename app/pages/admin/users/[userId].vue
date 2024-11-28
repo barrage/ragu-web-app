@@ -10,6 +10,10 @@ const route = useRoute()
 
 const usersStore = useUsersStore()
 
+useHead({
+  title: computed(() => t('users.details')),
+})
+
 const selectedUserId = computed(() => {
   const userId = Array.isArray(route.params.userId) ? route.params.userId[0] : route.params.userId
   return userId || ''
@@ -23,7 +27,7 @@ errorHandler(error)
 <template>
   <AdminPageContainer>
     <NuxtLink to="/admin/users" class="back-link">
-      <ArrowLeftIcon /> {{ t('users.title') }}
+      <ArrowLeftIcon size="20px" /> {{ t('users.title') }}
     </NuxtLink>
 
     <template v-if="status === 'pending'">

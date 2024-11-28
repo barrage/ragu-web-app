@@ -109,7 +109,7 @@ const redirectToAgentDetails = () => {
             type="primary"
             @click="redirectToAgentDetails()"
           >
-            <EyeIcon />
+            <EyeIcon size="20px" />
           </el-button>
         </ElTooltip>
         <ElTooltip
@@ -122,7 +122,7 @@ const redirectToAgentDetails = () => {
             plain
             @click="editClick"
           >
-            <EditIcon />
+            <EditIcon size="20px" />
           </ElButton>
         </ElTooltip>
         <ElTooltip
@@ -132,7 +132,7 @@ const redirectToAgentDetails = () => {
           placement="top"
         >
           <el-button plain @click="emits('deactivate-agent', props.singleAgent)">
-            <PersonLockIcon />
+            <PersonLockIcon size="20px" />
           </el-button>
         </ElTooltip>
         <ElTooltip
@@ -142,7 +142,7 @@ const redirectToAgentDetails = () => {
           placement="top"
         >
           <el-button plain @click="emits('activate-agent', props.singleAgent)">
-            <PersonPasskeyIcon />
+            <PersonPasskeyIcon size="20px" />
           </el-button>
         </ElTooltip>
       </div>

@@ -83,7 +83,7 @@ const redirectToUserDetails = () => {
             type="primary"
             @click="redirectToUserDetails()"
           >
-            <EyeIcon />
+            <EyeIcon size="20px" />
           </el-button>
         </ElTooltip>
 
@@ -93,7 +93,7 @@ const redirectToUserDetails = () => {
           placement="top"
         >
           <el-button plain @click="emits('edit-user', props.user)">
-            <EditIcon />
+            <EditIcon size="20px" />
           </el-button>
         </ElTooltip>
 
@@ -104,7 +104,7 @@ const redirectToUserDetails = () => {
           placement="top"
         >
           <el-button plain @click="emits('deactivate-user', props.user)">
-            <PersonLockIcon />
+            <PersonLockIcon size="20px" />
           </el-button>
         </ElTooltip>
         <ElTooltip
@@ -114,7 +114,7 @@ const redirectToUserDetails = () => {
           placement="top"
         >
           <el-button plain @click="emits('activate-user', props.user)">
-            <PersonPasskeyIcon />
+            <PersonPasskeyIcon size="20px" />
           </el-button>
         </ElTooltip>
 
@@ -129,7 +129,7 @@ const redirectToUserDetails = () => {
             class="delete-action"
             @click="emits('delete-user', props.user)"
           >
-            <DeleteIcon />
+            <DeleteIcon size="20px" />
           </el-button>
         </ElTooltip>
       </div>

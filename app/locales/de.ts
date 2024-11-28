@@ -1,4 +1,11 @@
 export default {
+  seo: {
+    defaultTitle: 'LLMAO - Interaktive Kommunikation mit benutzerdefinierten KI-Agenten',
+    titleTemplate: 'LLMAO - {title}',
+    description: 'Verwalten Sie Ihre KI-Agenten und -Gespräche',
+    ogTitle: 'LLMAO - Site Title',
+    ogDescription: 'Verwalten Sie Ihre KI-Agenten und -Gespräche',
+  },
   empty_title: 'Hier gibt es noch nichts zu sehen',
   empty_description: 'Hier gibt es keine Elemente, die angezeigt werden sollen.',
   details: 'Details',
@@ -113,6 +120,7 @@ export default {
   },
   documents: {
     title: 'Dokumente',
+    document_details: 'Dokument Details',
     description: 'Verwalten und organisieren Sie alle Dokumente, die der KI beim Lernen helfen.',
     name: 'Name',
     extension: 'Format',
@@ -534,6 +542,7 @@ export default {
       deleteDescription: 'Sind Sie sicher, dass Sie die Sammlung löschen möchten?',
       create: 'Sammlung erstellen',
       createDescription: 'Erstellen Sie eine neue Sammlung nach Ihren Bedürfnissen!',
+      details: 'Sammlungsdetails',
     },
     buttons: {
       create: 'Sammlung erstellen',
@@ -646,6 +655,7 @@ export default {
   },
 
   users: {
+    details: 'Benutzerdetails',
     empty_title: 'Benutzer nicht gefunden.',
     empty_description: 'Der Benutzer, den Sie suchen, existiert nicht oder ist derzeit nicht verfügbar. Bitte überprüfen Sie die Benutzerinformationen erneut oder versuchen Sie eine andere Suche.',
     title: 'Benutzer',

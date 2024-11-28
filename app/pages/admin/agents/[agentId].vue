@@ -2,12 +2,17 @@
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
+const { t } = useI18n()
 definePageMeta({
   layout: 'admin-layout',
 })
 
+useHead({
+  title: computed(() => t('agents.titles.details')),
+})
+
 // CONSTATNS
-const { t } = useI18n()
+
 const route = useRoute()
 const agentStore = useAgentStore()
 
@@ -22,7 +27,7 @@ errorHandler(error)
 <template>
   <AdminPageContainer>
     <NuxtLink to="/admin/agents" class="back-link">
-      <ArrowLeftIcon /> {{ t('agents.title') }}
+      <ArrowLeftIcon size="20px" /> {{ t('agents.title') }}
     </NuxtLink>
 
     <template v-if="status === 'pending'">

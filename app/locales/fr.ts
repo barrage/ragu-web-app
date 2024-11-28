@@ -1,4 +1,12 @@
 export default {
+  seo: {
+    defaultTitle: 'LLMAO - Interact with Custom AI Agents',
+    titleTemplate: 'LLMAO - {title}',
+    description: 'Gérer vos agents IA et conversations',
+    ogTitle: 'LLMAO - Site Title',
+    ogDescription: 'Gérer vos agents IA et conversations',
+  },
+
   empty_title: 'Rien à voir ici encore',
   empty_description: 'Il n\'y a actuellement aucun élément à afficher ici.',
   details: 'Détails',
@@ -111,6 +119,7 @@ export default {
   },
   documents: {
     title: 'Documents',
+    document_details: 'Détails du Document',
     description: 'Gérez et organisez tous les documents qui aident l\'IA dans son apprentissage.',
     name: 'Nom',
     extension: 'Format',
@@ -533,6 +542,7 @@ export default {
       deleteDescription: 'Êtes-vous sûr de vouloir supprimer la collection?',
       create: 'Créer une collection',
       createDescription: 'Créez une nouvelle collection selon vos besoins!',
+      details: 'Détails de la collection',
     },
     buttons: {
       create: 'Créer une collection',
@@ -646,6 +656,7 @@ export default {
   },
 
   users: {
+    details: 'Détails de l\'utilisateur',
     empty_title: 'Utilisateur non trouvé.',
     empty_description: 'L\'utilisateur que vous recherchez n\'existe pas ou n\'est pas disponible actuellement. Veuillez vérifier les informations de l\'utilisateur ou essayer une recherche différente.',
     title: 'Utilisateurs',

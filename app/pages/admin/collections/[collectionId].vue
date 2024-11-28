@@ -6,8 +6,13 @@ definePageMeta({
   layout: 'admin-layout',
 })
 
-// CONSTATNS
 const { t } = useI18n()
+
+useHead({
+  title: computed(() => t('collections.titles.details')),
+})
+
+// CONSTATNS
 const route = useRoute()
 const collectionStore = useCollectionsStore()
 
@@ -25,7 +30,7 @@ errorHandler(error)
       to="/admin/collections"
       class="back-link"
     >
-      <ArrowLeftIcon /> {{ t('collections.title') }}
+      <ArrowLeftIcon size="20px" /> {{ t('collections.title') }}
     </NuxtLink>
 
     <template v-if="status === 'pending'">

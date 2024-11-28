@@ -8,6 +8,10 @@ const agentStore = useAgentStore()
 
 const { t } = useI18n()
 
+useHead({
+  title: computed(() => t('agents.title')),
+})
+
 definePageMeta({
   layout: 'admin-layout',
 })

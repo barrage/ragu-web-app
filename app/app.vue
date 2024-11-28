@@ -2,6 +2,34 @@
 const authStore = useAuthStore()
 const router = useRouter()
 const route = useRoute()
+const { t } = useI18n()
+
+const localHead = useLocaleHead({
+  addDirAttribute: true,
+  identifierAttribute: 'id',
+  addSeoAttributes: true,
+})
+
+useHead(() => ({
+  titleTemplate: (titleChunk) => {
+    return titleChunk
+      ? t('seo.titleTemplate', { title: titleChunk })
+      : t('seo.defaultTitle')
+  },
+  htmlAttrs: {
+    lang: localHead.value.htmlAttrs!.lang,
+  },
+  link: localHead.value.link,
+  meta: localHead.value.meta,
+}))
+
+useSeoMeta({
+  ogTitle: computed(() => t('seo.ogTitle')),
+  description: computed(() => t('seo.description')),
+  ogDescription: computed(() => t('seo.ogDescription')),
+  ogImage: 'https://example.com/llmao-og-image.png',
+  twitterCard: 'summary_large_image',
+})
 
 onMounted(async () => {
   await authStore.GET_CurrentUser()
@@ -12,14 +40,6 @@ onMounted(async () => {
   if (!authStore.isAuthenticated && !isLoginRoute && !isAuthGoogleRoute) {
     router.push('/login')
   }
-})
-useSeoMeta({
-  title: 'LLMAO - Interact with Custom AI Agents',
-  ogTitle: 'LLMAO - Create and Interact with Custom AI Agents',
-  description: 'LLMAO allows you to create personalized AI agents from documents and collections, enabling seamless conversations for any task.',
-  ogDescription: 'LLMAO is a platform where you can create and interact with AI agents. Build your custom agent with documents and collections to assist you in various tasks, all at your fingertips.',
-  ogImage: 'https://example.com/llmao-og-image.png',
-  twitterCard: 'summary_large_image',
 })
 </script>
 

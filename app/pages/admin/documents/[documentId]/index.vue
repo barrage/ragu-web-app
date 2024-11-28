@@ -5,8 +5,13 @@ import DocumentErrorIcon from '~/assets/icons/svg/document-error.svg'
 definePageMeta({
   layout: 'admin-layout',
 })
+
 const { t } = useI18n()
 const route = useRoute()
+
+useHead({
+  title: computed(() => t('documents.document_details')),
+})
 
 const documentStore = useDocumentsStore()
 
@@ -22,7 +27,7 @@ errorHandler(error)
 <template>
   <AdminPageContainer>
     <NuxtLink to="/admin/documents" class="back-link">
-      <ArrowLeftIcon /> {{ t('documents.title') }}
+      <ArrowLeftIcon size="20px" /> {{ t('documents.title') }}
     </NuxtLink>
     <template v-if="status === 'pending'">
       <LlmLoader />

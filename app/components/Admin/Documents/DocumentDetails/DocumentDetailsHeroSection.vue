@@ -101,7 +101,7 @@ errorHandler(deleteError)
         size="small"
         @click="openDeleteDialog"
       >
-        <DeleteIcon /> Delete
+        <DeleteIcon size="20px" />{{ t('agents.buttons.delete') }}
       </el-button>
     </div>
     <el-dialog
@@ -111,15 +111,15 @@ errorHandler(deleteError)
       class="barrage-dialog--small"
     >
       <template #header>
-        <h6>Delete</h6>
+        <h6>{{ t('agents.buttons.delete') }}</h6>
       </template>
       <p>Are you sure that you want to delete: <b>{{ document?.name }} document</b> </p>
       <template #footer>
         <el-button @click="closeDeleteDialog">
-          Cancel
+          {{ t('agents.buttons.cancel') }}
         </el-button>
         <el-button type="danger" @click="submitDelete()">
-          Delete
+          {{ t('agents.buttons.delete') }}
         </el-button>
       </template>
     </el-dialog>

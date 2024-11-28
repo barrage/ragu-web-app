@@ -78,7 +78,7 @@ interface Emits {
             type="primary"
             @click="redirectToChatDetails()"
           >
-            <EyeIcon />
+            <EyeIcon size="20px" />
           </el-button>
         </ElTooltip>
 
@@ -88,7 +88,7 @@ interface Emits {
           placement="top"
         >
           <el-button plain @click="emits('edit-chat-title', props.chat)">
-            <EditIcon />
+            <EditIcon size="20px" />
           </el-button>
         </ElTooltip>
 
@@ -103,7 +103,7 @@ interface Emits {
             class="delete-action"
             @click="emits('delete-chat', props.chat)"
           >
-            <DeleteIcon />
+            <DeleteIcon size="20px" />
           </el-button>
         </ElTooltip>
       </div>

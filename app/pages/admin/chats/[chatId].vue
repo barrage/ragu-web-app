@@ -2,10 +2,15 @@
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
 import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 
+const { t } = useI18n()
+
 definePageMeta({
   layout: 'admin-layout',
 })
-const { t } = useI18n()
+
+useHead({
+  title: computed(() => t('chat.admin.chat_details.title')),
+})
 const route = useRoute()
 
 const chatStore = useChatStore()
@@ -38,7 +43,7 @@ const selectedChat = computed(() => {
 <template>
   <AdminPageContainer>
     <NuxtLink to="/admin/chats" class="back-link">
-      <ArrowLeftIcon /> {{ t('chat.admin.title') }}
+      <ArrowLeftIcon size="20px" /> {{ t('chat.admin.title') }}
     </NuxtLink>
     <AdminPageHeadingTemplate>
       <template #title>
