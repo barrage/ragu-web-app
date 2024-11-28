@@ -65,6 +65,28 @@ const chatId = computed(() => {
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
+    .chat-title::after {
+      background: linear-gradient(
+        to left,
+        var(--color-primary-300),
+        transparent
+      );
+    }
+  }
+
+  &:hover {
+    background: var(--color-primary-300);
+    color: var(--color-primary-900);
+  }
+
+  &:hover .icon-container {
+    opacity: 1;
+    transform: translateX(6px);
+  }
+  &:hover .chat-title {
+    &::after {
+      display: none;
+    }
   }
 }
 .chat-tooltip {
@@ -84,35 +106,44 @@ const chatId = computed(() => {
   overflow: hidden;
   white-space: nowrap;
   position: relative;
+  padding-right: 2rem;
   transition: color 0.3s ease;
-  text-overflow: ellipsis;
-}
 
-.more-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: translateX(20px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-
-  background: var(--color-primary-300);
-  padding-right: 0.1875rem;
-  height: 100% !important;
-  border-radius: 0 8px 8px 0;
-
-  color: var(--color-primary-700);
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2rem;
+    background: linear-gradient(to left, var(--color-primary-200), transparent);
+    pointer-events: none;
+  }
 }
 
 .dark {
-  .more-icon {
+  .chat-item {
     color: var(--color-primary-100);
+
+    &:hover {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
+    }
+    &.selected {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
+      .chat-title::after {
+        background: linear-gradient(
+          to left,
+          var(--color-primary-700),
+          transparent
+        );
+      }
+    }
+  }
+
+  .chat-title::after {
+    background: linear-gradient(to left, var(--color-primary-800), transparent);
   }
 }
 </style>

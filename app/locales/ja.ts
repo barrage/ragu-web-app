@@ -360,6 +360,7 @@ export default {
     titles: {
       mainTitle: 'エージェント',
       details: 'エージェントの詳細',
+      configuration: '設定 (Settei)',
       description: 'AIとのやり取りを担当するエージェントを管理します',
       edit: 'エージェントを編集',
       create: 'エージェントを作成',
@@ -592,18 +593,18 @@ export default {
       title: 'コレクションの割り当て',
       rules: {
         collection_name: 'コレクションを選択してください',
-        amount: '数量を入力してください',
+        amount: '応答の深さを入力してください (Ōtō no Fukasa o Nyūryoku Shite Kudasai)',
         instruction: '指示を入力してください',
       },
       placeholder: {
         select: 'コレクションを選択',
         instruction: '指示を入力',
-        amount: '数量を入力',
+        amount: '応答の深さを入力 (Ōtō no Fukasa o Nyūryoku)',
       },
       labels: {
         name: 'コレクション名',
         instructions: '指示',
-        amount: '数量',
+        amount: '応答の深さ (Ōtō no Fukasa)',
       },
       descriptions: {
         response_depth: {

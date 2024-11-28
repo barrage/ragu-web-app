@@ -473,6 +473,7 @@ export default {
     titles: {
       mainTitle: 'Agents',
       details: 'Agent Details',
+      configuration: 'Configuration',
       description: 'Manage the agents responsible for interacting with the AI',
       edit: 'Edit Agent',
       create: 'Create Agent',

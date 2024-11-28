@@ -363,6 +363,7 @@ export default {
     titles: {
       mainTitle: 'Agentes',
       details: 'Detalles del agente',
+      configuration: 'Configuración',
       description: 'Gestiona los agentes responsables de interactuar con la IA',
       edit: 'Editar agente',
       create: 'Crear agente',
@@ -595,18 +596,18 @@ export default {
       title: 'Asignar Colección',
       rules: {
         collection_name: 'Por favor seleccione una colección',
-        amount: 'Por favor ingrese una cantidad',
+        amount: 'Por favor, introduzca una profundidad de respuesta',
         instruction: 'Por favor ingrese una instrucción',
       },
       placeholder: {
         select: 'Seleccione colección',
         instruction: 'Ingrese instrucción',
-        amount: 'Ingrese cantidad',
+        amount: 'Introduzca la profundidad de respuesta',
       },
       labels: {
         name: 'Nombre de colección',
         instructions: 'Instrucciones',
-        amount: 'Cantidad',
+        amount: 'Profundidad de respuesta',
       },
       descriptions: {
         response_depth: {

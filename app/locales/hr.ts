@@ -471,6 +471,7 @@ export default {
     titles: {
       mainTitle: 'Agenti',
       details: 'Detalji agenta',
+      configuration: 'Konfiguracija',
       description: 'Upravljajte agentima odgovornim za interakciju s AI',
       edit: 'Uredi agenta',
       create: 'Stvori agenta',
@@ -705,18 +706,18 @@ export default {
       title: 'Dodijeli Kolekciju',
       rules: {
         collection_name: 'Molimo odaberite kolekciju',
-        amount: 'Molimo unesite količinu',
+        amount: 'Molimo unesite dubinu odgovora',
         instruction: 'Molimo unesite uputu',
       },
       placeholder: {
         select: 'Odaberite kolekciju',
         instruction: 'Unesite uputu',
-        amount: 'Unesite količinu',
+        amount: 'Unesite dubinu odgovora',
       },
       labels: {
         name: 'Naziv kolekcije',
         instructions: 'Upute',
-        amount: 'Količina',
+        amount: 'Dubina odgovora',
       },
       descriptions: {
         response_depth: {

@@ -7,7 +7,7 @@ import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
-import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
+import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 import { StatusType } from '~/types/statusTypes'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
@@ -53,22 +53,6 @@ const { execute: getAgent } = await useAsyncData(() => agentStore.GET_SingleAgen
 
 const editClick = (): void => {
   agentStore.setEditMode(true)
-}
-
-/* const openAssignCollectionModal = () => {
-  assignCollectionModalVisible.value = true
-}
-
-const closeAssignCollectionModal = () => {
-  assignCollectionModalVisible.value = false
-}
-
-const openDeleteCollectionModal = () => {
-  deleteCollectionModalVisible.value = true
-}
-
-const closeDeleteCollectionModal = () => {
-  deleteCollectionModalVisible.value = false
 }
 
 /* Activate Agent */
@@ -118,30 +102,6 @@ const agentDeactivated = () => {
       </div>
     </div>
     <div class="agent-details-actions-wrapper">
-      <!--  <el-button
-        size="small"
-        type="primary"
-        plain
-        @click="openAssignCollectionModal()"
-      >
-        <CollectionIcon /> {{ t('collections.assign_collection.title') }}
-      </el-button>
-      <ElTooltip
-        :disabled="!(agentStore.singleAgent?.collections?.length === 0)"
-        :content="t('collections.assign_collection.notification.delete_collection')"
-        :enterable="false"
-        placement="top"
-      >
-        <el-button
-          size="small"
-          type="primary"
-          plain
-          :disabled="agentStore.singleAgent?.collections?.length === 0"
-          @click="openDeleteCollectionModal()"
-        >
-          <CollectionIcon />  {{ t('collections.deleteModal.title') }}
-        </el-button>
-      </ElTooltip> -->
       <el-button
         v-if="!props.singleAgent?.agent?.active"
         size="small"
@@ -172,18 +132,6 @@ const agentDeactivated = () => {
   </div>
   <div class="agent-informations-section">
     <LabelDescriptionItem
-      :label="t('agents.labels.id')"
-      :description="agentData.id"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <PersonInfoIcon size="18px" />
-          <span>  {{ t('agents.labels.id') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
       :label="t('agents.labels.name')"
       :description="agentData.name"
       horizontal
@@ -195,6 +143,20 @@ const agentDeactivated = () => {
         </div>
       </template>
     </LabelDescriptionItem>
+
+    <LabelDescriptionItem
+      :label="t('agents.labels.id')"
+      :description="agentData.id"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonKeyIcon size="18px" />
+          <span>  {{ t('agents.labels.id') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+
     <LabelDescriptionItem
       :label="t('agents.labels.description') "
       :description="agentData.description"
@@ -207,7 +169,48 @@ const agentDeactivated = () => {
         </div>
       </template>
     </LabelDescriptionItem>
+    <LabelDescriptionItem
+      :label=" t('agents.labels.language')"
+      :description="agentData.language"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonInfoIcon size="18px" />
+          <span>  {{ t('agents.labels.language') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      :label="t('agents.labels.created_at') "
+      :description="agentData.createdAt"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonCalendarIcon size="18px" />
+          <span>  {{ t('agents.labels.created_at') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      :label="t('agents.labels.updated_at')"
+      :description="agentData.updatedAt"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonClockIcon size="18px" />
+          <span>  {{ t('agents.labels.updated_at') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
 
+    <div class="configuration-title-wrapper">
+      <PersonSettingsIcon size="32px" /> <h6 class="agent-configuration-title">
+        {{ t('agents.titles.configuration') }}
+      </h6>
+    </div>
     <LabelDescriptionItem
       :label=" t('agents.labels.llmProvider')"
       :description="agentData.llmProvider"
@@ -229,19 +232,6 @@ const agentDeactivated = () => {
         <div class="agent-details-custom-label">
           <BrainIcon size="18px" />
           <span>  {{ t('agents.labels.model') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-
-    <LabelDescriptionItem
-      :label=" t('agents.labels.language')"
-      :description="agentData.language"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <PersonInfoIcon size="18px" />
-          <span>  {{ t('agents.labels.language') }}</span>
         </div>
       </template>
     </LabelDescriptionItem>
@@ -294,35 +284,10 @@ const agentDeactivated = () => {
         </div>
       </template>
     </LabelDescriptionItem>
+
     <LabelDescriptionItem
-      :label="t('agents.labels.created_at') "
-      :description="agentData.createdAt"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <PersonCalendarIcon size="18px" />
-          <span>  {{ t('agents.labels.created_at') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.updated_at')"
-      :description="agentData.updatedAt"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <PersonClockIcon size="18px" />
-          <span>  {{ t('agents.labels.updated_at') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      v-if="props.singleAgent?.configuration?.agentInstructions?.languageInstruction"
       :label="t('agents.labels.languageInstruction')"
       :description="agentData.languageInstruction"
-      horizontal
     >
       <template #customLabel>
         <div class="agent-details-custom-label">
@@ -330,12 +295,13 @@ const agentDeactivated = () => {
           <span>  {{ t('agents.labels.languageInstruction') }}</span>
         </div>
       </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.languageInstruction" />
+      </template>
     </LabelDescriptionItem>
     <LabelDescriptionItem
-      v-if="props.singleAgent?.configuration?.agentInstructions?.summaryInstruction"
       :label="t('agents.labels.summaryInstruction')"
       :description="agentData.summaryInstruction"
-      horizontal
     >
       <template #customLabel>
         <div class="agent-details-custom-label">
@@ -343,12 +309,13 @@ const agentDeactivated = () => {
           <span>  {{ t('agents.labels.summaryInstruction') }}</span>
         </div>
       </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.summaryInstruction" />
+      </template>
     </LabelDescriptionItem>
     <LabelDescriptionItem
-      v-if="props.singleAgent?.configuration?.agentInstructions?.titleInstruction"
       :label="t('agents.labels.titleInstruction')"
       :description="agentData.titleInstruction"
-      horizontal
     >
       <template #customLabel>
         <div class="agent-details-custom-label">
@@ -356,27 +323,28 @@ const agentDeactivated = () => {
           <span>  {{ t('agents.labels.titleInstruction') }}</span>
         </div>
       </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.titleInstruction" />
+      </template>
     </LabelDescriptionItem>
-    <div class="context-container">
-      <span class="label">
-        <PersonKeyIcon size="18px" />
-        {{ t('agents.labels.context') }}
-      </span>
-      <span class="description">
 
-        {{ agentData.context }}
-      </span>
-    </div>
+    <LabelDescriptionItem
+      :label="t('agents.labels.context')"
+      :description="agentData.context"
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonInfoIcon size="18px" />
+          <span>  {{ t('agents.labels.context') }}</span>
+        </div>
+      </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.context" />
+      </template>
+    </LabelDescriptionItem>
   </div>
   <AgentCollections :agent-collections="props.singleAgent?.collections" />
-  <!--  <AssignCollectionModal
-    :is-open="assignCollectionModalVisible"
-    @close-modal="closeAssignCollectionModal"
-  />
-  <DeleteAgentCollectionModal
-    :is-open="deleteCollectionModalVisible"
-    @close-modal="closeDeleteCollectionModal"
-  /> -->
+
   <ActivateAgentModalBackoffice
     :is-open="activateAgentModalVisible"
     :selected-agent="props.singleAgent"
@@ -417,7 +385,18 @@ const agentDeactivated = () => {
     gap: 2rem;
   }
 }
-
+.configuration-title-wrapper {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 22px 0px 0px;
+  color: var(--color-primary-800);
+  & .agent-configuration-title {
+    color: var(--color-primary-800);
+    font-weight: var(--font-weight-bold);
+  }
+}
 .agent-informations-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -439,29 +418,10 @@ const agentDeactivated = () => {
   flex: 0 0 calc(30% - 0.5rem);
   color: var(--color-primary-900);
   font-size: var(--font-size-fluid-3);
+  max-height: fit-content;
 
   svg {
     flex-shrink: 0;
-  }
-}
-
-.context-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  & .label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: var(--font-size-fluid-3);
-    line-height: normal;
-    color: var(--color-primary-900);
-  }
-  & .description {
-    line-height: normal;
-    color: var(--color-primary-800);
-    font-size: var(--font-size-fluid-2);
-    padding-left: 1.675rem;
   }
 }
 
@@ -481,6 +441,12 @@ const agentDeactivated = () => {
   }
   & .description {
     color: var(--color-primary-0);
+  }
+  & .configuration-title-wrapper {
+    color: var(--color-primary-100);
+    & .agent-configuration-title {
+      color: var(--color-primary-100);
+    }
   }
 }
 </style>

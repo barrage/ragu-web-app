@@ -38,9 +38,7 @@ const agentCollectionData = computed(() => {
         :description="agentCollectionData.instruction"
       >
         <template #customDescription>
-          <div class="highlighted-text-area">
-            <span class="highlighted-text"> <i>{{ agentCollectionData.instruction }}</i> </span>
-          </div>
+          <HighlightedText :text="agentCollectionData.instruction" />
         </template>
       </LabelDescriptionItem>
     </div>
@@ -60,30 +58,6 @@ const agentCollectionData = computed(() => {
 
     & .agent-collection-instruction {
       grid-column: span 4;
-    }
-  }
-}
-.highlighted-text-area {
-  background: var(--color-primary-200);
-  width: fit-content;
-  border: 1px solid var(--color-primary-300);
-  border-radius: 8px;
-  padding-inline: 12px;
-  padding-block: 4px;
-
-  & .highlighted-text {
-    font-size: var(--font-size-fluid-2);
-    color: var(--color-primary-900);
-  }
-}
-
-.dark {
-  .highlighted-text-area {
-    background: var(--color-primary-800);
-    border: 1px solid var(--color-primary-700);
-
-    & .highlighted-text {
-      color: var(--color-primary-100);
     }
   }
 }
