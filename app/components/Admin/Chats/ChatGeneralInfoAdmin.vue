@@ -65,7 +65,7 @@ const redirectToAgentDetails = () => {
     </div>
     <div class="user-general-info-card">
       <div class="user-profile-item" @click="redirectToUserDetails">
-        <ProfileIcon size="36" />
+        <ProfileIcon size="36px" />
         <div class="username-mail-wrapper">
           <p class="username">
             {{ `${chatData.user.username}` }}
@@ -100,7 +100,7 @@ const redirectToAgentDetails = () => {
     </div>
     <div class="agent-general-info-card">
       <div class="user-profile-item" @click="redirectToAgentDetails">
-        <AgentIcon size="36" />
+        <AgentIcon size="36px" />
         <div class="username-mail-wrapper">
           <p class="username">
             {{ `${chatData.agent.username}` }}

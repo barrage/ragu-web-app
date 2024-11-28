@@ -27,7 +27,7 @@ const { setLocale, locales, locale } = useI18n()
   <ClientOnly>
     <el-dropdown trigger="hover" :popper-options="popperOptions">
       <el-button class="locale-switch-button " size="small">
-        <LocaleIcon size="20" />
+        <LocaleIcon size="20px" />
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>
@@ -37,7 +37,7 @@ const { setLocale, locales, locale } = useI18n()
               :key="language.value"
             >
               <div class="language-option" @click="setLocale(language.code)">
-                <span :class="{ selected: language.code === locale }">{{ language.name }}</span>  <CheckIcon v-if="language.code === locale" size="16" />
+                <span :class="{ selected: language.code === locale }">{{ language.name }}</span>  <CheckIcon v-if="language.code === locale" size="16px" />
               </div>
             </template>
           </div>

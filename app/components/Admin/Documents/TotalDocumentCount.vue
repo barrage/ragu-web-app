@@ -17,7 +17,7 @@ const { t } = useI18n()
       <h6>{{ t('documents.total') }}</h6>
       <div class="total-count-info">
         <h4> {{ props.total }}</h4>
-        <DocumentDatabaseIcon size="32" />
+        <DocumentDatabaseIcon size="32px" />
       </div>
     </div>
   </ElTooltip>

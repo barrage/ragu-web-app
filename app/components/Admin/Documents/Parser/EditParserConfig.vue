@@ -219,7 +219,7 @@ const removeFilter = (filter: string) => {
               <el-tag size="small">
                 <span> {{ filter }}  </span>
                 <CloseIcon
-                  size="12"
+                  size="12px"
                   class="delete-filter-icon"
                   @click="removeFilter(filter)"
                 />

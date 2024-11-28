@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
 
       <ClientOnly>
         <el-dropdown trigger="hover" :popper-options="popperOptions">
-          <MoreIcon size="20" />
+          <MoreIcon size="20px" />
 
           <template #dropdown>
             <el-dropdown-menu>

@@ -265,7 +265,7 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
           class="start-stop-chat-button"
           @click="stopStream"
         >
-          <StopStreamIcon size="32" />
+          <StopStreamIcon size="32px" />
         </el-button>
       </template>
       <template v-else>
@@ -276,7 +276,7 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
           :disabled="!hasActiveAgents || !isSelectedAgentActive"
           @click="sendMessage"
         >
-          <ArrowUpIcon size="32" />
+          <ArrowUpIcon size="32px" />
         </el-button>
       </template>
     </div>

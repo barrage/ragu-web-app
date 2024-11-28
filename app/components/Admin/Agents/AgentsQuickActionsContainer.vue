@@ -7,7 +7,7 @@ const { t } = useI18n()
 <template>
   <div class="agents-quick-actions-container">
     <NuxtLink to="/admin/agents/create" class="barrage-button create-user-redirect">
-      <AgentIcon size="24" />  {{ t('agents.buttons.create') }}
+      <AgentIcon size="24px" />  {{ t('agents.buttons.create') }}
     </NuxtLink>
   </div>
 </template>

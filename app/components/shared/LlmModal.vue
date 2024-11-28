@@ -26,7 +26,7 @@ defineEmits(['close'])
       <div class="modal__header ">
         <div class="modal__header--main">
           <div class="logo-header">
-            <LogoIcon size="44" />
+            <LogoIcon size="44px" />
             <h5>
               <slot name="header" />
             </h5>
@@ -36,7 +36,7 @@ defineEmits(['close'])
             class="close"
             @click="$emit('close')"
           >
-            <CloseIcon size="28" />
+            <CloseIcon size="28px" />
           </div>
         </div>
       </div>

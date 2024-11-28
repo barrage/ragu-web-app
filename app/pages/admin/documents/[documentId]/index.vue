@@ -32,7 +32,7 @@ errorHandler(error)
     </template>
     <template v-else>
       <div class="document-details-empty-state">
-        <DocumentErrorIcon size="44" />
+        <DocumentErrorIcon size="44px" />
         <p> <b>{{ t('documents.details.empty') }}</b> </p>
       </div>
     </template>

@@ -44,7 +44,7 @@ watch(
       </div>
 
       <div class="selected-agent-wrapper">
-        <ChatAgentIcon size="52" />
+        <ChatAgentIcon size="52px" />
         <h6>{{ selectedAgent?.name }}</h6>
         <div class="agent-info">
           <span>{{ t('agents.labels.language') }}: {{ selectedAgent?.language }}</span>

@@ -80,7 +80,7 @@ const themeOptions = ref([
   <ClientOnly>
     <el-dropdown trigger="hover" :popper-options="popperOptions">
       <el-button class="theme-switch-button " size="small">
-        <PalleteIcon size="20" />
+        <PalleteIcon size="20px" />
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>

@@ -18,13 +18,13 @@ const isDarkMode = useDark()
   >
     <template v-if="isDarkMode">
       <MoonIcon
-        size="20"
+        size="20px"
         color="currentColor"
       />
     </template>
     <template v-else>
       <SunIcon
-        size="20"
+        size="20px"
         color="currentColor"
       />
     </template>

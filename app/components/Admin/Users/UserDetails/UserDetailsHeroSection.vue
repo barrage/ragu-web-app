@@ -88,7 +88,7 @@ const closeDeactivateModal = () => {
 <template>
   <section class="user-details-hero-section">
     <div class="profile-avatar-wrapper">
-      <ProfileIcon size="80" />
+      <ProfileIcon size="80px" />
       <div class="username-status-wrapper">
         <h5 class="username">
           {{ `${userData.fullName}` }}

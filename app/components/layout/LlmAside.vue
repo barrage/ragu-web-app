@@ -25,7 +25,7 @@ const route = useRoute()
           placement="right"
         >
           <el-button class="toggle-btn" @click="navigationStore.toggleSidebar">
-            <PanelIcon size="24" />
+            <PanelIcon size="24px" />
           </el-button>
         </ElTooltip>
       </div>
@@ -41,7 +41,7 @@ const route = useRoute()
           :class="{ opened: !navigationStore.isSidebarCollapsed, selected: route.path === '/' }"
           @click="router.push('/')"
         >
-          <BrainIcon size="24" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
+          <BrainIcon size="24px" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon v-if="!navigationStore.isSidebarCollapsed" class="add-icon" />
         </a>
       </ElTooltip>
 

@@ -95,13 +95,21 @@ async function socialSignIn(provider: OAuthProvider) {
 <template>
   <div class="social-container">
     <div class="social" @click="socialSignIn('google')">
-      <GoogleLogo name="google" original />
+      <GoogleLogo
+        size="24px"
+        name="google"
+        original
+      />
       <p class="semi-bold">
         {{ $t('login.continueWith') }} Google
       </p>
     </div>
     <div class="social microsoft" @click="socialSignIn('microsoft')">
-      <MicrosoftLogo name="microsoft" original />
+      <MicrosoftLogo
+        size="24px"
+        name="microsoft"
+        original
+      />
       <p class="semi-bold">
         {{ $t('login.continueWith') }} Microsoft
       </p>

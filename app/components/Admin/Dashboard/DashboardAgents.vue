@@ -14,7 +14,7 @@ const { t } = useI18n()
   <section class="dashboard-count-section grid">
     <div class="section-heading-wrapper">
       <div class="title-wrapper">
-        <AgentsIcon size="42" />
+        <AgentsIcon size="42px" />
         <h5 class="section-title">
           {{ t('agents.title') }}
         </h5>

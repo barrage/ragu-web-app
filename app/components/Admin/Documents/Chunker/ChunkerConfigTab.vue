@@ -5,7 +5,7 @@ import ChunkDocument from '~/assets/icons/svg/chunk-document.svg'
 <template>
   <section class="edit-chunker-section">
     <div class="chunk-title-wrapper">
-      <ChunkDocument size="32" />
+      <ChunkDocument size="32px" />
       <h6> <b> {{ $t('documents.chunker.title') }}</b> </h6>
     </div>
     <div class="document-parser-config-container">

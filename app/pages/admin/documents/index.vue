@@ -39,7 +39,7 @@ errorHandler(error)
           :description="t('documents.description')"
         >
           <template #icon>
-            <DocumentIcon size="52" />
+            <DocumentIcon size="52px" />
           </template>
         </AdminPageTitleContainer>
       </template>

@@ -77,7 +77,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
           Admin Panel
         </p>
         <el-button class="toggle-btn" @click="navigationStore.toggleAdminSidebar">
-          <PanelIcon size="24" />
+          <PanelIcon size="24px" />
         </el-button>
       </div>
       <div class="horizontal-divider" />
@@ -110,7 +110,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
       <!-- Get Help Section -->
       <div class="get-help-section">
         <div class="gel-help-content" @click="router.push(`/login`)">
-          <span v-if="!navigationStore.isAdminSidebarCollapsed">Get help </span> <QuestionIcon size="24" />
+          <span v-if="!navigationStore.isAdminSidebarCollapsed">Get help </span> <QuestionIcon size="24px" />
         </div>
       </div>
     </nav>

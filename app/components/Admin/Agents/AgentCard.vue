@@ -59,7 +59,7 @@ const redirectToAgentDetails = () => {
   <el-card class="agent-card is-primary">
     <div class="agent-card-body">
       <div class="agent-name-type-wrapper" @click="redirectToAgentDetails()">
-        <AgentIcon size="40" />
+        <AgentIcon size="40px" />
         <div class="agent-name-wrapper">
           <p class="agent-name">
             {{ agentData.name }}

@@ -56,33 +56,33 @@ errorHandler(deleteError)
     <div class="profile-avatar-wrapper">
       <PdfIcon
         v-if="documentData.extension === 'pdf'"
-        size="80"
+        size="80px"
         original
       />
       <DocxIcon v-else-if="documentData.extension === 'docx'" size="80" />
       <MarkdownIcon
         v-else-if="documentData.extension === 'md'"
-        size="80"
+        size="80px"
         original
       />
       <CsvIcon
         v-else-if="documentData.extension === 'csv'"
-        size="80"
+        size="80px"
         original
       />
       <JsonIcon
         v-else-if="documentData.extension === 'json'"
-        size="80"
+        size="80px"
         original
       />
       <TxtIcon
         v-else-if="documentData.extension === 'txt'"
-        size="80"
+        size="80px"
         original
       />
       <UnknownDocumentIcon
         v-else
-        size="80"
+        size="80px"
         original
       />
       <div class="documentname-status-wrapper">
