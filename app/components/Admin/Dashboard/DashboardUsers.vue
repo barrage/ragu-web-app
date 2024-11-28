@@ -1,14 +1,20 @@
 <script lang="ts" setup>
 import TeamIcon from '~/assets/icons/svg/team.svg'
+import PersonQuestionMarkIcon from '~/assets/icons/svg/person-question-mark.svg'
 import type { UserStatistic } from '~/types/statistic'
 import type { User } from '~/types/users'
 
 const props = defineProps<{
   countDataUser: UserStatistic
   recentUsers: Array<User>
+  loading: boolean
+  error: any
 }>()
 
 const { t } = useI18n()
+
+const isRecentUsersEmpty = computed(() => !props.recentUsers || props.recentUsers.length === 0)
+const hasError = computed(() => !!props.error)
 </script>
 
 <template>
@@ -39,8 +45,35 @@ const { t } = useI18n()
       <TitleDescription :title="t('dashboard.users.most_recent_users.title')" :description="t('dashboard.users.most_recent_users.description')" />
 
       <div class="most-recent-users-list">
-        <template v-for="user in recentUsers" :key="user.id">
-          <UserProfileOverview :user="user" />
+        <template v-if="props.loading">
+          <div class="loader-container">
+            <MeetUpLoader />
+          </div>
+        </template>
+        <template v-else-if="hasError">
+          <EmptyState
+            :title="t('users.empty_title')"
+            :description="t('users.empty_description')"
+          >
+            <template #icon>
+              <PersonQuestionMarkIcon size="44px" />
+            </template>
+          </EmptyState>
+        </template>
+        <template v-else-if="isRecentUsersEmpty">
+          <EmptyState
+            :title="t('users.empty_title')"
+            :description="t('users.empty_description')"
+          >
+            <template #icon>
+              <PersonQuestionMarkIcon size="44px" />
+            </template>
+          </EmptyState>
+        </template>
+        <template v-else>
+          <template v-for="user in props.recentUsers" :key="user.id">
+            <UserProfileOverview :user="user" />
+          </template>
         </template>
       </div>
     </el-card>
@@ -148,6 +181,12 @@ const { t } = useI18n()
       gap: 6px;
     }
   }
+}
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 
 .dark {

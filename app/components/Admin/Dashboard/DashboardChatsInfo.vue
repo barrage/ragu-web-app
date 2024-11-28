@@ -3,18 +3,13 @@ import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
 import LinkIcon from '~/assets/icons/svg/link.svg'
 import type { PieChartDataEntry } from '~/types/statistic'
-import type { AdminChatDetails } from '~/types/chat'
-import type { Agent } from '~/types/agent'
 import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 
-const props = defineProps<{
-  chatCount: number
-  chatPieChartData: PieChartDataEntry[] | null
-  recentChats: Array<AdminChatDetails>
-  activeAgents: Array<Agent>
-}>()
 const router = useRouter()
 const { t } = useI18n()
+const statisticStore = useStatisticStore()
+const chatStore = useChatStore()
+const agentsStore = useAgentStore()
 
 const redirectToChatDetails = (id: string) => {
   return router.push(`/admin/chats/${id}`)
@@ -24,6 +19,26 @@ const redirectToAgentDetails = (id: string | undefined) => {
   if (!id) { return }
   return router.push(`/admin/agents/${id}`)
 }
+
+const chatCount = computed<number>(() => {
+  return statisticStore.dashboardCount?.chat.total || 0
+})
+
+const chatPieChartData = computed<PieChartDataEntry[] | null>(() => {
+  return statisticStore.dashboardCount?.chat?.chats ? formatPieChartData(statisticStore.dashboardCount?.chat.chats) : null
+})
+
+// Recent chats
+const { data: recentChats, status: recentChatsStatus } = useAsyncData('recentChats', () =>
+  chatStore.GET_AllAdminChats(1, 10, 'updatedAt', 'desc'))
+
+const mostRecentChats = computed(() => recentChats.value?.items || [])
+
+// Active agents
+const { data: activeAgents, status: activeAgentsStatus } = useAsyncData('activeAgents', () =>
+  agentsStore.GET_AllAgents(1, 20, 'updatedAt', 'desc', false))
+
+const allActiveAgents = computed(() => activeAgents.value?.items || [])
 </script>
 
 <template>
@@ -50,19 +65,35 @@ const redirectToAgentDetails = (id: string | undefined) => {
         <TitleDescription :title="t('dashboard.chats.most_recent.title')" :description="t('dashboard.chats.most_recent.description')" />
 
         <div class="recent-chat-list">
-          <template v-for="chat in props.recentChats" :key="chat.id">
-            <div class="recent-chat-card">
-              <div class="chat-profile-item" @click="redirectToChatDetails(chat.chat.id)">
-                <ChatIcon size="36" class="chat-icon" />
-                <div class="chat-wrapper">
-                  <p class="chat-name">
-                    {{ `${chat?.chat.title || t('chat.admin.chat_card.unknown_title')}` }}
-                  </p>
-                  <span class="chat-time-update">{{ chat?.chat?.updatedAt ? useRelativeDate(chat.chat.updatedAt) : '' }}</span>
-                </div>
-              </div>
+          <template v-if="recentChatsStatus === 'pending'">
+            <div class="loader-container">
+              <MeetUpLoader />
             </div>
           </template>
+          <template v-else-if="recentChatsStatus === 'success'">
+            <template v-for="chat in mostRecentChats" :key="chat.id">
+              <div class="recent-chat-card">
+                <div class="chat-profile-item" @click="redirectToChatDetails(chat.chat.id)">
+                  <ChatIcon size="36" class="chat-icon" />
+                  <div class="chat-wrapper">
+                    <p class="chat-name">
+                      {{ `${chat?.chat.title || t('chat.admin.chat_card.unknown_title')}` }}
+                    </p>
+                    <span class="chat-time-update">{{ chat?.chat?.updatedAt ? useRelativeDate(chat.chat.updatedAt) : '' }}</span>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </template>
+          <EmptyState
+            v-else
+            :title="t('chat.admin.chat_card.empty_state_title')"
+            :description="t('chat.admin.chat_card.empty_state_desc')"
+          >
+            <template #icon>
+              <ChatIcon size="44px" />
+            </template>
+          </EmptyState>
         </div>
       </el-card>
     </div>
@@ -71,9 +102,9 @@ const redirectToAgentDetails = (id: string | undefined) => {
       <el-card class="is-primary all-chats-usage-card">
         <TitleDescription :title="t('dashboard.chats.all_chat_usage.title')" :description="t('dashboard.chats.all_chat_usage.description')" />
         <PieChart
-          :data="props.chatPieChartData || []"
+          :data="chatPieChartData || []"
           :series-name="t('dashboard.chats.all_chat_usage.series_name')"
-          :title-text="props.chatCount ? props.chatCount.toString() : '0'"
+          :title-text="chatCount ? chatCount.toString() : '0'"
           :title-subtext="t('dashboard.chats.all_chat_usage.pie_chart_subtext')"
         />
       </el-card>
@@ -84,17 +115,33 @@ const redirectToAgentDetails = (id: string | undefined) => {
         <TitleDescription :title="t('dashboard.chats.available_agents.title')" :description="t('dashboard.chats.available_agents.description')" />
 
         <div class="active-agents-list">
-          <template v-for="agent in props.activeAgents" :key="agent.agent.id">
-            <div class="agent-name-type-wrapper" @click="redirectToAgentDetails(agent?.agent?.id)">
-              <AgentIcon size="36" />
-              <div class="agent-name-wrapper">
-                <p class="agent-name">
-                  {{ agent?.agent?.name }}
-                </p>
-                <span class="agent-provider">{{ agent.configuration?.llmProvider }}</span>
-              </div>
+          <template v-if="activeAgentsStatus === 'pending'">
+            <div class="loader-container">
+              <MeetUpLoader />
             </div>
           </template>
+          <template v-else-if="activeAgentsStatus === 'success'">
+            <template v-for="agent in allActiveAgents" :key="agent.agent.id">
+              <div class="agent-name-type-wrapper" @click="redirectToAgentDetails(agent?.agent?.id)">
+                <AgentIcon size="36" />
+                <div class="agent-name-wrapper">
+                  <p class="agent-name">
+                    {{ agent?.agent?.name }}
+                  </p>
+                  <span class="agent-provider">{{ agent.configuration?.llmProvider }}</span>
+                </div>
+              </div>
+            </template>
+          </template>
+          <EmptyState
+            v-else
+            :title="t('agents.agent_card.empty_state_title')"
+            :description="t('agents.agent_card.empty_state_desc')"
+          >
+            <template #icon>
+              <AgentIcon size="44px" />
+            </template>
+          </EmptyState>
         </div>
       </el-card>
     </div>
@@ -114,6 +161,13 @@ const redirectToAgentDetails = (id: string | undefined) => {
     padding-top: var(--font-size-fluid-1);
     overflow-y: auto;
   }
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 
 .redirect-link {

@@ -1,4 +1,6 @@
 export default {
+  empty_title: 'Aún no hay nada que ver aquí',
+  empty_description: 'No hay elementos para mostrar aquí.',
   details: 'Detalles',
   chatDock: 'Panel de chat',
   login: {
@@ -68,6 +70,8 @@ export default {
         view_details: 'Ver detalles',
         edit_chat: 'Editar chat',
         delete_chat: 'Eliminar chat',
+        empty_state_title: 'Sin chats',
+        empty_state_desc: 'Actualmente no hay chats para mostrar.',
       },
       chat_details: {
         title: 'Detalles del chat',
@@ -518,6 +522,11 @@ export default {
     title: 'Colecciones',
     all_collections: 'Todas las colecciones',
 
+    empty_state: {
+      title: 'No hay colecciones asignadas',
+      description: 'Este agente no tiene actualmente ninguna colección asociada con él.',
+    },
+
     titles: {
       title: 'Colecciones',
       subTitle: 'Administra las colecciones de contenido que guían la base de conocimiento de la IA.',
@@ -638,6 +647,8 @@ export default {
   },
 
   users: {
+    empty_title: 'Usuario no encontrado.',
+    empty_description: 'El usuario que buscas no existe o no está disponible en este momento. Por favor, verifica la información del usuario nuevamente o intenta con una búsqueda diferente.',
     title: 'Usuarios',
     description: 'Administra los miembros de tu equipo y establece sus niveles de acceso.',
     invite_user: 'Invitar usuario',
