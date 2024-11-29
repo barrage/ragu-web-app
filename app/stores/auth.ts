@@ -64,8 +64,15 @@ export const useAuthStore = defineStore('auth', () => {
    * Logout the current user.
    */
   async function POST_Logout() {
+    isAuthenticated.value = false
     await $api.auth.Logout()
     user.value = null
+  }
+
+  async function initializeAuth(): Promise<void> {
+    if (!user.value && !isAuthenticated.value) {
+      await GET_CurrentUser()
+    }
   }
 
   return {
@@ -76,6 +83,7 @@ export const useAuthStore = defineStore('auth', () => {
     POST_Login,
     POST_Logout,
     GET_CurrentUser,
+    initializeAuth,
 
   }
 })

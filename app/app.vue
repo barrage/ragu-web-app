@@ -32,8 +32,6 @@ useSeoMeta({
 })
 
 onMounted(async () => {
-  await authStore.GET_CurrentUser()
-
   const isLoginRoute = route.path === '/login'
   const isAuthGoogleRoute = route.path === '/auth/google'
 

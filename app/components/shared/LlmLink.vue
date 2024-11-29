@@ -82,6 +82,8 @@ const classes = computed(() => {
     display: flex;
     align-items: center;
     gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
