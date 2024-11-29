@@ -652,6 +652,9 @@ export default {
     description: 'Gestisci i membri del tuo team e imposta i loro livelli di accesso.',
     invite_user: 'Invita utente',
     all_users: 'Tutti gli utenti',
+    user_chats_history: 'Cronologia delle conversazioni',
+    empty_chats_title: 'Nessuna chat disponibile',
+    empty_chats_description: 'Questo utente non ha ancora avviato alcuna conversazione. Tutte le chat future appariranno qui.',
     delete_user: {
       title: 'Elimina Utente',
       description: 'Sei sicuro di voler eliminare questo utente? Questa azione non può essere annullata.',

@@ -653,6 +653,9 @@ export default {
     description: 'Administra los miembros de tu equipo y establece sus niveles de acceso.',
     invite_user: 'Invitar usuario',
     all_users: 'Todos los usuarios',
+    user_chats_history: 'Historial de conversaciones',
+    empty_chats_title: 'No hay chats disponibles',
+    empty_chats_description: 'Este usuario no ha iniciado ninguna conversación todavía. Todos los chats futuros aparecerán aquí.',
     delete_user: {
       title: 'Eliminar Usuario',
       description: '¿Está seguro de que desea eliminar este usuario? Esta acción no se puede deshacer.',

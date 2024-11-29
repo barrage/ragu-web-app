@@ -25,7 +25,8 @@ const { copy } = useClipboard()
 
 const copyItem = () => {
   if (props.canCopy && props.description) {
-    copy(props.description)
+    const copyValue = props.description.toString()
+    copy(copyValue)
     ElNotification({
       title: t('chat.copy_title'),
       message: t('chat.copy_message'),

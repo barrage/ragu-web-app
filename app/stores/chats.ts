@@ -68,6 +68,7 @@ export const useChatStore = defineStore('chat', () => {
    * @param perPage - The number of chats per page.
    * @param sortBy - The field to sort by (e.g., 'title').
    * @param sortOrder - The order of sorting ('asc' or 'desc').
+   *  @param userId - Optional parametar for specific user chats.
    * @returns A promise that resolves to an ChatsResponse type or null.
    */
   const adminAllChatsResponse = ref<AdminChatsResponse | null>(null)
@@ -77,15 +78,27 @@ export const useChatStore = defineStore('chat', () => {
     perPage: number = 10,
     sortBy: string = 'firstName',
     sortOrder: 'asc' | 'desc' = 'asc',
+    userId?: string,
   ): Promise<AdminChatsResponse | null> {
-    const data = await $api.chat.GetAllAdminChats(page, perPage, sortBy, sortOrder)
+    try {
+      const data = await $api.chat.GetAllAdminChats(page, perPage, sortBy, sortOrder, userId)
 
-    if (data) {
-      adminAllChatsData.value = data.items
-      return adminAllChatsResponse.value = data
+      if (data) {
+        adminAllChatsData.value = data.items
+        adminAllChatsResponse.value = data
+        return data
+      }
+      else {
+        adminAllChatsData.value = []
+        adminAllChatsResponse.value = null
+        return null
+      }
     }
-    else {
-      return adminAllChatsResponse.value = null
+    catch (error) {
+      console.error('Error fetching admin chats:', error)
+      adminAllChatsData.value = []
+      adminAllChatsResponse.value = null
+      throw (error)
     }
   }
 

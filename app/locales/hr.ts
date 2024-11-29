@@ -295,6 +295,11 @@ export default {
     description: 'Upravljajte članovima svog tima i postavite njihove razine pristupa.',
     invite_user: 'Dodaj korisnika',
     all_users: 'Svi korisnici',
+    user_chats_history: 'Povijest razgovora',
+
+    empty_chats_title: 'Nema dostupnih razgovora',
+    empty_chats_description: 'Ovaj korisnik još nije započeo nijedan razgovor. Svi budući razgovori će se ovdje prikazati.',
+
     delete_user: {
       title: 'Izbriši Korisnika',
       description: 'Jeste li sigurni da želite izbrisati ovog korisnika? Ova radnja se ne može poništiti.',

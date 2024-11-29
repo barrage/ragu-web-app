@@ -12,6 +12,7 @@ const props = defineProps<{
     <div class="horizontal-divider" />
     <UserDetailsInformationsSection :user="props.user" />
     <div class="horizontal-divider" />
+    <UserChats :user="props.user" />
   </div>
 </template>
 
