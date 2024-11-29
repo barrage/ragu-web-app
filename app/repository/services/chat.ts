@@ -90,13 +90,14 @@ export default class ChatServise extends FetchFactory {
    * @returns A promise that resolves to an array of Chat objects.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllAdminChats(page: number = 1, perPage: number = 10, sortBy: string = 'firstName', sortOrder: 'asc' | 'desc' = 'asc'): Promise<AdminChatsResponse> {
+  async GetAllAdminChats(page: number = 1, perPage: number = 10, sortBy: string = 'firstName', sortOrder: 'asc' | 'desc' = 'asc', userId?: string): Promise<AdminChatsResponse> {
     try {
       const queryParams = new URLSearchParams({
         page: page.toString(),
         perPage: perPage.toString(),
         sortBy,
         sortOrder,
+        ...(userId ? { userId } : {}),
       }).toString()
       return await this.$fetch<AdminChatsResponse>(`${this.adminChatsEndpoint}?${queryParams}`, {
         credentials: 'include',

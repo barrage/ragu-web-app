@@ -289,6 +289,9 @@ export default {
     description: 'Manage team members of your organization and set their access level',
     invite_user: 'Invite user',
     all_users: 'All Users',
+    user_chats_history: 'Conversation History',
+    empty_chats_title: 'No Chats Available',
+    empty_chats_description: 'This user has not initiated any conversations yet. All future chats will appear here.',
     delete_user: {
       title: 'Delete User',
       description: 'Are you sure you want to delete this user? This action cannot be undone.',

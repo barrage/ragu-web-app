@@ -652,6 +652,9 @@ export default {
     description: 'Verwalten Sie die Mitglieder Ihres Teams und legen Sie deren Zugriffsrechte fest.',
     invite_user: 'Benutzer einladen',
     all_users: 'Alle Benutzer',
+    user_chats_history: 'Gesprächsverlauf',
+    empty_chats_title: 'Keine Chats verfügba',
+    empty_chats_description: 'Dieser Benutzer hat noch keine Unterhaltungen gestartet. Alle zukünftigen Chats werden hier angezeigt.',
     delete_user: {
       title: 'Benutzer löschen',
       description: 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',

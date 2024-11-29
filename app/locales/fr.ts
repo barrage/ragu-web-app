@@ -652,6 +652,9 @@ export default {
     description: 'Gérez les membres de votre équipe et définissez leurs niveaux d\'accès.',
     invite_user: 'Inviter un utilisateur',
     all_users: 'Tous les utilisateurs',
+    user_chats_history: 'Historique des conversations',
+    empty_chats_title: 'Aucun chat disponible',
+    empty_chats_description: 'Cet utilisateur n\'a pas encore initié de conversation. Tous les chats futurs apparaîtront ici.',
     delete_user: {
       title: 'Supprimer l\'Utilisateur',
       description: 'Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.',

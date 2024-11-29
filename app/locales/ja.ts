@@ -650,6 +650,9 @@ export default {
     description: 'チームメンバーを管理し、アクセスレベルを設定します。',
     invite_user: 'ユーザーを招待',
     all_users: 'すべてのユーザー',
+    user_chats_history: '会話履歴 (Kaiwa Rireki)',
+    empty_chats_title: 'チャットは利用できません',
+    empty_chats_description: 'このユーザーはまだ会話を開始していません。今後のチャットはここに表示されます',
     delete_user: {
       title: 'ユーザーを削除',
       description: 'このユーザーを削除してもよろしいですか？この操作は取り消せません。',
