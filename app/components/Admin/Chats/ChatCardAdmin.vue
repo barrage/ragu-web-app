@@ -121,7 +121,6 @@ interface Emits {
     justify-content: flex-start;
     text-overflow: ellipsis;
     color: var(--color-primary-900);
-    max-width: calc(100% - 40px);
 
     & .chat-icon {
       min-width: fit-content;
@@ -160,6 +159,7 @@ interface Emits {
   justify-content: space-between;
   text-overflow: ellipsis;
   max-width: 100%;
+  overflow: hidden;
 
   & .chat-name {
     margin: 0;
