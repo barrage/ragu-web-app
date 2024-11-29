@@ -20,7 +20,6 @@ interface MenuCategory {
   items: MenuItem[]
 }
 
-const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
 const menuList = computed<MenuCategory[]>(() => ([
@@ -88,7 +87,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
             {{ menuItem.title }}
           </p>
           <div class="feature-list">
-            <NuxtLink
+            <LlmLink
               v-for="(item, index2) in menuItem.items"
               :key="index2"
               :to="item.link"
@@ -102,16 +101,20 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
                   {{ item.label }}
                 </p>
               </div>
-            </NuxtLink>
+            </LlmLink>
           </div>
         </div>
       </div>
 
       <!-- Get Help Section -->
       <div class="get-help-section">
-        <div class="gel-help-content" @click="router.push(`/login`)">
+        <LlmLink
+          to="/login"
+          type="link"
+          class="gel-help-content"
+        >
           <span v-if="!navigationStore.isAdminSidebarCollapsed">Get help </span> <QuestionIcon size="24px" />
-        </div>
+        </LlmLink>
       </div>
     </nav>
   </aside>

@@ -144,19 +144,15 @@ const createAgent = async (formEl: FormInstance | undefined) => {
   })
 }
 
-const cancelCreate = () => {
-  navigateTo({ path: localePath('/admin/agents') })
-}
-
 // ERROR HANDLERS
 errorHandler(createError)
 </script>
 
 <template>
   <AdminPageContainer>
-    <NuxtLink to="/admin/agents" class="back-link">
+    <LlmLink to="/admin/agents" type="link">
       <ArrowLeftIcon size="20px" /> {{ t('agents.title') }}
-    </NuxtLink>
+    </LlmLink>
     <AdminPageHeadingTemplate>
       <template #title>
         <AdminPageTitleContainer
@@ -307,9 +303,9 @@ errorHandler(createError)
           />
         </ElFormItem>
         <ElFormItem class="actions">
-          <ElButton @click="cancelCreate">
+          <LlmLink to="/admin/agents" type="button">
             {{ t('agents.buttons.cancel') }}
-          </ElButton>
+          </LlmLink>
           <ElButton
             type="primary"
             :loading="createStatus === 'pending'"
@@ -372,11 +368,5 @@ errorHandler(createError)
   .left-button {
     margin-right: var(--spacing-fluid-m);
   }
-}
-.back-link {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  margin-bottom: 32px;
 }
 </style>

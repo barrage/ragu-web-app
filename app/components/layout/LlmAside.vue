@@ -7,7 +7,6 @@ import QuestionIcon from '~/assets/icons/svg/question.svg'
 
 // CONSTANTS
 const navigationStore = useNavigationStore()
-const router = useRouter()
 const route = useRoute()
 </script>
 
@@ -36,24 +35,29 @@ const route = useRoute()
         :enterable="false"
         placement="right"
       >
-        <a
+        <LlmLink
+          to="/"
+          type="link"
           class="new-chat"
           :class="{ opened: !navigationStore.isSidebarCollapsed, selected: route.path === '/' }"
-          @click="router.push('/')"
         >
           <BrainIcon size="24px" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon
             v-if="!navigationStore.isSidebarCollapsed"
             size="24px"
             class="add-icon"
           />
-        </a>
+        </LlmLink>
       </ElTooltip>
 
       <ChatsDisplay v-if="!navigationStore.isSidebarCollapsed" />
       <div class="get-help-section">
-        <div class="gel-help-content" @click="router.push(`/login`)">
+        <LlmLink
+          to="/login"
+          type="link"
+          class="gel-help-content"
+        >
           <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('getHelp.title') }}</span> <QuestionIcon size="24px" />
-        </div>
+        </LlmLink>
       </div>
     </nav>
   </aside>
@@ -101,7 +105,6 @@ aside {
     color: var(--color-primary-900);
     text-wrap: nowrap;
     width: 100%;
-    gap: 0.625rem;
     margin-top: 1rem;
     padding-inline: 0.25rem;
     padding-top: 8px;

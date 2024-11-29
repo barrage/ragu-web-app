@@ -42,9 +42,9 @@ const selectedChat = computed(() => {
 
 <template>
   <AdminPageContainer>
-    <NuxtLink to="/admin/chats" class="back-link">
+    <LlmLink to="/admin/chats" type="link">
       <ArrowLeftIcon size="20px" /> {{ t('chat.admin.title') }}
-    </NuxtLink>
+    </LlmLink>
     <AdminPageHeadingTemplate>
       <template #title>
         <AdminPageTitleContainer
@@ -68,10 +68,4 @@ const selectedChat = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.back-link {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  margin-bottom: 32px;
-}
 </style>

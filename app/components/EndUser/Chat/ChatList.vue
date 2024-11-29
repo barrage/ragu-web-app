@@ -6,7 +6,6 @@ const props = defineProps<{
   chats: Chat[]
 }>()
 
-const router = useRouter()
 const route = useRoute()
 const chatId = computed(() => {
   return route.params.chatId
@@ -15,12 +14,13 @@ const chatId = computed(() => {
 
 <template>
   <div class="chat-list">
-    <div
+    <LlmLink
       v-for="chat in props.chats"
       :key="chat.id"
+      :to="`/c/${chat.id}`"
+      type="link"
       class="chat-item"
       :class="{ selected: chatId === chat.id }"
-      @click="router.push(`/c/${chat.id}`)"
     >
       <ElTooltip
         :show-after="1500"
@@ -37,7 +37,7 @@ const chatId = computed(() => {
           <span class="chat-title">{{ chat.title || 'Chat' }}</span>
         </div>
       </ElTooltip>
-    </div>
+    </LlmLink>
   </div>
 </template>
 

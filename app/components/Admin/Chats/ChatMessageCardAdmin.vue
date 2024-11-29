@@ -35,17 +35,15 @@ const messageData = computed(() => {
     sender: props.message?.senderType === 'user' ? selectedUser.value?.fullName : selectedAgent.value?.name,
   }
 })
-
-const router = useRouter()
-const redirectToDetails = () => {
-  return props.message?.senderType === 'user' ? router.push(`/admin/users/${props.message?.sender}`) : router.push(`/admin/agents/${props.message?.sender}`)
-}
 </script>
 
 <template>
   <div>
     <div class="message-card">
-      <div class="message-profile-item" @click="redirectToDetails()">
+      <LlmLink
+        :to="message?.senderType === 'user' ? `/admin/users/${message?.sender}` : `/admin/agents/${message?.sender}`"
+        class="message-profile-item"
+      >
         <ProfileIcon v-if="messageData.iconType === 'user'" size="36px" />
         <BrainIcon v-else-if="messageData.iconType === 'assistant'" size="36px" />
         <div class="messagename-mail-wrapper">
@@ -54,7 +52,7 @@ const redirectToDetails = () => {
           </p>
           <span class="message-mail">{{ messageData.createdAt }}</span>
         </div>
-      </div>
+      </LlmLink>
       <div class="message-content" v-html="messageData.content" />
     </div>
   </div>

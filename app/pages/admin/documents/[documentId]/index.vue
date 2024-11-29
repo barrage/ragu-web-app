@@ -26,9 +26,9 @@ errorHandler(error)
 
 <template>
   <AdminPageContainer>
-    <NuxtLink to="/admin/documents" class="back-link">
+    <LlmLink to="/admin/documents" type="link">
       <ArrowLeftIcon size="20px" /> {{ t('documents.title') }}
-    </NuxtLink>
+    </LlmLink>
     <template v-if="status === 'pending'">
       <LlmLoader />
     </template>
@@ -45,12 +45,6 @@ errorHandler(error)
 </template>
 
 <style lang="scss" scoped>
-.back-link {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-
 .document-details-empty-state {
   display: flex;
   justify-content: center;

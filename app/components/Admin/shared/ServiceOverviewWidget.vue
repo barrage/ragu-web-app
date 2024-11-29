@@ -45,9 +45,9 @@ interface Slots {
         <span class="service-overview-widget-description">{{ props.description }}</span>
 
         <div class="horizontal-divider" />
-        <NuxtLink :to="props.redirectUrl" class="service-overview-widget-redirect-link">
-          {{ props.redirectText }} <ArrowRightIcon size="20px" />
-        </NuxtLink>
+        <LlmLink :to="redirectUrl" class="service-overview-widget-redirect-link">
+          {{ redirectText }} <ArrowRightIcon size="20px" />
+        </LlmLink>
       </div>
     </div>
   </el-card>

@@ -9,12 +9,7 @@ const props = withDefaults(defineProps<{
   size: 'small',
 })
 
-const router = useRouter()
 const { t } = useI18n()
-
-const redirectToUserDetails = () => {
-  return router.push(`/admin/users/${props.user?.id}`)
-}
 
 const userData = computed(() => {
   return {
@@ -47,7 +42,11 @@ const textSize = computed(() => {
 </script>
 
 <template>
-  <div class="user-profile-item" @click="redirectToUserDetails">
+  <LlmLink
+    :to="`/admin/users/${user?.id}`"
+    type="link"
+    class="user-profile-item"
+  >
     <ProfileIcon :size="iconSize" />
     <div class="username-mail-wrapper">
       <p class="username" :style="{ fontSize: textSize.username }">
@@ -55,7 +54,7 @@ const textSize = computed(() => {
       </p>
       <span class="user-mail" :style="{ fontSize: textSize.email }">{{ userData.email }}</span>
     </div>
-  </div>
+  </LlmLink>
 </template>
 
 <style lang="scss" scoped>

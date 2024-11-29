@@ -26,9 +26,9 @@ errorHandler(error)
 
 <template>
   <AdminPageContainer>
-    <NuxtLink to="/admin/users" class="back-link">
+    <LlmLink to="/admin/users" type="link">
       <ArrowLeftIcon size="20px" /> {{ t('users.title') }}
-    </NuxtLink>
+    </LlmLink>
 
     <template v-if="status === 'pending'">
       <div class="user-details-loader">
@@ -57,11 +57,5 @@ errorHandler(error)
   align-items: center;
   justify-content: center;
   margin-top: var(--spacing-fluid-3-xl);
-}
-
-.back-link {
-  display: flex;
-  gap: 4px;
-  align-items: center;
 }
 </style>

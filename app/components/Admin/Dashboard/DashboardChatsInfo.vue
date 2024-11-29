@@ -1,24 +1,13 @@
 <script lang="ts" setup>
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
-import LinkIcon from '~/assets/icons/svg/link.svg'
 import type { PieChartDataEntry } from '~/types/statistic'
 import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 
-const router = useRouter()
 const { t } = useI18n()
 const statisticStore = useStatisticStore()
 const chatStore = useChatStore()
 const agentsStore = useAgentStore()
-
-const redirectToChatDetails = (id: string) => {
-  return router.push(`/admin/chats/${id}`)
-}
-
-const redirectToAgentDetails = (id: string | undefined) => {
-  if (!id) { return }
-  return router.push(`/admin/agents/${id}`)
-}
 
 const chatCount = computed<number>(() => {
   return statisticStore.dashboardCount?.chat.total || 0
@@ -51,13 +40,9 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
         </h4>
       </div>
 
-      <NuxtLink
-        class="barrage-button redirect-link"
-        to="/admin/chats"
-      >
+      <LlmLink to="/admin/chats" type="buttonPrimary">
         {{ t('chat.admin.title') }}
-        <LinkIcon />
-      </NuxtLink>
+      </LlmLink>
     </div>
 
     <div class="recent-chats">
@@ -73,7 +58,11 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
           <template v-else-if="recentChatsStatus === 'success'">
             <template v-for="chat in mostRecentChats" :key="chat.id">
               <div class="recent-chat-card">
-                <div class="chat-profile-item" @click="redirectToChatDetails(chat.chat.id)">
+                <LlmLink
+                  :to="`/admin/chats/${chat.chat.id}`"
+                  type="link"
+                  class="chat-profile-item"
+                >
                   <ChatIcon size="36px" class="chat-icon" />
                   <div class="chat-wrapper">
                     <p class="chat-name">
@@ -81,7 +70,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
                     </p>
                     <span class="chat-time-update">{{ chat?.chat?.updatedAt ? useRelativeDate(chat.chat.updatedAt) : '' }}</span>
                   </div>
-                </div>
+                </LlmLink>
               </div>
             </template>
           </template>
@@ -122,7 +111,11 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
           </template>
           <template v-else-if="activeAgentsStatus === 'success'">
             <template v-for="agent in allActiveAgents" :key="agent.agent.id">
-              <div class="agent-name-type-wrapper" @click="redirectToAgentDetails(agent?.agent?.id)">
+              <LlmLink
+                :to="`/admin/agents/${agent?.agent?.id}`"
+                type="link"
+                class="agent-name-type-wrapper"
+              >
                 <AgentIcon size="36px" />
                 <div class="agent-name-wrapper">
                   <p class="agent-name">
@@ -130,7 +123,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
                   </p>
                   <span class="agent-provider">{{ agent.configuration?.llmProvider }}</span>
                 </div>
-              </div>
+              </LlmLink>
             </template>
           </template>
           <EmptyState
@@ -168,11 +161,6 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
   justify-content: center;
   align-items: center;
   height: 200px;
-}
-
-.redirect-link {
-  display: flex;
-  gap: 6px;
 }
 .agent-name-type-wrapper {
   grid-column: span 3;

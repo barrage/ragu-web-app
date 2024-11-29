@@ -43,15 +43,6 @@ const chatData = computed(() => {
     },
   }
 })
-
-const router = useRouter()
-const redirectToUserDetails = () => {
-  return props.user?.id ? router.push(`/admin/users/${props.user?.id}`) : null
-}
-
-const redirectToAgentDetails = () => {
-  return props.agent?.id ? router.push(`/admin/agents/${props.agent?.id}`) : null
-}
 </script>
 
 <template>
@@ -64,7 +55,11 @@ const redirectToAgentDetails = () => {
       </div>
     </div>
     <div class="user-general-info-card">
-      <div class="user-profile-item" @click="redirectToUserDetails">
+      <LlmLink
+        :to="`/admin/users/${user?.id}`"
+        type="link"
+        class="user-profile-item"
+      >
         <ProfileIcon size="36px" />
         <div class="username-mail-wrapper">
           <p class="username">
@@ -72,7 +67,7 @@ const redirectToAgentDetails = () => {
           </p>
           <span class="user-mail">{{ chatData.user.email }}</span>
         </div>
-      </div>
+      </LlmLink>
       <div class="user-informations">
         <LabelDescriptionItem
           :label="t('users.user_card.status')"
@@ -99,7 +94,11 @@ const redirectToAgentDetails = () => {
       </div>
     </div>
     <div class="agent-general-info-card">
-      <div class="user-profile-item" @click="redirectToAgentDetails">
+      <LlmLink
+        :to="`/admin/users/${agent?.id}`"
+        type="link"
+        class="user-profile-item"
+      >
         <AgentIcon size="36px" />
         <div class="username-mail-wrapper">
           <p class="username">
@@ -107,7 +106,7 @@ const redirectToAgentDetails = () => {
           </p>
           <span class="user-mail">{{ chatData.agent.language }}</span>
         </div>
-      </div>
+      </LlmLink>
       <div class="user-informations">
         <LabelDescriptionItem
           :label="t('agents.labels.status')"

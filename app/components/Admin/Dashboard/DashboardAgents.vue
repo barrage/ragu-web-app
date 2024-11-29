@@ -20,11 +20,9 @@ const { t } = useI18n()
         </h5>
       </div>
 
-      <NuxtLink to="/admin/agents">
-        <el-button size="small" type="primary">
-          {{ t('agents.title') }}
-        </el-button>
-      </NuxtLink>
+      <LlmLink to="/admin/agents" type="buttonPrimary">
+        {{ t('agents.title') }}
+      </LlmLink>
     </div>
     <el-card class="total-agents-widget is-primary">
       <span class="total-agents-title">{{ t('dashboard.agents.total_widget.active') }}</span>

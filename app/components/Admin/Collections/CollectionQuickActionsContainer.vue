@@ -2,18 +2,16 @@
 import AddCollectionIcon from '~/assets/icons/svg/folder-add.svg'
 
 const { t } = useI18n()
-const localePath = useLocalePath()
 </script>
 
 <template>
   <div class="collection-quick-actions-container">
-    <ElButton
-      type="primary"
-      class="create-button"
-      @click="navigateTo({ path: localePath('/admin/collections/create') })"
+    <LlmLink
+      type="buttonPrimary"
+      to="/admin/collections/create"
     >
       <AddCollectionIcon size="20px" /> {{ t('collections.buttons.create') }}
-    </ElButton>
+    </LlmLink>
   </div>
 </template>
 

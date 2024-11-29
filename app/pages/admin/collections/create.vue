@@ -98,10 +98,6 @@ const createCollection = async (formEl: FormInstance | undefined) => {
   })
 }
 
-const cancelCreate = () => {
-  navigateTo({ path: localePath('/admin/collections') })
-}
-
 const isModelDisabled = computed(() => !form.embeddingProvider)
 
 // ERROR HANDLERS
@@ -195,12 +191,12 @@ errorHandler(createError)
 
       <!-- Form Actions -->
       <ElFormItem class="actions">
-        <ElButton
-          class="left-button"
-          @click="cancelCreate"
+        <LlmLink
+          to="/admin/collections"
+          type="button"
         >
           {{ t('collections.buttons.cancel') }}
-        </ElButton>
+        </LlmLink>
         <ElButton
           type="primary"
           :loading="createStatus === 'pending'"
@@ -249,10 +245,6 @@ errorHandler(createError)
       display: flex;
       flex-direction: row;
     }
-  }
-
-  .left-button {
-    margin-right: var(--spacing-fluid-m);
   }
 }
 

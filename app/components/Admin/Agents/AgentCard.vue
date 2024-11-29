@@ -18,7 +18,6 @@ const props = defineProps<{
 // CONSTANTS
 const agentStore = useAgentStore()
 const { t } = useI18n()
-const router = useRouter()
 const emits = defineEmits<Emits>()
 
 interface Emits {
@@ -46,19 +45,17 @@ const agentData = computed(() => {
 
 const editClick = (): void => {
   agentStore.setEditMode(true)
-
-  router.push(`/admin/agents/${props.singleAgent?.agent?.id}`)
-}
-
-const redirectToAgentDetails = () => {
-  return router.push(`/admin/agents/${props.singleAgent?.agent?.id}`)
 }
 </script>
 
 <template>
   <el-card class="agent-card is-primary">
     <div class="agent-card-body">
-      <div class="agent-name-type-wrapper" @click="redirectToAgentDetails()">
+      <LlmLink 
+      :to="`/admin/agents/${singleAgent?.agent?.id}`" 
+      type="link" 
+      class="agent-name-type-wrapper"
+    >
         <AgentIcon size="40px" />
         <div class="agent-name-wrapper">
           <p class="agent-name">
@@ -66,7 +63,7 @@ const redirectToAgentDetails = () => {
           </p>
           <span class="agent-provider">{{ agentData.llmProvider }}</span>
         </div>
-      </div>
+      </LlmLink>
       <LabelDescriptionItem
         :label="t('agents.labels.model')"
         :description="agentData.model"
@@ -104,26 +101,25 @@ const redirectToAgentDetails = () => {
           :enterable="false"
           placement="top"
         >
-          <el-button
-            plain
-            type="primary"
-            @click="redirectToAgentDetails()"
+          <LlmLink
+            :to="`/admin/agents/${singleAgent?.agent?.id}`"
+            type="plainButtonPrimary"
           >
             <EyeIcon size="20px" />
-          </el-button>
+          </LlmLink>
         </ElTooltip>
         <ElTooltip
           :content="t('agents.agent_card.edit_agent')"
           :enterable="false"
           placement="top"
         >
-          <ElButton
-            type="primary"
-            plain
+          <LlmLink
+            :to="`/admin/agents/${singleAgent?.agent?.id}`"
+            type="plainButtonPrimary"
             @click="editClick"
           >
             <EditIcon size="20px" />
-          </ElButton>
+          </LlmLink>
         </ElTooltip>
         <ElTooltip
           v-if="props.singleAgent?.agent.active"

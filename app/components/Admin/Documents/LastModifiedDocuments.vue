@@ -30,7 +30,7 @@ const { t } = useI18n()
           :key="doc.id"
         >
           <div class="horizontal-divider" />
-          <NuxtLink :to="`/admin/documents/${doc.id}`">
+          <LlmLink :to="`/admin/documents/${doc.id}`">
             <div class="document-item">
               <div class="document-name-wrapper">
                 <PdfIcon
@@ -68,7 +68,7 @@ const { t } = useI18n()
               </div>
               <span>{{ useRelativeDate(doc.updatedAt) }}</span>
             </div>
-          </NuxtLink>
+          </LlmLink>
         </li>
       </ul>
     </div>
