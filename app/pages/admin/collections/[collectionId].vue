@@ -26,12 +26,9 @@ errorHandler(error)
 
 <template>
   <AdminPageContainer>
-    <NuxtLink
-      to="/admin/collections"
-      class="back-link"
-    >
+    <LlmLink to="/admin/collections" type="link">
       <ArrowLeftIcon size="20px" /> {{ t('collections.title') }}
-    </NuxtLink>
+    </LlmLink>
 
     <template v-if="status === 'pending'">
       <div class="collection-details-loader">
@@ -59,10 +56,5 @@ errorHandler(error)
   align-items: center;
   justify-content: center;
   margin-top: var(--spacing-fluid-3-xl);
-}
-.back-link {
-  display: flex;
-  gap: 4px;
-  align-items: center;
 }
 </style>

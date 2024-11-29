@@ -6,9 +6,9 @@ const { t } = useI18n()
 
 <template>
   <div class="agents-quick-actions-container">
-    <NuxtLink to="/admin/agents/create" class="barrage-button create-user-redirect">
+    <LlmLink to="/admin/agents/create" type="button">
       <AgentIcon size="24px" />  {{ t('agents.buttons.create') }}
-    </NuxtLink>
+    </LlmLink>
   </div>
 </template>
 
@@ -18,11 +18,6 @@ const { t } = useI18n()
   justify-content: space-between;
   align-items: center;
   padding-left: 1.5rem;
-
-  .create-user-redirect {
-    display: flex;
-    gap: 8px;
-  }
 }
 .dark {
   .agents-quick-actions-container {

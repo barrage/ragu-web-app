@@ -9,12 +9,7 @@ const props = withDefaults(defineProps<{
   size: 'small',
 })
 
-const router = useRouter()
 const { t } = useI18n()
-
-const redirectToAgentDetails = () => {
-  return router.push(`/admin/agents/${props.agent?.agent?.id}`)
-}
 
 const agentData = computed(() => {
   return {
@@ -46,7 +41,11 @@ const textSize = computed(() => {
 </script>
 
 <template>
-  <div class="agent-profile-item" @click="redirectToAgentDetails">
+  <LlmLink
+    :to="`/admin/agents/${agent?.agent?.id}`"
+    type="link"
+    class="agent-profile-item"
+  >
     <AgentIcon :size="iconSize" />
     <div class="agent-wrapper">
       <p class="agent-name" :style="{ fontSize: textSize.username }">
@@ -54,7 +53,7 @@ const textSize = computed(() => {
       </p>
       <span class="agent-provider" :style="{ fontSize: textSize.email }">{{ agent?.configuration?.llmProvider }}</span>
     </div>
-  </div>
+  </LlmLink>
 </template>
 
 <style lang="scss" scoped>

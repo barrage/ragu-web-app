@@ -9,6 +9,7 @@ import SettingsIcon from '~/assets/icons/svg/settings.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 // STATE
 const router = useRouter()
+const route = useRoute()
 const oAuthStore = useAuthStore()
 const { t } = useI18n()
 
@@ -78,16 +79,6 @@ const user = computed(() => {
 })
 
 const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/admin'))
-
-const switchRole = () => {
-  const currentPath = router.currentRoute.value.path
-  if (currentPath.includes('/admin')) {
-    router.push('/')
-  }
-  else {
-    router.push('/admin')
-  }
-}
 </script>
 
 <template>
@@ -108,11 +99,16 @@ const switchRole = () => {
         </div>
         <template v-if="oAuthStore.selectedRole === 'admin'">
           <div class="horizontal-divider" />
-          <el-dropdown-item @click="switchRole">
-            <div class="dropdown-item">
-              <AdminIcon size="20px" /> <p>  {{ isAdminRoute ? t('profileDropdown.switchToUser') : t('profileDropdown.switchToAdmin') }}</p>
-            </div>
-          </el-dropdown-item>
+          <LlmLink
+            :to="route.path.includes('/admin') ? '/' : '/admin'"
+            type="link"
+          >
+            <ElDropdownItem>
+              <div class="dropdown-item">
+                <AdminIcon size="20px" /> <p>  {{ isAdminRoute ? t('profileDropdown.switchToUser') : t('profileDropdown.switchToAdmin') }}</p>
+              </div>
+            </ElDropdownItem>
+          </LlmLink>
         </template>
 
         <div class="horizontal-divider" />

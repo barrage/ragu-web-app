@@ -13,7 +13,6 @@ const props = defineProps<{
 const emits = defineEmits<Emits>()
 
 const { t } = useI18n()
-const router = useRouter()
 
 const relativeCreatedAtDate = ref(props.chat?.chat.createdAt ? useRelativeDate(props.chat.chat.createdAt) : t('timePeriod.unknown_date'))
 const relativeUpdatedAtDate = ref(props.chat?.chat.updatedAt ? useRelativeDate(props.chat.chat.updatedAt) : t('timePeriod.unknown_date'))
@@ -29,10 +28,6 @@ const chatData = computed(() => {
   }
 })
 
-const redirectToChatDetails = () => {
-  return router.push(`/admin/chats/${props.chat?.chat?.id}`)
-}
-
 interface Emits {
   (event: 'delete-chat', chat: AdminChatDetails): void
   (event: 'edit-chat-title', chat: AdminChatDetails): void
@@ -42,14 +37,18 @@ interface Emits {
 <template>
   <el-card class="chat-card is-primary">
     <div class="grid">
-      <div class="chat-profile-item" @click="redirectToChatDetails">
+      <LlmLink
+        :to="`/admin/chats/${chat?.chat?.id}`"
+        type="link"
+        class="chat-profile-item"
+      >
         <ChatIcon size="40px" class="chat-icon" />
         <div class="chat-wrapper">
           <p class="chat-name">
             {{ `${chatData.title}` }}
           </p>
         </div>
-      </div>
+      </LlmLink>
       <div class="chat-informations">
         <LabelDescriptionItem
           :label="t('chat.admin.chat_card.updated_at')"
@@ -73,13 +72,12 @@ interface Emits {
           :enterable="false"
           placement="top"
         >
-          <el-button
-            plain
-            type="primary"
-            @click="redirectToChatDetails()"
+          <LlmLink
+            :to="`/admin/chats/${chat?.chat?.id}`"
+            type="plainButtonPrimary"
           >
             <EyeIcon size="20px" />
-          </el-button>
+          </LlmLink>
         </ElTooltip>
 
         <ElTooltip

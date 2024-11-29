@@ -19,13 +19,6 @@ const props = defineProps<{
 }>()
 /* const emits = defineEmits<Emits>() */
 const documentStore = useDocumentsStore()
-const router = useRouter()
-
-const navigateToDocumentDetailsPage = () => {
-  if (props.document.id) {
-    router.push(`documents/${props.document.id}`)
-  }
-}
 
 const { t } = useI18n()
 
@@ -79,7 +72,7 @@ const submitDeleteDocument = async () => {
 <template>
   <el-card class="document-card is-primary">
     <div class="grid">
-      <div class="document-name-type-wrapper" @click="navigateToDocumentDetailsPage()">
+      <LlmLink :to="`documents/${document.id}`" class="document-name-type-wrapper">
         <PdfIcon
           v-if="documentData.extension === 'pdf'"
           size="40px"
@@ -120,7 +113,7 @@ const submitDeleteDocument = async () => {
         <div class="document-name-wrapper">
           <h6>{{ documentData.name }}</h6>
         </div>
-      </div>
+      </LlmLink>
       <div class="document-inforamtions">
         <LabelDescriptionItem
           label="Extension"
@@ -135,14 +128,12 @@ const submitDeleteDocument = async () => {
           :enterable="false"
           placement="top"
         >
-          <el-button
-            type="primary"
-            plain
-            class="manage-document-button"
-            @click="navigateToDocumentDetailsPage"
+          <LlmLink
+            :to="`documents/${document.id}`"
+            type="plainButtonPrimary"
           >
             <DocumentEditIcon size="24px" />
-          </el-button>
+          </LlmLink>
         </ElTooltip>
         <ElTooltip
           :content="t('documents.tooltip.delete_document')"
@@ -251,9 +242,6 @@ const submitDeleteDocument = async () => {
   align-items: center;
   width: 100%;
   gap: 0.5rem;
-}
-.manage-document-button {
-  margin-left: auto;
 }
 .dark {
   .document-card {

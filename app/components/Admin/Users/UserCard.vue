@@ -24,7 +24,6 @@ interface Emits {
 
 /* Setup */
 const { t } = useI18n()
-const router = useRouter()
 
 const userData = computed(() => {
   return {
@@ -37,18 +36,18 @@ const userData = computed(() => {
     createdAt: props.user?.createdAt ? useRelativeDate(props.user.createdAt) : t('users.user_card.unknown_date'),
   }
 })
-
-const redirectToUserDetails = () => {
-  return router.push(`/admin/users/${props.user?.id}`)
-}
 </script>
 
 <template>
   <el-card class="user-card is-primary">
     <div class="user-card-body">
-      <div class="user-profile-item-wrapper" @click="redirectToUserDetails">
+      <LlmLink
+        :to="`/admin/users/${user?.id}`"
+        type="link"
+        class="user-profile-item-wrapper"
+      >
         <UserProfileOverview :user="props.user" />
-      </div>
+      </LlmLink>
 
       <LabelDescriptionItem
         :label="t('users.user_card.role')"
@@ -78,13 +77,12 @@ const redirectToUserDetails = () => {
           :enterable="false"
           placement="top"
         >
-          <el-button
-            plain
-            type="primary"
-            @click="redirectToUserDetails()"
+          <LlmLink
+            :to="`/admin/users/${user?.id}`"
+            type="plainButtonPrimary"
           >
             <EyeIcon size="20px" />
-          </el-button>
+          </LlmLink>
         </ElTooltip>
 
         <ElTooltip

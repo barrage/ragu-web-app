@@ -26,9 +26,9 @@ errorHandler(error)
 
 <template>
   <AdminPageContainer>
-    <NuxtLink to="/admin/agents" class="back-link">
+    <LlmLink to="/admin/agents" type="link">
       <ArrowLeftIcon size="20px" /> {{ t('agents.title') }}
-    </NuxtLink>
+    </LlmLink>
 
     <template v-if="status === 'pending'">
       <div class="agent-details-loader">
@@ -54,12 +54,6 @@ errorHandler(error)
 </template>
 
 <style lang="scss" scoped>
-.back-link {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-
 .agent-details-loader {
   display: flex;
   align-items: center;

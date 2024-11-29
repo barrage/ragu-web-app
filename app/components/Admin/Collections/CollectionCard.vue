@@ -11,7 +11,6 @@ const props = defineProps<{
 
 const emit = defineEmits(['openDeleteModal'])
 // CONSTANTS
-const router = useRouter()
 const { t } = useI18n()
 // HELPERS
 const collectionData = computed(() => {
@@ -29,16 +28,16 @@ const collectionData = computed(() => {
 const openDeleteModal = () => {
   emit('openDeleteModal', props.collection)
 }
-
-const redirectToCollectionDetails = () => {
-  return router.push(`/admin/collections/${props.collection?.id}`)
-}
 </script>
 
 <template>
   <el-card class="collection-card is-primary">
     <div class=" grid">
-      <div class="collection-profile-item" @click="redirectToCollectionDetails">
+      <LlmLink
+        :to="`/admin/collections/${collection?.id}`"
+        type="link"
+        class="collection-profile-item"
+      >
         <CollectionIcon size="36px" />
         <div class="collection-wrapper">
           <p class="collection-name">
@@ -46,7 +45,7 @@ const redirectToCollectionDetails = () => {
           </p>
           <span class="collection-embedder">{{ collectionData.embedder }}</span>
         </div>
-      </div>
+      </LlmLink>
       <div class="collection-informations-wrapper">
         <LabelDescriptionItem
           :label="t('collections.labels.updated_at')"
@@ -71,13 +70,12 @@ const redirectToCollectionDetails = () => {
           :enterable="false"
           placement="top"
         >
-          <el-button
-            plain
-            type="primary"
-            @click="redirectToCollectionDetails()"
+          <LlmLink
+            :to="`/admin/collections/${collection?.id}`"
+            type="plainButtonPrimary"
           >
             <EyeIcon size="20px" />
-          </el-button>
+          </LlmLink>
         </ElTooltip>
         <ElTooltip
           :content="t('collections.collection_card.delete_collection')"

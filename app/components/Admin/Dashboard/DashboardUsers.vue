@@ -27,11 +27,9 @@ const hasError = computed(() => !!props.error)
         </h5>
       </div>
 
-      <NuxtLink to="/admin/users">
-        <el-button size="small" type="primary">
-          {{ t('users.title') }}
-        </el-button>
-      </NuxtLink>
+      <LlmLink to="/admin/users" type="buttonPrimary">
+        {{ t('users.title') }}
+      </LlmLink>
     </div>
 
     <el-card class="total-user-widget is-primary">

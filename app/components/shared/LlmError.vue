@@ -6,8 +6,6 @@ interface Props {
 }
 
 defineProps<Props>()
-
-const handleError = () => clearError({ redirect: '/' })
 </script>
 
 <template>
@@ -34,16 +32,16 @@ const handleError = () => clearError({ redirect: '/' })
         your
         journey
         from
-        <NuxtLink
-          class="link"
+        <LlmLink
           to="/"
+          type="link"
         >
           your dashboard
-        </NuxtLink>.
+        </LlmLink>.
       </p>
-      <button @click="handleError">
+      <LlmLink type="button" @click="clearError()">
         Go to home page
-      </button>
+      </LlmLink>
     </div>
   </div>
 </template>
@@ -78,20 +76,6 @@ const handleError = () => clearError({ redirect: '/' })
 
   & .error-info {
     margin-bottom: 1.875rem;
-  }
-
-  .link {
-    cursor: pointer;
-    display: inline-block;
-    text-decoration: none;
-    transition: 0.3s;
-    color: var(--color-primary-700);
-    &:hover {
-      color: var(--color-primary-400);
-    }
-    &:active {
-      color: var(--color-primary-200);
-    }
   }
 }
 </style>
