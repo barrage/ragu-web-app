@@ -48,6 +48,9 @@ const chatData = computed(() => {
 <template>
   <div class="chat-general-info-container grid">
     <div class="chat-general-info-card">
+      <h5 class="chat-details-title">
+        {{ chatData.chat.title }}
+      </h5>
       <div class="chat-informations-wrapper grid">
         <LabelDescriptionItem label="Id:" :description="chatData.chat?.id" />
         <LabelDescriptionItem :label="t('chat.admin.chat_card.created_at')" :description="chatData.chat?.createdAt" />
@@ -140,6 +143,12 @@ const chatData = computed(() => {
 .chat-general-info-container {
   & .chat-general-info-card {
     grid-column: span 12;
+
+    & .chat-details-title {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-900);
+      font-size: var(--font-size-fluid-5);
+    }
     & .chat-informations-wrapper {
       margin-top: 0.75rem;
 
