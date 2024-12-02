@@ -21,48 +21,50 @@ watch(
   },
   { immediate: true },
 )
-</script>s
+</script>
 
 <template>
-  <template v-if="status === 'pending'">
-    <div class="agent-details-loader">
-      <MeetUpLoader />
-    </div>
-  </template>
-  <template v-else-if="status === 'success'">
-    <div class="agents-overview-container">
-      <div class="agents-names-wrapper">
-        <template v-for="agent in agentStore.appAgents" :key="agent.id">
-          <div
-            class="agent-name"
-            :class="{ selected: agent.id === selectedAgent?.id }"
-            @click="selectAgent(agent)"
-          >
-            <ChatAgentIcon size="20px" /> {{ agent.name }}
-          </div>
-        </template>
+  <div>
+    <template v-if="status === 'pending'">
+      <div class="agent-details-loader">
+        <MeetUpLoader />
       </div>
+    </template>
+    <template v-else-if="agentStore.appAgents.length !== 0">
+      <div class="agents-overview-container">
+        <div class="agents-names-wrapper">
+          <template v-for="agent in agentStore.appAgents" :key="agent.id">
+            <div
+              class="agent-name"
+              :class="{ selected: agent.id === selectedAgent?.id }"
+              @click="selectAgent(agent)"
+            >
+              <ChatAgentIcon size="20px" /> {{ agent.name }}
+            </div>
+          </template>
+        </div>
 
-      <div class="selected-agent-wrapper">
-        <ChatAgentIcon size="52px" />
-        <h6>{{ selectedAgent?.name }}</h6>
-        <div class="agent-info">
-          <span>{{ t('agents.labels.language') }}: {{ selectedAgent?.language }}</span>
-          <span>{{ t('agents.labels.updated_at') }}: {{ formatDate(selectedAgent?.updatedAt) }}</span>
-          <p>{{ t('agents.labels.description') }}: {{ selectedAgent?.description }}</p>
+        <div class="selected-agent-wrapper">
+          <ChatAgentIcon size="52px" />
+          <h6>{{ selectedAgent?.name }}</h6>
+          <div class="agent-info">
+            <span>{{ t('agents.labels.language') }}: {{ selectedAgent?.language }}</span>
+            <span>{{ t('agents.labels.updated_at') }}: {{ formatDate(selectedAgent?.updatedAt) }}</span>
+            <p>{{ t('agents.labels.description') }}: {{ selectedAgent?.description }}</p>
+          </div>
         </div>
       </div>
-    </div>
-  </template>
-  <EmptyState
-    v-else
-    :title="t('agents.agent_card.empty_state_title')"
-    :description="t('agents.agent_card.empty_state_desc')"
-  >
-    <template #icon>
-      <ChatAgentIcon size="44px" />
     </template>
-  </EmptyState>
+    <EmptyState
+      v-else
+      :title="t('agents.agent_card.empty_state_title')"
+      :description="t('agents.agent_card.empty_state_desc')"
+    >
+      <template #icon>
+        <ChatAgentIcon size="44px" />
+      </template>
+    </EmptyState>
+  </div>
 </template>
 
 <style lang="scss" scoped>

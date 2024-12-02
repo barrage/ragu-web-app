@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { marked } from 'marked'
+import hljs from 'highlight.js'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import MicrophoneIcon from '~/assets/icons/svg/microphone.svg'
@@ -6,12 +8,31 @@ import LikeIcon from '~/assets/icons/svg/like.svg'
 import DislikeIcon from '~/assets/icons/svg/dislike.svg'
 import CopyIcon from '~/assets/icons/svg/copy.svg'
 import StopIcon from '~/assets/icons/svg/stop.svg'
-import { sanitizeHtml } from '~/utils/sanitizeHtml'
 import type { Message } from '~/types/chat'
+import { sanitizeHtml } from '~/utils/sanitizeHtml'
 
 const props = defineProps<{
   message: Message | null
 }>()
+const isDark = useDark()
+const loadHighlightTheme = (isDarkMode: boolean) => {
+  const themeLinkId = 'highlight-theme'
+  let themeLink = document.getElementById(themeLinkId) as HTMLLinkElement | null
+
+  if (!themeLink) {
+    themeLink = document.createElement('link')
+    themeLink.id = themeLinkId
+    themeLink.rel = 'stylesheet'
+    document.head.appendChild(themeLink)
+  }
+  themeLink.href = isDarkMode
+    ? 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css'
+    : 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-light.min.css'
+}
+
+watch(isDark, (newVal) => {
+  loadHighlightTheme(newVal)
+}, { immediate: true })
 
 const { t } = useI18n()
 
@@ -19,9 +40,31 @@ const chatStore = useChatStore()
 const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 const displayedContent = ref('')
 const pendingContent = ref('')
-const sanitizedContent = computed(() => {
-  return props.message?.content ? sanitizeHtml(props.message.content.replace(/\n/g, '<br>')) : ''
+
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+  highlight(code, lang) {
+    try {
+      if (lang && hljs.getLanguage(lang)) {
+        return hljs.highlight(code, { language: lang }).value
+      }
+      return hljs.highlightAuto(code).value
+    }
+    catch (error) {
+      console.error('Highlight.js error:', error)
+      return code
+    }
+  },
 })
+
+const formatContent = (content: string) => {
+  if (!content) { return '' }
+  const rawHtml = marked(content)
+  return sanitizeHtml(rawHtml)
+}
+
+const sanitizedDisplayedContent = computed(() => formatContent(displayedContent.value))
 
 const isAnimating = ref(false)
 let animationTimeout: number | null = null
@@ -41,7 +84,7 @@ const animateNextLetter = () => {
 }
 
 watch(
-  () => sanitizedContent.value,
+  () => props.message?.content,
   (newContent, oldContent) => {
     if (isAssistantMessage.value && newContent && oldContent) {
       const additionalContent = newContent.slice(oldContent.length)
@@ -106,12 +149,25 @@ const copyItem = () => {
     })
   }
 }
+
+const highlightCodeBlocks = () => {
+  const codeBlocks = document.querySelectorAll('pre code:not([data-highlighted])')
+  codeBlocks.forEach((block) => {
+    hljs.highlightElement(block)
+    block.setAttribute('data-highlighted', 'yes')
+  })
+}
+
+watchEffect(() => {
+  nextTick(() => {
+    highlightCodeBlocks()
+  })
+})
 </script>
 
 <template>
   <div v-if="props.message">
     <div
-
       class="message"
       :class="[props.message.senderType]"
     >
@@ -134,7 +190,7 @@ const copyItem = () => {
         }"
         class="content"
       >
-        <span v-html="displayedContent" />
+        <span v-html="sanitizedDisplayedContent" />
         <span v-if="isAnimating" class="cursor" />
       </p>
     </div>
@@ -191,6 +247,7 @@ const copyItem = () => {
   display: flex;
   gap: 24px;
   color: var(--color-primary-900);
+  max-width: 100%;
 }
 
 .sender {
@@ -224,8 +281,84 @@ const copyItem = () => {
 }
 
 .assistantmessage {
-  max-width: max-content;
+  width: 100%;
   position: relative;
+
+  pre,
+  ::v-deep(pre) {
+    background-color: var(--color-primary-100);
+    border: 2px solid var(--color-primary-200);
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: var(--font-size-fluid-2);
+    overflow-x: auto;
+
+    & .hljs {
+      background: var(--color-primary-subtle);
+    }
+  }
+
+  ::v-deep(a) {
+    color: var(--color-blue-600);
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+      color: var(--color-blue-300);
+    }
+  }
+  ::v-deep(ol) {
+    color: var(--color-primary-800);
+
+    & li {
+      margin-block: 12px;
+    }
+  }
+  ::v-deep(ul) {
+    color: var(--color-primary-900);
+    list-style-type: circle;
+    list-style-position: inside;
+
+    & > li {
+      margin-block: 12px;
+      list-style-type: inherit;
+    }
+  }
+
+  ::v-deep(h1) {
+    color: var(--color-primary-900);
+    line-height: normal;
+    font-size: var(--font-size-fluid-8);
+  }
+  ::v-deep(h2) {
+    color: var(--color-primary-800);
+    line-height: normal;
+    font-size: var(--font-size-fluid-7);
+  }
+  ::v-deep(h3) {
+    color: var(--color-primary-800);
+    line-height: normal;
+    font-size: var(--font-size-fluid-6);
+  }
+  ::v-deep(h4) {
+    color: var(--color-primary-800);
+    line-height: normal;
+    font-size: var(--font-size-fluid-5);
+  }
+  ::v-deep(h5) {
+    color: var(--color-primary-700);
+    line-height: normal;
+    font-size: var(--font-size-fluid-4);
+  }
+  ::v-deep(h6) {
+    color: var(--color-primary-700);
+    line-height: normal;
+    font-size: var(--font-size-fluid-3);
+  }
+
+  &.content {
+    overflow: hidden;
+  }
 }
 
 .cursor {
@@ -278,6 +411,50 @@ const copyItem = () => {
       &:hover {
         color: var(--color-primary-0);
       }
+    }
+  }
+
+  & .assistantmessage {
+    pre,
+    ::v-deep(pre) {
+      background-color: var(--color-primary-800);
+      border: 1px solid var(--color-primary-600);
+      & .hljs {
+        background: var(--color-primary-900);
+      }
+    }
+
+    ::v-deep(a) {
+      color: var(--color-blue-200);
+
+      &:hover {
+        color: var(--color-blue-100);
+      }
+    }
+
+    ::v-deep(ol) {
+      color: var(--color-primary-100);
+    }
+    ::v-deep(ul) {
+      color: var(--color-primary-0);
+    }
+    ::v-deep(h1) {
+      color: var(--color-primary-subtle);
+    }
+    ::v-deep(h2) {
+      color: var(--color-primary-0);
+    }
+    ::v-deep(h3) {
+      color: var(--color-primary-0);
+    }
+    ::v-deep(h4) {
+      color: var(--color-primary-0);
+    }
+    ::v-deep(h5) {
+      color: var(--color-primary-100);
+    }
+    ::v-deep(h6) {
+      color: var(--color-primary-100);
     }
   }
 }
