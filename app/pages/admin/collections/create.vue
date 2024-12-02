@@ -244,6 +244,7 @@ errorHandler(createError)
     .barrage-form-item__content {
       display: flex;
       flex-direction: row;
+      column-gap: 1.375rem;
     }
   }
 }

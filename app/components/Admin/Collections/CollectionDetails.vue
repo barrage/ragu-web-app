@@ -234,7 +234,12 @@ onMounted(() => {
           :disabled="status === 'pending'"
           @click="submitSelection"
         >
-          Submit
+          <template v-if="status === 'pending'">
+            <LlmLoader />
+          </template>
+          <template v-else>
+            Submit
+          </template>
         </el-button>
       </template>
     </el-transfer>
@@ -336,6 +341,12 @@ onMounted(() => {
       flex: 1;
     }
   }
+}
+
+:deep(.loader) {
+  width: 38px;
+  height: 32px;
+  justify-content: center;
 }
 
 .dark {

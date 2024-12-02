@@ -73,7 +73,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
     <nav class="navigation-container">
       <div class="sidebar-head-title">
         <p v-if="!navigationStore.isAdminSidebarCollapsed" class="typing-effect">
-          Admin Panel
+          {{ t('adminPanel') }}
         </p>
         <el-button class="toggle-btn" @click="navigationStore.toggleAdminSidebar">
           <PanelIcon size="24px" />
@@ -113,7 +113,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
           type="link"
           class="gel-help-content"
         >
-          <span v-if="!navigationStore.isAdminSidebarCollapsed">Get help </span> <QuestionIcon size="24px" />
+          <span v-if="!navigationStore.isAdminSidebarCollapsed">{{ t('getHelp.title') }} </span> <QuestionIcon size="24px" />
         </LlmLink>
       </div>
     </nav>

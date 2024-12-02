@@ -10,6 +10,7 @@ export default {
   empty_description: 'Hier gibt es keine Elemente, die angezeigt werden sollen.',
   details: 'Details',
   chatDock: 'Chat-Panel',
+  adminPanel: 'Admin Panel',
   login: {
     title: 'Login',
     description: 'Wählen Sie eine Anmeldemethode',

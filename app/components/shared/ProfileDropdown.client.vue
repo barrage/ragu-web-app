@@ -263,6 +263,9 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
     margin-block: 1rem;
   }
 }
+:deep(.link) {
+  width: 100%;
+}
 
 .dark {
   & .profile-toggle-button {

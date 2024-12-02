@@ -10,7 +10,7 @@ const selectAgent = (agent: any) => {
   return selectedAgent.value = agent
 }
 
-const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents())
+const { error, status } = useAsyncData(() => agentStore.GET_AllAppAgents())
 
 errorHandler(error)
 
@@ -21,7 +21,7 @@ watch(
   },
   { immediate: true },
 )
-</script>
+</script>s
 
 <template>
   <template v-if="status === 'pending'">
@@ -29,7 +29,7 @@ watch(
       <MeetUpLoader />
     </div>
   </template>
-  <template v-else-if="agentStore.appAgents.length !== 0">
+  <template v-else-if="status === 'success'">
     <div class="agents-overview-container">
       <div class="agents-names-wrapper">
         <template v-for="agent in agentStore.appAgents" :key="agent.id">
@@ -71,6 +71,7 @@ watch(
   align-items: center;
   justify-content: center;
   margin-top: var(--spacing-fluid-3-xl);
+  padding-bottom: 100px;
 }
 
 .agents-overview-container {

@@ -139,6 +139,18 @@ interface Emits {
     grid-column: span 6;
     width: 100%;
     padding-left: 22px;
+
+    & > * {
+      min-width: 0;
+    }
+
+    &:deep(.label-description-item-container .description) {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
   }
 
   & .chat-actions {

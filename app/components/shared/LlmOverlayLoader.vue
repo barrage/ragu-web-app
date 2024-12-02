@@ -19,6 +19,7 @@
   justify-content: center;
   align-items: center;
   background: var(--color-primary-300);
+  z-index: 1000;
 
   &:deep(.loader) {
     svg {

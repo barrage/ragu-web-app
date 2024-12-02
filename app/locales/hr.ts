@@ -10,6 +10,7 @@ export default {
   empty_description: 'Trenutno nema elemenata za prikaz.',
   details: 'Detalji',
   chatDock: 'Chat panel',
+  adminPanel: 'Admin Panel',
   login: {
     title: 'Prijava',
     description: 'Odaberite način prijave',

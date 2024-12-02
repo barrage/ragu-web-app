@@ -11,6 +11,7 @@ export default {
   empty_description: 'Il n\'y a actuellement aucun élément à afficher ici.',
   details: 'Détails',
   chatDock: 'Panneau de chat',
+  adminPanel: 'Panneau d\'administration',
   login: {
     title: 'Se connecter',
     description: 'Choisissez une méthode de connexion',
