@@ -92,6 +92,7 @@ const classes = computed(() => {
   text-decoration: none;
   transition: 0.3s;
   color: var(--color-primary-900);
+
   &:hover {
     color: var(--color-primary-600);
   }

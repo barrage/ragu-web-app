@@ -13,6 +13,7 @@ export default {
   empty_description: 'There are no items to display here.',
   details: 'Details',
   chatDock: 'Chat panel',
+  adminPanel: 'Admin Panel',
   login: {
     title: 'Login',
     description: 'Choose a login method',

@@ -53,7 +53,7 @@ const closeActivateModal = () => {
 const agentActivated = () => {
   emits('agentActivated')
 }
-/* Dectivate Agent */
+/* Deactivate Agent */
 const selectedAgentDeactivate = ref<Agents | null>(null)
 const deactivateAgentModalVisible = ref(false)
 

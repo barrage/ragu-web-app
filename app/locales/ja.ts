@@ -10,6 +10,7 @@ export default {
   empty_description: 'ここには表示するアイテムはありません。',
   details: '詳細',
   chatDock: 'チャットパネル',
+  adminPanel: '管理パネル',
   login: {
     title: 'ログイン',
     description: 'ログイン方法を選択してください',

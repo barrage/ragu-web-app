@@ -30,7 +30,7 @@ interface Emits {
 const { execute: activateAgent, error } = await useAsyncData(() => agentStore.PUT_ActivateAgent(props.selectedAgent!.agent.id), { immediate: false })
 
 const submitActivateAgent = async () => {
-  if (props.selectedAgent?.agent.id) {
+  if (props.selectedAgent?.agent?.id) {
     await activateAgent()
     activateAgentModalVisible.value = false
     if (error.value) {

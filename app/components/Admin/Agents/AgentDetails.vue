@@ -403,6 +403,7 @@ const agentDeactivated = () => {
   grid-template-rows: auto;
   padding-block: 2rem;
   row-gap: 1.5rem;
+  column-gap: 32px;
   border-top: 1px solid var(--color-primary-300);
   border-bottom: 1px solid var(--color-primary-300);
 

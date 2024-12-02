@@ -10,6 +10,7 @@ export default {
   empty_description: 'Não há itens para exibir aqui.',
   details: 'Detalhes',
   chatDock: 'Painel de chat',
+  adminPanel: 'Painel de administração',
   login: {
     title: 'Login',
     description: 'Escolha um método de login',
