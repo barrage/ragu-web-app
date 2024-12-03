@@ -41,6 +41,39 @@ const isAssistantMessage = computed(() => props.message?.senderType === 'assista
 const displayedContent = ref('')
 const pendingContent = ref('')
 
+const isTable = computed(() => {
+  if (!props.message?.content) {
+    return false
+  }
+  const lines = props.message.content.split('\n')
+  const tableStartIndex = lines.findIndex(line => line.trim().startsWith('|'))
+  const isTableContent = tableStartIndex !== -1 && lines.slice(tableStartIndex).some(line => line.includes('|'))
+
+  return isTableContent
+})
+
+const tableData = computed(() => {
+  if (!isTable.value || !props.message?.content) {
+    return null
+  }
+
+  const lines = props.message.content.split('\n')
+  const tableStartIndex = lines.findIndex(line => line.trim().startsWith('|'))
+  if (tableStartIndex === -1) {
+    return null
+  }
+
+  const tableLines = lines.slice(tableStartIndex)
+  const headers = tableLines[0].split('|').filter(cell => cell.trim()).map(cell => cell.trim())
+  const body = tableLines.slice(2)
+    .filter(line => line.includes('|') && !line.replace(/\|/g, '').trim().match(/^[-\s]+$/))
+    .map(row => row.split('|').filter(cell => cell.trim()).map(cell => cell.trim()))
+
+  const result = { headers, body }
+
+  return result
+})
+
 marked.setOptions({
   breaks: true,
   gfm: true,
@@ -181,6 +214,31 @@ watchEffect(() => {
       <template v-if="props.message.senderType === 'assistant' && chatStore.isWebSocketStreaming && !props.message.content">
         <MeetUpLoader class="assistant-message-loader" />
       </template>
+      <template v-else-if="isTable && tableData">
+        <div class="table-message-container">
+          <p v-if="props.message.content.includes('\n\n')">
+            {{ props.message.content.split('\n\n')[0] }}
+          </p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th v-for="header in tableData.headers" :key="header">
+                    {{ header || '&nbsp;' }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, index) in tableData.body" :key="index">
+                  <td v-for="(cell, cellIndex) in row" :key="cellIndex">
+                    {{ cell || '&nbsp;' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </template>
       <p
         v-else
         :class="{
@@ -242,6 +300,85 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
+.table-message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-block: 15px;
+  overflow: hidden;
+}
+.table-container {
+  overflow-x: auto;
+}
+:deep(table) {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--font-size-fluid-2);
+  overflow-x: auto;
+  overflow: auto;
+  border-radius: var(--radius-4);
+  box-shadow: 0 0 0 1px var(--color-primary-200);
+}
+
+:deep(th, td) {
+  border: 1px solid var(--color-primary-300);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+:deep(th) {
+  background-color: var(--color-primary-100);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-900);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: var(--font-size-fluid-1);
+}
+
+:deep(td) {
+  background-color: var(--color-primary-0);
+  color: var(--color-primary-800);
+  padding-left: 1rem;
+}
+
+:deep(tr:nth-child(even) td) {
+  background-color: var(--color-primary-subtle);
+}
+
+// Round corners for first and last cells in first and last rows
+:deep(tr:first-child th:first-child) {
+  border-top-left-radius: var(--radius-4);
+}
+
+:deep(tr:first-child th:last-child) {
+  border-top-right-radius: var(--radius-4);
+}
+
+:deep(tr:last-child td:first-child) {
+  border-bottom-left-radius: var(--radius-4);
+}
+
+:deep(tr:last-child td:last-child) {
+  border-bottom-right-radius: var(--radius-4);
+}
+
+// Remove double borders
+:deep(tr:not(:last-child) th),
+:deep(tr:not(:last-child) td) {
+  border-bottom: none;
+}
+
+:deep(th:not(:last-child)),
+:deep(td:not(:last-child)) {
+  border-right: 1px solid var(--color-primary-300);
+}
+
+// Hover effect
+:deep(tr:hover td) {
+  background-color: var(--color-primary-100);
+}
+
 .message {
   border-radius: 15px;
   display: flex;
@@ -393,6 +530,33 @@ watchEffect(() => {
 }
 
 .dark {
+  :deep(table) {
+    box-shadow: 0 0 0 1px var(--color-primary-700);
+  }
+
+  :deep(th, td) {
+    border-color: var(--color-primary-700);
+    background-color: red;
+  }
+
+  :deep(th) {
+    background-color: var(--color-primary-800);
+    color: var(--color-primary-100);
+  }
+
+  :deep(td) {
+    background-color: var(--color-primary-900);
+    color: var(--color-primary-100);
+  }
+
+  :deep(tr:nth-child(even) td) {
+    background-color: var(--color-primary-800);
+  }
+
+  :deep(tr:hover td) {
+    background-color: var(--color-primary-700);
+  }
+
   & .usermessage {
     background-color: var(--color-primary-800);
     color: var(--color-primary-0);

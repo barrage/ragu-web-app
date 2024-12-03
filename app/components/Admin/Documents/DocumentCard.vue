@@ -31,6 +31,7 @@ const documentData = computed(() => {
   }
 })
 const { execute: executeDeleteDocument, error } = await useAsyncData(() => documentStore.DELETE_Document(props.document.id), { immediate: false })
+const { execute: getAllDocuments } = await useAsyncData(() => documentStore.GET_AllDocuments(), { immediate: false })
 /* Delete document */
 const isDeleteDialogVisible = ref(false)
 
@@ -55,7 +56,7 @@ const submitDeleteDocument = async () => {
       })
     }
     else {
-      documentStore.GET_AllDocuments()
+      await getAllDocuments()
       ElNotification({
         title: t('documents.delete_document.notifications.success_title'),
         message: t('documents.delete_document.notifications.success_description'),

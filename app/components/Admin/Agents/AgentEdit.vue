@@ -73,7 +73,7 @@ const rules = computed<FormRules>(() => ({
 const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => agentStore.PUT_UpdateAgent(agentId.value, form), {
   immediate: false,
 })
-providerStore.GET_List_Providers()
+await useAsyncData(() => providerStore.GET_List_Providers())
 
 // HELPERS
 const updateAgent = async (formEl: FormInstance | undefined) => {

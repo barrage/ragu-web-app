@@ -13,7 +13,6 @@ const props = defineProps<{
 const emits = defineEmits(['update:visible'])
 const { t } = useI18n()
 const collectionStore = useCollectionsStore()
-const deleteStatus = ref('')
 const deleteCollectionModalVisible = ref(props.visible)
 
 watch(() => props.visible, (newVal) => {
@@ -24,25 +23,16 @@ const closeModal = () => {
   emits('update:visible', false)
 }
 
-const { execute } = await useAsyncData(() => collectionStore.GET_AllCollections(), { immediate: false })
+const { execute: getAllCollections } = await useAsyncData(() => collectionStore.GET_AllCollections(), { immediate: false })
+const { execute: deleteCollection, error: deleteCollectionError, status } = await useAsyncData(() => collectionStore.DELETE_Collection(props.collection!.id), { immediate: false })
 
 const confirmDelete = async () => {
   if (!props.collection || !props.collection.id) { return }
 
-  try {
-    deleteStatus.value = 'pending'
-    await collectionStore.DELETE_Collection(props.collection.id)
-    await execute()
-    deleteCollectionModalVisible.value = false
-    ElNotification({
-      title: 'Success',
-      message: t('collections.notifications.delete_message'),
-      type: 'success',
-      customClass: 'success',
-      duration: 2500,
-    })
-  }
-  catch {
+  await deleteCollection()
+  await getAllCollections()
+  deleteCollectionModalVisible.value = false
+  if (deleteCollectionError.value) {
     ElNotification({
       title: 'Error',
       message: t('collections.notifications.delete_error'),
@@ -50,8 +40,14 @@ const confirmDelete = async () => {
       duration: 2500,
     })
   }
-  finally {
-    deleteStatus.value = ''
+  else {
+    ElNotification({
+      title: 'Success',
+      message: t('collections.notifications.delete_message'),
+      type: 'success',
+      customClass: 'success',
+      duration: 2500,
+    })
   }
 }
 </script>
@@ -75,7 +71,7 @@ const confirmDelete = async () => {
       </el-button>
       <el-button
         type="danger"
-        :loading="deleteStatus === 'pending'"
+        :disabled="status === 'pending'"
         @click="confirmDelete"
       >
         {{ t('collections.buttons.delete') }}

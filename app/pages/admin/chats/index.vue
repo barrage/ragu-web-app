@@ -4,6 +4,7 @@ import type { SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
 
 const { t } = useI18n()
+const chatsStore = useChatStore()
 
 definePageMeta({
   layout: 'admin-layout',
@@ -12,8 +13,6 @@ definePageMeta({
 useHead({
   title: computed(() => t('chat.admin.title')),
 })
-
-const chatsStore = useChatStore()
 
 const pagination = ref<Pagination>({
   currentPage: 1,

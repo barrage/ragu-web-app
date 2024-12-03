@@ -25,14 +25,6 @@ const changePage = (page: number) => {
   emits('pageChange', pagination.value.currentPage)
 }
 
-watch(
-  () => documentStore.documentResponse?.total,
-  (newTotal) => {
-    if (newTotal !== undefined) {
-      pagination.value.total = newTotal
-    }
-  },
-)
 const cardClasses = ref<string[]>([])
 const applyCardClasses = () => {
   cardClasses.value = []
@@ -42,6 +34,15 @@ const applyCardClasses = () => {
     }, index * 100)
   })
 }
+
+watch(
+  () => documentStore.documentResponse?.total,
+  (newTotal) => {
+    if (newTotal !== undefined) {
+      pagination.value.total = newTotal
+    }
+  },
+)
 
 watch(
   () => props.documents,

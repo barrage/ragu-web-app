@@ -27,14 +27,6 @@ const applyCardClasses = () => {
   })
 }
 
-watch(
-  () => props.users,
-  () => {
-    nextTick(applyCardClasses)
-  },
-  { immediate: true },
-)
-
 const changePage = (page: number) => {
   emits('pageChange', page)
 }
@@ -103,6 +95,14 @@ const closeDeactivateModal = () => {
 const userDeactivated = () => {
   emits('userDeactivated')
 }
+
+watch(
+  () => props.users,
+  () => {
+    nextTick(applyCardClasses)
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
