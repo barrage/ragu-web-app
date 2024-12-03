@@ -131,6 +131,10 @@ aside {
         }
       }
     }
+
+    &:deep(.llm-link--template) {
+      width: 100%;
+    }
   }
 
   .toggle-btn {
@@ -150,6 +154,7 @@ aside {
     }
   }
 }
+
 .sidebar-collapsed {
   & .toggle-btn {
     transform: scaleX(-1);

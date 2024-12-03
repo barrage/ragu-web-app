@@ -110,10 +110,6 @@ export const useAgentStore = defineStore('agent', () => {
     }
   }
 
-  async function DELETE_DeleteAgent(id: number): Promise<void> {
-    await $api.agent.DeleteAgent(id)
-  }
-
   async function PUT_UpdateAgentCollection(id: string, body: AssignCollectionPayload): Promise<any | null> {
     await $api.agent.UpdateAgentCollection(id, body)
   }
@@ -139,7 +135,6 @@ export const useAgentStore = defineStore('agent', () => {
     GET_SingleAgent,
     POST_CreateAgent,
     PUT_UpdateAgent,
-    DELETE_DeleteAgent,
     PUT_UpdateAgentCollection,
     GET_AllAppAgents,
     PUT_ActivateAgent,

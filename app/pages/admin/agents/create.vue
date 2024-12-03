@@ -109,7 +109,7 @@ const { execute: createExecute, error: createError, status: createStatus, data }
   immediate: false,
 })
 
-providerStore.GET_List_Providers()
+await useAsyncData(() => providerStore.GET_List_Providers())
 
 // HELPERS
 const createAgent = async (formEl: FormInstance | undefined) => {

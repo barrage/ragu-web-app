@@ -14,7 +14,6 @@ const scrollIntoViewOptions = {
 }
 
 const appConfigStore = useAppConfigStore()
-appConfigStore.GET_AppConfig()
 
 const { t } = useI18n()
 
@@ -83,7 +82,12 @@ const { error: upadteChunkConfigError, status: loadingUpdateConfig, execute: exe
 
 const { error: getSingleDocumentError, execute: executeGetSingleDocument } = await useAsyncData(() => documentStore.GET_SingleDocument(selectedDocument.value!.id), { immediate: false })
 
+const { error: getAppConfigError } = await useAsyncData(() => appConfigStore.GET_AppConfig())
+
+errorHandler(getAppConfigError)
+
 errorHandler(getSingleDocumentError)
+
 async function previewDocumentChunker() {
   if (selectedDocument.value?.id) {
     await executeChunkPreview()

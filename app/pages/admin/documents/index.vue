@@ -2,16 +2,16 @@
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import type { SortingValues } from '~/types/sort'
 
+const { t } = useI18n()
+const documentStore = useDocumentsStore()
+
 definePageMeta({
   layout: 'admin-layout',
 })
-const { t } = useI18n()
 
 useHead({
   title: computed(() => t('documents.title')),
 })
-
-const documentStore = useDocumentsStore()
 
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
@@ -23,6 +23,8 @@ const sort = ref<SortingValues>({
 const { error, execute } = await useAsyncData(() =>
   documentStore.GET_AllDocuments(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction))
 
+errorHandler(error)
+
 const handlePageChange = async (page: number) => {
   currentPage.value = page
   await execute()
@@ -32,7 +34,6 @@ const handleSortChange = async (sortingValues: SortingValues) => {
   sort.value.sortProperty = sortingValues.sortProperty
   await execute()
 }
-errorHandler(error)
 </script>
 
 <template>
