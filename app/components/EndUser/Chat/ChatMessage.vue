@@ -64,7 +64,7 @@ const tableData = computed(() => {
   }
 
   const tableLines = lines.slice(tableStartIndex)
-  const headers = tableLines[0].split('|').filter(cell => cell.trim()).map(cell => cell.trim())
+  const headers = tableLines[0]?.split('|').filter(cell => cell.trim()).map(cell => cell.trim())
   const body = tableLines.slice(2)
     .filter(line => line.includes('|') && !line.replace(/\|/g, '').trim().match(/^[-\s]+$/))
     .map(row => row.split('|').filter(cell => cell.trim()).map(cell => cell.trim()))
@@ -530,31 +530,32 @@ watchEffect(() => {
 }
 
 .dark {
-  :deep(table) {
-    box-shadow: 0 0 0 1px var(--color-primary-700);
-  }
+  & .table-message-container {
+    ::v-deep(table) {
+      box-shadow: 0 0 0 1px var(--color-primary-700);
+    }
 
-  :deep(th, td) {
-    border-color: var(--color-primary-700);
-    background-color: red;
-  }
+    ::v-deep(th, td) {
+      border-color: var(--color-primary-700);
+    }
 
-  :deep(th) {
-    background-color: var(--color-primary-800);
-    color: var(--color-primary-100);
-  }
+    ::v-deep(th) {
+      background-color: var(--color-primary-800);
+      color: var(--color-primary-100);
+    }
 
-  :deep(td) {
-    background-color: var(--color-primary-900);
-    color: var(--color-primary-100);
-  }
+    ::v-deep(td) {
+      background-color: var(--color-primary-900);
+      color: var(--color-primary-100);
+    }
 
-  :deep(tr:nth-child(even) td) {
-    background-color: var(--color-primary-800);
-  }
+    ::v-deep(tr:nth-child(even) td) {
+      background-color: var(--color-primary-800);
+    }
 
-  :deep(tr:hover td) {
-    background-color: var(--color-primary-700);
+    ::v-deep(tr:hover td) {
+      background-color: var(--color-primary-700);
+    }
   }
 
   & .usermessage {
