@@ -60,6 +60,7 @@ export default {
     max_length: '最大文字数は {max} です',
   },
   chat: {
+    llm_chat: 'LLMチャット',
     user: 'ユーザー',
     assistant: 'アシスタント',
     messages: 'メッセージ',

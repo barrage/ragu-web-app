@@ -63,6 +63,7 @@ export default {
     max_length: 'The maximum number of characters is {max}',
   },
   chat: {
+    llm_chat: 'LLM Chat',
     user: 'User',
     assistant: 'Assistant',
     messages: 'Messages',

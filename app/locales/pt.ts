@@ -60,6 +60,7 @@ export default {
   },
 
   chat: {
+    llm_chat: 'Chat LLM',
     user: 'Usuário',
     assistant: 'Assistente',
     messages: 'Mensagens',

@@ -192,21 +192,6 @@ aside {
   }
 }
 
-/* == */
-.typing-effect {
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid black;
-  display: inline-block;
-  font-family: 'Roboto', sans-serif;
-  max-width: max-content;
-  color: var(--color-primary-800);
-  font-weight: 600;
-  animation:
-    typing 1.5s steps(30, end) forwards,
-    blink 0.75s step-end infinite;
-}
-
 .history {
   margin-top: 1.25rem;
   font-size: var(--font-size-fluid-2);
@@ -222,16 +207,6 @@ aside {
   margin-left: auto;
   transition: all 0.3s ease;
   transform: translateX(5px);
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-    border: none;
-  }
 }
 
 .dark {

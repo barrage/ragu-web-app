@@ -216,16 +216,7 @@ aside {
 }
 
 .typing-effect {
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid black;
-  display: inline-block;
-  max-width: max-content;
   color: var(--color-primary-800);
-  font-weight: bold;
-  animation:
-    typing 1.5s steps(30, end) forwards,
-    blink 0.75s step-end infinite;
 }
 
 .sidebar-head-title {
@@ -233,16 +224,6 @@ aside {
   justify-content: space-between;
   align-items: center;
   padding-bottom: var(--spacing-fluid-4-xs);
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-    border: none;
-  }
 }
 
 .feature-container {

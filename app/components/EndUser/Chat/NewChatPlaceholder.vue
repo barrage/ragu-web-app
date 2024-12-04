@@ -18,7 +18,9 @@ const activeAgentLength = computed(() => {
       height="64px"
       class="ai-logo"
     />
-    <h5>LLM Chat</h5>
+    <h5 class="typing-effect">
+      {{ $t('chat.llm_chat') }}
+    </h5>
     <p class="description">
       {{ $t('chat.newChat.description') }}
     </p>

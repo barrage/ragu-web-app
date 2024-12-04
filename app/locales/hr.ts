@@ -63,6 +63,7 @@ export default {
   },
 
   chat: {
+    llm_chat: 'LLM razgovor',
     user: 'Korisnik',
     assistant: 'Asistent',
     messages: 'Poruke',
