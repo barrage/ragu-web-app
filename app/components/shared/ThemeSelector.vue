@@ -2,6 +2,10 @@
 import { useThemeStore } from '~/stores/theme'
 import PalleteIcon from '~/assets/icons/svg/palette-theme.svg'
 
+defineProps<{
+  loginLayout?: boolean
+}>()
+
 const popperOptions = {
   placement: 'bottom-end',
   modifiers: [
@@ -79,7 +83,11 @@ const themeOptions = ref([
 <template>
   <ClientOnly>
     <el-dropdown trigger="hover" :popper-options="popperOptions">
-      <el-button class="theme-switch-button " size="small">
+      <el-button
+        class="theme-switch-button"
+        :class="{ 'theme-switch-button--login': loginLayout }"
+        size="small"
+      >
         <PalleteIcon size="20px" />
       </el-button>
       <template #dropdown>
@@ -145,6 +153,12 @@ const themeOptions = ref([
   &:hover {
     background: var(--color-primary-100);
   }
+  &--login {
+    color: var(--color-primary-600);
+    @include viewport-m {
+      color: var(--color-primary-300);
+    }
+  }
 }
 
 .dark {
@@ -153,6 +167,12 @@ const themeOptions = ref([
     &:hover {
       color: var(--color-primary-0);
       background: var(--color-primary-600);
+    }
+    &--login {
+      color: var(--color-primary-300);
+      @include viewport-m {
+        color: var(--color-primary-600);
+      }
     }
   }
   & .color-section {

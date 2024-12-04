@@ -2,7 +2,10 @@
 import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 
-useThemeStore()
+interface Emits {
+  (event: 'redirection'): void
+}
+const emits = defineEmits<Emits>()
 
 definePageMeta({
   layout: 'login-layout',
@@ -11,37 +14,36 @@ const { t } = useI18n()
 useHead({
   title: computed(() => t('login.title')),
 })
+
+const showTypingEffect = ref(false)
+
+onMounted(() => showDelayedTypingEffect())
+
+function showDelayedTypingEffect() {
+  // Wait for in-animation
+  setTimeout(() => showTypingEffect.value = true, 1300)
+}
 </script>
 
 <template>
   <div class="login-page-container">
-    <header>
-      <BarrageLogo
-        width="110px"
-        height="48px"
-      />
-      <div class="header-right">
-        <ThemeSelector />
-        <div class="vertical-divider" />
-        <LightDarkModeSelector />
-        <div class="vertical-divider" />
-        <LocalizationSelector />
-      </div>
-    </header>
     <div class="login-wrapper">
       <div class="login-header">
         <div class="logo-icon-wrapper">
           <BrainIcon size="42px" />
         </div>
 
-        <h4 class="login-title typing-effect">
-          {{ $t('login.title') }}
-        </h4>
-        <p class="login-description">
-          {{ $t('login.description') }}
-        </p>
+        <template v-if="showTypingEffect">
+          <h4 class="login-title typing-effect">
+            {{ $t('login.title') }}
+          </h4>
+          <p class="login-description typing-effect">
+            {{ $t('login.description') }}
+          </p>
+        </template>
+        <div v-else style="height: calc(70px + 1rem);" />
       </div>
-      <LlmOauthLogin />
+      <LlmOauthLogin @redirection="emits('redirection')" />
     </div>
   </div>
 </template>
@@ -49,48 +51,22 @@ useHead({
 <style lang="scss" scoped>
 .login-page-container {
   width: 100%;
-  min-height: 100%;
-  grid-column: span 12;
+  min-height: calc(100% - 72px - 0.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  & header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-area: header;
-    position: sticky;
-    top: 0;
-    gap: clamp(4.375rem, -6.699rem + 47.2492vw, 50rem);
-    padding: 1rem;
-    background-color: transparent;
-    min-height: fit-content;
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      column-gap: 0.75rem;
-    }
-    .vertical-divider {
-      width: 1px;
-      height: 1.75rem;
-      background: var(--color-primary-300);
-    }
+  @include viewport-m {
+    width: 37%;
   }
 
-  & .login-wrapper {
+  .login-wrapper {
     max-width: 400px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin: auto;
-    margin-top: 2.5rem;
-    border: 0.5px solid var(--color-primary-300);
-    border-radius: 10px;
-    box-shadow:
-      0 2px 4px var(--color-primary-200),
-      0 3px 10px var(--color-primary-200);
-
     padding: 1.5rem;
-    background: var(--color-primary-100);
 
     & .login-header {
       display: flex;
@@ -101,7 +77,7 @@ useHead({
 
     & .login-title {
       min-height: fit-content;
-      color: var(--color-primary-700);
+      color: var(--color-primary-800);
       line-height: normal;
       margin: auto;
     }
@@ -121,33 +97,8 @@ useHead({
   border-radius: 15%;
 }
 
-.typing-effect {
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid var(--color-primary-900);
-  display: inline-block;
-  max-width: max-content;
-  animation:
-    typing 1s steps(30, end) forwards,
-    blink 0.1s step-end infinite;
-}
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-    border: none;
-  }
-}
-
 .dark {
   & .login-wrapper {
-    background: var(--color-primary-800);
-    border: 1px solid var(--color-primary-600);
-    border-top: 2px solid var(--color-primary-600);
-
-    box-shadow: none;
     & .login-title {
       color: var(--color-primary-100);
     }

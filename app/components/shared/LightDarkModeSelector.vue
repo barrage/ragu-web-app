@@ -2,6 +2,10 @@
 import MoonIcon from '~/assets/icons/svg/moon.svg'
 import SunIcon from '~/assets/icons/svg/sun.svg'
 
+defineProps<{
+  loginLayout?: boolean
+}>()
+
 const themeStore = useThemeStore()
 const toggleDark = () => {
   (themeStore.isDarkMode = !themeStore.isDarkMode)
@@ -13,6 +17,7 @@ const isDarkMode = useDark()
 <template>
   <el-button
     class="theme-switch-button"
+    :class="{ 'theme-switch-button--login': loginLayout }"
     size="small"
     @click="toggleDark()"
   >
@@ -40,6 +45,12 @@ const isDarkMode = useDark()
   &:hover {
     background: var(--color-primary-100);
   }
+  &--login {
+    color: var(--color-primary-600);
+    @include viewport-m {
+      color: var(--color-primary-300);
+    }
+  }
 }
 
 .dark {
@@ -48,6 +59,12 @@ const isDarkMode = useDark()
     &:hover {
       color: var(--color-primary-200);
       background: var(--color-primary-600);
+    }
+    &--login {
+      color: var(--color-primary-300);
+      @include viewport-m {
+        color: var(--color-primary-600);
+      }
     }
   }
 }
