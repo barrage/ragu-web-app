@@ -148,7 +148,7 @@ onUnmounted(() => {
 
 <template>
   <el-card class="edit-agent-card is-primary">
-    <h4 class="typing-effect title-color section-title">
+    <h4 class="section-title">
       {{ agentStore.editMode ? t('agents.titles.edit') : t('agents.titles.details') }}
     </h4>
 

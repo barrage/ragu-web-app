@@ -39,28 +39,28 @@ const isChatGroupEmpty = (chatGroup: Chat[] | null) => {
 <template>
   <div class="chat-display scrollable-element">
     <div v-if="!isChatGroupEmpty(groupedChats.today)">
-      <h6 class="chat-group-title">
+      <h6 class="chat-group-title typing-effect">
         {{ $t('timePeriod.today') }}
       </h6>
       <ChatList :chats="groupedChats.today" />
     </div>
 
     <div v-if="!isChatGroupEmpty(groupedChats.yesterday)">
-      <h6 class="chat-group-title">
+      <h6 class="chat-group-title typing-effect">
         {{ $t('timePeriod.yesterday') }}
       </h6>
       <ChatList :chats="groupedChats.yesterday" />
     </div>
 
     <div v-if="!isChatGroupEmpty(groupedChats.last7days)">
-      <h6 class="chat-group-title">
+      <h6 class="chat-group-title typing-effect">
         {{ $t('timePeriod.last7days') }}
       </h6>
       <ChatList :chats="groupedChats.last7days" />
     </div>
 
     <div v-if="!isChatGroupEmpty(groupedChats.last30days)">
-      <h6 class="chat-group-title">
+      <h6 class="chat-group-title typing-effect">
         {{ $t('timePeriod.last30days') }}
       </h6>
       <ChatList :chats="groupedChats.last30days" />
@@ -71,7 +71,7 @@ const isChatGroupEmpty = (chatGroup: Chat[] | null) => {
         v-for="(chats, month) in groupedChats.monthsThisYear"
         :key="month"
       >
-        <h6 class="chat-group-title">
+        <h6 class="chat-group-title typing-effect">
           {{ month }}
         </h6>
         <ChatList :chats="chats" />
@@ -79,7 +79,7 @@ const isChatGroupEmpty = (chatGroup: Chat[] | null) => {
     </template>
 
     <div v-if="!isChatGroupEmpty(groupedChats.lastYear)">
-      <h6 class="chat-group-title">
+      <h6 class="chat-group-title  typing-effect">
         {{ $t('timePeriod.lastYear') }}
       </h6>
       <ChatList :chats="groupedChats.lastYear" />

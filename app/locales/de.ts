@@ -62,6 +62,7 @@ export default {
   },
 
   chat: {
+    llm_chat: 'LLM-Chat',
     user: 'Benutzer',
     assistant: 'Assistent',
     messages: 'Nachrichten',
