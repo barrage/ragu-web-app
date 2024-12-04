@@ -3,6 +3,11 @@ import type { OAuthProvider } from '~/types/auth'
 import GoogleLogo from '~/assets/icons/svg/google.svg'
 import MicrosoftLogo from '~/assets/icons/svg/microsoft.svg'
 
+interface Emits {
+  (event: 'redirection'): void
+}
+const emits = defineEmits<Emits>()
+
 // CONSTANTS
 const runtimeConfig = useRuntimeConfig()
 
@@ -87,7 +92,9 @@ async function socialSignIn(provider: OAuthProvider) {
   }
 
   if (redirectUrl) {
-    window.location.href = redirectUrl
+    emits('redirection')
+    // Wait for out-animation
+    setTimeout(() => window.location.href = redirectUrl, 1000)
   }
 }
 </script>
@@ -123,6 +130,7 @@ async function socialSignIn(provider: OAuthProvider) {
 
   min-width: max-content;
   & .social {
+    height: 58px;
     cursor: pointer;
     display: flex;
     align-items: center;

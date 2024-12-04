@@ -2,6 +2,10 @@
 import LocaleIcon from '~/assets/icons/svg/locale.svg'
 import CheckIcon from '~/assets/icons/svg/check.svg'
 
+defineProps<{
+  loginLayout?: boolean
+}>()
+
 const popperOptions = {
   placement: 'bottom-end',
   modifiers: [
@@ -26,7 +30,11 @@ const { setLocale, locales, locale } = useI18n()
 <template>
   <ClientOnly>
     <el-dropdown trigger="hover" :popper-options="popperOptions">
-      <el-button class="locale-switch-button " size="small">
+      <el-button
+        class="locale-switch-button "
+        :class="{ 'locale-switch-button--login': loginLayout }"
+        size="small"
+      >
         <LocaleIcon size="20px" />
       </el-button>
       <template #dropdown>
@@ -65,6 +73,12 @@ const { setLocale, locales, locale } = useI18n()
   &:hover {
     background: var(--color-primary-100);
   }
+  &--login {
+    color: var(--color-primary-600);
+    @include viewport-m {
+      color: var(--color-primary-300);
+    }
+  }
 }
 .language-option {
   display: flex;
@@ -86,6 +100,12 @@ const { setLocale, locales, locale } = useI18n()
     &:hover {
       color: var(--color-primary-200);
       background: var(--color-primary-600);
+    }
+    &--login {
+      color: var(--color-primary-300);
+      @include viewport-m {
+        color: var(--color-primary-600);
+      }
     }
   }
   & .language-option {
