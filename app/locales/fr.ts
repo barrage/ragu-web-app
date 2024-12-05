@@ -667,6 +667,7 @@ export default {
     user_chats_history: 'Historique des conversations',
     empty_chats_title: 'Aucun chat disponible',
     empty_chats_description: 'Cet utilisateur n\'a pas encore initié de conversation. Tous les chats futurs apparaîtront ici.',
+    invite_user_description: 'Le formulaire d\'invitation utilisateur vous permet d\'inviter des utilisateurs en saisissant leurs coordonnées et en attribuant des rôles. Les utilisateurs invités peuvent se connecter avec leur e-mail via Google OAuth. Les rôles définissent l\'accès, du contrôle complet d\'administrateur à l\'utilisation limitée de l\'application pour les chats avec des agents LLM.',
     delete_user: {
       title: 'Supprimer l\'Utilisateur',
       description: 'Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.',
@@ -724,6 +725,8 @@ export default {
       email_placeholder: 'Entrez l\'adresse e-mail',
       role: 'Rôle',
       role_placeholder: 'Sélectionnez un rôle pour l\'utilisateur',
+      username: 'Nom d\'utilisateur',
+      username_placeholder: 'Entrez le nom d\'utilisateur',
       submit: 'Valider',
       cancel: 'Annuler',
       rules: {
@@ -735,6 +738,12 @@ export default {
       create_error_title: 'Erreur d\'ajout d\'utilisateur',
       create_error_description: 'Échec de l\'ajout d\'un nouvel utilisateur.',
       create_error_existing_user_description: 'L\'utilisateur existe déjà.',
+    },
+    roles: {
+      admin_label: 'Administrateur',
+      admin_description: 'Accès complet au back-office et aux opérations de l\'application.',
+      user_label: 'Utilisateur',
+      user_description: 'Accès à l\'application utilisateur final pour discuter avec des agents IA.',
     },
     user_card: {
       role: 'Rôle',

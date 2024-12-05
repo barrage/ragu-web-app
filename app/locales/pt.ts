@@ -667,6 +667,7 @@ export default {
     user_chats_history: 'Histórico de conversas',
     empty_chats_title: 'Nenhum chat disponível',
     empty_chats_description: 'Este usuário ainda não iniciou nenhuma conversa. Todos os chats futuros aparecerão aqui.',
+    invite_user_description: 'O Formulário de Convite de Usuário permite convidar usuários inserindo seus detalhes e atribuindo funções. Usuários convidados podem fazer login com seu e-mail via Google OAuth. As funções definem o acesso, desde o controle total do administrador até o uso limitado do aplicativo para chats com agentes LLM.',
     delete_user: {
       title: 'Excluir Usuário',
       description: 'Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita.',
@@ -724,6 +725,8 @@ export default {
       email_placeholder: 'Insira o endereço de e-mail',
       role: 'Função',
       role_placeholder: 'Selecione uma função para o usuário',
+      username: 'Nome de usuário',
+      username_placeholder: 'Insira o nome de usuário',
       submit: 'Confirmar',
       cancel: 'Cancelar',
       rules: {
@@ -735,6 +738,12 @@ export default {
       create_error_title: 'Erro ao adicionar usuário',
       create_error_description: 'Não foi possível adicionar um novo usuário.',
       create_error_existing_user_description: 'O usuário já existe.',
+    },
+    roles: {
+      admin_label: 'Administrador',
+      admin_description: 'Acesso total ao back-office e às operações do aplicativo.',
+      user_label: 'Usuário',
+      user_description: 'Acesso ao aplicativo para usuários finais para conversar com agentes de IA.',
     },
     user_card: {
       role: 'Função',
