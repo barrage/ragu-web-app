@@ -1,63 +1,54 @@
 <script lang="ts" setup>
 // IMPORTS
 import PanelIcon from '~/assets/icons/svg/panel.svg'
-import BrainIcon from '~/assets/icons/svg/brain.svg'
-import AddIcon from '~/assets/icons/svg/add.svg'
 import QuestionIcon from '~/assets/icons/svg/question.svg'
 
 // CONSTANTS
 const navigationStore = useNavigationStore()
-const route = useRoute()
+const { isSidebarCollapsed } = storeToRefs(navigationStore)
 </script>
 
 <template>
   <aside>
     <nav class="navigation-container">
       <div class="sidebar-head-section">
-        <p v-if="!navigationStore.isSidebarCollapsed" class="typing-effect">
+        <p v-if="!isSidebarCollapsed" class="typing-effect sidebar-title">
           {{ $t('chatDock') }}
         </p>
         <ElTooltip
-          content="Toggle sidebar"
-          :show-after="700"
+          :content="$t('chat.toggle_sidebar')"
+          :show-after="1500"
+          :hide-after="0"
+          :disabled="!isSidebarCollapsed"
           :enterable="false"
           placement="right"
         >
-          <el-button class="toggle-btn" @click="navigationStore.toggleSidebar">
+          <ElButton class="toggle-btn" @click="navigationStore.toggleSidebar">
             <PanelIcon size="24px" />
-          </el-button>
+          </ElButton>
         </ElTooltip>
       </div>
-      <div class="horizontal-divider" />
-      <ElTooltip
-        content="Pokreni novi chat"
-        :show-after="1500"
-        :enterable="false"
-        placement="right"
-      >
-        <LlmLink
-          to="/"
-          type="link"
-          class="new-chat"
-          :class="{ opened: !navigationStore.isSidebarCollapsed, selected: route.path === '/' }"
-        >
-          <BrainIcon size="24px" />  <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span> <AddIcon
-            v-if="!navigationStore.isSidebarCollapsed"
-            size="24px"
-            class="add-icon"
-          />
-        </LlmLink>
-      </ElTooltip>
 
-      <ChatsDisplay v-if="!navigationStore.isSidebarCollapsed" />
+      <div class="horizontal-divider" />
+
+      <ChatsDisplay />
       <div class="get-help-section">
-        <LlmLink
-          to="/login"
-          type="link"
-          class="gel-help-content"
+        <ElTooltip
+          :content="$t('getHelp.title')"
+          :show-after="1500"
+          :hide-after="0"
+          :disabled="!isSidebarCollapsed"
+          :enterable="false"
+          placement="right"
         >
-          <span v-if="!navigationStore.isSidebarCollapsed">{{ $t('getHelp.title') }}</span> <QuestionIcon size="24px" />
-        </LlmLink>
+          <LlmLink
+            to="/login"
+            type="link"
+            class="gel-help-content"
+          >
+            <span v-if="!isSidebarCollapsed">{{ $t('getHelp.title') }}</span> <QuestionIcon size="24px" />
+          </LlmLink>
+        </ElTooltip>
       </div>
     </nav>
   </aside>
@@ -74,6 +65,10 @@ aside {
   margin: 1.25rem 1rem 1rem 1rem;
   box-shadow: 0 0.25rem 0.5rem var(--color-primary-300);
   color: var(--color-primary-900);
+
+  .sidebar-title {
+    color: var(--color-primary-900);
+  }
 
   .navigation-container {
     display: flex;
@@ -92,49 +87,6 @@ aside {
 
   .chat-icons {
     align-items: center;
-  }
-
-  & .new-chat {
-    margin-inline: auto;
-    height: 3rem;
-    transition: all 0.2s ease-out;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-primary-900);
-    text-wrap: nowrap;
-    width: 100%;
-    margin-top: 1rem;
-    padding-inline: 0.25rem;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border-radius: 8px;
-    background-color: transparent;
-    font-size: var(--font-size-fluid-3);
-
-    &.selected {
-      background: var(--color-primary-300);
-      color: var(--color-primary-900);
-    }
-
-    &:hover {
-      background: var(--color-primary-300);
-    }
-    &.opened {
-      justify-content: flex-start;
-
-      &:hover {
-        & .add-icon {
-          opacity: 1;
-          transform: translateX(-5px);
-        }
-      }
-    }
-
-    &:deep(.llm-link--template) {
-      width: 100%;
-    }
   }
 
   .toggle-btn {
@@ -166,29 +118,16 @@ aside {
     border: 1px solid var(--color-primary-700);
     box-shadow: 0 4px 8px var(--color-primary-700);
     color: var(--color-primary-100);
+
+    .sidebar-title {
+      color: var(--color-primary-100);
+    }
   }
   .toggle-btn {
     color: var(--color-primary-100);
     &:hover {
       background: var(--color-primary-700);
     }
-  }
-  .new-chat {
-    color: var(--color-primary-100);
-    &.selected {
-      background: var(--color-primary-700);
-      color: var(--color-primary-0);
-    }
-    &.opened {
-      color: var(--color-primary-100);
-    }
-
-    &:hover {
-      background: var(--color-primary-700);
-    }
-  }
-  & .typing-effect {
-    color: var(--color-primary-200);
   }
 }
 
@@ -201,12 +140,6 @@ aside {
   justify-content: space-between;
   align-items: center;
   padding-bottom: var(--spacing-fluid-4-xs);
-}
-.add-icon {
-  opacity: 0;
-  margin-left: auto;
-  transition: all 0.3s ease;
-  transform: translateX(5px);
 }
 
 .dark {
