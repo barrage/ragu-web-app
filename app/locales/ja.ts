@@ -664,6 +664,7 @@ export default {
     user_chats_history: '会話履歴 (Kaiwa Rireki)',
     empty_chats_title: 'チャットは利用できません',
     empty_chats_description: 'このユーザーはまだ会話を開始していません。今後のチャットはここに表示されます',
+    invite_user_description: 'ユーザー招待フォームでは、ユーザーの詳細を入力して役割を割り当てることにより、ユーザーを招待できます。招待されたユーザーは、Google OAuthを使用してメールでログインできます。役割により、管理者の完全な制御からLLMエージェントとのチャットのためのアプリの制限された使用まで、アクセスが定義されます。',
     delete_user: {
       title: 'ユーザーを削除',
       description: 'このユーザーを削除してもよろしいですか？この操作は取り消せません。',
@@ -721,6 +722,8 @@ export default {
       email_placeholder: 'メールアドレスを入力してください',
       role: '役割',
       role_placeholder: 'ユーザーの役割を選択してください',
+      username: 'ユーザー名',
+      username_placeholder: 'ユーザー名を入力してください',
       submit: '確認',
       cancel: 'キャンセル',
       rules: {
@@ -728,7 +731,12 @@ export default {
         invalid_email: '無効なメール形式です',
       },
     },
-
+    roles: {
+      admin_label: '管理者',
+      admin_description: 'バックオフィスとアプリ操作への完全なアクセス。',
+      user_label: 'ユーザー',
+      user_description: 'AIエージェントとチャットするためのエンドユーザーアプリへのアクセス。',
+    },
     notifications: {
       create_error_title: 'ユーザー追加エラー',
       create_error_description: '新しいユーザーの追加に失敗しました。',

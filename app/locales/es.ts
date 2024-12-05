@@ -667,6 +667,7 @@ export default {
     user_chats_history: 'Historial de conversaciones',
     empty_chats_title: 'No hay chats disponibles',
     empty_chats_description: 'Este usuario no ha iniciado ninguna conversación todavía. Todos los chats futuros aparecerán aquí.',
+    invite_user_description: 'El formulario de invitación de usuario le permite invitar usuarios ingresando sus detalles y asignando roles. Los usuarios invitados pueden iniciar sesión con su correo electrónico a través de Google OAuth. Los roles definen el acceso, desde el control total de administrador hasta el uso limitado de la aplicación para chats con agentes LLM.',
     delete_user: {
       title: 'Eliminar Usuario',
       description: '¿Está seguro de que desea eliminar este usuario? Esta acción no se puede deshacer.',
@@ -724,6 +725,8 @@ export default {
       email_placeholder: 'Introduce la dirección de correo',
       role: 'Rol',
       role_placeholder: 'Seleccione un rol para el usuario',
+      username: 'Nombre de usuario',
+      username_placeholder: 'Ingrese nombre de usuario',
       submit: 'Confirmar',
       cancel: 'Cancelar',
       rules: {
@@ -736,7 +739,12 @@ export default {
       create_error_description: 'No se pudo agregar un nuevo usuario.',
       create_error_existing_user_description: 'El usuario ya existe.',
     },
-
+    roles: {
+      admin_label: 'Administrador',
+      admin_description: 'Acceso completo al back office y operaciones de la aplicación.',
+      user_label: 'Usuario',
+      user_description: 'Acceso a la aplicación para usuarios finales para chatear con agentes de IA.',
+    },
     user_card: {
       role: 'Rol',
       status: 'Estado',

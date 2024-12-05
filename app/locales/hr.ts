@@ -306,10 +306,9 @@ export default {
     invite_user: 'Dodaj korisnika',
     all_users: 'Svi korisnici',
     user_chats_history: 'Povijest razgovora',
-
     empty_chats_title: 'Nema dostupnih razgovora',
     empty_chats_description: 'Ovaj korisnik još nije započeo nijedan razgovor. Svi budući razgovori će se ovdje prikazati.',
-
+    invite_user_description: 'Obrazac za pozivanje korisnika omogućuje pozivanje korisnika unosom njihovih podataka i dodjeljivanjem uloga. Pozvani korisnici mogu se prijaviti putem svoje e-pošte putem Google OAuth-a. Uloge definiraju pristup, od pune administrativne kontrole do ograničene uporabe aplikacije za chat s LLM agentima.',
     delete_user: {
       title: 'Izbriši Korisnika',
       description: 'Jeste li sigurni da želite izbrisati ovog korisnika? Ova radnja se ne može poništiti.',
@@ -367,6 +366,8 @@ export default {
       email_placeholder: 'Unesite e-mail adresu',
       role: 'Uloga',
       role_placeholder: 'Odaberite ulogu za korisnika',
+      username: 'Korisničko ime',
+      username_placeholder: 'Unesite korisničko ime',
       submit: 'Potvrdi',
       cancel: 'Odustani',
       rules: {
@@ -375,6 +376,12 @@ export default {
       },
     },
 
+    roles: {
+      admin_label: 'Administrator',
+      admin_description: 'Puni pristup backofficeu i upravljanju aplikacijom.',
+      user_label: 'Korisnik',
+      user_description: 'Pristup aplikaciji za krajnjeg korisnika za razgovor s AI agentima.',
+    },
     notifications: {
       create_error_title: 'Greška prilikom dodavanja korisnika',
       create_error_description: 'Nije moguće dodati novog korisnika.',

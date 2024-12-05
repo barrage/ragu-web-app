@@ -303,6 +303,7 @@ export default {
     user_chats_history: 'Conversation History',
     empty_chats_title: 'No Chats Available',
     empty_chats_description: 'This user has not initiated any conversations yet. All future chats will appear here.',
+    invite_user_description: 'The Invite User Form allows you to invite users by entering their details and assigning roles. Invited users can log in with their email via Google OAuth. Roles define access, from full admin control to limited app usage for LLM agent chats.',
     delete_user: {
       title: 'Delete User',
       description: 'Are you sure you want to delete this user? This action cannot be undone.',
@@ -360,6 +361,8 @@ export default {
       email_placeholder: 'Enter email address',
       role: 'Role',
       role_placeholder: 'Select a role for the user',
+      username: 'Username',
+      username_placeholder: 'Enter username',
       submit: 'Submit',
       cancel: 'Cancel',
       rules: {
@@ -367,7 +370,12 @@ export default {
         invalid_email: 'Invalid email format',
       },
     },
-
+    roles: {
+      admin_label: 'Administrator',
+      admin_description: 'Full access to back-office and app operations.',
+      user_label: 'User',
+      user_description: 'Access to end-user app for chatting with AI agents.',
+    },
     notifications: {
       create_error_title: 'User Addition Error',
       create_error_description: 'Failed to add a new user.',

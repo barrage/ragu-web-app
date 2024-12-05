@@ -666,6 +666,7 @@ export default {
     user_chats_history: 'Gesprächsverlauf',
     empty_chats_title: 'Keine Chats verfügba',
     empty_chats_description: 'Dieser Benutzer hat noch keine Unterhaltungen gestartet. Alle zukünftigen Chats werden hier angezeigt.',
+    invite_user_description: 'Das Benutzer Einladeformular ermöglicht es Ihnen, Benutzer einzuladen, indem Sie deren Details eingeben und Rollen zuweisen. Eingeladene Benutzer können sich mit ihrer E-Mail über Google OAuth anmelden. Rollen definieren den Zugriff, von voller Admin-Kontrolle bis hin zur eingeschränkten Nutzung der App für LLM-Agenten-Chats.',
     delete_user: {
       title: 'Benutzer löschen',
       description: 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
@@ -723,6 +724,8 @@ export default {
       email_placeholder: 'E-Mail-Adresse eingeben',
       role: 'Rolle',
       role_placeholder: 'Wählen Sie eine Rolle für den Benutzer',
+      username: 'Benutzername',
+      username_placeholder: 'Benutzernamen eingeben',
       submit: 'Bestätigen',
       cancel: 'Abbrechen',
       rules: {
@@ -730,7 +733,12 @@ export default {
         invalid_email: 'Ungültiges E-Mail-Format',
       },
     },
-
+    roles: {
+      admin_label: 'Administrator',
+      admin_description: 'Voller Zugriff auf Backoffice und App-Operationen.',
+      user_label: 'Benutzer',
+      user_description: 'Zugriff auf die Endbenutzer-App zum Chatten mit KI-Agenten.',
+    },
     notifications: {
       create_error_title: 'Fehler beim Hinzufügen eines Benutzers',
       create_error_description: 'Das Hinzufügen eines neuen Benutzers ist fehlgeschlagen.',
