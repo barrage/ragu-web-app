@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 import type { Chat } from '~/types/chat'
 
 const props = defineProps<{
   chats: Chat[]
 }>()
 
+const { isSidebarCollapsed } = storeToRefs(useNavigationStore())
 const route = useRoute()
 const chatId = computed(() => {
   return route.params.chatId
@@ -14,30 +16,34 @@ const chatId = computed(() => {
 
 <template>
   <div class="chat-list">
-    <LlmLink
+    <ElTooltip
       v-for="chat in props.chats"
       :key="chat.id"
-      :to="`/c/${chat.id}`"
-      type="link"
-      class="chat-item"
-      :class="{ selected: chatId === chat.id }"
+      :show-after="isSidebarCollapsed ? 100 : 1500"
+      :hide-after="0"
+      :enterable="false"
+      placement="right"
     >
-      <ElTooltip
-        :show-after="1500"
-        :enterable="false"
-        placement="right"
-      >
-        <template #content>
-          <div class="chat-tooltip">
-            <span>{{ chat.title }}</span>
-            <span>{{ formatDate(chat.createdAt) }}</span>
-          </div>
-        </template>
-        <div class="chat-content">
-          <span class="chat-title">{{ chat.title || 'Chat' }}</span>
+      <template #content>
+        <div class="chat-tooltip">
+          <span>{{ chat.title }}</span>
+          <span>{{ formatDate(chat.createdAt) }}</span>
         </div>
-      </ElTooltip>
-    </LlmLink>
+      </template>
+      <LlmLink
+        :to="`/c/${chat.id}`"
+        type="link"
+        class="chat-item"
+        :class="{ 'selected': chatId === chat.id, 'collapsed-link': isSidebarCollapsed }"
+      >
+        <div class="chat-content">
+          <span v-if="isSidebarCollapsed">
+            <ChatIcon size="24px" />
+          </span>
+          <span v-else class="chat-title">{{ chat.title || $t('chat.chat') }}</span>
+        </div>
+      </LlmLink>
+    </ElTooltip>
   </div>
 </template>
 
@@ -51,6 +57,7 @@ const chatId = computed(() => {
 .chat-item {
   display: flex;
   align-items: center;
+  min-height: 40px;
   padding: 4px;
   padding-inline-start: 8px;
   font-size: var(--font-size-desktop-2);
@@ -62,6 +69,9 @@ const chatId = computed(() => {
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  scroll-snap-align: start;
+  margin-right: 3px;
+
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
@@ -99,6 +109,11 @@ const chatId = computed(() => {
   justify-content: space-between;
   width: 100%;
   position: relative;
+}
+
+.collapsed-link {
+  display: flex;
+  justify-content: center;
 }
 
 .chat-title {

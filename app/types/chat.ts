@@ -1,5 +1,6 @@
 import type { SingleAgent } from '~/types/agent.ts'
 import type { User } from '~/types/users'
+import type { MonthName } from '~/components/EndUser/Chat/ChatListTimeLabel.vue'
 
 export interface Message {
   id: string
@@ -40,8 +41,9 @@ export interface GroupedChats {
   yesterday: Chat[]
   last7days: Chat[]
   last30days: Chat[]
-  monthsThisYear: { [month: string]: Chat[] }
+  monthsThisYear: Partial<Record<MonthName, Chat[]>>
   lastYear: Chat[]
+  older: Chat[]
 }
 export interface ChatsResponse {
   items: Chat[]
