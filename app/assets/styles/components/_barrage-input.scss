@@ -166,7 +166,23 @@
     &__prefix {
       left: var(--input-suffix-position-right);
     }
+
+    // `--suffix` is slot, `__suffix` is prop
+    &--suffix {
+      .barrage-input {
+        &__suffix {
+          width: auto;
+          height: auto;
+        }
+      }
+      .barrage-input {
+        &__inner {
+          padding-right: 3.5rem;
+        }
+      }
+    }
   }
+
   .barrage-input--large {
     font-size: var(--font-size-fluid-3);
     .barrage-input {

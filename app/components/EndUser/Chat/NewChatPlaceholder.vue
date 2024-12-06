@@ -25,7 +25,9 @@ const activeAgentLength = computed(() => {
       {{ $t('chat.newChat.description') }}
     </p>
     <div class="about-container">
-      <p> {{ $t('chat.newChat.choseFrom') }}</p>
+      <p class="chose-from-label">
+        {{ $t('chat.newChat.choseFrom') }}
+      </p>
       <div
         class="suggestions-container scrollable-element"
         :class="
@@ -95,8 +97,7 @@ const activeAgentLength = computed(() => {
   p {
     margin-bottom: 1.25rem;
     font-size: 1rem;
-    opacity: 0.7;
-    color: var(--color-primary-600);
+    color: var(--color-primary-700);
   }
 }
 .suggestions-container {
@@ -108,9 +109,11 @@ const activeAgentLength = computed(() => {
   justify-content: center;
   padding-bottom: 2rem;
   color: var(--color-primary-800);
+  scroll-snap-type: x mandatory;
+
   & .agent-select-card {
     flex: 0 0 calc(25% - 1rem);
-    min-width: 180px;
+    min-width: 200px;
     min-height: 175px;
   }
 }
@@ -135,7 +138,7 @@ const activeAgentLength = computed(() => {
     text-align: center;
 
     p {
-      color: var(--color-primary-200);
+      color: var(--color-primary-100);
     }
   }
   .suggestions-container {
