@@ -3,6 +3,7 @@ import PersonMailIcon from '~/assets/icons/svg/person-mail.svg'
 import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
+import AccountIcon from '~/assets/icons/svg/account.svg'
 import { StatusType } from '~/types/statusTypes'
 
 // CONSTANTS
@@ -26,7 +27,7 @@ const userProfileData = computed(() => {
 <template>
   <div class="profile-container">
     <div class="profile-top">
-      <div class="avatar" />
+      <AccountIcon size="80px" />
       <div class="profile-title">
         <h6>{{ userProfileData.name }}</h6>
         <div class="profile-avatar-wrapper">
@@ -97,16 +98,6 @@ const userProfileData = computed(() => {
   align-items: center;
   gap: 15px;
   margin-bottom: 3rem;
-}
-
-.avatar {
-  width: 80px;
-  height: 80px;
-  /*   background-image: url('../assets/images/login-img.jpg'); */
-  background-size: cover;
-  background-position: center;
-  border-radius: 50%;
-  border: 3px solid var(--color-primary-300);
 }
 
 .profile-title {

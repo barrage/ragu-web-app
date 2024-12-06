@@ -2,7 +2,7 @@
 import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import type { SingleAgent } from '~/types/agent.ts'
 
-const props = defineProps<{
+defineProps<{
   agent: SingleAgent | null
 }>()
 
@@ -10,22 +10,52 @@ const agentStore = useAgentStore()
 </script>
 
 <template>
-  <el-card
+  <ElCard
     v-if="agent?.active"
     class="agent-select-card"
     :class="{ 'is-accent': agent?.id === agentStore.selectedAgent?.id, 'selected': agent?.id === agentStore.selectedAgent?.id }"
-    @click="agentStore.setSelectedAgent(props.agent)"
+    @click="agentStore.setSelectedAgent(agent)"
   >
     <div class="agent-body-wrapper">
-      <div class="agent-name-wrapper">
-        <ChatAgentIcon size="32px" class="chat-agent-icon" />
-        <p class="agent-select-text">
-          {{ props.agent?.name }}
-        </p>
-      </div>
-      <span class="agent-description">{{ props.agent?.description }}</span>
+      <ElTooltip
+        :show-after="1500"
+        :hide-after="0"
+        :disabled="agent?.name.length <= 60"
+        :enterable="false"
+        placement="top"
+      >
+        <template #content>
+          <div class="tooltip-content-wrapper">
+            {{ agent?.name }}
+          </div>
+        </template>
+        <div class="agent-name-wrapper">
+          <ChatAgentIcon size="32px" class="chat-agent-icon" />
+          <p class="agent-select-text">
+            {{ formatStringMaxLenght(agent?.name, 60) }}
+          </p>
+        </div>
+      </ElTooltip>
+
+      <ElTooltip
+        :show-after="1500"
+        :hide-after="0"
+        :disabled="agent?.description.length <= 140"
+        :enterable="false"
+        placement="top"
+      >
+        <template #content>
+          <div class="tooltip-content-wrapper">
+            {{ agent?.description }}
+          </div>
+        </template>
+        <span class="agent-description">
+          {{ formatStringMaxLenght(agent?.description, 140) }}
+        </span>
+        <ElTooltip />
+      </eltooltip>
     </div>
-  </el-card>
+  </ElCard>
 </template>
 
 <style lang="scss" scoped>
@@ -33,6 +63,8 @@ const agentStore = useAgentStore()
   padding: 0.75rem;
   padding-bottom: 1rem;
   display: flex;
+  scroll-snap-align: start;
+
   &.selected {
     & .agent-select-text {
       color: var(--color-primary-900);
@@ -53,13 +85,14 @@ const agentStore = useAgentStore()
 
     & .agent-name-wrapper {
       display: flex;
-      align-items: center;
       gap: 0.5rem;
 
       & .chat-agent-icon {
+        align-self: baseline;
         min-width: max-content;
       }
       & .agent-select-text {
+        align-self: center;
         font-size: var(--font-size-desktop-3);
         gap: 1rem;
         text-align: left;
@@ -77,7 +110,7 @@ const agentStore = useAgentStore()
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 4;
+      -line-clamp: 4;
       white-space: normal;
     }
   }
@@ -91,6 +124,13 @@ const agentStore = useAgentStore()
       color: var(--color-primary-900);
     }
   }
+}
+
+.tooltip-content-wrapper {
+  width: max-content;
+  max-width: 200px;
+  text-wrap: wrap;
+  line-height: 18px;
 }
 
 .dark {

@@ -8,32 +8,29 @@ const { $getWs, $wsConnect, $wsSendChatMessage, $wsConnectionState, $wsSendIniti
 
 const agentStore = useAgentStore()
 const chatStore = useChatStore()
+const { currentChatId, isWebSocketStreaming, messages, wsToken } = storeToRefs(useChatStore())
 const isTokenFetching = ref(false)
 const message = ref('')
 const router = useRouter()
-
-const currentChatId = computed(() => {
-  return chatStore.currentChatId
-})
 
 const route = useRoute()
 
 const handleServerMessage = (data: string) => {
   let parsedData
-  const assistantMessage = chatStore?.messages?.find(
+  const assistantMessage = messages.value.find(
     msg => msg.id === 'currentlyStreaming',
   )
   try {
     parsedData = JSON.parse(data)
   }
   catch (error) {
-    if (chatStore.isWebSocketStreaming && assistantMessage) {
+    if (isWebSocketStreaming.value && assistantMessage) {
       assistantMessage.content += data
     }
     return
   }
   if (parsedData) {
-    if (chatStore.isWebSocketStreaming && assistantMessage) {
+    if (isWebSocketStreaming.value && assistantMessage) {
       if (typeof parsedData === 'number' || !Number.isNaN(Number(parsedData))) {
         assistantMessage.content += String(parsedData)
       }
@@ -48,13 +45,13 @@ const handleServerMessage = (data: string) => {
       handleChatTitleEvent(parsedData)
       break
     case 'chat_closed':
-      chatStore.isWebSocketStreaming = false
+      isWebSocketStreaming.value = false
       if (assistantMessage) {
         assistantMessage.id = ''
       }
       break
     case 'chat_stop_stream':
-      chatStore.isWebSocketStreaming = false
+      isWebSocketStreaming.value = false
       if (assistantMessage) {
         assistantMessage.id = ''
       }
@@ -63,7 +60,7 @@ const handleServerMessage = (data: string) => {
       }
       break
     case 'finish_event':
-      chatStore.isWebSocketStreaming = false
+      isWebSocketStreaming.value = false
       if (assistantMessage) {
         assistantMessage.id = ''
       }
@@ -75,13 +72,13 @@ const handleServerMessage = (data: string) => {
       }
       break
     case 'API':
-      chatStore.isWebSocketStreaming = false
+      isWebSocketStreaming.value = false
       if (assistantMessage) {
         assistantMessage.id = ''
       }
       break
     case 'error':
-      chatStore.isWebSocketStreaming = false
+      isWebSocketStreaming.value = false
       if (assistantMessage) {
         assistantMessage.id = ''
       }
@@ -116,7 +113,7 @@ const ensureWsTokenAndConnect = async () => {
       isTokenFetching.value = true
       await chatStore.GET_WsToken()
 
-      await $wsConnect(chatStore.wsToken)
+      await $wsConnect(wsToken.value)
 
       $getWs().onopen = async () => {
         $wsConnectionState.value = 'open'
@@ -127,7 +124,7 @@ const ensureWsTokenAndConnect = async () => {
         console.warn('WebSocket closed unexpectedly. Clearing token and attempting reconnection...')
         $wsConnectionState.value = 'closed'
         isTokenFetching.value = false
-        chatStore.wsToken = ''
+        wsToken.value = ''
         await ensureWsTokenAndConnect()
       }
     }
@@ -145,7 +142,7 @@ const ensureWsTokenAndConnect = async () => {
 }
 
 const sendMessage = () => {
-  if (!($wsConnectionState.value === 'open') || chatStore.isWebSocketStreaming) { return }
+  if (!($wsConnectionState.value === 'open') || isWebSocketStreaming.value) { return }
   if (!message.value.trim()) { return }
   const userMessage = {
     id: '',
@@ -169,15 +166,15 @@ const sendMessage = () => {
     createdAt: '',
     updatedAt: '',
   }
-  if (!Array.isArray(chatStore.messages)) {
-    chatStore.messages = []
+  if (!Array.isArray(messages.value)) {
+    messages.value = []
   }
 
-  chatStore.messages.unshift(userMessage)
-  chatStore.messages.unshift(assistantMessage)
+  messages.value.unshift(userMessage)
+  messages.value.unshift(assistantMessage)
 
   $wsSendChatMessage(message.value)
-  chatStore.isWebSocketStreaming = true
+  isWebSocketStreaming.value = true
   message.value = ''
 }
 
@@ -201,9 +198,9 @@ onBeforeMount(async () => {
 })
 
 const stopStream = () => {
-  if (chatStore.isWebSocketStreaming) {
+  if (isWebSocketStreaming.value) {
     $wsStopStream()
-    chatStore.isWebSocketStreaming = false
+    isWebSocketStreaming.value = false
   }
 }
 
@@ -250,35 +247,32 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
       </p>
     </el-card>
     <div v-else class="input-button-wrapper">
-      <el-input
+      <ElInput
         v-model="message"
         size="large"
         :placeholder="$t('chat.chatInputPlaceholder')"
         class="barrage-chat-input"
         :disabled="!hasActiveAgents || !isSelectedAgentActive"
         @keyup.enter="sendMessage"
-      />
-      <template v-if="chatStore.isWebSocketStreaming">
-        <el-button
-          circle
-          small
-          class="start-stop-chat-button"
-          @click="stopStream"
-        >
-          <StopStreamIcon size="32px" />
-        </el-button>
-      </template>
-      <template v-else>
-        <el-button
-          circle
-          small
-          class="start-stop-chat-button"
-          :disabled="!hasActiveAgents || !isSelectedAgentActive"
-          @click="sendMessage"
-        >
-          <ArrowUpIcon size="32px" />
-        </el-button>
-      </template>
+      >
+        <template #suffix>
+          <div
+            class="input-suffix-wrapper"
+            :class="{ 'input-suffix-wrapper--active': message.length || isWebSocketStreaming }"
+          >
+            <StopStreamIcon
+              v-if="isWebSocketStreaming"
+              size="32px"
+              @click="stopStream"
+            />
+            <ArrowUpIcon
+              v-else-if="hasActiveAgents && isSelectedAgentActive"
+              size="32px"
+              @click="sendMessage"
+            />
+          </div>
+        </template>
+      </ElInput>
     </div>
   </section>
 </template>
@@ -301,10 +295,29 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
     & .barrage-chat-input {
       width: 100%;
       max-width: 768px;
-    }
 
-    & .start-stop-chat-button {
-      max-height: min-content;
+      ::v-deep(.barrage-input__inner) {
+        background-color: transparent;
+      }
+
+      .input-suffix-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20%;
+        width: 40px;
+        height: 40px;
+        color: var(--color-primary-200);
+        border: var(--border-size-1) var(--border-type-solid)
+          var(--input-border-color);
+        transition:
+          color 0.3s ease-in-out,
+          border-color 0.3s ease-in-out;
+        &--active {
+          color: var(--color-primary-600);
+          border-color: var(--color-primary-600);
+        }
+      }
     }
   }
 }
@@ -312,27 +325,20 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
   width: fit-content;
   height: fit-content;
 }
-.suffix-icon {
-  color: var(--color-primary-100);
-  background: var(--color-primary-800);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  &:hover {
-    color: var(--color-primary-0);
-    background: var(--color-primary-900);
-  }
-}
-.dark {
-  & .suffix-icon {
-    color: var(--color-primary-700);
-    background: var(--color-primary-100);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+html.dark {
+  .chat-input-section {
+    & .input-button-wrapper {
+      & .barrage-chat-input {
+        .input-suffix-wrapper {
+          color: var(--color-primary-800);
+          border-color: var(--color-primary-800);
+          &--active {
+            color: var(--color-primary-400);
+            border-color: var(--color-primary-400);
+          }
+        }
+      }
+    }
   }
 }
 </style>

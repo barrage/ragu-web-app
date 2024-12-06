@@ -257,6 +257,7 @@ watchEffect(() => {
         v-if="!isSpeaking"
         content="Read aloud"
         :show-after="50"
+        :hide-after="0"
         :enterable="false"
         placement="top"
       >
@@ -266,6 +267,7 @@ watchEffect(() => {
         v-else
         content="Stop reading"
         :show-after="50"
+        :hide-after="0"
         :enterable="false"
         placement="top"
       >
@@ -274,6 +276,7 @@ watchEffect(() => {
       <ElTooltip
         content="Copy message"
         :show-after="50"
+        :hide-after="0"
         :enterable="false"
         placement="top"
       >
@@ -282,6 +285,7 @@ watchEffect(() => {
       <ElTooltip
         content="Good answer"
         :show-after="50"
+        :hide-after="0"
         :enterable="false"
         placement="top"
       >
@@ -290,6 +294,7 @@ watchEffect(() => {
       <ElTooltip
         content="Bad answer"
         :show-after="50"
+        :hide-after="0"
         :enterable="false"
         placement="top"
       >
