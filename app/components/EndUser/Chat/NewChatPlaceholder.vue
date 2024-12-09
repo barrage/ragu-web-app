@@ -84,7 +84,6 @@ const activeAgentLength = computed(() => {
   text-align: center;
   font-weight: 300;
   margin-bottom: 1rem;
-  max-width: 21.875rem;
   overflow-wrap: break-word;
   word-break: break-word;
   color: var(--color-primary-700);

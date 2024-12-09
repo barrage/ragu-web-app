@@ -214,7 +214,7 @@ export default {
         error_existing_document_title: '既存のドキュメント',
         error_existing_document_description: 'このドキュメントはすでに存在します',
         error_file_size_title: 'ファイルサイズの問題',
-        error_file_size_description: 'ファイルサイズは50 MBを超えてはいけません！',
+        error_file_size_description: 'ファイルサイズは100 MBを超えてはいけません！',
         error_file_type_title: 'ファイル形式の問題',
         error_file_type_description: 'ファイルはPDF、TXT、JSON、またはDOCX形式である必要があります！',
       },
