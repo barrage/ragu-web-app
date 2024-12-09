@@ -169,10 +169,10 @@ errorHandler(createError)
         :label="t('collections.labels.model')"
         prop="model"
       >
-        <ElTooltip
-          content="Please select an Embedding Provider first."
+        <LlmTooltip
+          :content="$t('collections.tooltip.select_embedding_provider_first')"
           placement="bottom"
-          :show-after="500"
+          delayed
         >
           <ElSelect
             v-model="form.model"
@@ -186,7 +186,7 @@ errorHandler(createError)
               :value="model"
             />
           </ElSelect>
-        </ElTooltip>
+        </LlmTooltip>
       </ElFormItem>
 
       <!-- Form Actions -->

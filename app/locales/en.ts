@@ -1,4 +1,4 @@
-import { textProps } from 'element-plus'
+import { textProps, tooltipEmits } from 'element-plus'
 
 export default {
   seo: {
@@ -112,6 +112,13 @@ export default {
     inactive_agent: 'This agent is no longer active. Please select an active agent to begin a new conversation.',
     copy_title: 'Copied',
     copy_message: 'Copied to clipboard',
+    quick_action_tooltip: {
+      read_aloud: 'Read aloud',
+      stop_reading: 'Stop reading',
+      copy_message: 'Copy message',
+      good_answer: 'Good answer',
+      bad_answer: 'Bad answer',
+    },
     admin: {
       title: 'Chats',
       description: 'Manage all your chats in one place',
@@ -287,6 +294,12 @@ export default {
         title: 'Configure Semantic Chunking',
         description: 'Set up and customize the semantic chunker for this document. Preview the chunks in real time to fine-tune your configuration.',
         name: 'Semantic',
+        placeholders: {
+          embedding_provider: 'Select provider',
+          embedding_model: 'Select model',
+        },
+        preview_semantic_chunker: 'Preview Semantic Chunker',
+        save_new_config: 'Save New Config',
         form: {
           size: 'Chunk Size (words)',
           threshold: 'Relevance Threshold',
@@ -306,6 +319,8 @@ export default {
         title: 'Configure Sliding Chunking',
         description: 'Set up sliding window-based chunking for precise segmentation of text with overlapping sections.',
         name: 'Sliding',
+        preview_parse_document: 'Preview Parse Document',
+        save_new_config: 'Save New Config',
         form: {
           size: 'Chunk Size',
           overlap: 'Overlap Size',
@@ -755,6 +770,10 @@ export default {
       model: 'Model',
       embedder: 'Embedder',
       add_document: 'Add documents to collection',
+    },
+
+    tooltip: {
+      select_embedding_provider_first: 'Please select an Embedding Provider first.',
     },
 
     deleteModal: {

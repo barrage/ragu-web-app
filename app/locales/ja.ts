@@ -109,6 +109,13 @@ export default {
     copy_title: 'コピーしました',
     copy_message: 'クリップボードにコピーしました',
     all_chats: 'すべてのチャット',
+    quick_action_tooltip: {
+      read_aloud: '音読',
+      stop_reading: '読み取りを停止',
+      copy_message: 'メッセージをコピー',
+      good_answer: '良い回答',
+      bad_answer: '悪い回答',
+    },
     admin: {
       title: 'チャット',
       description: 'すべてのチャットを一箇所で管理',
@@ -281,6 +288,12 @@ export default {
         title: 'セマンティックチャンクの設定',
         description: 'このドキュメントのセマンティックチャンクを設定およびカスタマイズします。リアルタイムでチャンクをプレビューして設定を微調整します。',
         name: 'セマンティック',
+        placeholders: {
+          embedding_provider: 'プロバイダーを選択',
+          embedding_model: 'モデルを選択',
+        },
+        preview_semantic_chunker: 'セマンティック チャンカーのプレビュー',
+        save_new_config: '新しい構成を保存',
         form: {
           size: 'チャンクサイズ（単語数）',
           threshold: '関連性のしきい値',
@@ -300,6 +313,8 @@ export default {
         title: 'スライディングチャンクの設定',
         description: '重複するセクションを含む正確なテキストセグメントを作成するためのスライディングウィンドウベースのチャンクを設定します。',
         name: 'スライディング',
+        preview_parse_document: 'プレビュー ドキュメント解析',
+        save_new_config: '新しい設定を保存',
         form: {
           size: 'チャンクサイズ',
           overlap: '重複サイズ',
@@ -622,6 +637,10 @@ export default {
       model: 'モデル',
       embedder: '埋め込みツール',
       add_document: 'コレクションにドキュメントを追加',
+    },
+
+    tooltip: {
+      select_embedding_provider_first: '最初に埋め込みプロバイダーを選択してください。',
     },
 
     deleteModal: {

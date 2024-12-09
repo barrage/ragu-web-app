@@ -112,6 +112,13 @@ export default {
     inactive_agent: 'Ovaj agent više nije aktivan. Molimo odaberite aktivnog agenta za započinjanje novog razgovora.',
     copy_title: 'Kopirano',
     copy_message: 'Kopirano u međuspremnik',
+    quick_action_tooltip: {
+      read_aloud: 'Čitaj naglas',
+      stop_reading: 'Zaustavi čitanje',
+      copy_message: 'Kopiraj poruku',
+      good_answer: 'Dobar odgovor',
+      bad_answer: 'Loš odgovor',
+    },
     admin: {
       title: 'Razgovori',
       description: 'Upravljajte svim razgovorima na jednom mjestu',
@@ -292,6 +299,12 @@ export default {
         title: 'Konfigurirajte Semantičko Razdvajanje',
         description: 'Podesite i prilagodite semantički podjeljivač za ovaj dokument. Pregledajte segmente u stvarnom vremenu kako biste finije prilagodili postavke.',
         name: 'Semantičko',
+        placeholders: {
+          embedding_provider: 'Odaberite pružatelja usluge',
+          embedding_model: 'Odaberite model',
+        },
+        preview_semantic_chunker: 'Pregled semantičkog segmentatora',
+        save_new_config: 'Spremi novu konfiguraciju',
         form: {
           size: 'Veličina segmenta (riječi)',
           threshold: 'Prag relevantnosti',
@@ -311,6 +324,8 @@ export default {
         title: 'Konfigurirajte klizno razdvajanje',
         description: 'Konfigurirajte kliznu segmentaciju koja omogućava preciznu podjelu teksta s preklapanjem sekcija.',
         name: 'Klizno',
+        preview_parse_document: 'Pregled Parsiranje dokumenta',
+        save_new_config: 'Spremi novu konfiguraciju',
         form: {
           size: 'Veličina segmenta',
           overlap: 'Veličina preklapanja',
@@ -748,6 +763,10 @@ export default {
       model: 'Model',
       embedder: 'Ugraditelj',
       add_document: 'Dodaj Dokument',
+    },
+
+    tooltip: {
+      select_embedding_provider_first: 'Molimo prvo odaberite davatelja usluge ugradnje.',
     },
 
     deleteModal: {

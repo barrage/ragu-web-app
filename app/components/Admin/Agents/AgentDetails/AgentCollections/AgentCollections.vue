@@ -46,11 +46,9 @@ const closeDeleteCollectionModal = () => {
         >
           <CollectionIcon /> {{ t('collections.assign_collection.title') }}
         </el-button>
-        <ElTooltip
-          :disabled="!(agentStore.singleAgent?.collections?.length === 0)"
-          :content="t('collections.assign_collection.notification.delete_collection')"
-          :enterable="false"
-          placement="top"
+        <LlmTooltip
+          :disabled="!agentStore.singleAgent?.collections?.length"
+          :content="$t('collections.assign_collection.notification.delete_collection')"
         >
           <el-button
             size="small"
@@ -61,7 +59,7 @@ const closeDeleteCollectionModal = () => {
           >
             <CollectionDelete />  {{ t('collections.deleteModal.title') }}
           </el-button>
-        </ElTooltip>
+        </LlmTooltip>
       </div>
     </div>
     <div class="agent-collection-list-container">

@@ -110,6 +110,13 @@ export default {
     copy_title: 'Copié',
     copy_message: 'Copié dans le presse-papiers',
     all_chats: 'Tous les chats',
+    quick_action_tooltip: {
+      read_aloud: 'Lire à haute voix',
+      stop_reading: 'Arrêter de lire',
+      copy_message: 'Copier le message',
+      good_answer: 'Bonne réponse',
+      bad_answer: 'Mauvaise réponse',
+    },
     admin: {
       title: 'Conversations',
       description: 'Gérez toutes vos conversations à un seul endroit',
@@ -284,6 +291,12 @@ export default {
         title: 'Configurer la segmentation sémantique',
         description: 'Configurez et personnalisez le diviseur sémantique pour ce document. Prévisualisez les segments en temps réel pour affiner vos paramètres.',
         name: 'Sémantique',
+        placeholders: {
+          embedding_provider: 'Sélectionner un fournisseur',
+          embedding_model: 'Sélectionner un modèle',
+        },
+        preview_semantic_chunker: 'Aperçu du découpeur sémantique',
+        save_new_config: 'Enregistrer une nouvelle configuration',
         form: {
           size: 'Taille du segment (mots)',
           threshold: 'Seuil de pertinence',
@@ -303,6 +316,8 @@ export default {
         title: 'Configurer la segmentation glissante',
         description: 'Configurez une segmentation basée sur une fenêtre glissante pour un découpage précis du texte avec des sections qui se chevauchent.',
         name: 'Glissante',
+        preview_parse_document: 'Aperçu Analyse du document',
+        save_new_config: 'Enregistrer la nouvelle configuration',
         form: {
           size: 'Taille du segment',
           overlap: 'Taille du chevauchement',
@@ -624,6 +639,10 @@ export default {
       model: 'Modèle',
       embedder: 'Intégrateur',
       add_document: 'Ajouter des documents à la collection',
+    },
+
+    tooltip: {
+      select_embedding_provider_first: 'Veuillez d\'abord sélectionner un fournisseur d\'intégration.',
     },
 
     deleteModal: {

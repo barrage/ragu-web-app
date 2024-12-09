@@ -16,12 +16,10 @@ const chatId = computed(() => {
 
 <template>
   <div class="chat-list">
-    <ElTooltip
+    <LlmTooltip
       v-for="chat in props.chats"
       :key="chat.id"
-      :show-after="isSidebarCollapsed ? 100 : 1500"
-      :hide-after="0"
-      :enterable="false"
+      :delayed="!isSidebarCollapsed"
       placement="right"
     >
       <template #content>
@@ -43,7 +41,7 @@ const chatId = computed(() => {
           <span v-else class="chat-title">{{ chat.title || $t('chat.chat') }}</span>
         </div>
       </LlmLink>
-    </ElTooltip>
+    </LlmTooltip>
   </div>
 </template>
 

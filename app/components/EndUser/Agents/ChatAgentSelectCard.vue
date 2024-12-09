@@ -17,12 +17,9 @@ const agentStore = useAgentStore()
     @click="agentStore.setSelectedAgent(agent)"
   >
     <div class="agent-body-wrapper">
-      <ElTooltip
-        :show-after="1500"
-        :hide-after="0"
+      <LlmTooltip
+        delayed
         :disabled="agent?.name.length <= 60"
-        :enterable="false"
-        placement="top"
       >
         <template #content>
           <div class="tooltip-content-wrapper">
@@ -35,14 +32,11 @@ const agentStore = useAgentStore()
             {{ formatStringMaxLenght(agent?.name, 60) }}
           </p>
         </div>
-      </ElTooltip>
+      </LlmTooltip>
 
-      <ElTooltip
-        :show-after="1500"
-        :hide-after="0"
+      <LlmTooltip
+        delayed
         :disabled="agent?.description.length <= 140"
-        :enterable="false"
-        placement="top"
       >
         <template #content>
           <div class="tooltip-content-wrapper">
@@ -52,8 +46,8 @@ const agentStore = useAgentStore()
         <span class="agent-description">
           {{ formatStringMaxLenght(agent?.description, 140) }}
         </span>
-        <ElTooltip />
-      </eltooltip>
+        <LlmTooltip />
+      </llmtooltip>
     </div>
   </ElCard>
 </template>

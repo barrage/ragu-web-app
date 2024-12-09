@@ -109,6 +109,13 @@ export default {
     copy_title: 'Copiado',
     copy_message: 'Copiado al portapapeles',
     all_chats: 'Todos los chats',
+    quick_action_tooltip: {
+      read_aloud: 'Leer en voz alta',
+      stop_reading: 'Dejar de leer',
+      copy_message: 'Copiar mensaje',
+      good_answer: 'Buena respuesta',
+      bad_answer: 'Mala respuesta',
+    },
     admin: {
       title: 'Chats',
       description: 'Gestiona todos tus chats en un solo lugar',
@@ -284,6 +291,12 @@ export default {
         title: 'Configurar segmentación semántica',
         description: 'Configura y personaliza el divisor semántico para este documento. Previsualiza los segmentos en tiempo real para ajustar la configuración.',
         name: 'Semántico',
+        placeholders: {
+          embedding_provider: 'Seleccionar proveedor',
+          embedding_model: 'Seleccionar modelo',
+        },
+        preview_semantic_chunker: 'Vista previa del segmentador semántico',
+        save_new_config: 'Guardar nueva configuración',
         form: {
           size: 'Tamaño del segmento (palabras)',
           threshold: 'Umbral de relevancia',
@@ -303,6 +316,8 @@ export default {
         title: 'Configurar segmentación deslizante',
         description: 'Configura la segmentación basada en ventanas deslizantes para una segmentación precisa del texto con secciones superpuestas.',
         name: 'Deslizante',
+        preview_parse_document: 'Vista previa del análisis del documento',
+        save_new_config: 'Guardar nueva configuración',
         form: {
           size: 'Tamaño del segmento',
           overlap: 'Tamaño de la superposición',
@@ -625,6 +640,10 @@ export default {
       model: 'Modelo',
       embedder: 'Incrustador',
       add_document: 'Agregar documentos a la colección',
+    },
+
+    tooltip: {
+      select_embedding_provider_first: 'Primero seleccione un proveedor de incrustaciones.',
     },
 
     deleteModal: {

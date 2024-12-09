@@ -178,22 +178,12 @@ const submitSaveForm = async (formEl: FormInstance | undefined) => {
 
       <ElFormItem>
         <div class="form-actions">
-          <ElTooltip
-            content="Preview Parse document"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
+          <LlmTooltip :content="$t('documents.chunker.sliding.preview_parse_document')">
             <el-button :disabled="loadingPreviewChunker === 'pending'" @click="submitForm(formRef)">
               <ChunkDocument />    {{ t('documents.chunker.sliding.form.actions.preview') }}
             </el-button>
-          </ElTooltip>
-          <ElTooltip
-            content="Save New Config"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
+          </LlmTooltip>
+          <LlmTooltip :content="$t('documents.chunker.sliding.save_new_config')">
             <ElButton
               type="primary"
               :disabled="loadingUpdateConfig === 'pending'"
@@ -201,7 +191,7 @@ const submitSaveForm = async (formEl: FormInstance | undefined) => {
             >
               <SaveIcon />  {{ t('documents.chunker.sliding.form.actions.save') }}
             </ElButton>
-          </ElTooltip>
+          </LlmTooltip>
         </div>
       </ElFormItem>
     </ElForm>

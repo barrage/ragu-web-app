@@ -11,11 +11,9 @@ const customTitle = computed(() => {
 </script>
 
 <template>
-  <ElTooltip
-    :content="t('documents.tooltip.document_formats')"
-    :show-after="3000"
-    :enterable="false"
-    placement="top"
+  <LlmTooltip
+    :content="$t('documents.tooltip.document_formats')"
+    delayed
   >
     <div class="document-formats-count">
       <h6>{{ t('documents.formats') }}</h6>
@@ -27,7 +25,7 @@ const customTitle = computed(() => {
         :title-subtext="t('documents.specific_formats')"
       />
     </div>
-  </ElTooltip>
+  </LlmTooltip>
 </template>
 
   <style lang="scss" scoped>

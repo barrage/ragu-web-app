@@ -22,8 +22,8 @@ const emits = defineEmits<Emits>()
 
 interface Emits {
 
-  (event: 'activate-agent', agent: Agents): void
-  (event: 'deactivate-agent', agent: Agents): void
+  (event: 'activateAgent', agent: Agents): void
+  (event: 'deactivateAgent', agent: Agents): void
 }
 
 // HELPERS
@@ -96,23 +96,15 @@ const editClick = (): void => {
 
 
       <div class="agent-actions">
-        <ElTooltip
-          :content="t('agents.agent_card.view_more')"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('agents.agent_card.view_more')">
           <LlmLink
             :to="`/admin/agents/${singleAgent?.agent?.id}`"
             type="plainButtonPrimary"
           >
             <EyeIcon size="20px" />
           </LlmLink>
-        </ElTooltip>
-        <ElTooltip
-          :content="t('agents.agent_card.edit_agent')"
-          :enterable="false"
-          placement="top"
-        >
+        </LlmTooltip>
+        <LlmTooltip :content="$t('agents.agent_card.edit_agent')">
           <LlmLink
             :to="`/admin/agents/${singleAgent?.agent?.id}`"
             type="plainButtonPrimary"
@@ -120,27 +112,23 @@ const editClick = (): void => {
           >
             <EditIcon size="20px" />
           </LlmLink>
-        </ElTooltip>
-        <ElTooltip
+        </LlmTooltip>
+        <LlmTooltip
           v-if="props.singleAgent?.agent.active"
-          :content="t('agents.agent_card.deactivate_agent')"
-          :enterable="false"
-          placement="top"
+          :content="$t('agents.agent_card.deactivate_agent')"
         >
-          <el-button plain @click="emits('deactivate-agent', props.singleAgent)">
+          <el-button plain @click="emits('deactivateAgent', props.singleAgent)">
             <PersonLockIcon size="20px" />
           </el-button>
-        </ElTooltip>
-        <ElTooltip
+        </LlmTooltip>
+        <LlmTooltip
           v-if="!props.singleAgent?.agent.active"
-          :content="t('agents.agent_card.activate_agent')"
-          :enterable="false"
-          placement="top"
+          :content="$t('agents.agent_card.activate_agent')"
         >
-          <el-button plain @click="emits('activate-agent', props.singleAgent)">
+          <el-button plain @click="emits('activateAgent', props.singleAgent as Agents)">
             <PersonPasskeyIcon size="20px" />
           </el-button>
-        </ElTooltip>
+        </LlmTooltip>
       </div>
     </div>
   </el-card>

@@ -65,23 +65,15 @@ const openDeleteModal = () => {
       </div>
 
       <div class="action-links">
-        <ElTooltip
-          :content="t('collections.collection_card.view_more')"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('collections.collection_card.view_more')">
           <LlmLink
             :to="`/admin/collections/${collection?.id}`"
             type="plainButtonPrimary"
           >
             <EyeIcon size="20px" />
           </LlmLink>
-        </ElTooltip>
-        <ElTooltip
-          :content="t('collections.collection_card.delete_collection')"
-          :enterable="false"
-          placement="top"
-        >
+        </LlmTooltip>
+        <LlmTooltip :content="$t('collections.collection_card.delete_collection')">
           <ElButton
             type="danger"
             plain
@@ -89,7 +81,7 @@ const openDeleteModal = () => {
           >
             <DeleteIcon size="20px" />
           </ElButton>
-        </ElTooltip>
+        </LlmTooltip>
       </div>
     </div>
   </el-card>

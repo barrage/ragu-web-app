@@ -72,55 +72,39 @@ const userData = computed(() => {
         :description="userData.createdAt"
       />
       <div class="user-actions">
-        <ElTooltip
-          :content="t('users.user_card.view_more')"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('users.user_card.view_more')">
           <LlmLink
             :to="`/admin/users/${user?.id}`"
             type="plainButtonPrimary"
           >
             <EyeIcon size="20px" />
           </LlmLink>
-        </ElTooltip>
+        </LlmTooltip>
 
-        <ElTooltip
-          :content="t('users.user_card.edit_user')"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('users.user_card.edit_user')">
           <el-button plain @click="emits('edit-user', props.user)">
             <EditIcon size="20px" />
           </el-button>
-        </ElTooltip>
+        </LlmTooltip>
 
-        <ElTooltip
+        <LlmTooltip
           v-if="props.user.active"
           :content="t('users.user_card.deactivate_user')"
-          :enterable="false"
-          placement="top"
         >
           <el-button plain @click="emits('deactivate-user', props.user)">
             <PersonLockIcon size="20px" />
           </el-button>
-        </ElTooltip>
-        <ElTooltip
+        </LlmTooltip>
+        <LlmTooltip
           v-if="!props.user.active"
           :content="t('users.user_card.activate_user')"
-          :enterable="false"
-          placement="top"
         >
           <el-button plain @click="emits('activate-user', props.user)">
             <PersonPasskeyIcon size="20px" />
           </el-button>
-        </ElTooltip>
+        </LlmTooltip>
 
-        <ElTooltip
-          :content="t('users.user_card.delete_user')"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('users.user_card.delete_user')">
           <el-button
             plain
             type="danger"
@@ -129,7 +113,7 @@ const userData = computed(() => {
           >
             <DeleteIcon size="20px" />
           </el-button>
-        </ElTooltip>
+        </LlmTooltip>
       </div>
     </div>
   </el-card>

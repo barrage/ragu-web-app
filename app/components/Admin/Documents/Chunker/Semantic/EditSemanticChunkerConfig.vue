@@ -281,7 +281,7 @@ function onProviderChange() {
       >
         <ElSelect
           v-model="form.semantic.embeddingProvider"
-          placeholder="Select provider"
+          :placeholder="$t('documents.chunker.semantic.placeholders.embedding_provider')"
           @change="onProviderChange"
         >
           <ElOption
@@ -298,7 +298,7 @@ function onProviderChange() {
       >
         <ElSelect
           v-model="form.semantic.embeddingModel"
-          placeholder="Select model"
+          :placeholder="$t('documents.chunker.semantic.placeholders.embedding_model')"
         >
           <ElOption
             v-for="model in availableModels"
@@ -343,30 +343,20 @@ function onProviderChange() {
 
       <ElFormItem>
         <div class="form-actions">
-          <ElTooltip
-            content="Preview Semantic chunker"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
+          <LlmTooltip :content="$t('documents.chunker.semantic.preview_semantic_chunker')">
             <el-button :disabled="loadingPreviewChunker === 'pending'" @click="submitForm(formRef)">
               <ChunkDocument />  {{ t('documents.chunker.semantic.form.actions.preview') }}
             </el-button>
-          </ElTooltip>
-          <ElTooltip
-            content="Save New Config"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
+          </LlmTooltip>
+          <LlmTooltip :content="$t('documents.chunker.semantic.preview_semantic_chunker')">
             <ElButton
               type="primary"
               :disabled="loadingUpdateConfig === 'pending'"
               @click="submitSaveForm(formRef)"
             >
-              <SaveIcon /> {{ t('documents.chunker.semantic.form.actions.save') }}
+              <SaveIcon /> {{ t('documents.chunker.semantic.save_new_config') }}
             </ElButton>
-          </ElTooltip>
+          </LlmTooltip>
         </div>
       </ElFormItem>
     </ElForm>

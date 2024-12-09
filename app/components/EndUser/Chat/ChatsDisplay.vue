@@ -36,12 +36,10 @@ function isChatGroupEmpty(chatGroup: Chat[] | null) {
     class="chat-display"
     :class="{ 'collapsed-sidebar': isSidebarCollapsed }"
   >
-    <ElTooltip
+    <LlmTooltip
       :content="$t('chat.start_new_chat')"
-      :show-after="1500"
-      :hide-after="0"
+      delayed
       :disabled="!isSidebarCollapsed"
-      :enterable="false"
       placement="right"
     >
       <LlmLink
@@ -58,7 +56,7 @@ function isChatGroupEmpty(chatGroup: Chat[] | null) {
           class="add-icon"
         />
       </LlmLink>
-    </ElTooltip>
+    </LlmTooltip>
 
     <div v-if="!isChatGroupEmpty(groupedChats.today)">
       <ChatListTimeLabel localization="today" />
