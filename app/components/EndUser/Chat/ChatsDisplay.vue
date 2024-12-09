@@ -1,38 +1,21 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import AddIcon from '~/assets/icons/svg/add.svg'
 import { groupChatsByTime } from '~/utils/groupChatsByTime'
 import type { Chat } from '~/types/chat'
-import type { TimeLabel } from '~/components/EndUser/Chat/ChatListTimeLabel.vue'
 
 const route = useRoute()
 const chatStore = useChatStore()
 const { isSidebarCollapsed } = storeToRefs(useNavigationStore())
-const scrollableContainerRef = ref<HTMLElement | null>(null)
 const allChats = computed(() => {
   return chatStore.chats
 })
 
 const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
-
-useResizeObserver(scrollableContainerRef, () => {
-  if (scrollableContainerRef.value) {
-    if (scrollableContainerRef.value.scrollHeight > scrollableContainerRef.value.clientHeight - 70) {
-      scrollableContainerRef.value.classList.add('has-scrollbar')
-    }
-    else { scrollableContainerRef.value.classList.remove('has-scrollbar') }
-  }
-})
-
-function isChatGroupEmpty(chatGroup: Chat[] | null) {
-  return !chatGroup?.length
-}
 </script>
 
 <template>
   <div
-    ref="scrollableContainerRef"
     class="chat-display"
     :class="{ 'collapsed-sidebar': isSidebarCollapsed }"
   >
@@ -58,44 +41,20 @@ function isChatGroupEmpty(chatGroup: Chat[] | null) {
       </LlmLink>
     </LlmTooltip>
 
-    <div v-if="!isChatGroupEmpty(groupedChats.today)">
-      <ChatListTimeLabel localization="today" />
-      <ChatList :chats="groupedChats.today" />
-    </div>
-
-    <div v-if="!isChatGroupEmpty(groupedChats.yesterday)">
-      <ChatListTimeLabel localization="yesterday" />
-      <ChatList :chats="groupedChats.yesterday" />
-    </div>
-
-    <div v-if="!isChatGroupEmpty(groupedChats.last7days)">
-      <ChatListTimeLabel localization="last7days" />
-      <ChatList :chats="groupedChats.last7days" />
-    </div>
-
-    <div v-if="!isChatGroupEmpty(groupedChats.last30days)">
-      <ChatListTimeLabel localization="last30days" />
-      <ChatList :chats="groupedChats.last30days" />
-    </div>
-
-    <template v-if="groupedChats.monthsThisYear">
-      <div
-        v-for="(chat, month) in groupedChats.monthsThisYear"
-        :key="month"
-      >
-        <ChatListTimeLabel :localization="`month${month}`" />
-        <ChatList :chats="chat" />
+    <div v-for="_, group in groupedChats" :key="group">
+      <template v-if="group === 'monthsThisYear'">
+        <div
+          v-for="(chat, month) in groupedChats.monthsThisYear"
+          :key="month"
+        >
+          <ChatListTimeLabel :localization="`month${month}`" />
+          <ChatList v-if="chat" :chats="chat" />
+        </div>
+      </template>
+      <div v-else-if="groupedChats[group].length">
+        <ChatListTimeLabel :localization="group" />
+        <ChatList :chats="groupedChats[group]" />
       </div>
-    </template>
-
-    <div v-if="!isChatGroupEmpty(groupedChats.lastYear)">
-      <ChatListTimeLabel localization="lastYear" />
-      <ChatList :chats="groupedChats.lastYear" />
-    </div>
-
-    <div v-if="!isChatGroupEmpty(groupedChats.older)">
-      <ChatListTimeLabel localization="older" />
-      <ChatList :chats="groupedChats.older" />
     </div>
   </div>
 </template>
@@ -108,12 +67,8 @@ function isChatGroupEmpty(chatGroup: Chat[] | null) {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   padding-bottom: 1rem;
-  scrollbar-gutter: stable;
   scroll-snap-type: y mandatory;
-
-  &.has-scrollbar {
-    overflow-y: auto;
-  }
+  overflow-y: auto;
 
   &.collapsed-sidebar {
     &::-webkit-scrollbar {

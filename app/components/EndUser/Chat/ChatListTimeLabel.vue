@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { GroupedChats } from '~/types/chat'
+
 export type MonthName =
   | 'January'
   | 'February'
@@ -12,14 +14,7 @@ export type MonthName =
   | 'November'
   | 'December'
 
-export type TimeLabel =
-  | 'today'
-  | 'yesterday'
-  | 'last7days'
-  | 'last30days'
-  | 'lastYear'
-  | 'older'
-  | `month${MonthName}`
+export type TimeLabel = keyof GroupedChats | `month${MonthName}`
 
 const props = defineProps<{ localization: TimeLabel }>()
 const { isSidebarCollapsed } = storeToRefs(useNavigationStore())
