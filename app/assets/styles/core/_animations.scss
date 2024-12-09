@@ -110,6 +110,7 @@
     border-right: 2px solid var(--color-primary-600);
     display: inline-block;
     max-width: max-content;
+    min-height: fit-content;
     animation:
       typing 2s steps(30, end) forwards,
       blink 2.5s step-end;

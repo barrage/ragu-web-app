@@ -33,7 +33,7 @@ const beforeUploadCheck: UploadProps['beforeUpload'] = (rawFile) => {
     fileList.value = []
     return false
   }
-  else if (rawFile.size / 1024 / 1024 > 50) {
+  else if (rawFile.size / 1024 / 1024 > 100) {
     ElNotification({
       title: t('documents.notifications.create.error_file_size_title'),
       message: t('documents.notifications.create.error_file_size_description'),

@@ -216,7 +216,7 @@ export default {
         error_existing_document_title: 'Documento Existente',
         error_existing_document_description: 'Este documento já existe',
         error_file_size_title: 'Problema de Tamanho do Arquivo',
-        error_file_size_description: 'O tamanho do arquivo não pode exceder 50 MB!',
+        error_file_size_description: 'O tamanho do arquivo não pode exceder 100 MB!',
         error_file_type_title: 'Problema de Formato do Arquivo',
         error_file_type_description: 'O arquivo deve estar no formato PDF, TXT, JSON ou DOCX!',
       },
