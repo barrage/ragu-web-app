@@ -36,5 +36,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <LlmOverlayLoader />
+  <OAuthOverlayLoader />
 </template>
