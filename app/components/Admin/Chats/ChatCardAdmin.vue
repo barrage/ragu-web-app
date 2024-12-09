@@ -67,34 +67,22 @@ interface Emits {
         />
       </div>
       <div class="chat-actions">
-        <ElTooltip
-          :content="t('chat.admin.chat_card.view_details')"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('chat.admin.chat_card.view_details')">
           <LlmLink
             :to="`/admin/chats/${chat?.chat?.id}`"
             type="plainButtonPrimary"
           >
             <EyeIcon size="20px" />
           </LlmLink>
-        </ElTooltip>
+        </LlmTooltip>
 
-        <ElTooltip
-          :content="t('chat.admin.chat_card.edit_chat')"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('chat.admin.chat_card.edit_chat')">
           <el-button plain @click="emits('edit-chat-title', props.chat)">
             <EditIcon size="20px" />
           </el-button>
-        </ElTooltip>
+        </LlmTooltip>
 
-        <ElTooltip
-          :content="t('chat.admin.chat_card.delete_chat')"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('chat.admin.chat_card.delete_chat')">
           <el-button
             plain
             type="danger"
@@ -103,7 +91,7 @@ interface Emits {
           >
             <DeleteIcon size="20px" />
           </el-button>
-        </ElTooltip>
+        </LlmTooltip>
       </div>
     </div>
   </el-card>

@@ -231,22 +231,12 @@ const removeFilter = (filter: string) => {
 
       <ElFormItem>
         <div class="form-actions">
-          <ElTooltip
-            :content="t('documents.parser.form.actions.preview_description')"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
+          <LlmTooltip :content="$t('documents.parser.form.actions.preview_description')">
             <el-button :disabled="loadingPreviewParser === 'pending'" @click="submitForm(formRef)">
               {{ t('documents.parser.form.actions.preview') }} <ParseDocument />
             </el-button>
-          </ElTooltip>
-          <ElTooltip
-            :content="t('documents.parser.form.actions.save_description')"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
+          </LlmTooltip>
+          <LlmTooltip :content="$t('documents.parser.form.actions.save_description')">
             <ElButton
               type="primary"
               :disabled="loadingUpdateConfig === 'pending'"
@@ -254,7 +244,7 @@ const removeFilter = (filter: string) => {
             >
               <SaveIcon /> {{ t('documents.parser.form.actions.save') }}
             </ElButton>
-          </ElTooltip>
+          </LlmTooltip>
         </div>
       </ElFormItem>
     </ElForm>

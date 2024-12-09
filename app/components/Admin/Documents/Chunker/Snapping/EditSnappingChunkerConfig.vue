@@ -257,22 +257,12 @@ const removeFilter = (filter: string, type: 'skipF' | 'skipB') => {
 
       <ElFormItem>
         <div class="form-actions">
-          <ElTooltip
-            content="Preview Parse document"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
+          <LlmTooltip :content="$t('documents.chunker.sliding.preview_parse_document')">
             <el-button :disabled="loadingPreviewChunker === 'pending'" @click="submitPreviewForm(formRef)">
               <ChunkDocument />  {{ t('documents.chunker.snapping.form.actions.preview') }}
             </el-button>
-          </ElTooltip>
-          <ElTooltip
-            content="Save New Config"
-            :show-after="100"
-            :enterable="false"
-            placement="top"
-          >
+          </LlmTooltip>
+          <LlmTooltip :content="$t('documents.chunker.sliding.save_new_config')">
             <ElButton
               type="primary"
               :disabled="loadingUpdateConfig === 'pending'"
@@ -280,7 +270,7 @@ const removeFilter = (filter: string, type: 'skipF' | 'skipB') => {
             >
               <SaveIcon />  {{ t('documents.chunker.snapping.form.actions.save') }}
             </ElButton>
-          </ElTooltip>
+          </LlmTooltip>
         </div>
       </ElFormItem>
     </ElForm>

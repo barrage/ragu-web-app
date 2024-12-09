@@ -111,6 +111,13 @@ export default {
     copy_title: 'Kopiert',
     copy_message: 'In die Zwischenablage kopiert',
     all_chats: 'Alle Chats',
+    quick_action_tooltip: {
+      read_aloud: 'Vorlesen',
+      stop_reading: 'Lesen stoppen',
+      copy_message: 'Nachricht kopieren',
+      good_answer: 'Gute Antwort',
+      bad_answer: 'Schlechte Antwort',
+    },
     admin: {
       title: 'Chats',
       description: 'Verwalten Sie alle Ihre Chats an einem Ort',
@@ -285,6 +292,12 @@ export default {
         title: 'Semantisches Chunking konfigurieren',
         description: 'Richten Sie den semantischen Chunker für dieses Dokument ein und passen Sie ihn an. Vorschau der Chunks in Echtzeit, um die Konfiguration zu optimieren.',
         name: 'Semantisch',
+        placeholders: {
+          embedding_provider: 'Anbieter auswählen',
+          embedding_model: 'Modell auswählen',
+        },
+        preview_semantic_chunker: 'Vorschau des semantischen Chunkers',
+        save_new_config: 'Neue Konfiguration speichern',
         form: {
           size: 'Chunk-Größe (Wörter)',
           threshold: 'Relevanzschwelle',
@@ -304,6 +317,8 @@ export default {
         title: 'Konfiguration des gleitenden Chunking',
         description: 'Richten Sie ein gleitendes Chunking mit überlappenden Abschnitten ein, um den Text präzise zu segmentieren.',
         name: 'Sliding',
+        preview_parse_document: 'Vorschau Dokument analysieren',
+        save_new_config: 'Neue Konfiguration speichern',
         form: {
           size: 'Chunk-Größe',
           overlap: 'Überlappungsgröße',
@@ -624,6 +639,10 @@ export default {
       model: 'Modell',
       embedder: 'Einbettung',
       add_document: 'Dokumente zur Sammlung hinzufügen',
+    },
+
+    tooltip: {
+      select_embedding_provider_first: 'Bitte wählen Sie zuerst einen Einbettungsanbieter aus.',
     },
 
     deleteModal: {

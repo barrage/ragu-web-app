@@ -15,30 +15,26 @@ const { isSidebarCollapsed } = storeToRefs(navigationStore)
         <p v-if="!isSidebarCollapsed" class="typing-effect sidebar-title">
           {{ $t('chatDock') }}
         </p>
-        <ElTooltip
+        <LlmTooltip
           :content="$t('chat.toggle_sidebar')"
-          :show-after="1500"
-          :hide-after="0"
+          delayed
           :disabled="!isSidebarCollapsed"
-          :enterable="false"
           placement="right"
         >
           <ElButton class="toggle-btn" @click="navigationStore.toggleSidebar">
             <PanelIcon size="24px" />
           </ElButton>
-        </ElTooltip>
+        </LlmTooltip>
       </div>
 
       <div class="horizontal-divider" />
 
       <ChatsDisplay />
       <div class="get-help-section">
-        <ElTooltip
+        <LlmTooltip
           :content="$t('getHelp.title')"
-          :show-after="1500"
-          :hide-after="0"
+          delayed
           :disabled="!isSidebarCollapsed"
-          :enterable="false"
           placement="right"
         >
           <LlmLink
@@ -48,7 +44,7 @@ const { isSidebarCollapsed } = storeToRefs(navigationStore)
           >
             <span v-if="!isSidebarCollapsed">{{ $t('getHelp.title') }}</span> <QuestionIcon size="24px" />
           </LlmLink>
-        </ElTooltip>
+        </LlmTooltip>
       </div>
     </nav>
   </aside>

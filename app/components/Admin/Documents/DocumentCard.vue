@@ -123,25 +123,15 @@ const submitDeleteDocument = async () => {
         />
       </div>
       <div class="document-actions">
-        <ElTooltip
-          :content="t('documents.tooltip.manage_document')"
-          :show-after="100"
-          :enterable="false"
-          placement="top"
-        >
+        <LlmTooltip :content="$t('documents.tooltip.manage_document')">
           <LlmLink
             :to="`documents/${document.id}`"
             type="plainButtonPrimary"
           >
             <DocumentEditIcon size="24px" />
           </LlmLink>
-        </ElTooltip>
-        <ElTooltip
-          :content="t('documents.tooltip.delete_document')"
-          :show-after="100"
-          :enterable="false"
-          placement="top"
-        >
+        </LlmTooltip>
+        <LlmTooltip :content="$t('documents.tooltip.delete_document')">
           <el-button
             type="danger"
             plain
@@ -150,7 +140,7 @@ const submitDeleteDocument = async () => {
           >
             <DeleteIcon size="24px" />
           </el-button>
-        </ElTooltip>
+        </LlmTooltip>
       </div>
       <el-dialog
         v-model="isDeleteDialogVisible"

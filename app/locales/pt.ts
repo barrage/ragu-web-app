@@ -109,6 +109,13 @@ export default {
     copy_title: 'Copiado',
     copy_message: 'Copiado para a área de transferência',
     all_chats: 'Todas as conversas',
+    quick_action_tooltip: {
+      read_aloud: 'Ler em voz alta',
+      stop_reading: 'Parar de ler',
+      copy_message: 'Copiar mensagem',
+      good_answer: 'Boa resposta',
+      bad_answer: 'Má resposta',
+    },
     admin: {
       title: 'Conversas',
       description: 'Gerencie todas as suas conversas em um só lugar',
@@ -286,6 +293,12 @@ export default {
         title: 'Configurar Segmentação Semântica',
         description: 'Configure e personalize o divisor semântico para este documento. Visualize os segmentos em tempo real para ajustar a configuração.',
         name: 'Semântico',
+        placeholders: {
+          embedding_provider: 'Selecione o provedor',
+          embedding_model: 'Selecione o modelo',
+        },
+        preview_semantic_chunker: 'Visualizar Segmentador Semântico',
+        save_new_config: 'Salvar Nova Configuração',
         form: {
           size: 'Tamanho do segmento (palavras)',
           threshold: 'Limite de relevância',
@@ -305,6 +318,8 @@ export default {
         title: 'Configurar Segmentação Deslizante',
         description: 'Configure uma segmentação deslizante para uma divisão precisa do texto com seções sobrepondo-se.',
         name: 'Deslizante',
+        preview_parse_document: 'Pré-visualizar Análise de documento',
+        save_new_config: 'Salvar nova configuração',
         form: {
           size: 'Tamanho do segmento',
           overlap: 'Tamanho da sobreposição',
@@ -626,6 +641,10 @@ export default {
       model: 'Modelo',
       embedder: 'Incorporador',
       add_document: 'Adicionar documentos à coleção',
+    },
+
+    tooltip: {
+      select_embedding_provider_first: 'Por favor, selecione primeiro um provedor de embeddings.',
     },
 
     deleteModal: {

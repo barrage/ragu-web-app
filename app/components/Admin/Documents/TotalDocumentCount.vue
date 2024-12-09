@@ -7,11 +7,9 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <ElTooltip
-    :content="t('documents.tooltip.display_total')"
-    :show-after="1000"
-    :enterable="false"
-    placement="top"
+  <LlmTooltip
+    :content="$t('documents.tooltip.display_total')"
+    delayed
   >
     <div class="total-document-count">
       <h6>{{ t('documents.total') }}</h6>
@@ -20,7 +18,7 @@ const { t } = useI18n()
         <DocumentDatabaseIcon size="32px" />
       </div>
     </div>
-  </ElTooltip>
+  </LlmTooltip>
 </template>
 
   <style lang="scss" scoped>

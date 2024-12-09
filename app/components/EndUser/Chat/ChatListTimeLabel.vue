@@ -43,18 +43,16 @@ const shortLocalization = computed(() => {
 
 <template>
   <h6 class="chat-group-title" :class="{ collapsed: isSidebarCollapsed }">
-    <ElTooltip
+    <LlmTooltip
       :content="$t(localization)"
-      :show-after="1500"
-      :hide-after="0"
+      delayed
       :disabled="!isSidebarCollapsed"
-      :enterable="false"
       placement="right"
     >
       <span :class="{ 'collapsed-localization': isSidebarCollapsed }">
         {{ isSidebarCollapsed ? $t(shortLocalization) : $t(localization) }}
       </span>
-    </ElTooltip>
+    </LlmTooltip>
   </h6>
 </template>
 

@@ -16,11 +16,9 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <ElTooltip
-    :content="t('documents.tooltip.most_recent')"
-    :show-after="2000"
-    :enterable="false"
-    placement="top"
+  <LlmTooltip
+    :content="$t('documents.tooltip.most_recent')"
+    delayed
   >
     <div class="last-modified-documents">
       <h6>{{ t('documents.most_recent') }}</h6>
@@ -72,7 +70,7 @@ const { t } = useI18n()
         </li>
       </ul>
     </div>
-  </ElTooltip>
+  </LlmTooltip>
 </template>
 
 <style lang="scss" scoped>

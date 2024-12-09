@@ -109,6 +109,13 @@ export default {
     copy_title: 'Copiato',
     copy_message: 'Copiato negli appunti',
     all_chats: 'Tutte le chat',
+    quick_action_tooltip: {
+      read_aloud: 'Leggi ad alta voce',
+      stop_reading: 'Smetti di leggere',
+      copy_message: 'Copia messaggio',
+      good_answer: 'Buona risposta',
+      bad_answer: 'Cattiva risposta',
+    },
     admin: {
       title: 'Chat',
       description: 'Gestisci tutte le tue chat in un unico posto',
@@ -283,6 +290,12 @@ export default {
         title: 'Configura la segmentazione semantica',
         description: 'Configura e personalizza il divisore semantico per questo documento. Visualizza i segmenti in tempo reale per perfezionare la configurazione.',
         name: 'Semantico',
+        placeholders: {
+          embedding_provider: 'Seleziona il provider',
+          embedding_model: 'Seleziona il modello',
+        },
+        preview_semantic_chunker: 'Anteprima del segmentatore semantico',
+        save_new_config: 'Salva nuova configurazione',
         form: {
           size: 'Dimensione del segmento (parole)',
           threshold: 'Soglia di rilevanza',
@@ -302,6 +315,8 @@ export default {
         title: 'Configura segmentazione scorrevole',
         description: 'Configura la segmentazione basata su finestre scorrevoli per una suddivisione precisa del testo con sezioni sovrapposte.',
         name: 'Scorrevole',
+        preview_parse_document: 'Anteprima Analisi documento',
+        save_new_config: 'Salva nuova configurazione',
         form: {
           size: 'Dimensione del segmento',
           overlap: 'Dimensione della sovrapposizione',
@@ -625,6 +640,10 @@ export default {
       model: 'Modello',
       embedder: 'Incorporatore',
       add_document: 'Aggiungi documenti alla collezione',
+    },
+
+    tooltip: {
+      select_embedding_provider_first: 'Seleziona prima un provider di embedding.',
     },
 
     deleteModal: {

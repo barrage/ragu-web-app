@@ -253,53 +253,27 @@ watchEffect(() => {
       </p>
     </div>
     <div v-if="props.message.senderType === 'assistant' && !chatStore.isWebSocketStreaming" class="agent-message-actions">
-      <ElTooltip
+      <LlmTooltip
         v-if="!isSpeaking"
-        content="Read aloud"
-        :show-after="50"
-        :hide-after="0"
-        :enterable="false"
-        placement="top"
+        :content="$t('chat.quick_action_tooltip.read_aloud')"
       >
         <MicrophoneIcon size="18px" @click="readText" />
-      </ElTooltip>
-      <ElTooltip
+      </LlmTooltip>
+      <LlmTooltip
         v-else
-        content="Stop reading"
-        :show-after="50"
-        :hide-after="0"
-        :enterable="false"
-        placement="top"
+        :content="$t('chat.quick_action_tooltip.stop_reading')"
       >
         <StopIcon size="18px" @click="stopReading" />
-      </ElTooltip>
-      <ElTooltip
-        content="Copy message"
-        :show-after="50"
-        :hide-after="0"
-        :enterable="false"
-        placement="top"
-      >
+      </LlmTooltip>
+      <LlmTooltip :content="$t('chat.quick_action_tooltip.copy_message')">
         <CopyIcon size="18px" @click="copyItem()" />
-      </ElTooltip>
-      <ElTooltip
-        content="Good answer"
-        :show-after="50"
-        :hide-after="0"
-        :enterable="false"
-        placement="top"
-      >
+      </LlmTooltip>
+      <LlmTooltip :content="$t('chat.quick_action_tooltip.good_answer')">
         <LikeIcon size="18px" />
-      </ElTooltip>
-      <ElTooltip
-        content="Bad answer"
-        :show-after="50"
-        :hide-after="0"
-        :enterable="false"
-        placement="top"
-      >
+      </LlmTooltip>
+      <LlmTooltip :content="$t('chat.quick_action_tooltip.bad_answer')">
         <DislikeIcon size="18px" />
-      </ElTooltip>
+      </LlmTooltip>
     </div>
   </div>
 </template>
