@@ -128,32 +128,33 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
         </div>
       </div>
 
-      <div class="horizontal-divider" />
-
-      <div v-if="isWhatsAppActive" class="feature-container">
-        <div v-for="menuItem in whatsAppMenuList" :key="menuItem.category">
-          <p v-if="menuItem.title && !navigationStore.isAdminSidebarCollapsed" class="feature-group-title typing-effect">
-            {{ menuItem.title }}
-          </p>
-          <div class="feature-list">
-            <LlmLink
-              v-for="(item, index2) in menuItem.items"
-              :key="index2"
-              :to="item.link"
-              class="feature-item"
-              :class="{ selected: item.link === route.path }"
-              @click="selectFeature(item, menuItem.category)"
-            >
-              <div class="item-content">
-                <component :is="item.icon" size="20px" />
-                <p v-if="!navigationStore.isAdminSidebarCollapsed" class="item-title">
-                  {{ item.label }}
-                </p>
-              </div>
-            </LlmLink>
+      <template v-if="isWhatsAppActive">
+        <div class="horizontal-divider" />
+        <div class="feature-container">
+          <div v-for="menuItem in whatsAppMenuList" :key="menuItem.category">
+            <p v-if="menuItem.title && !navigationStore.isAdminSidebarCollapsed" class="feature-group-title typing-effect">
+              {{ menuItem.title }}
+            </p>
+            <div class="feature-list">
+              <LlmLink
+                v-for="(item, index2) in menuItem.items"
+                :key="index2"
+                :to="item.link"
+                class="feature-item"
+                :class="{ selected: item.link === route.path }"
+                @click="selectFeature(item, menuItem.category)"
+              >
+                <div class="item-content">
+                  <component :is="item.icon" size="20px" />
+                  <p v-if="!navigationStore.isAdminSidebarCollapsed" class="item-title">
+                    {{ item.label }}
+                  </p>
+                </div>
+              </LlmLink>
+            </div>
           </div>
         </div>
-      </div>
+      </template>
 
       <!-- Get Help Section -->
       <div class="get-help-section">

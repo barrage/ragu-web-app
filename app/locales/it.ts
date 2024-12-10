@@ -108,6 +108,10 @@ export default {
     inactive_agent: 'Questo agente non è più attivo. Seleziona un agente attivo per iniziare una nuova conversazione. ',
     copy_title: 'Copiato',
     copy_message: 'Copiato negli appunti',
+    empty_state: {
+      title: 'Nessuna chat disponibile',
+      description: 'Questa chat attualmente non ha messaggi associati.',
+    },
     all_chats: 'Tutte le chat',
     quick_action_tooltip: {
       read_aloud: 'Leggi ad alta voce',
@@ -128,14 +132,16 @@ export default {
         view_details: 'Visualizza dettagli',
         edit_chat: 'Modifica chat',
         delete_chat: 'Elimina chat',
-        empty_state_title: 'Nessuna chat',
-        empty_state_desc: 'Attualmente non ci sono chat da visualizzare.',
+        empty_state_title: 'Nessuna chat disponibile',
+        empty_state_desc: 'Attualmente non ci sono chat da visualizzare qui.',
       },
       chat_details: {
         title: 'Dettagli della chat',
         description: 'Visualizza tutti i dettagli relativi a questa chat',
         empty_messages: 'Nessun messaggio WhatsApp disponibile',
         empty_description: 'Attualmente, non ci sono messaggi WhatsApp in questa chat.',
+        empty_state_title: 'Chat non trovata',
+        empty_state_desc: 'La chat che stai cercando non esiste o non è disponibile al momento. Controlla le informazioni della chat o prova con un\'altra ricerca.',
       },
     },
     edit_title: {
@@ -165,7 +171,9 @@ export default {
       title: 'Nuova chat',
       description: 'Scegli un agente per avviare la chat',
       choseFrom: 'Agenti:',
-      empty: 'Attualmente non ci sono agenti disponibili per la conversazione. Per avviare una chat, è necessario aggiungere o abilitare almeno un agente. Si prega di contattare l\'amministratore di sistema o verificare le impostazioni degli agenti per continuare.',
+      empty_title: 'Nessun agente disponibile',
+      empty: 'Al momento non ci sono agenti disponibili per la conversazione. Per avviare una chat, è necessario aggiungere o abilitare almeno un agente. Contatta l\'amministratore di sistema o controlla le impostazioni degli agenti per continuare.',
+      empty_cta: 'Crea agente',
     },
   },
   settings: {
@@ -307,7 +315,8 @@ export default {
     specific_formats: 'Formati specifici',
     series_name: 'Formato',
     sync_docs: 'Sincronizza documenti',
-
+    empty_state_title: 'Nessun documento disponibile',
+    empty_state_desc: 'Attualmente non ci sono documenti da visualizzare qui.',
     tooltip: {
       delete_document: 'Elimina il tuo documento',
       manage_document: 'Gestisci il tuo documento',
@@ -323,7 +332,8 @@ export default {
     },
 
     details: {
-      empty: 'Questo documento non è disponibile o non esiste più.',
+      empty_state_title: 'Documento non trovato',
+      empty_state_desc: 'Il documento che stai cercando non esiste o non è disponibile al momento. Controlla le informazioni del documento o prova con un\'altra ricerca.',
     },
     delete_document: {
       title: 'Elimina Documento',
@@ -476,6 +486,10 @@ export default {
         title: 'Agenti',
         description: 'agenti attivi',
         view_more: 'Visualizza di più',
+        most_used_empty_title: 'Nessun agente utilizzato',
+        most_used_empty_description: 'Attualmente non ci sono agenti utilizzati da mostrare.',
+        providers_empty_title: 'Nessun fornitore',
+        providers_empty_description: 'Attualmente non ci sono fornitori da mostrare.',
       },
       users: {
         title: 'Utenti',
@@ -551,7 +565,8 @@ export default {
   agents: {
     title: 'Agenti',
     all_agents: 'Tutti gli agenti',
-
+    empty_state_title_all: 'Nessun agente disponibile',
+    empty_state_desc_all: 'Attualmente non ci sono agenti da visualizzare qui.',
     titles: {
       mainTitle: 'Agenti',
       details: 'Dettagli agente',
@@ -715,6 +730,8 @@ export default {
     empty_state: {
       title: 'Nessuna collezione assegnata',
       description: 'Questo agente non ha attualmente nessuna collezione associata a lui.',
+      title_all: 'Nessuna collezione disponibile',
+      description_all: 'Attualmente non ci sono collezioni da visualizzare qui.',
     },
 
     titles: {

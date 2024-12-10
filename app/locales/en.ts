@@ -120,6 +120,10 @@ export default {
       bad_answer: 'Bad answer',
     },
     new_chat_tooltip: 'Start new chat',
+    empty_state: {
+      title: 'No chat available',
+      description: 'This chat currently doesn’t have any associated messages.',
+    },
     admin: {
       title: 'Chats',
       description: 'Manage all your chats in one place',
@@ -131,14 +135,16 @@ export default {
         view_details: 'View Details',
         edit_chat: 'Edit Chat',
         delete_chat: 'Delete Chat',
-        empty_state_title: 'No chats yet',
-        empty_state_desc: 'There are no chats to display here.',
+        empty_state_title: 'No chats available',
+        empty_state_desc: 'Currently, there are no chats to display here.',
       },
       chat_details: {
         title: 'Chat Details',
         description: 'View all details related to this chat',
         empty_messages: 'No WhatsApp messages available',
         empty_description: 'Currently, there are no WhatApp messages into this chat.',
+        empty_state_title: 'Chat not found',
+        empty_state_desc: 'The chat you are looking for does not exist or is currently unavailable. Please check the chat\'s information again or try a different search.',
       },
     },
     edit_title: {
@@ -169,7 +175,9 @@ export default {
       title: 'New chat',
       description: 'Choose an agent to start a chat with',
       choseFrom: 'Agents:',
+      empty_title: 'No agents available',
       empty: 'Currently, there are no available agents for conversation. To start a chat, it is necessary to add or enable at least one agent. Please contact your system administrator or check agent settings to continue.',
+      empty_cta: 'Create Agent',
     },
   },
   settings: {
@@ -311,6 +319,8 @@ export default {
     specific_formats: 'Specific formats',
     series_name: 'Format',
     sync_docs: 'Sync docs',
+    empty_state_title: 'No documents available',
+    empty_state_desc: 'Currently, there are no documents to display here.',
     tooltip: {
       delete_document: 'Delete your document',
       manage_document: 'Manage your document',
@@ -325,7 +335,8 @@ export default {
 
     },
     details: {
-      empty: 'This document is unavailable or no longer exists.',
+      empty_state_title: 'Document not found',
+      empty_state_desc: 'The document you are looking for does not exist or is currently unavailable. Please check the documents\'s information again or try a different search.',
     },
     delete_document: {
       title: 'Delete Document',
@@ -640,6 +651,10 @@ export default {
         title: 'Agents',
         description: 'active agents',
         view_more: 'View more',
+        most_used_empty_title: 'No used agents',
+        most_used_empty_description: 'Currently, there are no used agents to show.',
+        providers_empty_title: 'No providers',
+        providers_empty_description: 'Currently, there are no providers to show.',
       },
       users: {
         title: 'Users',
@@ -715,6 +730,8 @@ export default {
   agents: {
     title: 'Agents',
     all_agents: 'All Agents',
+    empty_state_title_all: 'No agents available',
+    empty_state_desc_all: 'Currently, there are no agents to display here.',
     titles: {
       mainTitle: 'Agents',
       details: 'Agent Details',
@@ -881,6 +898,8 @@ export default {
     empty_state: {
       title: 'No Collections Assigned',
       description: 'This agent currently doesn’t have any collections associated with them.',
+      title_all: 'No collections available',
+      description_all: 'Currently, there are no collections to display here.',
     },
 
     titles: {

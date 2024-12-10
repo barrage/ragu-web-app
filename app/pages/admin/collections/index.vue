@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 // IMPORTS
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
+import AddCollectionIcon from '~/assets/icons/svg/folder-add.svg'
+import EmptyCollectionIcon from '~/assets/icons/svg/collection-question-mark.svg'
 import type { SortingValues } from '~/types/sort'
 
 const collectionStore = useCollectionsStore()
@@ -52,7 +54,24 @@ const handleSortChange = async (sortingValues: SortingValues) => {
         <CollectionQuickActionsContainer />
       </template>
     </AdminPageHeadingTemplate>
-    <CollectionListActions @sort-change="handleSortChange" />
-    <CollectionList :collections="collectionStore.collections" @page-change="handlePageChange" />
+    <template v-if="collectionStore.collections.length">
+      <CollectionListActions @sort-change="handleSortChange" />
+      <CollectionList :collections="collectionStore.collections" @page-change="handlePageChange" />
+    </template>
+    <EmptyState
+      v-else
+      :title="t('collections.empty_state.title_all')"
+      :description="t('collections.empty_state.description_all')"
+      :cta-text="t('collections.assign_collection.title')"
+    >
+      <template #icon>
+        <EmptyCollectionIcon size="44px" />
+      </template>
+      <template #cta>
+        <LlmLink to="/admin/collections/create" type="button">
+          <AddCollectionIcon /> {{ t('collections.titles.create') }}
+        </LlmLink>
+      </template>
+    </EmptyState>
   </AdminPageContainer>
 </template>

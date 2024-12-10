@@ -5,8 +5,9 @@ import DocumentAddIcon from '~/assets/icons/svg/document-add.svg'
 import DocumentSyncIcon from '~/assets/icons/svg/document-sync.svg'
 import UploadIcon from '~/assets/icons/svg/upload-icon.svg'
 
+const isUploadModalVisible = defineModel<boolean>()
+
 const documentStore = useDocumentsStore()
-const isUploadModalVisible = ref(false)
 const isUploadLoading = ref(false)
 const openUploadModal = () => {
   isUploadModalVisible.value = true
@@ -140,16 +141,12 @@ const setEmptyList = () => {
 <template>
   <div class="documents-actions-container">
     <el-button
-      type="primary"
       :disabled="loading"
       @click="syncDocuments"
     >
       <DocumentSyncIcon v-if="!loading" size="20px" /> <LlmLoader v-else /> {{ t('documents.sync') }}
     </el-button>
-    <el-button
-      type="primary"
-      @click="openUploadModal"
-    >
+    <el-button @click="openUploadModal">
       <DocumentAddIcon size="20px" />  {{ t('documents.upload') }}
     </el-button>
     <ClientOnly>

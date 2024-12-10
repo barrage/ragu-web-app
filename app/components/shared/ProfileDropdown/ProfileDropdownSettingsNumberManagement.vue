@@ -3,7 +3,7 @@ import type { FormInstance, FormRules } from 'element-plus'
 import AddIcon from '~/assets/icons/svg/add.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import InfoIcon from '~/assets/icons/svg/info.svg'
-import WhatsAppLogoIcon from '~/assets/icons/svg/whatsapp-logo.svg'
+import WhatsAppLogoIcon from '~/assets/icons/svg/whatsapp-chat.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import { isValidPhoneNumber } from '~/utils/useValidation'
@@ -332,6 +332,7 @@ function showSuccessNotification(type: Types) {
     </div>
 
     <EmptyState
+      v-else
       :title="$t('users.phone_numbers.empty_data')"
       :description="$t('users.phone_numbers.empty_data_description')"
     >

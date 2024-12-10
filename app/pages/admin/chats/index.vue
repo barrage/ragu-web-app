@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
+import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 import type { SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
 
@@ -64,17 +65,26 @@ watch(
           </template>
         </AdminPageTitleContainer>
       </template>
-      <template #actions>
-        <!--     <ChatsQuickActionsContainer /> -->
-      </template>
+      <template #actions />
     </AdminPageHeadingTemplate>
-    <ChatsListAdminActions @sort-change="handleSortChange" />
-    <ChatsListAdmin
-      :chats="chatsStore?.adminAllChatsData"
-      :pagination="pagination"
-      @page-change="handlePageChange"
-      @chat-deleted="(handlePageChange(1))"
-      @chat-title-edited="(handlePageChange(1))"
-    />
+    <template v-if="chatsStore?.adminAllChatsData.length">
+      <ChatsListAdminActions @sort-change="handleSortChange" />
+      <ChatsListAdmin
+        :chats="chatsStore.adminAllChatsData"
+        :pagination="pagination"
+        @page-change="handlePageChange"
+        @chat-deleted="(handlePageChange(1))"
+        @chat-title-edited="(handlePageChange(1))"
+      />
+    </template>
+    <EmptyState
+      v-else
+      :title="$t('chat.admin.chat_card.empty_state_title')"
+      :description="$t('chat.admin.chat_card.empty_state_desc')"
+    >
+      <template #icon>
+        <ChatWarningIcon size="44px" />
+      </template>
+    </EmptyState>
   </AdminPageContainer>
 </template>

@@ -4,6 +4,7 @@ import type { Chat, Message } from '~/types/chat'
 import EditTextIcon from '~/assets/icons/svg/edit-text.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import MoreIcon from '~/assets/icons/svg/more.svg'
+import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 
 const props = defineProps<{
   chat: Chat | null
@@ -82,7 +83,7 @@ onBeforeUnmount(() => {
   <div class="chat-container">
     <div class="chat-title">
       <h5>
-        {{ displayedTitle || 'Chat title' }}
+        {{ displayedTitle || $t('chat.llm_chat') }}
       </h5>
 
       <ClientOnly>
@@ -107,7 +108,7 @@ onBeforeUnmount(() => {
       </ClientOnly>
     </div>
 
-    <div class="messages-container">
+    <div v-if="messages?.length" class="messages-container">
       <template
         v-for="message in props.messages"
         :key="message.id"
@@ -115,6 +116,16 @@ onBeforeUnmount(() => {
         <ChatMessage :message="message" />
       </template>
     </div>
+
+    <EmptyState
+      v-else
+      :title="$t('chat.empty_state.title')"
+      :description="$t('chat.empty_state.description')"
+    >
+      <template #icon>
+        <ChatWarningIcon size="44px" />
+      </template>
+    </EmptyState>
   </div>
 </template>
 

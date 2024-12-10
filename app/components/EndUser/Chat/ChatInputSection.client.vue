@@ -241,12 +241,10 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
 
 <template>
   <section class="chat-input-section">
-    <el-card v-if="chatStore.selectedChat?.chat?.id && !(chatStore?.selectedChat?.agent?.active)" class="inactive-agent-card is-accent">
-      <p>
-        {{ $t('chat.inactive_agent') }}
-      </p>
-    </el-card>
-    <div v-else class="input-button-wrapper">
+    <ElCard v-if="chatStore.selectedChat?.chat?.id && !(chatStore?.selectedChat?.agent?.active)" class="inactive-agent-card is-accent">
+      {{ $t('chat.inactive_agent') }}
+    </ElCard>
+    <div v-else-if="agentStore.appAgents.length" class="input-button-wrapper">
       <ElInput
         v-model="message"
         size="large"

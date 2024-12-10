@@ -8,7 +8,7 @@ const { t } = useI18n()
 <template>
   <div class="collection-quick-actions-container">
     <LlmLink
-      type="buttonPrimary"
+      type="button"
       to="/admin/collections/create"
     >
       <AddCollectionIcon size="20px" /> {{ t('collections.buttons.create') }}

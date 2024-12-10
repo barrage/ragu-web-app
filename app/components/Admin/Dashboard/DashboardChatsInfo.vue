@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import ChatsIcon from '~/assets/icons/svg/chat-multiple.svg'
 import type { PieChartDataEntry } from '~/types/statistic'
 import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
+import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 
 const { t } = useI18n()
 const statisticStore = useStatisticStore()
@@ -46,7 +48,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
     </div>
 
     <div class="recent-chats">
-      <el-card class="is-primary recent-chats-card ">
+      <ElCard class="is-primary recent-chats-card ">
         <TitleDescription :title="t('dashboard.chats.most_recent.title')" :description="t('dashboard.chats.most_recent.description')" />
 
         <div class="recent-chat-list">
@@ -76,31 +78,48 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
           </template>
           <EmptyState
             v-else
-            :title="t('chat.admin.chat_card.empty_state_title')"
-            :description="t('chat.admin.chat_card.empty_state_desc')"
+            :title="$t('chat.admin.chat_card.empty_state_title')"
+            :description="$t('chat.admin.chat_card.empty_state_desc')"
           >
             <template #icon>
-              <ChatIcon size="44px" />
+              <ChatWarningIcon size="44px" />
             </template>
           </EmptyState>
         </div>
-      </el-card>
+      </ElCard>
     </div>
 
     <div class="chats-information">
-      <el-card class="is-primary all-chats-usage-card">
+      <ElCard class="is-primary all-chats-usage-card">
         <TitleDescription :title="t('dashboard.chats.all_chat_usage.title')" :description="t('dashboard.chats.all_chat_usage.description')" />
+        <div v-if="statisticStore.dashboardCountLoading" class="loader-container">
+          <MeetUpLoader />
+        </div>
         <PieChart
+          v-else-if="chatPieChartData?.length"
           :data="chatPieChartData || []"
           :series-name="t('dashboard.chats.all_chat_usage.series_name')"
           :title-text="chatCount ? chatCount.toString() : '0'"
           :title-subtext="t('dashboard.chats.all_chat_usage.pie_chart_subtext')"
         />
-      </el-card>
+        <div
+          v-else
+          class="recent-chat-list"
+        >
+          <EmptyState
+            :title="$t('chat.admin.chat_card.empty_state_title')"
+            :description="$t('chat.admin.chat_card.empty_state_desc')"
+          >
+            <template #icon>
+              <ChatWarningIcon size="44px" />
+            </template>
+          </EmptyState>
+        </div>
+      </ElCard>
     </div>
 
     <div class="active-agents">
-      <el-card class="active-agents-card is-primary">
+      <ElCard class="active-agents-card is-primary">
         <TitleDescription :title="t('dashboard.chats.available_agents.title')" :description="t('dashboard.chats.available_agents.description')" />
 
         <div class="active-agents-list">
@@ -128,15 +147,21 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
           </template>
           <EmptyState
             v-else
-            :title="t('agents.agent_card.empty_state_title')"
-            :description="t('agents.agent_card.empty_state_desc')"
+            :title="$t('chat.newChat.empty_title')"
+            :description="$t('chat.newChat.empty')"
+            class="agents-empty-state"
           >
             <template #icon>
-              <AgentIcon size="44px" />
+              <AccountWarningIcon size="44px" />
+            </template>
+            <template #cta>
+              <LlmLink to="/admin/agents" type="button">
+                <AgentIcon /> {{ $t('agents.title') }}
+              </LlmLink>
             </template>
           </EmptyState>
         </div>
-      </el-card>
+      </ElCard>
     </div>
   </section>
 </template>
@@ -153,6 +178,10 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
     max-height: 300px;
     padding-top: var(--font-size-fluid-1);
     overflow-y: auto;
+
+    .agents-empty-state {
+      margin-top: 5rem;
+    }
   }
 }
 

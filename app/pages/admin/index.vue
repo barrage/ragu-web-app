@@ -17,7 +17,7 @@ const collectionsStore = useCollectionsStore()
 const documentsStore = useDocumentsStore()
 const currentPeriod = ref('WEEK')
 
-const { execute: refreshChatHistory, error: chatHistoryError } = useAsyncData(() => statisticStore.GET_ChatHistoryStatistic(currentPeriod.value))
+const { execute: refreshChatHistory, error: chatHistoryError, status: chatHistoryStatus } = useAsyncData(() => statisticStore.GET_ChatHistoryStatistic(currentPeriod.value))
 
 const { error: dashboardCountError } = useAsyncData(() => statisticStore.GET_DashboardCount())
 
@@ -118,6 +118,7 @@ function findMostUsedAgent(): { name: string, stats: { used: number, total: numb
           :collections-count="collectionsCount"
           :documents-count="documentsCount"
           :chat-history="chatHistory"
+          :status="chatHistoryStatus"
           @change-period="updatePeriod"
         />
       </div>
