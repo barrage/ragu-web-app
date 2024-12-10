@@ -7,10 +7,13 @@ import BrainIcon from '~/assets/icons/svg/brain.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import type { CollectionResponse } from '~/types/collection'
 
+// PROPS
+
 const props = defineProps<{
   singleCollection: CollectionResponse | null | undefined
 }>()
 
+// CONSTATNTS & STATES
 const route = useRoute()
 const { t } = useI18n()
 const documetStore = useDocumentsStore()
@@ -18,6 +21,20 @@ const collectionStore = useCollectionsStore()
 const selectedDocumentIds = ref<string[]>([])
 const collectionId = ref(route.params.collectionId as string)
 const rightValue = ref<string[]>([])
+
+// COMPUTEDS
+
+const collectionData = computed(() => {
+  return {
+    id: props.singleCollection?.collection?.id || t('collections.collection_card.unknown_id'),
+    name: props.singleCollection?.collection?.name || t('collections.collection_card.unknown_collectin_name'),
+    provider: props.singleCollection?.collection?.provider || t('collections.collection_card.unknown_llmProvider'),
+    embedder: props.singleCollection?.collection?.embedder || t('collections.collection_card.unknown_llmProvider'),
+    model: props.singleCollection?.collection?.model || t('collections.collection_card.unknown_model'),
+    updatedAt: props.singleCollection?.collection?.updatedAt ? formatDate(props.singleCollection?.collection.updatedAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
+    createdAt: props.singleCollection?.collection?.createdAt ? formatDate(props.singleCollection?.collection.createdAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
+  }
+})
 
 const payload = computed(() => {
   const add = rightValue.value.filter(id => !selectedDocumentIds.value.includes(id))
@@ -29,6 +46,9 @@ const payload = computed(() => {
     remove,
   }
 })
+
+// API CALLS
+
 const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDocuments(undefined, undefined, undefined, undefined, true))
 
 errorHandler(documentError)
@@ -37,6 +57,8 @@ const { execute: updateCollection, error: collectionError, status } = await useA
 const { error, execute: getCollection } = await useAsyncData(() => collectionStore.GET_SingleCollection(collectionId?.value), { immediate: false })
 
 errorHandler(error)
+
+// FUNCTIONS
 
 const handleTransferChange = (newValue: string[]) => {
   const addedDocs = newValue.filter(id => !rightValue.value.includes(id))
@@ -94,17 +116,7 @@ const submitSelection = async () => {
   }
 }
 
-const collectionData = computed(() => {
-  return {
-    id: props.singleCollection?.collection?.id || t('collections.collection_card.unknown_id'),
-    name: props.singleCollection?.collection?.name || t('collections.collection_card.unknown_collectin_name'),
-    provider: props.singleCollection?.collection?.provider || t('collections.collection_card.unknown_llmProvider'),
-    embedder: props.singleCollection?.collection?.embedder || t('collections.collection_card.unknown_llmProvider'),
-    model: props.singleCollection?.collection?.model || t('collections.collection_card.unknown_model'),
-    updatedAt: props.singleCollection?.collection?.updatedAt ? formatDate(props.singleCollection?.collection.updatedAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
-    createdAt: props.singleCollection?.collection?.createdAt ? formatDate(props.singleCollection?.collection.createdAt, 'MMMM DD, YYYY') : t('collections.collection_card.unknown_date'),
-  }
-})
+// LIFECYCLE HOOKS
 
 onMounted(() => {
   if (props.singleCollection?.documents) {

@@ -3,6 +3,13 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import type { Agent, Agents } from '~/types/agent'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 
+// PROPS & EMITS
+
+interface Emits {
+  (event: 'closeModal'): void
+  (event: 'agentActivated'): void
+}
+
 const props = defineProps<{
   selectedAgent: Agents | Agent | null | undefined
   isOpen: boolean
@@ -10,24 +17,23 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
+
+// CONSTANTS & STATES
+
 const { t } = useI18n()
+const { $api } = useNuxtApp()
 const activateAgentModalVisible = ref(props.isOpen)
-const agentStore = useAgentStore()
+
 const closeModal = () => {
   activateAgentModalVisible.value = false
   emits('closeModal')
 }
 
-watch(() => props.isOpen, (newVal) => {
-  activateAgentModalVisible.value = newVal
-})
+// API CALLS
 
-interface Emits {
-  (event: 'closeModal'): void
-  (event: 'agentActivated'): void
-}
+const { execute: activateAgent, error } = await useAsyncData(() => $api.agent.PutActiveAgent(props.selectedAgent!.agent.id), { immediate: false })
 
-const { execute: activateAgent, error } = await useAsyncData(() => agentStore.PUT_ActivateAgent(props.selectedAgent!.agent.id), { immediate: false })
+// FUNCTIONS
 
 const submitActivateAgent = async () => {
   if (props.selectedAgent?.agent?.id) {
@@ -54,6 +60,12 @@ const submitActivateAgent = async () => {
     }
   }
 }
+
+// WATCHERS
+
+watch(() => props.isOpen, (newVal) => {
+  activateAgentModalVisible.value = newVal
+})
 </script>
 
 <template>

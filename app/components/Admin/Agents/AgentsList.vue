@@ -3,6 +3,8 @@ import DeactivateAgentModalBackoffice from './DeactivateAgentModalBackoffice.vue
 import type { Agents } from '~/types/agent'
 import type { Pagination } from '~/types/pagination'
 
+// PROPS & EMITS
+
 const props = defineProps<{
   agents: Agents[] | null | undefined
   pagination: Pagination
@@ -14,7 +16,11 @@ const emits = defineEmits<{
   (event: 'agentActivated'): void
 }>()
 
+// CONSTANTS
+
 const cardClasses = ref<string[]>([])
+
+// FUNCTIONS
 
 const applyCardClasses = () => {
   cardClasses.value = []
@@ -24,14 +30,6 @@ const applyCardClasses = () => {
     }, index * 100)
   })
 }
-
-watch(
-  () => props.agents,
-  () => {
-    nextTick(applyCardClasses)
-  },
-  { immediate: true },
-)
 
 const changePage = (page: number) => {
   emits('pageChange', page)
@@ -69,6 +67,16 @@ const closeDeactivateModal = () => {
 const agentDeactivated = () => {
   emits('agentDeactivated')
 }
+
+// WATCHERS
+
+watch(
+  () => props.agents,
+  () => {
+    nextTick(applyCardClasses)
+  },
+  { immediate: true },
+)
 </script>
 
 <template>

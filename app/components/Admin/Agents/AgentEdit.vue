@@ -9,7 +9,7 @@ definePageMeta({
   layout: 'admin-layout',
 })
 
-// CONSTANTS
+// CONSTANTS & STATES
 const agentStore = useAgentStore()
 const providerStore = useProviderStore()
 
@@ -18,8 +18,6 @@ const { t } = useI18n()
 const maxContext = 1000
 const embeddingProviders: EmbeddingProvider[] = ['azure', 'openai', 'ollama']
 const agentId = ref(route.params.agentId as string)
-
-// STATE
 const formRef = ref<FormInstance>()
 const form = reactive({
   active: true,
@@ -75,6 +73,9 @@ const { execute: updateExecute, error: updateError, status: updateStatus } = awa
 })
 await useAsyncData(() => providerStore.GET_List_Providers())
 
+// ERROR HANDLERS
+errorHandler(updateError)
+
 // HELPERS
 const updateAgent = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
@@ -117,9 +118,6 @@ const cancelUpdate = (): void => {
   agentStore.setEditMode(false)
 }
 
-// ERROR HANDLERS
-errorHandler(updateError)
-
 // WATCHER FOR LLM PROVIDER
 watch(() => form.configuration?.llmProvider, async (newProvider) => {
   if (newProvider) {
@@ -127,6 +125,7 @@ watch(() => form.configuration?.llmProvider, async (newProvider) => {
   }
 })
 
+// LYFECYCLE HOOKS
 onMounted(async () => {
   form.name = agentStore.singleAgent?.agent?.name ?? ''
   form.configuration.context = agentStore.singleAgent?.configuration?.context ?? ''

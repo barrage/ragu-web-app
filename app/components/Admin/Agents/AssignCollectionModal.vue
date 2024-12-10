@@ -6,14 +6,22 @@ import MinusIcon from '~/assets/icons/svg/minus.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 import type { AssignCollectionPayload } from '~/types/collection'
 
+// PROPS & EMITS
+
 const props = defineProps<{
   isOpen: boolean
 }>()
-
 const emits = defineEmits<Emits>()
+
+interface Emits {
+  (event: 'closeModal'): void
+}
+
+// CONSTANTS & STATES
+
 const collectionStore = useCollectionsStore()
 const agentStore = useAgentStore()
-
+const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
 const agentId = route.params.agentId as string
@@ -31,6 +39,8 @@ const assignCollectionForm = reactive({
   amount: 1,
   instruction: '',
 })
+
+// COMPUTEDS
 
 const payload = computed(() => ({
   provider: assignCollectionForm.provider,
@@ -66,14 +76,6 @@ const filteredCollections = computed(() => {
   })
 })
 
-watch(() => props.isOpen, (newVal) => {
-  assignCollectionModalVisible.value = newVal
-})
-
-interface Emits {
-  (event: 'closeModal'): void
-}
-
 const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
   collectionName: [{ required: true, message: t('collections.assign_collection.rules.collection_name'), trigger: 'change' }],
   instruction: [{ required: true, message: t('collections.assign_collection.rules.instruction'), trigger: 'blur' }],
@@ -81,11 +83,21 @@ const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
 }
 ))
 
+// WATCHERS
+
+watch(() => props.isOpen, (newVal) => {
+  assignCollectionModalVisible.value = newVal
+})
+
+// API CALLS
+
 await useAsyncData(() => collectionStore.GET_AllCollections())
 
-const { execute: putCollection, error } = await useAsyncData(() => agentStore.PUT_UpdateAgentCollection(agentId, payload.value), { immediate: false })
+const { execute: putCollection, error } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
 
 const { execute: getAgent } = await useAsyncData(() => agentStore.GET_SingleAgent(agentId), { immediate: false })
+
+// FUNCTIONS
 
 const submitAssignCollectionForm = async () => {
   if (!assignCollectionFormRef.value) {

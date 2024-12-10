@@ -136,16 +136,16 @@ watch(
       & .agent-name {
         color: var(--color-primary-100);
         &:hover {
-          background: var(--color-primary-600);
+          background: var(--color-primary-700);
         }
 
         &.selected {
-          background: var(--color-primary-800);
+          background: var(--color-primary-700);
         }
       }
     }
     & .selected-agent-wrapper {
-      background: var(--color-primary-800);
+      background: var(--color-primary-700);
       & h6 {
         color: var(--color-primary-0);
       }

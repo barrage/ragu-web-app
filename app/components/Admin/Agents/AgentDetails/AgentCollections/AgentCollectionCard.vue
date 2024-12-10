@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import type { AgentCollection } from '~/types/agent'
 
+// PROPS
+
 const props = defineProps<{
   agentCollection: AgentCollection | undefined
 }>()
+
+// COMPUTED
 
 const agentCollectionData = computed(() => {
   return {
@@ -11,10 +15,14 @@ const agentCollectionData = computed(() => {
     name: props.agentCollection?.collection ? props.agentCollection?.collection : '-',
     amount: props.agentCollection?.amount ? props.agentCollection?.amount : 0,
     instruction: props.agentCollection?.instruction ? props.agentCollection?.instruction : '-',
-    created_at: props.agentCollection?.createdAt ? useRelativeDate(props.agentCollection?.createdAt) : '-',
-    updated_at: props.agentCollection?.updatedAt ? useRelativeDate(props.agentCollection?.updatedAt) : '-',
+    created_at: props.agentCollection?.createdAt ? props.agentCollection?.createdAt : null,
+    updated_at: props.agentCollection?.updatedAt ? props.agentCollection?.updatedAt : null,
   }
 })
+
+const createdAtRelativeDate = agentCollectionData.value.created_at
+  ? useRelativeDate(agentCollectionData.value.created_at)
+  : '-'
 </script>
 
 <template>
@@ -29,7 +37,7 @@ const agentCollectionData = computed(() => {
 
       <LabelDescriptionItem
         :label="$t('collections.labels.created_at')"
-        :description="agentCollectionData.created_at"
+        :description="createdAtRelativeDate"
       />
 
       <LabelDescriptionItem

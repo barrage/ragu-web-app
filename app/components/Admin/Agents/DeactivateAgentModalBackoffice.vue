@@ -3,30 +3,31 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import type { Agent, Agents } from '~/types/agent'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 
+// PROPS & EMITS
+
 const props = defineProps<{
-  selectedAgent: Agents | Agent | null | undefined
+  selectedAgent: Agents | Agent | null | undefined
   isOpen: boolean
 }>()
 
 const emits = defineEmits<Emits>()
-const { t } = useI18n()
-const deactivateAgentModalVisible = ref(props.isOpen)
-const agentStore = useAgentStore()
-const closeModal = () => {
-  deactivateAgentModalVisible.value = false
-  emits('closeModal')
-}
-
-watch(() => props.isOpen, (newVal) => {
-  deactivateAgentModalVisible.value = newVal
-})
 
 interface Emits {
   (event: 'closeModal'): void
   (event: 'agentDeactivated'): void
 }
 
-const { execute: deactivateAgent, error } = await useAsyncData(() => agentStore.PUT_DectivateAgent(props.selectedAgent!.agent.id), { immediate: false })
+// CONSTANTS & STATES
+
+const { t } = useI18n()
+const deactivateAgentModalVisible = ref(props.isOpen)
+const { $api } = useNuxtApp()
+
+// API CALLS
+
+const { execute: deactivateAgent, error } = await useAsyncData(() => $api.agent.PutDeactivateAgent(props.selectedAgent!.agent.id), { immediate: false })
+
+// FUNCTIONS
 
 const submitDeactivateAgent = async () => {
   if (props.selectedAgent?.agent?.id) {
@@ -53,6 +54,17 @@ const submitDeactivateAgent = async () => {
     }
   }
 }
+
+const closeModal = () => {
+  deactivateAgentModalVisible.value = false
+  emits('closeModal')
+}
+
+// WATCHERS
+
+watch(() => props.isOpen, (newVal) => {
+  deactivateAgentModalVisible.value = newVal
+})
 </script>
 
 <template>

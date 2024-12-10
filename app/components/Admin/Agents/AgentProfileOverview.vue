@@ -2,6 +2,8 @@
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import type { Agent } from '~/types/agent'
 
+// PROPS
+
 const props = withDefaults(defineProps<{
   agent: Agent | null | undefined
   size?: 'small' | 'medium' | 'large'
@@ -9,7 +11,11 @@ const props = withDefaults(defineProps<{
   size: 'small',
 })
 
+// CONSTANTS
+
 const { t } = useI18n()
+
+// COMPUTEDS
 
 const agentData = computed(() => {
   return {

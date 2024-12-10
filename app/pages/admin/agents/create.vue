@@ -17,7 +17,7 @@ useHead({
 })
 
 // CONSTANTS
-const agentStore = useAgentStore()
+const { $api } = useNuxtApp()
 const providerStore = useProviderStore()
 const collectionStore = useCollectionsStore()
 
@@ -105,7 +105,7 @@ watch(() => form.embeddingProvider, async (newModel) => {
 })
 
 // API CALLS
-const { execute: createExecute, error: createError, status: createStatus, data } = await useAsyncData(() => agentStore.POST_CreateAgent(form), {
+const { execute: createExecute, error: createError, status: createStatus, data } = await useAsyncData(() => $api.agent.CreateAgent(form), {
   immediate: false,
 })
 

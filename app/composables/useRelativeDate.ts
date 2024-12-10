@@ -1,7 +1,7 @@
 import { computed, ref, watchEffect } from 'vue'
+import { useI18n } from 'vue-i18n'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { useI18n } from 'vue-i18n'
 import 'dayjs/locale/de'
 import 'dayjs/locale/hr'
 import 'dayjs/locale/en'

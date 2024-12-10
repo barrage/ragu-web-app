@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import AddCollectionIcon from '~/assets/icons/svg/folder-add.svg'
 
+// CONSTANTS
 const { t } = useI18n()
 </script>
 

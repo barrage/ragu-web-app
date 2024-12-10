@@ -3,23 +3,36 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 
-const props = defineProps<{
+// PROPS & EMITS
 
+const props = defineProps<{
   isOpen: boolean
 }>()
 
 const emits = defineEmits<Emits>()
+
+interface Emits {
+  (event: 'closeModal'): void
+}
+
+// CONSTANTS & STATES
+
+const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
 const agentStore = useAgentStore()
 const deleteCollectionModalVisible = ref(props.isOpen)
 const deleteCollections = ref([])
+const agentId = route.params.agentId as string
+
+// COMPUTEDS
 
 const payload = computed(() => ({
   provider: agentStore.singleAgent?.agent?.vectorProvider,
   remove: deleteCollections.value,
 }))
-const agentId = route.params.agentId as string
+
+// FUNCTIONS
 
 const closeModal = () => {
   deleteCollectionModalVisible.value = false
@@ -27,14 +40,12 @@ const closeModal = () => {
   deleteCollections.value = []
 }
 
-watch(() => props.isOpen, (newVal) => {
-  deleteCollectionModalVisible.value = newVal
-})
-interface Emits {
-  (event: 'closeModal'): void
-}
-const { execute: deleteCollection, error } = await useAsyncData(() => agentStore.PUT_UpdateAgentCollection(agentId, payload.value), { immediate: false })
+// API CALLS
+
+const { execute: deleteCollection, error } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
 const { execute: getAgent } = await useAsyncData(() => agentStore.GET_SingleAgent(agentId), { immediate: false })
+
+// FUNCTIONS
 
 const submitDeleteCollection = async () => {
   await deleteCollection()
@@ -61,6 +72,12 @@ const submitDeleteCollection = async () => {
     deleteCollections.value = []
   }
 }
+
+// WATCHERS
+
+watch(() => props.isOpen, (newVal) => {
+  deleteCollectionModalVisible.value = newVal
+})
 </script>
 
 <template>

@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 
+// PROPS
+
 const props = withDefaults(defineProps<{
   collectionName: string | null
   size?: 'small' | 'medium' | 'large'
@@ -8,7 +10,11 @@ const props = withDefaults(defineProps<{
   size: 'small',
 })
 
+// CONSTANTS
+
 const { t } = useI18n()
+
+// COMPUTEDS
 
 const collectionData = computed(() => {
   return {

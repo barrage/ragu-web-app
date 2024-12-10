@@ -8,6 +8,20 @@ The **LLMAO Frontend Application** is a web-based platform designed to interact 
 
 - **End Users**: Regular users who can interact with the LLM agents in a chat-based environment. They can communicate with the agents, receive answers, and explore information through conversations, where the agents are empowered with specific knowledge depending on their assigned document collections.
 
+- **Authentication:** The application supports various authentication methods, including Google OAuth, allowing users to securely access the platform.
+
+- **Multi-language Support**: The application supports multiple languages, allowing users to interact with agents in their preferred language.
+
+- **Admin Panel**: Dashboard for managing AI agents, users, documents, and collections. Agent creation and management interface. User management system.
+
+- **AI Agent Interaction**: Custom AI agents with configurable parameters. Chat interface for interacting with AI agents. Support for multiple embedding providers (Azure, OpenAI, Ollama).
+
+- **Chat Functionality**: Real-time chat with AI agents. Chat history and conversation management.
+
+- **Document Management**: Upload and process documents. Collection management for organizing documents.
+
+- **Deployment**: The application is designed to be easily deployed with docker containerization allowing for quick setup and integration with various LLM providers.
+
 ### Key Features:
 
 - **Create and Configure LLM Agents**: Admin users can create agents that leverage large language models to provide interactive experiences.

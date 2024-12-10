@@ -5,26 +5,31 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import { useCollectionsStore } from '~/stores/collections'
 import type { Collection } from '~/types/collection'
 
+// PROPS & EMITS
+
 const props = defineProps<{
   collection: Collection | null
   visible: boolean
 }>()
 
 const emits = defineEmits(['update:visible'])
+
+// CONSTANTS & STATES
+
 const { t } = useI18n()
 const collectionStore = useCollectionsStore()
 const deleteCollectionModalVisible = ref(props.visible)
 
-watch(() => props.visible, (newVal) => {
-  deleteCollectionModalVisible.value = newVal
-})
+// API CALLS
+
+const { execute: getAllCollections } = await useAsyncData(() => collectionStore.GET_AllCollections(), { immediate: false })
+const { execute: deleteCollection, error: deleteCollectionError, status } = await useAsyncData(() => collectionStore.DELETE_Collection(props.collection!.id), { immediate: false })
+
+// FUNCTIONS
 
 const closeModal = () => {
   emits('update:visible', false)
 }
-
-const { execute: getAllCollections } = await useAsyncData(() => collectionStore.GET_AllCollections(), { immediate: false })
-const { execute: deleteCollection, error: deleteCollectionError, status } = await useAsyncData(() => collectionStore.DELETE_Collection(props.collection!.id), { immediate: false })
 
 const confirmDelete = async () => {
   if (!props.collection || !props.collection.id) { return }
@@ -50,6 +55,12 @@ const confirmDelete = async () => {
     })
   }
 }
+
+// WATCHERS
+
+watch(() => props.visible, (newVal) => {
+  deleteCollectionModalVisible.value = newVal
+})
 </script>
 
 <template>
