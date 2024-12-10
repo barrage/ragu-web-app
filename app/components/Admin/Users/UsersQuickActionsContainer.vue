@@ -1,15 +1,10 @@
 <script lang="ts" setup>
 import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 
-/* Invite */
 const inviteUserModalVisible = ref(false)
 
 const openInviteUserModal = () => {
   inviteUserModalVisible.value = true
-}
-
-const closeInviteUserModal = () => {
-  inviteUserModalVisible.value = false
 }
 </script>
 
@@ -21,10 +16,7 @@ const closeInviteUserModal = () => {
     >
       <AddPersonIcon size="20px" /> {{ $t('users.invite_user') }}
     </el-button>
-    <CreateUserModalBackoffice
-      :is-open="inviteUserModalVisible"
-      @close-modal="closeInviteUserModal"
-    />
+    <CreateUserModalBackoffice v-model="inviteUserModalVisible" />
   </div>
 </template>
 

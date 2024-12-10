@@ -427,6 +427,7 @@ export default {
       username_placeholder: 'Unesite korisničko ime',
       submit: 'Potvrdi',
       cancel: 'Odustani',
+      reset: 'Poništi',
       rules: {
         required: 'Ovo polje je obavezno',
         invalid_email: 'Neispravan format e-mail adrese',
@@ -440,9 +441,18 @@ export default {
       user_description: 'Pristup aplikaciji za krajnjeg korisnika za razgovor s AI agentima.',
     },
     notifications: {
-      create_error_title: 'Greška prilikom dodavanja korisnika',
-      create_error_description: 'Nije moguće dodati novog korisnika.',
+      create_error_title: 'Greška pri dodavanju korisnika',
+      create_error_description: 'Neuspješno dodavanje novog korisnika.',
       create_error_existing_user_description: 'Korisnik već postoji.',
+      delete_title: 'Uspjeh',
+      update_title: 'Uspjeh',
+      delete_message: 'Korisnik {name} je izbrisan!',
+      create_title: 'Uspjeh',
+      create_message: 'Korisnik {name} je kreiran!',
+      form_title: 'Greška u obrascu',
+      form_message: 'Molimo ispravite označene pogreške u obrascu.',
+      invalid_user: 'Ups! Nešto je pošlo po zlu. Korisnik kojeg pokušavate izbrisati ne postoji.',
+
     },
     user_card: {
       role: 'Uloga',

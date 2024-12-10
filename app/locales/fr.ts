@@ -790,6 +790,7 @@ export default {
       username_placeholder: 'Entrez le nom d\'utilisateur',
       submit: 'Valider',
       cancel: 'Annuler',
+      reset: 'Réinitialiser',
       rules: {
         required: 'Ce champ est requis',
         invalid_email: 'Format d\'e-mail invalide',
@@ -799,6 +800,14 @@ export default {
       create_error_title: 'Erreur d\'ajout d\'utilisateur',
       create_error_description: 'Échec de l\'ajout d\'un nouvel utilisateur.',
       create_error_existing_user_description: 'L\'utilisateur existe déjà.',
+      delete_title: 'Succès',
+      update_title: 'Succès',
+      delete_message: 'L\'utilisateur {name} a été supprimé !',
+      create_title: 'Succès',
+      create_message: 'L\'utilisateur {name} a été créé !',
+      form_title: 'Erreur de formulaire',
+      form_message: 'Veuillez corriger les erreurs en surbrillance dans le formulaire.',
+      invalid_user: 'Oups ! Quelque chose a mal tourné. L\'utilisateur que vous essayez de supprimer semble ne pas exister.',
     },
     roles: {
       admin_label: 'Administrateur',

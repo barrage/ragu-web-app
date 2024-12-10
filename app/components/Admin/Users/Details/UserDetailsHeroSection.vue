@@ -44,10 +44,10 @@ const openEditUserModal = () => {
   editUserModalVisible.value = true
 }
 
-const closeEditModal = () => {
+const userUpdated = () => {
   editUserModalVisible.value = false
+  GetUserDetails()
 }
-
 /* Delete User */
 const selectedUserDelete = ref<User | null >(props.user)
 const deleteUserModalVisible = ref(false)
@@ -141,10 +141,9 @@ const closeDeactivateModal = () => {
     />
 
     <EditUserModalBackoffice
-      :is-open="editUserModalVisible"
+      v-model="editUserModalVisible"
       :selected-user="selectedUserEdit"
-      @close-modal="closeEditModal"
-      @user-edited="GetUserDetails"
+      @user-edited="userUpdated"
     />
 
     <ActivateUserModalBackoffice

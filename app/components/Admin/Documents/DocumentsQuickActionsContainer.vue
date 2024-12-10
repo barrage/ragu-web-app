@@ -19,7 +19,7 @@ const { execute: getAllDocuments } = await useAsyncData(() => documentStore.GET_
 
 const beforeUploadCheck: UploadProps['beforeUpload'] = (rawFile) => {
   isUploadLoading.value = true
-  const allowedTypes = ['application/pdf', 'application/json', 'text/plain', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+  const allowedTypes = ['application/pdf', 'application/json', 'text/plain', 'text/markdown', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
 
   if (!allowedTypes.includes(rawFile.type)) {
     ElNotification({

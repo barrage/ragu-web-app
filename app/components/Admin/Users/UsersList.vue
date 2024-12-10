@@ -40,9 +40,6 @@ const openEditUserModal = (user: User) => {
   editUserModalVisible.value = true
 }
 
-const closeEditModal = () => {
-  editUserModalVisible.value = false
-}
 const userEdited = () => {
   emits('userEdited')
 }
@@ -139,9 +136,8 @@ watch(
     />
 
     <EditUserModalBackoffice
-      :is-open="editUserModalVisible"
+      v-model="editUserModalVisible"
       :selected-user="selectedUserEdit"
-      @close-modal="closeEditModal"
       @user-edited="userEdited"
     />
 

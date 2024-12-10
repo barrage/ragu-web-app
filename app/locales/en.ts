@@ -422,6 +422,7 @@ export default {
       username_placeholder: 'Enter username',
       submit: 'Submit',
       cancel: 'Cancel',
+      reset: 'Reset',
       rules: {
         required: 'This field is required',
         invalid_email: 'Invalid email format',

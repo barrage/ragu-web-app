@@ -790,6 +790,7 @@ export default {
       username_placeholder: 'Insira o nome de usuário',
       submit: 'Confirmar',
       cancel: 'Cancelar',
+      reset: 'Redefinir',
       rules: {
         required: 'Este campo é obrigatório',
         invalid_email: 'Formato de e-mail inválido',
@@ -797,8 +798,16 @@ export default {
     },
     notifications: {
       create_error_title: 'Erro ao adicionar usuário',
-      create_error_description: 'Não foi possível adicionar um novo usuário.',
+      create_error_description: 'Falha ao adicionar um novo usuário.',
       create_error_existing_user_description: 'O usuário já existe.',
+      delete_title: 'Sucesso',
+      update_title: 'Sucesso',
+      delete_message: 'Usuário {name} foi excluído!',
+      create_title: 'Sucesso',
+      create_message: 'Usuário {name} foi criado!',
+      form_title: 'Erro no formulário',
+      form_message: 'Por favor, corrija os erros destacados no formulário.',
+      invalid_user: 'Ops! Algo deu errado. O usuário que você está tentando excluir parece não existir.',
     },
     roles: {
       admin_label: 'Administrador',
