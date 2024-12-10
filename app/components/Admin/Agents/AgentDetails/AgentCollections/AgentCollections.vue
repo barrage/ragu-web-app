@@ -5,14 +5,20 @@ import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
 import CollectionDelete from '~/assets/icons/svg/folder-remove.svg'
 import OpenFolderIcon from '~/assets/icons/svg/open-folder.svg'
 
+// PROPS
+
 const props = defineProps<{
   agentCollections: AgentCollection[] | undefined
 }>()
 
+// CONSTATNTS & STATES
 const agentStore = useAgentStore()
 const assignCollectionModalVisible = ref(false)
 const deleteCollectionModalVisible = ref(false)
 const { t } = useI18n()
+
+// FUNCTIONS
+
 const openAssignCollectionModal = () => {
   assignCollectionModalVisible.value = true
 }

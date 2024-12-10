@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
-
 const props = defineProps<{ formats: { value: number, name: string }[] }>()
 
 const { t } = useI18n()

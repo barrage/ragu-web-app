@@ -217,6 +217,17 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
   & p {
     font-size: var(--font-size-fluid-2);
   }
+  & :deep(svg) {
+    transition: color 0.3s ease;
+  }
+
+  &:hover {
+    background-color: var(--color-primary-100);
+
+    & :deep(svg) {
+      color: var(--color-primary-600);
+    }
+  }
 }
 
 .user-profile-item {
@@ -280,6 +291,15 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
     &:hover {
       color: var(--color-primary-200);
       background: var(--color-primary-600);
+    }
+  }
+
+  & .dropdown-item {
+    background-color: transparent;
+    &:hover {
+      & :deep(svg) {
+        color: var(--color-primary-300);
+      }
     }
   }
 }

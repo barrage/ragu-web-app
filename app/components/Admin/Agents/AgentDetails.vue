@@ -12,6 +12,8 @@ import { StatusType } from '~/types/statusTypes'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 
+// PROPS & EMITS
+
 const props = defineProps<{
   singleAgent: Agent | null | undefined
 }>()
@@ -22,9 +24,12 @@ const emits = defineEmits<{
   (event: 'agentActivated'): void
 }>()
 
-const agentStore = useAgentStore()
+// STATES
 
+const agentStore = useAgentStore()
 const { t } = useI18n()
+
+// COMPUTED
 
 const agentData = computed(() => {
   return {
@@ -49,7 +54,10 @@ const agentData = computed(() => {
   }
 })
 
+// API CALLS
 const { execute: getAgent } = await useAsyncData(() => agentStore.GET_SingleAgent(props.singleAgent?.agent?.id), { immediate: false })
+
+// FUNCTIONS
 
 const editClick = (): void => {
   agentStore.setEditMode(true)

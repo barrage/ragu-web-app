@@ -2,6 +2,8 @@
 import type { Collection } from '~/types/collection'
 import type { Pagination } from '~/types/pagination'
 
+// PROPS & EMITS
+
 const props = defineProps<{
   collections: Collection[] | null | undefined
 }>()
@@ -10,16 +12,12 @@ const emits = defineEmits<{
   (event: 'pageChange', page: number): number
 }>()
 
+// CONSTANTS & STATES
+
 const collectionStore = useCollectionsStore()
 const cardClasses = ref<string[]>([])
 const isDeleteModalVisible = ref(false)
 const collectionToDelete = ref<Collection | null>(null)
-
-const openDeleteModal = (collection: Collection | null) => {
-  collectionToDelete.value = collection
-  isDeleteModalVisible.value = true
-}
-
 const pagination = ref<Pagination>({
   currentPage: 1,
   pageSize: 10,
@@ -27,10 +25,19 @@ const pagination = ref<Pagination>({
   disabled: false,
 })
 
+// FUNCTIONS
+
+const openDeleteModal = (collection: Collection | null) => {
+  collectionToDelete.value = collection
+  isDeleteModalVisible.value = true
+}
+
 const changePage = (page: number) => {
   pagination.value.currentPage = page
   emits('pageChange', pagination.value.currentPage)
 }
+
+// WATCHERS
 
 watch(
   () => collectionStore.collectionResponse?.total,
@@ -40,6 +47,8 @@ watch(
     }
   },
 )
+
+// LIFECYCLE HOOKS
 
 onMounted(() => {
   nextTick(() => {

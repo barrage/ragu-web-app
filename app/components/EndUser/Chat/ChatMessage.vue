@@ -401,7 +401,7 @@ watchEffect(() => {
   position: relative;
 
   pre,
-  ::v-deep(pre) {
+  :deep(pre) {
     background-color: var(--color-primary-100);
     border: 2px solid var(--color-primary-200);
     border-radius: 4px;
@@ -414,7 +414,7 @@ watchEffect(() => {
     }
   }
 
-  ::v-deep(a) {
+  :deep(a) {
     color: var(--color-blue-600);
     text-decoration: underline;
 
@@ -423,50 +423,49 @@ watchEffect(() => {
       color: var(--color-blue-300);
     }
   }
-  ::v-deep(ol) {
-    color: var(--color-primary-800);
+  :deep(ol),
+  :deep(ul) {
+    color: var(--color-primary-900);
 
-    & li {
+    li {
       margin-block: 12px;
     }
   }
-  ::v-deep(ul) {
-    color: var(--color-primary-900);
-    list-style-type: circle;
-    list-style-position: inside;
 
-    & > li {
-      margin-block: 12px;
+  :deep(ul) {
+    list-style: circle inside;
+
+    > li {
       list-style-type: inherit;
     }
   }
 
-  ::v-deep(h1) {
+  :deep(h1) {
     color: var(--color-primary-900);
     line-height: normal;
     font-size: var(--font-size-fluid-8);
   }
-  ::v-deep(h2) {
+  :deep(h2) {
     color: var(--color-primary-800);
     line-height: normal;
     font-size: var(--font-size-fluid-7);
   }
-  ::v-deep(h3) {
+  :deep(h3) {
     color: var(--color-primary-800);
     line-height: normal;
     font-size: var(--font-size-fluid-6);
   }
-  ::v-deep(h4) {
+  :deep(h4) {
     color: var(--color-primary-800);
     line-height: normal;
     font-size: var(--font-size-fluid-5);
   }
-  ::v-deep(h5) {
+  :deep(h5) {
     color: var(--color-primary-700);
     line-height: normal;
     font-size: var(--font-size-fluid-4);
   }
-  ::v-deep(h6) {
+  :deep(h6) {
     color: var(--color-primary-700);
     line-height: normal;
     font-size: var(--font-size-fluid-3);
@@ -510,29 +509,29 @@ watchEffect(() => {
 
 .dark {
   & .table-message-container {
-    ::v-deep(table) {
+    :deep(table) {
       box-shadow: 0 0 0 1px var(--color-primary-700);
     }
 
-    ::v-deep(th, td) {
+    :deep(th, td) {
       border-color: var(--color-primary-700);
     }
 
-    ::v-deep(th) {
+    :deep(th) {
       background-color: var(--color-primary-800);
       color: var(--color-primary-100);
     }
 
-    ::v-deep(td) {
+    :deep(td) {
       background-color: var(--color-primary-900);
       color: var(--color-primary-100);
     }
 
-    ::v-deep(tr:nth-child(even) td) {
+    :deep(tr:nth-child(even) td) {
       background-color: var(--color-primary-800);
     }
 
-    ::v-deep(tr:hover td) {
+    :deep(tr:hover td) {
       background-color: var(--color-primary-700);
     }
   }
@@ -560,7 +559,7 @@ watchEffect(() => {
 
   & .assistantmessage {
     pre,
-    ::v-deep(pre) {
+    :deep(pre) {
       background-color: var(--color-primary-800);
       border: 1px solid var(--color-primary-600);
       & .hljs {
@@ -568,7 +567,7 @@ watchEffect(() => {
       }
     }
 
-    ::v-deep(a) {
+    :deep(a) {
       color: var(--color-blue-200);
 
       &:hover {
@@ -576,28 +575,26 @@ watchEffect(() => {
       }
     }
 
-    ::v-deep(ol) {
-      color: var(--color-primary-100);
-    }
-    ::v-deep(ul) {
+    :deep(ul),
+    :deep(ol) {
       color: var(--color-primary-0);
     }
-    ::v-deep(h1) {
+    :deep(h1) {
       color: var(--color-primary-subtle);
     }
-    ::v-deep(h2) {
+    :deep(h2) {
       color: var(--color-primary-0);
     }
-    ::v-deep(h3) {
+    :deep(h3) {
       color: var(--color-primary-0);
     }
-    ::v-deep(h4) {
+    :deep(h4) {
       color: var(--color-primary-0);
     }
-    ::v-deep(h5) {
+    :deep(h5) {
       color: var(--color-primary-100);
     }
-    ::v-deep(h6) {
+    :deep(h6) {
       color: var(--color-primary-100);
     }
   }

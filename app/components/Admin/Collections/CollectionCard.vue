@@ -4,15 +4,19 @@ import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import type { Collection } from '~/types/collection'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
 
-// PROPS
+// PROPS & EMITS
 const props = defineProps<{
   collection: Collection | null
 }>()
 
 const emit = defineEmits(['openDeleteModal'])
+
 // CONSTANTS
+
 const { t } = useI18n()
-// HELPERS
+
+// COMPUTEDS
+
 const collectionData = computed(() => {
   return {
 
@@ -24,6 +28,8 @@ const collectionData = computed(() => {
 
   }
 })
+
+// FUNCTIONS
 
 const openDeleteModal = () => {
   emit('openDeleteModal', props.collection)

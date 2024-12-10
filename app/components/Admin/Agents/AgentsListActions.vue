@@ -1,10 +1,17 @@
 <script lang="ts" setup>
 import type { SortingValues } from '~/types/sort'
 
+// EMITS
+
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
 }>()
+
+// CONSTANTS
+
 const { t } = useI18n()
+
+// COMPUTEDS
 
 const sortOptions = computed(() => [
   { name: t('agents.labels.status'), value: 'active' },
@@ -13,6 +20,8 @@ const sortOptions = computed(() => [
   { name: t('agents.labels.updated_at'), value: 'updatedAt' },
 
 ])
+
+// FUNCTIONS
 
 const updateSort = (sortingValues: SortingValues) => {
   emits('sortChange', sortingValues)
