@@ -118,4 +118,15 @@ watch(
     gap: var(--spacing-fluid-2-xs);
   }
 }
+
+html.dark {
+  .user-chats-section {
+    & .user-chats-section-title-wrapper {
+      color: var(--color-primary-100);
+      & .user-chats-title {
+        color: var(--color-primary-100);
+      }
+    }
+  }
+}
 </style>

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import DocumentIcon from '~/assets/icons/svg/document.svg'
+import DocumentErrorIcon from '~/assets/icons/svg/document-error.svg'
+import DocumentAddIcon from '~/assets/icons/svg/document-add.svg'
 import type { SortingValues } from '~/types/sort'
 
 const { t } = useI18n()
@@ -15,6 +17,7 @@ useHead({
 
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
+const openedUploadDialog = ref(false)
 
 const sort = ref<SortingValues>({
   direction: 'desc',
@@ -50,7 +53,7 @@ const handleSortChange = async (sortingValues: SortingValues) => {
         </AdminPageTitleContainer>
       </template>
       <template #actions>
-        <DocumentsQuickActionsContainer />
+        <DocumentsQuickActionsContainer v-model="openedUploadDialog" />
       </template>
     </AdminPageHeadingTemplate>
 
@@ -66,6 +69,22 @@ const handleSortChange = async (sortingValues: SortingValues) => {
         </div>
       </div>
     </template>
+    <EmptyState
+      v-else
+      :title="$t('documents.empty_state_title')"
+      :description="$t('documents.empty_state_desc')"
+    >
+      <template #icon>
+        <DocumentErrorIcon size="44px" />
+      </template>
+      <template #cta>
+        <ElButton
+          @click="openedUploadDialog = true"
+        >
+          <DocumentAddIcon size="20px" />  {{ $t('documents.upload') }}
+        </ElButton>
+      </template>
+    </EmptyState>
   </AdminPageContainer>
 </template>
 

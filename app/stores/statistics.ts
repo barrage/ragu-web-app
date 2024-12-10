@@ -5,10 +5,12 @@ export const useStatisticStore = defineStore('statistic', () => {
   // State
 
   const dashboardCount = ref<DashboardStatistic | null >()
+  const dashboardCountLoading = ref<boolean>(false)
   const { $api } = useNuxtApp()
 
   /* API */
   async function GET_DashboardCount(): Promise<DashboardStatistic | null> {
+    dashboardCountLoading.value = true
     try {
       const data = await $api.statistic.GetDashboardCountStats()
       dashboardCount.value = data
@@ -18,6 +20,9 @@ export const useStatisticStore = defineStore('statistic', () => {
       console.error('Failed to fetch dashboard stats:', error)
       dashboardCount.value = null
       return null
+    }
+    finally {
+      dashboardCountLoading.value = false
     }
   }
 
@@ -37,8 +42,8 @@ export const useStatisticStore = defineStore('statistic', () => {
 
   return {
     dashboardCount,
+    dashboardCountLoading,
     GET_DashboardCount,
-
     chatHistoryStats,
     GET_ChatHistoryStatistic,
   }

@@ -108,6 +108,10 @@ export default {
     inactive_agent: 'Este agente não está mais ativo. Por favor, selecione um agente ativo para iniciar uma nova conversa.',
     copy_title: 'Copiado',
     copy_message: 'Copiado para a área de transferência',
+    empty_state: {
+      title: 'Nenhum chat disponível',
+      description: 'Este chat atualmente não possui mensagens associadas.',
+    },
     all_chats: 'Todas as conversas',
     quick_action_tooltip: {
       read_aloud: 'Ler em voz alta',
@@ -128,14 +132,16 @@ export default {
         view_details: 'Ver detalhes',
         edit_chat: 'Editar conversa',
         delete_chat: 'Excluir conversa',
-        empty_state_title: 'Sem conversas',
-        empty_state_desc: 'Atualmente, não há conversas para mostrar.',
+        empty_state_title: 'Nenhum chat disponível',
+        empty_state_desc: 'Atualmente, não há chats para exibir aqui.',
       },
       chat_details: {
         title: 'Detalhes da conversa',
         description: 'Veja todos os detalhes relacionados a esta conversa',
         empty_messages: 'Nenhuma mensagem do WhatsApp disponível',
         empty_description: 'Atualmente, não há mensagens do WhatsApp nesta conversa.',
+        empty_state_title: 'Chat não encontrado',
+        empty_state_desc: 'O chat que você está procurando não existe ou não está disponível no momento. Verifique as informações do chat ou tente uma pesquisa diferente.',
       },
     },
     edit_title: {
@@ -165,7 +171,9 @@ export default {
       title: 'Novo chat',
       description: 'Escolha um agente para iniciar o chat',
       choseFrom: 'Agentes:',
-      empty: 'Atualmente, não há agentes disponíveis para conversa. Para iniciar um chat, é necessário adicionar ou ativar pelo menos um agente. Por favor, entre em contato com o administrador do sistema ou verifique as configurações dos agentes para continuar.',
+      empty_title: 'Nenhum agente disponível',
+      empty: 'Atualmente, não há agentes disponíveis para conversa. Para iniciar um chat, é necessário adicionar ou habilitar pelo menos um agente. Por favor, entre em contato com o administrador do sistema ou verifique as configurações do agente para continuar.',
+      empty_cta: 'Criar agente',
     },
   },
   settings: {
@@ -289,6 +297,7 @@ export default {
     },
     close: 'Fechar',
   },
+
   documents: {
     title: 'Documentos',
     document_details: 'Detalhes do Documento',
@@ -307,7 +316,8 @@ export default {
     specific_formats: 'Formatos específicos',
     series_name: 'Formato',
     sync_docs: 'Sincronizar documentos',
-
+    empty_state_title: 'Nenhum documento disponível',
+    empty_state_desc: 'Atualmente, não há documentos para exibir aqui.',
     tooltip: {
       delete_document: 'Exclua seu documento',
       manage_document: 'Gerencie seu documento',
@@ -323,7 +333,8 @@ export default {
     },
 
     details: {
-      empty: 'Este documento está indisponível ou não existe mais.',
+      empty_state_title: 'Documento não encontrado',
+      empty_state_desc: 'O documento que você está procurando não existe ou não está disponível no momento. Verifique as informações do documento ou tente uma pesquisa diferente.',
     },
     delete_document: {
       title: 'Excluir Documento',
@@ -478,6 +489,10 @@ export default {
         title: 'Agentes',
         description: 'agentes ativos',
         view_more: 'Ver mais',
+        most_used_empty_title: 'Nenhum agente usado',
+        most_used_empty_description: 'Atualmente, não há agentes usados para mostrar.',
+        providers_empty_title: 'Nenhum provedor',
+        providers_empty_description: 'Atualmente, não há provedores para mostrar.',
       },
       users: {
         title: 'Usuários',
@@ -553,7 +568,8 @@ export default {
   agents: {
     title: 'Agentes',
     all_agents: 'Todos os agentes',
-
+    empty_state_title_all: 'Nenhum agente disponível',
+    empty_state_desc_all: 'Atualmente, não há agentes para exibir aqui.',
     titles: {
       mainTitle: 'Agentes',
       details: 'Detalhes do agente',
@@ -716,6 +732,8 @@ export default {
     empty_state: {
       title: 'Nenhuma coleção atribuída',
       description: 'Este agente não tem atualmente nenhuma coleção associada a ele.',
+      title_all: 'Nenhuma coleção disponível',
+      description_all: 'Atualmente, não há coleções para exibir aqui.',
     },
 
     titles: {

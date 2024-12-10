@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
 import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
+import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 
 const { t } = useI18n()
 
@@ -57,13 +58,23 @@ const selectedChat = computed(() => {
         </AdminPageTitleContainer>
       </template>
     </AdminPageHeadingTemplate>
-    <ChatGeneralInfoAdmin
-      :agent="selectedAgent"
-      :chat="selectedChat"
-      :user="selectedUser"
-    />
-
-    <ChatMessagesListAdmin :messages="chatStore.adminChatMessagesData" />
+    <template v-if="selectedAgent">
+      <ChatGeneralInfoAdmin
+        :agent="selectedAgent"
+        :chat="selectedChat"
+        :user="selectedUser"
+      />
+      <ChatMessagesListAdmin :messages="chatStore.adminChatMessagesData" />
+    </template>
+    <EmptyState
+      v-else
+      :title="$t('chat.admin.chat_details.empty_state_title')"
+      :description="$t('chat.admin.chat_details.empty_state_desc')"
+    >
+      <template #icon>
+        <ChatWarningIcon size="44px" />
+      </template>
+    </EmptyState>
   </AdminPageContainer>
 </template>
 

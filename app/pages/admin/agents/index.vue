@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
+import AddAgentIcon from '~/assets/icons/svg/person-add.svg'
+import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import { useAgentStore } from '~/stores/agents'
 import type { Pagination } from '~/types/pagination'
 import type { SortingValues } from '~/types/sort'
@@ -68,14 +70,30 @@ watch(
         <AgentsQuickActionsContainer />
       </template>
     </AdminPageHeadingTemplate>
-    <AgentsListActions @sort-change="handleSortChange" />
-    <AgentsList
-      :agents="agentStore.agentsResponse?.items"
-      :pagination="pagination"
-      @page-change="handlePageChange"
-      @agent-activated="(handlePageChange(1))"
-      @agent-deactivated="(handlePageChange(1))"
-    />
+    <template v-if="agentStore.agentsResponse?.total">
+      <AgentsListActions @sort-change="handleSortChange" />
+      <AgentsList
+        :agents="agentStore.agentsResponse.items"
+        :pagination="pagination"
+        @page-change="handlePageChange"
+        @agent-activated="(handlePageChange(1))"
+        @agent-deactivated="(handlePageChange(1))"
+      />
+    </template>
+    <EmptyState
+      v-else
+      :title="$t('agents.empty_state_title_all')"
+      :description="$t('agents.empty_state_desc_all')"
+    >
+      <template #icon>
+        <AccountWarningIcon size="44px" />
+      </template>
+      <template #cta>
+        <LlmLink to="/admin/agents/create" type="button">
+          <AddAgentIcon size="24px" />  {{ t('agents.buttons.create') }}
+        </LlmLink>
+      </template>
+    </EmptyState>
   </AdminPageContainer>
 </template>
 

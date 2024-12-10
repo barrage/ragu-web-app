@@ -5,6 +5,7 @@ import TeamIcon from '~/assets/icons/svg/team.svg'
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
+import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 import type { AgentStatistic, LineChartSeriesData, UserStatistic } from '~/types/statistic'
 import TitleDescription from '~/components/shared/TitleDescription.vue'
 
@@ -14,6 +15,7 @@ const props = defineProps<{
   documentsCount: number
   collectionsCount: number
   chatHistory: LineChartSeriesData[] | null
+  status: string
 }>()
 
 const emits = defineEmits<Emits>()
@@ -164,14 +166,27 @@ const selectPeriod = (newPeriod: any) => {
           </ClientOnly>
         </div>
 
+        <div v-if="status === 'pending'" class="loader-container">
+          <MeetUpLoader />
+        </div>
         <LineChart
-          :series-data="props.chatHistory"
+          v-else-if="chatHistory"
+          :series-data="chatHistory"
           title-text=""
           title-subtext=""
           x-axis-name=""
           y-axis-name=""
           :small="false"
         />
+        <EmptyState
+          v-else
+          :title="$t('chat.admin.chat_card.empty_state_title')"
+          :description="$t('chat.admin.chat_card.empty_state_desc')"
+        >
+          <template #icon>
+            <ChatWarningIcon size="44px" />
+          </template>
+        </EmptyState>
       </el-card>
     </div>
   </section>
@@ -229,5 +244,12 @@ const selectPeriod = (newPeriod: any) => {
       }
     }
   }
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 328px;
 }
 </style>

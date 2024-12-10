@@ -109,6 +109,10 @@ export default {
     inactive_agent: 'Cet agent n\'est plus actif. Veuillez sélectionner un agent actif pour commencer une nouvelle conversation.',
     copy_title: 'Copié',
     copy_message: 'Copié dans le presse-papiers',
+    empty_state: {
+      title: 'Aucun chat disponible',
+      description: 'Ce chat n\'a actuellement aucun message associé.',
+    },
     all_chats: 'Tous les chats',
     quick_action_tooltip: {
       read_aloud: 'Lire à haute voix',
@@ -129,14 +133,16 @@ export default {
         view_details: 'Voir les détails',
         edit_chat: 'Modifier la conversation',
         delete_chat: 'Supprimer la conversation',
-        empty_state_title: 'Aucune conversation',
-        empty_state_desc: 'Il n\'y a actuellement aucune conversation à afficher.',
+        empty_state_title: 'Aucun chat disponible',
+        empty_state_desc: 'Il n\'y a actuellement aucun chat à afficher ici.',
       },
       chat_details: {
         title: 'Détails de la conversation',
         description: 'Voir tous les détails liés à cette conversation',
         empty_messages: 'Aucun message WhatsApp disponible',
         empty_description: 'Actuellement, il n\'y a aucun message WhatsApp dans cette discussion.',
+        empty_state_title: 'Chat introuvable',
+        empty_state_desc: 'Le chat que vous recherchez n\'existe pas ou n\'est pas disponible actuellement. Veuillez vérifier les informations du chat ou essayer une autre recherche.',
       },
     },
     edit_title: {
@@ -166,7 +172,9 @@ export default {
       title: 'Nouveau chat',
       description: 'Choisissez un agent pour commencer à discuter',
       choseFrom: 'Agents :',
-      empty: 'Il n\'y a actuellement aucun agent disponible pour la conversation. Pour démarrer un chat, vous devez ajouter ou activer au moins un agent. Veuillez contacter l\'administrateur système ou vérifier les paramètres des agents pour continuer.',
+      empty_title: 'Aucun agent disponible',
+      empty: 'Il n\'y a actuellement aucun agent disponible pour la conversation. Pour commencer un chat, il est nécessaire d\'ajouter ou d\'activer au moins un agent. Veuillez contacter votre administrateur système ou vérifier les paramètres des agents pour continuer.',
+      empty_cta: 'Créer un agent',
     },
   },
   settings: {
@@ -308,7 +316,8 @@ export default {
     specific_formats: 'Formats spécifiques',
     series_name: 'Format',
     sync_docs: 'Synchroniser les documents',
-
+    empty_state_title: 'Aucun document disponible',
+    empty_state_desc: 'Il n\'y a actuellement aucun document à afficher ici.',
     tooltip: {
       delete_document: 'Supprimez votre document',
       manage_document: 'Gérez votre document',
@@ -324,7 +333,8 @@ export default {
     },
 
     details: {
-      empty: 'Ce document n\'est pas disponible ou n\'existe plus.',
+      empty_state_title: 'Document introuvable',
+      empty_state_desc: 'Le document que vous recherchez n\'existe pas ou n\'est pas disponible actuellement. Veuillez vérifier les informations du document ou essayer une autre recherche.',
     },
     delete_document: {
       title: 'Supprimer le Document',
@@ -477,6 +487,10 @@ export default {
         title: 'Agents',
         description: 'agents actifs',
         view_more: 'Voir plus',
+        most_used_empty_title: 'Aucun agent utilisé',
+        most_used_empty_description: 'Il n\'y a actuellement aucun agent utilisé à afficher.',
+        providers_empty_title: 'Aucun fournisseur',
+        providers_empty_description: 'Il n\'y a actuellement aucun fournisseur à afficher.',
       },
       users: {
         title: 'Utilisateurs',
@@ -552,7 +566,8 @@ export default {
   agents: {
     title: 'Agents',
     all_agents: 'Tous les agents',
-
+    empty_state_title_all: 'Aucun agent disponible',
+    empty_state_desc_all: 'Il n\'y a actuellement aucun agent à afficher ici.',
     titles: {
       mainTitle: 'Agents',
       details: 'Détails de l’agent',
@@ -715,6 +730,8 @@ export default {
     empty_state: {
       title: 'Aucune collection assignée',
       description: 'Cet agent n\'a actuellement aucune collection associée à lui.',
+      title_all: 'Aucune collection disponible',
+      description_all: 'Il n\'y a actuellement aucune collection à afficher ici.',
     },
 
     titles: {

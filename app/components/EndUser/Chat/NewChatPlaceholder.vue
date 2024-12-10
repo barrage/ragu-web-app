@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import BrainIcon from '~/assets/icons/svg/brain.svg'
+import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
+import PersonAddIcon from '~/assets/icons/svg/person-add.svg'
 
 const agentStore = useAgentStore()
+const { selectedRole } = storeToRefs(useAuthStore())
 const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents())
 
 errorHandler(error)
@@ -45,9 +48,20 @@ const activeAgentLength = computed(() => {
             <ChatAgentSelectCard :agent="agent" />
           </template>
         </template>
-        <template v-else>
-          <p> {{ $t('chat.newChat.empty') }}</p>
-        </template>
+        <EmptyState
+          v-else
+          :title="$t('chat.newChat.empty_title')"
+          :description="$t('chat.newChat.empty')"
+        >
+          <template #icon>
+            <AccountWarningIcon size="44px" />
+          </template>
+          <template v-if="selectedRole === 'admin'" #cta>
+            <LlmLink to="/admin/agents" type="button">
+              <PersonAddIcon /> {{ $t('chat.newChat.empty_cta') }}
+            </LlmLink>
+          </template>
+        </EmptyState>
       </div>
     </div>
   </div>

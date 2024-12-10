@@ -108,6 +108,10 @@ export default {
     inactive_agent: 'Este agente ya no está activo. Por favor, seleccione un agente activo para comenzar una nueva conversación.',
     copy_title: 'Copiado',
     copy_message: 'Copiado al portapapeles',
+    empty_state: {
+      title: 'No hay chats disponibles',
+      description: 'Este chat no tiene mensajes asociados actualmente.',
+    },
     all_chats: 'Todos los chats',
     quick_action_tooltip: {
       read_aloud: 'Leer en voz alta',
@@ -128,14 +132,16 @@ export default {
         view_details: 'Ver detalles',
         edit_chat: 'Editar chat',
         delete_chat: 'Eliminar chat',
-        empty_state_title: 'Sin chats',
-        empty_state_desc: 'Actualmente no hay chats para mostrar.',
+        empty_state_title: 'No hay chats disponibles',
+        empty_state_desc: 'Actualmente no hay chats para mostrar aquí.',
       },
       chat_details: {
         title: 'Detalles del chat',
         description: 'Ver todos los detalles relacionados con este chat',
         empty_messages: 'No hay mensajes de WhatsApp disponibles',
         empty_description: 'Actualmente, no hay mensajes de WhatsApp en este chat.',
+        empty_state_title: 'Chat no encontrado',
+        empty_state_desc: 'El chat que buscas no existe o no está disponible en este momento. Por favor, verifica la información del chat o intenta con otra búsqueda.',
       },
     },
     edit_title: {
@@ -165,7 +171,9 @@ export default {
       title: 'Nuevo chat',
       description: 'Elige un agente para iniciar el chat',
       choseFrom: 'Agentes:',
-      empty: 'Actualmente no hay agentes disponibles para la conversación. Para iniciar un chat, es necesario agregar o habilitar al menos un agente. Por favor, contacte al administrador del sistema o verifique la configuración de los agentes para continuar.',
+      empty_title: 'No hay agentes disponibles',
+      empty: 'Actualmente no hay agentes disponibles para la conversación. Para iniciar un chat, es necesario agregar o habilitar al menos un agente. Comuníquese con su administrador del sistema o revise la configuración de agentes para continuar.',
+      empty_cta: 'Crear agente',
     },
   },
   settings: {
@@ -307,7 +315,8 @@ export default {
     specific_formats: 'Formatos específicos',
     series_name: 'Formato',
     sync_docs: 'Sincronizar documentos',
-
+    empty_state_title: 'No hay documentos disponibles',
+    empty_state_desc: 'Actualmente no hay documentos para mostrar aquí.',
     tooltip: {
       delete_document: 'Elimina tu documento',
       manage_document: 'Administra tu documento',
@@ -323,7 +332,8 @@ export default {
     },
 
     details: {
-      empty: 'Este documento no está disponible o ya no existe.',
+      empty_state_title: 'Documento no encontrado',
+      empty_state_desc: 'El documento que busca no existe o no está disponible en este momento. Por favor, revise la información del documento o intente con otra búsqueda.',
     },
     delete_document: {
       title: 'Eliminar Documento',
@@ -477,6 +487,10 @@ export default {
         title: 'Agentes',
         description: 'agentes activos',
         view_more: 'Ver más',
+        most_used_empty_title: 'No hay agentes usados',
+        most_used_empty_description: 'Actualmente no hay agentes usados para mostrar.',
+        providers_empty_title: 'No hay proveedores',
+        providers_empty_description: 'Actualmente no hay proveedores para mostrar.',
       },
       users: {
         title: 'Usuarios',
@@ -552,7 +566,8 @@ export default {
   agents: {
     title: 'Agentes',
     all_agents: 'Todos los agentes',
-
+    empty_state_title_all: 'No hay agentes disponibles',
+    empty_state_desc_all: 'Actualmente no hay agentes para mostrar aquí.',
     titles: {
       mainTitle: 'Agentes',
       details: 'Detalles del agente',
@@ -715,6 +730,8 @@ export default {
     empty_state: {
       title: 'No hay colecciones asignadas',
       description: 'Este agente no tiene actualmente ninguna colección asociada con él.',
+      title_all: 'No hay colecciones disponibles',
+      description_all: 'Actualmente no hay colecciones para mostrar aquí.',
     },
 
     titles: {

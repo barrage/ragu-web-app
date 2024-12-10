@@ -120,6 +120,10 @@ export default {
       bad_answer: 'Loš odgovor',
     },
     new_chat_tooltip: 'Započni novi razgovor',
+    empty_state: {
+      title: 'Nema dostupnih razgovora',
+      description: 'Ovaj razgovor trenutno nema poruka.',
+    },
     admin: {
       title: 'Razgovori',
       description: 'Upravljajte svim razgovorima na jednom mjestu',
@@ -131,7 +135,7 @@ export default {
         view_details: 'Pogledaj detalje',
         edit_chat: 'Uredi razgovor',
         delete_chat: 'Obriši razgovor',
-        empty_state_title: 'Nema razgovora',
+        empty_state_title: 'Nema dostupnih razgovora',
         empty_state_desc: 'Trenutno nema razgovora za prikaz.',
       },
       chat_details: {
@@ -139,6 +143,8 @@ export default {
         description: 'Pregledajte sve detalje vezane za ovaj razgovor',
         empty_messages: 'Nema dostupnih WhatsApp poruka',
         empty_description: 'Trenutno nema dostupnih WhatsApp poruka u ovom razgovoru.',
+        empty_state_title: 'Razgovor nije pronađen',
+        empty_state_desc: 'Razgovor koji tražite ne postoji ili trenutno nije dostupan. Provjerite informacije o razgovoru ili pokušajte s novim pretraživanjem.',
       },
     },
     edit_title: {
@@ -169,7 +175,9 @@ export default {
       title: 'Novi chat',
       description: 'Izaberite agenta s kojim želite započeti razgovor',
       choseFrom: 'Agenti:',
-      empty: 'Trenutno nema dostupnih agenata za razgovor. Kako biste započeli chat, potrebno je dodati ili omogućiti barem jednog agenta. Molimo vas da se obratite administratoru sustava ili provjerite postavke agenata kako biste nastavili.',
+      empty_title: 'Nema dostupnih agenata',
+      empty: 'Trenutno nema dostupnih agenata za razgovor. Da biste započeli razgovor, potrebno je dodati ili omogućiti barem jednog agenta. Molimo kontaktirajte svog sistemskog administratora ili provjerite postavke agenata za nastavak.',
+      empty_cta: 'Kreiraj agenta',
     },
   },
   settings: {
@@ -311,7 +319,8 @@ export default {
     specific_formats: 'Specifični formati',
     series_name: 'Format',
     sync_docs: 'Sinkroniziraj dokumente',
-
+    empty_state_title: 'Nema dostupnih dokumenata',
+    empty_state_desc: 'Trenutno nema dokumenata za prikazivanje ovdje.',
     tooltip: {
       delete_document: 'Izbriši svoj dokument',
       manage_document: 'Upravljaj svojim dokumentom',
@@ -327,7 +336,8 @@ export default {
     },
 
     details: {
-      empty: 'Ovaj dokument nije dostupan ili više ne postoji.',
+      empty_state_title: 'Dokument nije pronađen',
+      empty_state_desc: 'Dokument koji tražite ne postoji ili trenutno nije dostupan. Provjerite informacije o dokumentu ili pokušajte s drugim pretraživanjem.',
     },
     delete_document: {
       title: 'Brisanje dokumenta',
@@ -646,6 +656,10 @@ export default {
         title: 'Agenti',
         description: 'aktivni agenti',
         view_more: 'Prikaži više',
+        most_used_empty_title: 'Nema korištenih agenata',
+        most_used_empty_description: 'Trenutno nema korištenih agenata za prikaz.',
+        providers_empty_title: 'Nema pružatelja usluga',
+        providers_empty_description: 'Trenutno nema pružatelja usluga za prikaz.',
       },
       users: {
         title: 'Korisnici',
@@ -721,7 +735,8 @@ export default {
   agents: {
     title: 'Agenti',
     all_agents: 'Svi agenti',
-
+    empty_state_title_all: 'Nema dostupnih agenata',
+    empty_state_desc_all: 'Trenutno nema agenata za prikazivanje.',
     titles: {
       mainTitle: 'Agenti',
       details: 'Detalji agenta',
@@ -884,6 +899,8 @@ export default {
     empty_state: {
       title: 'Nema dodjeljenih kolekcija',
       description: 'Ovaj agent trenutno nema nijednu kolekciju povezanu sa njim.',
+      title_all: 'Nema dostupnih kolekcija',
+      description_all: 'Trenutno nema kolekcija za prikazivanje ovdje.',
     },
 
     titles: {

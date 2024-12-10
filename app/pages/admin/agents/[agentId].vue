@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
-import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 
 const { t } = useI18n()
 definePageMeta({
@@ -47,7 +47,7 @@ errorHandler(error)
       :description="t('agents.agent_card.empty_state_desc')"
     >
       <template #icon>
-        <AgentIcon size="44px" />
+        <AccountWarningIcon size="44px" />
       </template>
     </EmptyState>
   </AdminPageContainer>

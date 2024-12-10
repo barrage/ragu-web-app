@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { nextTick } from 'vue'
 import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
+import ChatMutipleIcon from '~/assets/icons/svg/chat-multiple.svg'
 import type { Message } from '~/types/chat'
 /* import type { Pagination } from '~/types/pagination' */
 
@@ -44,19 +45,21 @@ const messagesListData = computed(() => {
 
 <template>
   <div class="messages-list-container">
-    <h6 class="messages-title">
-      {{ $t('chat.messages') }}
-    </h6>
-    <template v-if="props.messages?.length">
-      <div class="messages-list">
-        <div
-          v-for="(message, index) in messagesListData"
-          :key="message.id"
-          class="list-item"
-          :class="[cardClasses[index]]"
-        >
-          <ChatMessageCardAdmin :message="message" />
-        </div>
+    <div class="message-title-wrapper">
+      <ChatMutipleIcon size="36px" />
+      <h6 class="messages-title">
+        {{ $t('chat.messages') }}
+      </h6>
+    </div>
+    <div v-if="messages?.length" class="messages-list">
+      <div
+        v-for="(message, index) in messagesListData"
+        :key="message.id"
+        class="list-item"
+        :class="[cardClasses[index]]"
+      >
+        <ChatMessageCardAdmin :message="message" />
+      </div>
 
       <!-- <Pagination
         :current-page="pagination.currentPage"
@@ -64,14 +67,16 @@ const messagesListData = computed(() => {
         :total="pagination.total"
         @page-change="(page:number) => changePage(page)"
       /> -->
-      </div>
-    </template>
-    <template v-else>
-      <div class="chat-messages-empty-state">
-        <ChatWarningIcon size="42px" />
-        <p> <b>{{ $t('chat.admin.chat_details.empty_messages') }}</b></p>
-      </div>
-    </template>
+    </div>
+    <EmptyState
+      v-else
+      :title="$t('chat.admin.chat_card.empty_state_title')"
+      :description="$t('chat.admin.chat_details.empty_messages')"
+    >
+      <template #icon>
+        <ChatWarningIcon size="44px" />
+      </template>
+    </EmptyState>
   </div>
 </template>
 
@@ -81,9 +86,16 @@ const messagesListData = computed(() => {
   border-radius: 10px;
   overflow: hidden;
 }
-.messages-title {
+.message-title-wrapper {
   color: var(--color-primary-800);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 2rem 0rem 1rem;
+
+  .messages-title {
+    color: var(--color-primary-800);
+  }
 }
 .messages-list {
   display: flex;
@@ -103,15 +115,12 @@ const messagesListData = computed(() => {
   opacity: 1;
   transform: translateY(0);
 }
-.chat-messages-empty-state {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
 .dark {
-  .messages-title {
+  .message-title-wrapper {
     color: var(--color-primary-100);
+    .messages-title {
+      color: var(--color-primary-100);
+    }
   }
 }
 </style>

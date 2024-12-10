@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
+import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 
 const agentStore = useAgentStore()
+const { selectedRole } = storeToRefs(useAuthStore())
 
 const { t } = useI18n()
 
@@ -30,7 +33,7 @@ watch(
         <MeetUpLoader />
       </div>
     </template>
-    <template v-else-if="agentStore.appAgents.length !== 0">
+    <template v-else-if="agentStore.appAgents.length">
       <div class="agents-overview-container">
         <div class="agents-names-wrapper">
           <template v-for="agent in agentStore.appAgents" :key="agent.id">
@@ -57,11 +60,16 @@ watch(
     </template>
     <EmptyState
       v-else
-      :title="t('agents.agent_card.empty_state_title')"
-      :description="t('agents.agent_card.empty_state_desc')"
+      :title="$t('chat.newChat.empty_title')"
+      :description="$t('chat.newChat.empty')"
     >
       <template #icon>
-        <ChatAgentIcon size="44px" />
+        <AccountWarningIcon size="44px" />
+      </template>
+      <template v-if="selectedRole === 'admin'" #cta>
+        <LlmLink to="/admin/agents" type="button">
+          <AddPersonIcon /> {{ $t('chat.newChat.empty_cta') }}
+        </LlmLink>
       </template>
     </EmptyState>
   </div>

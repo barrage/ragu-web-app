@@ -146,7 +146,7 @@ const chatData = computed(() => {
 
     & .chat-details-title {
       font-weight: var(--font-weight-bold);
-      color: var(--color-primary-900);
+      color: var(--color-primary-800);
       font-size: var(--font-size-fluid-5);
     }
     & .chat-informations-wrapper {
@@ -231,6 +231,9 @@ const chatData = computed(() => {
         border: 0.5px solid var(--color-primary-700);
         background: var(--color-primary-900);
         box-shadow: 0 0.2rem 0.3rem var(--color-primary-800);
+      }
+      & .chat-details-title {
+        color: var(--color-primary-100);
       }
     }
     & .user-general-info-card {

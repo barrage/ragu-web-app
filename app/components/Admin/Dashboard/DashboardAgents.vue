@@ -1,13 +1,16 @@
 <script lang="ts" setup>
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
+import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
+import FolderWarningIcon from '~/assets/icons/svg/folder-warning.svg'
 import type { AgentStatistic, PieChartDataEntry } from '~/types/statistic'
 
-const props = defineProps<{
+defineProps<{
   agentProvidersPieChartData: PieChartDataEntry[] | null
   countDataAgents: AgentStatistic
   mostUsedAgent: any
 }>()
 const { t } = useI18n()
+const { dashboardCountLoading } = storeToRefs(useStatisticStore())
 </script>
 
 <template>
@@ -24,16 +27,20 @@ const { t } = useI18n()
         {{ t('agents.title') }}
       </LlmLink>
     </div>
-    <el-card class="total-agents-widget is-primary">
+
+    <ElCard class="total-agents-widget is-primary">
       <span class="total-agents-title">{{ t('dashboard.agents.total_widget.active') }}</span>
       <p class="total-agents-count">
-        {{ props?.countDataAgents?.active }}
+        {{ countDataAgents?.active || 0 }}
       </p>
-    </el-card>
+    </ElCard>
 
-    <el-card class="agent-most-used-card is-primary">
+    <ElCard class="agent-most-used-card is-primary">
       <TitleDescription :title="t('dashboard.agents.most_used_agent.title')" :description="t('dashboard.agents.most_used_agent.description')" />
-      <div class="chart-container">
+      <div v-if="dashboardCountLoading" class="most-used-agents-loader-container">
+        <MeetUpLoader />
+      </div>
+      <div v-else-if="mostUsedAgent" class="chart-container">
         <HalfGaugeChart
           :data="mostUsedAgent?.stats"
           type="blue"
@@ -41,15 +48,38 @@ const { t } = useI18n()
           :used-text="mostUsedAgent?.name || '-'"
         />
       </div>
-    </el-card>
-    <el-card class="agent-providers-widget-card is-primary">
+      <EmptyState
+        v-else
+        :title="$t('dashboard.service_widgets.agents.most_used_empty_title')"
+        :description="$t('dashboard.service_widgets.agents.most_used_empty_description')"
+      >
+        <template #icon>
+          <AccountWarningIcon size="44px" />
+        </template>
+      </EmptyState>
+    </ElCard>
+
+    <ElCard class="agent-providers-widget-card is-primary">
       <TitleDescription :title="t('dashboard.agents.providers.title')" :description="t('dashboard.agents.providers.description')" />
+      <div v-if="dashboardCountLoading" class="providers-loader-container">
+        <MeetUpLoader />
+      </div>
       <PieChart
+        v-else-if="agentProvidersPieChartData?.length"
         :data="agentProvidersPieChartData"
         :series-name="t('dashboard.agents.providers.series_name')"
         small
       />
-    </el-card>
+      <EmptyState
+        v-else
+        :title="$t('dashboard.service_widgets.agents.providers_empty_title')"
+        :description="$t('dashboard.service_widgets.agents.providers_empty_description')"
+      >
+        <template #icon>
+          <FolderWarningIcon size="44px" />
+        </template>
+      </EmptyState>
+    </ElCard>
   </section>
 </template>
 
@@ -108,6 +138,18 @@ const { t } = useI18n()
       font-size: var(--font-size-fluid-2);
     }
   }
+}
+.most-used-agents-loader-container,
+.providers-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.most-used-agents-loader-container {
+  height: 250px;
+}
+.providers-loader-container {
+  height: 148px;
 }
 
 .chart-container {

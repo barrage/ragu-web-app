@@ -3,7 +3,7 @@ import type { AgentCollection } from '~/types/agent'
 import FolderPersonIcon from '~/assets/icons/svg/folder-person.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
 import CollectionDelete from '~/assets/icons/svg/folder-remove.svg'
-import OpenFolderIcon from '~/assets/icons/svg/open-folder.svg'
+import FolderWarningIcon from '~/assets/icons/svg/folder-warning.svg'
 
 // PROPS
 
@@ -82,7 +82,7 @@ const closeDeleteCollectionModal = () => {
           @cta-click="openAssignCollectionModal"
         >
           <template #icon>
-            <OpenFolderIcon size="44px" />
+            <FolderWarningIcon size="44px" />
           </template>
           <template #cta>
             <el-button @click="openAssignCollectionModal">

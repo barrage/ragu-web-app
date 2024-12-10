@@ -35,20 +35,17 @@ errorHandler(error)
     <template v-else-if="documentStore.selectedDocument">
       <DocumentDetails :document="documentStore.selectedDocument" />
     </template>
-    <template v-else>
-      <div class="document-details-empty-state">
+    <EmptyState
+      v-else
+      :title="$t('documents.details.empty_state_title')"
+      :description="$t('documents.details.empty_state_desc')"
+    >
+      <template #icon>
         <DocumentErrorIcon size="44px" />
-        <p> <b>{{ t('documents.details.empty') }}</b> </p>
-      </div>
-    </template>
+      </template>
+    </EmptyState>
   </AdminPageContainer>
 </template>
 
 <style lang="scss" scoped>
-.document-details-empty-state {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: var(--spacing-fluid-3-xl);
-}
 </style>

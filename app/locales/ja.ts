@@ -108,6 +108,10 @@ export default {
     inactive_agent: 'このエージェントはもうアクティブではありません。新しい会話を始めるには、アクティブなエージェントを選択してください。',
     copy_title: 'コピーしました',
     copy_message: 'クリップボードにコピーしました',
+    empty_state: {
+      title: '利用可能なチャットはありません',
+      description: 'このチャットには現在、関連するメッセージがありません。',
+    },
     all_chats: 'すべてのチャット',
     quick_action_tooltip: {
       read_aloud: '音読',
@@ -128,14 +132,16 @@ export default {
         view_details: '詳細を見る',
         edit_chat: 'チャットを編集',
         delete_chat: 'チャットを削除',
-        empty_state_title: 'チャットはありません',
-        empty_state_desc: '現在、表示するチャットはありません。',
+        empty_state_title: '利用可能なチャットはありません',
+        empty_state_desc: '現在、ここに表示するチャットはありません。',
       },
       chat_details: {
         title: 'チャットの詳細',
         description: 'このチャットに関するすべての詳細を表示',
         empty_messages: '利用可能なWhatsAppメッセージがありません',
         empty_description: '現在、このチャットにはWhatsAppメッセージがありません。',
+        empty_state_title: 'チャットが見つかりません',
+        empty_state_desc: 'お探しのチャットは存在しないか、現在利用できません。チャット情報を再確認するか、別の検索をお試しください。',
       },
     },
     edit_title: {
@@ -165,7 +171,9 @@ export default {
       title: '新しいチャット',
       description: 'チャットを開始するエージェントを選択してください',
       choseFrom: 'エージェント:',
-      empty: '現在、会話可能なエージェントは利用できません。チャットを開始するには、少なくとも1人のエージェントを追加または有効にする必要があります。システム管理者に連絡するか、エージェントの設定を確認してください。',
+      empty_title: '利用可能なエージェントがいません',
+      empty: '現在、会話に利用できるエージェントがいません。チャットを開始するには、少なくとも1人のエージェントを追加または有効にする必要があります。システム管理者に連絡するか、エージェントの設定を確認してください。',
+      empty_cta: 'エージェントを作成',
     },
   },
   settings: {
@@ -307,7 +315,8 @@ export default {
     specific_formats: '特定の形式',
     series_name: '形式',
     sync_docs: 'ドキュメントを同期する',
-
+    empty_state_title: '利用可能なドキュメントはありません',
+    empty_state_desc: '現在、ここに表示するドキュメントはありません。',
     tooltip: {
       delete_document: 'ドキュメントを削除します',
       manage_document: 'ドキュメントを管理します',
@@ -323,7 +332,8 @@ export default {
     },
 
     details: {
-      empty: 'このドキュメントは利用できないか、もはや存在しません。',
+      empty_state_title: 'ドキュメントが見つかりません',
+      empty_state_desc: 'お探しのドキュメントは存在しないか、現在利用できません。ドキュメント情報を再確認するか、別の検索をお試しください。',
     },
     delete_document: {
       title: 'ドキュメントの削除',
@@ -474,6 +484,10 @@ export default {
         title: '合計エージェント',
         description: 'アクティブなエージェント',
         view_more: 'もっと見る',
+        most_used_empty_title: '使用されたエージェントはありません',
+        most_used_empty_description: '現在、表示する使用済みエージェントはありません。',
+        providers_empty_title: 'プロバイダーがありません',
+        providers_empty_description: '現在、表示するプロバイダーはありません。',
       },
       users: {
         title: '合計ユーザー',
@@ -549,7 +563,8 @@ export default {
   agents: {
     title: 'エージェント',
     all_agents: 'すべてのエージェント',
-
+    empty_state_title_all: '利用可能なエージェントがいません',
+    empty_state_desc_all: '現在、ここに表示するエージェントはありません。',
     titles: {
       mainTitle: 'エージェント',
       details: 'エージェントの詳細',
@@ -713,6 +728,9 @@ export default {
     empty_state: {
       title: 'コレクションが割り当てられていません',
       description: 'このエージェントには現在、関連付けられたコレクションはありません。',
+      title_all: '利用可能なコレクションはありません',
+      description_all: '現在、ここに表示するコレクションはありません。',
+
     },
 
     titles: {

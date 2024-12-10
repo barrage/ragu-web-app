@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import AddAgentIcon from '~/assets/icons/svg/person-add.svg'
 
 // CONSTANTS
 const { t } = useI18n()
@@ -8,7 +8,7 @@ const { t } = useI18n()
 <template>
   <div class="agents-quick-actions-container">
     <LlmLink to="/admin/agents/create" type="button">
-      <AgentIcon size="24px" />  {{ t('agents.buttons.create') }}
+      <AddAgentIcon size="24px" />  {{ t('agents.buttons.create') }}
     </LlmLink>
   </div>
 </template>
