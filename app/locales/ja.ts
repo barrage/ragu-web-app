@@ -787,6 +787,7 @@ export default {
       username_placeholder: 'ユーザー名を入力してください',
       submit: '確認',
       cancel: 'キャンセル',
+      reset: 'リセット (Risetto)',
       rules: {
         required: 'このフィールドは必須です',
         invalid_email: '無効なメール形式です',
@@ -801,7 +802,15 @@ export default {
     notifications: {
       create_error_title: 'ユーザー追加エラー',
       create_error_description: '新しいユーザーの追加に失敗しました。',
-      create_error_existing_user_description: 'ユーザーはすでに存在します。',
+      create_error_existing_user_description: 'ユーザーは既に存在します。',
+      delete_title: '成功',
+      update_title: '成功',
+      delete_message: 'ユーザー {name} が削除されました！',
+      create_title: '成功',
+      create_message: 'ユーザー {name} が作成されました！',
+      form_title: 'フォームエラー',
+      form_message: 'フォーム内のハイライトされたエラーを修正してください。',
+      invalid_user: 'おっと！ 問題が発生しました。削除しようとしているユーザーは存在しないようです。',
     },
     user_card: {
       role: '役割',

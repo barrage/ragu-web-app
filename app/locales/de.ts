@@ -789,6 +789,7 @@ export default {
       username_placeholder: 'Benutzernamen eingeben',
       submit: 'Bestätigen',
       cancel: 'Abbrechen',
+      reset: 'Zurücksetzen',
       rules: {
         required: 'Dieses Feld ist erforderlich',
         invalid_email: 'Ungültiges E-Mail-Format',
@@ -801,9 +802,17 @@ export default {
       user_description: 'Zugriff auf die Endbenutzer-App zum Chatten mit KI-Agenten.',
     },
     notifications: {
-      create_error_title: 'Fehler beim Hinzufügen eines Benutzers',
-      create_error_description: 'Das Hinzufügen eines neuen Benutzers ist fehlgeschlagen.',
+      create_error_title: 'Fehler bei der Benutzererstellung',
+      create_error_description: 'Fehler beim Hinzufügen eines neuen Benutzers.',
       create_error_existing_user_description: 'Benutzer existiert bereits.',
+      delete_title: 'Erfolg',
+      update_title: 'Erfolg',
+      delete_message: 'Benutzer {name} wurde gelöscht!',
+      create_title: 'Erfolg',
+      create_message: 'Benutzer {name} wurde erstellt!',
+      form_title: 'Formularfehler',
+      form_message: 'Bitte beheben Sie die hervorgehobenen Fehler im Formular.',
+      invalid_user: 'Hoppla! Etwas ist schiefgelaufen. Der Benutzer, den Sie löschen möchten, scheint nicht zu existieren.',
     },
     user_card: {
       role: 'Rolle',
