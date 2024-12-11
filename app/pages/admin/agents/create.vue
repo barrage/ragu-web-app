@@ -19,7 +19,6 @@ useHead({
 // CONSTANTS
 const { $api } = useNuxtApp()
 const providerStore = useProviderStore()
-const collectionStore = useCollectionsStore()
 
 const localePath = useLocalePath()
 
@@ -31,11 +30,8 @@ const formRef = ref<FormInstance>()
 const form = reactive<AgentDetail>({
   active: false,
   description: '',
-  embeddingModel: '',
-  embeddingProvider: '',
   language: '',
   name: '',
-  vectorProvider: '',
   configuration: {
     context: '',
     llmProvider: '',
@@ -74,15 +70,6 @@ const rules = reactive<FormRules<typeof form>>({
   'configuration.temperature': [
     { required: true, message: t('agents.rules.temperature.required_message'), trigger: 'change' },
   ],
-  'vectorProvider': [
-    { required: true, message: t('agents.rules.vectorProvider.required_message'), trigger: 'change' },
-  ],
-  'embeddingProvider': [
-    { required: true, message: t('agents.rules.embeddingProvider.required_message'), trigger: 'change' },
-  ],
-  'embeddingModel': [
-    { required: true, message: t('agents.rules.embeddingModel.required_message'), trigger: 'blur' },
-  ],
   'active': [
     { required: true, message: t('agents.rules.active.required_message'), trigger: 'change' },
   ],
@@ -95,13 +82,6 @@ watch(() => form.configuration.llmProvider, async (newProvider) => {
     form.configuration.model = ''
     await providerStore.GET_AvailableListLlms(newProvider)
   }
-})
-
-watch(() => form.embeddingProvider, async (newModel) => {
-  form.embeddingModel = ''
-
-  const provider = newModel === 'azure' ? 'openai' : newModel
-  await collectionStore.GET_ListEmbeddingModels(provider)
 })
 
 // API CALLS
@@ -249,47 +229,6 @@ errorHandler(createError)
               v-for="model in providerStore?.availableLlmList"
               :key="model"
               :label="model"
-              :value="model"
-            />
-          </ElSelect>
-        </ElFormItem>
-
-        <ElFormItem :label="t('agents.labels.vectorProvider')" prop="vectorProvider">
-          <ElSelect v-model="form.vectorProvider" :placeholder="t('agents.placeholder.vecotrProvider')">
-            <ElOption
-              v-for="provider in providerStore?.listProviders?.vector"
-              :key="provider"
-              :label="provider"
-              :value="provider"
-            />
-          </ElSelect>
-        </ElFormItem>
-
-        <ElFormItem :label="t('agents.labels.embeddingProvider')" prop="embeddingProvider">
-          <ElSelect v-model="form.embeddingProvider" :placeholder="t('agents.placeholder.embeddingProvider')">
-            <ElOption
-              v-for="provider in providerStore.listProviders?.embedding"
-              :key="provider"
-              :label="provider"
-              :value="provider"
-            />
-          </ElSelect>
-        </ElFormItem>
-        <ElFormItem
-
-          class="group"
-          :label="t('agents.labels.embeddingModel')"
-          prop="embeddingModel"
-        >
-          <ElSelect
-            v-model="form.embeddingModel"
-            placeholder="Select Model"
-            :disabled="collectionStore?.listEmbeddingsModels?.length === 0"
-          >
-            <ElOption
-              v-for="(dimension, model) in collectionStore?.listEmbeddingsModels"
-              :key="model"
-              :label="`${model} - ${dimension}`"
               :value="model"
             />
           </ElSelect>

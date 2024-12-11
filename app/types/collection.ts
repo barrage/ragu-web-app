@@ -32,13 +32,18 @@ export interface CollectionDetail {
 }
 
 export interface AssignCollectionPayload {
-  provider?: string
   add?: AddCollection[]
-  remove?: string[]
+  remove?: RemoveCollection[]
 }
 
 export interface AddCollection {
   name: string
   amount: number
   instruction: string
+  provider: string
+}
+
+export interface RemoveCollection {
+  name: string
+  provider: string
 }

@@ -43,9 +43,6 @@ const agentData = computed(() => {
     model: props.singleAgent?.configuration?.model || t('agents.agent_card.unknown_model'),
     language: props.singleAgent?.agent?.language || t('agents.agent_card.unknown_language'),
     temperature: props.singleAgent?.configuration?.temperature || t('agents.agent_card.unknown_temperature'),
-    vectorProvider: props.singleAgent?.agent?.vectorProvider || t('agents.agent_card.unknown_vectorProvider'),
-    embeddingProvider: props.singleAgent?.agent?.embeddingProvider || t('agents.agent_card.unknown_embeddingProvider'),
-    embeddingModel: props.singleAgent?.agent?.embeddingModel || t('agents.agent_card.unknown_embeddingModel'),
     updatedAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
     languageInstruction: props.singleAgent?.configuration?.agentInstructions?.languageInstruction || t('agents.agent_card.unknown_instruction'),
     summaryInstruction: props.singleAgent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
@@ -253,42 +250,6 @@ const agentDeactivated = () => {
         <div class="agent-details-custom-label">
           <BrainIcon size="18px" />
           <span>  {{ t('agents.labels.temperature') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.vectorProvider')"
-      :description="agentData.vectorProvider"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.vectorProvider') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.embeddingProvider')"
-      :description="agentData.embeddingProvider"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.embeddingProvider') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.embeddingModel') "
-      :description="agentData.embeddingModel"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.embeddingModel') }}</span>
         </div>
       </template>
     </LabelDescriptionItem>

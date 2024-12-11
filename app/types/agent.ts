@@ -35,13 +35,14 @@ export interface SingleAgent {
   activeConfigurationId: string
   createdAt: Date | string
   description: string
-  embeddingModel: string
-  embeddingProvider: string
   id: string
   language: string
   name: string
   updatedAt: Date | string
-  vectorProvider: string
+  vectorProvider?: string
+  embeddingProvider?: EmbeddingProvider
+  embeddingModel?: string
+
 }
 
 export interface Configuration {
@@ -67,11 +68,9 @@ export interface AgentDetail {
   active: boolean
   configuration: AgentConfiguration
   description: string
-  embeddingModel: string
-  embeddingProvider: string
   language: string
   name: string
-  vectorProvider: string
+
 }
 
 export interface AgentConfiguration {
