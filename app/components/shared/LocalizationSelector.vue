@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDropdownKeyboard } from '~/utils/useDropdownKeyboard'
 import LocaleIcon from '~/assets/icons/svg/locale.svg'
 import CheckIcon from '~/assets/icons/svg/check.svg'
 
@@ -25,33 +26,58 @@ const popperOptions = {
 }
 
 const { setLocale, locales, locale } = useI18n()
+const currentLocale = computed (() => locales.value.findIndex(lang => lang.code === locale.value))
+const dropdownRef = ref(null)
+const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
+  locales.value,
+  currentLocale,
+  'language-option',
+  (selectedItem) => {
+    setLocale(selectedItem.code)
+    dropdownRef.value.handleClose()
+  },
+)
 </script>
 
 <template>
   <ClientOnly>
-    <el-dropdown trigger="hover" :popper-options="popperOptions">
-      <el-button
-        class="locale-switch-button "
+    <ElDropdown
+      ref="dropdownRef"
+      trigger="hover"
+      :popper-options="popperOptions"
+      @visible-change="handleDropdownVisibleChange"
+    >
+      <ElButton
+        class="locale-switch-button"
         :class="{ 'locale-switch-button--login': loginLayout }"
         size="small"
+        @keyup.enter="toggleDropdown"
+        @keyup.space="toggleDropdown"
       >
         <LocaleIcon size="20px" />
-      </el-button>
+      </ElButton>
       <template #dropdown>
-        <el-dropdown-menu>
+        <ElDropdownMenu>
           <div class="lozalization-options-container">
             <template
               v-for="language in locales"
               :key="language.value"
             >
-              <div class="language-option" @click="setLocale(language.code)">
-                <span :class="{ selected: language.code === locale }">{{ language.name }}</span>  <CheckIcon v-if="language.code === locale" size="16px" />
+              <div
+                class="language-option"
+                tabindex="0"
+                @click="setLocale(language.code)"
+              >
+                <span :class="{ selected: language.code === locale }">
+                  {{ language.name }}
+                </span>
+                <CheckIcon v-if="language.code === locale" size="16px" />
               </div>
             </template>
           </div>
-        </el-dropdown-menu>
+        </ElDropdownMenu>
       </template>
-    </el-dropdown>
+    </ElDropdown>
   </ClientOnly>
 </template>
 

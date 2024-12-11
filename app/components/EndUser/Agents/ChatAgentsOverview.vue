@@ -40,6 +40,9 @@ watch(
             <div
               class="agent-name"
               :class="{ selected: agent.id === selectedAgent?.id }"
+              tabindex="0"
+              @keyup.enter="selectAgent(agent)"
+              @keyup.space="selectAgent(agent)"
               @click="selectAgent(agent)"
             >
               <ChatAgentIcon size="20px" /> {{ agent.name }}

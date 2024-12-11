@@ -27,7 +27,7 @@ defineProps<{
     :hide-after="hideAfter || 0"
     :visible="visible || undefined"
     :offset="offset || 12"
-    :trigger="trigger || 'hover'"
+    :trigger="trigger || ['hover', 'focus']"
   >
     <template #content>
       <slot name="content" />

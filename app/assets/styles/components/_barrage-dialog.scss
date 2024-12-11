@@ -22,6 +22,9 @@
       --dialog-background-color: var(--color-primary-800);
 
       &__headerbtn {
+        &:focus-visible {
+          border: 1px solid var(--color-primary-200);
+        }
         .barrage-icon--fill,
         .svg-icon--fill * {
           fill: var(--color-primary-200);
@@ -97,6 +100,11 @@
       outline: 0;
       padding: 0;
       cursor: pointer;
+
+      &:focus {
+        opacity: 0.6;
+        border: 1px solid var(--color-primary-800);
+      }
 
       .barrage-icon {
         --icon-width: 1.75rem;

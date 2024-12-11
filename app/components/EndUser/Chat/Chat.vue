@@ -4,6 +4,7 @@ import EditTextIcon from '~/assets/icons/svg/edit-text.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import MoreIcon from '~/assets/icons/svg/more.svg'
 import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
+import { useDropdownKeyboard } from '~/utils/useDropdownKeyboard'
 
 const props = defineProps<{
   chat: Chat | null
@@ -12,8 +13,8 @@ const props = defineProps<{
 
 const emits = defineEmits<Emits>()
 interface Emits {
-  (event: 'delete-chat'): void
-  (event: 'edit-chat-title'): void
+  (event: 'deleteChat'): void
+  (event: 'editChatTitle'): void
 }
 
 const popperOptions = {
@@ -76,6 +77,26 @@ onBeforeUnmount(() => {
     clearTimeout(titleAnimationTimeout)
   }
 })
+
+function openEditDialog() {
+  emits('editChatTitle')
+}
+
+function openDeleteDialog() {
+  emits('deleteChat')
+}
+
+// Keyboard accessability
+const dropdownRef = ref<HTMLElement | null>(null)
+const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
+  [openEditDialog, openDeleteDialog],
+  0,
+  'dropdown-item',
+  (selectedItem) => {
+    selectedItem()
+    if (dropdownRef.value) { dropdownRef.value.handleClose() }
+  },
+)
 </script>
 
 <template>
@@ -85,26 +106,41 @@ onBeforeUnmount(() => {
         {{ displayedTitle || $t('chat.llm_chat') }}
       </h5>
 
-      <ClientOnly>
-        <el-dropdown trigger="hover" :popper-options="popperOptions">
-          <MoreIcon size="20px" />
+      <ElDropdown
+        ref="dropdownRef"
+        trigger="hover"
+        :popper-options="popperOptions"
+        @visible-change="handleDropdownVisibleChange"
+      >
+        <MoreIcon
+          size="20px"
+          @keyup.enter="toggleDropdown"
+          @keyup.space="toggleDropdown"
+        />
 
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="emits('edit-chat-title')">
-                <div class="dropdown-item">
-                  <EditTextIcon />  {{ $t('chat.edit_title.title') }}
-                </div>
-              </el-dropdown-item>
-              <el-dropdown-item @click="emits('delete-chat')">
-                <div class="dropdown-item">
-                  <DeleteIcon /> {{ $t('chat.delete_chat.title') }}
-                </div>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </ClientOnly>
+        <template #dropdown>
+          <ElDropdownMenu>
+            <ElDropdownItem @click="openEditDialog">
+              <div
+                class="dropdown-item"
+                tabindex="0"
+                @keyup.escape="dropdownRef.handleClose"
+              >
+                <EditTextIcon /> {{ $t('chat.edit_title.title') }}
+              </div>
+            </ElDropdownItem>
+            <ElDropdownItem @click="openDeleteDialog">
+              <div
+                class="dropdown-item"
+                tabindex="0"
+                @keyup.escape="dropdownRef.handleClose"
+              >
+                <DeleteIcon /> {{ $t('chat.delete_chat.title') }}
+              </div>
+            </ElDropdownItem>
+          </ElDropdownMenu>
+        </template>
+      </ElDropdown>
     </div>
 
     <div v-if="messages?.length" class="messages-container">

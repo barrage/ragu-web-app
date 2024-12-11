@@ -42,7 +42,6 @@ const themeOptions = ref([
     name: 'blue',
     value: 'blue',
   },
-
   {
     name: 'violet',
     value: 'violet',
@@ -71,33 +70,93 @@ const themeOptions = ref([
     name: 'magenta',
     value: 'magenta',
   },
-
   {
     name: 'brown',
     value: 'brown',
   },
-
 ])
+
+// Keyboard friendly logic
+
+const dropdownRef = ref(null)
+const focusedIndex = ref(-1)
+const isDropdownOpen = ref(false)
+
+function addKeyEventListener() {
+  document.addEventListener('keydown', handleKeyDown)
+}
+
+function removeKeyEventListener() {
+  document.removeEventListener('keydown', handleKeyDown)
+}
+
+function handleKeyDown(event: KeyboardEvent) {
+  const itemCount = themeOptions.value.length
+
+  if (event.key === 'ArrowRight') {
+    event.preventDefault()
+    focusedIndex.value = (focusedIndex.value + 1) % itemCount
+  }
+  else if (event.key === 'ArrowLeft') {
+    event.preventDefault()
+    focusedIndex.value = (focusedIndex.value - 1 + itemCount) % itemCount
+  }
+  else if (event.key === 'ArrowDown') {
+    event.preventDefault()
+    focusedIndex.value = (focusedIndex.value + 4) % itemCount
+  }
+  else if (event.key === 'ArrowUp') {
+    event.preventDefault()
+    focusedIndex.value = (focusedIndex.value - 4 + itemCount) % itemCount
+  }
+  else if ((event.key === 'Enter' || event.key === ' ') && isDropdownOpen.value) {
+    event.preventDefault()
+    if (focusedIndex.value >= 0) {
+      themeStore.selectedPrimaryColor = themeOptions.value[focusedIndex.value].value
+      dropdownRef.value.handleClose()
+    }
+  }
+}
+
+function toggleDropdown(open: boolean) {
+  isDropdownOpen.value = open
+  if (!open) {
+    focusedIndex.value = -1
+    removeKeyEventListener()
+  }
+  else {
+    addKeyEventListener()
+    focusedIndex.value = themeOptions.value.findIndex(option => option.value === themeStore.selectedPrimaryColor)
+  }
+}
 </script>
 
 <template>
   <ClientOnly>
-    <el-dropdown trigger="hover" :popper-options="popperOptions">
+    <el-dropdown
+      ref="dropdownRef"
+      trigger="hover"
+      :popper-options="popperOptions"
+      @visible-change="toggleDropdown"
+    >
       <el-button
         class="theme-switch-button"
         :class="{ 'theme-switch-button--login': loginLayout }"
         size="small"
+        @focus="isDropdownOpen.value && (focusedIndex.value = 0)"
       >
         <PalleteIcon size="20px" />
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>
           <div class="colors-container">
-            <template v-for="color in themeOptions" :key="color.name">
+            <template v-for="(color, index) in themeOptions" :key="color.name">
               <div
                 class="color-section"
-                :class="{ selected: color.value === themeStore.selectedPrimaryColor }"
+                :class="{ selected: color.value === themeStore.selectedPrimaryColor, focused: index === focusedIndex }"
+                tabindex="0"
                 @click="themeStore.selectedPrimaryColor = color.value"
+                @focus="focusedIndex = index"
               >
                 <div
                   class="color-circle"
@@ -106,7 +165,6 @@ const themeOptions = ref([
                     background: color.value === 'default'
                       ? 'linear-gradient(90deg, black 50%, white 50%)'
                       : `var(--color-${color.value}-300)`,
-
                   }"
                 />
               </div>
@@ -134,6 +192,10 @@ const themeOptions = ref([
 
   &.selected {
     background: var(--color-primary-100);
+  }
+
+  &.focused {
+    outline: 2px solid var(--color-primary-500);
   }
 
   &:hover {

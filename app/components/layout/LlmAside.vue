@@ -15,16 +15,9 @@ const { isSidebarCollapsed } = storeToRefs(navigationStore)
         <p v-if="!isSidebarCollapsed" class="typing-effect sidebar-title">
           {{ $t('chatDock') }}
         </p>
-        <LlmTooltip
-          :content="$t('chat.toggle_sidebar')"
-          delayed
-          :disabled="!isSidebarCollapsed"
-          placement="right"
-        >
-          <ElButton class="toggle-btn" @click="navigationStore.toggleSidebar">
-            <PanelIcon size="24px" />
-          </ElButton>
-        </LlmTooltip>
+        <ElButton class="toggle-btn" @click="navigationStore.toggleSidebar">
+          <PanelIcon size="24px" />
+        </ElButton>
       </div>
 
       <div class="horizontal-divider" />
