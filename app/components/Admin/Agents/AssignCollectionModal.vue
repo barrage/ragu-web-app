@@ -34,7 +34,7 @@ const scrollIntoViewOptions = {
 const assignCollectionModalVisible = ref(props.isOpen)
 const assignCollectionFormRef = ref<FormInstance>()
 const assignCollectionForm = reactive({
-  provider: agentStore.singleAgent?.agent?.vectorProvider,
+  provider: 'weaviate',
   collectionName: '',
   amount: 1,
   instruction: '',
@@ -43,35 +43,25 @@ const assignCollectionForm = reactive({
 // COMPUTEDS
 
 const payload = computed(() => ({
-  provider: assignCollectionForm.provider,
+
   add: [
     {
       name: assignCollectionForm.collectionName,
       amount: assignCollectionForm.amount,
       instruction: assignCollectionForm.instruction,
+      provider: assignCollectionForm.provider,
     },
   ],
 }))
 
 const filteredCollections = computed(() => {
-  const vectorProvider = agentStore.singleAgent?.agent?.vectorProvider
-  let embeddingProvider = agentStore.singleAgent?.agent?.embeddingProvider
-  const embeddingModel = agentStore.singleAgent?.agent?.embeddingModel
-
-  if (embeddingProvider === 'azure') {
-    embeddingProvider = 'openai'
-  }
-
   const existingCollectionNames = new Set(
     [...agentStore.singleAgent?.collections].map(entry => entry.collection),
   )
 
   return collectionStore.collections.filter((collection) => {
     return (
-      collection.provider === vectorProvider
-      && collection.embedder === embeddingProvider
-      && collection.model === embeddingModel
-      && !existingCollectionNames.has(collection.name)
+      !existingCollectionNames.has(collection.name)
     )
   })
 })

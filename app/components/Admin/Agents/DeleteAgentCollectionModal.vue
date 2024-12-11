@@ -22,14 +22,16 @@ const { t } = useI18n()
 const route = useRoute()
 const agentStore = useAgentStore()
 const deleteCollectionModalVisible = ref(props.isOpen)
-const deleteCollections = ref([])
+const deleteCollections = ref<string[]>([])
 const agentId = route.params.agentId as string
 
 // COMPUTEDS
 
 const payload = computed(() => ({
-  provider: agentStore.singleAgent?.agent?.vectorProvider,
-  remove: deleteCollections.value,
+  remove: deleteCollections.value.map(collectionName => ({
+    name: collectionName,
+    provider: 'weaviate',
+  })),
 }))
 
 // FUNCTIONS
