@@ -428,8 +428,11 @@ export const useEChart = () => {
     },
 
     tooltip: {
-      className: 't-ht-chart',
-      trigger: 'axis',
+      className: 'barrage-chart',
+      formatter: '{a0} <br /> {b0}: <br /> {c0}<br />',
+      axisPointer: {
+        type: 'cross',
+      },
       borderRadius: 12,
       padding: 12,
     },
