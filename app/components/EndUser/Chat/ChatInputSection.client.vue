@@ -17,7 +17,7 @@ const route = useRoute()
 
 const handleServerMessage = (data: string) => {
   let parsedData
-  const assistantMessage = messages.value.find(
+  const assistantMessage = messages.value?.find(
     msg => msg.id === 'currentlyStreaming',
   )
   try {
@@ -295,7 +295,7 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
       max-width: 768px;
 
       ::v-deep(.barrage-input__inner) {
-        background-color: transparent;
+        background-color: var(--color-primary-100);
       }
 
       .input-suffix-wrapper {
@@ -305,15 +305,15 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
         border-radius: 20%;
         width: 40px;
         height: 40px;
-        color: var(--color-primary-200);
+        color: var(--color-primary-300);
         border: var(--border-size-1) var(--border-type-solid)
-          var(--input-border-color);
+          var(--color-primary-300);
         transition:
           color 0.3s ease-in-out,
           border-color 0.3s ease-in-out;
         &--active {
-          color: var(--color-primary-600);
-          border-color: var(--color-primary-600);
+          color: var(--color-primary-700);
+          border-color: var(--color-primary-700);
         }
       }
     }
@@ -327,9 +327,12 @@ html.dark {
   .chat-input-section {
     & .input-button-wrapper {
       & .barrage-chat-input {
+        ::v-deep(.barrage-input__inner) {
+          background-color: var(--color-primary-800);
+        }
         .input-suffix-wrapper {
-          color: var(--color-primary-800);
-          border-color: var(--color-primary-800);
+          color: var(--color-primary-700);
+          border-color: var(--color-primary-700);
           &--active {
             color: var(--color-primary-400);
             border-color: var(--color-primary-400);

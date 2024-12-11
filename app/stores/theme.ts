@@ -49,6 +49,7 @@ export const useThemeStore = defineStore('theme', () => {
     isDarkMode,
     selectedPrimaryColor,
     toggleDarkMode,
+    updateHtmlClass,
 
   }
 })
