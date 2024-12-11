@@ -4,3 +4,9 @@ ingress:
     ## The following annotation is to limit access to the ingress
     nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
     
+barrage:
+  vault:
+    create: true
+    role: "llmao-webapp-m2-role"
+    moduleWorkspace: "llmao/data/deploy-web-app-dev"
+    authPath: auth/kubernetes-m2
