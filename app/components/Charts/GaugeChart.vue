@@ -19,13 +19,6 @@ const isDark = useDark()
 const { useGaugeEChart, gaugeChartOptions } = useEChart()
 const isMounted = ref(false)
 
-/* LCH */
-onMounted(() => {
-  useGaugeEChart()
-  updateChartOptions(props.data || {})
-  isMounted.value = true
-})
-
 useGaugeEChart()
 const chartOptions = ref(merge({}, gaugeChartOptions))
 
@@ -132,8 +125,8 @@ const updateChartOptions = (data: any) => {
           fontSize: 18,
           fontWeight: 'bold',
           color: isDark.value
-            ? 'var(--t-ht-shade-0)'
-            : 'var(--t-ht-shade-1000)',
+            ? 'var(--color-primary-0)'
+            : 'var(--color-primary-1000)',
           valueAnimation: true,
           formatter: `${props.data[0].value}%`,
         },
@@ -154,8 +147,8 @@ const updateChartOptions = (data: any) => {
           offsetCenter: [0, 60],
           fontSize: 11.5,
           color: isDark.value
-            ? 'var(--t-ht-shade-0)'
-            : 'var(--t-ht-shade-1000)',
+            ? 'var(--color-primary-0)'
+            : 'var(--color-primary-1000)',
         },
       },
     ],
@@ -163,10 +156,10 @@ const updateChartOptions = (data: any) => {
       text: props.small ? '' : props.titleText || '',
       subtext: props.small ? '' : props.titleSubtext || '',
       subtextStyle: {
-        color: isDark.value ? 'var(--t-ht-shade-0)' : 'var(--t-ht-shade-1000)',
+        color: isDark.value ? 'var(--color-primary-0)' : 'var(--color-primary-1000)',
       },
       textStyle: {
-        color: isDark.value ? 'var(--t-ht-shade-0)' : 'var(--t-ht-shade-1000)',
+        color: isDark.value ? 'var(-color-primary-0)' : 'var(--color-primary-1000)',
       },
     },
 
@@ -174,11 +167,11 @@ const updateChartOptions = (data: any) => {
       ...gaugeChartOptions.tooltip,
       extraCssText: 'width:200px',
       backgroundColor: isDark
-        ? 'var(--t-ht-shade-1000)'
-        : 'var(--t-ht-shade-0)',
-      borderColor: isDark ? 'var(--t-ht-shade-1000)' : 'var(--t-ht-shade-0)',
+        ? 'var(--color-primary-1000)'
+        : 'var(--color-primary-0)',
+      borderColor: isDark ? 'var(--color-primary-1000)' : 'var(--color-primary-0)',
       textStyle: {
-        color: isDark ? 'var(--t-ht-shade-0)' : 'var(--t-ht-shade-1000)',
+        color: isDark ? 'var(--color-primary-0)' : 'var(--color-primary-1000)',
       },
     },
   }
@@ -196,6 +189,12 @@ watch(
     updateChartOptions(props.data || [])
   },
 )
+/* LCH */
+onMounted(() => {
+  useGaugeEChart()
+  updateChartOptions(props.data || {})
+  isMounted.value = true
+})
 </script>
 
 <template>
