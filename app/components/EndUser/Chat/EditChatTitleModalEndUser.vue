@@ -10,6 +10,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
+const btnLoading = ref(false)
 
 const chatStore = useChatStore()
 
@@ -52,6 +53,7 @@ const submiteditChatTitleForm = async (formEl: FormInstance | undefined) => {
 
   await formEl.validate(async (valid, __) => {
     if (valid) {
+      btnLoading.value = true
       await updateChatTitle()
       editUserModalVisible.value = false
       if (error.value) {
@@ -79,6 +81,7 @@ const submiteditChatTitleForm = async (formEl: FormInstance | undefined) => {
           duration: 2500,
         })
       }
+      btnLoading.value = false
     }
   })
 }
@@ -119,7 +122,7 @@ const closeModal = () => {
       class="barrage-dialog--small"
       :close-icon="CloseCircleIcon"
       :close-on-click-modal="false"
-      :close-on-press-escape="false"
+      :close-on-press-escape="true"
       @close="closeModal"
     >
       <template #header>
@@ -151,6 +154,7 @@ const closeModal = () => {
 
               <ElButton
                 type="primary"
+                :loading="btnLoading"
                 @click="submiteditChatTitleForm(editChatTitleFormRef)"
               >
                 {{ t('users.form.submit') }}

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // IMPORTS
+import { useDropdownKeyboard } from '~/utils/useDropdownKeyboard'
 import AdminIcon from '~/assets/icons/svg/admin.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import LogoutIcon from '~/assets/icons/svg/logout.svg'
@@ -84,11 +85,38 @@ const user = computed(() => {
 })
 
 const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/admin'))
+
+// Keyboard accessability
+const dropdownRef = ref<HTMLElement | null>(null)
+const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
+  [switchRoute, openProfileModal, openSettingsModal, openAgentsModal, undefined, openSignOutModal],
+  0,
+  'dropdown-item',
+  (selectedItem) => {
+    selectedItem()
+    dropdownRef.value.handleClose()
+  },
+)
+
+function switchRoute() {
+  handleDropdownVisibleChange(false)
+  navigateTo({ path: isAdminRoute.value ? '/' : '/admin' })
+}
 </script>
 
 <template>
-  <el-dropdown trigger="hover" :popper-options="popperOptions">
-    <el-button class="profile-toggle-button" size="small">
+  <el-dropdown
+    ref="dropdownRef"
+    trigger="hover"
+    :popper-options="popperOptions"
+    @visible-change="handleDropdownVisibleChange"
+  >
+    <el-button
+      class="profile-toggle-button"
+      size="small"
+      @keyup.enter="toggleDropdown"
+      @keyup.space="toggleDropdown"
+    >
       <ProfileIcon size="36px" />
     </el-button>
     <template #dropdown>
@@ -109,7 +137,11 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
             type="link"
           >
             <ElDropdownItem>
-              <div class="dropdown-item">
+              <div
+                class="dropdown-item"
+                tabindex="0"
+                @keyup.escape="dropdownRef.handleClose"
+              >
                 <AdminIcon size="20px" /> <p>  {{ isAdminRoute ? t('profileDropdown.switchToUser') : t('profileDropdown.switchToAdmin') }}</p>
               </div>
             </ElDropdownItem>
@@ -118,29 +150,49 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
 
         <div class="horizontal-divider" />
         <el-dropdown-item @click="openProfileModal">
-          <div class="dropdown-item">
+          <div
+            class="dropdown-item"
+            tabindex="0"
+            @keyup.escape="dropdownRef.handleClose"
+          >
             <ProfileIcon size="20px" /> <p> {{ t('profileDropdown.profile') }}</p>
           </div>
         </el-dropdown-item>
         <el-dropdown-item @click="openSettingsModal">
-          <div class="dropdown-item">
+          <div
+            class="dropdown-item"
+            tabindex="0"
+            @keyup.escape="dropdownRef.handleClose"
+          >
             <SettingsIcon size="20px" /> <p>{{ t('profileDropdown.settings') }}</p>
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
         <el-dropdown-item @click="openAgentsModal">
-          <div class="dropdown-item">
+          <div
+            class="dropdown-item"
+            tabindex="0"
+            @keyup.escape="dropdownRef.handleClose"
+          >
             <ChatAgentIcon size="20px" />  <p>{{ t('profileDropdown.agents') }}</p>
           </div>
         </el-dropdown-item>
         <el-dropdown-item disabled>
-          <div class="dropdown-item">
+          <div
+            class="dropdown-item"
+            tabindex="0"
+            @keyup.escape="dropdownRef.handleClose"
+          >
             <SupportIcon size="20px" /> <p>{{ t('profileDropdown.support') }}</p>
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
-        <el-dropdown-item @click=" openSignOutModal">
-          <div class="dropdown-item">
+        <el-dropdown-item @click="openSignOutModal">
+          <div
+            class="dropdown-item"
+            tabindex="0"
+            @keyup.escape="dropdownRef.handleClose"
+          >
             <LogoutIcon size="20px" /> <p>{{ t('profileDropdown.signOut') }}</p>
           </div>
         </el-dropdown-item>
@@ -221,9 +273,8 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
     transition: color 0.3s ease;
   }
 
-  &:hover {
-    background-color: var(--color-primary-100);
-
+  &:hover,
+  &:focus {
     & :deep(svg) {
       color: var(--color-primary-600);
     }
@@ -268,10 +319,6 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
   }
 }
 
-.hidden {
-  display: none;
-}
-
 .upload-container {
   display: flex;
   flex-direction: column;
@@ -296,7 +343,8 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
 
   & .dropdown-item {
     background-color: transparent;
-    &:hover {
+    &:hover,
+    &:focus {
       & :deep(svg) {
         color: var(--color-primary-300);
       }

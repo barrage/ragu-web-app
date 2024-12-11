@@ -17,6 +17,7 @@ const closeModal = () => {
   deleteChatModalVisible.value = false
   emits('closeModal')
 }
+const btnLoading = ref(false)
 
 watch(() => props.isOpen, (newVal) => {
   deleteChatModalVisible.value = newVal
@@ -28,6 +29,7 @@ const { execute: deleteChat, error } = await useAsyncData(() => chatStore.DELETE
 
 const submitDeleteChat = async () => {
   if (props.selectedChat?.id) {
+    btnLoading.value = true
     await deleteChat()
     deleteChatModalVisible.value = false
     if (error.value) {
@@ -49,6 +51,7 @@ const submitDeleteChat = async () => {
         duration: 2500,
       })
     }
+    btnLoading.value = true
   }
 }
 </script>

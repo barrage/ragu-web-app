@@ -184,6 +184,10 @@ const copyItem = () => {
   }
 }
 
+const handleLike = () => {}
+
+const handleDislike = () => {}
+
 const highlightCodeBlocks = () => {
   const codeBlocks = document.querySelectorAll('pre code:not([data-highlighted])')
   codeBlocks.forEach((block) => {
@@ -258,22 +262,54 @@ watchEffect(() => {
         v-if="!isSpeaking"
         :content="$t('chat.quick_action_tooltip.read_aloud')"
       >
-        <MicrophoneIcon size="18px" @click="readText" />
+        <div
+          tabindex="0"
+          @click="readText"
+          @keyup.enter="readText"
+        >
+          <MicrophoneIcon
+            size="18px"
+          />
+        </div>
       </LlmTooltip>
       <LlmTooltip
         v-else
         :content="$t('chat.quick_action_tooltip.stop_reading')"
       >
-        <StopIcon size="18px" @click="stopReading" />
+        <div
+          tabindex="0"
+          @click="stopReading"
+          @keyup.enter="stopReading"
+        >
+          <StopIcon size="18px" />
+        </div>
       </LlmTooltip>
       <LlmTooltip :content="$t('chat.quick_action_tooltip.copy_message')">
-        <CopyIcon size="18px" @click="copyItem()" />
+        <div
+          tabindex="0"
+          @click="copyItem"
+          @keyup.enter="copyItem"
+        >
+          <CopyIcon size="18px" />
+        </div>
       </LlmTooltip>
       <LlmTooltip :content="$t('chat.quick_action_tooltip.good_answer')">
-        <LikeIcon size="18px" />
+        <div
+          tabindex="0"
+          @click="handleLike"
+          @keyup.enter="handleLike"
+        >
+          <LikeIcon size="18px" />
+        </div>
       </LlmTooltip>
       <LlmTooltip :content="$t('chat.quick_action_tooltip.bad_answer')">
-        <DislikeIcon size="18px" />
+        <div
+          tabindex="0"
+          @click="handleDislike"
+          @keyup.enter="handleDislike"
+        >
+          <DislikeIcon size="18px" />
+        </div>
       </LlmTooltip>
     </div>
   </div>

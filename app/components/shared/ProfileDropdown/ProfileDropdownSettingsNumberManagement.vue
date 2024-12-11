@@ -203,7 +203,9 @@ function showSuccessNotification(type: Types) {
         {{ $t('settings.whatsapp_numbers_management') }}
       </h6>
       <LlmTooltip :content="$t('settings.labels.mobile_number_info')">
-        <InfoIcon class="icon" size="24" />
+        <div tabindex="0">
+          <InfoIcon class="icon" size="24" />
+        </div>
       </LlmTooltip>
     </div>
   </div>
@@ -292,47 +294,47 @@ function showSuccessNotification(type: Types) {
           </LlmTooltip>
         </div>
       </div>
-
-      <ElForm
-        ref="formRef"
-        :model="form"
-        :rules="rules"
-        class="number-card grid"
-      >
-        <ElFormItem prop="phoneNumber" :style="`padding-bottom: ${isPhoneNumberValid ? '0px' : '32px'};`">
-          <template #label>
-            <div class="add-phone-number-label-wrapper">
-              <AddIcon size="24" />
-              {{ $t('users.phone_numbers.add.title') }}
-            </div>
-          </template>
-          <div class="add-number-form-item-wrapper">
-            <ElInput
-              v-model="form.phoneNumber"
-              :placeholder="$t('settings.placeholders.mobile_number')"
-              class="add-number-form-item-input"
-            >
-              <template #prefix>
-                <p class="main-text-color">
-                  +
-                </p>
-              </template>
-            </ElInput>
-            <ElButton
-              type="primary"
-              :loading="addNumberStatus === 'pending'"
-              :disabled="!form.phoneNumber?.length"
-              @click="handleAddNumber(formRef)"
-            >
-              {{ $t('settings.save') }}
-            </ElButton>
-          </div>
-        </ElFormItem>
-      </ElForm>
     </div>
 
+    <ElForm
+      ref="formRef"
+      :model="form"
+      :rules="rules"
+      class="number-card grid"
+    >
+      <ElFormItem prop="phoneNumber" :style="`padding-bottom: ${isPhoneNumberValid ? '0px' : '32px'};`">
+        <template #label>
+          <div class="add-phone-number-label-wrapper">
+            <AddIcon size="24" />
+            {{ $t('users.phone_numbers.add.title') }}
+          </div>
+        </template>
+        <div class="add-number-form-item-wrapper">
+          <ElInput
+            v-model="form.phoneNumber"
+            :placeholder="$t('settings.placeholders.mobile_number')"
+            class="add-number-form-item-input"
+          >
+            <template #prefix>
+              <p class="main-text-color">
+                +
+              </p>
+            </template>
+          </ElInput>
+          <ElButton
+            type="primary"
+            :loading="addNumberStatus === 'pending'"
+            :disabled="!form.phoneNumber?.length"
+            @click="handleAddNumber(formRef)"
+          >
+            {{ $t('settings.save') }}
+          </ElButton>
+        </div>
+      </ElFormItem>
+    </ElForm>
+
     <EmptyState
-      v-else
+      v-if="!getPhoneNumbersData?.length"
       :title="$t('users.phone_numbers.empty_data')"
       :description="$t('users.phone_numbers.empty_data_description')"
     >
@@ -429,54 +431,54 @@ function showSuccessNotification(type: Types) {
   .edit-form {
     grid-column: span 12;
   }
+}
 
-  .number-card {
-    border: 0.5px solid var(--color-primary-300);
-    background: var(--color-primary-0);
-    box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
-    border-radius: 16px;
-    padding: 1rem;
+.number-card {
+  border: 0.5px solid var(--color-primary-300);
+  background: var(--color-primary-0);
+  box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
+  border-radius: 16px;
+  padding: 1rem;
 
-    .add-phone-number-label-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+  .add-phone-number-label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .add-number-form-item-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-fluid-s);
+
+    .add-number-form-item-input {
+      width: 100%;
     }
+  }
 
-    .add-number-form-item-wrapper {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-fluid-s);
+  .whatsapp-number-actions {
+    grid-column: 11/-1;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+  }
 
-      .add-number-form-item-input {
-        width: 100%;
-      }
-    }
+  .whatsapp-number-wrapper {
+    grid-column: span 3;
+    align-items: center;
+    text-overflow: ellipsis;
+    display: flex;
+    min-width: fit-content;
+    gap: 6px;
+    color: var(--color-primary-800);
+  }
 
-    .whatsapp-number-actions {
-      grid-column: 11/-1;
-      display: flex;
-      gap: 12px;
-      justify-content: flex-end;
-    }
-
-    .whatsapp-number-wrapper {
-      grid-column: span 3;
-      align-items: center;
-      text-overflow: ellipsis;
-      display: flex;
-      min-width: fit-content;
-      gap: 6px;
-      color: var(--color-primary-800);
-    }
-
-    .whatsapp-number {
-      margin: 0;
-      font-size: var(--font-size-fluid-2);
-      line-height: normal;
-      font-weight: var(--font-weight-bold);
-      color: var(--color-primary-900);
-    }
+  .whatsapp-number {
+    margin: 0;
+    font-size: var(--font-size-fluid-2);
+    line-height: normal;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-900);
   }
 }
 
@@ -488,17 +490,15 @@ function showSuccessNotification(type: Types) {
 }
 
 .dark {
-  .whatsapp-numbers-container {
-    .number-card {
-      border: 1px solid var(--color-primary-500);
-      background-color: var(--color-primary-700);
-      box-shadow: 0px 2px 6px 0px var(--color-primary-600);
-      & .whatsapp-number-wrapper {
-        color: var(--color-primary-100);
-      }
-      & .whatsapp-number {
-        color: var(--color-primary-0);
-      }
+  .number-card {
+    border: 1px solid var(--color-primary-500);
+    background-color: var(--color-primary-700);
+    box-shadow: 0px 2px 6px 0px var(--color-primary-600);
+    & .whatsapp-number-wrapper {
+      color: var(--color-primary-100);
+    }
+    & .whatsapp-number {
+      color: var(--color-primary-0);
     }
   }
 

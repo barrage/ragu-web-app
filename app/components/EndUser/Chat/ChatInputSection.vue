@@ -263,12 +263,16 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
             <StopStreamIcon
               v-if="isWebSocketStreaming"
               size="32px"
+              tabindex="0"
               @click="stopStream"
+              @keyup.enter="stopStream"
             />
             <ArrowUpIcon
               v-else-if="hasActiveAgents && isSelectedAgentActive"
+              :tabindex="message.length ? 0 : -1"
               size="32px"
               @click="sendMessage"
+              @keyup.enter="sendMessage"
             />
           </div>
         </template>

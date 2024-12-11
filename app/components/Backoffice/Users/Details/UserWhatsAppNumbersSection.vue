@@ -282,7 +282,7 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
       >
         <ElInput
           v-model="form.phoneNumber"
-          :placeholder="$t('settings.placeholders.mobile_number')"
+          placeholder="385 12 3456 789"
         >
           <template #prefix>
             <p class="input-prefix-color">

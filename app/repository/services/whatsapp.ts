@@ -55,9 +55,10 @@ export default class whatsAppService extends FetchFactory {
    */
   async BoPostWhatsAppNumber(userId: string, phoneNumber: string): Promise<WhatsAppNumber> {
     try {
+      const payload = phoneNumber.replaceAll(' ', '')
       return await this.$fetch<WhatsAppNumber>(`${this.adminEndpoint}/numbers/${userId}`, {
         method: 'POST',
-        body: JSON.stringify({ phoneNumber }),
+        body: JSON.stringify({ payload }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -80,9 +81,10 @@ export default class whatsAppService extends FetchFactory {
    */
   async UserPostWhatsAppNumber(phoneNumber: string): Promise<WhatsAppNumber> {
     try {
+      const payload = phoneNumber.replaceAll(' ', '')
       return await this.$fetch<WhatsAppNumber>(`${this.userEndpoint}/numbers`, {
         method: 'POST',
-        body: JSON.stringify({ phoneNumber }),
+        body: JSON.stringify({ payload }),
         headers: {
           'Content-Type': 'application/json',
         },

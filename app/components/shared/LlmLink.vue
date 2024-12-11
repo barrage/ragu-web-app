@@ -63,12 +63,15 @@ const classes = computed(() => {
 
 <template>
   <NuxtLink
+    tabindex="=0"
     :to="to"
     :external="external"
     :prefetch="true"
     :prefetch-on="prefetchOn"
     :target="target"
     :class="classes"
+    @keydown.enter="navigateTo({ path: to })"
+    @keydown.space="navigateTo({ path: to })"
   >
     <div class="llm-link--template">
       <slot />

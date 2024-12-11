@@ -79,9 +79,10 @@
         --dropdown-item-background-color: var(--color-primary-100);
       }
 
-      &:focus-visible {
+      &:focus-visible,
+      &:focus {
         outline: none;
-        background-color: var(--dropdown-item-background-color);
+        background-color: var(--color-primary-200);
       }
 
       &:active {

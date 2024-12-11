@@ -13,7 +13,10 @@ const agentStore = useAgentStore()
   <ElCard
     v-if="agent?.active"
     class="agent-select-card"
+    tabindex="0"
     :class="{ 'is-accent': agent?.id === agentStore.selectedAgent?.id, 'selected': agent?.id === agentStore.selectedAgent?.id }"
+    @keyup.enter="agentStore.setSelectedAgent(agent)"
+    @keyup.space="agentStore.setSelectedAgent(agent)"
     @click="agentStore.setSelectedAgent(agent)"
   >
     <div class="agent-body-wrapper">
