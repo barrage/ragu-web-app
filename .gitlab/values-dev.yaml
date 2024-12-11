@@ -7,6 +7,6 @@ ingress:
 barrage:
   vault:
     create: true
-    role: "llmao-webapp-g2-role"
+    role: "llmao-webapp-m2-role"
     moduleWorkspace: "llmao/data/deploy-web-app-dev"
-    authPath: auth/kubernetes-g2
+    authPath: auth/kubernetes-m2
