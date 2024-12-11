@@ -7,10 +7,12 @@ const props = defineProps({
   resetFormTrigger: {
     type: Boolean,
     default: false,
+    required: false,
   },
   hasCancelOption: {
     type: Boolean,
     default: true,
+    required: false,
   },
 })
 

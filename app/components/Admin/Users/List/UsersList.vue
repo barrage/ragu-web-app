@@ -1,15 +1,12 @@
 <script lang="ts" setup>
 import { nextTick } from 'vue'
 import type { User } from '~/types/users'
-import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
   users: User[] | null | undefined
-  pagination: Pagination
 }>()
 
 const emits = defineEmits<{
-  (event: 'pageChange', page: number): number
   (event: 'userDeleted'): void
   (event: 'userEdited'): void
   (event: 'userDeactivated'): void
@@ -25,10 +22,6 @@ const applyCardClasses = () => {
       cardClasses.value[index] = 'list-item-visible'
     }, index * 100)
   })
-}
-
-const changePage = (page: number) => {
-  emits('pageChange', page)
 }
 
 /* Edit User */
@@ -119,13 +112,6 @@ watch(
           @deactivate-user="openDeactivateUserModal(user)"
         />
       </div>
-
-      <Pagination
-        :current-page="props.pagination.currentPage"
-        :page-size="props.pagination.pageSize"
-        :total="props.pagination.total"
-        @page-change="(page:number) => changePage(page)"
-      />
     </div>
 
     <DeleteUserModalBackoffice
