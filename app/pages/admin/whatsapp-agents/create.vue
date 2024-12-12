@@ -16,7 +16,6 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 const maxContext = 1000
 const embeddingProviders: EmbeddingProvider[] = ['azure', 'openai', 'ollama']
-const provider = ref('')
 
 // FORM
 
@@ -24,10 +23,7 @@ const formRef = ref<FormInstance>()
 const form = reactive<PostWhatsAppAgentBody>({
   name: '',
   description: '',
-  vectorProvider: '',
   language: '',
-  embeddingModel: '',
-  embeddingProvider: '',
   active: false,
   configuration: {
     context: '',
@@ -64,15 +60,6 @@ const rules = computed<FormRules>(() => ({
   'configuration.temperature': [
     { required: true, message: t('agents.rules.temperature.required_message'), trigger: 'change' },
   ],
-  'vectorProvider': [
-    { required: true, message: t('agents.rules.vectorProvider.required_message'), trigger: 'change' },
-  ],
-  'embeddingProvider': [
-    { required: true, message: t('agents.rules.embeddingProvider.required_message'), trigger: 'change' },
-  ],
-  'embeddingModel': [
-    { required: true, message: t('agents.rules.embeddingModel.required_message'), trigger: 'blur' },
-  ],
   'active': [
     { required: true, message: t('agents.rules.active.required_message'), trigger: 'change' },
   ],
@@ -81,16 +68,10 @@ const rules = computed<FormRules>(() => ({
 // API CALLS
 
 const { execute: postAgent, error: postAgentError, status: postAgentStatus, data: postAgentData } = await useAsyncData(() => $api.whatsApp.BoCreateWhatsAppAgent(form), { immediate: false })
-const { execute: getProvider, error: getProviderError, data: providerData } = await useAsyncData(() => $api.provider.GetListProviders(), { immediate: false })
 const { execute: getAvailableLLms, error: getAvailableLLmsError, data: availableLLmsData } = await useAsyncData(() => $api.provider.GetListAvailableLLms(form.configuration.llmProvider), { immediate: false })
-const { execute: getListEmbedingModels, error: getListEmbedingModelsError, data: listEmbedingModelsData } = await useAsyncData(() => $api.collection.GetListEmbeddingModels(provider.value), { immediate: false })
-
-getProvider()
 
 errorHandler(postAgentError)
-errorHandler(getProviderError)
 errorHandler(getAvailableLLmsError)
-errorHandler(getListEmbedingModelsError)
 
 // WATCHERS
 
@@ -99,12 +80,6 @@ watch(() => form.configuration.llmProvider, async (newProvider) => {
     form.configuration.model = ''
     await getAvailableLLms()
   }
-})
-
-watch(() => form.embeddingProvider, async (newModel) => {
-  form.embeddingModel = ''
-  provider.value = newModel === 'azure' ? 'openai' : newModel
-  await getListEmbedingModels()
 })
 
 // FUNCTIONS
@@ -221,47 +196,6 @@ async function createAgent(formEl: FormInstance | undefined) {
               v-for="model in availableLLmsData"
               :key="model"
               :label="model"
-              :value="model"
-            />
-          </ElSelect>
-        </ElFormItem>
-
-        <ElFormItem :label="$t('agents.labels.vectorProvider')" prop="vectorProvider">
-          <ElSelect v-model="form.vectorProvider" :placeholder="$t('agents.placeholder.vecotrProvider')">
-            <ElOption
-              v-for="item in providerData?.vector"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </ElSelect>
-        </ElFormItem>
-
-        <ElFormItem :label="$t('agents.labels.embeddingProvider')" prop="embeddingProvider">
-          <ElSelect v-model="form.embeddingProvider" :placeholder="$t('agents.placeholder.embeddingProvider')">
-            <ElOption
-              v-for="item in providerData?.embedding"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </ElSelect>
-        </ElFormItem>
-
-        <ElFormItem
-          class="group"
-          :label="$t('agents.labels.embeddingModel')"
-          prop="embeddingModel"
-        >
-          <ElSelect
-            v-model="form.embeddingModel"
-            :placeholder="$t('agents.placeholder.embeddingModel')"
-            :disabled="!listEmbedingModelsData?.length"
-          >
-            <ElOption
-              v-for="(dimension, model) in listEmbedingModelsData"
-              :key="model"
-              :label="`${model} - ${dimension}`"
               :value="model"
             />
           </ElSelect>

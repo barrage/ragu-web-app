@@ -42,11 +42,8 @@ export interface SingleWhatsAppAgentResponse {
 export interface PostWhatsAppAgentBody {
   name: string
   description: string
-  vectorProvider: string
   language: string
   active: boolean
-  embeddingProvider: string
-  embeddingModel: string
   configuration: {
     context: string
     llmProvider: string
