@@ -111,6 +111,7 @@ const closeDeleteCollectionModal = () => {
     grid-column: span 12;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 
     & .agent-collections-title {
       display: flex;
@@ -125,6 +126,7 @@ const closeDeleteCollectionModal = () => {
       display: flex;
       align-items: center;
       gap: 22px;
+      flex-wrap: wrap;
     }
   }
 

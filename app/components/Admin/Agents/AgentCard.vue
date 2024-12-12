@@ -140,8 +140,15 @@ const editClick = (): void => {
   padding-block: 0.8rem;
   & .agent-card-body {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+
+    @include viewport-s {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include viewport-m {
+      grid-template-columns: repeat(7, 1fr);
+    }
     & .agent-name-type-wrapper {
       grid-column: span 2;
       align-items: center;
@@ -150,6 +157,10 @@ const editClick = (): void => {
       min-width: fit-content;
       gap: 6px;
       color: var(--color-primary-800);
+
+      & svg {
+        flex-shrink: 0;
+      }
 
       &:hover {
         cursor: pointer;
@@ -175,15 +186,7 @@ const editClick = (): void => {
         }
       }
     }
-    & .label-description-item-container {
-      grid-column: span 2;
-      @include viewport-s {
-        grid-column: span 1;
-      }
-      @include viewport-ml {
-        grid-column: span 1;
-      }
-    }
+
   }
 
   &.agent-model {
@@ -195,7 +198,11 @@ const editClick = (): void => {
     grid-column: span 1;
     display: flex;
     gap: 12px;
-    justify-content: flex-end;
+    justify-content: flex-start;
+
+    @include viewport-m {
+      justify-content: flex-end;
+    }
   }
 }
 
@@ -208,6 +215,8 @@ const editClick = (): void => {
     text-overflow: ellipsis;
   }
 }
+
+
 .dark {
   .agent-card {
     & .agent-card-body { & .agent-name-type-wrapper {

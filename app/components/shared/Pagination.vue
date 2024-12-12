@@ -129,6 +129,7 @@ const goToLastPageDisabled = computed(() => {
 .pagination {
   padding-top: 22px;
   margin: auto;
+  justify-content: center;
 
   :deep(.barrage-icon) {
     svg {

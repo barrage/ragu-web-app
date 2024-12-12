@@ -65,6 +65,7 @@ const textSize = computed(() => {
   margin-right: 1rem;
   text-overflow: ellipsis;
   color: var(--color-primary-900);
+  flex-wrap: wrap;
 
   svg {
     flex-shrink: 0;

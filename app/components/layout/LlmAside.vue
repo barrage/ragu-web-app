@@ -66,6 +66,10 @@ aside {
     color: var(--color-primary-900);
   }
 
+  .horizontal-divider {
+    background-color: var(--color-primary-300);
+  }
+
   .navigation-container {
     display: flex;
     flex-direction: column;

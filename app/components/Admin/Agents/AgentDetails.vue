@@ -338,6 +338,7 @@ const agentDeactivated = () => {
   justify-content: space-between;
   align-items: center;
   padding-block: 1rem;
+  flex-wrap: wrap;
 
   & .profile-avatar-wrapper {
     display: flex;
@@ -348,6 +349,7 @@ const agentDeactivated = () => {
     text-overflow: ellipsis;
     .agent-icon {
       color: var(--color-primary-900);
+      flex-shrink: 0;
     }
   }
 
@@ -355,6 +357,7 @@ const agentDeactivated = () => {
     display: flex;
     align-items: center;
     gap: 2rem;
+    flex-wrap: wrap;
   }
 }
 .configuration-title-wrapper {

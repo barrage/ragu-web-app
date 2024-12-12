@@ -383,7 +383,7 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
       <p> {{ $t('whatsapp_agents.delete.dialog_description') }}</p>
       <div class="dialog-agent-name-wrapper">
         <AgentIcon size="24px" />
-        <p>{{ singleAgent.agent.name }}</p>
+        <p>{{ singleAgent?.agent?.name }}</p>
       </div>
     </div>
     <template #footer>
@@ -408,6 +408,7 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
   justify-content: space-between;
   align-items: center;
   padding-block: 1rem;
+  flex-wrap: wrap;
 
   & .profile-avatar-wrapper {
     display: flex;
