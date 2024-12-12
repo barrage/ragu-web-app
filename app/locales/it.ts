@@ -309,7 +309,7 @@ export default {
       success_notification_title: 'L’agente WhatsApp è stato impostato come attivo',
       success_notification_message: 'L’agente WhatsApp attivo è stato cambiato con successo.',
       already_active_message: 'Questo agente è già attivo',
-      dialog_title: 'Imposta l’agente WhatsApp come attivo',
+      dialog_title: 'Attiva l’agente WhatsApp',
       dialog_description: 'Sei sicuro di voler impostare questo agente WhatsApp come attivo?',
     },
     delete: {
@@ -317,7 +317,7 @@ export default {
       success_notification_title: 'L’agente WhatsApp è stato eliminato',
       success_notification_message: 'L’agente WhatsApp è stato eliminato con successo.',
       dialog_title: 'Elimina l’agente WhatsApp',
-      dialog_description: 'Sei sicuro di voler eliminare questo agente WhatsApp? Questa azione non può essere annullata.',
+      dialog_description: 'Sei sicuro di voler eliminare questo agente WhatsApp?',
       active_agent_tooltip: 'L’agente attivo non può essere eliminato',
     },
     close: 'Chiudi',
@@ -671,7 +671,7 @@ export default {
       status: 'Stato Agente',
       languageInstruction: 'Istruzione Lingua',
       summaryInstruction: 'Istruzione Sommario',
-      titleInstruction: 'Istruzione Titolo',
+      promptInstruction: 'Istruzione Prompt',
     },
     buttons: {
       create: 'Crea Agente',
@@ -694,7 +694,7 @@ export default {
       language: 'Inserisci Lingua Agente',
       languageInstruction: 'Inserisci Istruzioni Lingua Agente',
       summaryInstruction: 'Inserisci Istruzioni Sommario Agente',
-      titleInstruction: 'Inserisci Istruzioni Titolo Agente',
+      promptInstruction: 'Inserisci Istruzioni Prompt Agente',
       embeddingModel: 'Seleziona modello di incorporamento',
     },
 

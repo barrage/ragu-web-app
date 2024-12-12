@@ -317,7 +317,7 @@ export default {
       success_notification_title: 'O agente do WhatsApp foi excluído',
       success_notification_message: 'O agente do WhatsApp foi excluído com sucesso.',
       dialog_title: 'Excluir agente do WhatsApp',
-      dialog_description: 'Tem certeza de que deseja excluir este agente do WhatsApp? Esta ação não pode ser desfeita.',
+      dialog_description: 'Tem certeza de que deseja excluir este agente do WhatsApp?',
       active_agent_tooltip: 'O agente ativo não pode ser excluído',
     },
     close: 'Fechar',
@@ -674,7 +674,7 @@ export default {
       status: 'Status do Agente',
       languageInstruction: 'Instrução de Idioma',
       summaryInstruction: 'Instrução de Resumo',
-      titleInstruction: 'Instrução de Título',
+      promptInstruction: 'Instrução de Prompt',
     },
     buttons: {
       create: 'Criar Agente',
@@ -697,7 +697,7 @@ export default {
       language: 'Inserir Idioma do Agente',
       languageInstruction: 'Inserir Instruções de Idioma do Agente',
       summaryInstruction: 'Inserir Instruções de Resumo do Agente',
-      titleInstruction: 'Inserir Instruções de Título do Agente',
+      promptInstruction: 'Inserir Instruções de Prompt do Agente',
       embeddingModel: 'Selecionar modelo de incorporação',
     },
 

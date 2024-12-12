@@ -318,7 +318,7 @@ export default {
       success_notification_title: 'L’agent WhatsApp a été supprimé',
       success_notification_message: 'L’agent WhatsApp a été supprimé avec succès.',
       dialog_title: 'Supprimer l’agent WhatsApp',
-      dialog_description: 'Êtes-vous sûr de vouloir supprimer cet agent WhatsApp ? Cette action est irréversible.',
+      dialog_description: 'Êtes-vous sûr de vouloir supprimer cet agent WhatsApp ?',
       active_agent_tooltip: 'L’agent actif ne peut pas être supprimé',
     },
     close: 'Fermer',
@@ -672,7 +672,7 @@ export default {
       status: 'Statut de l’Agent',
       languageInstruction: 'Instruction de Langue',
       summaryInstruction: 'Instruction de Résumé',
-      titleInstruction: 'Instruction de Titre',
+      promptInstruction: 'Instruction de Saisie',
     },
     buttons: {
       create: 'Créer l’Agent',
@@ -695,7 +695,7 @@ export default {
       language: 'Entrer la Langue de l’Agent',
       languageInstruction: 'Entrer l’Instruction de Langue de l’Agent',
       summaryInstruction: 'Entrer l’Instruction de Résumé de l’Agent',
-      titleInstruction: 'Entrer l’Instruction de Titre de l’Agent',
+      promptInstruction: 'Entrer l’Instruction de Saisie de l’Agent',
       embeddingModel: 'Sélectionner le modèle d\'intégration',
     },
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import type { Chat, Message } from '~/types/chat'
 import EditTextIcon from '~/assets/icons/svg/edit-text.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'

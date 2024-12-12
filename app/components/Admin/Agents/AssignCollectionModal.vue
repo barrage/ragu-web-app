@@ -56,7 +56,7 @@ const payload = computed(() => ({
 
 const filteredCollections = computed(() => {
   const existingCollectionNames = new Set(
-    [...agentStore.singleAgent?.collections].map(entry => entry.collection),
+    agentStore.singleAgent?.collections?.map(entry => entry.collection),
   )
 
   return collectionStore.collections.filter((collection) => {

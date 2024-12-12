@@ -172,15 +172,15 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
   <section class="user-whatsapp-numbers-section">
     <div class="heading">
       <div class="title-wrapper">
-        <WhatsAppLogoIcon size="24" />
-        <h6 class="title">
+        <WhatsAppLogoIcon size="36px" />
+        <h4 class="title">
           {{ $t('users.phone_numbers.title') }}
-        </h6>
+        </h4>
         <LlmTooltip :content="$t('settings.labels.mobile_number_info')">
-          <InfoIcon class="hover-pointer" />
+          <InfoIcon class="hover-pointer" size="20px" />
         </LlmTooltip>
       </div>
-      <ElButton @click="openDialog('add')">
+      <ElButton v-if="phoneNumbers?.length" @click="openDialog('add')">
         <AddIcon />
         {{ $t('users.phone_numbers.add_btn_label') }}
       </ElButton>
@@ -251,7 +251,7 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
   >
     <template #header>
       <div class="number-modal-header">
-        <WhatsAppLogoIcon size="24" />
+        <WhatsAppLogoIcon size="42px" />
         <h5>
           {{
             modal.type === 'add' ? $t('users.phone_numbers.add.title')
@@ -367,7 +367,9 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
     gap: 8px;
     color: var(--color-primary-900);
     .title {
-      color: var(--color-primary-900);
+      color: var(--color-primary-800);
+      font-size: var(--font-size-fluid-4);
+      font-weight: var(--font-weight-bold);
     }
   }
 

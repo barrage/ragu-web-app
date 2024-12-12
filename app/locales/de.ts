@@ -311,7 +311,7 @@ export default {
       success_notification_title: 'WhatsApp-Agent wurde als aktiv festgelegt',
       success_notification_message: 'Der aktive WhatsApp-Agent wurde erfolgreich geändert.',
       already_active_message: 'Dieser Agent ist bereits aktiv',
-      dialog_title: 'WhatsApp-Agent als aktiv festlegen',
+      dialog_title: 'Active WhatsApp-Agent festlegen',
       dialog_description: 'Möchten Sie diesen WhatsApp-Agenten wirklich als aktiv festlegen?',
     },
     delete: {
@@ -319,7 +319,7 @@ export default {
       success_notification_title: 'WhatsApp-Agent wurde gelöscht',
       success_notification_message: 'WhatsApp-Agent wurde erfolgreich gelöscht.',
       dialog_title: 'WhatsApp-Agent löschen',
-      dialog_description: 'Möchten Sie diesen WhatsApp-Agenten wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
+      dialog_description: 'Möchten Sie diesen WhatsApp-Agenten wirklich löschen?',
       active_agent_tooltip: 'Ein aktiver Agent kann nicht gelöscht werden',
     },
     close: 'Schließen',
@@ -673,7 +673,7 @@ export default {
       status: 'Agentenstatus',
       languageInstruction: 'Sprachanweisung',
       summaryInstruction: 'Zusammenfassungsanweisung',
-      titleInstruction: 'Titelanweisung',
+      promptInstruction: 'Promptanweisung',
     },
     buttons: {
       create: 'Agent Erstellen',
@@ -696,7 +696,7 @@ export default {
       language: 'Agentensprache eingeben',
       languageInstruction: 'Sprachanweisung eingeben',
       summaryInstruction: 'Zusammenfassungsanweisung eingeben',
-      titleInstruction: 'Titelanweisung eingeben',
+      promptInstruction: 'Promptanweisung eingeben',
       embeddingModel: 'Embedding-Modell auswählen',
     },
 

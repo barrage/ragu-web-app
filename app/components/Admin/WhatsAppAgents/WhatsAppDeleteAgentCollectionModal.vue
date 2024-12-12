@@ -1,15 +1,19 @@
 <script lang="ts" setup>
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import DeletePersonIcon from '~/assets/icons/svg/delete-person.svg'
-import type { SingleWhatsAppAgentResponse } from '~/types/whatsapp'
+import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
+import type { AgentCollection } from '~/types/agent'
 
-defineProps<{
-  singleAgent: SingleWhatsAppAgentResponse | null | undefined
+const props = defineProps<{
+  agentCollections: AgentCollection[] | undefined
+  isOpen: boolean
 }>()
-const emits = defineEmits<{
+
+const emits = defineEmits<Emits>()
+
+interface Emits {
+  (event: 'closeModal'): void
   (event: 'refreshAgent'): void
-}>()
-const isOpen = defineModel<boolean>()
+}
 
 // CONSTANTS & STATES
 
@@ -18,7 +22,7 @@ const { t } = useI18n()
 const route = useRoute()
 const deleteCollections = ref<string[]>([])
 const agentId = route.params.agentId as string
-const collectionStore = useCollectionsStore()
+const deleteCollectionModalVisible = ref(props.isOpen)
 
 const payload = computed(() => ({
   remove: deleteCollections.value.map(collectionName => ({
@@ -30,14 +34,19 @@ const payload = computed(() => ({
 // API CALLS
 
 const { execute: deleteCollection, error: deleteCollectionError } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, payload.value), { immediate: false })
-const { execute: getAllCollections } = await useAsyncData(() => collectionStore.GET_AllCollections(), { immediate: false })
 
 // FUNCTIONS
 
-async function submitDeleteCollection() {
+const closeModal = () => {
+  deleteCollectionModalVisible.value = false
+  emits('closeModal')
+  deleteCollections.value = []
+}
+
+const submitDeleteCollection = async () => {
   await deleteCollection()
-  await getAllCollections()
-  isOpen.value = false
+
+  deleteCollectionModalVisible.value = false
 
   if (deleteCollectionError.value) {
     ElNotification({
@@ -59,21 +68,29 @@ async function submitDeleteCollection() {
     })
   }
 }
+
+// WATCHERS
+
+watch(() => props.isOpen, (newVal) => {
+  deleteCollectionModalVisible.value = newVal
+})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="isOpen"
+      v-model="deleteCollectionModalVisible"
       destroy-on-close
       align-center
       class="barrage-dialog--small"
       :close-icon="CloseCircleIcon"
       :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      @close="closeModal"
     >
       <template #header>
         <div class="delete-user-modal-header">
-          <DeletePersonIcon size="42px" />
+          <CollectionIcon size="42px" />
           <h5> {{ $t('collections.deleteModal.title') }}</h5>
         </div>
       </template>
@@ -87,16 +104,16 @@ async function submitDeleteCollection() {
           multiple
         >
           <ElOption
-            v-for="collection in singleAgent?.collections"
+            v-for="collection in agentCollections"
             :key="collection.id"
-            :label="collection.collection"
-            :value="collection.collection"
+            :label="collection.collection ?? ''"
+            :value="collection.collection ?? ''"
           />
         </ElSelect>
       </div>
 
       <template #footer>
-        <ElButton @click="isOpen = false">
+        <ElButton @click="closeModal">
           {{ $t('collections.buttons.cancel') }}
         </ElButton>
         <ElButton

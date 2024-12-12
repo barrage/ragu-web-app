@@ -125,8 +125,7 @@ watch(() => form.configuration?.llmProvider, async (newProvider) => {
   }
 })
 
-// LYFECYCLE HOOKS
-onMounted(async () => {
+const setForm = () => {
   form.name = agentStore.singleAgent?.agent?.name ?? ''
   form.configuration.context = agentStore.singleAgent?.configuration?.context ?? ''
   form.description = agentStore.singleAgent?.agent?.description ?? ''
@@ -138,6 +137,11 @@ onMounted(async () => {
   form.configuration.instructions.languageInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
   form.configuration.instructions.summaryInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
   form.active = agentStore.singleAgent?.agent?.active ?? true
+}
+
+// LYFECYCLE HOOKS
+onMounted(() => {
+  setForm()
 })
 
 onUnmounted(() => {

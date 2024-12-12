@@ -312,7 +312,7 @@ export default {
       success_notification_title: 'WhatsApp agent is set as active',
       success_notification_message: 'Active WhatsApp agent has been successfully changed.',
       already_active_message: 'This agent is already active',
-      dialog_title: 'Set WhatsApp agent as active',
+      dialog_title: 'Activate WhatsApp Agent',
       dialog_description: 'Are you sure you want to set this WhatsApp agent as active?',
     },
     delete: {
@@ -320,7 +320,7 @@ export default {
       success_notification_title: 'WhatsApp agent is deleted',
       success_notification_message: 'WhatsApp agent has been successfully deleted.',
       dialog_title: 'Delete WhatsApp agent',
-      dialog_description: 'Are you sure you want to delete this WhatsApp agent? This action cannot be undone.',
+      dialog_description: 'Are you sure you want to delete this WhatsApp agent?',
       active_agent_tooltip: 'Active agent can not be deleted',
     },
     close: 'Close',
@@ -835,7 +835,7 @@ export default {
       status: 'Agent Status',
       languageInstruction: 'Language Instruction',
       summaryInstruction: 'Summary Instruction',
-      titleInstruction: 'Title Instruction',
+      promptInstruction: 'Prompt Instruction',
 
     },
     buttons: {
@@ -860,7 +860,7 @@ export default {
       language: 'Enter Agent Language',
       languageInstruction: 'Enter Agent Language Instructions',
       summaryInstruction: 'Enter Agent Summary Instructions',
-      titleInstruction: 'Enter Agent Title Instructions',
+      promptInstruction: 'Enter Agent Prompt Instructions',
       embeddingModel: 'Select Embedding Model',
     },
 
