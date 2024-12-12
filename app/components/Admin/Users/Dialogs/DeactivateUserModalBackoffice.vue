@@ -4,33 +4,33 @@ import type { User } from '~/types/users'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 
 const props = defineProps<{
-  selectedUser: User | null
-  isOpen: boolean
+  selectedUser: User | undefined | null
+
 }>()
 
 const emits = defineEmits<Emits>()
+
+const isOpen = defineModel<boolean>()
+
+const { $api } = useNuxtApp()
 const { t } = useI18n()
-const deactivateUserModalVisible = ref(props.isOpen)
-const usersStore = useUsersStore()
+
 const closeModal = () => {
-  deactivateUserModalVisible.value = false
-  emits('closeModal')
+  isOpen.value = false
 }
 
-watch(() => props.isOpen, (newVal) => {
-  deactivateUserModalVisible.value = newVal
-})
 interface Emits {
-  (event: 'closeModal'): void
   (event: 'userDeactivated'): void
 }
-const { execute: deactivateUser, error } = await useAsyncData(() => usersStore.PUT_DectivateUser(props.selectedUser!.id), { immediate: false })
+
+const { execute: executeDeactivateUser, error: deactivateUserError, status: deactivateUserStatus } = await useAsyncData(() => $api.user.PutDeactivateUser(props.selectedUser!.id), {
+  immediate: false,
+})
 
 const submitDeactivateUser = async () => {
   if (props.selectedUser?.id) {
-    await deactivateUser()
-    deactivateUserModalVisible.value = false
-    if (error.value) {
+    await executeDeactivateUser()
+    if (deactivateUserError.value) {
       ElNotification({
         title: t('users.deactivate_user.notifications.error_title'),
         message: t('users.deactivate_user.notifications.error_description'),
@@ -51,12 +51,16 @@ const submitDeactivateUser = async () => {
     }
   }
 }
+
+const isDeactivateUserLoading = computed(() => {
+  return deactivateUserStatus.value === 'pending'
+})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="deactivateUserModalVisible"
+      v-model="isOpen"
       destroy-on-close
       align-center
       class="barrage-dialog--small"
@@ -89,6 +93,7 @@ const submitDeactivateUser = async () => {
         <el-button
           data-testid="confirm-deactivate-user-modal-button"
           type="danger"
+          :disabled="isDeactivateUserLoading"
           @click="submitDeactivateUser()"
         >
           {{ $t('users.deactivate_user.confirm') }}

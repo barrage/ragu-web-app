@@ -4,7 +4,7 @@ import type { User } from '~/types/users'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 
 const props = defineProps<{
-  selectedUser: User | null
+  selectedUser: User | undefined | null
 }>()
 
 const emits = defineEmits<Emits>()

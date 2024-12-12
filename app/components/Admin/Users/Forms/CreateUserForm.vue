@@ -157,32 +157,6 @@ const isCreateUserLoading = computed(() => {
     :scroll-into-view-options="scrollIntoViewOptions"
   >
     <div class="invite-user-form-items-wrapper">
-      <p class="form-description">
-        {{ t('users.invite_user_description') }}
-      </p>
-      <span class="role-title">{{ t('users.form.role') }}</span>
-      <div class="new-user-role-wrapper">
-        <template v-for="role in userRoles" :key="role.value">
-          <el-card
-            class="is-accent select-role-card"
-            :class="{
-              selected: role.value === inviteUserform.role,
-            }"
-            @click="selectUserRole(role.value)"
-          >
-            <div class="select-role-card-body">
-              <div class="title-wrapper">
-                <p class="role-label">
-                  {{ role.label }}
-                </p>
-                <CheckIcon v-if="role.value === inviteUserform.role" size="22px" />
-              </div>
-
-              <span class="role-description">  {{ role.description }}</span>
-            </div>
-          </el-card>
-        </template>
-      </div>
       <div class="form-items-inline">
         <ElFormItem
           :label="t('users.form.first_name')"
@@ -228,6 +202,29 @@ const isCreateUserLoading = computed(() => {
             size="small"
           />
         </ElFormItem>
+      </div>
+      <span class="role-title">{{ t('users.form.role') }}</span>
+      <div class="new-user-role-wrapper">
+        <template v-for="role in userRoles" :key="role.value">
+          <el-card
+            class="is-accent select-role-card"
+            :class="{
+              selected: role.value === inviteUserform.role,
+            }"
+            @click="selectUserRole(role.value)"
+          >
+            <div class="select-role-card-body">
+              <div class="title-wrapper">
+                <p class="role-label">
+                  {{ role.label }}
+                </p>
+                <CheckIcon v-if="role.value === inviteUserform.role" size="22px" />
+              </div>
+
+              <span class="role-description">  {{ role.description }}</span>
+            </div>
+          </el-card>
+        </template>
       </div>
       <ElFormItem class="form-item-actions">
         <div class="form-actions">
@@ -290,7 +287,7 @@ const isCreateUserLoading = computed(() => {
 .invite-user-form-items-wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-fluid-xs);
+  padding-top: var(--spacing-fluid-xl);
   & .form-items-inline {
     display: flex;
     gap: var(--spacing-fluid-xs);

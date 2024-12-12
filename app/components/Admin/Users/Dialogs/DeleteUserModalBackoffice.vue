@@ -5,33 +5,32 @@ import type { User } from '~/types/users'
 
 const props = defineProps<{
   selectedUser: User | null | undefined
-  isOpen: boolean
 }>()
 
 const emits = defineEmits<Emits>()
+
+const isOpen = defineModel<boolean>()
+
+const { $api } = useNuxtApp()
 const { t } = useI18n()
-const router = useRouter()
-const deleteUserModalVisible = ref(props.isOpen)
-const usersStore = useUsersStore()
+
 const closeModal = () => {
-  deleteUserModalVisible.value = false
-  emits('closeModal')
+  isOpen.value = false
 }
 
-watch(() => props.isOpen, (newVal) => {
-  deleteUserModalVisible.value = newVal
-})
 interface Emits {
-  (event: 'closeModal'): void
   (event: 'userDeleted'): void
 }
-const { execute: deleteUser, error } = await useAsyncData(() => usersStore.DELETE_User(props.selectedUser!.id), { immediate: false })
+
+const { execute: executeDeleteUser, error: deleteUserError, status: deleteUserStatus } = await useAsyncData(() => $api.user.DeleteUser(props.selectedUser!.id), {
+  immediate: false,
+})
 
 const submitDeleteUser = async () => {
   if (props.selectedUser?.id) {
-    await deleteUser()
-    deleteUserModalVisible.value = false
-    if (error.value) {
+    await executeDeleteUser()
+
+    if (deleteUserError.value) {
       ElNotification({
         title: t('users.delete_user.notifications.error_title'),
         message: t('users.delete_user.notifications.error_description'),
@@ -42,7 +41,8 @@ const submitDeleteUser = async () => {
     }
     else {
       emits('userDeleted')
-      router.push(`/admin/users`)
+      closeModal()
+
       ElNotification({
         title: t('users.delete_user.notifications.success_title'),
         message: t('users.delete_user.notifications.success_description'),
@@ -53,12 +53,16 @@ const submitDeleteUser = async () => {
     }
   }
 }
+
+const isDeleteUserLoading = computed(() => {
+  return deleteUserStatus.value === 'pending'
+})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="deleteUserModalVisible"
+      v-model="isOpen"
       destroy-on-close
       align-center
       class="barrage-dialog--small"
@@ -86,7 +90,12 @@ const submitDeleteUser = async () => {
         <el-button @click="closeModal">
           {{ $t('users.delete_user.cancel') }}
         </el-button>
-        <el-button type="danger" @click="submitDeleteUser()">
+
+        <el-button
+          type="danger"
+          :disabled="isDeleteUserLoading"
+          @click="submitDeleteUser()"
+        >
           {{ $t('users.delete_user.confirm') }}
         </el-button>
       </template>

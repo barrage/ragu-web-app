@@ -8,13 +8,17 @@ import { StatusType } from '~/types/statusTypes'
 import type { User } from '~/types/users'
 
 const props = defineProps<{
-  user: User | null
+  user: User | undefined | null
 }>()
 
-/* Setup */
+const emits = defineEmits<{
+  (event: 'userDeleted'): void
+  (event: 'userEdited'): void
+  (event: 'userDeactivated'): void
+  (event: 'userActivated'): void
+}>()
 const { t } = useI18n()
-const route = useRoute()
-const usersStore = useUsersStore()
+const router = useRouter()
 
 const userData = computed(() => {
   return {
@@ -28,60 +32,50 @@ const userData = computed(() => {
   }
 })
 
-const selectedUserId = computed(() => {
-  const userId = Array.isArray(route.params.userId) ? route.params.userId[0] : route.params.userId
-  return userId || ''
-})
-
-const { error, execute: GetUserDetails } = await useAsyncData(() => usersStore.GET_SingleUser(selectedUserId.value), { immediate: false })
-
-errorHandler(error)
 /* Edit User */
-const selectedUserEdit = ref<User | null >(props.user)
+const selectedUserEdit = ref<User | undefined | null >(props.user)
 const editUserModalVisible = ref(false)
 
 const openEditUserModal = () => {
   editUserModalVisible.value = true
 }
 
-const userUpdated = () => {
-  editUserModalVisible.value = false
-  GetUserDetails()
+const handleUserUpdated = () => {
+  emits('userEdited')
 }
 /* Delete User */
-const selectedUserDelete = ref<User | null >(props.user)
+const selectedUserDelete = ref<User | undefined | null>(props.user)
 const deleteUserModalVisible = ref(false)
 
 const openDeleteUserModal = () => {
   deleteUserModalVisible.value = true
 }
 
-const closeDeleteModal = () => {
-  deleteUserModalVisible.value = false
+const handleUserDeleted = () => {
+  router.push(`/admin/users`)
+  emits('userDeleted')
 }
-
 /* Activate User */
-const selectedUserActivate = ref<User | null >(props.user)
+const selectedUserActivate = ref<User | undefined | null>(props.user)
 const activateUserModalVisible = ref(false)
 
 const openActivateUserModal = () => {
   activateUserModalVisible.value = true
 }
 
-const closeActivateModal = () => {
-  activateUserModalVisible.value = false
+const handleUserActivated = () => {
+  emits('userActivated')
 }
 
 /* Dectivate User */
-const selectedUserDeactivate = ref<User | null >(props.user)
+const selectedUserDeactivate = ref<User | undefined | null>(props.user)
 const deactivateUserModalVisible = ref(false)
 
 const openDeactivateUserModal = () => {
   deactivateUserModalVisible.value = true
 }
-
-const closeDeactivateModal = () => {
-  deactivateUserModalVisible.value = false
+const handleUserDeactivated = () => {
+  emits('userDeactivated')
 }
 </script>
 
@@ -134,30 +128,29 @@ const closeDeactivateModal = () => {
         <DeleteIcon size="20px" />  {{ t('users.user_card.delete_user_title') }}
       </ElButton>
     </div>
+
     <DeleteUserModalBackoffice
-      :is-open="deleteUserModalVisible"
+      v-model="deleteUserModalVisible"
       :selected-user="selectedUserDelete"
-      @close-modal="closeDeleteModal"
+      @user-deleted="handleUserDeleted"
     />
 
     <EditUserModalBackoffice
       v-model="editUserModalVisible"
       :selected-user="selectedUserEdit"
-      @user-edited="userUpdated"
+      @user-edited="handleUserUpdated"
     />
 
     <ActivateUserModalBackoffice
-      :is-open="activateUserModalVisible"
+      v-model="activateUserModalVisible"
       :selected-user="selectedUserActivate"
-      @close-modal="closeActivateModal"
-      @user-activated="GetUserDetails"
+      @user-activated="handleUserActivated"
     />
 
     <DeactivateUserModalBackoffice
-      :is-open="deactivateUserModalVisible"
+      v-model="deactivateUserModalVisible"
       :selected-user="selectedUserDeactivate"
-      @close-modal="closeDeactivateModal"
-      @user-deactivated="GetUserDetails"
+      @user-deactivated="handleUserDeactivated"
     />
   </section>
 </template>

@@ -4,29 +4,32 @@ import type { SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
 
 const { $api } = useNuxtApp()
+const usersStore = useUsersStore()
 
-const pagination = ref<Pagination>({
-  currentPage: 1,
-  pageSize: 10,
-  total: 0,
-  disabled: false,
-})
+const pagination = ref<Pagination>({ ...usersStore.usersListPagination })
+const sort = ref<SortingValues>({ ...usersStore.usersListSort })
 
-const sort = ref<SortingValues>({
-  direction: 'desc',
-  sortProperty: { name: '', value: '' },
-})
+const updateStorePagination = () => {
+  usersStore.updatePagination(pagination.value)
+}
+
+const updateStoreSorting = () => {
+  usersStore.updateSorting(sort.value)
+}
 
 const { execute: executeGetUsers, error: getUsersError, status: getUsersStatus, data: allUsersData } = await useAsyncData(() => $api.user.GetAllUsers(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction))
 
 const handlePageChange = async (page: number) => {
   pagination.value.currentPage = page
+  updateStorePagination()
+  scrollToTop()
   await executeGetUsers()
 }
 
 const handleSortChange = async (sortingValues: SortingValues) => {
   sort.value.direction = sortingValues.direction
   sort.value.sortProperty = sortingValues.sortProperty
+  updateStoreSorting()
   await executeGetUsers()
 }
 
@@ -34,6 +37,7 @@ watch(
   () => allUsersData.value?.total,
   (newTotal) => {
     pagination.value.total = newTotal || 0
+    updateStorePagination()
   },
   { immediate: true },
 )
@@ -71,9 +75,16 @@ errorHandler(getUsersError)
   />
 
   <Pagination
+    class="users-list-pagination"
     :current-page="pagination.currentPage"
     :page-size="pagination.pageSize"
     :total="pagination.total"
     @page-change="handlePageChange"
   />
 </template>
+
+<style lang="scss" scoped>
+.users-list-pagination {
+  max-width: fit-content;
+}
+</style>

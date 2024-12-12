@@ -16,7 +16,7 @@ const applySkeletonClasses = () => {
   skeletonArray.value.forEach((_, index) => {
     setTimeout(() => {
       skeletonClasses.value[index] = 'skeleton-item-visible'
-    }, index * 100)
+    }, index * 350)
   })
 }
 
@@ -117,16 +117,16 @@ onUnmounted(() => {
 
 .dark {
   .skeleton-list-item {
-    background-color: var(--color-primary-800);
+    background-color: var(--color-primary-700);
     animation: pulse-dark 1.5s infinite ease-in-out;
   }
 
   .skeleton-avatar {
-    background: var(--color-primary-700);
+    background: var(--color-primary-600);
   }
 
   .skeleton-line {
-    background: var(--color-primary-700);
+    background: var(--color-primary-600);
   }
 }
 
@@ -144,13 +144,13 @@ onUnmounted(() => {
 
 @keyframes pulse-dark {
   0% {
-    background-color: var(--color-primary-800);
+    background-color: var(--color-primary-700);
   }
   50% {
-    background-color: var(--color-primary-900);
+    background-color: var(--color-primary-800);
   }
   100% {
-    background-color: var(--color-primary-800);
+    background-color: var(--color-primary-700);
   }
 }
 </style>

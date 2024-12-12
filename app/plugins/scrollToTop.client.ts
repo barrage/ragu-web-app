@@ -1,12 +1,10 @@
 import { defineNuxtPlugin } from '#app'
+import { scrollToTop } from '~/utils/scrollToTop'
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('page:finish', () => {
     setTimeout(() => {
-      const mainContent = document.querySelector('.main')
-      if (mainContent) {
-        mainContent.scrollTo({ top: 0, behavior: 'smooth' })
-      }
+      scrollToTop()
     }, 300)
   })
 })

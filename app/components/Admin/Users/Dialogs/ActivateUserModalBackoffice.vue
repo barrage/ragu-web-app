@@ -4,33 +4,28 @@ import type { User } from '~/types/users'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 
 const props = defineProps<{
-  selectedUser: User | null
-  isOpen: boolean
+  selectedUser: User | undefined | null
 }>()
 
 const emits = defineEmits<Emits>()
+const isOpen = defineModel<boolean>()
+const { $api } = useNuxtApp()
 const { t } = useI18n()
-const activateUserModalVisible = ref(props.isOpen)
-const usersStore = useUsersStore()
+
 const closeModal = () => {
-  activateUserModalVisible.value = false
-  emits('closeModal')
+  isOpen.value = false
 }
 
-watch(() => props.isOpen, (newVal) => {
-  activateUserModalVisible.value = newVal
-})
 interface Emits {
-  (event: 'closeModal'): void
   (event: 'userActivated'): void
 }
-const { execute: activateUser, error } = await useAsyncData(() => usersStore.PUT_ActivateUser(props.selectedUser!.id), { immediate: false })
-
+const { execute: executeActivateUser, error: activateUserError, status: activateUserStatus } = await useAsyncData(() => $api.user.PutActivateUser(props.selectedUser!.id), {
+  immediate: false,
+})
 const submitActivateUser = async () => {
   if (props.selectedUser?.id) {
-    await activateUser()
-    activateUserModalVisible.value = false
-    if (error.value) {
+    await executeActivateUser()
+    if (activateUserError.value) {
       ElNotification({
         title: t('users.activate_user.notifications.error_title'),
         message: t('users.activate_user.notifications.error_description'),
@@ -41,6 +36,8 @@ const submitActivateUser = async () => {
     }
     else {
       emits('userActivated')
+      closeModal()
+
       ElNotification({
         title: t('users.activate_user.notifications.success_title'),
         message: t('users.activate_user.notifications.success_description'),
@@ -51,12 +48,16 @@ const submitActivateUser = async () => {
     }
   }
 }
+
+const isActivateUserLoading = computed(() => {
+  return activateUserStatus.value === 'pending'
+})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="activateUserModalVisible"
+      v-model="isOpen"
       destroy-on-close
       align-center
       class="barrage-dialog--small"
@@ -88,6 +89,7 @@ const submitActivateUser = async () => {
         </el-button>
         <el-button
           type="danger"
+          :disabled="isActivateUserLoading"
           data-testid="confirm-activate-user-modal-button"
           @click="submitActivateUser()"
         >

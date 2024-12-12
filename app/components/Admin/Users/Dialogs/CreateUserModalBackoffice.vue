@@ -37,12 +37,16 @@ const closeModal = () => {
           </h5>
         </div>
       </template>
-
-      <CreateUserForm
-        :reset-form-trigger="resetFormTrigger"
-        @user-created="emits('userInvited')"
-        @user-creation-canceled="closeModal"
-      />
+      <div>
+        <p class="invite-user-modal-description">
+          {{ $t('users.invite_user_description') }}
+        </p>
+        <CreateUserForm
+          :reset-form-trigger="resetFormTrigger"
+          @user-created="emits('userInvited')"
+          @user-creation-canceled="closeModal"
+        />
+      </div>
     </ElDialog>
   </ClientOnly>
 </template>
@@ -67,5 +71,15 @@ const closeModal = () => {
       color: var(--color-primary-0);
     }
   }
+  & .invite-user-modal-description {
+    color: var(--color-primary-0);
+  }
+}
+
+.invite-user-modal-description {
+  color: var(--color-primary-800);
+  font-size: var(--font-size-fluid-2);
+  line-height: var(--font-size-fluid-4);
+  text-align: left;
 }
 </style>

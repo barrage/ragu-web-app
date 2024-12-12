@@ -5,12 +5,25 @@ defineProps<{
   user: User | null
 }>()
 
+const emits = defineEmits<{
+  (event: 'userDeleted'): void
+  (event: 'userEdited'): void
+  (event: 'userDeactivated'): void
+  (event: 'userActivated'): void
+}>()
+
 const { isWhatsAppActive } = storeToRefs(useWhatsAppStore())
 </script>
 
 <template>
   <div class="user-details-wrapper">
-    <UserDetailsHeroSection :user="user" />
+    <UserDetailsHeroSection
+      :user="user"
+      @user-deleted="(emits('userDeleted'))"
+      @user-edited="(emits('userEdited'))"
+      @user-activated="(emits('userDeactivated'))"
+      @user-deactivated="(emits('userActivated'))"
+    />
     <div class="horizontal-divider" />
     <UserDetailsInformationsSection :user="user" />
     <div class="horizontal-divider" />
