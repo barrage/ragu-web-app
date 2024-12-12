@@ -7,8 +7,7 @@ definePageMeta({
 })
 const { t } = useI18n()
 const route = useRoute()
-
-const usersStore = useUsersStore()
+const { $api } = useNuxtApp()
 
 useHead({
   title: computed(() => t('users.details')),
@@ -19,9 +18,13 @@ const selectedUserId = computed(() => {
   return userId || ''
 })
 
-const { error, status } = await useAsyncData(() => usersStore.GET_SingleUser(selectedUserId.value))
+const { execute: getUserDetails, error: getUserError, status: getUserStatus, data: userData } = await useAsyncData(() => $api.user.GetSingleUser(selectedUserId.value))
 
-errorHandler(error)
+errorHandler(getUserError)
+
+const isGetUserLoading = computed(() => {
+  return getUserStatus.value === 'pending'
+})
 </script>
 
 <template>
@@ -30,14 +33,20 @@ errorHandler(error)
       <ArrowLeftIcon size="20px" /> {{ t('users.title') }}
     </LlmLink>
 
-    <template v-if="status === 'pending'">
+    <template v-if="isGetUserLoading">
       <div class="user-details-loader">
         <MeetUpLoader />
       </div>
     </template>
-    <template v-else-if="usersStore.selectedUser?.id">
-      <UserDetails :user="usersStore.selectedUser" />
+    <template v-else-if="userData?.id">
+      <UserDetails
+        :user="userData"
+        @user-edited="(getUserDetails)"
+        @user-activated="(getUserDetails)"
+        @user-deactivated="(getUserDetails)"
+      />
     </template>
+
     <template v-else>
       <EmptyState
         :title="t('users.empty_title')"

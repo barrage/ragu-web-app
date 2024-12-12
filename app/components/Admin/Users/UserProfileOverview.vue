@@ -3,7 +3,7 @@ import ProfileIcon from '~/assets/icons/svg/account.svg'
 import type { User } from '~/types/users'
 
 const props = withDefaults(defineProps<{
-  user: User | null
+  user: User | undefined | null
   size?: 'small' | 'medium' | 'large'
 }>(), {
   size: 'small',

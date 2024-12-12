@@ -5,7 +5,7 @@ import CheckIcon from '~/assets/icons/svg/check.svg'
 
 const props = withDefaults(
   defineProps<{
-    selectedUser: User | null
+    selectedUser: User | undefined | null
     resetFormTrigger: boolean
     hasCancelOption: boolean
   }>(),
@@ -169,29 +169,6 @@ const isEditUserLoading = computed(() => {
     :scroll-into-view-options="scrollIntoViewOptions"
   >
     <div class="edit-user-form-items-wrapper">
-      <span class="role-title">{{ t('users.form.role') }}</span>
-      <div class="new-user-role-wrapper">
-        <template v-for="role in userRoles" :key="role.value">
-          <el-card
-            class="is-accent select-role-card"
-            :class="{
-              selected: role.value === editUserForm.role,
-            }"
-            @click="selectUserRole(role.value)"
-          >
-            <div class="select-role-card-body">
-              <div class="title-wrapper">
-                <p class="role-label">
-                  {{ role.label }}
-                </p>
-                <CheckIcon v-if="role.value === editUserForm.role" size="22px" />
-              </div>
-
-              <span class="role-description">  {{ role.description }}</span>
-            </div>
-          </el-card>
-        </template>
-      </div>
       <div class="form-items-inline">
         <ElFormItem
           :label="t('users.form.first_name')"
@@ -236,7 +213,29 @@ const isEditUserLoading = computed(() => {
           />
         </ElFormItem>
       </div>
+      <span class="role-title">{{ t('users.form.role') }}</span>
+      <div class="new-user-role-wrapper">
+        <template v-for="role in userRoles" :key="role.value">
+          <el-card
+            class="is-accent select-role-card"
+            :class="{
+              selected: role.value === editUserForm.role,
+            }"
+            @click="selectUserRole(role.value)"
+          >
+            <div class="select-role-card-body">
+              <div class="title-wrapper">
+                <p class="role-label">
+                  {{ role.label }}
+                </p>
+                <CheckIcon v-if="role.value === editUserForm.role" size="22px" />
+              </div>
 
+              <span class="role-description">  {{ role.description }}</span>
+            </div>
+          </el-card>
+        </template>
+      </div>
       <ElFormItem>
         <div class="form-actions">
           <div class="form-actions-left">
@@ -332,7 +331,7 @@ const isEditUserLoading = computed(() => {
 .edit-user-form-items-wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-fluid-xs);
+
   & .form-items-inline {
     display: flex;
     gap: var(--spacing-fluid-xs);

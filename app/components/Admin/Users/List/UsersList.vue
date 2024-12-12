@@ -33,7 +33,7 @@ const openEditUserModal = (user: User) => {
   editUserModalVisible.value = true
 }
 
-const userEdited = () => {
+const handleUserEdited = () => {
   emits('userEdited')
 }
 
@@ -46,11 +46,7 @@ const openDeleteUserModal = (user: User) => {
   deleteUserModalVisible.value = true
 }
 
-const closeDeleteModal = () => {
-  deleteUserModalVisible.value = false
-}
-
-const userDeleted = () => {
+const handleUserDeleted = () => {
   emits('userDeleted')
 }
 
@@ -63,10 +59,7 @@ const openActivateUserModal = (user: User) => {
   activateUserModalVisible.value = true
 }
 
-const closeActivateModal = () => {
-  activateUserModalVisible.value = false
-}
-const userActivated = () => {
+const handleUserActivated = () => {
   emits('userActivated')
 }
 /* Dectivate User */
@@ -78,11 +71,7 @@ const openDeactivateUserModal = (user: User) => {
   deactivateUserModalVisible.value = true
 }
 
-const closeDeactivateModal = () => {
-  deactivateUserModalVisible.value = false
-}
-
-const userDeactivated = () => {
+const handleUserDeactivated = () => {
   emits('userDeactivated')
 }
 
@@ -115,30 +104,27 @@ watch(
     </div>
 
     <DeleteUserModalBackoffice
-      :is-open="deleteUserModalVisible"
+      v-model="deleteUserModalVisible"
       :selected-user="selectedUserDelete"
-      @close-modal="closeDeleteModal"
-      @user-deleted="userDeleted"
+      @user-deleted="handleUserDeleted"
     />
 
     <EditUserModalBackoffice
       v-model="editUserModalVisible"
       :selected-user="selectedUserEdit"
-      @user-edited="userEdited"
+      @user-edited="handleUserEdited"
     />
 
     <ActivateUserModalBackoffice
-      :is-open="activateUserModalVisible"
+      v-model="activateUserModalVisible"
       :selected-user="selectedUserActivate"
-      @close-modal="closeActivateModal"
-      @user-activated="userActivated"
+      @user-activated="handleUserActivated"
     />
 
     <DeactivateUserModalBackoffice
-      :is-open="deactivateUserModalVisible"
+      v-model="deactivateUserModalVisible"
       :selected-user="selectedUserDeactivate"
-      @close-modal="closeDeactivateModal"
-      @user-deactivated="userDeactivated"
+      @user-deactivated="handleUserDeactivated"
     />
   </div>
 </template>

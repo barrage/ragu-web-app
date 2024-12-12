@@ -11,8 +11,9 @@ const { t } = useI18n()
 useHead({
   title: computed(() => t('dashboard.title')),
 })
+
+const { $api } = useNuxtApp()
 const statisticStore = useStatisticStore()
-const userStore = useUsersStore()
 const collectionsStore = useCollectionsStore()
 const documentsStore = useDocumentsStore()
 const currentPeriod = ref('WEEK')
@@ -51,12 +52,10 @@ const mostUsedAgentData = computed(() => {
 })
 
 // Recent users
-
-const { data: recentUsers, error: recentUsersError, status } = useAsyncData('recentUsers', () =>
-  userStore.GET_AllUsers(1, 5, 'createdAt', 'desc'))
+const { error: recentUsersError, data: recentUsers, status: recentUsersStatus } = await useAsyncData(() => $api.user.GetAllUsers(1, 5, 'createdAt', 'desc'))
 
 const mostRecentUser = computed(() => recentUsers.value?.items || [])
-const isLoading = computed(() => status.value === 'pending')
+const isLoading = computed(() => recentUsersStatus.value === 'pending')
 const hasError = computed(() => !!dashboardCountError.value || !!recentUsersError.value)
 
 // Collections
