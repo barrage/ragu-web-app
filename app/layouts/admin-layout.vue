@@ -1,6 +1,17 @@
 <script lang="ts" setup>
 // CONSTANTS
 const navigationStore = useNavigationStore()
+const { width } = useWindowSize()
+
+// WATCHERS
+watch(width, (newWidth) => {
+  if (newWidth <= 575) {
+    navigationStore.isAdminSidebarCollapsed = true
+  }
+  else {
+    navigationStore.isAdminSidebarCollapsed = false
+  }
+}, { immediate: true })
 </script>
 
 <template>

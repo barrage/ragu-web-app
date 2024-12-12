@@ -11,7 +11,10 @@ export interface AgentCollection {
   agentId: string
   instruction: string
   collection: string
-  amount: number
+  amount: number | null
+  embeddingProvider: string
+  embeddingModel: string
+  vectorProvider: string
   createdAt: Date | string
   updatedAt: Date | string
 }

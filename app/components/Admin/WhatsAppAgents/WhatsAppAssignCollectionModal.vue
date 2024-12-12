@@ -31,7 +31,7 @@ const scrollIntoViewOptions = {
 
 const assignCollectionFormRef = ref<FormInstance>()
 const assignCollectionForm = reactive({
-  provider: props.singleAgent?.agent?.vectorProvider,
+  provider: 'weaviate',
   collectionName: '',
   amount: 1,
   instruction: '',
@@ -44,7 +44,7 @@ const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
 
 // API CALLS
 
-const { execute: getCollections, data: collections } = await useAsyncData(() => $api.collection.GetAllCollections(0, 0), { immediate: false })
+const { execute: getCollections, data: collections } = await useAsyncData(() => $api.collection.GetAllCollections(), { immediate: false })
 const { execute: putCollection, error: putCollectionError } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, getPayload()), { immediate: false })
 
 // FUNCTIONS
@@ -53,23 +53,23 @@ onMounted(() => setCollections())
 
 async function setCollections() {
   await getCollections()
-  const existingCollectionNames = new Set([...(props.singleAgent?.collections || [])].map(collection => collection.name))
+  const existingCollectionNames = new Set([...(props.singleAgent?.collections || [])].map(collection => collection.collection))
   filteredCollections.value = collections.value?.items.filter((collection) => {
     return (
-      collection.provider === props.singleAgent?.agent?.vectorProvider
-      && !existingCollectionNames.has(collection.name)
+
+      !existingCollectionNames.has(collection.name)
     )
   })
 }
 
 function getPayload() {
   return {
-    provider: assignCollectionForm.provider,
     add: [
       {
         name: assignCollectionForm.collectionName,
         amount: assignCollectionForm.amount,
         instruction: assignCollectionForm.instruction,
+        provider: assignCollectionForm.provider,
       },
     ],
   }

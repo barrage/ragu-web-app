@@ -7,6 +7,7 @@ export interface CollectionResponse {
 export interface Collection {
   id: string
   name: string
+  collection?: string
   model: string
   embedder: string
   provider: string

@@ -3,7 +3,7 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import DeletePersonIcon from '~/assets/icons/svg/delete-person.svg'
 import type { SingleWhatsAppAgentResponse } from '~/types/whatsapp'
 
-const props = defineProps<{
+defineProps<{
   singleAgent: SingleWhatsAppAgentResponse | null | undefined
 }>()
 const emits = defineEmits<{
@@ -16,21 +16,21 @@ const isOpen = defineModel<boolean>()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
-const deleteCollections = ref([])
+const deleteCollections = ref<string[]>([])
 const agentId = route.params.agentId as string
+
+const payload = computed(() => ({
+  remove: deleteCollections.value.map(collectionName => ({
+    name: collectionName,
+    provider: 'weaviate',
+  })),
+}))
 
 // API CALLS
 
-const { execute: deleteCollection, error: deleteCollectionError } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, getPayload()), { immediate: false })
+const { execute: deleteCollection, error: deleteCollectionError } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
 
 // FUNCTIONS
-
-function getPayload() {
-  return {
-    provider: props.singleAgent?.agent?.vectorProvider,
-    remove: deleteCollections.value,
-  }
-}
 
 async function submitDeleteCollection() {
   await deleteCollection()
@@ -86,8 +86,8 @@ async function submitDeleteCollection() {
           <ElOption
             v-for="collection in singleAgent?.collections"
             :key="collection.id"
-            :label="collection.name"
-            :value="collection.name"
+            :label="collection.collection"
+            :value="collection.collection"
           />
         </ElSelect>
       </div>

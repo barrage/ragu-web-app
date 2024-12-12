@@ -193,6 +193,10 @@ aside {
   }
 }
 
+.horizontal-divider {
+  background-color: var(--color-primary-300);
+}
+
 .toggle-btn {
   width: max-content;
   height: fit-content;
@@ -324,7 +328,17 @@ aside {
   }
 }
 
+.feature-group-title {
+  color: var(--color-primary-800);
+  font-weight: 700;
+  font-size: var(--font-size-desktop-1);
+  padding: 12px 0px 8px 0px;
+}
+
 .dark {
+  & .feature-group-title {
+    color: var(--color-primary-200);
+  }
   aside {
     background-color: var(--color-primary-800);
     border: 1px solid var(--color-primary-700);
@@ -383,18 +397,6 @@ aside {
         var(--color-primary-800)
       );
     }
-  }
-}
-
-.feature-group-title {
-  color: var(--color-primary-800);
-  font-weight: 700;
-  font-size: var(--font-size-desktop-1);
-  padding: 12px 0px 8px 0px;
-}
-.dark {
-  & .feature-group-title {
-    color: var(--color-primary-200);
   }
 }
 </style>
