@@ -16,7 +16,7 @@ const sortOptions = computed(() => [
 
 // FUNCTIONS
 
-function updateSort(sortingValues: SortingValues) {
+const updateSort = (sortingValues: SortingValues) => {
   emits('sortChange', sortingValues)
 }
 </script>

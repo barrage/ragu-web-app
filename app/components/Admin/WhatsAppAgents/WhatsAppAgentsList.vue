@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import WhatsAppAgentIcon from '~/assets/icons/svg/whatsapp-chat-agent.svg'
-import CheckIcon from '~/assets/icons/svg/check.svg'
-import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import type { WhatsAppAgent } from '~/types/whatsapp'
 import type { Pagination } from '~/types/pagination'
+import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
+import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
+
+// TYPES
 
 type DialogType = 'delete' | 'setAsActive'
 
@@ -34,24 +35,16 @@ const dialog = ref<{
   agent: undefined,
 })
 
-// WATCHERS
-
-watch(
-  () => props.agents,
-  () => nextTick(applyCardClasses()),
-  { immediate: true },
-)
-
 // API
 
-const { execute: setAsActive, error: setAsActiveError, status: setAsActiveStatus } = await useAsyncData(() => $api.whatsApp.BoSetActiveAgent(dialog.value.agent.id), { immediate: false })
-const { execute: deleteAgent, error: deleteAgentError, status: deleteAgentStatus } = await useAsyncData(() => $api.whatsApp.BoDeleteWhatsAppAgent(dialog.value.agent.id), { immediate: false })
+const { execute: setAsActive, error: setAsActiveError, status: setAsActiveStatus } = await useAsyncData(() => $api.whatsApp.BoSetActiveAgent(dialog.value.agent!.id), { immediate: false })
+const { execute: deleteAgent, error: deleteAgentError, status: deleteAgentStatus } = await useAsyncData(() => $api.whatsApp.BoDeleteWhatsAppAgent(dialog.value.agent!.id), { immediate: false })
 errorHandler(setAsActiveError)
 errorHandler(deleteAgentError)
 
 // FUNCTIONS
 
-function applyCardClasses() {
+const applyCardClasses = () => {
   cardClasses.value = []
   props.agents?.forEach((_, index) => {
     setTimeout(() => {
@@ -60,38 +53,20 @@ function applyCardClasses() {
   })
 }
 
-function changePage(page: number) {
+const changePage = (page: number) => {
   emits('pageChange', page)
 }
 
-function openDialog(type: DialogType, agent: WhatsAppAgent) {
+const openDialog = (type: DialogType, agent: WhatsAppAgent) => {
   dialog.value = { isOpened: true, type, agent }
 }
 
-function closeDialog() {
+const closeDialog = () => {
   dialog.value.isOpened = false
   setTimeout(() => dialog.value = { isOpened: false, type: undefined, agent: undefined }, 200)
 }
 
-async function handleSetAsActive() {
-  await setAsActive()
-  if (!setAsActiveError.value) {
-    showSuccessNotification('setAsActive')
-    emits('refreshAgents')
-    closeDialog()
-  }
-}
-
-async function handleDeleteAgent() {
-  await deleteAgent()
-  if (!setAsActiveError.value) {
-    showSuccessNotification('delete')
-    emits('refreshAgents')
-    closeDialog()
-  }
-}
-
-function showSuccessNotification(type: DialogType) {
+const showSuccessNotification = (type: DialogType) => {
   ElNotification({
     title: type === 'delete' ? t('whatsapp_agents.delete.success_notification_title') : t('whatsapp_agents.set_as_active.success_notification_title'),
     message: type === 'delete' ? t('whatsapp_agents.delete.success_notification_message') : t('whatsapp_agents.set_as_active.success_notification_message'),
@@ -100,6 +75,34 @@ function showSuccessNotification(type: DialogType) {
     duration: 2500,
   })
 }
+
+const handleSetAsActive = async () => {
+  await setAsActive()
+  if (!setAsActiveError.value) {
+    showSuccessNotification('setAsActive')
+    emits('refreshAgents')
+    closeDialog()
+  }
+}
+
+const handleDeleteAgent = async () => {
+  await deleteAgent()
+  if (!setAsActiveError.value) {
+    showSuccessNotification('delete')
+    emits('refreshAgents')
+    closeDialog()
+  }
+}
+
+// WATCHERS
+
+watch(
+  () => props.agents,
+  () => {
+    nextTick(applyCardClasses)
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -136,18 +139,19 @@ function showSuccessNotification(type: DialogType) {
     @close="closeDialog"
   >
     <template #header>
-      <div class="dialog-title-wrapper">
-        <DeleteIcon v-if="dialog.type === 'delete'" size="42px" />
-        <CheckIcon v-else size="42px" />
-        <h5> {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.dialog_title') : $t('whatsapp_agents.set_as_active.dialog_title') }}</h5>
+      <div class="activate-agent-modal-header">
+        <PersonLockIcon v-if="dialog.type === 'delete'" size="42px" />
+        <PersonPasskeyIcon v-else size="42px" />
+        <h5>{{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.dialog_title') : $t('whatsapp_agents.set_as_active.dialog_title') }}</h5>
       </div>
     </template>
-    <div>
-      <p> {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.dialog_description') : $t('whatsapp_agents.set_as_active.dialog_description') }}</p>
-      <div class="dialog-agent-name-wrapper">
-        <WhatsAppAgentIcon size="24px" />
-        <p>{{ dialog.agent?.name }}</p>
-      </div>
+    <div class="activate-agent-modal-body">
+      <p>
+        {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.dialog_description') : $t('agents.activate_agent.description') }}
+      </p>
+      <el-card class="is-primary">
+        <WhatsAppAgentProfileOverview :agent="dialog.agent" />
+      </el-card>
     </div>
     <template #footer>
       <ElButton @click="dialog.isOpened = false">
@@ -158,7 +162,7 @@ function showSuccessNotification(type: DialogType) {
         :loading="setAsActiveStatus === 'pending' || deleteAgentStatus === 'pending' "
         @click="dialog.type === 'delete' ? handleDeleteAgent() : handleSetAsActive()"
       >
-        {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.label') : $t('whatsapp_agents.set_as_active.label') }}
+        {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.label') : $t('agents.activate_agent.title') }}
       </ElButton>
     </template>
   </ElDialog>
@@ -187,17 +191,15 @@ function showSuccessNotification(type: DialogType) {
   transform: translateY(0);
 }
 
-.dialog-title-wrapper {
+.activate-agent-modal-header {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
-
-.dialog-agent-name-wrapper {
+.activate-agent-modal-body {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 </style>

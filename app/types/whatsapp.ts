@@ -1,5 +1,5 @@
+import type { AgentCollection } from './agent'
 import type { User } from '~/types/users.js'
-import type { Collection } from '~/types/collection'
 
 export interface WhatsAppNumber {
   id: string
@@ -22,9 +22,11 @@ export interface WhatsAppAgent {
   active: boolean
   embeddingProvider: string
   embeddingModel: string
-  titleInstruction: null
-  languageInstruction: string | null
-  summaryInstruction: string | null
+  agentInstructions: {
+    promptInstruction: string | null
+    languageInstruction: string | null
+    summaryInstruction: string | null
+  }
   createdAt: string | Date
   updatedAt: string | Date
 }
@@ -36,7 +38,7 @@ export interface AllWhatsAppAgentsResponse {
 
 export interface SingleWhatsAppAgentResponse {
   agent: WhatsAppAgent
-  collections: Collection[]
+  collections: AgentCollection[]
 }
 
 export interface PostWhatsAppAgentBody {
@@ -52,6 +54,7 @@ export interface PostWhatsAppAgentBody {
     instructions: {
       languageInstruction: string | null
       summaryInstruction: string | null
+      promptInstruction: string | null
     }
   }
 }
@@ -59,16 +62,17 @@ export interface PostWhatsAppAgentBody {
 export interface BoUpdateAgentRequest {
   active?: boolean
   description: string
-  language: string
   name: string
+  language: string
   configuration: {
     context: string
     llmProvider: string
     model: string
     temperature: number
     instructions: {
-      language: string
-      summaryInstructions: string
+      languageInstruction: string
+      summaryInstruction: string
+      promptInstruction: string
     }
   }
 }

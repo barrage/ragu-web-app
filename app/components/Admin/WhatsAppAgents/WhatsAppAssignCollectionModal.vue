@@ -5,30 +5,35 @@ import AddIcon from '~/assets/icons/svg/add.svg'
 import MinusIcon from '~/assets/icons/svg/minus.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 import type { AssignCollectionPayload } from '~/types/collection'
-import type { SingleWhatsAppAgentResponse } from '~/types/whatsapp'
+import type { AgentCollection } from '~/types/agent'
+
+// PROPS & EMITS
 
 const props = defineProps<{
-  singleAgent: SingleWhatsAppAgentResponse | null | undefined
+  isOpen: boolean
+  agentCollections: AgentCollection[] | undefined
 }>()
-const emits = defineEmits<{
+const emits = defineEmits<Emits>()
+
+interface Emits {
+  (event: 'closeModal'): void
   (event: 'refreshAgent'): void
-}>()
-const isOpen = defineModel<boolean>()
+}
 
 // CONSTANTS & STATES
 
+const collectionStore = useCollectionsStore()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
-const collectionStore = useCollectionsStore()
 const agentId = route.params.agentId as string
+
 const scrollIntoViewOptions = {
   behavior: 'smooth',
   block: 'center',
 }
 
-// FORM
-
+const assignCollectionModalVisible = ref(props.isOpen)
 const assignCollectionFormRef = ref<FormInstance>()
 const assignCollectionForm = reactive({
   provider: 'weaviate',
@@ -36,21 +41,24 @@ const assignCollectionForm = reactive({
   amount: 1,
   instruction: '',
 })
-const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
-  collectionName: [{ required: true, message: t('collections.assign_collection.rules.collection_name'), trigger: 'change' }],
-  instruction: [{ required: true, message: t('collections.assign_collection.rules.instruction'), trigger: 'blur' }],
-  amount: [{ required: true, message: t('collections.assign_collection.rules.amount'), trigger: 'blur' }],
+
+// COMPUTEDS
+
+const payload = computed(() => ({
+  add: [
+    {
+      name: assignCollectionForm.collectionName,
+      amount: assignCollectionForm.amount,
+      instruction: assignCollectionForm.instruction,
+      provider: assignCollectionForm.provider,
+    },
+  ],
 }))
 
-// API CALLS
-
-await useAsyncData(() => $api.collection.GetAllCollections())
-const { execute: putCollection, error: putCollectionError } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, getPayload()), { immediate: false })
-
-// FUNCTIONS
-
 const filteredCollections = computed(() => {
-  const existingCollectionNames = new Set([...(props.singleAgent?.collections || [])].map(collection => collection.collection))
+  const existingCollectionNames = new Set(
+    (props.agentCollections ?? []).map(collection => collection.collection),
+  )
 
   return collectionStore.collections.filter((collection) => {
     return (
@@ -59,27 +67,36 @@ const filteredCollections = computed(() => {
   })
 })
 
-function getPayload() {
-  return {
-    add: [
-      {
-        name: assignCollectionForm.collectionName,
-        amount: assignCollectionForm.amount,
-        instruction: assignCollectionForm.instruction,
-        provider: assignCollectionForm.provider,
-      },
-    ],
+const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
+  collectionName: [{ required: true, message: t('collections.assign_collection.rules.collection_name'), trigger: 'change' }],
+  instruction: [{ required: true, message: t('collections.assign_collection.rules.instruction'), trigger: 'blur' }],
+  amount: [{ required: true, message: t('collections.assign_collection.rules.amount'), trigger: 'blur' }],
+}))
+
+// WATCHERS
+
+watch(() => props.isOpen, (newVal) => {
+  assignCollectionModalVisible.value = newVal
+})
+
+// API CALLS
+
+await useAsyncData(() => collectionStore.GET_AllCollections())
+
+const { execute: putCollection, error } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, payload.value), { immediate: false })
+
+// FUNCTIONS
+
+const submitAssignCollectionForm = async () => {
+  if (!assignCollectionFormRef.value) {
+    return
   }
-}
 
-async function submitAssignCollectionForm(formEl: FormInstance | undefined) {
-  if (!formEl) { return }
-
-  await formEl.validate(async (valid) => {
+  await assignCollectionFormRef.value.validate(async (valid) => {
     if (valid) {
       await putCollection()
-      isOpen.value = false
-      if (putCollectionError.value) {
+      assignCollectionModalVisible.value = false
+      if (error.value) {
         ElNotification({
           title: t('collections.assign_collection.notification.error_title'),
           message: t('collections.assign_collection.notification.assign_error_title'),
@@ -102,27 +119,28 @@ async function submitAssignCollectionForm(formEl: FormInstance | undefined) {
   })
 }
 
-function resetForm(formEl: FormInstance | undefined) {
+const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) { return }
   formEl.resetFields()
 }
-
-function closeModal(formEl: FormInstance | undefined) {
-  isOpen.value = false
-  resetForm(formEl)
+const closeModal = () => {
+  assignCollectionModalVisible.value = false
+  resetForm(assignCollectionFormRef.value)
+  emits('closeModal')
 }
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="isOpen"
+      v-model="assignCollectionModalVisible"
       :destroy-on-close="true"
       align-center
-      class="barrage-dialog--small"
+      class="barrage-dialog--large"
       :close-icon="CloseCircleIcon"
       :close-on-click-modal="false"
-      @close="closeModal(assignCollectionFormRef)"
+      :close-on-press-escape="false"
+      @close="closeModal"
     >
       <template #header>
         <div class="edit-user-modal-header">
@@ -138,6 +156,7 @@ function closeModal(formEl: FormInstance | undefined) {
         :scroll-to-error="true"
         :scroll-into-view-options="scrollIntoViewOptions"
       >
+        <!-- Collection Name Dropdown -->
         <ElFormItem :label="t('collections.assign_collection.labels.name')" prop="collectionName">
           <ElSelect
             v-model="assignCollectionForm.collectionName"
@@ -149,13 +168,25 @@ function closeModal(formEl: FormInstance | undefined) {
               :label="collection.name"
               :value="collection.name"
             />
+
+            <template #empty>
+              <div>
+                {{ t('collections.placeholders.empty_collection') || 'No collections available' }}
+              </div>
+            </template>
           </ElSelect>
         </ElFormItem>
-
+        <el-divider class="is-weak" />
+        <!-- Instruction (Text Input) -->
         <ElFormItem :label="t('collections.assign_collection.labels.instructions')" prop="instruction">
-          <ElInput v-model="assignCollectionForm.instruction" :placeholder="t('collections.assign_collection.placeholder.instruction')" />
+          <ElInput
+            v-model="assignCollectionForm.instruction"
+            type="textarea"
+            :placeholder="t('collections.assign_collection.placeholder.instruction')"
+          />
         </ElFormItem>
-
+        <el-divider class="is-weak" />
+        <!-- Amount (Number Input) -->
         <ElFormItem :label="t('collections.assign_collection.labels.amount')" prop="amount">
           <ElInputNumber
             v-model="assignCollectionForm.amount"
@@ -170,13 +201,32 @@ function closeModal(formEl: FormInstance | undefined) {
             </template>
           </ElInputNumber>
         </ElFormItem>
-
+        <div class="response-depth-info-wrapper">
+          <LabelDescriptionItem
+            size="small"
+            :label="t('collections.assign_collection.descriptions.response_depth.low_depth.title')"
+            :description="t('collections.assign_collection.descriptions.response_depth.low_depth.description')"
+          />
+          <LabelDescriptionItem
+            size="small"
+            :label="t('collections.assign_collection.descriptions.response_depth.moderate_depth.title')"
+            :description="t('collections.assign_collection.descriptions.response_depth.moderate_depth.description')"
+          />
+          <LabelDescriptionItem
+            size="small"
+            :label="t('collections.assign_collection.descriptions.response_depth.high_depth.title')"
+            :description="t('collections.assign_collection.descriptions.response_depth.high_depth.description')"
+          />
+          <span class="response-depth-note"> {{ t('collections.assign_collection.descriptions.response_depth.note') }}</span>
+        </div>
+        <el-divider class="is-weak" />
+        <!-- Form Actions -->
         <ElFormItem>
           <div class="form-actions">
-            <ElButton @click="closeModal(assignCollectionFormRef)">
+            <ElButton @click="closeModal">
               {{ t('collections.buttons.cancel') }}
             </ElButton>
-            <ElButton type="primary" @click="submitAssignCollectionForm(assignCollectionFormRef)">
+            <ElButton type="primary" @click="submitAssignCollectionForm">
               {{ t('collections.assign_collection.title') }}
             </ElButton>
           </div>
@@ -199,5 +249,18 @@ function closeModal(formEl: FormInstance | undefined) {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+.response-depth-info-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  & .response-depth-note {
+    font-size: var(--font-size-fluid-2);
+  }
+}
+
+.barrage-form-item {
+  padding-block: 32px;
 }
 </style>

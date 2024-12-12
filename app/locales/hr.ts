@@ -314,7 +314,7 @@ export default {
       success_notification_title: 'WhatsApp agent je postavljen kao aktivan',
       success_notification_message: 'Aktivni WhatsApp agent je uspješno promijenjen.',
       already_active_message: 'Ovaj agent je već aktivan',
-      dialog_title: 'Postavi WhatsApp agenta kao aktivnog',
+      dialog_title: 'Aktiviraj WhatsApp agenta',
       dialog_description: 'Jeste li sigurni da želite postaviti ovog WhatsApp agenta kao aktivnog?',
     },
     delete: {
@@ -322,7 +322,7 @@ export default {
       success_notification_title: 'WhatsApp agent je izbrisan',
       success_notification_message: 'WhatsApp agent je uspješno izbrisan.',
       dialog_title: 'Izbriši WhatsApp agenta',
-      dialog_description: 'Jeste li sigurni da želite izbrisati ovog WhatsApp agenta? Ova akcija se ne može poništiti.',
+      dialog_description: 'Jeste li sigurni da želite izbrisati ovog WhatsApp agenta?',
       active_agent_tooltip: 'Aktivni agent ne može biti izbrisan',
     },
     close: 'Zatvori',
@@ -842,7 +842,7 @@ export default {
       status: 'Status Agenta',
       languageInstruction: 'Uputa za Jezik',
       summaryInstruction: 'Uputa za Sažetak',
-      titleInstruction: 'Uputa za Naslov',
+      promptInstruction: 'Uputa za Prompt',
     },
     buttons: {
       create: 'Stvori Agenta',
@@ -865,7 +865,7 @@ export default {
       language: 'Unesite Jezik Agenta',
       languageInstruction: 'Unesite Uputu za Jezik Agenta',
       summaryInstruction: 'Unesite Uputu za Sažetak Agenta',
-      titleInstruction: 'Unesite Uputu za Naslov Agenta',
+      promptInstruction: 'Unesite Uputu za Prompt Agenta',
       embeddingModel: 'Odaberite model Embeddinga',
     },
 

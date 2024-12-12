@@ -33,6 +33,7 @@ const form = reactive<PostWhatsAppAgentBody>({
     instructions: {
       languageInstruction: '',
       summaryInstruction: '',
+      promptInstruction: '',
     },
   },
 })
@@ -84,7 +85,7 @@ watch(() => form.configuration.llmProvider, async (newProvider) => {
 
 // FUNCTIONS
 
-async function createAgent(formEl: FormInstance | undefined) {
+const createAgent = async (formEl: FormInstance | undefined) => {
   if (!formEl) { return }
 
   await formEl.validate(async (valid) => {
@@ -146,23 +147,46 @@ async function createAgent(formEl: FormInstance | undefined) {
         <ElFormItem :label="$t('agents.labels.name')" prop="name">
           <ElInput v-model="form.name" :placeholder="$t('agents.placeholder.agentName')" />
         </ElFormItem>
-
-        <ElFormItem :label="$t('agents.labels.description')" prop="description">
-          <ElInput v-model="form.description" :placeholder="$t('agents.placeholder.description')" />
-        </ElFormItem>
-
         <ElFormItem :label="$t('agents.labels.language')" prop="language">
           <ElInput v-model="form.language" :placeholder="$t('agents.placeholder.language')" />
         </ElFormItem>
-
         <ElFormItem :label="$t('agents.labels.languageInstruction')" prop="configuration.instructions.languageInstruction">
           <ElInput v-model="form.configuration.instructions.languageInstruction" :placeholder="$t('agents.placeholder.languageInstruction')" />
         </ElFormItem>
-
-        <ElFormItem :label="$t('agents.labels.summaryInstruction')" prop="configuration.instructions.summaryInstruction">
-          <ElInput v-model="form.configuration.instructions.summaryInstruction" :placeholder="$t('agents.placeholder.summaryInstruction')" />
+        <ElFormItem
+          :label="$t('agents.labels.description')"
+          prop="description"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.description"
+            :placeholder="$t('agents.placeholder.description')"
+            type="textarea"
+          />
+        </ElFormItem>
+        <ElFormItem
+          :label="t('agents.labels.promptInstruction')"
+          prop="configuration.instructions.promptInstruction"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.configuration.instructions.promptInstruction"
+            :placeholder="t('agents.placeholder.promptInstruction')"
+            type="textarea"
+          />
         </ElFormItem>
 
+        <ElFormItem
+          :label="$t('agents.labels.summaryInstruction')"
+          prop="configuration.instructions.summaryInstruction"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.configuration.instructions.summaryInstruction"
+            :placeholder="$t('agents.placeholder.summaryInstruction')"
+            type="textarea"
+          />
+        </ElFormItem>
         <ElFormItem
           :label="$t('agents.labels.context')"
           prop="configuration.context"

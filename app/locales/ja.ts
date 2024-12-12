@@ -309,7 +309,7 @@ export default {
       success_notification_title: 'WhatsAppエージェントがアクティブに設定されました',
       success_notification_message: 'アクティブなWhatsAppエージェントが正常に変更されました。',
       already_active_message: 'このエージェントはすでにアクティブです',
-      dialog_title: 'WhatsAppエージェントをアクティブとして設定',
+      dialog_title: 'WhatsAppエージェントをアクティブに設定',
       dialog_description: 'このWhatsAppエージェントをアクティブとして設定してもよろしいですか？',
     },
     delete: {
@@ -317,7 +317,7 @@ export default {
       success_notification_title: 'WhatsAppエージェントが削除されました',
       success_notification_message: 'WhatsAppエージェントが正常に削除されました。',
       dialog_title: 'WhatsAppエージェントを削除',
-      dialog_description: 'このWhatsAppエージェントを削除してもよろしいですか？この操作は元に戻せません。',
+      dialog_description: 'このWhatsAppエージェントを削除してもよろしいですか？',
       active_agent_tooltip: 'アクティブなエージェントは削除できません',
     },
     close: '閉じる',
@@ -669,7 +669,7 @@ export default {
       status: 'エージェントステータス',
       languageInstruction: '言語の指示',
       summaryInstruction: '概要の指示',
-      titleInstruction: 'タイトルの指示',
+      promptInstruction: 'プロンプトの指示',
     },
     buttons: {
       create: 'エージェントを作成',
@@ -692,7 +692,7 @@ export default {
       language: 'エージェントの言語を入力',
       languageInstruction: 'エージェントの言語指示を入力',
       summaryInstruction: 'エージェントの概要指示を入力',
-      titleInstruction: 'エージェントのタイトル指示を入力',
+      promptInstruction: 'エージェントのプロンプト指示を入力',
       embeddingModel: '埋め込みモデルを選択',
     },
 

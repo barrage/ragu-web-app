@@ -102,7 +102,6 @@ const updatedAtRelativeDate = agentCollectionData.value.updated_at
     }
 
     & .agent-collection-instruction {
-      grid-column: 1/-1;
       align-items: center;
     }
 
@@ -111,6 +110,10 @@ const updatedAtRelativeDate = agentCollectionData.value.updated_at
 
       @include viewport-xs {
         grid-column: span 1;
+
+        &:last-of-type {
+          grid-column: 1/-1;
+        }
       }
     }
   }

@@ -3,22 +3,23 @@ import type { WhatsAppAgent } from '~/types/whatsapp'
 import { StatusType } from '~/types/statusTypes'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
-import CheckIcon from '~/assets/icons/svg/check.svg'
+import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import WhatsAppAgentIcon from '~/assets/icons/svg/whatsapp-chat-agent.svg'
+import InfoIcon from '~/assets/icons/svg/info.svg'
+
+// PROPS & EMITS
+
+const props = defineProps<{
+  singleWhatsAppAgent: WhatsAppAgent
+}>()
+const emits = defineEmits<Emits>()
 
 interface Emits {
   (event: 'refreshAgents'): void
   (event: 'openDeleteDialog', agent: WhatsAppAgent): void
   (event: 'openSetAsActiveDialog', agent: WhatsAppAgent): void
 }
-
-// PROPS & EMITS
-
-const props = defineProps<{
-  singleWhatsAppAgent?: WhatsAppAgent
-}>()
-const emits = defineEmits<Emits>()
 
 // CONSTANTS & STATES
 
@@ -42,7 +43,7 @@ const agentData = computed(() => {
 
 // FUNCTIONS
 
-function editClick() {
+const editClick = () => {
   whatsAppStore.setEditMode(true)
 }
 </script>
@@ -113,27 +114,31 @@ function editClick() {
         </LlmTooltip>
         <LlmTooltip
           :content="agentData.statusType === 'danger' ? $t('whatsapp_agents.set_as_active.label') : $t('whatsapp_agents.set_as_active.already_active_message')"
-          :placement="agentData.statusType === 'danger' ? 'top' : 'left'"
         >
           <ElButton
-            type="success"
+            v-if="agentData.statusType === 'danger'"
             plain
-            :disabled="agentData.statusType === 'success'"
-            @click="emits('openSetAsActiveDialog', agentData)"
+            @click="emits('openSetAsActiveDialog', singleWhatsAppAgent)"
           >
-            <CheckIcon class="set-as-active-icon" />
+            <PersonPasskeyIcon size="20px" />
+          </ElButton>
+          <ElButton
+            v-else
+
+            :disabled="agentData.statusType === 'success'"
+          >
+            <InfoIcon size="20px" />
           </ElButton>
         </LlmTooltip>
         <LlmTooltip
           :content="agentData.status === 'Active' ? $t('whatsapp_agents.delete.active_agent_tooltip') : $t('whatsapp_agents.delete.label')"
-          :placement="agentData.status === 'Active' ? 'left' : 'top'"
         >
           <ElButton
             plain
             type="danger"
             class="delete-action"
             :disabled="agentData.status === 'Active'"
-            @click="emits('openDeleteDialog', agentData)"
+            @click="emits('openDeleteDialog', singleWhatsAppAgent)"
           >
             <DeleteIcon size="20px" />
           </ElButton>

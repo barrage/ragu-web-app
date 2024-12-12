@@ -6,12 +6,17 @@ import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
-import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
-import CheckIcon from '~/assets/icons/svg/check.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
-import type { SingleWhatsAppAgentResponse } from '~/types/whatsapp'
+import DeleteAgentIcon from '~/assets/icons/svg/delete-person.svg'
+import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
+import type { SingleWhatsAppAgentResponse, WhatsAppAgent } from '~/types/whatsapp'
+
+// TYPES
+type DialogType = 'delete' | 'setAsActive'
+
+// PROPS & EMITS
 
 const props = defineProps<{
   singleAgent: SingleWhatsAppAgentResponse | null | undefined
@@ -24,10 +29,17 @@ const emits = defineEmits<{
 const { $api } = useNuxtApp()
 const whatsAppStore = useWhatsAppStore()
 const localePath = useLocalePath()
-const assignCollectionModalVisible = ref(false)
-const deleteCollectionModalVisible = ref(false)
 const { t } = useI18n()
-const isDeleteDialogOpen = ref(false)
+const dialog = ref<{
+  isOpened: boolean
+  type: DialogType | undefined
+  agent: WhatsAppAgent | undefined
+}>({
+  isOpened: false,
+  type: undefined,
+  agent: undefined,
+})
+
 const agentData = computed(() => {
   return {
     id: props.singleAgent?.agent?.id || t('agents.agent_card.unknown_id'),
@@ -39,45 +51,35 @@ const agentData = computed(() => {
     model: props.singleAgent?.agent?.model || t('agents.agent_card.unknown_model'),
     language: props.singleAgent?.agent?.language || t('agents.agent_card.unknown_language'),
     temperature: props.singleAgent?.agent?.temperature || t('agents.agent_card.unknown_temperature'),
-    vectorProvider: props.singleAgent?.agent?.vectorProvider || t('agents.agent_card.unknown_vectorProvider'),
-    embeddingProvider: props.singleAgent?.agent?.embeddingProvider || t('agents.agent_card.unknown_embeddingProvider'),
-    embeddingModel: props.singleAgent?.agent?.embeddingModel || t('agents.agent_card.unknown_embeddingModel'),
     updatedAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    languageInstruction: props.singleAgent?.agent.languageInstruction || t('agents.agent_card.unknown_instruction'),
-    summaryInstruction: props.singleAgent?.agent.summaryInstruction || t('agents.agent_card.unknown_instruction'),
+    languageInstruction: props.singleAgent?.agent.agentInstructions.languageInstruction || t('agents.agent_card.unknown_instruction'),
+    summaryInstruction: props.singleAgent?.agent.agentInstructions.summaryInstruction || t('agents.agent_card.unknown_instruction'),
+    promptInstruction: props.singleAgent?.agent.agentInstructions.promptInstruction || t('agents.agent_card.unknown_instruction'),
     createdAt: props.singleAgent?.agent?.createdAt ? formatDate(props.singleAgent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
   }
 })
 
 // API
-const { execute: setAsActive, error: setAsActiveError } = await useAsyncData(() => $api.whatsApp.BoSetActiveAgent(props.singleAgent?.agent.id as string), { immediate: false })
+const { execute: setAsActive, error: setAsActiveError, status: setAsActiveStatus } = await useAsyncData(() => $api.whatsApp.BoSetActiveAgent(props.singleAgent?.agent.id as string), { immediate: false })
 const { execute: deleteAgent, error: deleteAgentError, status: deleteAgentStatus } = await useAsyncData(() => $api.whatsApp.BoDeleteWhatsAppAgent(props.singleAgent?.agent.id as string), { immediate: false })
 errorHandler(setAsActiveError)
 errorHandler(deleteAgentError)
 
 // FUNCTIONS
-function editClick() {
+const editClick = () => {
   whatsAppStore.setEditMode(true)
 }
 
-async function handleSetAsActive() {
-  await setAsActive()
-  if (!setAsActiveError.value) {
-    showSuccessNotification('setAsActive')
-    emits('refreshAgent')
-  }
+const openDialog = (type: DialogType, agent: WhatsAppAgent) => {
+  dialog.value = { isOpened: true, type, agent }
 }
 
-async function handleDeleteAgent() {
-  await deleteAgent()
-  if (!setAsActiveError.value) {
-    showSuccessNotification('delete')
-    isDeleteDialogOpen.value = false
-    navigateTo({ path: localePath(`/admin/whatsapp-agents`) })
-  }
+const closeDialog = () => {
+  dialog.value.isOpened = false
+  setTimeout(() => dialog.value = { isOpened: false, type: undefined, agent: undefined }, 200)
 }
 
-function showSuccessNotification(type: 'setAsActive' | 'delete') {
+const showSuccessNotification = (type: 'setAsActive' | 'delete') => {
   ElNotification({
     title: type === 'delete' ? t('whatsapp_agents.delete.success_notification_title') : t('whatsapp_agents.set_as_active.success_notification_title'),
     message: type === 'delete' ? t('whatsapp_agents.delete.success_notification_message') : t('whatsapp_agents.set_as_active.success_notification_message'),
@@ -85,6 +87,28 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
     customClass: 'success',
     duration: 2500,
   })
+}
+
+const handleSetAsActive = async () => {
+  await setAsActive()
+  if (!setAsActiveError.value) {
+    showSuccessNotification('setAsActive')
+    emits('refreshAgent')
+    closeDialog()
+  }
+}
+
+const handleDeleteAgent = async () => {
+  await deleteAgent()
+  if (!setAsActiveError.value) {
+    showSuccessNotification('delete')
+    closeDialog()
+    navigateTo({ path: localePath(`/admin/whatsapp-agents`) })
+  }
+}
+
+const handleRefreshAgent = () => {
+  emits('refreshAgent')
 }
 </script>
 
@@ -109,35 +133,12 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
       <ElButton
         v-if="!singleAgent?.agent.active"
         size="small"
-        type="success"
-        plain
-        class="set-as-active-btn"
-        @click="handleSetAsActive"
-      >
-        <CheckIcon /> {{ $t('whatsapp_agents.set_as_active.label') }}
-      </ElButton>
-      <ElButton
-        size="small"
         type="primary"
         plain
-        @click="assignCollectionModalVisible = true"
+        @click="openDialog('setAsActive', singleAgent?.agent)"
       >
-        <CollectionIcon /> {{ t('collections.assign_collection.title') }}
+        <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
       </ElButton>
-      <LlmTooltip
-        :disabled="!(!singleAgent?.collections?.length)"
-        :content="t('collections.assign_collection.notification.delete_collection')"
-      >
-        <ElButton
-          size="small"
-          type="danger"
-          plain
-          :disabled="!singleAgent?.collections?.length"
-          @click="deleteCollectionModalVisible = true"
-        >
-          <CollectionIcon />  {{ t('collections.deleteModal.title') }}
-        </ElButton>
-      </LlmTooltip>
       <ElButton
         size="small"
         type="primary"
@@ -147,15 +148,14 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
         <EditIcon />  {{ t('agents.buttons.edit') }}
       </ElButton>
       <LlmTooltip
-        :content="agentData.status === 'Active' ? $t('whatsapp_agents.delete.active_agent_tooltip') : $t('whatsapp_agents.delete.label')"
-        :placement="agentData.status === 'Active' ? 'left' : 'top'"
+        :content="agentData.status === 'Active' ? $t('whatsapp_agents.delete.active_agent_tooltip') : $t('whatsapp_agents.delete.dialog_title')"
       >
         <ElButton
           plain
           type="danger"
           class="delete-action"
           :disabled="agentData.status === 'Active'"
-          @click="isDeleteDialogOpen = true"
+          @click="openDialog('delete', singleAgent?.agent)"
         >
           <DeleteIcon size="20px" />
           {{ $t('whatsapp_agents.delete.label') }}
@@ -249,42 +249,6 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
       </template>
     </LabelDescriptionItem>
     <LabelDescriptionItem
-      :label="t('agents.labels.vectorProvider')"
-      :description="agentData.vectorProvider"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.vectorProvider') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.embeddingProvider')"
-      :description="agentData.embeddingProvider"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.embeddingProvider') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.embeddingModel') "
-      :description="agentData.embeddingModel"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.embeddingModel') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
       :label="t('agents.labels.created_at') "
       :description="agentData.createdAt"
       horizontal
@@ -334,6 +298,19 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
         </div>
       </template>
     </LabelDescriptionItem>
+    <LabelDescriptionItem
+      v-if="agentData.promptInstruction"
+      :label="t('agents.labels.promptInstruction')"
+      :description="agentData.promptInstruction"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonClockIcon size="18px" />
+          <span>  {{ t('agents.labels.promptInstruction') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
     <div class="context-container">
       <span class="label">
         <PersonKeyIcon size="18px" />
@@ -353,49 +330,45 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
       <AccountWarningIcon size="44px" />
     </template>
   </EmptyState>
-
-  <WhatsAppAssignCollectionModal
-    v-model="assignCollectionModalVisible"
-    :single-agent="singleAgent"
-    @refresh-agent="emits('refreshAgent')"
+  <WhatsAppAgentCollections
+    :agent-collections="singleAgent?.collections"
+    :single-agent="singleAgent?.agent"
+    @refresh-agent="handleRefreshAgent"
   />
-  <WhatsAppDeleteAgentCollectionModal
-    v-model="deleteCollectionModalVisible"
-    :single-agent="singleAgent"
-    @refresh-agent="emits('refreshAgent')"
-  />
-
   <ElDialog
-    v-model="isDeleteDialogOpen"
+    v-model="dialog.isOpened"
     destroy-on-close
     align-center
     class="barrage-dialog--small"
     :close-on-click-modal="false"
     :close-icon="CloseCircleIcon"
+    @close="closeDialog"
   >
     <template #header>
       <div class="dialog-title-wrapper">
-        <DeleteIcon size="42px" />
-        <h5> {{ $t('whatsapp_agents.delete.dialog_title') }}</h5>
+        <DeleteAgentIcon v-if="dialog.type === 'delete'" size="42px" />
+        <PersonPasskeyIcon v-else size="42px" />
+        <h5> {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.dialog_title') : $t('whatsapp_agents.set_as_active.dialog_title') }}</h5>
       </div>
     </template>
-    <div>
-      <p> {{ $t('whatsapp_agents.delete.dialog_description') }}</p>
-      <div class="dialog-agent-name-wrapper">
-        <AgentIcon size="24px" />
-        <p>{{ singleAgent?.agent?.name }}</p>
-      </div>
+    <div class="dialog-agent-name-wrapper">
+      <p>
+        {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.dialog_description') : $t('whatsapp_agents.set_as_active.dialog_description') }}
+      </p>
+      <el-card class="is-primary">
+        <WhatsAppAgentProfileOverview :agent="singleAgent?.agent" />
+      </el-card>
     </div>
     <template #footer>
-      <ElButton @click="isDeleteDialogOpen = false">
+      <ElButton @click="dialog.isOpened = false">
         {{ $t('whatsapp_agents.close') }}
       </ElButton>
       <ElButton
-        type="danger"
-        :loading="deleteAgentStatus === 'pending' "
-        @click="handleDeleteAgent()"
+        :type="dialog.type === 'delete' ? 'danger' : 'primary'"
+        :loading="setAsActiveStatus === 'pending' || deleteAgentStatus === 'pending' "
+        @click="dialog.type === 'delete' ? handleDeleteAgent() : handleSetAsActive()"
       >
-        {{ $t('whatsapp_agents.delete.label') }}
+        {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.label') : $t('whatsapp_agents.set_as_active.label') }}
       </ElButton>
     </template>
   </ElDialog>
@@ -493,10 +466,9 @@ function showSuccessNotification(type: 'setAsActive' | 'delete') {
 
 .dialog-agent-name-wrapper {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .dark {

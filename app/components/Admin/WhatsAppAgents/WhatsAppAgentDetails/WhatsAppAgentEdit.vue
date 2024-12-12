@@ -4,6 +4,8 @@ import { useAgentStore } from '~/stores/agents'
 import type { EmbeddingProvider } from '~/types/agent'
 import type { SingleWhatsAppAgentResponse } from '~/types/whatsapp'
 
+// PROPS & EMITS
+
 const props = defineProps<{
   singleAgent: SingleWhatsAppAgentResponse | null | undefined
 }>()
@@ -36,8 +38,9 @@ const form = reactive({
     model: '',
     temperature: 0.1,
     instructions: {
-      language: '',
-      summaryInstructions: '',
+      languageInstruction: '',
+      summaryInstruction: '',
+      promptInstruction: '',
     },
   },
 })
@@ -70,25 +73,13 @@ const rules = computed<FormRules>(() => ({
 // API CALLS
 
 const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => $api.whatsApp.BoUpdateAgent(agentId.value, form), { immediate: false })
-providerStore.GET_List_Providers()
+await useAsyncData(() => providerStore.GET_List_Providers())
 
 errorHandler(updateError)
 
-// WATCHERS
-
-watch(() => form.configuration?.llmProvider, async (newProvider) => {
-  if (newProvider) {
-    await providerStore.GET_AvailableListLlms(newProvider)
-  }
-})
-
 // FUNCTIONS
 
-onMounted(async () => setForm())
-
-onUnmounted(() => whatsAppStore.setEditMode(false))
-
-function setForm() {
+const setForm = () => {
   form.name = props.singleAgent?.agent.name ?? ''
   form.configuration.context = props.singleAgent?.agent.context ?? ''
   form.description = props.singleAgent?.agent.description ?? ''
@@ -96,11 +87,12 @@ function setForm() {
   form.configuration.model = props.singleAgent?.agent.model ?? ''
   form.language = props.singleAgent?.agent.language ?? ''
   form.configuration.temperature = props.singleAgent?.agent.temperature ?? 0.1
-  form.configuration.instructions.language = props.singleAgent?.agent.languageInstruction ?? ''
-  form.configuration.instructions.summaryInstructions = props.singleAgent?.agent.summaryInstruction ?? ''
+  form.configuration.instructions.languageInstruction = props.singleAgent?.agent.agentInstructions.languageInstruction ?? ''
+  form.configuration.instructions.summaryInstruction = props.singleAgent?.agent.agentInstructions.summaryInstruction ?? ''
+  form.configuration.instructions.promptInstruction = props.singleAgent?.agent.agentInstructions.promptInstruction ?? ''
 }
 
-async function updateAgent(formEl: FormInstance | undefined) {
+const updateAgent = async (formEl: FormInstance | undefined) => {
   if (!formEl) { return }
 
   try {
@@ -135,9 +127,22 @@ async function updateAgent(formEl: FormInstance | undefined) {
   }
 }
 
-function cancelUpdate() {
+const cancelUpdate = () => {
   whatsAppStore.setEditMode(false)
 }
+
+// WATCHERS
+
+watch(() => form.configuration?.llmProvider, async (newProvider) => {
+  if (newProvider) {
+    await providerStore.GET_AvailableListLlms(newProvider)
+  }
+})
+
+// LIFECYCLE HOOKS
+onMounted(() => setForm())
+
+onUnmounted(() => whatsAppStore.setEditMode(false))
 </script>
 
 <template>
@@ -162,15 +167,6 @@ function cancelUpdate() {
           <ElInput v-model="form.name" :placeholder="t('agents.placeholder.agentName')" />
         </ElFormItem>
 
-        <!-- Description -->
-        <ElFormItem
-          class="group"
-          :label="t('agents.labels.description')"
-          prop="description"
-        >
-          <ElInput v-model="form.description" :placeholder="t('agents.placeholder.description')" />
-        </ElFormItem>
-
         <!-- Language -->
         <ElFormItem
           class="group"
@@ -190,20 +186,47 @@ function cancelUpdate() {
           prop="configuration.instructions.language"
         >
           <ElInput
-            v-model="form.configuration.instructions.language"
+            v-model="form.configuration.instructions.languageInstruction"
             :placeholder="t('agents.placeholder.languageInstruction')"
+          />
+        </ElFormItem>
+
+        <!-- Description -->
+        <ElFormItem
+          class="group context-form-item"
+          :label="t('agents.labels.description')"
+          prop="description"
+        >
+          <ElInput
+            v-model="form.description"
+            :placeholder="t('agents.placeholder.description')"
+            type="textarea"
+          />
+        </ElFormItem>
+
+        <!-- Title Instruction -->
+        <ElFormItem
+          :label="t('agents.labels.promptInstruction')"
+          prop="configuration.instructions.promptInstruction"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.configuration.instructions.promptInstruction"
+            :placeholder="t('agents.placeholder.promptInstruction')"
+            type="textarea"
           />
         </ElFormItem>
 
         <!-- Summary Instruction -->
         <ElFormItem
-          class="group"
+          class="group context-form-item"
           :label="t('agents.labels.summaryInstruction')"
           prop="configuration.instructions.summaryInstructions"
         >
           <ElInput
-            v-model="form.configuration.instructions.summaryInstructions"
+            v-model="form.configuration.instructions.summaryInstruction"
             :placeholder="t('agents.placeholder.summaryInstruction')"
+            type="textarea"
           />
         </ElFormItem>
 
