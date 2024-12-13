@@ -6,4 +6,9 @@ ingress:
     # cert-manager.io/cluster-issuer: "barrage-dev"
     ## The following annotation is to limit access to the ingress
     nginx.ingress.kubernetes.io/whitelist-source-range: 172.21.252.1/24, 172.21.240.245/32
+
+barrage:
+  vault:
+    role: "llmao-web-app-k8-dev"
+    moduleWorkspace: "llmao/data/deploy-web-app-dev"
     

@@ -68,10 +68,10 @@ hpa:
   #       type: Utilization
   #       averageUtilization: 80
 
-# barrage:
-#   vault:
-#     create: true
-#     customFormat: true
+barrage:
+  vault:
+    create: true
+    customFormat: true
 
 gitlab:
   app:

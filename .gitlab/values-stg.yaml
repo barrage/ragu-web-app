@@ -8,4 +8,4 @@ ingress:
 barrage:
   vault:
     role: "llmao-web-app-k8-stg"
-    moduleWorkspace: "llmao/data/deploy-web-app-dev"
+    moduleWorkspace: "llmao/data/deploy-web-app-stg"
