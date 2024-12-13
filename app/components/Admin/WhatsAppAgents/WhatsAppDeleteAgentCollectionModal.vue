@@ -18,6 +18,7 @@ const { t } = useI18n()
 const route = useRoute()
 const deleteCollections = ref<string[]>([])
 const agentId = route.params.agentId as string
+const collectionStore = useCollectionsStore()
 
 const payload = computed(() => ({
   remove: deleteCollections.value.map(collectionName => ({
@@ -28,12 +29,14 @@ const payload = computed(() => ({
 
 // API CALLS
 
-const { execute: deleteCollection, error: deleteCollectionError } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
+const { execute: deleteCollection, error: deleteCollectionError } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, payload.value), { immediate: false })
+const { execute: getAllCollections } = await useAsyncData(() => collectionStore.GET_AllCollections(), { immediate: false })
 
 // FUNCTIONS
 
 async function submitDeleteCollection() {
   await deleteCollection()
+  await getAllCollections()
   isOpen.value = false
 
   if (deleteCollectionError.value) {
