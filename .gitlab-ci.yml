@@ -20,6 +20,8 @@ build:
 
 review:
   extends: .review_app
+  variables:
+    KUBE_INGRESS_BASE_DOMAIN: barrage.dev
   environment:
     on_stop: cleanup
   needs:
@@ -38,6 +40,8 @@ cleanup:
 
 development:
   extends: .development
+  variables:
+    KUBE_INGRESS_BASE_DOMAIN: barrage.dev
   needs:
     - job: build
   rules:

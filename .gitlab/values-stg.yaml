@@ -1,9 +1,9 @@
 ingress:
   className: nginx-external
-  # annotations:
+  annotations:
   #   cert-manager.io/cluster-issuer: "barrage-le-production"
   #   ## The following annotation is to limit access to the ingress
-  #   nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
+    nginx.ingress.kubernetes.io/whitelist-source-range: 172.21.252.1/24, 172.21.240.245/32
     
 barrage:
   vault:
