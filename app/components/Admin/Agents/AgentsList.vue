@@ -18,18 +18,7 @@ const emits = defineEmits<{
 
 // CONSTANTS
 
-const cardClasses = ref<string[]>([])
-
 // FUNCTIONS
-
-const applyCardClasses = () => {
-  cardClasses.value = []
-  props.agents?.forEach((_, index) => {
-    setTimeout(() => {
-      cardClasses.value[index] = 'list-item-visible'
-    }, index * 100)
-  })
-}
 
 const changePage = (page: number) => {
   emits('pageChange', page)
@@ -67,16 +56,6 @@ const closeDeactivateModal = () => {
 const agentDeactivated = () => {
   emits('agentDeactivated')
 }
-
-// WATCHERS
-
-watch(
-  () => props.agents,
-  () => {
-    nextTick(applyCardClasses)
-  },
-  { immediate: true },
-)
 </script>
 
 <template>
@@ -84,10 +63,11 @@ watch(
     <div
       v-for="(agent, index) in props.agents"
       :key="agent.agent.id"
-      class="list-item"
-      :class="[cardClasses[index]]"
     >
       <AgentCard
+        v-motion-fade
+        :delay="(index * 100)"
+        :duration="400"
         :single-agent="agent"
         @activate-agent="openActivateAgentModal(agent)"
         @deactivate-agent="openDeactivateAgentModal(agent)"
@@ -124,18 +104,5 @@ watch(
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
-}
-
-.list-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-.list-item-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 </style>

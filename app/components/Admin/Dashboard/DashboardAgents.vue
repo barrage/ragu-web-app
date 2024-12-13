@@ -16,7 +16,7 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
 <template>
   <section class="dashboard-count-section grid">
     <div class="section-heading-wrapper">
-      <div class="title-wrapper">
+      <div v-motion-pop-visible-once class="title-wrapper">
         <AgentsIcon size="42px" />
         <h5 class="section-title">
           {{ t('agents.title') }}
@@ -28,14 +28,28 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
       </LlmLink>
     </div>
 
-    <ElCard class="total-agents-widget is-primary">
+    <ElCard
+      v-motion
+      class="total-agents-widget is-primary"
+      :initial="{ opacity: 0 }"
+      :enter="{ opacity: 1 }"
+      :duration="400"
+      :delay="1200"
+    >
       <span class="total-agents-title">{{ t('dashboard.agents.total_widget.active') }}</span>
       <p class="total-agents-count">
         {{ countDataAgents?.active || 0 }}
       </p>
     </ElCard>
 
-    <ElCard class="agent-most-used-card is-primary">
+    <ElCard
+      v-motion
+      class="agent-most-used-card is-primary"
+      :initial="{ opacity: 0 }"
+      :enter="{ opacity: 1 }"
+      :duration="400"
+      :delay="1400"
+    >
       <TitleDescription :title="t('dashboard.agents.most_used_agent.title')" :description="t('dashboard.agents.most_used_agent.description')" />
       <div v-if="dashboardCountLoading" class="most-used-agents-loader-container">
         <MeetUpLoader />
@@ -59,7 +73,14 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
       </EmptyState>
     </ElCard>
 
-    <ElCard class="agent-providers-widget-card is-primary">
+    <ElCard
+      v-motion
+      class="agent-providers-widget-card is-primary"
+      :initial="{ opacity: 0 }"
+      :enter="{ opacity: 1 }"
+      :duration="400"
+      :delay="1500"
+    >
       <TitleDescription :title="t('dashboard.agents.providers.title')" :description="t('dashboard.agents.providers.description')" />
       <div v-if="dashboardCountLoading" class="providers-loader-container">
         <MeetUpLoader />

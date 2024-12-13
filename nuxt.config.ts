@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  modules: ['@nuxt/eslint', '@vueuse/nuxt', 'nuxt-svgo', '@pinia/nuxt', '@nuxtjs/i18n', '@element-plus/nuxt'],
+  modules: ['@nuxt/eslint', '@vueuse/nuxt', 'nuxt-svgo', '@pinia/nuxt', '@nuxtjs/i18n', '@element-plus/nuxt', '@vueuse/motion/nuxt'],
   plugins: ['~/plugins/error-handler', { src: '~/plugins/websocket.client.ts', mode: 'client' }],
   eslint: {
     config: {

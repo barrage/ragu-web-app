@@ -69,10 +69,12 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   padding-bottom: 1rem;
   scroll-snap-type: y mandatory;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-500) var(--color-primary-200);
 
   &.collapsed-sidebar {
     &::-webkit-scrollbar {
-      width: 3px;
+      width: 1px;
     }
   }
 

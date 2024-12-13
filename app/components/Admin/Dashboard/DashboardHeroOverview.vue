@@ -114,8 +114,13 @@ const selectPeriod = (newPeriod: any) => {
 <template>
   <section class="dashboard-hero-overview-section grid">
     <div class="service-overview-widgets-wrapper grid">
-      <template v-for="item in overviewWidgetsData" :key="item.name">
+      <template v-for="(item, index) in overviewWidgetsData" :key="item.name">
         <ServiceOverviewWidget
+          v-motion
+          :initial="{ opacity: 0, y: 20 }"
+          :enter="{ opacity: 1, y: 0 }"
+          :delay="150 * index "
+          :duration="400"
           :title="item.name"
           :value="item.value"
           :description="item.description"
@@ -130,7 +135,14 @@ const selectPeriod = (newPeriod: any) => {
       </template>
     </div>
     <div class="chat-usage-by-period-line-chart-wrapper ">
-      <el-card class="is-primary chats-usage-widget-card">
+      <el-card
+        v-motion
+        class="is-primary chats-usage-widget-card"
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
+        :duration="400"
+        :delay="600"
+      >
         <div class="chat-usage-widget-header">
           <TitleDescription :title="t('dashboard.chat_usage_line_chart.title')" />
           <ClientOnly>
