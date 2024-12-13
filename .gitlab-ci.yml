@@ -37,7 +37,7 @@ cleanup:
     - when: manual
 
 development:
-  extends: .pre-production
+  extends: .development
   needs:
     - job: build
   rules:
