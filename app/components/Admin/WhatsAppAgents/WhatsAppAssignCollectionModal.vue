@@ -20,8 +20,8 @@ const isOpen = defineModel<boolean>()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
+const collectionStore = useCollectionsStore()
 const agentId = route.params.agentId as string
-const filteredCollections = ref()
 const scrollIntoViewOptions = {
   behavior: 'smooth',
   block: 'center',
@@ -44,23 +44,20 @@ const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
 
 // API CALLS
 
-const { execute: getCollections, data: collections } = await useAsyncData(() => $api.collection.GetAllCollections(), { immediate: false })
+await useAsyncData(() => $api.collection.GetAllCollections())
 const { execute: putCollection, error: putCollectionError } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, getPayload()), { immediate: false })
 
 // FUNCTIONS
 
-onMounted(() => setCollections())
-
-async function setCollections() {
-  await getCollections()
+const filteredCollections = computed(() => {
   const existingCollectionNames = new Set([...(props.singleAgent?.collections || [])].map(collection => collection.collection))
-  filteredCollections.value = collections.value?.items.filter((collection) => {
-    return (
 
+  return collectionStore.collections.filter((collection) => {
+    return (
       !existingCollectionNames.has(collection.name)
     )
   })
-}
+})
 
 function getPayload() {
   return {
