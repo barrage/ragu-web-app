@@ -1,6 +1,7 @@
 ingress:
+  className: nginx-internal
   annotations:
-    cert-manager.io/cluster-issuer: "barrage-le-production"
+    cert-manager.io/cluster-issuer: "barrage-dev"
     ## The following annotation is to limit access to the ingress
-    nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
+    # nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
     

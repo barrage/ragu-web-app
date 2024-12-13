@@ -1,7 +1,10 @@
 include:
   - project: devops/ci-template
-    ref: v1.0.0
+    ref: v1.1.0
     file: GitlabFlow/Deploy-custom.yml
+
+variables:
+    HELM_RELEASE_PREFIX: llmao-webapp
 
 build: 
   extends: .build-vault
@@ -17,8 +20,6 @@ build:
 
 review:
   extends: .review_app
-  variables:
-    HELM_RELEASE_NAME: llmao-web-app
   environment:
     on_stop: cleanup
   needs:
@@ -35,10 +36,8 @@ cleanup:
     - !reference [.stop_review, rules]
     - when: manual
 
-staging:
+development:
   extends: .pre-production
-  variables:
-    HELM_RELEASE_NAME: llmao-web-app
   needs:
     - job: build
   rules:
@@ -47,8 +46,6 @@ staging:
 
 production:
   extends: .production
-  variables:
-    HELM_RELEASE_NAME: llmao-web-app
   needs:
     - job: build
   rules:

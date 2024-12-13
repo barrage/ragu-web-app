@@ -1,12 +1,11 @@
 ingress:
-  annotations:
-    cert-manager.io/cluster-issuer: "barrage-le-production"
-    ## The following annotation is to limit access to the ingress
-    nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
+  className: nginx-external
+  # annotations:
+  #   cert-manager.io/cluster-issuer: "barrage-le-production"
+  #   ## The following annotation is to limit access to the ingress
+  #   nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
     
 barrage:
   vault:
-    create: true
-    role: "llmao-webapp-m2-role"
+    role: "llmao-web-app-k8-stg"
     moduleWorkspace: "llmao/data/deploy-web-app-dev"
-    authPath: auth/kubernetes-m2
