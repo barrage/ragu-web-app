@@ -9,13 +9,28 @@ import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
       height="40px"
     />
     <div class="header-right">
-      <ThemeSelector />
+      <div v-motion-slide-top :delay="1100">
+        <ThemeSelector />
+      </div>
       <div class="vertical-divider" />
-      <LightDarkModeSelector />
-      <div class="vertical-divider" />
-      <LocalizationSelector />
-      <div class="vertical-divider" />
-      <ProfileDropdown />
+
+      <div v-motion-slide-top :delay="1300">
+        <LightDarkModeSelector />
+      </div>
+
+      <div
+        class="vertical-divider"
+      />
+
+      <div v-motion-slide-top :delay="1500">
+        <LocalizationSelector />
+      </div>
+      <div
+        class="vertical-divider"
+      />
+      <div>
+        <ProfileDropdown />
+      </div>
     </div>
   </header>
 </template>

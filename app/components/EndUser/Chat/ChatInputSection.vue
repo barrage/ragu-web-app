@@ -247,6 +247,8 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
     <div v-else-if="agentStore.appAgents.length" class="input-button-wrapper">
       <ElInput
         v-model="message"
+        v-motion-slide-bottom
+        :delay="1100"
         size="large"
         :placeholder="$t('chat.chatInputPlaceholder')"
         class="barrage-chat-input"

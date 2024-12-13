@@ -98,7 +98,7 @@ const chatData = computed(() => {
     </div>
     <div class="agent-general-info-card">
       <LlmLink
-        :to="`/admin/users/${agent?.id}`"
+        :to="`/admin/agents/${agent?.id}`"
         type="link"
         class="user-profile-item"
       >

@@ -9,18 +9,6 @@ const props = defineProps<{
   messages: Message[] | null | undefined
 }>()
 
-const cardClasses = ref<string[]>([])
-
-onMounted(() => {
-  nextTick(() => {
-    props.messages?.forEach((_, index) => {
-      setTimeout(() => {
-        cardClasses.value[index] = 'list-item-visible'
-      }, index * 100)
-    })
-  })
-})
-
 /* const emits = defineEmits<{
   (event: 'pageChange', page: number): number
 }>() */
@@ -55,10 +43,13 @@ const messagesListData = computed(() => {
       <div
         v-for="(message, index) in messagesListData"
         :key="message.id"
-        class="list-item"
-        :class="[cardClasses[index]]"
       >
-        <ChatMessageCardAdmin :message="message" />
+        <ChatMessageCardAdmin
+          v-motion-fade
+          :delay="(index * 100)"
+          :duration="400"
+          :message="message"
+        />
       </div>
 
       <!-- <Pagination
@@ -103,18 +94,6 @@ const messagesListData = computed(() => {
   gap: 0.8rem;
 }
 
-.list-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-.list-item-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 .dark {
   .message-title-wrapper {
     color: var(--color-primary-100);

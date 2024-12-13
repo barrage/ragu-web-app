@@ -35,7 +35,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
 <template>
   <section class="dashboard-chats-info-section grid">
     <div class="section-heading-wrapper">
-      <div class="title-wrapper">
+      <div v-motion-pop-visible-once class="title-wrapper">
         <ChatsIcon size="42px" />
         <h4 class="section-title">
           {{ t('chat.admin.title') }}
@@ -48,7 +48,14 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
     </div>
 
     <div class="recent-chats">
-      <ElCard class="is-primary recent-chats-card ">
+      <ElCard
+        v-motion
+        class="is-primary recent-chats-card "
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
+        :duration="600"
+        :delay="600"
+      >
         <TitleDescription :title="t('dashboard.chats.most_recent.title')" :description="t('dashboard.chats.most_recent.description')" />
 
         <div class="recent-chat-list">
@@ -90,7 +97,14 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
     </div>
 
     <div class="chats-information">
-      <ElCard class="is-primary all-chats-usage-card">
+      <ElCard
+        v-motion
+        class="is-primary all-chats-usage-card"
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
+        :duration="600"
+        :delay="800"
+      >
         <TitleDescription :title="t('dashboard.chats.all_chat_usage.title')" :description="t('dashboard.chats.all_chat_usage.description')" />
         <div v-if="statisticStore.dashboardCountLoading" class="loader-container">
           <MeetUpLoader />
@@ -119,7 +133,14 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
     </div>
 
     <div class="active-agents">
-      <ElCard class="active-agents-card is-primary">
+      <ElCard
+        v-motion
+        class="active-agents-card is-primary"
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
+        :duration="600"
+        :delay="1000"
+      >
         <TitleDescription :title="t('dashboard.chats.available_agents.title')" :description="t('dashboard.chats.available_agents.description')" />
 
         <div class="active-agents-list">

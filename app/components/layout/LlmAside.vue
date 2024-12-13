@@ -9,7 +9,7 @@ const { isSidebarCollapsed } = storeToRefs(navigationStore)
 </script>
 
 <template>
-  <aside>
+  <aside v-motion-slide-left :delay="2400">
     <nav class="navigation-container">
       <div class="sidebar-head-section">
         <p v-if="!isSidebarCollapsed" class="typing-effect sidebar-title">

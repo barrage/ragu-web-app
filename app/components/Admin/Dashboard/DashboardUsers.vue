@@ -20,7 +20,7 @@ const hasError = computed(() => !!props.error)
 <template>
   <section class="dashboard-count-section grid">
     <div class="section-heading-wrapper">
-      <div class="title-wrapper">
+      <div v-motion-pop-visible-once class="title-wrapper">
         <TeamIcon size="42px" />
         <h5 class="section-title">
           {{ t('users.title') }}
@@ -32,14 +32,29 @@ const hasError = computed(() => !!props.error)
       </LlmLink>
     </div>
 
-    <el-card class="total-user-widget is-primary">
+    <el-card
+      v-motion
+      class="total-user-widget is-primary"
+      :initial="{ opacity: 0 }"
+      :enter="{ opacity: 1 }"
+      :duration="400"
+      :delay="1700"
+    >
       <span class="total-users-title">{{ t('dashboard.users.total_widget.total') }}</span>
       <p class="total-users-count">
         {{ props?.countDataUser?.total }}
       </p>
     </el-card>
 
-    <el-card class="most-recent-users-widget is-primary" size="small">
+    <el-card
+      v-motion
+      :initial="{ opacity: 0 }"
+      :enter="{ opacity: 1 }"
+      :duration="400"
+      :delay="1900"
+      class="most-recent-users-widget is-primary"
+      size="small"
+    >
       <TitleDescription :title="t('dashboard.users.most_recent_users.title')" :description="t('dashboard.users.most_recent_users.description')" />
 
       <div class="most-recent-users-list">
@@ -76,7 +91,14 @@ const hasError = computed(() => !!props.error)
       </div>
     </el-card>
 
-    <el-card class="users-roles-widget-card is-primary">
+    <el-card
+      v-motion
+      :initial="{ opacity: 0 }"
+      :enter="{ opacity: 1 }"
+      :duration="400"
+      :delay="2000"
+      class="users-roles-widget-card is-primary"
+    >
       <div class="users-roles-widget-body">
         <LabelDescriptionItem
           :label="t('dashboard.users.user_roles.admins')"

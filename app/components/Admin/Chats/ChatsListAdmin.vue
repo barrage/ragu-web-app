@@ -14,25 +14,6 @@ const emits = defineEmits<{
   (event: 'chatTitleEdited'): void
 }>()
 
-const cardClasses = ref<string[]>([])
-
-const applyCardClasses = () => {
-  cardClasses.value = []
-  props.chats?.forEach((_, index) => {
-    setTimeout(() => {
-      cardClasses.value[index] = 'list-item-visible'
-    }, index * 100)
-  })
-}
-
-watch(
-  () => props.chats,
-  () => {
-    nextTick(applyCardClasses)
-  },
-  { immediate: true },
-)
-
 const changePage = (page: number) => {
   emits('pageChange', page)
 }
@@ -75,10 +56,11 @@ const chatTitleEdited = () => {
       <div
         v-for="(chat, index) in props.chats"
         :key="chat?.chat?.id"
-        class="list-item"
-        :class="[cardClasses[index]]"
       >
         <ChatCardAdmin
+          v-motion-fade
+          :delay="(index * 100)"
+          :duration="400"
           :chat="chat"
           @delete-chat="openDeleteChatModal(chat)"
           @edit-chat-title="openEditChatModal(chat)"
@@ -119,18 +101,5 @@ const chatTitleEdited = () => {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-}
-
-.list-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-.list-item-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 </style>

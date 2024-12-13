@@ -112,7 +112,7 @@
     max-width: max-content;
     min-height: fit-content;
     animation:
-      typing 2s steps(30, end) forwards,
+      typing 1.5s steps(30, end) forwards,
       blink 2.5s step-end;
     animation-fill-mode: forwards;
   }

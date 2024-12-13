@@ -13,17 +13,6 @@ const emits = defineEmits<{
   (event: 'userActivated'): void
 }>()
 
-const cardClasses = ref<string[]>([])
-
-const applyCardClasses = () => {
-  cardClasses.value = []
-  props.users?.forEach((_, index) => {
-    setTimeout(() => {
-      cardClasses.value[index] = 'list-item-visible'
-    }, index * 100)
-  })
-}
-
 /* Edit User */
 const selectedUserEdit = ref<User | null>(null)
 const editUserModalVisible = ref(false)
@@ -74,14 +63,6 @@ const openDeactivateUserModal = (user: User) => {
 const handleUserDeactivated = () => {
   emits('userDeactivated')
 }
-
-watch(
-  () => props.users,
-  () => {
-    nextTick(applyCardClasses)
-  },
-  { immediate: true },
-)
 </script>
 
 <template>
@@ -90,10 +71,11 @@ watch(
       <div
         v-for="(user, index) in props.users"
         :key="user.id"
-        class="list-item"
-        :class="[cardClasses[index]]"
       >
         <UserCard
+          v-motion-fade
+          :delay="(index * 100)"
+          :duration="400"
           :user="user"
           @delete-user="openDeleteUserModal(user)"
           @edit-user="openEditUserModal(user)"
@@ -140,18 +122,5 @@ watch(
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-}
-
-.list-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-.list-item-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 </style>

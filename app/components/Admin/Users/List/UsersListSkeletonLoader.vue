@@ -117,16 +117,16 @@ onUnmounted(() => {
 
 .dark {
   .skeleton-list-item {
-    background-color: var(--color-primary-700);
+    background-color: var(--color-primary-900);
     animation: pulse-dark 1.5s infinite ease-in-out;
   }
 
   .skeleton-avatar {
-    background: var(--color-primary-600);
+    background: var(--color-primary-700);
   }
 
   .skeleton-line {
-    background: var(--color-primary-600);
+    background: var(--color-primary-700);
   }
 }
 
@@ -144,13 +144,13 @@ onUnmounted(() => {
 
 @keyframes pulse-dark {
   0% {
-    background-color: var(--color-primary-700);
+    background-color: var(--color-primary-900);
   }
   50% {
     background-color: var(--color-primary-800);
   }
   100% {
-    background-color: var(--color-primary-700);
+    background-color: var(--color-primary-900);
   }
 }
 </style>

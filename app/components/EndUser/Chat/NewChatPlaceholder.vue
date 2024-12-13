@@ -21,14 +21,24 @@ const activeAgentLength = computed(() => {
       height="64px"
       class="ai-logo"
     />
-    <h5 class="typing-effect">
+    <h5
+      v-motion-fade
+      :delay="100"
+      :duration="800"
+    >
       {{ $t('chat.llm_chat') }}
     </h5>
-    <p class="description">
+    <p
+      class="description typing-effect"
+    >
       {{ $t('chat.newChat.description') }}
     </p>
     <div class="about-container">
-      <p class="chose-from-label">
+      <p
+        v-motion-fade
+        :delay="1100"
+        class="chose-from-label"
+      >
         {{ $t('chat.newChat.choseFrom') }}
       </p>
       <div
@@ -45,7 +55,11 @@ const activeAgentLength = computed(() => {
         </template>
         <template v-else-if="agentStore.appAgents.length">
           <template v-for="(agent) in agentStore.appAgents" :key="agent.id">
-            <ChatAgentSelectCard :agent="agent" />
+            <ChatAgentSelectCard
+              v-motion-slide-left
+              :delay="1300"
+              :agent="agent"
+            />
           </template>
         </template>
         <EmptyState

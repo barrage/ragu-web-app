@@ -25,16 +25,6 @@ const changePage = (page: number) => {
   emits('pageChange', pagination.value.currentPage)
 }
 
-const cardClasses = ref<string[]>([])
-const applyCardClasses = () => {
-  cardClasses.value = []
-  props.documents?.forEach((_, index) => {
-    setTimeout(() => {
-      cardClasses.value[index] = 'list-item-visible'
-    }, index * 100)
-  })
-}
-
 watch(
   () => documentStore.documentResponse?.total,
   (newTotal) => {
@@ -42,14 +32,6 @@ watch(
       pagination.value.total = newTotal
     }
   },
-)
-
-watch(
-  () => props.documents,
-  () => {
-    nextTick(applyCardClasses)
-  },
-  { immediate: true },
 )
 </script>
 
@@ -60,8 +42,11 @@ watch(
     </div> -->
     <div class="documents-container grid">
       <DocumentCard
-        v-for="document in props.documents"
+        v-for="(document, index) in props.documents"
         :key="document.id"
+        v-motion-fade
+        :delay="(index * 100)"
+        :duration="400"
         :document="document"
       />
     </div>
