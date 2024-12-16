@@ -93,4 +93,5 @@ export interface Instructions {
   titleInstruction: string
   languageInstruction: string
   summaryInstruction: string
+  promptInstruction: string
 }

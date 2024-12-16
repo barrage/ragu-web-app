@@ -327,6 +327,7 @@ export default {
   documents: {
     title: 'Dokumente',
     document_details: 'Dokument Details',
+    document_search: 'Dokumente suchen...',
     description: 'Verwalten und organisieren Sie alle Dokumente, die der KI beim Lernen helfen.',
     name: 'Name',
     extension: 'Format',
@@ -674,6 +675,7 @@ export default {
       languageInstruction: 'Sprachanweisung',
       summaryInstruction: 'Zusammenfassungsanweisung',
       promptInstruction: 'Promptanweisung',
+      titleInstruction: 'Titelanweisung',
     },
     buttons: {
       create: 'Agent Erstellen',
@@ -697,6 +699,7 @@ export default {
       languageInstruction: 'Sprachanweisung eingeben',
       summaryInstruction: 'Zusammenfassungsanweisung eingeben',
       promptInstruction: 'Promptanweisung eingeben',
+      titleInstruction: 'Titelanweisung eingeben',
       embeddingModel: 'Embedding-Modell auswählen',
     },
 
@@ -753,6 +756,7 @@ export default {
   collections: {
     title: 'Sammlungen',
     all_collections: 'Alle Sammlungen',
+    single_collection: 'Sammlung',
     empty_state: {
       title: 'Keine Sammlungen zugewiesen',
       description: 'Dieser Agent hat derzeit keine Sammlungen zugewiesen.',
@@ -1046,6 +1050,18 @@ export default {
       empty_data_description: 'Derzeit gibt es keine WhatsApp-Nummern, die hier angezeigt werden können.',
       cancel: 'Abbrechen',
     },
+  },
+  auth: {
+    notifications: {
+      user_authenticate: 'Benutzer nicht authentifiziert, wird zum Login weitergeleitet',
+    },
+
+  },
+  unsaved_changes: {
+    title: 'Unsaved Changes',
+    description: 'You have unsaved changes. Are you sure you want to leave this page?',
+    confirmButtonText: 'Leave',
+    cancelButtonText: 'Cancel',
   },
 
   error_notifications: {

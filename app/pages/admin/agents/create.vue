@@ -41,6 +41,7 @@ const form = reactive<AgentDetail>({
       languageInstruction: '',
       summaryInstruction: '',
       titleInstruction: '',
+      promptInstruction: '',
     },
   },
 })
@@ -173,6 +174,18 @@ errorHandler(createError)
             v-model="form.description"
             type="textarea"
             :placeholder="t('agents.placeholder.description')"
+          />
+        </ElFormItem>
+
+        <ElFormItem
+          :label="t('agents.labels.promptInstruction')"
+          prop="configuration.instructions.promptInstruction"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.configuration.instructions.promptInstruction"
+            :placeholder="t('agents.placeholder.promptInstruction')"
+            type="textarea"
           />
         </ElFormItem>
 

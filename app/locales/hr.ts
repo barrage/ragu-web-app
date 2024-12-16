@@ -330,6 +330,7 @@ export default {
   documents: {
     title: 'Dokumenti',
     document_details: 'Detalji Dokumenta',
+    document_search: 'Pretraži dokumente...',
     description: 'Upravljajte i organizirajte sve dokumente koji pomažu AI-ju u učenju.',
     name: 'Naziv',
     extension: 'Format',
@@ -847,6 +848,7 @@ export default {
       languageInstruction: 'Uputa za Jezik',
       summaryInstruction: 'Uputa za Sažetak',
       promptInstruction: 'Uputa za Prompt',
+      titleInstruction: 'Uputa za Naslov',
     },
     buttons: {
       create: 'Stvori Agenta',
@@ -870,6 +872,7 @@ export default {
       languageInstruction: 'Unesite Uputu za Jezik Agenta',
       summaryInstruction: 'Unesite Uputu za Sažetak Agenta',
       promptInstruction: 'Unesite Uputu za Prompt Agenta',
+      titleInstruction: 'Unesite Uputu za Naslov Agenta',
       embeddingModel: 'Odaberite model Embeddinga',
     },
 
@@ -926,6 +929,7 @@ export default {
   collections: {
     title: 'Kolekcije',
     all_collections: 'Sve kolekcije',
+    single_collection: 'Kolekcija',
     empty_state: {
       title: 'Nema dodjeljenih kolekcija',
       description: 'Ovaj agent trenutno nema nijednu kolekciju povezanu sa njim.',
@@ -1063,7 +1067,13 @@ export default {
     notifications: {
       user_authenticate: 'Korisnik nije autentificiran, preusmjerava se na prijavu',
     },
+  },
 
+  unsaved_changes: {
+    title: 'Nespremljene promjene',
+    description: 'Imate nespremljene promjene. Jeste li sigurni da želite napustiti ovu stranicu?',
+    confirmButtonText: 'Napusti',
+    cancelButtonText: 'Odustani',
   },
 
   error_notifications: {

@@ -326,6 +326,7 @@ export default {
   documents: {
     title: 'Documents',
     document_details: 'Détails du Document',
+    document_search: 'Rechercher des documents...',
     description: 'Gérez et organisez tous les documents qui aident l\'IA dans son apprentissage.',
     name: 'Nom',
     extension: 'Format',
@@ -673,6 +674,7 @@ export default {
       languageInstruction: 'Instruction de Langue',
       summaryInstruction: 'Instruction de Résumé',
       promptInstruction: 'Instruction de Saisie',
+      titleInstruction: 'Instruction de Titre',
     },
     buttons: {
       create: 'Créer l’Agent',
@@ -696,6 +698,7 @@ export default {
       languageInstruction: 'Entrer l’Instruction de Langue de l’Agent',
       summaryInstruction: 'Entrer l’Instruction de Résumé de l’Agent',
       promptInstruction: 'Entrer l’Instruction de Saisie de l’Agent',
+      titleInstruction: 'Entrer l’Instruction de Titre de l’Agent',
       embeddingModel: 'Sélectionner le modèle d\'intégration',
     },
 
@@ -752,6 +755,7 @@ export default {
   collections: {
     title: 'Collections',
     all_collections: 'Toutes les collections',
+    single_collection: 'Collection',
     empty_state: {
       title: 'Aucune collection assignée',
       description: 'Cet agent n\'a actuellement aucune collection associée à lui.',
@@ -1046,6 +1050,18 @@ export default {
       empty_data_description: 'Actuellement, il n\'y a aucun numéro WhatsApp à afficher ici.',
       cancel: 'Annuler',
     },
+  },
+  auth: {
+    notifications: {
+      user_authenticate: 'Utilisateur non authentifié, redirection vers la page de connexion',
+    },
+
+  },
+  unsaved_changes: {
+    title: 'Modifications non enregistrées',
+    description: 'Vous avez des modifications non enregistrées. Êtes-vous sûr de vouloir quitter cette page ?',
+    confirmButtonText: 'Quitter',
+    cancelButtonText: 'Annuler',
   },
 
   error_notifications: {

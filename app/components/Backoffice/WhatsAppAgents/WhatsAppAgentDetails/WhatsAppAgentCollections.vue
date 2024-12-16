@@ -62,20 +62,16 @@ const handleRefreshAgent = () => {
         >
           <CollectionIcon /> {{ t('collections.assign_collection.title') }}
         </el-button>
-        <LlmTooltip
-          :disabled="!agentStore.singleAgent?.collections?.length"
-          :content="$t('collections.assign_collection.notification.delete_collection')"
+
+        <el-button
+          size="small"
+          type="primary"
+          plain
+          :disabled="agentStore.singleAgent?.collections?.length === 0"
+          @click="openDeleteCollectionModal()"
         >
-          <el-button
-            size="small"
-            type="primary"
-            plain
-            :disabled="agentStore.singleAgent?.collections?.length === 0"
-            @click="openDeleteCollectionModal()"
-          >
-            <CollectionDelete />  {{ t('collections.deleteModal.title') }}
-          </el-button>
-        </LlmTooltip>
+          <CollectionDelete />  {{ t('collections.deleteModal.title') }}
+        </el-button>
       </div>
     </div>
     <div class="agent-collection-list-container">

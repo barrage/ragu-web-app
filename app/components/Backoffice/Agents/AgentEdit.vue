@@ -33,6 +33,7 @@ const form = reactive({
       titleInstruction: '',
       languageInstruction: '',
       summaryInstruction: '',
+      promptInstruction: '',
     },
   },
 })
@@ -136,6 +137,7 @@ const setForm = () => {
   form.configuration.instructions.titleInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
   form.configuration.instructions.languageInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
   form.configuration.instructions.summaryInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
+  form.configuration.instructions.promptInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.promptInstruction ?? ''
   form.active = agentStore.singleAgent?.agent?.active ?? true
 }
 
@@ -187,6 +189,8 @@ onUnmounted(() => {
         >
           <ElInput v-model="form.configuration.instructions.languageInstruction" />
         </ElFormItem>
+
+        <!-- Description -->
         <ElFormItem
           :label="t('agents.labels.description')"
           class="context-form-item"
@@ -199,6 +203,8 @@ onUnmounted(() => {
           />
         </ElFormItem>
 
+        <!-- Title Instruction -->
+
         <ElFormItem
           :label="t('agents.labels.titleInstruction')"
           prop="configuration.instructions.titleInstruction"
@@ -210,6 +216,21 @@ onUnmounted(() => {
             type="textarea"
           />
         </ElFormItem>
+
+        <!-- Prompt Instruction -->
+        <ElFormItem
+          :label="t('agents.labels.promptInstruction')"
+          prop="configuration.instructions.promptInstruction"
+          class="context-form-item"
+        >
+          <ElInput
+            v-model="form.configuration.instructions.promptInstruction"
+            :placeholder="t('agents.placeholder.promptInstruction')"
+            type="textarea"
+          />
+        </ElFormItem>
+
+        <!-- Summary Instruction -->
         <ElFormItem
           :label="t('agents.labels.summaryInstruction')"
           prop="configuration.instructions.summaryInstruction"

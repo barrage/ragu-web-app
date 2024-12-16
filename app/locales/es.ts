@@ -326,6 +326,7 @@ export default {
   documents: {
     title: 'Documentos',
     document_details: 'Detalles del Documento',
+    document_search: 'Buscar documentos...',
     description: 'Administra y organiza todos los documentos que ayudan a la IA a aprender.',
     name: 'Nombre',
     extension: 'Formato',
@@ -674,6 +675,7 @@ export default {
       languageInstruction: 'Instrucción de Idioma',
       summaryInstruction: 'Instrucción de Resumen',
       promptInstruction: 'Instrucción de Solicitud',
+      titleInstruction: 'Instrucción de Título',
     },
     buttons: {
       create: 'Crear Agente',
@@ -697,6 +699,7 @@ export default {
       languageInstruction: 'Ingresar Instrucción de Idioma del Agente',
       summaryInstruction: 'Ingresar Instrucción de Resumen del Agente',
       promptInstruction: 'Ingresar Instrucción de Solicitud del Agente',
+      titleInstruction: 'Ingresar Instrucción de Título del Agente',
       embeddingModel: 'Seleccionar modelo de incrustación',
     },
 
@@ -752,7 +755,7 @@ export default {
   collections: {
     title: 'Colecciones',
     all_collections: 'Todas las colecciones',
-
+    single_collection: 'Colección',
     empty_state: {
       title: 'No hay colecciones asignadas',
       description: 'Este agente no tiene actualmente ninguna colección asociada con él.',
@@ -1047,6 +1050,18 @@ export default {
       empty_data_description: 'Actualmente, no hay números de WhatsApp para mostrar aquí.',
       cancel: 'Cancelar',
     },
+  },
+  auth: {
+    notifications: {
+      user_authenticate: 'Usuario no autenticado, redirigiendo a inicio de sesión',
+    },
+
+  },
+  unsaved_changes: {
+    title: 'Cambios no guardados',
+    description: 'Tienes cambios no guardados. ¿Estás seguro de que quieres abandonar esta página?',
+    confirmButtonText: 'Abandonar',
+    cancelButtonText: 'Cancelar',
   },
 
   error_notifications: {
