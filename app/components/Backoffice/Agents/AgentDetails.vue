@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
-import type { Agent, Agents } from '~/types/agent'
+import type { Agent } from '~/types/agent'
 import PersonKeyIcon from '~/assets/icons/svg/person-key.svg'
 import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
@@ -47,6 +47,7 @@ const agentData = computed(() => {
     languageInstruction: props.singleAgent?.configuration?.agentInstructions?.languageInstruction || t('agents.agent_card.unknown_instruction'),
     summaryInstruction: props.singleAgent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
     titleInstruction: props.singleAgent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
+    promptInstruction: props.singleAgent?.configuration?.agentInstructions?.promptInstruction || t('agents.agent_card.unknown_instruction'),
     createdAt: props.singleAgent?.agent?.createdAt ? formatDate(props.singleAgent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
   }
 })
@@ -174,6 +175,7 @@ const agentDeactivated = () => {
         </div>
       </template>
     </LabelDescriptionItem>
+
     <LabelDescriptionItem
       :label=" t('agents.labels.language')"
       :description="agentData.language"
@@ -311,7 +313,23 @@ const agentDeactivated = () => {
         <HighlightedText :text="agentData.context" />
       </template>
     </LabelDescriptionItem>
+
+    <LabelDescriptionItem
+      :label="t('agents.labels.promptInstruction')"
+      :description="agentData.promptInstruction"
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonInfoIcon size="18px" />
+          <span>  {{ t('agents.labels.promptInstruction') }}</span>
+        </div>
+      </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.promptInstruction" />
+      </template>
+    </LabelDescriptionItem>
   </div>
+
   <AgentCollections :agent-collections="props.singleAgent?.collections" />
 
   <ActivateAgentModalBackoffice

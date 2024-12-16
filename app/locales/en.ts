@@ -328,6 +328,7 @@ export default {
   documents: {
     title: 'Documents',
     document_details: 'Document Details',
+    document_search: 'Search documents...',
     description: 'Manage and organize all documents that help AI in learning.',
     name: 'Name',
     extension: 'Format',
@@ -840,6 +841,7 @@ export default {
       languageInstruction: 'Language Instruction',
       summaryInstruction: 'Summary Instruction',
       promptInstruction: 'Prompt Instruction',
+      titleInstruction: 'Title Instruction',
 
     },
     buttons: {
@@ -865,6 +867,7 @@ export default {
       languageInstruction: 'Enter Agent Language Instructions',
       summaryInstruction: 'Enter Agent Summary Instructions',
       promptInstruction: 'Enter Agent Prompt Instructions',
+      titleInstruction: 'Enter Agent Title Instructions',
       embeddingModel: 'Select Embedding Model',
     },
 
@@ -922,7 +925,7 @@ export default {
   collections: {
     title: 'Collections',
     all_collections: 'All Collections',
-
+    single_collection: 'Collection',
     empty_state: {
       title: 'No Collections Assigned',
       description: 'This agent currently doesn’t have any collections associated with them.',
@@ -1065,6 +1068,12 @@ export default {
       user_authenticate: 'User not authenticated, redirecting to login',
     },
 
+  },
+  unsaved_changes: {
+    title: 'Unsaved Changes',
+    description: 'You have unsaved changes. Are you sure you want to leave this page?',
+    confirmButtonText: 'Leave',
+    cancelButtonText: 'Cancel',
   },
 
   error_notifications: {

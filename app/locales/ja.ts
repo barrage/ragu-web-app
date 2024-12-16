@@ -325,6 +325,7 @@ export default {
   documents: {
     title: 'ドキュメント',
     document_details: 'ドキュメントの詳細',
+    document_search: 'ドキュメントを検索...',
     description: 'AIの学習を支援するすべてのドキュメントを管理および整理します。',
     name: '名前',
     extension: '形式',
@@ -670,6 +671,7 @@ export default {
       languageInstruction: '言語の指示',
       summaryInstruction: '概要の指示',
       promptInstruction: 'プロンプトの指示',
+      titleInstruction: 'タイトルの指示',
     },
     buttons: {
       create: 'エージェントを作成',
@@ -693,6 +695,7 @@ export default {
       languageInstruction: 'エージェントの言語指示を入力',
       summaryInstruction: 'エージェントの概要指示を入力',
       promptInstruction: 'エージェントのプロンプト指示を入力',
+      titleInstruction: 'エージェントのタイトル指示を入力',
       embeddingModel: '埋め込みモデルを選択',
     },
 
@@ -749,7 +752,7 @@ export default {
   collections: {
     title: 'コレクション',
     all_collections: 'すべてのコレクション',
-
+    single_collection: 'コレクション',
     empty_state: {
       title: 'コレクションが割り当てられていません',
       description: 'このエージェントには現在、関連付けられたコレクションはありません。',
@@ -1044,6 +1047,17 @@ export default {
       empty_data_description: '現在、表示できるWhatsApp番号はありません。',
       cancel: 'キャンセル',
     },
+  },
+  auth: {
+    notifications: {
+      user_authenticate: 'ユーザーが認証されていません、ログインにリダイレクトします',
+    },
+  },
+  unsaved_changes: {
+    title: '保存されていない変更',
+    description: '保存されていない変更があります。このページから離れる前に、変更を保存しますか？',
+    confirmButtonText: '保存',
+    cancelButtonText: 'キャンセル',
   },
 
   error_notifications: {

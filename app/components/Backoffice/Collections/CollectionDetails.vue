@@ -15,12 +15,16 @@ const props = defineProps<{
 
 // CONSTATNTS & STATES
 const route = useRoute()
+const router = useRouter()
 const { t } = useI18n()
 const documetStore = useDocumentsStore()
 const collectionStore = useCollectionsStore()
 const selectedDocumentIds = ref<string[]>([])
 const collectionId = ref(route.params.collectionId as string)
 const rightValue = ref<string[]>([])
+const hasUnsavedChanges = ref(false)
+const showLeaveConfirmation = ref(false)
+const nextRoute = ref(null)
 
 // COMPUTEDS
 
@@ -75,6 +79,7 @@ const handleTransferChange = (newValue: string[]) => {
   })
 
   rightValue.value = newValue
+  hasUnsavedChanges.value = true
 }
 
 const transformedDocuments = computed(() => {
@@ -93,6 +98,10 @@ const submitSelection = async () => {
 
   if (!payload.value.add.length && !payload.value.remove.length) { return }
   await updateCollection()
+
+  if (!collectionError.value) {
+    hasUnsavedChanges.value = false
+  }
 
   if (collectionError.value) {
     ElNotification({
@@ -113,6 +122,28 @@ const submitSelection = async () => {
     })
 
     await getCollection()
+  }
+}
+
+onBeforeRouteLeave((to, from, next) => {
+  if (hasUnsavedChanges.value) {
+    showLeaveConfirmation.value = true
+    nextRoute.value = to
+    next(false)
+  }
+  else {
+    next()
+  }
+})
+
+const handleLeaveConfirmation = (confirm: boolean) => {
+  showLeaveConfirmation.value = false
+  if (confirm) {
+    hasUnsavedChanges.value = false
+    nextRoute.value && router.push(nextRoute.value)
+  }
+  else {
+    nextRoute.value = null
   }
 }
 
@@ -233,9 +264,9 @@ onMounted(() => {
     </div>
     <el-transfer
       v-model="rightValue"
-      :titles="['Documents', 'Collection']"
+      :titles="[t('documents.title'), t('collections.single_collection')]"
       filterable
-      filter-placeholder="Search for documents..."
+      :filter-placeholder="t('documents.document_search')"
       :data="transformedDocuments"
       @change="handleTransferChange"
     >
@@ -255,6 +286,16 @@ onMounted(() => {
         </el-button>
       </template>
     </el-transfer>
+
+    <ConformationModal
+      :is-visible="showLeaveConfirmation"
+      :title="t('unsaved_changes.title')"
+      :message="t('unsaved_changes.description')"
+      :confirm-button-text="t('unsaved_changes.confirmButtonText')"
+      :cancel-button-text="t('unsaved_changes.cancelButtonText')"
+      @confirm="handleLeaveConfirmation(true)"
+      @cancel="handleLeaveConfirmation(false)"
+    />
   </div>
 </template>
 

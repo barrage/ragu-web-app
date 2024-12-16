@@ -11,6 +11,7 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import DeleteAgentIcon from '~/assets/icons/svg/delete-person.svg'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
+import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 import type { SingleWhatsAppAgentResponse, WhatsAppAgent } from '~/types/whatsapp'
 
 // TYPES
@@ -165,18 +166,6 @@ const handleRefreshAgent = () => {
   </div>
   <div v-if="singleAgent" class="agent-informations-section">
     <LabelDescriptionItem
-      :label="t('agents.labels.id')"
-      :description="agentData.id"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <PersonInfoIcon size="18px" />
-          <span>  {{ t('agents.labels.id') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
       :label="t('agents.labels.name')"
       :description="agentData.name"
       horizontal
@@ -188,6 +177,20 @@ const handleRefreshAgent = () => {
         </div>
       </template>
     </LabelDescriptionItem>
+
+    <LabelDescriptionItem
+      :label="t('agents.labels.id')"
+      :description="agentData.id"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonInfoIcon size="18px" />
+          <span>  {{ t('agents.labels.id') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+
     <LabelDescriptionItem
       :label="t('agents.labels.description') "
       :description="agentData.description"
@@ -200,30 +203,7 @@ const handleRefreshAgent = () => {
         </div>
       </template>
     </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label=" t('agents.labels.llmProvider')"
-      :description="agentData.llmProvider"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.llmProvider') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.model')"
-      :description="agentData.model"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.model') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
+
     <LabelDescriptionItem
       :label=" t('agents.labels.language')"
       :description="agentData.language"
@@ -236,18 +216,7 @@ const handleRefreshAgent = () => {
         </div>
       </template>
     </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.temperature')"
-      :description="agentData.temperature?.toString()"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <BrainIcon size="18px" />
-          <span>  {{ t('agents.labels.temperature') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
+
     <LabelDescriptionItem
       :label="t('agents.labels.created_at') "
       :description="agentData.createdAt"
@@ -272,11 +241,55 @@ const handleRefreshAgent = () => {
         </div>
       </template>
     </LabelDescriptionItem>
+
+    <div class="configuration-title-wrapper">
+      <PersonSettingsIcon size="32px" /> <h6 class="agent-configuration-title">
+        {{ t('agents.titles.configuration') }}
+      </h6>
+    </div>
+
+    <LabelDescriptionItem
+      :label=" t('agents.labels.llmProvider')"
+      :description="agentData.llmProvider"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <BrainIcon size="18px" />
+          <span>  {{ t('agents.labels.llmProvider') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      :label="t('agents.labels.model')"
+      :description="agentData.model"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <BrainIcon size="18px" />
+          <span>  {{ t('agents.labels.model') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+
+    <LabelDescriptionItem
+      :label="t('agents.labels.temperature')"
+      :description="agentData.temperature?.toString()"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <BrainIcon size="18px" />
+          <span>  {{ t('agents.labels.temperature') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+
     <LabelDescriptionItem
       v-if="agentData.languageInstruction"
       :label="t('agents.labels.languageInstruction')"
       :description="agentData.languageInstruction"
-      horizontal
     >
       <template #customLabel>
         <div class="agent-details-custom-label">
@@ -284,12 +297,14 @@ const handleRefreshAgent = () => {
           <span>  {{ t('agents.labels.languageInstruction') }}</span>
         </div>
       </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.languageInstruction" />
+      </template>
     </LabelDescriptionItem>
     <LabelDescriptionItem
       v-if="agentData.summaryInstruction"
       :label="t('agents.labels.summaryInstruction')"
       :description="agentData.summaryInstruction"
-      horizontal
     >
       <template #customLabel>
         <div class="agent-details-custom-label">
@@ -297,29 +312,40 @@ const handleRefreshAgent = () => {
           <span>  {{ t('agents.labels.summaryInstruction') }}</span>
         </div>
       </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.summaryInstruction" />
+      </template>
     </LabelDescriptionItem>
+
     <LabelDescriptionItem
-      v-if="agentData.promptInstruction"
       :label="t('agents.labels.promptInstruction')"
       :description="agentData.promptInstruction"
-      horizontal
     >
       <template #customLabel>
         <div class="agent-details-custom-label">
-          <PersonClockIcon size="18px" />
+          <PersonInfoIcon size="18px" />
           <span>  {{ t('agents.labels.promptInstruction') }}</span>
         </div>
       </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.promptInstruction" />
+      </template>
     </LabelDescriptionItem>
-    <div class="context-container">
-      <span class="label">
-        <PersonKeyIcon size="18px" />
-        {{ t('agents.labels.context') }}
-      </span>
-      <span class="description">
-        {{ agentData.context }}
-      </span>
-    </div>
+
+    <LabelDescriptionItem
+      :label="t('agents.labels.context')"
+      :description="agentData.context"
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonInfoIcon size="18px" />
+          <span>  {{ t('agents.labels.context') }}</span>
+        </div>
+      </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.context" />
+      </template>
+    </LabelDescriptionItem>
   </div>
   <EmptyState
     v-else
@@ -406,6 +432,19 @@ const handleRefreshAgent = () => {
   }
 }
 
+.configuration-title-wrapper {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 22px 0px 0px;
+  color: var(--color-primary-800);
+  & .agent-configuration-title {
+    color: var(--color-primary-800);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
 .agent-informations-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -427,7 +466,7 @@ const handleRefreshAgent = () => {
   flex: 0 0 calc(30% - 0.5rem);
   color: var(--color-primary-900);
   font-size: var(--font-size-fluid-3);
-
+  max-height: fit-content;
   svg {
     flex-shrink: 0;
   }
