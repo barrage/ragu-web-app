@@ -2,7 +2,6 @@
 // IMPORTS
 import { ElNotification, type FormInstance, type FormRules } from 'element-plus'
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
-import { useAgentStore } from '~/stores/agents'
 import type { AgentDetail, EmbeddingProvider } from '~/types/agent'
 import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 

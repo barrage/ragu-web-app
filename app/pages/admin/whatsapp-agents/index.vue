@@ -31,14 +31,14 @@ errorHandler(error)
 
 // WATCHERS
 
-watch(() => agents.value.total, (newTotal) => {
+watch(() => agents.value?.total, (newTotal) => {
   if (newTotal) { pagination.value.total = newTotal || 0 }
 })
 
 // FUNCTIONS
 
 onMounted(() => {
-  pagination.value.total = agents.value.total || 0
+  pagination.value.total = agents.value?.total || 0
 })
 
 async function handlePageChange(page: number) {
