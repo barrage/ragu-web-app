@@ -8,7 +8,6 @@ import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import type { User } from '~/types/users'
 import { StatusType } from '~/types/statusTypes'
 
-/* Props & Emits */
 const props = defineProps<{
   user: User
 }>()
@@ -16,13 +15,12 @@ const props = defineProps<{
 const emits = defineEmits<Emits>()
 
 interface Emits {
-  (event: 'delete-user', user: User): void
-  (event: 'edit-user', user: User): void
-  (event: 'activate-user', user: User): void
-  (event: 'deactivate-user', user: User): void
+  (event: 'deleteUser', user: User): void
+  (event: 'editUser', user: User): void
+  (event: 'activateUser', user: User): void
+  (event: 'deactivateUser', user: User): void
 }
 
-/* Setup */
 const { t } = useI18n()
 
 const userData = computed(() => {
@@ -45,6 +43,7 @@ const userData = computed(() => {
         :to="`/admin/users/${user?.id}`"
         type="link"
         class="user-profile-item-wrapper"
+        data-testid="bo-user-card-profile-overview-link"
       >
         <UserProfileOverview :user="props.user" />
       </LlmLink>
@@ -82,7 +81,11 @@ const userData = computed(() => {
         </LlmTooltip>
 
         <LlmTooltip :content="$t('users.user_card.edit_user')">
-          <el-button plain @click="emits('edit-user', props.user)">
+          <el-button
+            plain
+            data-testid="bo-user-card-edit-button"
+            @click="emits('editUser', props.user)"
+          >
             <EditIcon size="20px" />
           </el-button>
         </LlmTooltip>
@@ -91,7 +94,11 @@ const userData = computed(() => {
           v-if="props.user.active"
           :content="t('users.user_card.deactivate_user')"
         >
-          <el-button plain @click="emits('deactivate-user', props.user)">
+          <el-button
+            plain
+            data-testid="bo-user-card-deactivate-button"
+            @click="emits('deactivateUser', props.user)"
+          >
             <PersonLockIcon size="20px" />
           </el-button>
         </LlmTooltip>
@@ -99,7 +106,11 @@ const userData = computed(() => {
           v-if="!props.user.active"
           :content="t('users.user_card.activate_user')"
         >
-          <el-button plain @click="emits('activate-user', props.user)">
+          <el-button
+            plain
+            data-testid="bo-user-card-activate-button"
+            @click="emits('activateUser', props.user)"
+          >
             <PersonPasskeyIcon size="20px" />
           </el-button>
         </LlmTooltip>
@@ -108,8 +119,9 @@ const userData = computed(() => {
           <el-button
             plain
             type="danger"
+            data-testid="bo-user-card-delete-button"
             class="delete-action"
-            @click="emits('delete-user', props.user)"
+            @click="emits('deleteUser', props.user)"
           >
             <DeleteIcon size="20px" />
           </el-button>

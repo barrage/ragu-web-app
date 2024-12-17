@@ -894,6 +894,10 @@ export default {
     empty_chats_title: 'Nessuna chat disponibile',
     empty_chats_description: 'Questo utente non ha ancora avviato alcuna conversazione. Tutte le chat future appariranno qui.',
     invite_user_description: 'Il modulo di invito utente consente di invitare gli utenti inserendo i loro dettagli e assegnando ruoli. Gli utenti invitati possono accedere con la loro email tramite Google OAuth. I ruoli definiscono l\'accesso, dal pieno controllo dell\'amministratore a un uso limitato dell\'app per le chat con gli agenti LLM.',
+    empty_state: {
+      title: 'Nessun utente trovato',
+      description: 'La tua ricerca non ha prodotto risultati. Controlla i filtri o prova con criteri di ricerca diversi.',
+    },
     delete_user: {
       title: 'Elimina Utente',
       description: 'Sei sicuro di voler eliminare questo utente? Questa azione non può essere annullata.',

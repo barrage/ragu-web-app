@@ -895,6 +895,10 @@ export default {
     empty_chats_title: 'Nenhum chat disponível',
     empty_chats_description: 'Este usuário ainda não iniciou nenhuma conversa. Todos os chats futuros aparecerão aqui.',
     invite_user_description: 'O Formulário de Convite de Usuário permite convidar usuários inserindo seus detalhes e atribuindo funções. Usuários convidados podem fazer login com seu e-mail via Google OAuth. As funções definem o acesso, desde o controle total do administrador até o uso limitado do aplicativo para chats com agentes LLM.',
+    empty_state: {
+      title: 'Nenhum usuário encontrado',
+      description: 'Sua pesquisa não retornou resultados. Verifique os filtros ou tente critérios de pesquisa diferentes.',
+    },
     delete_user: {
       title: 'Excluir Usuário',
       description: 'Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita.',

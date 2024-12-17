@@ -895,6 +895,10 @@ export default {
     empty_chats_title: 'Aucun chat disponible',
     empty_chats_description: 'Cet utilisateur n\'a pas encore initié de conversation. Tous les chats futurs apparaîtront ici.',
     invite_user_description: 'Le formulaire d\'invitation utilisateur vous permet d\'inviter des utilisateurs en saisissant leurs coordonnées et en attribuant des rôles. Les utilisateurs invités peuvent se connecter avec leur e-mail via Google OAuth. Les rôles définissent l\'accès, du contrôle complet d\'administrateur à l\'utilisation limitée de l\'application pour les chats avec des agents LLM.',
+    empty_state: {
+      title: 'Aucun utilisateur trouvé',
+      description: 'Votre recherche n\'a donné aucun résultat. Veuillez vérifier les filtres ou essayer d\'autres critères de recherche.',
+    },
     delete_user: {
       title: 'Supprimer l\'Utilisateur',
       description: 'Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.',

@@ -2,15 +2,19 @@
 import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
 import type { SortOption, SortingValues } from '~/types/sort'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   options: Array<SortOption>
-}>()
+  initialSortBy: string
+  initialSortDirection?: 'asc' | 'desc'
+}>(), {
+  initialSortDirection: 'asc',
+})
 const emits = defineEmits<Emits>()
 interface Emits {
   (event: 'sortUpdated', sort: SortingValues): void
 }
 const selectedSortBy = ref<SortOption>()
-const sortOrder = ref<'asc' | 'desc'>('desc')
+const sortOrder = ref<'asc' | 'desc'>(props.initialSortDirection)
 
 const sortingValues = computed(() => ({
   direction: sortOrder.value,
@@ -34,12 +38,23 @@ const changeSortOrder = () => {
   }
   emitSortingValues()
 }
+
 watch(
   () => props.options,
   (newOptions) => {
     const updatedOption = newOptions.find(option => option.value === selectedSortBy.value?.value)
     selectedSortBy.value = updatedOption || newOptions[0]
   },
+  { immediate: true },
+)
+const resolveSelectedSortBy = () => {
+  const matchingOption = props.options.find(option => option.value === props.initialSortBy)
+  selectedSortBy.value = matchingOption || props.options[0] // Default to first option if no match
+}
+
+watch(
+  () => [props.options, props.initialSortBy],
+  resolveSelectedSortBy,
   { immediate: true },
 )
 </script>

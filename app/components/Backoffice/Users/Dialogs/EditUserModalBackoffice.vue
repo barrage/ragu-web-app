@@ -29,6 +29,7 @@ const closeModal = () => {
       v-model="isOpen"
       :destroy-on-close="true"
       align-center
+      data-testid="bo-edit-user-dialog"
       class="edit-user-modal-backoffice barrage-dialog--medium"
       :close-icon="CloseCircleIcon"
       :close-on-click-modal="false"
@@ -47,6 +48,7 @@ const closeModal = () => {
         <EditUserForm
           :selected-user="props.selectedUser"
           :reset-form-trigger="resetFormTrigger"
+          :has-cancel-option="true"
           @user-edited="emits('userEdited')"
           @user-edit-canceled="closeModal"
         />

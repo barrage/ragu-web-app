@@ -519,6 +519,10 @@ export default {
     empty_chats_title: 'No Chats Available',
     empty_chats_description: 'This user has not initiated any conversations yet. All future chats will appear here.',
     invite_user_description: 'The Invite User Form allows you to invite users by entering their details and assigning roles. Invited users can log in with their email via Google OAuth. Roles define access, from full admin control to limited app usage for LLM agent chats.',
+    empty_state: {
+      title: 'No users found',
+      description: 'Your search did not return any results. Please check the filters or try different search criteria.',
+    },
     delete_user: {
       title: 'Delete User',
       description: 'Are you sure you want to delete this user? This action cannot be undone.',

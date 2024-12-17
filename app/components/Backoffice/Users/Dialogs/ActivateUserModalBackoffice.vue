@@ -58,6 +58,7 @@ const isActivateUserLoading = computed(() => {
   <ClientOnly>
     <ElDialog
       v-model="isOpen"
+      data-testid="bo-activate-user-dialog"
       destroy-on-close
       align-center
       class="barrage-dialog--small"

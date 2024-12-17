@@ -62,6 +62,7 @@ const isDeactivateUserLoading = computed(() => {
     <ElDialog
       v-model="isOpen"
       destroy-on-close
+      data-testid="bo-deactivate-user-dialog"
       align-center
       class="barrage-dialog--small"
       :close-icon="CloseCircleIcon"

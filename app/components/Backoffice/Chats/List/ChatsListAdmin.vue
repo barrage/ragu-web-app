@@ -1,22 +1,14 @@
 <script lang="ts" setup>
-import { nextTick } from 'vue'
-import type { AdminChatDetails, AdminChatsResponse } from '~/types/chat'
-import type { Pagination } from '~/types/pagination'
+import type { AdminChatDetails } from '~/types/chat'
 
 const props = defineProps<{
   chats: AdminChatDetails[] | null | undefined
-  pagination: Pagination
 }>()
 
 const emits = defineEmits<{
-  (event: 'pageChange', page: number): number
   (event: 'chatDeleted'): void
   (event: 'chatTitleEdited'): void
 }>()
-
-const changePage = (page: number) => {
-  emits('pageChange', page)
-}
 
 /* Delete Chat */
 const selectedChatDelete = ref<AdminChatDetails | null>(null)
@@ -27,9 +19,6 @@ const openDeleteChatModal = (chat: AdminChatDetails) => {
   deleteChatModalVisible.value = true
 }
 
-const closeDeleteChatModal = () => {
-  deleteChatModalVisible.value = false
-}
 const chatDeleted = () => {
   emits('chatDeleted')
 }
@@ -42,9 +31,6 @@ const openEditChatModal = (chat: AdminChatDetails) => {
   editChatModalVisible.value = true
 }
 
-const closeEditChatModal = () => {
-  editChatModalVisible.value = false
-}
 const chatTitleEdited = () => {
   emits('chatTitleEdited')
 }
@@ -59,6 +45,7 @@ const chatTitleEdited = () => {
       >
         <ChatCardAdmin
           v-motion-fade
+          :data-testid="`bo-chat-data-card-${index + 1}`"
           :delay="(index * 100)"
           :duration="400"
           :chat="chat"
@@ -66,25 +53,17 @@ const chatTitleEdited = () => {
           @edit-chat-title="openEditChatModal(chat)"
         />
       </div>
-      <Pagination
-        :current-page="props.pagination.currentPage"
-        :page-size="props.pagination.pageSize"
-        :total="props.pagination.total"
-        @page-change="(page:number) => changePage(page)"
-      />
     </div>
 
     <DeleteChatModalBackoffice
-      :is-open="deleteChatModalVisible"
+      v-model="deleteChatModalVisible"
       :selected-chat="selectedChatDelete"
-      @close-modal="closeDeleteChatModal"
       @chat-deleted="chatDeleted"
     />
 
     <EditChatTitleModalBackoffice
-      :is-open="editChatModalVisible"
+      v-model="editChatModalVisible"
       :selected-chat="selectedChatEdit"
-      @close-modal="closeEditChatModal"
       @chat-title-edited="chatTitleEdited"
     />
   </div>
