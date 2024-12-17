@@ -19,7 +19,7 @@ const agentStore = useAgentStore()
 const selectedAgentId = ref(route.params.agentId as string)
 
 // API CALLS
-const { error, status } = await useAsyncData(() => agentStore.GET_SingleAgent(selectedAgentId.value))
+const { error, status } = await useAsyncData(() => agentStore.GET_SingleAgent(selectedAgentId.value), { lazy: true })
 
 errorHandler(error)
 </script>

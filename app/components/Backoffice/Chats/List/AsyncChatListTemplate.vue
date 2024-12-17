@@ -32,7 +32,7 @@ const {
     pagination.value.pageSize,
     sort.value.sortBy,
     sort.value.sortOrder,
-  ))
+  ), { lazy: true })
 
 const updateRouteQuery = () => {
   router.replace({

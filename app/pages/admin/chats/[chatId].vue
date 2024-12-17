@@ -26,7 +26,7 @@ const { error } = await useAsyncData(() =>
 )
 errorHandler(error)
 
-const { error: SingleChatError } = await useAsyncData(() => chatStore.GET_SingleChatAdmin(selectedChatId.value))
+const { error: SingleChatError } = await useAsyncData(() => chatStore.GET_SingleChatAdmin(selectedChatId.value), { lazy: true })
 
 errorHandler(SingleChatError)
 

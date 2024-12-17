@@ -30,7 +30,7 @@ const pagination = ref<Pagination>({
   disabled: false,
 })
 
-const { error, execute } = await useAsyncData(() => agentStore.GET_AllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction))
+const { error, execute } = await useAsyncData(() => agentStore.GET_AllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction), { lazy: true })
 
 const handlePageChange = async (page: number) => {
   pagination.value.currentPage = page

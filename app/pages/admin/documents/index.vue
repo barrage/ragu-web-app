@@ -24,7 +24,7 @@ const sort = ref<SortingValues>({
   sortProperty: { name: '', value: '' },
 })
 const { error, execute } = await useAsyncData(() =>
-  documentStore.GET_AllDocuments(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction))
+  documentStore.GET_AllDocuments(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction), { lazy: true })
 
 errorHandler(error)
 

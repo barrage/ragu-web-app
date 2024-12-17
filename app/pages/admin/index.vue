@@ -17,7 +17,7 @@ const collectionsStore = useCollectionsStore()
 const documentsStore = useDocumentsStore()
 const currentPeriod = ref('WEEK')
 
-const { execute: refreshChatHistory, error: chatHistoryError, status: chatHistoryStatus } = useAsyncData(() => statisticStore.GET_ChatHistoryStatistic(currentPeriod.value))
+const { execute: refreshChatHistory, error: chatHistoryError, status: chatHistoryStatus } = useAsyncData(() => statisticStore.GET_ChatHistoryStatistic(currentPeriod.value), { lazy: true })
 
 const { error: dashboardCountError } = useAsyncData(() => statisticStore.GET_DashboardCount())
 
@@ -51,7 +51,7 @@ const mostUsedAgentData = computed(() => {
 })
 
 // Recent users
-const { error: recentUsersError, data: recentUsers, status: recentUsersStatus } = await useAsyncData(() => $api.user.GetAllUsers(1, 5, 'createdAt', 'desc'))
+const { error: recentUsersError, data: recentUsers, status: recentUsersStatus } = await useAsyncData(() => $api.user.GetAllUsers(1, 5, 'createdAt', 'desc'), { lazy: true })
 
 const mostRecentUser = computed(() => recentUsers.value?.items || [])
 const isLoading = computed(() => recentUsersStatus.value === 'pending')

@@ -14,7 +14,7 @@ const selectedAgentId = ref(route.params.agentId as string)
 
 // API CALLS
 
-const { execute: getAgentData, error, data: agent } = await useAsyncData(() => $api.whatsApp.BoGetSingleWhatsAppAgent(selectedAgentId?.value))
+const { execute: getAgentData, error, data: agent } = await useAsyncData(() => $api.whatsApp.BoGetSingleWhatsAppAgent(selectedAgentId?.value), { lazy: true })
 errorHandler(error)
 </script>
 

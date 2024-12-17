@@ -23,7 +23,7 @@ const sort = ref<SortingValues>({
   direction: 'desc',
   sortProperty: { name: '', value: '' },
 })
-const { error: getError, execute } = await useAsyncData(() => collectionStore.GET_AllCollections(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction))
+const { error: getError, execute } = await useAsyncData(() => collectionStore.GET_AllCollections(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction), { lazy: true })
 errorHandler(getError)
 
 const handlePageChange = async (page: number) => {

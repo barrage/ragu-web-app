@@ -21,7 +21,7 @@ const sort = ref<Sort>({
   sortBy: (route.query.sortBy as string) || 'createdAt',
 })
 
-const { execute: executeGetUsers, error: getUsersError, status: getUsersStatus, data: allUsersData } = await useAsyncData(() => $api.user.GetAllUsers(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder))
+const { execute: executeGetUsers, error: getUsersError, status: getUsersStatus, data: allUsersData } = await useAsyncData(() => $api.user.GetAllUsers(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder), { lazy: true })
 
 const updateRouteQuery = () => {
   router.replace({
