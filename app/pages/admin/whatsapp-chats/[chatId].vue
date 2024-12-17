@@ -3,6 +3,7 @@ import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
 import WhatsAppChatIcon from '~/assets/icons/svg/whatsapp-chat.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import ChatEmptyIcon from '~/assets/icons/svg/chat-warning.svg'
+import { StatusType } from '~/types/statusTypes'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -24,9 +25,9 @@ errorHandler(error)
 
 const chat = computed(() => {
   return {
-    id: chatData.value.chat.id,
-    createdAt: formatDate(chatData.value.chat.createdAt, 'MMMM DD, YYYY'),
-    updatedAt: formatDate(chatData.value.chat.updatedAt, 'MMMM DD, YYYY'),
+    id: chatData.value?.chat?.id,
+    createdAt: formatDate(chatData.value?.chat?.createdAt, 'MMMM DD, YYYY'),
+    updatedAt: formatDate(chatData.value?.chat?.updatedAt, 'MMMM DD, YYYY'),
   }
 })
 
@@ -37,7 +38,7 @@ const user = computed(() => {
     email: chatData.value?.user.email,
     role: chatData.value?.user.role,
     status: chatData.value?.user.active ? t('users.user_card.active_status') : t('users.user_card.inactive_status'),
-    tagType: chatData.value?.user.active ? 'success' : 'danger',
+    statusType: chatData.value?.user.active ? StatusType.Success : StatusType.Danger,
     createdAt: formatDate(chatData.value?.chat.createdAt, 'MMMM DD, YYYY'),
     updatedAt: formatDate(chatData.value?.chat.updatedAt, 'MMMM DD, YYYY'),
   }
@@ -105,7 +106,7 @@ const user = computed(() => {
             :description="$t('users.user_card.status')"
           >
             <template #customDescription>
-              <ElTag :type="user.tagType" size="small">
+              <ElTag :type="user.statusType" size="small">
                 <span class="status-dot" />
                 {{ user.status }}
               </ElTag>
