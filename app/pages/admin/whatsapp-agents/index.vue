@@ -26,7 +26,7 @@ const sort = ref<SortingValues>({
 
 // API CALLS
 
-const { error, execute, data: agents } = await useAsyncData(() => $api.whatsApp.BoGetAllWhatsAppAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction), { immediate: true })
+const { error, execute, data: agents } = await useAsyncData(() => $api.whatsApp.BoGetAllWhatsAppAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction), { immediate: true, lazy: true })
 errorHandler(error)
 
 // WATCHERS

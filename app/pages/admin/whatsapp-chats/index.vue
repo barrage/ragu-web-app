@@ -20,7 +20,7 @@ const pagination = ref({
 
 // API CALLS
 
-const { error, execute, data: chatData } = await useAsyncData(() => $api.whatsApp.BoGetAllChats(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction))
+const { error, execute, data: chatData } = await useAsyncData(() => $api.whatsApp.BoGetAllChats(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction), { lazy: true })
 errorHandler(error)
 
 // FUNCTIONS

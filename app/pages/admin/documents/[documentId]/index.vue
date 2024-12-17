@@ -19,7 +19,7 @@ const selectedDocumentId = computed(() => {
   const documentId = Array.isArray(route.params.documentId) ? route.params.documentId[0] : route.params.documentId
   return documentId || ''
 })
-const { error, status } = await useAsyncData(() => documentStore.GET_SingleDocument(selectedDocumentId.value))
+const { error, status } = await useAsyncData(() => documentStore.GET_SingleDocument(selectedDocumentId.value), { lazy: true })
 
 errorHandler(error)
 </script>

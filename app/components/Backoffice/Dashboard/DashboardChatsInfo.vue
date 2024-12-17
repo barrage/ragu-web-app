@@ -21,13 +21,13 @@ const chatPieChartData = computed<PieChartDataEntry[] | null>(() => {
 
 // Recent chats
 const { data: recentChats, status: recentChatsStatus } = useAsyncData('recentChats', () =>
-  chatStore.GET_AllAdminChats(1, 10, 'updatedAt', 'desc'))
+  chatStore.GET_AllAdminChats(1, 10, 'updatedAt', 'desc'), { lazy: true })
 
 const mostRecentChats = computed(() => recentChats.value?.items || [])
 
 // Active agents
 const { data: activeAgents, status: activeAgentsStatus } = useAsyncData('activeAgents', () =>
-  agentsStore.GET_AllAgents(1, 20, 'updatedAt', 'desc', false))
+  agentsStore.GET_AllAgents(1, 20, 'updatedAt', 'desc', false), { lazy: true })
 
 const allActiveAgents = computed(() => activeAgents.value?.items || [])
 </script>

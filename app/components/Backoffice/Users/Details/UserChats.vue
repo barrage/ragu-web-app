@@ -24,8 +24,7 @@ const sort = ref<SortingValues>({
 })
 
 const { error, status: loadingUserChats, data, execute: getUserChats } = await useAsyncData(() =>
-  chatStore.GET_AllAdminChats(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction, props.user!.id),
-)
+  chatStore.GET_AllAdminChats(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction, props.user!.id), { lazy: true })
 
 const handlePageChange = async (page: number) => {
   pagination.value.currentPage = page
@@ -67,7 +66,11 @@ watch(
     </template>
     <template v-else-if="userHasChats">
       <div class="user-chats-container">
-        <ChatsListAdminActions @sort-change="handleSortChange" />
+        <ChatsListAdminActions
+          :selected-sort-by="sort.sortProperty"
+          :selected-sort-direction="sort.direction"
+          @sort-change="handleSortChange"
+        />
         <ChatsListAdmin
           :chats="chatStore?.adminAllChatsData"
           :pagination="pagination"

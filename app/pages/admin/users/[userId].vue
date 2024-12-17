@@ -18,7 +18,7 @@ const selectedUserId = computed(() => {
   return userId || ''
 })
 
-const { execute: getUserDetails, error: getUserError, status: getUserStatus, data: userData } = await useAsyncData(() => $api.user.GetSingleUser(selectedUserId.value))
+const { execute: getUserDetails, error: getUserError, status: getUserStatus, data: userData } = await useAsyncData(() => $api.user.GetSingleUser(selectedUserId.value), { lazy: true })
 
 errorHandler(getUserError)
 

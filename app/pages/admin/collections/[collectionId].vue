@@ -19,7 +19,7 @@ const collectionStore = useCollectionsStore()
 const selectedCollectionId = ref(route.params.collectionId as string)
 
 // API CALLS
-const { error, status } = await useAsyncData(() => collectionStore.GET_SingleCollection(selectedCollectionId?.value))
+const { error, status } = await useAsyncData(() => collectionStore.GET_SingleCollection(selectedCollectionId?.value), { lazy: true })
 
 errorHandler(error)
 </script>

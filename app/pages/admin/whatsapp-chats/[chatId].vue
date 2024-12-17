@@ -17,7 +17,7 @@ const chatId = route.params.chatId
 
 // API CALLS
 
-const { error, data: chatData } = await useAsyncData(() => $api.whatsApp.BoGetChat(chatId as string), { immediate: true })
+const { error, data: chatData } = await useAsyncData(() => $api.whatsApp.BoGetChat(chatId as string), { immediate: true, lazy: true })
 errorHandler(error)
 
 // COMPUTED
