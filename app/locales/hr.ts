@@ -524,6 +524,10 @@ export default {
     empty_chats_title: 'Nema dostupnih razgovora',
     empty_chats_description: 'Ovaj korisnik još nije započeo nijedan razgovor. Svi budući razgovori će se ovdje prikazati.',
     invite_user_description: 'Obrazac za pozivanje korisnika omogućuje pozivanje korisnika unosom njihovih podataka i dodjeljivanjem uloga. Pozvani korisnici mogu se prijaviti putem svoje e-pošte putem Google OAuth-a. Uloge definiraju pristup, od pune administrativne kontrole do ograničene uporabe aplikacije za chat s LLM agentima.',
+    empty_state: {
+      title: 'Nema pronađenih korisnika',
+      description: 'Vaša pretraga nije dala rezultate. Molimo provjerite filtere ili pokušajte s drugačijim kriterijima pretrage.',
+    },
     delete_user: {
       title: 'Izbriši Korisnika',
       description: 'Jeste li sigurni da želite izbrisati ovog korisnika? Ova radnja se ne može poništiti.',

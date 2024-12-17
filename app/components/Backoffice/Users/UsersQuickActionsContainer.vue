@@ -12,6 +12,7 @@ const openInviteUserModal = () => {
   <div class="users-actions-container">
     <el-button
       type="primary"
+      data-testid="bo-users-create-user-button"
       @click="openInviteUserModal()"
     >
       <AddPersonIcon size="20px" /> {{ $t('users.invite_user') }}

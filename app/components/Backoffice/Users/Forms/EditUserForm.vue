@@ -1,42 +1,42 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
+import type { EditUserPayload, User } from '~/types/users'
 import CheckIcon from '~/assets/icons/svg/check.svg'
-import type { CreateUserPayload } from '~/types/users.ts'
 
-const props = defineProps({
-  resetFormTrigger: {
-    type: Boolean,
-    default: false,
-    required: false,
+const props = withDefaults(
+  defineProps<{
+    selectedUser: User | undefined | null
+    resetFormTrigger: boolean
+    hasCancelOption: boolean
+  }>(),
+  {
+    resetFormTrigger: false,
+    hasCancelOption: true,
   },
-  hasCancelOption: {
-    type: Boolean,
-    default: true,
-    required: false,
-  },
-})
+)
 
 const emits = defineEmits<Emits>()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
-const router = useRouter()
 
 interface Emits {
-  (event: 'userCreated'): void
-  (event: 'userCreationCanceled'): void
+  (event: 'userEdited'): void
+  (event: 'userEditCanceled'): void
 }
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) { return }
   formEl.resetFields()
 }
 
-const inviteUserformRef = ref<FormInstance>()
-const inviteUserform = reactive<CreateUserPayload>({
+const editUserFormRef = ref<FormInstance>()
+
+const editUserForm = reactive<EditUserPayload>({
+  active: false,
   email: '',
   fullName: '',
   firstName: '',
   lastName: '',
-  role: 'user',
+  role: '',
 })
 
 const userRoles = computed(() => [
@@ -51,6 +51,10 @@ const userRoles = computed(() => [
     value: 'admin',
   },
 ])
+const scrollIntoViewOptions = {
+  behavior: 'smooth',
+  block: 'center',
+}
 
 const validateEmail = (_rule: any, value: string, callback: (error?: Error) => void) => {
   if (!value) {
@@ -63,7 +67,8 @@ const validateEmail = (_rule: any, value: string, callback: (error?: Error) => v
     callback()
   }
 }
-const rules = computed<FormRules<CreateUserPayload>>(() => ({
+
+const rules = computed<FormRules<EditUserPayload>>(() => ({
   email: [
     { required: true, message: t('users.form.rules.required'), trigger: 'blur' },
     { validator: validateEmail, trigger: 'blur' },
@@ -83,87 +88,96 @@ const rules = computed<FormRules<CreateUserPayload>>(() => ({
 }))
 
 const selectUserRole = (role: string) => {
-  return inviteUserform.role = role
+  return editUserForm.role = role
 }
-const { execute: executeCreateUser, error: createUserError, status: createUserStatus, data: createdUserData } = await useAsyncData(() => $api.user.PostCreateUser(inviteUserform), {
+
+const { execute: executeEditUser, error: editUserError, status: editUserStatus } = await useAsyncData(() => $api.user.PutEditUser(props.selectedUser!.id, editUserForm), {
   immediate: false,
 })
 
-const submitInviteUserForm = async (formEl: FormInstance | undefined) => {
+const submitEditUserForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
     return
   }
+
   await formEl.validate(async (valid, __) => {
     if (valid) {
-      await executeCreateUser()
-      if (createUserError.value) {
-        if (createUserError.value?.statusCode === 409) {
-          ElNotification({
-            title: t('users.notifications.create_error_title'),
-            message: t('users.notifications.create_error_existing_user_description'),
-            type: 'error',
-            customClass: 'error',
-            duration: 2500,
-          })
-        }
-        else {
-          ElNotification({
-            title: t('users.notifications.create_error_title'),
-            message: t('users.notifications.create_error_description'),
-            type: 'error',
-            customClass: 'error',
-            duration: 2500,
-          })
-        }
+      await executeEditUser()
+      if (editUserError.value) {
+        ElNotification({
+          title: t('users.edit_user.notifications.error_title'),
+          message: t('users.edit_user.notifications.error_description'),
+          type: 'error',
+          customClass: 'error',
+          duration: 2500,
+        })
       }
+
       else {
         ElNotification({
-          title: t('users.notifications.create_title'),
-          message: t('users.notifications.create_message', { name: inviteUserform.fullName }),
+          title: t('users.edit_user.notifications.success_title'),
+          message: t('users.edit_user.notifications.success_description'),
           type: 'success',
           customClass: 'success',
           duration: 2500,
         })
-
-        router.push(`/admin/users/${createdUserData.value?.id}`)
-        emits('userCreated')
-        resetForm(inviteUserformRef.value)
+        emits('userEdited')
+        resetForm(editUserFormRef.value)
       }
     }
   })
 }
 
-const scrollIntoViewOptions = {
-  behavior: 'smooth',
-  block: 'center',
+const prefillEditUserForm = () => {
+  if (props.selectedUser) {
+    editUserForm.active = props.selectedUser.active
+    editUserForm.email = props.selectedUser.email
+    editUserForm.firstName = props.selectedUser.firstName
+    editUserForm.lastName = props.selectedUser.lastName
+    editUserForm.fullName = props.selectedUser.fullName
+    editUserForm.role = props.selectedUser.role
+  }
 }
+watch(
+  () => props.selectedUser,
+  () => {
+    prefillEditUserForm()
+  },
+)
+
+onMounted(() => {
+  prefillEditUserForm()
+})
+
 watch(() => props.resetFormTrigger, (newVal) => {
   if (newVal) {
-    resetForm(inviteUserformRef.value)
+    resetForm(editUserFormRef.value)
   }
 })
 
-const isCreateUserLoading = computed(() => {
-  return createUserStatus.value === 'pending'
+const isEditUserLoading = computed(() => {
+  return editUserStatus.value === 'pending'
 })
 </script>
 
 <template>
   <ElForm
-    ref="inviteUserformRef"
-    :model="inviteUserform"
+    ref="editUserFormRef"
+    :model="editUserForm"
+    data-testid="bo-edit-user-form"
     :rules="rules"
     :scroll-to-error="true"
     :scroll-into-view-options="scrollIntoViewOptions"
   >
-    <div class="invite-user-form-items-wrapper">
+    <div class="edit-user-form-items-wrapper">
       <div class="form-items-inline">
         <ElFormItem
           :label="t('users.form.first_name')"
           prop="firstName"
         >
           <ElInput
-            v-model="inviteUserform.firstName"
+            v-model="editUserForm.firstName"
+            data-testid="bo-edit-user-form-first-name-input"
             :placeholder="t('users.form.first_name_placeholder')"
             size="small"
           />
@@ -173,7 +187,8 @@ const isCreateUserLoading = computed(() => {
           prop="lastName"
         >
           <ElInput
-            v-model="inviteUserform.lastName"
+            v-model="editUserForm.lastName"
+            data-testid="bo-edit-user-form-last-name-input"
             :placeholder="t('users.form.last_name_placeholder')"
             size="small"
           />
@@ -183,21 +198,21 @@ const isCreateUserLoading = computed(() => {
         <ElFormItem
           :label="t('users.form.email')"
           prop="email"
-          size="small"
         >
           <ElInput
-            v-model="inviteUserform.email"
+            v-model="editUserForm.email"
+            data-testid="bo-edit-user-form-email-input"
             :placeholder="t('users.form.email_placeholder')"
             size="small"
           />
         </ElFormItem>
-
         <ElFormItem
           :label="t('users.form.username')"
           prop="fullName"
         >
           <ElInput
-            v-model="inviteUserform.fullName"
+            v-model="editUserForm.fullName"
+            data-testid="bo-edit-user-form-full-name-input"
             :placeholder="t('users.form.username_placeholder')"
             size="small"
           />
@@ -208,8 +223,9 @@ const isCreateUserLoading = computed(() => {
         <template v-for="role in userRoles" :key="role.value">
           <el-card
             class="is-accent select-role-card"
+            :data-testid="`bo-edit-user-form-role-select-card-${role.value}`"
             :class="{
-              selected: role.value === inviteUserform.role,
+              selected: role.value === editUserForm.role,
             }"
             @click="selectUserRole(role.value)"
           >
@@ -218,7 +234,7 @@ const isCreateUserLoading = computed(() => {
                 <p class="role-label">
                   {{ role.label }}
                 </p>
-                <CheckIcon v-if="role.value === inviteUserform.role" size="22px" />
+                <CheckIcon v-if="role.value === editUserForm.role" size="22px" />
               </div>
 
               <span class="role-description">  {{ role.description }}</span>
@@ -226,22 +242,24 @@ const isCreateUserLoading = computed(() => {
           </el-card>
         </template>
       </div>
-      <ElFormItem class="form-item-actions">
+      <ElFormItem>
         <div class="form-actions">
           <div class="form-actions-left">
             <el-button
               v-if="props.hasCancelOption"
+              data-testid="bo-edit-user-form-cancel-button"
               size="small"
               plain
-              @click="emits('userCreationCanceled')"
+              @click="emits('userEditCanceled')"
             >
-              {{ t('users.form.cancel') }}
+              {{ t('users.edit_user.cancel') }}
             </el-button>
             <el-button
               size="small"
-              :disabled="isCreateUserLoading"
+              data-testid="bo-edit-user-form-reset-button"
+              :disabled="isEditUserLoading"
               plain
-              @click="resetForm(inviteUserformRef)"
+              @click="resetForm(editUserFormRef)"
             >
               {{ t('users.form.reset') }}
             </el-button>
@@ -249,10 +267,11 @@ const isCreateUserLoading = computed(() => {
           <ElButton
             type="primary"
             size="small"
-            :disabled="isCreateUserLoading"
-            @click="submitInviteUserForm(inviteUserformRef)"
+            data-testid="bo-edit-user-form-confirm-button"
+            :disabled="isEditUserLoading"
+            @click="submitEditUserForm(editUserFormRef)"
           >
-            {{ t('users.form.submit') }}
+            {{ t('users.edit_user.confirm') }}
           </ElButton>
         </div>
       </ElFormItem>
@@ -266,14 +285,11 @@ const isCreateUserLoading = computed(() => {
   gap: 22px;
   width: 100%;
   justify-content: space-between;
-
+  margin-top: 32px;
   & .form-actions-left {
     display: flex;
     gap: 22px;
   }
-}
-.form-item-actions {
-  padding: 0;
 }
 .new-user-role-wrapper {
   display: flex;
@@ -284,10 +300,47 @@ const isCreateUserLoading = computed(() => {
   color: var(--form-item-label-color);
   font-size: var(--font-size-fluid-2);
 }
-.invite-user-form-items-wrapper {
+
+.edit-user-modal-body {
   display: flex;
   flex-direction: column;
-  padding-top: var(--spacing-fluid-xl);
+  gap: 22px;
+}
+
+.dark {
+  .select-role-card {
+    background: var(--color-primary-800);
+    border: 1.5px solid var(--color-primary-600);
+    &:hover {
+      cursor: pointer;
+    }
+    &.selected {
+      background: var(--color-primary-700);
+      border: 1.5px solid var(--color-primary-0);
+    }
+
+    & .select-role-card-body {
+      & .title-wrapper {
+        .role-label {
+          color: var(--color-primary-0);
+        }
+      }
+
+      & .role-description {
+        color: var(--color-primary-100);
+      }
+    }
+  }
+  .edit-user-form-items-wrapper {
+    & .form-description {
+      color: var(--color-primary-0);
+    }
+  }
+}
+.edit-user-form-items-wrapper {
+  display: flex;
+  flex-direction: column;
+
   & .form-items-inline {
     display: flex;
     gap: var(--spacing-fluid-xs);
@@ -300,7 +353,6 @@ const isCreateUserLoading = computed(() => {
     text-align: left;
   }
 }
-
 .select-role-card {
   border: 1.5px solid var(--color-primary-300);
   background: var(--color-primary-200);
@@ -335,37 +387,6 @@ const isCreateUserLoading = computed(() => {
       color: var(--color-primary-800);
       line-height: normal;
       font-size: var(--font-size-fluid-1);
-    }
-  }
-}
-
-.dark {
-  .select-role-card {
-    background: var(--color-primary-800);
-    border: 1.5px solid var(--color-primary-600);
-    &:hover {
-      cursor: pointer;
-    }
-    &.selected {
-      background: var(--color-primary-700);
-      border: 1.5px solid var(--color-primary-0);
-    }
-
-    & .select-role-card-body {
-      & .title-wrapper {
-        .role-label {
-          color: var(--color-primary-0);
-        }
-      }
-
-      & .role-description {
-        color: var(--color-primary-100);
-      }
-    }
-  }
-  .invite-user-form-items-wrapper {
-    & .form-description {
-      color: var(--color-primary-0);
     }
   }
 }

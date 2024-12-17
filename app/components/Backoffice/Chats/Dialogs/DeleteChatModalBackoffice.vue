@@ -6,32 +6,30 @@ import DeleteIcon from '~/assets/icons/svg/delete.svg'
 
 const props = defineProps<{
   selectedChat: AdminChatDetails | null
-  isOpen: boolean
 }>()
 const emits = defineEmits<Emits>()
-const { t } = useI18n()
-const deleteChatModalVisible = ref(props.isOpen)
 
-const chatStore = useChatStore()
+const isOpen = defineModel<boolean>()
+
+const { t } = useI18n()
+const { $api } = useNuxtApp()
+
 const closeModal = () => {
-  deleteChatModalVisible.value = false
-  emits('closeModal')
+  isOpen.value = false
 }
 
-watch(() => props.isOpen, (newVal) => {
-  deleteChatModalVisible.value = newVal
-})
 interface Emits {
-  (event: 'closeModal'): void
   (event: 'chatDeleted'): void
 }
-const { execute: deleteChat, error } = await useAsyncData(() => chatStore.DELETE_ChatBackoffice(props.selectedChat!.chat?.id), { immediate: false })
+
+const { execute: executeDeleteChat, error: deleteChatError, status: deleteChatStatus } = await useAsyncData(() => $api.chat.DeleteChat(props.selectedChat!.chat?.id), {
+  immediate: false,
+})
 
 const submitDeleteChat = async () => {
   if (props.selectedChat?.chat?.id) {
-    await deleteChat()
-    deleteChatModalVisible.value = false
-    if (error.value) {
+    await executeDeleteChat()
+    if (deleteChatError.value) {
       ElNotification({
         title: t('chat.delete_chat.notifications.error_title'),
         message: t('chat.delete_chat.notifications.error_description'),
@@ -52,12 +50,16 @@ const submitDeleteChat = async () => {
     }
   }
 }
+const isDeleteChatLoading = computed(() => {
+  return deleteChatStatus.value === 'pending'
+})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="deleteChatModalVisible"
+      v-model="isOpen"
+      data-testid="bo-delete-chat-dialog"
       :destroy-on-close="true"
       align-center
       class="barrage-dialog--small"
@@ -77,11 +79,16 @@ const submitDeleteChat = async () => {
       </div>
 
       <template #footer>
-        <el-button @click="closeModal">
-          Cancel
+        <el-button data-testid="bo-delete-chat-dialog-cancel-button" @click="closeModal">
+          {{ t('settings.cancel') }}
         </el-button>
-        <el-button type="danger" @click="submitDeleteChat()">
-          Delete <DeleteIcon />
+        <el-button
+          type="danger"
+          data-testid="bo-delete-chat-dialog-delete-button"
+          :disabled="isDeleteChatLoading"
+          @click="submitDeleteChat()"
+        >
+          {{ t('settings.delete') }} <DeleteIcon />
         </el-button>
       </template>
     </ElDialog>

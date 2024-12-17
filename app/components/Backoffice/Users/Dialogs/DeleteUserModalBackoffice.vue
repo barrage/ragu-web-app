@@ -64,6 +64,7 @@ const isDeleteUserLoading = computed(() => {
     <ElDialog
       v-model="isOpen"
       destroy-on-close
+      data-testid="bo-delete-user-dialog"
       align-center
       class="barrage-dialog--small"
       :close-icon="CloseCircleIcon"

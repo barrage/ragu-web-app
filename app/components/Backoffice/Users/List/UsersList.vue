@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { nextTick } from 'vue'
 import type { User } from '~/types/users'
 
 const props = defineProps<{
@@ -74,6 +73,7 @@ const handleUserDeactivated = () => {
       >
         <UserCard
           v-motion-fade
+          :data-testid="`bo-user-data-card-${index + 1}`"
           :delay="(index * 100)"
           :duration="400"
           :user="user"

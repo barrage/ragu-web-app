@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import type { SortingValues } from '~/types/sort'
 
+const props = defineProps<{
+  selectedSortBy: string
+  selectedSortDirection: 'asc' | 'desc'
+}>()
+
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
 }>()
@@ -25,8 +30,18 @@ const updateSort = (sortingValues: SortingValues) => {
       {{ $t('users.all_users') }}
     </p>
 
-    <div class="actions-wrapper">
-      <SortSelect :options="sortOptions" @sort-updated="updateSort" />
+    <div
+      v-motion-pop
+      :delay="300"
+      class="actions-wrapper"
+    >
+      <SortSelect
+        :initial-sort-by="props.selectedSortBy"
+        :initial-sort-direction="props.selectedSortDirection"
+        data-testid="bo-users-list-sort"
+        :options="sortOptions"
+        @sort-updated="updateSort"
+      />
     </div>
   </div>
 </template>

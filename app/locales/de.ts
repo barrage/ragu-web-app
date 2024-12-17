@@ -895,6 +895,10 @@ export default {
     empty_chats_title: 'Keine Chats verfügba',
     empty_chats_description: 'Dieser Benutzer hat noch keine Unterhaltungen gestartet. Alle zukünftigen Chats werden hier angezeigt.',
     invite_user_description: 'Das Benutzer Einladeformular ermöglicht es Ihnen, Benutzer einzuladen, indem Sie deren Details eingeben und Rollen zuweisen. Eingeladene Benutzer können sich mit ihrer E-Mail über Google OAuth anmelden. Rollen definieren den Zugriff, von voller Admin-Kontrolle bis hin zur eingeschränkten Nutzung der App für LLM-Agenten-Chats.',
+    empty_state: {
+      title: 'Keine Benutzer gefunden',
+      description: 'Ihre Suche hat keine Ergebnisse geliefert. Bitte überprüfen Sie die Filter oder versuchen Sie es mit anderen Suchkriterien.',
+    },
     delete_user: {
       title: 'Benutzer löschen',
       description: 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',

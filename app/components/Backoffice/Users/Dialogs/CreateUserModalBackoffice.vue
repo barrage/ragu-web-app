@@ -23,6 +23,7 @@ const closeModal = () => {
       v-model="isOpen"
       align-center
       destroy-on-close
+      data-testid="bo-create-user-dialog"
       class="barrage-dialog--medium"
       :close-icon="CloseCircleIcon"
       :close-on-click-modal="false"

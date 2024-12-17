@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import DashboardIcon from '~/assets/icons/svg/dashboard-icon.svg'
-import DashboardHeroOverview from '~/components/Admin/Dashboard/DashboardHeroOverview.vue'
 import type { AgentStatistic, PieChartDataEntry, UserStatistic } from '~/types/statistic'
 
 definePageMeta({
