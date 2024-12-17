@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
     @sort-change="handleSortChange"
   />
   <GlobalCardListLoader
-    v-if="(delayedStatus === 'pending')"
+    v-if="(delayedStatus === 'pending') || (delayedStatus === 'idle')"
     type="user"
     :skeleton-count="10"
   />

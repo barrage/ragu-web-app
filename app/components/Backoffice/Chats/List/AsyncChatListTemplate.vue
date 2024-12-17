@@ -130,8 +130,9 @@ onBeforeUnmount(() => {
     :selected-sort-direction="sort.sortOrder"
     @sort-change="handleSortChange"
   />
+
   <GlobalCardListLoader
-    v-if="(delayedStatus === 'pending')"
+    v-if="(delayedStatus === 'pending') || (delayedStatus === 'idle')"
     type="chat"
     :skeleton-count="10"
   />
