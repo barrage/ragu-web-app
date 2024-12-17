@@ -1,8 +1,8 @@
-# LLMAO Frontend Application
+# Frontend Application
 
 ## Overview
 
-The **LLMAO Frontend Application** is a web-based platform designed to interact with **Large Language Model (LLM) agents**. This application allows users to create, manage, and interact with agents powered by LLMs. It provides distinct interfaces and functionalities for two main user roles:
+The **Frontend Application** is a web-based platform designed to interact with **Large Language Model (LLM) agents**. This application allows users to create, manage, and interact with agents powered by LLMs. It provides distinct interfaces and functionalities for two main user roles:
 
 - **Admin Users**: These users have full administrative access to the platform, where they can manage users, configure agents, upload documents, and create collections that can be assigned to specific agents. They also have control over agent configurations, permissions, and content management, allowing for highly customizable agent experiences.
 
@@ -105,4 +105,12 @@ Locally preview production build:
 npm run preview
 ```
 
-## ⚖️ License
+## License
+
+This repository contains Frontend application, a part of Ragu, covered under the [Apache License 2.0](LICENSE), except where noted (any Ragu logos or trademarks are not covered under the Apache License, and should be explicitly noted by a LICENSE file.)
+
+Frontend application, a part of Ragu, is a product produced from this open source software, exclusively by Barrage d.o.o. It is distributed under our commercial terms.
+
+Others are allowed to make their own distribution of the software, but they cannot use any of the Ragu trademarks, cloud services, etc.
+
+We explicitly grant permission for you to make a build that includes our trademarks while developing Ragu itself. You may not publish or share the build, and you may not use that build to run Ragu for any other purpose.
