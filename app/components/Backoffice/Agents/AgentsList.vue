@@ -20,10 +20,6 @@ const emits = defineEmits<{
 
 // FUNCTIONS
 
-const changePage = (page: number) => {
-  emits('pageChange', page)
-}
-
 /* Activate Agent */
 const selectedAgentActivate = ref<Agents | null>(null)
 const activateAgentModalVisible = ref(false)
@@ -31,10 +27,6 @@ const activateAgentModalVisible = ref(false)
 const openActivateAgentModal = (agent: Agents) => {
   selectedAgentActivate.value = agent
   activateAgentModalVisible.value = true
-}
-
-const closeActivateModal = () => {
-  activateAgentModalVisible.value = false
 }
 
 const agentActivated = () => {
@@ -49,10 +41,6 @@ const openDeactivateAgentModal = (agent: Agents) => {
   deactivateAgentModalVisible.value = true
 }
 
-const closeDeactivateModal = () => {
-  deactivateAgentModalVisible.value = false
-}
-
 const agentDeactivated = () => {
   emits('agentDeactivated')
 }
@@ -60,40 +48,33 @@ const agentDeactivated = () => {
 
 <template>
   <div class="agents-list-container">
-    <div
-      v-for="(agent, index) in props.agents"
-      :key="agent.agent.id"
-    >
-      <AgentCard
-        v-motion-fade
-        :delay="(index * 100)"
-        :duration="400"
-        :single-agent="agent"
-        @activate-agent="openActivateAgentModal(agent)"
-        @deactivate-agent="openDeactivateAgentModal(agent)"
-      />
+    <div class="agents-list">
+      <div
+        v-for="(agent, index) in props.agents"
+        :key="agent.agent.id"
+      >
+        <AgentCard
+          v-motion-fade
+          :delay="(index * 100)"
+          :duration="400"
+          :single-agent="agent"
+          @activate-agent="openActivateAgentModal(agent)"
+          @deactivate-agent="openDeactivateAgentModal(agent)"
+        />
+      </div>
     </div>
+    <ActivateAgentModalBackoffice
+      v-model="activateAgentModalVisible"
+      :selected-agent="selectedAgentActivate"
+      @agent-activated="agentActivated"
+    />
 
-    <Pagination
-      :current-page="props.pagination.currentPage"
-      :page-size="props.pagination.pageSize"
-      :total="props.pagination.total"
-      @page-change="(page) => changePage(page)"
+    <DeactivateAgentModalBackoffice
+      v-model="deactivateAgentModalVisible"
+      :selected-agent="selectedAgentDeactivate"
+      @agent-deactivated="agentDeactivated"
     />
   </div>
-  <ActivateAgentModalBackoffice
-    :is-open="activateAgentModalVisible"
-    :selected-agent="selectedAgentActivate"
-    @close-modal="closeActivateModal"
-    @agent-activated="agentActivated"
-  />
-
-  <DeactivateAgentModalBackoffice
-    :is-open="deactivateAgentModalVisible"
-    :selected-agent="selectedAgentDeactivate"
-    @close-modal="closeDeactivateModal"
-    @agent-deactivated="agentDeactivated"
-  />
 </template>
 
 <style lang="scss" scoped>
@@ -104,5 +85,11 @@ const agentDeactivated = () => {
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
+}
+
+.agents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 </style>

@@ -1,25 +1,27 @@
 <script setup lang="ts">
-import type { Document } from '~/types/document'
+import type { DocumentListResponse } from '~/types/document'
 
-const props = defineProps<{ documents: Document[] }>()
+const props = defineProps<{ documents: DocumentListResponse }>()
+
+const documentItems = computed(() => props.documents.items)
 
 const lastModifiedDocuments = computed(() => {
-  if (!props?.documents) {
+  if (!documentItems.value) {
     return []
   }
-  return props?.documents
+  return documentItems.value
     .slice()
     .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
     .slice(0, 3)
 })
 
 const documentFormats = computed(() => {
-  if (!props?.documents) {
+  if (!documentItems.value) {
     return []
   }
   const formatCounts: Record<string, number> = {}
 
-  props?.documents.forEach((doc) => {
+  documentItems.value.forEach((doc) => {
     formatCounts[doc.ext] = (formatCounts[doc.ext] || 0) + 1
   })
 
@@ -28,8 +30,6 @@ const documentFormats = computed(() => {
     value,
   }))
 })
-
-const totalDocuments = computed(() => props?.documents?.length)
 
 /* const mostUsedTag = computed(() => {
   const tagCounts: Record<string, number> = {}
@@ -50,7 +50,7 @@ const totalDocuments = computed(() => props?.documents?.length)
 <template>
   <div class="document-statistics grid">
     <div class="total-documents-count">
-      <TotalDocumentCount :total="totalDocuments" />
+      <TotalDocumentCount :total="documents.total" />
     </div>
 
     <div class="last-modified-documents">

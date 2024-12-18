@@ -7,32 +7,35 @@ import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 
 const props = defineProps<{
   selectedAgent: Agents | Agent | null | undefined
-  isOpen: boolean
+
 }>()
 
 const emits = defineEmits<Emits>()
 
 interface Emits {
-  (event: 'closeModal'): void
   (event: 'agentDeactivated'): void
 }
 
 // CONSTANTS & STATES
 
 const { t } = useI18n()
-const deactivateAgentModalVisible = ref(props.isOpen)
 const { $api } = useNuxtApp()
+const isOpen = defineModel<boolean>()
 
 // API CALLS
 
-const { execute: deactivateAgent, error } = await useAsyncData(() => $api.agent.PutDeactivateAgent(props.selectedAgent!.agent.id), { immediate: false })
+const { execute: deactivateAgent, error, status: deactivateAgentStatus } = await useAsyncData(() => $api.agent.PutDeactivateAgent(props.selectedAgent!.agent.id), { immediate: false })
 
 // FUNCTIONS
+
+const closeModal = () => {
+  isOpen.value = false
+}
 
 const submitDeactivateAgent = async () => {
   if (props.selectedAgent?.agent?.id) {
     await deactivateAgent()
-    deactivateAgentModalVisible.value = false
+
     if (error.value) {
       ElNotification({
         title: t('agents.deactivate_agent.notifications.error_title'),
@@ -44,6 +47,7 @@ const submitDeactivateAgent = async () => {
     }
     else {
       emits('agentDeactivated')
+      closeModal()
       ElNotification({
         title: t('agents.deactivate_agent.notifications.success_title'),
         message: t('agents.deactivate_agent.notifications.success_description'),
@@ -54,23 +58,12 @@ const submitDeactivateAgent = async () => {
     }
   }
 }
-
-const closeModal = () => {
-  deactivateAgentModalVisible.value = false
-  emits('closeModal')
-}
-
-// WATCHERS
-
-watch(() => props.isOpen, (newVal) => {
-  deactivateAgentModalVisible.value = newVal
-})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="deactivateAgentModalVisible"
+      v-model="isOpen"
       destroy-on-close
       align-center
       class="barrage-dialog--small"
@@ -102,6 +95,7 @@ watch(() => props.isOpen, (newVal) => {
         </el-button>
         <el-button
           data-testid="confirm-deactivate-agent-modal-button"
+          :disabled="deactivateAgentStatus === 'pending'"
           type="danger"
           @click="submitDeactivateAgent()"
         >

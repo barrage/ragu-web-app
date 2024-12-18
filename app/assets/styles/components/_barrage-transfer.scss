@@ -95,7 +95,7 @@
           padding: 6px 0;
           list-style: none;
           height: var(--transfer-panel-body-height);
-          overflow: auto;
+          overflow: scroll;
           box-sizing: border-box;
           .barrage-checkbox {
             height: var(--transfer-item-height);

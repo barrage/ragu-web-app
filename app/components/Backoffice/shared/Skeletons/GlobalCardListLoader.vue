@@ -10,6 +10,7 @@ const skeletonCardData = computed(() => {
       numberOfLabelDescriptions: 3,
       numberOfActions: 4,
       hasProfileDescription: true,
+
     }
   }
   if (props.type === 'chat') {
@@ -24,6 +25,7 @@ const skeletonCardData = computed(() => {
       numberOfLabelDescriptions: 4,
       numberOfActions: 3,
       hasProfileDescription: true,
+      gridColumns: 7,
     }
   }
   if (props.type === 'collection') {
@@ -59,9 +61,7 @@ const skeletonCardData = computed(() => {
       <GlobalCardLoader
         v-motion-fade
         :delay="((index + 1) * 50)"
-        :number-of-label-descriptions="skeletonCardData?.numberOfLabelDescriptions"
-        :number-of-actions="skeletonCardData?.numberOfActions"
-        :has-profile-description="skeletonCardData?.hasProfileDescription"
+        v-bind="skeletonCardData"
       />
     </template>
   </div>

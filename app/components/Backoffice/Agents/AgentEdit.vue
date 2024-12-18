@@ -2,7 +2,18 @@
 // IMPORTS
 import type { FormInstance, FormRules } from 'element-plus'
 import { useAgentStore } from '~/stores/agents'
-import type { EmbeddingProvider } from '~/types/agent'
+import type { Agent, EmbeddingProvider } from '~/types/agent'
+
+// PROPS & EMITS
+
+const props = defineProps<{
+
+  singleAgent: Agent | null | undefined
+}>()
+
+const emits = defineEmits<{
+  (event: 'agentUpdated'): void
+}>()
 
 // LAYOUT
 definePageMeta({
@@ -12,6 +23,7 @@ definePageMeta({
 // CONSTANTS & STATES
 const agentStore = useAgentStore()
 const providerStore = useProviderStore()
+const { $api } = useNuxtApp()
 
 const route = useRoute()
 const { t } = useI18n()
@@ -69,10 +81,10 @@ const rules = computed<FormRules>(() => ({
 
 // API CALLS
 
-const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => agentStore.PUT_UpdateAgent(agentId.value, form), {
+const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => $api.agent.UpdateAgent(agentId.value, form), {
   immediate: false,
 })
-await useAsyncData(() => providerStore.GET_List_Providers())
+await useAsyncData(() => providerStore.GET_List_Providers(), { lazy: true })
 
 // ERROR HANDLERS
 errorHandler(updateError)
@@ -91,11 +103,12 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
         if (updateStatus.value === 'success') {
           ElNotification({
             title: t('agents.notifications.update_title'),
-            message: t('agents.notifications.update_message', { name: agentStore.singleAgent?.agent?.name }),
+            message: t('agents.notifications.update_message', { name: props.singleAgent?.agent?.name }),
             type: 'success',
             customClass: 'success',
             duration: 2500,
           })
+          emits('agentUpdated')
         }
       }
     })
@@ -127,18 +140,18 @@ watch(() => form.configuration?.llmProvider, async (newProvider) => {
 })
 
 const setForm = () => {
-  form.name = agentStore.singleAgent?.agent?.name ?? ''
-  form.configuration.context = agentStore.singleAgent?.configuration?.context ?? ''
-  form.description = agentStore.singleAgent?.agent?.description ?? ''
-  form.configuration.llmProvider = agentStore.singleAgent?.configuration?.llmProvider ?? ''
-  form.configuration.model = agentStore.singleAgent?.configuration?.model ?? ''
-  form.language = agentStore.singleAgent?.agent?.language ?? ''
-  form.configuration.temperature = agentStore.singleAgent?.configuration?.temperature ?? 0.1
-  form.configuration.instructions.titleInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
-  form.configuration.instructions.languageInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
-  form.configuration.instructions.summaryInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
-  form.configuration.instructions.promptInstruction = agentStore.singleAgent?.configuration?.agentInstructions?.promptInstruction ?? ''
-  form.active = agentStore.singleAgent?.agent?.active ?? true
+  form.name = props.singleAgent?.agent?.name ?? ''
+  form.configuration.context = props.singleAgent?.configuration?.context ?? ''
+  form.description = props.singleAgent?.agent?.description ?? ''
+  form.configuration.llmProvider = props.singleAgent?.configuration?.llmProvider ?? ''
+  form.configuration.model = props.singleAgent?.configuration?.model ?? ''
+  form.language = props.singleAgent?.agent?.language ?? ''
+  form.configuration.temperature = props.singleAgent?.configuration?.temperature ?? 0.1
+  form.configuration.instructions.titleInstruction = props.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
+  form.configuration.instructions.languageInstruction = props.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
+  form.configuration.instructions.summaryInstruction = props.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
+  form.configuration.instructions.promptInstruction = props.singleAgent?.configuration?.agentInstructions?.promptInstruction ?? ''
+  form.active = props.singleAgent?.agent?.active ?? true
 }
 
 // LYFECYCLE HOOKS
@@ -170,7 +183,7 @@ onUnmounted(() => {
           :label="t('agents.labels.name')"
           prop="name"
         >
-          <ElInput v-model="form.name" />
+          <ElInput v-model="form.name" data-testid="bo-edit-agent-form-name-input" />
         </ElFormItem>
         <!-- Language -->
         <ElFormItem
@@ -178,7 +191,7 @@ onUnmounted(() => {
           :label="t('agents.labels.language')"
           prop="language"
         >
-          <ElInput v-model="form.language" />
+          <ElInput v-model="form.language" data-testid="bo-edit-agent-form-language-input" />
         </ElFormItem>
 
         <!-- Language Instruction -->
@@ -187,7 +200,7 @@ onUnmounted(() => {
           :label="t('agents.labels.languageInstruction')"
           prop="configuration.instructions.language"
         >
-          <ElInput v-model="form.configuration.instructions.languageInstruction" />
+          <ElInput v-model="form.configuration.instructions.languageInstruction" data-testid="bo-edit-agent-form-language-instruction-input" />
         </ElFormItem>
 
         <!-- Description -->
@@ -199,6 +212,7 @@ onUnmounted(() => {
           <ElInput
             v-model="form.description"
             type="textarea"
+            data-testid="bo-edit-agent-form-description-input"
             :placeholder="t('agents.placeholder.description')"
           />
         </ElFormItem>
@@ -213,6 +227,7 @@ onUnmounted(() => {
           <ElInput
             v-model="form.configuration.instructions.titleInstruction"
             :placeholder="t('agents.placeholder.titleInstruction')"
+            data-testid="bo-edit-agent-form-title-instruction-input"
             type="textarea"
           />
         </ElFormItem>
@@ -226,6 +241,7 @@ onUnmounted(() => {
           <ElInput
             v-model="form.configuration.instructions.promptInstruction"
             :placeholder="t('agents.placeholder.promptInstruction')"
+            data-testid="bo-edit-agent-form-prompt-instruction-input"
             type="textarea"
           />
         </ElFormItem>
@@ -239,6 +255,7 @@ onUnmounted(() => {
           <ElInput
             v-model="form.configuration.instructions.summaryInstruction"
             :placeholder="t('agents.placeholder.summaryInstruction')"
+            data-testid="bo-edit-agent-form-summary-instruction-input"
             type="textarea"
           />
         </ElFormItem>
@@ -249,7 +266,11 @@ onUnmounted(() => {
           :label="t('agents.labels.context')"
           prop="configuration.context"
         >
-          <ElInput v-model="form.configuration.context" type="textarea" />
+          <ElInput
+            v-model="form.configuration.context"
+            type="textarea"
+            data-testid="bo-edit-agent-form-context-input"
+          />
         </ElFormItem>
 
         <!-- LLM Provider -->
@@ -258,12 +279,17 @@ onUnmounted(() => {
           :label="t('agents.labels.llmProvider')"
           prop="configuration.llmProvider"
         >
-          <ElSelect v-model="form.configuration.llmProvider" placeholder="Select LLM Provider">
+          <ElSelect
+            v-model="form.configuration.llmProvider"
+            placeholder="Select LLM Provider"
+            data-testid="bo-edit-agent-form-llm-provider-input"
+          >
             <ElOption
               v-for="provider in embeddingProviders"
               :key="provider"
               :label="provider"
               :value="provider"
+              data-testid="bo-edit-agent-form-llm-provider-option"
             />
           </ElSelect>
         </ElFormItem>
@@ -278,12 +304,14 @@ onUnmounted(() => {
             v-model="form.configuration.model"
             placeholder="Select Model"
             :disabled="providerStore?.availableLlmList?.length === 0"
+            data-testid="bo-edit-agent-form-model-input"
           >
             <ElOption
               v-for="model in providerStore?.availableLlmList"
               :key="model"
               :label="model"
               :value="model"
+              data-testid="bo-edit-agent-form-model-option"
             />
           </ElSelect>
         </ElFormItem>
@@ -299,12 +327,13 @@ onUnmounted(() => {
             :min="0"
             :max="1"
             :step="0.1"
+            data-testid="bo-edit-agent-form-temperature-input"
           />
         </ElFormItem>
 
         <!-- Active Status -->
         <ElFormItem :label="t('agents.labels.status')" class="range-checkbox">
-          <el-switch v-model="form.active" />
+          <el-switch v-model="form.active" data-testid="bo-edit-agent-form-active-input" />
         </ElFormItem>
 
         <ElFormItem class="actions">
@@ -316,7 +345,8 @@ onUnmounted(() => {
           </ElButton>
           <ElButton
             type="primary"
-            :loading="updateStatus === 'pending'"
+            :disabled="updateStatus === 'pending'"
+            data-testid="bo-edit-agent-form-confirm-button"
             @click="updateAgent(formRef)"
           >
             {{ t('agents.buttons.save') }}
