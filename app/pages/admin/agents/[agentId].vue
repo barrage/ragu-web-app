@@ -3,6 +3,7 @@ import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 
 const { t } = useI18n()
+const { $api } = useNuxtApp()
 definePageMeta({
   layout: 'admin-layout',
 })
@@ -14,14 +15,13 @@ useHead({
 // CONSTATNS
 
 const route = useRoute()
-const agentStore = useAgentStore()
 
 const selectedAgentId = ref(route.params.agentId as string)
 
 // API CALLS
-const { error, status } = await useAsyncData(() => agentStore.GET_SingleAgent(selectedAgentId.value), { lazy: true })
+const { execute: getAgentData, error: getSingleAgentError, status: getSingleAgentStatus, data: singleAgentData } = await useAsyncData(() => $api.agent.GetSingleAgent(selectedAgentId.value), { lazy: true })
 
-errorHandler(error)
+errorHandler(getSingleAgentError)
 </script>
 
 <template>
@@ -30,26 +30,30 @@ errorHandler(error)
       <ArrowLeftIcon size="20px" /> {{ t('agents.title') }}
     </LlmLink>
 
-    <template v-if="status === 'pending'">
+    <template v-if="getSingleAgentStatus === 'pending'">
       <div class="agent-details-loader">
         <MeetUpLoader />
       </div>
     </template>
 
-    <template v-else-if="status === 'success'">
-      <AgentDetails v-if="!agentStore.editMode" :single-agent="agentStore.singleAgent" />
-      <AgentEdit v-else :agent="agentStore.singleAgent" />
+    <template v-else-if="getSingleAgentStatus === 'success'">
+      <AgentDetails
+        :single-agent="singleAgentData"
+        @refresh-agent="getAgentData"
+      />
     </template>
 
-    <EmptyState
-      v-else
-      :title="t('agents.agent_card.empty_state_title')"
-      :description="t('agents.agent_card.empty_state_desc')"
-    >
-      <template #icon>
-        <AccountWarningIcon size="44px" />
-      </template>
-    </EmptyState>
+    <template v-else>
+      <EmptyState
+
+        :title="t('agents.agent_card.empty_state_title')"
+        :description="t('agents.agent_card.empty_state_desc')"
+      >
+        <template #icon>
+          <AccountWarningIcon size="44px" />
+        </template>
+      </EmptyState>
+    </template>
   </AdminPageContainer>
 </template>
 

@@ -3,18 +3,22 @@ const props = withDefaults(defineProps<{
   numberOfLabelDescriptions?: number
   numberOfActions?: number
   hasProfileDescription?: boolean
+  gridColumns?: number
 }>(), {
   numberOfLabelDescriptions: 3,
   numberOfActions: 3,
   hasProfileDescription: true,
+  gridColumns: 6,
 })
+
+const gridTemplateColumns = computed(() => `repeat(${props.gridColumns}, 1fr)`)
 </script>
 
 <template>
   <el-card
     class="skeleton-card"
   >
-    <div class="skeleton-card-body">
+    <div class="skeleton-card-body" :style="{ gridTemplateColumns }">
       <div class="skeleton-profile">
         <div class="skeleton-avatar" />
         <div class="skeleton-name-wrapper">
@@ -49,7 +53,6 @@ const props = withDefaults(defineProps<{
 
   & .skeleton-card-body {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
     column-gap: 16px;
 
     & .skeleton-profile {

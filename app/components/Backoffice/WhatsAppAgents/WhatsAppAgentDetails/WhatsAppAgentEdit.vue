@@ -15,7 +15,6 @@ const emits = defineEmits<{
 
 // CONSTANTS & STATES
 
-const agentStore = useAgentStore()
 const providerStore = useProviderStore()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
@@ -103,7 +102,7 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
           emits('refreshAgent')
           ElNotification({
             title: t('agents.notifications.update_title'),
-            message: t('agents.notifications.update_message', { name: agentStore.singleAgent?.agent?.name }),
+            message: t('agents.notifications.update_message', { name: props.singleAgent?.agent?.name }),
             type: 'success',
             customClass: 'success',
             duration: 2500,

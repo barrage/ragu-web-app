@@ -5,17 +5,23 @@ import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
 import CollectionDelete from '~/assets/icons/svg/folder-remove.svg'
 import FolderWarningIcon from '~/assets/icons/svg/folder-warning.svg'
 
-// PROPS
+// PROPS & EMITS
 
 const props = defineProps<{
   agentCollections: AgentCollection[] | undefined
 }>()
 
+const emits = defineEmits<{
+  (event: 'refreshAgent'): void
+}>()
+
 // CONSTATNTS & STATES
-const agentStore = useAgentStore()
+
 const assignCollectionModalVisible = ref(false)
 const deleteCollectionModalVisible = ref(false)
 const { t } = useI18n()
+
+const selectedCollectionDelete = ref<AgentCollection | null>(null)
 
 // FUNCTIONS
 
@@ -25,6 +31,7 @@ const openAssignCollectionModal = () => {
 
 const closeAssignCollectionModal = () => {
   assignCollectionModalVisible.value = false
+  emits('refreshAgent')
 }
 
 const openDeleteCollectionModal = () => {
@@ -33,6 +40,15 @@ const openDeleteCollectionModal = () => {
 
 const closeDeleteCollectionModal = () => {
   deleteCollectionModalVisible.value = false
+  emits('refreshAgent')
+}
+
+const handleCollectionAssigned = () => {
+  closeAssignCollectionModal()
+}
+
+const handleCollectionDeleted = () => {
+  closeDeleteCollectionModal()
 }
 </script>
 
@@ -57,7 +73,7 @@ const closeDeleteCollectionModal = () => {
           size="small"
           type="primary"
           plain
-          :disabled="agentStore.singleAgent?.collections?.length === 0"
+          :disabled="agentCollections.length === 0"
           @click="openDeleteCollectionModal()"
         >
           <CollectionDelete />  {{ t('collections.deleteModal.title') }}
@@ -90,12 +106,16 @@ const closeDeleteCollectionModal = () => {
     </div>
   </section>
   <AssignCollectionModal
-    :is-open="assignCollectionModalVisible"
-    @close-modal="closeAssignCollectionModal"
+    v-model="assignCollectionModalVisible"
+    :agent-collections="props.agentCollections"
+    @collection-assigned="handleCollectionAssigned"
   />
+
   <DeleteAgentCollectionModal
-    :is-open="deleteCollectionModalVisible"
-    @close-modal="closeDeleteCollectionModal"
+    v-model="deleteCollectionModalVisible"
+    :selected-collection="selectedCollectionDelete"
+    :agent-collections="props.agentCollections"
+    @collection-deleted="handleCollectionDeleted"
   />
 </template>
 

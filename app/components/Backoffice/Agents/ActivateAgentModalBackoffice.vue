@@ -12,33 +12,30 @@ interface Emits {
 
 const props = defineProps<{
   selectedAgent: Agents | Agent | null | undefined
-  isOpen: boolean
 
 }>()
 
 const emits = defineEmits<Emits>()
-
+const isOpen = defineModel<boolean>()
 // CONSTANTS & STATES
 
 const { t } = useI18n()
 const { $api } = useNuxtApp()
-const activateAgentModalVisible = ref(props.isOpen)
 
 const closeModal = () => {
-  activateAgentModalVisible.value = false
-  emits('closeModal')
+  isOpen.value = false
 }
 
 // API CALLS
 
-const { execute: activateAgent, error } = await useAsyncData(() => $api.agent.PutActiveAgent(props.selectedAgent!.agent.id), { immediate: false })
+const { execute: activateAgent, error, status: activateAgentStatus } = await useAsyncData(() => $api.agent.PutActiveAgent(props.selectedAgent!.agent.id), { immediate: false })
 
 // FUNCTIONS
 
 const submitActivateAgent = async () => {
   if (props.selectedAgent?.agent?.id) {
     await activateAgent()
-    activateAgentModalVisible.value = false
+
     if (error.value) {
       ElNotification({
         title: t('agents.activate_agent.notifications.error_title'),
@@ -50,6 +47,7 @@ const submitActivateAgent = async () => {
     }
     else {
       emits('agentActivated')
+      closeModal()
       ElNotification({
         title: t('agents.activate_agent.notifications.success_title'),
         message: t('agents.activate_agent.notifications.success_description'),
@@ -60,18 +58,12 @@ const submitActivateAgent = async () => {
     }
   }
 }
-
-// WATCHERS
-
-watch(() => props.isOpen, (newVal) => {
-  activateAgentModalVisible.value = newVal
-})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="activateAgentModalVisible"
+      v-model="isOpen"
       destroy-on-close
       align-center
       class="barrage-dialog--small"
@@ -104,6 +96,7 @@ watch(() => props.isOpen, (newVal) => {
         <el-button
           data-testid="confirm-activate-agent-modal-button"
           type="success"
+          :disabled="activateAgentStatus === 'pending'"
           @click="submitActivateAgent()"
         >
           {{ $t('agents.activate_agent.confirm') }}

@@ -9,7 +9,7 @@ import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 const { t } = useI18n()
 const statisticStore = useStatisticStore()
 const chatStore = useChatStore()
-const agentsStore = useAgentStore()
+const { $api } = useNuxtApp()
 
 const chatCount = computed<number>(() => {
   return statisticStore.dashboardCount?.chat.total || 0
@@ -27,7 +27,7 @@ const mostRecentChats = computed(() => recentChats.value?.items || [])
 
 // Active agents
 const { data: activeAgents, status: activeAgentsStatus } = useAsyncData('activeAgents', () =>
-  agentsStore.GET_AllAgents(1, 20, 'updatedAt', 'desc', false), { lazy: true })
+  $api.agent.GetAllAgents(1, 20, 'updatedAt', 'desc', false), { lazy: true })
 
 const allActiveAgents = computed(() => activeAgents.value?.items || [])
 </script>

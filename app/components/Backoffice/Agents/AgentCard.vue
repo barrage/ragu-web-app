@@ -34,7 +34,7 @@ const agentData = computed(() => {
     context: props.singleAgent?.configuration?.context || t('agents.agent_card.unknown_agentcontext'),
     status: props.singleAgent?.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
     statusType: props.singleAgent?.agent?.active ? StatusType.Success : StatusType.Danger,
-    createdAt: props.singleAgent?.agent?.createdAt ? formatDate(props.singleAgent?.agent.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.created_at'),
+    createdAt: props.singleAgent?.agent?.createdAt ? useRelativeDate(props.singleAgent?.agent.createdAt) : t('agents.agent_card.created_at'),
     model: props.singleAgent?.configuration?.model || '-',
     llmProvider: props.singleAgent?.configuration?.llmProvider || '-',
     embeddingModel: props.singleAgent?.agent?.embeddingModel || '-',
@@ -147,6 +147,10 @@ const editClick = (): void => {
       grid-template-columns: repeat(3, 1fr);
     }
     @include viewport-m {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    
+    @include viewport-ml {
       grid-template-columns: repeat(7, 1fr);
     }
     & .agent-name-type-wrapper {

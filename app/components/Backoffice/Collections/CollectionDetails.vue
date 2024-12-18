@@ -281,7 +281,7 @@ onMounted(() => {
             <LlmLoader />
           </template>
           <template v-else>
-            Submit
+            {{ t('users.form.submit') }}
           </template>
         </el-button>
       </template>

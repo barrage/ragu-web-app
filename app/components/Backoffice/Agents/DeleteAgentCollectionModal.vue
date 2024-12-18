@@ -2,17 +2,20 @@
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
+import type { AgentCollection } from '~/types/agent'
 
 // PROPS & EMITS
 
-const props = defineProps<{
-  isOpen: boolean
+defineProps<{
+
+  agentCollections: AgentCollection[] | undefined
 }>()
 
 const emits = defineEmits<Emits>()
 
 interface Emits {
   (event: 'closeModal'): void
+  (event: 'collectionDeleted'): void
 }
 
 // CONSTANTS & STATES
@@ -20,8 +23,7 @@ interface Emits {
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
-const agentStore = useAgentStore()
-const deleteCollectionModalVisible = ref(props.isOpen)
+const isOpen = defineModel<boolean>()
 const deleteCollections = ref<string[]>([])
 const agentId = route.params.agentId as string
 
@@ -37,21 +39,18 @@ const payload = computed(() => ({
 // FUNCTIONS
 
 const closeModal = () => {
-  deleteCollectionModalVisible.value = false
-  emits('closeModal')
+  isOpen.value = false
   deleteCollections.value = []
 }
 
 // API CALLS
 
-const { execute: deleteCollection, error } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
-const { execute: getAgent } = await useAsyncData(() => agentStore.GET_SingleAgent(agentId), { immediate: false })
+const { execute: deleteCollection, error, status: deleteCollectionStatus } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
 
 // FUNCTIONS
 
 const submitDeleteCollection = async () => {
   await deleteCollection()
-  deleteCollectionModalVisible.value = false
 
   if (error.value) {
     ElNotification({
@@ -63,7 +62,7 @@ const submitDeleteCollection = async () => {
     })
   }
   else {
-    await getAgent()
+    emits('collectionDeleted')
     ElNotification({
       title: t('collections.notifications.delete_title'),
       message: t('collections.notifications.delete_message'),
@@ -74,18 +73,12 @@ const submitDeleteCollection = async () => {
     deleteCollections.value = []
   }
 }
-
-// WATCHERS
-
-watch(() => props.isOpen, (newVal) => {
-  deleteCollectionModalVisible.value = newVal
-})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="deleteCollectionModalVisible"
+      v-model="isOpen"
       destroy-on-close
       align-center
       class="barrage-dialog--small"
@@ -108,7 +101,7 @@ watch(() => props.isOpen, (newVal) => {
           multiple
         >
           <ElOption
-            v-for="collection in agentStore.singleAgent?.collections"
+            v-for="collection in agentCollections"
             :key="collection.id"
             :label="collection.collection"
             :value="collection.collection"
@@ -122,7 +115,7 @@ watch(() => props.isOpen, (newVal) => {
         </el-button>
         <el-button
           type="danger"
-          :disabled="deleteCollections.length === 0"
+          :disabled="deleteCollections.length === 0 || deleteCollectionStatus === 'pending'"
           @click="submitDeleteCollection"
         >
           {{ $t('collections.buttons.delete') }}

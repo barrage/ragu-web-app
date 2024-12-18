@@ -5,22 +5,23 @@ import AddIcon from '~/assets/icons/svg/add.svg'
 import MinusIcon from '~/assets/icons/svg/minus.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 import type { AssignCollectionPayload } from '~/types/collection'
+import type { AgentCollection } from '~/types/agent'
 
 // PROPS & EMITS
 
 const props = defineProps<{
-  isOpen: boolean
+  modelValue: boolean
+  agentCollections: AgentCollection[] | undefined
 }>()
-const emits = defineEmits<Emits>()
 
-interface Emits {
-  (event: 'closeModal'): void
-}
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void
+  (e: 'collectionAssigned'): void
+}>()
 
 // CONSTANTS & STATES
 
 const collectionStore = useCollectionsStore()
-const agentStore = useAgentStore()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
@@ -31,7 +32,7 @@ const scrollIntoViewOptions = {
   block: 'center',
 }
 
-const assignCollectionModalVisible = ref(props.isOpen)
+const isOpen = defineModel<boolean>()
 const assignCollectionFormRef = ref<FormInstance>()
 const assignCollectionForm = reactive({
   provider: 'weaviate',
@@ -56,7 +57,7 @@ const payload = computed(() => ({
 
 const filteredCollections = computed(() => {
   const existingCollectionNames = new Set(
-    agentStore.singleAgent?.collections?.map(entry => entry.collection),
+    props.agentCollections?.map(entry => entry.collection),
   )
 
   return collectionStore.collections.filter((collection) => {
@@ -73,22 +74,23 @@ const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
 }
 ))
 
-// WATCHERS
-
-watch(() => props.isOpen, (newVal) => {
-  assignCollectionModalVisible.value = newVal
-})
-
 // API CALLS
 
 await useAsyncData(() => collectionStore.GET_AllCollections())
 
-const { execute: putCollection, error } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
-
-const { execute: getAgent } = await useAsyncData(() => agentStore.GET_SingleAgent(agentId), { immediate: false })
+const { execute: putCollection, error, status: updateAgentCollectionStatus } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
 
 // FUNCTIONS
 
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) { return }
+  formEl.resetFields()
+}
+
+const closeModal = () => {
+  isOpen.value = false
+  resetForm(assignCollectionFormRef.value)
+}
 const submitAssignCollectionForm = async () => {
   if (!assignCollectionFormRef.value) {
     return
@@ -97,7 +99,7 @@ const submitAssignCollectionForm = async () => {
   await assignCollectionFormRef.value.validate(async (valid) => {
     if (valid) {
       await putCollection()
-      assignCollectionModalVisible.value = false
+
       if (error.value) {
         ElNotification({
           title: t('collections.assign_collection.notification.error_title'),
@@ -108,7 +110,8 @@ const submitAssignCollectionForm = async () => {
         })
       }
       else {
-        await getAgent()
+        closeModal()
+        emits('collectionAssigned')
         ElNotification({
           title: t('collections.notifications.delete_title'),
           message: t('collections.assign_collection.notification.assign_cuccess_title'),
@@ -120,22 +123,12 @@ const submitAssignCollectionForm = async () => {
     }
   })
 }
-
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) { return }
-  formEl.resetFields()
-}
-const closeModal = () => {
-  assignCollectionModalVisible.value = false
-  resetForm(assignCollectionFormRef.value)
-  emits('closeModal')
-}
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="assignCollectionModalVisible"
+      v-model="isOpen"
       :destroy-on-close="true"
       align-center
       class="barrage-dialog--large"
@@ -228,7 +221,11 @@ const closeModal = () => {
             <ElButton @click="closeModal">
               {{ t('collections.buttons.cancel') }}
             </ElButton>
-            <ElButton type="primary" @click="submitAssignCollectionForm">
+            <ElButton
+              type="primary"
+              :disabled="updateAgentCollectionStatus === 'pending'"
+              @click="submitAssignCollectionForm"
+            >
               {{ t('collections.assign_collection.title') }}
             </ElButton>
           </div>

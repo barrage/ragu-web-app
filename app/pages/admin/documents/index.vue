@@ -65,7 +65,7 @@ const handleSortChange = async (sortingValues: SortingValues) => {
           <DocumentList :documents="documentStore.documentResponse?.items" @page-change="handlePageChange" />
         </div>
         <div class="widgets">
-          <DocumentStatistics :documents="documentStore.documentResponse?.items" />
+          <DocumentStatistics :documents="documentStore.documentResponse" />
         </div>
       </div>
     </template>

@@ -89,7 +89,7 @@ const { execute: createExecute, error: createError, status: createStatus, data }
   immediate: false,
 })
 
-await useAsyncData(() => providerStore.GET_List_Providers())
+await useAsyncData(() => providerStore.GET_List_Providers(), { lazy: true })
 
 // HELPERS
 const createAgent = async (formEl: FormInstance | undefined) => {
@@ -153,15 +153,27 @@ errorHandler(createError)
         :rules="rules"
       >
         <ElFormItem :label="t('agents.labels.name')" prop="name">
-          <ElInput v-model="form.name" :placeholder="t('agents.placeholder.agentName')" />
+          <ElInput
+            v-model="form.name"
+            :placeholder="t('agents.placeholder.agentName')"
+            data-testid="bo-create-agent-form-name-input"
+          />
         </ElFormItem>
 
         <ElFormItem :label="t('agents.labels.language')" prop="language">
-          <ElInput v-model="form.language" :placeholder="t('agents.placeholder.language')" />
+          <ElInput
+            v-model="form.language"
+            :placeholder="t('agents.placeholder.language')"
+            data-testid="bo-create-agent-form-language-input"
+          />
         </ElFormItem>
 
         <ElFormItem :label="t('agents.labels.languageInstruction')" prop="configuration.instructions.languageInstruction">
-          <ElInput v-model="form.configuration.instructions.languageInstruction" :placeholder="t('agents.placeholder.languageInstruction')" />
+          <ElInput
+            v-model="form.configuration.instructions.languageInstruction"
+            :placeholder="t('agents.placeholder.languageInstruction')"
+            data-testid="bo-create-agent-form-language-instruction-input"
+          />
         </ElFormItem>
 
         <ElFormItem
@@ -173,6 +185,7 @@ errorHandler(createError)
             v-model="form.description"
             type="textarea"
             :placeholder="t('agents.placeholder.description')"
+            data-testid="bo-create-agent-form-description-input"
           />
         </ElFormItem>
 
@@ -185,6 +198,7 @@ errorHandler(createError)
             v-model="form.configuration.instructions.promptInstruction"
             :placeholder="t('agents.placeholder.promptInstruction')"
             type="textarea"
+            data-testid="bo-create-agent-form-prompt-instruction-input"
           />
         </ElFormItem>
 
@@ -197,6 +211,7 @@ errorHandler(createError)
             v-model="form.configuration.instructions.titleInstruction"
             :placeholder="t('agents.placeholder.titleInstruction')"
             type="textarea"
+            data-testid="bo-create-agent-form-title-instruction-input"
           />
         </ElFormItem>
 
@@ -209,6 +224,7 @@ errorHandler(createError)
             v-model="form.configuration.instructions.summaryInstruction"
             :placeholder="t('agents.placeholder.summaryInstruction')"
             type="textarea"
+            data-testid="bo-create-agent-form-summary-instruction-input"
           />
         </ElFormItem>
 
@@ -225,23 +241,33 @@ errorHandler(createError)
         </ElFormItem>
 
         <ElFormItem :label="t('agents.labels.llmProvider')" prop="configuration.llmProvider">
-          <ElSelect v-model="form.configuration.llmProvider" :placeholder="t('agents.placeholder.llmProvider')">
+          <ElSelect
+            v-model="form.configuration.llmProvider"
+            :placeholder="t('agents.placeholder.llmProvider')"
+            data-testid="bo-create-agent-form-llm-provider-input"
+          >
             <ElOption
               v-for="provider in embeddingProviders"
               :key="provider"
               :label="provider"
               :value="provider"
+              data-testid="bo-create-agent-form-llm-provider-option"
             />
           </ElSelect>
         </ElFormItem>
 
         <ElFormItem :label="t('agents.labels.model')" prop="configuration.model">
-          <ElSelect v-model="form.configuration.model" :disabled="providerStore?.availableLlmList?.length === 0">
+          <ElSelect
+            v-model="form.configuration.model"
+            :disabled="providerStore?.availableLlmList?.length === 0"
+            data-testid="bo-create-agent-form-model-input"
+          >
             <ElOption
               v-for="model in providerStore?.availableLlmList"
               :key="model"
               :label="model"
               :value="model"
+              data-testid="bo-create-agent-form-model-option"
             />
           </ElSelect>
         </ElFormItem>
@@ -251,6 +277,7 @@ errorHandler(createError)
             :min="0"
             :max="1"
             :step="0.1"
+            data-testid="bo-create-agent-form-temperature-input"
           />
         </ElFormItem>
         <ElFormItem class="actions">
@@ -259,7 +286,8 @@ errorHandler(createError)
           </LlmLink>
           <ElButton
             type="primary"
-            :loading="createStatus === 'pending'"
+            :disabled="createStatus === 'pending'"
+            data-testid="bo-create-agent-form-confirm-button"
             @click="createAgent(formRef)"
           >
             {{ t('agents.buttons.create') }}
