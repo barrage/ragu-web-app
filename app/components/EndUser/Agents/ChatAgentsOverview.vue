@@ -13,7 +13,7 @@ const selectAgent = (agent: any) => {
   return selectedAgent.value = agent
 }
 
-const { error, status } = useAsyncData(() => agentStore.GET_AllAppAgents())
+const { error, status } = useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
 
 errorHandler(error)
 

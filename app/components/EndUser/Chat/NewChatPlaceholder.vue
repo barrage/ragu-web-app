@@ -5,7 +5,7 @@ import PersonAddIcon from '~/assets/icons/svg/person-add.svg'
 
 const agentStore = useAgentStore()
 const { selectedRole } = storeToRefs(useAuthStore())
-const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents())
+const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
 
 errorHandler(error)
 
