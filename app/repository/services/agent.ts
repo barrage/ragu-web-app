@@ -183,6 +183,14 @@ export default class AgentService extends FetchFactory {
     }
   }
 
+  /**
+   * Updates an agent from the API
+   * @param id The ID of the agent to update
+   * @param body The updated data for the agent
+   * @returns A promise that resolves to Agent object
+   * @throws Will throw an error if request fails
+   */
+
   async UpdateAgentCollection(id: string, body: AssignCollectionPayload): Promise<any> {
     const plainPayload = toRaw(body)
     try {
@@ -196,6 +204,33 @@ export default class AgentService extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to update collection to agent with id ${id}`,
+      })
+    }
+  }
+
+  /**
+   *  Deletes a collection from all agents.
+   * @param collection
+   * @param provider
+   * @returns  A promise that resolves when the agents collection is successfully deleted.
+   * @throws Will throw an error if the request fails.
+   */
+  async DeleteCollectionFromAllAgents(collection: string, provider: string): Promise<void> {
+    try {
+      const queryParams = new URLSearchParams({
+        collection,
+        provider,
+      }).toString()
+
+      return await this.$fetch(`${this.adminEndpoint}/collections?${queryParams}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete collection ${collection} from all agents`,
       })
     }
   }

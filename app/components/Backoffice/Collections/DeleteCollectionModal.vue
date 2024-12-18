@@ -18,12 +18,17 @@ const emits = defineEmits(['update:visible'])
 
 const { t } = useI18n()
 const collectionStore = useCollectionsStore()
+const { $api } = useNuxtApp()
+
 const deleteCollectionModalVisible = ref(props.visible)
 
 // API CALLS
 
 const { execute: getAllCollections } = await useAsyncData(() => collectionStore.GET_AllCollections(), { immediate: false })
 const { execute: deleteCollection, error: deleteCollectionError, status } = await useAsyncData(() => collectionStore.DELETE_Collection(props.collection!.id), { immediate: false })
+const { execute: deleteCollectionFromALlAgents, error: deleteCollectionAllError } = await useAsyncData(() => $api.agent.DeleteCollectionFromAllAgents(props.collection!.name, props.collection!.provider), { immediate: false })
+
+errorHandler(deleteCollectionAllError)
 
 // FUNCTIONS
 
@@ -35,6 +40,7 @@ const confirmDelete = async () => {
   if (!props.collection || !props.collection.id) { return }
 
   await deleteCollection()
+  await deleteCollectionFromALlAgents()
   await getAllCollections()
   deleteCollectionModalVisible.value = false
   if (deleteCollectionError.value) {
