@@ -163,8 +163,8 @@ export default {
       chat_details: {
         title: 'チャットの詳細',
         description: 'このチャットに関するすべての詳細を表示',
-        empty_messages: '利用可能なWhatsAppメッセージがありません',
-        empty_description: '現在、このチャットにはWhatsAppメッセージがありません。',
+        empty_messages: '利用可能なメッセージがありません',
+        empty_description: '現在、このチャットにはメッセージがありません。',
         empty_state_title: 'チャットが見つかりません',
         empty_state_desc: 'お探しのチャットは存在しないか、現在利用できません。チャット情報を再確認するか、別の検索をお試しください。',
       },

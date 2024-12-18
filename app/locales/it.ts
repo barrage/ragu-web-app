@@ -163,8 +163,8 @@ export default {
       chat_details: {
         title: 'Dettagli della chat',
         description: 'Visualizza tutti i dettagli relativi a questa chat',
-        empty_messages: 'Nessun messaggio WhatsApp disponibile',
-        empty_description: 'Attualmente, non ci sono messaggi WhatsApp in questa chat.',
+        empty_messages: 'Nessun messaggio disponibile',
+        empty_description: 'Attualmente, non ci sono messaggi in questa chat.',
         empty_state_title: 'Chat non trovata',
         empty_state_desc: 'La chat che stai cercando non esiste o non è disponibile al momento. Controlla le informazioni della chat o prova con un\'altra ricerca.',
       },

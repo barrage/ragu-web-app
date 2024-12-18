@@ -91,7 +91,7 @@ const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
 </script>
 
 <template>
-  <aside>
+  <aside v-motion-slide-left :delay="400">
     <nav class="navigation-container">
       <div class="sidebar-head-title">
         <p v-if="!navigationStore.isAdminSidebarCollapsed" class="typing-effect">

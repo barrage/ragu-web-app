@@ -14,6 +14,7 @@ import { sanitizeHtml } from '~/utils/sanitizeHtml'
 const props = defineProps<{
   message: Message | null
 }>()
+
 const isDark = useDark()
 const loadHighlightTheme = (isDarkMode: boolean) => {
   const themeLinkId = 'highlight-theme'

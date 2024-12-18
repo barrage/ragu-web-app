@@ -17,7 +17,7 @@ const pagination = ref<Pagination>({
 })
 
 const sort = ref<Sort>({
-  sortOrder: (route.query.dir as 'asc' | 'desc') || 'asc',
+  sortOrder: (route.query.dir as 'asc' | 'desc') || 'desc',
   sortBy: (route.query.sortBy as string) || 'createdAt',
 })
 
