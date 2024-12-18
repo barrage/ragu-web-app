@@ -216,7 +216,7 @@ const isSelectedAgentActive = computed(() => {
     return true
   }
 })
-const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents())
+const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
 errorHandler(error)
 
 function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
