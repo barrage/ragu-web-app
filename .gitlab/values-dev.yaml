@@ -2,6 +2,8 @@ ingress:
   className: nginx-external
   annotations:
     cert-manager.io/cluster-issuer: "barrage-dev"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100M
+    nginx.org/client-max-body-size: 100M 
     ## The following annotation is to limit access to the ingress
     nginx.ingress.kubernetes.io/whitelist-source-range: 172.21.252.1/24, 172.21.240.245/32
 
