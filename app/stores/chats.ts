@@ -102,41 +102,10 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
-  /**
-   * Fetches a paginated and sorted list of chats.
-   * @param page - The page number to fetch.
-   * @param perPage - The number of chats per page.
-   * @param sortBy - The field to sort by (e.g., 'title').
-   * @param sortOrder - The order of sorting ('asc' or 'desc').
-   * @returns A promise that resolves to an ChatsResponse type or null.
-   */
-  const adminChatMessagesResponse = ref<Message[] | null>(null)
-  const adminChatMessagesData = ref<Message[]>([])
-  async function GET_AllChatMessagesAdmin(
+  const selectedBoChatDetails = ref<AdminChatDetails | null>(null)
 
-    chatId: string,
-  ): Promise<Message[] | null> {
-    const data = await $api.chat.GetAllChatMessagesAdmin(chatId)
-
-    if (data) {
-      adminChatMessagesData.value = data
-      return adminChatMessagesResponse.value = data
-    }
-    else {
-      return adminChatMessagesResponse.value = null
-    }
-  }
-
-  const selectedChatAdmin = ref<AdminChatDetails | null>(null)
-  async function GET_SingleChatAdmin(chatId: string): Promise<AdminChatDetails | null> {
-    const data = await $api.chat.GetAdminSingleChat(chatId)
-
-    if (data) {
-      return selectedChatAdmin.value = data
-    }
-    else {
-      return null
-    }
+  const setSelectedBoChatDetails = (chat: AdminChatDetails | null) => {
+    return selectedBoChatDetails.value = chat
   }
 
   const wsToken = ref<string | null>(null)
@@ -187,10 +156,8 @@ export const useChatStore = defineStore('chat', () => {
     GET_AllAdminChats,
     adminAllChatsData,
     adminAllChatsResponse,
-    GET_AllChatMessagesAdmin,
-    adminChatMessagesData,
-    selectedChatAdmin,
-    GET_SingleChatAdmin,
+    selectedBoChatDetails,
+    setSelectedBoChatDetails,
     DELETE_Chat,
     DELETE_ChatBackoffice,
     PUT_UpdateChatTitle,

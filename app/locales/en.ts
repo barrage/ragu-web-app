@@ -1,5 +1,3 @@
-import { textProps, tooltipEmits } from 'element-plus'
-
 export default {
   seo: {
     defaultTitle: 'LLMAO - Interact with Custom AI Agents',
@@ -165,8 +163,8 @@ export default {
       chat_details: {
         title: 'Chat Details',
         description: 'View all details related to this chat',
-        empty_messages: 'No WhatsApp messages available',
-        empty_description: 'Currently, there are no WhatApp messages into this chat.',
+        empty_messages: 'No messages available',
+        empty_description: 'Currently, there are no messages into this chat.',
         empty_state_title: 'Chat not found',
         empty_state_desc: 'The chat you are looking for does not exist or is currently unavailable. Please check the chat\'s information again or try a different search.',
       },

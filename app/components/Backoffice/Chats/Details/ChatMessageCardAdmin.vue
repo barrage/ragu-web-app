@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { marked } from 'marked'
+import hljs from 'highlight.js'
 import { useI18n } from 'vue-i18n'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
@@ -15,10 +17,10 @@ const relativeCreatedDate = ref(props.message?.createdAt ? useRelativeDate(props
 
 const chatStore = useChatStore()
 const selectedAgent = computed(() => {
-  return chatStore.selectedChatAdmin?.agent || null
+  return chatStore.selectedBoChatDetails?.agent || null
 })
 const selectedUser = computed(() => {
-  return chatStore.selectedChatAdmin?.user || null
+  return chatStore.selectedBoChatDetails?.user || null
 })
 
 const messageData = computed(() => {
@@ -34,6 +36,63 @@ const messageData = computed(() => {
     content: sanitizedContent,
     sender: props.message?.senderType === 'user' ? selectedUser.value?.fullName : selectedAgent.value?.name,
   }
+})
+
+const formatContent = (content: string) => {
+  if (!content) { return '' }
+  const rawHtml = marked(content)
+  return sanitizeHtml(rawHtml)
+}
+const sanitizedDisplayedContent = computed(() => formatContent(props.message.content))
+
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+  highlight(code, lang) {
+    try {
+      if (lang && hljs.getLanguage(lang)) {
+        return hljs.highlight(code, { language: lang }).value
+      }
+      return hljs.highlightAuto(code).value
+    }
+    catch (error) {
+      console.error('Highlight.js error:', error)
+      return code
+    }
+  },
+})
+const isDark = useDark()
+const loadHighlightTheme = (isDarkMode: boolean) => {
+  const themeLinkId = 'highlight-theme'
+  let themeLink = document.getElementById(themeLinkId) as HTMLLinkElement | null
+
+  if (!themeLink) {
+    themeLink = document.createElement('link')
+    themeLink.id = themeLinkId
+    themeLink.rel = 'stylesheet'
+    document.head.appendChild(themeLink)
+  }
+  themeLink.href = isDarkMode
+    ? 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css'
+    : 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-light.min.css'
+}
+
+watch(isDark, (newVal) => {
+  loadHighlightTheme(newVal)
+}, { immediate: true })
+
+const highlightCodeBlocks = () => {
+  const codeBlocks = document.querySelectorAll('pre code:not([data-highlighted])')
+  codeBlocks.forEach((block) => {
+    hljs.highlightElement(block)
+    block.setAttribute('data-highlighted', 'yes')
+  })
+}
+
+watchEffect(() => {
+  nextTick(() => {
+    highlightCodeBlocks()
+  })
 })
 </script>
 
@@ -53,7 +112,7 @@ const messageData = computed(() => {
           <span class="message-mail">{{ messageData.createdAt }}</span>
         </div>
       </LlmLink>
-      <div class="message-content" v-html="messageData.content" />
+      <div class="message-content" v-html="sanitizedDisplayedContent" />
     </div>
   </div>
 </template>
@@ -77,6 +136,81 @@ const messageData = computed(() => {
     padding: 22px;
     border-radius: 10px;
     white-space: pre-wrap;
+
+    pre,
+    :deep(pre) {
+      background-color: var(--color-primary-100);
+      border: 2px solid var(--color-primary-200);
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: var(--font-size-fluid-2);
+      overflow-x: auto;
+
+      & .hljs {
+        background: var(--color-primary-subtle);
+      }
+    }
+
+    :deep(a) {
+      color: var(--color-blue-600);
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+        color: var(--color-blue-300);
+      }
+    }
+    :deep(ol),
+    :deep(ul) {
+      color: var(--color-primary-900);
+
+      li {
+        margin-block: 12px;
+      }
+    }
+
+    :deep(ul) {
+      list-style: circle inside;
+
+      > li {
+        list-style-type: inherit;
+      }
+    }
+
+    :deep(h1) {
+      color: var(--color-primary-900);
+      line-height: normal;
+      font-size: var(--font-size-fluid-8);
+    }
+    :deep(h2) {
+      color: var(--color-primary-800);
+      line-height: normal;
+      font-size: var(--font-size-fluid-7);
+    }
+    :deep(h3) {
+      color: var(--color-primary-800);
+      line-height: normal;
+      font-size: var(--font-size-fluid-6);
+    }
+    :deep(h4) {
+      color: var(--color-primary-800);
+      line-height: normal;
+      font-size: var(--font-size-fluid-5);
+    }
+    :deep(h5) {
+      color: var(--color-primary-700);
+      line-height: normal;
+      font-size: var(--font-size-fluid-4);
+    }
+    :deep(h6) {
+      color: var(--color-primary-700);
+      line-height: normal;
+      font-size: var(--font-size-fluid-3);
+    }
+
+    &.content {
+      overflow: hidden;
+    }
   }
 }
 
@@ -140,6 +274,45 @@ const messageData = computed(() => {
   }
   .message-content {
     background: var(--color-primary-800);
+    pre,
+    :deep(pre) {
+      background-color: var(--color-primary-800);
+      border: 1px solid var(--color-primary-600);
+      & .hljs {
+        background: var(--color-primary-900);
+      }
+    }
+
+    :deep(a) {
+      color: var(--color-blue-200);
+
+      &:hover {
+        color: var(--color-blue-100);
+      }
+    }
+
+    :deep(ul),
+    :deep(ol) {
+      color: var(--color-primary-0);
+    }
+    :deep(h1) {
+      color: var(--color-primary-subtle);
+    }
+    :deep(h2) {
+      color: var(--color-primary-0);
+    }
+    :deep(h3) {
+      color: var(--color-primary-0);
+    }
+    :deep(h4) {
+      color: var(--color-primary-0);
+    }
+    :deep(h5) {
+      color: var(--color-primary-100);
+    }
+    :deep(h6) {
+      color: var(--color-primary-100);
+    }
   }
   .message-profile-item {
     color: var(--color-primary-0);

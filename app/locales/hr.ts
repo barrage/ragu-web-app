@@ -167,8 +167,8 @@ export default {
       chat_details: {
         title: 'Detalji razgovora',
         description: 'Pregledajte sve detalje vezane za ovaj razgovor',
-        empty_messages: 'Nema dostupnih WhatsApp poruka',
-        empty_description: 'Trenutno nema dostupnih WhatsApp poruka u ovom razgovoru.',
+        empty_messages: 'Nema dostupnih poruka',
+        empty_description: 'Trenutno nema dostupnih poruka u ovom razgovoru.',
         empty_state_title: 'Razgovor nije pronađen',
         empty_state_desc: 'Razgovor koji tražite ne postoji ili trenutno nije dostupan. Provjerite informacije o razgovoru ili pokušajte s novim pretraživanjem.',
       },
