@@ -2,16 +2,33 @@
 import type { Pagination } from '~/types/pagination'
 import type { Document } from '~/types/document'
 
-// Define the props for this component
+// PROPS & EMITS
 const props = defineProps<{
   documents: Document[]
 }>()
 
 const emits = defineEmits<{
   (event: 'pageChange', page: number): number
+  (event: 'documentDeleted'): void
 }>()
 
+// CONSTANTS & STATES
+
 const documentStore = useDocumentsStore()
+
+/* Delete Document */
+const documentToDelete = ref<Document | null>(null)
+const isDeleteModalVisible = ref(false)
+
+const openDeleteModal = (document: Document | null) => {
+  documentToDelete.value = document
+  isDeleteModalVisible.value = true
+}
+const handleDocumentDeleted = () => {
+  emits('documentDeleted')
+}
+
+// FUNCTIONS
 
 const pagination = ref<Pagination>({
   currentPage: 1,
@@ -24,6 +41,8 @@ const changePage = (page: number) => {
   pagination.value.currentPage = page
   emits('pageChange', pagination.value.currentPage)
 }
+
+// WATCHERS
 
 watch(
   () => documentStore.documentResponse?.total,
@@ -48,6 +67,12 @@ watch(
         :delay="(index * 100)"
         :duration="400"
         :document="document"
+        @delete-document="openDeleteModal(document)"
+      />
+      <DeleteDocumentModal
+        v-model="isDeleteModalVisible"
+        :document="documentToDelete"
+        @document-deleted="handleDocumentDeleted"
       />
     </div>
     <Pagination
