@@ -43,7 +43,7 @@ watch(
 
 watch(
   () => props.chats?.total,
-  value => pagination.value.total = value,
+  value => pagination.value.total = value ?? 0,
   { immediate: true },
 )
 
@@ -55,17 +55,13 @@ function changePage(page: number) {
 }
 
 const chatsData = computed(() => {
-  const tempChats = []
-  props.chats.items.forEach((object) => {
-    tempChats.push({
-      fullName: object.fullName,
-      id: object.chat.id,
-      userId: object.chat.userId,
-      createdAt: formatDate(object.chat.updatedAt, 'MMMM DD, YYYY'),
-      updatedAt: formatDate(object.chat.updatedAt, 'MMMM DD, YYYY'),
-    })
-  })
-  return tempChats
+  return props.chats?.items.map(object => ({
+    fullName: object.fullName,
+    id: object.chat.id,
+    userId: object.chat.userId,
+    createdAt: formatDate(object.chat.updatedAt, 'MMMM DD, YYYY'),
+    updatedAt: formatDate(object.chat.updatedAt, 'MMMM DD, YYYY'),
+  })) || []
 })
 </script>
 
@@ -122,7 +118,7 @@ const chatsData = computed(() => {
       <Pagination
         :current-page="pagination.currentPage"
         :page-size="pagination.pageSize"
-        :total="chats?.total"
+        :total="chats?.total ?? 0"
         @page-change="(page:number) => changePage(page)"
       />
     </div>

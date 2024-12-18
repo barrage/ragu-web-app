@@ -57,9 +57,12 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
+          api: 'modern-compiler',
           additionalData: '@use "~/assets/styles/mixins/_media.scss" as *; ',
         },
+
       },
+
     },
   },
   svgo: {
@@ -81,49 +84,49 @@ export default defineNuxtConfig({
     locales: [
       {
         code: 'hr',
-        iso: 'hr',
+        language: 'hr',
         name: 'Croatian',
         file: 'hr.ts',
       },
       {
         code: 'en',
-        iso: 'en',
+        language: 'en',
         name: 'English',
         file: 'en.ts',
       },
       {
         code: 'de',
-        iso: 'de',
+        language: 'de',
         name: 'German',
         file: 'de.ts',
       },
       {
         code: 'es',
-        iso: 'es',
+        language: 'es',
         name: 'Spanish',
         file: 'es.ts',
       },
       {
         code: 'fr',
-        iso: 'fr',
+        language: 'fr',
         name: 'France',
         file: 'fr.ts',
       },
       {
         code: 'it',
-        iso: 'it',
+        language: 'it',
         name: 'Italian',
         file: 'it.ts',
       },
       {
         code: 'ja',
-        iso: 'ja',
+        language: 'ja',
         name: 'Japanese',
         file: 'ja.ts',
       },
       {
         code: 'pt',
-        iso: 'pt',
+        language: 'pt',
         name: 'Portuguese',
         file: 'pt.ts',
       },
