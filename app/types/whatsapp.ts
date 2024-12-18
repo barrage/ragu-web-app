@@ -99,7 +99,7 @@ export interface BoChatsResponse {
   total: number
   items: [{
     chat: WhatsAppChat
-    fullname: string
+    fullName: string
   }]
 }
 
