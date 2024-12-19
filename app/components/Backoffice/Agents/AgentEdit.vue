@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 // IMPORTS
+
 import type { FormInstance, FormRules } from 'element-plus'
 import { useAgentStore } from '~/stores/agents'
-import type { Agent, EmbeddingProvider } from '~/types/agent'
+import type { Agent } from '~/types/agent'
 
 // PROPS & EMITS
 
@@ -22,13 +23,11 @@ definePageMeta({
 
 // CONSTANTS & STATES
 const agentStore = useAgentStore()
-const providerStore = useProviderStore()
 const { $api } = useNuxtApp()
 
 const route = useRoute()
 const { t } = useI18n()
 const maxContext = 1000
-const embeddingProviders: EmbeddingProvider[] = ['azure', 'openai', 'ollama']
 const agentId = ref(route.params.agentId as string)
 const formRef = ref<FormInstance>()
 const form = reactive({
@@ -49,6 +48,8 @@ const form = reactive({
     },
   },
 })
+
+const selectedLlmProvider = computed(() => form.configuration.llmProvider)
 
 const rules = computed<FormRules>(() => ({
   'name': [
@@ -84,7 +85,9 @@ const rules = computed<FormRules>(() => ({
 const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => $api.agent.UpdateAgent(agentId.value, form), {
   immediate: false,
 })
-await useAsyncData(() => providerStore.GET_List_Providers(), { lazy: true })
+const { data: providers } = await useAsyncData(() => $api.provider.GetListProviders(), { lazy: true })
+
+const { data: availableLLms } = await useAsyncData(() => $api.provider.GetListAvailableLLms(form.configuration.llmProvider), { immediate: false, watch: [selectedLlmProvider] })
 
 // ERROR HANDLERS
 errorHandler(updateError)
@@ -131,13 +134,6 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
 const cancelUpdate = (): void => {
   agentStore.setEditMode(false)
 }
-
-// WATCHER FOR LLM PROVIDER
-watch(() => form.configuration?.llmProvider, async (newProvider) => {
-  if (newProvider) {
-    await providerStore.GET_AvailableListLlms(newProvider)
-  }
-})
 
 const setForm = () => {
   form.name = props.singleAgent?.agent?.name ?? ''
@@ -285,7 +281,7 @@ onUnmounted(() => {
             data-testid="bo-edit-agent-form-llm-provider-input"
           >
             <ElOption
-              v-for="provider in embeddingProviders"
+              v-for="provider in providers?.llm"
               :key="provider"
               :label="provider"
               :value="provider"
@@ -303,11 +299,11 @@ onUnmounted(() => {
           <ElSelect
             v-model="form.configuration.model"
             placeholder="Select Model"
-            :disabled="providerStore?.availableLlmList?.length === 0"
+            :disabled="availableLLms?.length === 0"
             data-testid="bo-edit-agent-form-model-input"
           >
             <ElOption
-              v-for="model in providerStore?.availableLlmList"
+              v-for="model in availableLLms"
               :key="model"
               :label="model"
               :value="model"
