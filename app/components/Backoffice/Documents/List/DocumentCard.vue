@@ -5,7 +5,7 @@ import TxtIcon from '~/assets/icons/svg/txt-icon.svg'
 import MarkdownIcon from '~/assets/icons/svg/markdown-icon.svg'
 import CsvIcon from '~/assets/icons/svg/csv-icon.svg'
 import JsonIcon from '~/assets/icons/svg/json-icon.svg'
-import DocumentEditIcon from '~/assets/icons/svg/document-edit.svg'
+import EyeIcon from '~/assets/icons/svg/eye.svg'
 import UnknownDocumentIcon from '~/assets/icons/svg/unknown-document-icon.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import type { Document } from '~/types/document'
@@ -92,14 +92,14 @@ const documentData = computed(() => {
             :to="`documents/${document.id}`"
             type="plainButtonPrimary"
           >
-            <DocumentEditIcon size="24px" />
+            <EyeIcon size="24px" />
           </LlmLink>
         </LlmTooltip>
         <LlmTooltip :content="$t('documents.tooltip.delete_document')">
           <el-button
             type="danger"
             plain
-            class="manage-document-button"
+            class="delete-document-button"
             @click="emits('deleteDocument', props.document)"
           >
             <DeleteIcon size="24px" />
@@ -165,6 +165,10 @@ const documentData = computed(() => {
     grid-column: span 2;
     display: flex;
     gap: 12px;
+
+    & .delete-document-button {
+      margin-left: 12px;
+    }
   }
 }
 

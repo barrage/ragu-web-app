@@ -3,7 +3,7 @@ import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, Par
 
 export const useDocumentsStore = defineStore('document', () => {
   // State
-
+  const documentsDataEmpty = ref(false)
   const documentResponse = ref<DocumentListResponse | null >()
   const { $api } = useNuxtApp()
 
@@ -35,15 +35,8 @@ export const useDocumentsStore = defineStore('document', () => {
     }
   }
 
-  async function GET_SyncFs() {
-    await $api.document.GetSyncFs()
-  }
-
-  async function POST_UploadDocument(file: File): Promise<DocumentListResponse | null> {
-    const formData = new FormData()
-    formData.append('file', file)
-    return await $api.document.PostUploadDocument(formData)
-  }
+  const newDocumentUploaded = ref(false)
+  const documentDeleted = ref(false)
 
   async function DELETE_Document(id: string): Promise<void> {
     try {
@@ -108,17 +101,18 @@ export const useDocumentsStore = defineStore('document', () => {
   }
 
   return {
+    documentsDataEmpty,
     documentResponse,
     selectedDocument,
     parserPreview,
     loadingParsePreview,
     chunkPreview,
     loadingChunkPreview,
+    newDocumentUploaded,
+    documentDeleted,
     GET_AllDocuments,
     GET_SingleDocument,
-    GET_SyncFs,
     DELETE_Document,
-    POST_UploadDocument,
     POST_ParseDocumentPreview,
     POST_ChunkDocumentPreview,
     PUT_UpdateDocumentConfig,

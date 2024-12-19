@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import PdfIcon from '~/assets/icons/svg/pdfIcon.svg'
 import DocxIcon from '~/assets/icons/svg/docx-icon.svg'
 import TxtIcon from '~/assets/icons/svg/txt-icon.svg'
