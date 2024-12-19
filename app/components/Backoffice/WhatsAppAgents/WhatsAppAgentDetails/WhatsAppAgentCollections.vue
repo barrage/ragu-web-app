@@ -18,7 +18,7 @@ const emits = defineEmits<{
 }>()
 
 // CONSTATNTS & STATES
-const agentStore = useAgentStore()
+
 const assignCollectionModalVisible = ref(false)
 const deleteCollectionModalVisible = ref(false)
 const { t } = useI18n()
@@ -67,7 +67,7 @@ const handleRefreshAgent = () => {
           size="small"
           type="primary"
           plain
-          :disabled="agentStore.singleAgent?.collections?.length === 0"
+          :disabled="agentCollections.length === 0"
           @click="openDeleteCollectionModal()"
         >
           <CollectionDelete />  {{ t('collections.deleteModal.title') }}

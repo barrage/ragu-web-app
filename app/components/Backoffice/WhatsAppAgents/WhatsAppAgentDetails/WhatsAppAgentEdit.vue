@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import { useAgentStore } from '~/stores/agents'
 import type { EmbeddingProvider } from '~/types/agent'
 import type { SingleWhatsAppAgentResponse } from '~/types/whatsapp'
 
@@ -15,13 +14,11 @@ const emits = defineEmits<{
 
 // CONSTANTS & STATES
 
-const providerStore = useProviderStore()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const whatsAppStore = useWhatsAppStore()
 const route = useRoute()
 const maxContext = 1000
-const embeddingProviders: EmbeddingProvider[] = ['azure', 'openai', 'ollama']
 const agentId = ref(route.params.agentId as string)
 
 // FORM
@@ -43,6 +40,8 @@ const form = reactive({
     },
   },
 })
+
+const selectedLlmProvider = computed(() => form.configuration.llmProvider)
 const rules = computed<FormRules>(() => ({
   'name': [
     { required: true, message: t('agents.rules.name.required_message'), trigger: 'blur' },
@@ -72,7 +71,9 @@ const rules = computed<FormRules>(() => ({
 // API CALLS
 
 const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => $api.whatsApp.BoUpdateAgent(agentId.value, form), { immediate: false })
-await useAsyncData(() => providerStore.GET_List_Providers())
+const { data: providers } = await useAsyncData(() => $api.provider.GetListProviders(), { lazy: true })
+
+const { data: availableLLms } = await useAsyncData(() => $api.provider.GetListAvailableLLms(form.configuration.llmProvider), { immediate: false, watch: [selectedLlmProvider] })
 
 errorHandler(updateError)
 
@@ -129,14 +130,6 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
 const cancelUpdate = () => {
   whatsAppStore.setEditMode(false)
 }
-
-// WATCHERS
-
-watch(() => form.configuration?.llmProvider, async (newProvider) => {
-  if (newProvider) {
-    await providerStore.GET_AvailableListLlms(newProvider)
-  }
-})
 
 // LIFECYCLE HOOKS
 onMounted(() => setForm())
@@ -250,7 +243,7 @@ onUnmounted(() => whatsAppStore.setEditMode(false))
         >
           <ElSelect v-model="form.configuration.llmProvider" :placeholder="t('agents.placeholder.llmProvider')">
             <ElOption
-              v-for="provider in embeddingProviders"
+              v-for="provider in providers?.llm"
               :key="provider"
               :label="provider"
               :value="provider"
@@ -267,10 +260,10 @@ onUnmounted(() => whatsAppStore.setEditMode(false))
           <ElSelect
             v-model="form.configuration.model"
             :placeholder="t('agents.placeholder.model')"
-            :disabled="providerStore?.availableLlmList?.length === 0"
+            :disabled="availableLLms?.length === 0"
           >
             <ElOption
-              v-for="model in providerStore?.availableLlmList"
+              v-for="model in availableLLms"
               :key="model"
               :label="model"
               :value="model"

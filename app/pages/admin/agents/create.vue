@@ -2,7 +2,7 @@
 // IMPORTS
 import { ElNotification, type FormInstance, type FormRules } from 'element-plus'
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
-import type { AgentDetail, EmbeddingProvider } from '~/types/agent'
+import type { AgentDetail } from '~/types/agent'
 import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 
 const { t } = useI18n()
@@ -17,14 +17,12 @@ useHead({
 
 // CONSTANTS
 const { $api } = useNuxtApp()
-const providerStore = useProviderStore()
 
 const localePath = useLocalePath()
 
 // STATE
 
 const maxContext = 1000
-const embeddingProviders: EmbeddingProvider[] = ['azure', 'openai', 'ollama']
 const formRef = ref<FormInstance>()
 const form = reactive<AgentDetail>({
   active: false,
@@ -44,6 +42,8 @@ const form = reactive<AgentDetail>({
     },
   },
 })
+
+const selectedLlmProvider = computed(() => form.configuration.llmProvider)
 
 // Validation Rules (Update field paths for new structure)
 const rules = reactive<FormRules<typeof form>>({
@@ -75,21 +75,14 @@ const rules = reactive<FormRules<typeof form>>({
   ],
 })
 
-// WATCHERs
-
-watch(() => form.configuration.llmProvider, async (newProvider) => {
-  if (newProvider) {
-    form.configuration.model = ''
-    await providerStore.GET_AvailableListLlms(newProvider)
-  }
-})
-
 // API CALLS
 const { execute: createExecute, error: createError, status: createStatus, data } = await useAsyncData(() => $api.agent.CreateAgent(form), {
   immediate: false,
 })
 
-await useAsyncData(() => providerStore.GET_List_Providers(), { lazy: true })
+const { data: providers } = await useAsyncData(() => $api.provider.GetListProviders(), { lazy: true })
+
+const { data: availableLLms } = await useAsyncData(() => $api.provider.GetListAvailableLLms(form.configuration.llmProvider), { immediate: false, watch: [selectedLlmProvider] })
 
 // HELPERS
 const createAgent = async (formEl: FormInstance | undefined) => {
@@ -247,7 +240,7 @@ errorHandler(createError)
             data-testid="bo-create-agent-form-llm-provider-input"
           >
             <ElOption
-              v-for="provider in embeddingProviders"
+              v-for="provider in providers?.llm"
               :key="provider"
               :label="provider"
               :value="provider"
@@ -259,11 +252,11 @@ errorHandler(createError)
         <ElFormItem :label="t('agents.labels.model')" prop="configuration.model">
           <ElSelect
             v-model="form.configuration.model"
-            :disabled="providerStore?.availableLlmList?.length === 0"
+            :disabled="availableLLms?.length === 0"
             data-testid="bo-create-agent-form-model-input"
           >
             <ElOption
-              v-for="model in providerStore?.availableLlmList"
+              v-for="model in availableLLms"
               :key="model"
               :label="model"
               :value="model"
