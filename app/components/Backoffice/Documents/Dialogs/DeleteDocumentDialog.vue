@@ -3,11 +3,10 @@ import DocumentDismissIcon from '~/assets/icons/svg/document-dismiss.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import type { Document } from '~/types/document'
 
-// PROPS & EMITS
-
 const props = defineProps<{
   document: Document | null
 }>()
+
 const emits = defineEmits<Emits>()
 
 interface Emits {
@@ -15,18 +14,11 @@ interface Emits {
 }
 
 const isOpen = defineModel<boolean>()
-
-// CONSTANTS & STATES
-
 const { t } = useI18n()
+const { $api } = useNuxtApp()
 const documentStore = useDocumentsStore()
 
-// API CALLS
-
-const { execute: executeDeleteDocument, error } = await useAsyncData(() => documentStore.DELETE_Document(props.document!.id), { immediate: false })
-const { execute: getAllDocuments } = await useAsyncData(() => documentStore.GET_AllDocuments(), { immediate: false })
-
-// FUNCTIONS
+const { execute: executeDeleteDocument, error: deleteDocumentError, status: deleteDocumentStatus } = await useAsyncData(() => $api.document.DeleteDocument(props.document!.id), { immediate: false })
 
 const closeModal = () => {
   isOpen.value = false
@@ -36,7 +28,7 @@ const submitDelete = async () => {
   if (props.document?.id) {
     await executeDeleteDocument()
 
-    if (error.value) {
+    if (deleteDocumentError.value) {
       ElNotification({
         title: t('documents.delete_document.notifications.error_title'),
         message: t('documents.delete_document.notifications.error_description'),
@@ -46,7 +38,7 @@ const submitDelete = async () => {
       })
     }
     else {
-      await getAllDocuments()
+      documentStore.documentDeleted = true
       emits('documentDeleted')
       closeModal()
       ElNotification({
@@ -59,6 +51,10 @@ const submitDelete = async () => {
     }
   }
 }
+
+const isDeleteDocumentLoading = computed(() => {
+  return deleteDocumentStatus.value === 'pending'
+})
 </script>
 
 <template>
@@ -84,7 +80,11 @@ const submitDelete = async () => {
       <el-button @click="closeModal">
         {{ t('collections.buttons.cancel') }}
       </el-button>
-      <el-button type="danger" @click="submitDelete">
+      <el-button
+        type="danger"
+        :disabled="isDeleteDocumentLoading"
+        @click="submitDelete"
+      >
         {{ t('collections.buttons.delete') }}
       </el-button>
     </template>

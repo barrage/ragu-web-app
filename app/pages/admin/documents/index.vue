@@ -2,7 +2,6 @@
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import DocumentErrorIcon from '~/assets/icons/svg/document-error.svg'
 import DocumentAddIcon from '~/assets/icons/svg/document-add.svg'
-import type { SortingValues } from '~/types/sort'
 
 const { t } = useI18n()
 const documentStore = useDocumentsStore()
@@ -15,28 +14,7 @@ useHead({
   title: computed(() => t('documents.title')),
 })
 
-const currentPage = ref(1)
-const itemsPerPage = ref(10)
 const openedUploadDialog = ref(false)
-
-const sort = ref<SortingValues>({
-  direction: 'desc',
-  sortProperty: { name: '', value: '' },
-})
-const { error, execute } = await useAsyncData(() =>
-  documentStore.GET_AllDocuments(currentPage.value, itemsPerPage.value, sort.value.sortProperty.value, sort.value?.direction), { lazy: true })
-
-errorHandler(error)
-
-const handlePageChange = async (page: number) => {
-  currentPage.value = page
-  await execute()
-}
-const handleSortChange = async (sortingValues: SortingValues) => {
-  sort.value.direction = sortingValues.direction
-  sort.value.sortProperty = sortingValues.sortProperty
-  await execute()
-}
 </script>
 
 <template>
@@ -53,19 +31,17 @@ const handleSortChange = async (sortingValues: SortingValues) => {
         </AdminPageTitleContainer>
       </template>
       <template #actions>
-        <DocumentsQuickActionsContainer v-model="openedUploadDialog" />
+        <DocumentsQuickActionsContainer v-if="!(documentStore.documentsDataEmpty)" v-model="openedUploadDialog" />
       </template>
     </AdminPageHeadingTemplate>
 
-    <!--   <DocumentsListActions /> -->
-    <template v-if="documentStore.documentResponse?.items">
+    <template v-if="!(documentStore.documentsDataEmpty)">
       <div class="active-screen-container grid">
         <div class="documents-overview">
-          <DocumentsListActions @sort-change="handleSortChange" />
-          <DocumentList :documents="documentStore.documentResponse?.items" @page-change="handlePageChange" />
+          <AsyncDocumentsListTemplate />
         </div>
         <div class="widgets">
-          <DocumentStatistics :documents="documentStore.documentResponse" />
+          <DocumentStatistics />
         </div>
       </div>
     </template>

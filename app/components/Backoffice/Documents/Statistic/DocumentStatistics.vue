@@ -1,27 +1,44 @@
 <script setup lang="ts">
-import type { DocumentListResponse } from '~/types/document'
+import type { Pagination } from '~/types/pagination'
 
-const props = defineProps<{ documents: DocumentListResponse }>()
+const { $api } = useNuxtApp()
+const documentStore = useDocumentsStore()
+const pagination = ref<Pagination>({
+  currentPage: 1,
+  pageSize: 1000,
+  total: 0,
+  disabled: false,
+})
+const {
+  execute: executeGetDocuments,
+  error: getDocumentsError,
+  status: getDocumentsStatus,
+  data: documentsData,
+} = await useAsyncData(() =>
+  $api.document.GetAllDocuments(
+    pagination.value.currentPage,
+    pagination.value.pageSize,
+  ), { lazy: true })
 
-const documentItems = computed(() => props.documents.items)
+errorHandler(getDocumentsError)
 
 const lastModifiedDocuments = computed(() => {
-  if (!documentItems.value) {
+  if (!documentsData.value?.items) {
     return []
   }
-  return documentItems.value
+  return documentsData.value?.items
     .slice()
     .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
     .slice(0, 3)
 })
 
 const documentFormats = computed(() => {
-  if (!documentItems.value) {
+  if (!documentsData.value?.items) {
     return []
   }
   const formatCounts: Record<string, number> = {}
 
-  documentItems.value.forEach((doc) => {
+  documentsData.value?.items.forEach((doc) => {
     formatCounts[doc.ext] = (formatCounts[doc.ext] || 0) + 1
   })
 
@@ -31,6 +48,26 @@ const documentFormats = computed(() => {
   }))
 })
 
+const totalDocuments = computed(() => documentsData.value?.total || 0)
+
+watch(
+  () => documentStore.newDocumentUploaded,
+  (newValue) => {
+    if (newValue) {
+      executeGetDocuments()
+      documentStore.newDocumentUploaded = false
+    }
+  },
+)
+watch(
+  () => documentStore.documentDeleted,
+  (newValue) => {
+    if (newValue) {
+      executeGetDocuments()
+      documentStore.documentDeleted = false
+    }
+  },
+)
 /* const mostUsedTag = computed(() => {
   const tagCounts: Record<string, number> = {}
 
@@ -50,7 +87,7 @@ const documentFormats = computed(() => {
 <template>
   <div class="document-statistics grid">
     <div class="total-documents-count">
-      <TotalDocumentCount :total="documents.total" />
+      <TotalDocumentCount :total="totalDocuments" />
     </div>
 
     <div class="last-modified-documents">

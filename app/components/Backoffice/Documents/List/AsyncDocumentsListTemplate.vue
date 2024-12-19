@@ -3,7 +3,7 @@ import { type LocationQuery, useRoute, useRouter } from 'vue-router'
 import GlobalCardListLoader from '../../shared/Skeletons/GlobalCardListLoader.vue'
 import type { Sort, SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
-import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
+import DocumentErrorIcon from '~/assets/icons/svg/document-error.svg'
 
 const { $api } = useNuxtApp()
 const route = useRoute()
@@ -18,16 +18,16 @@ const pagination = ref<Pagination>({
 
 const sort = ref<Sort>({
   sortOrder: (route.query.dir as 'asc' | 'desc') || 'desc',
-  sortBy: (route.query.sortBy as string) || 'createdAt',
+  sortBy: (route.query.sortBy as string) || 'name',
 })
 
 const {
-  execute: executeGetChats,
-  error: getChatsError,
-  status: getChatsStatus,
-  data: chatsData,
+  execute: executeGetDocuments,
+  error: getDocumentsError,
+  status: getDocumentsStatus,
+  data: documentsData,
 } = await useAsyncData(() =>
-  $api.chat.GetAllAdminChats(
+  $api.document.GetAllDocuments(
     pagination.value.currentPage,
     pagination.value.pageSize,
     sort.value.sortBy,
@@ -50,28 +50,28 @@ const syncQueryValues = (newQuery: LocationQuery) => {
   pagination.value.currentPage = Number(newQuery.page) || 1
   pagination.value.pageSize = Number(newQuery.pageSize) || 10
   sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'asc'
-  sort.value.sortBy = (newQuery.sortBy as string) || 'createdAt'
+  sort.value.sortBy = (newQuery.sortBy as string) || 'name'
 }
 
 const handlePageChange = async (page: number) => {
   pagination.value.currentPage = page
   updateRouteQuery()
   scrollToTop()
-  await executeGetChats()
+  await executeGetDocuments()
 }
 
 const handleSortChange = async (sortingValues: SortingValues) => {
   sort.value.sortOrder = sortingValues.direction
   sort.value.sortBy = sortingValues.sortProperty.value
   updateRouteQuery()
-  await executeGetChats()
+  await executeGetDocuments()
 }
 
-const delayedStatus = ref(getChatsStatus.value)
+const delayedStatus = ref(getDocumentsStatus.value)
 const MIN_LOADING_TIME = 600
 
 watch(
-  getChatsStatus,
+  getDocumentsStatus,
   (newStatus) => {
     if (newStatus === 'pending') {
       delayedStatus.value = 'pending'
@@ -85,14 +85,14 @@ watch(
   { immediate: true },
 )
 
-errorHandler(getChatsError)
+errorHandler(getDocumentsError)
 
-const emptyChatData = computed(() => {
-  const items = chatsData.value?.items
+const emptyDocumentsData = computed(() => {
+  const items = documentsData.value?.items
   return !Array.isArray(items) || items.length === 0
 })
 
-const chatDataItems = computed(() => chatsData.value?.items)
+const documentDataItems = computed(() => documentsData.value?.items || null)
 
 const shouldSyncQuery = ref(true)
 
@@ -104,11 +104,14 @@ watch(
     }
   },
 )
-
+const documentStore = useDocumentsStore()
 watch(
-  () => chatsData.value?.total,
+  () => documentsData.value?.total,
   (newTotal) => {
     pagination.value.total = newTotal || 0
+    if (newTotal === 0) {
+      documentStore.documentsDataEmpty = true
+    }
   },
   { immediate: true },
 )
@@ -122,10 +125,20 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   shouldSyncQuery.value = false
 })
+
+watch(
+  () => documentStore.newDocumentUploaded,
+  (newValue) => {
+    if (newValue) {
+      executeGetDocuments()
+      documentStore.newDocumentUploaded = false
+    }
+  },
+)
 </script>
 
 <template>
-  <ChatsListAdminActions
+  <DocumentsListActions
     :selected-sort-by="sort.sortBy"
     :selected-sort-direction="sort.sortOrder"
     @sort-change="handleSortChange"
@@ -133,28 +146,28 @@ onBeforeUnmount(() => {
 
   <GlobalCardListLoader
     v-if="(delayedStatus === 'pending') || (delayedStatus === 'idle')"
-    type="chat"
+    type="document"
     :skeleton-count="10"
   />
-
-  <ChatsListAdmin
-    v-else-if="!emptyChatData"
-    :chats="chatDataItems"
+  <DocumentList
+    v-else-if="!emptyDocumentsData"
+    :documents="documentDataItems"
     :pagination="pagination"
-    @chat-deleted="(handlePageChange(1))"
-    @chat-title-edited="(handlePageChange(1))"
+    @page-change="handlePageChange"
+    @document-deleted="(handlePageChange(1))"
   />
   <EmptyState
     v-else
-    :title="$t('chat.admin.chat_card.empty_state_title')"
-    :description="$t('chat.admin.chat_card.empty_state_desc')"
+    :title="$t('documents.empty_state_title')"
+    :description="$t('documents.empty_state_desc')"
   >
     <template #icon>
-      <ChatWarningIcon size="44px" />
+      <DocumentErrorIcon size="44px" />
     </template>
   </EmptyState>
+
   <Pagination
-    data-testid="bo-chat-list-pagination"
+    data-testid="bo-documents-list-pagination"
     :current-page="pagination.currentPage"
     :page-size="pagination.pageSize"
     :total="pagination.total"
