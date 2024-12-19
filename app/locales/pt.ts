@@ -824,7 +824,7 @@ export default {
       name: {
         required_message: 'Por favor, insira o nome da coleção',
         length_message: 'O nome deve ter entre {min} e {max} caracteres',
-        ascii_alphanumeric_underscored_message: 'Por favor, insira um nome que comece com letra maiúscula e contenha apenas letras, números e sublinhados para espaço ( _ ).',
+        ascii_alphanumeric_underscored_message: 'Por favor, insira um nome que comece com uma letra maiúscula e contenha apenas letras, números e sublinhados para espaços.',
       },
       vectorProvider: 'Selecione um fornecedor de vetores',
       embeddingProvider: 'Selecione um fornecedor de embeddings',

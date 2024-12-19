@@ -821,7 +821,7 @@ export default {
       name: {
         required_message: 'コレクション名を入力してください',
         length_message: '名前は{min}〜{max}文字である必要があります',
-        ascii_alphanumeric_underscored_message: '名前は大文字で始まり、文字、数字、およびスペースとしてのアンダースコア（ _ ）のみを含むように入力してください。',
+        ascii_alphanumeric_underscored_message: 'スペースのための文字、数字、アンダースコアを含む大文字で始まる名前を入力してください。',
       },
       vectorProvider: 'ベクタープロバイダーを選択してください',
       embeddingProvider: '埋め込みプロバイダーを選択してください',

@@ -823,7 +823,8 @@ export default {
       name: {
         required_message: 'Veuillez entrer le nom de la collection',
         length_message: 'Le nom doit comporter entre {min} et {max} caractères',
-        ascii_alphanumeric_underscored_message: 'Veuillez entrer un nom qui commence par une majuscule et ne contient que des lettres, des chiffres et des tirets bas pour les espaces ( _ ).',
+        ascii_alphanumeric_underscored_message: 'Veuillez entrer un nom qui commence par une lettre majuscule et contient uniquement des lettres, des chiffres et des underscores pour les espaces.',
+
       },
       vectorProvider: 'Veuillez sélectionner un fournisseur de vecteurs',
       embeddingProvider: 'Veuillez sélectionner un fournisseur d\'embedding',
