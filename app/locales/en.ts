@@ -995,7 +995,7 @@ export default {
       name: {
         required_message: 'Please input Collection name',
         length_message: 'Name should be {min} to {max} charaters long',
-        ascii_alphanumeric_underscored_message: 'Please enter a name that starts with a capital letter and contains only letters, numbers and underscores for space( _ ).',
+        ascii_alphanumeric_underscored_message: 'Please enter a name that starts with a capital letter and contains letters, numbers and underscores for space.',
       },
       vectorProvider: 'Please select Vector provider',
       embeddingProvider: 'Please select Embedding provider',

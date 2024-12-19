@@ -35,6 +35,10 @@ const handleSortChange = async (sortingValues: SortingValues) => {
   sort.value.sortProperty = sortingValues.sortProperty
   await execute()
 }
+
+const refreshCollections = async () => {
+  await execute()
+}
 </script>
 
 <template>
@@ -51,7 +55,7 @@ const handleSortChange = async (sortingValues: SortingValues) => {
         </AdminPageTitleContainer>
       </template>
       <template #actions>
-        <CollectionQuickActionsContainer />
+        <CollectionQuickActionsContainer @refresh-collections="refreshCollections" />
       </template>
     </AdminPageHeadingTemplate>
     <template v-if="collectionStore.collections.length">

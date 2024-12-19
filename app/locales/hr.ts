@@ -998,7 +998,7 @@ export default {
       name: {
         required_message: 'Unesite naziv kolekcije',
         length_message: 'Naziv bi trebao imati između {min} i {max} znakova',
-        ascii_alphanumeric_underscored_message: 'Unesite ime koje počinje velikim slovom i sadrži samo slova, brojeve i donje crte za razmak ( _ ).',
+        ascii_alphanumeric_underscored_message: 'Unesite naziv koji počinje velikim slovom i sadrži samo slova, brojeve i donje crte za razmake.',
 
       },
       vectorProvider: 'Odaberite davatelja vektora',
