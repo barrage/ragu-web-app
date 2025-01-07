@@ -5,7 +5,7 @@ const { width } = useWindowSize()
 
 // WATCHERS
 watch(width, (newWidth) => {
-  if (newWidth <= 575) {
+  if (newWidth <= 990) {
     navigationStore.isAdminSidebarCollapsed = true
   }
   else {
