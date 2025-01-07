@@ -1,8 +1,10 @@
+@use '../mixins/media' as *;
+
 @layer barrage-transfer {
   :root {
     --transfer-border-color: var(--color-primary-300);
     --transfer-border-radius: var(--radius-3);
-    --transfer-panel-width: 400px;
+    --transfer-panel-width: 100%;
     --transfer-panel-header-height: 40px;
     --transfer-panel-header-bg-color: var(--color-primary-200);
     --transfer-panel-footer-height: 40px;
@@ -22,9 +24,16 @@
 
   .barrage-transfer {
     display: flex;
+    flex-direction: column;
     width: 100%;
     background: var(--transfer-background-color);
     border: 1px solid var(--transfer-border-color);
+    align-items: center;
+
+    @include viewport-s {
+      flex-direction: row;
+      align-items: normal;
+    }
 
     &-panel {
       overflow: hidden;
@@ -94,14 +103,15 @@
           margin: 0;
           padding: 6px 0;
           list-style: none;
-          height: var(--transfer-panel-body-height);
+          height: calc(100% - var(--transfer-filter-height) - 30px);
+          padding-top: 0;
           overflow: scroll;
           box-sizing: border-box;
           .barrage-checkbox {
             height: var(--transfer-item-height);
             align-items: center;
             padding-left: 15px;
-            display: inline-block;
+            display: flex;
             position: relative;
             font-size: 14px;
             line-height: var(--transfer-item-height);
@@ -113,6 +123,14 @@
               display: inline-flex;
             }
             &__label {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              display: block;
+              box-sizing: border-box;
+
+              line-height: var(--el-transfer-item-height);
               span {
                 padding-left: 8px;
               }
@@ -232,6 +250,16 @@
       vertical-align: middle;
       padding: 0 30px;
       margin-block: auto;
+      width: fit-content;
+      transform: rotate(90deg);
+      flex-direction: column;
+      gap: 10px;
+
+      @include viewport-s {
+        width: auto;
+        transform: rotate(0deg);
+        flex-direction: row;
+      }
 
       .barrage-button {
         background-color: var(--transfer-button-background-color);

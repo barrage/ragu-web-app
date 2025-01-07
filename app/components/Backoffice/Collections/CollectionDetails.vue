@@ -325,7 +325,7 @@ onMounted(() => {
 
 .collection-informations-section {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-template-rows: auto;
   padding-block: 2rem;
   row-gap: 1.5rem;
@@ -334,6 +334,10 @@ onMounted(() => {
 
   :deep(.description) {
     font-size: var(--font-size-fluid-2);
+  }
+
+  @include viewport-m {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
