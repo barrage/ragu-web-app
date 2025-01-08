@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { type LocationQuery, useRoute, useRouter } from 'vue-router'
-import GlobalCardListLoader from '../../shared/Skeletons/GlobalCardListLoader.vue'
 import type { Sort, SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'

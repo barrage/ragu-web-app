@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { SortingValues } from '~/types/sort'
+import FilterIcon from '~/assets/icons/svg/filter.svg'
 
 // EMITS
 
@@ -26,6 +27,12 @@ const sortOptions = computed(() => [
 const updateSort = (sortingValues: SortingValues) => {
   emits('sortChange', sortingValues)
 }
+
+const drawer = ref(false)
+
+const toggleFilterDrawer = () => {
+  drawer.value = !drawer.value
+}
 </script>
 
 <template>
@@ -35,8 +42,21 @@ const updateSort = (sortingValues: SortingValues) => {
     </p>
     <div class="actions-wrapper">
       <SortSelect :options="sortOptions" @sort-updated="updateSort" />
+
+      <el-button
+        size="small"
+        data-testid="open-filter-button"
+        @click="toggleFilterDrawer"
+      >
+        <FilterIcon />  Filter
+      </el-button>
     </div>
   </div>
+  <el-drawer
+    v-model="drawer"
+    direction="rtl"
+    title="Filter"
+  />
 </template>
 
 <style lang="scss" scoped>
@@ -50,6 +70,12 @@ const updateSort = (sortingValues: SortingValues) => {
   & .agents-list-title {
     font-size: var(--font-size-fluid-4);
     color: var(--color-primary-800);
+  }
+  & .actions-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 22px;
   }
 }
 .dark {
