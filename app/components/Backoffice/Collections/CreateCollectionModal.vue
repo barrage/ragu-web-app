@@ -11,7 +11,8 @@ interface Emits {
 }
 
 const emits = defineEmits<Emits>()
-
+const router = useRouter()
+const { $api } = useNuxtApp()
 const { t } = useI18n()
 
 definePageMeta({
@@ -21,8 +22,6 @@ definePageMeta({
 useHead({
   title: computed(() => t('collections.titles.create')),
 })
-
-const collectionStore = useCollectionsStore()
 
 const vectorProviders = ['qdrant', 'weaviate']
 const embeddingProviders = ['fembed', 'openai']
@@ -63,14 +62,14 @@ watch(
   async (newProvider) => {
     if (newProvider) {
       form.model = ''
-      await collectionStore.GET_ListEmbeddingModels(newProvider)
-      listEmbeddingsModels.value = collectionStore.listEmbeddingsModels
+      const { data: embeddingModels } = await useAsyncData(() => $api.collection.GetListEmbeddingModels(newProvider))
+      listEmbeddingsModels.value = embeddingModels.value
     }
   },
 )
 
 // API CALLS
-const { execute: createExecute, error: createError, status: createStatus } = await useAsyncData(() => collectionStore.POST_CreateCollection(form), {
+const { execute: createExecute, error: createError, status: createStatus, data: createdUserData } = await useAsyncData(() => $api.collection.CreateCollection(form), {
   immediate: false,
 })
 
@@ -94,13 +93,14 @@ const createCollection = async (formEl: FormInstance | undefined) => {
       if (createStatus.value === 'success') {
         ElNotification({
           title: t('collections.notifications.create_title'),
-          message: t('collections.notifications.create_message', { name: collectionStore.newCollection?.name }),
+          message: t('collections.notifications.create_message', { name: createdUserData.value?.name }),
           type: 'success',
           customClass: 'success',
           duration: 2500,
         })
         emits('collectionCreated')
         closeModal()
+        router.push(`/admin/collections/${createdUserData.value?.id}`)
       }
     }
     else {
@@ -212,7 +212,7 @@ errorHandler(createError)
               :disabled="isModelDisabled"
             >
               <ElOption
-                v-for="(dimension, model) in collectionStore?.listEmbeddingsModels"
+                v-for="(dimension, model) in listEmbeddingsModels"
                 :key="model"
                 :label="`${model} - ${dimension} dims`"
                 :value="model"
@@ -273,10 +273,6 @@ errorHandler(createError)
   }
 }
 
-/* :deep(.barrage-form) {
-  background
-}
- */
 html.dark {
   & .page-title {
     color: var(--color-primary-100);

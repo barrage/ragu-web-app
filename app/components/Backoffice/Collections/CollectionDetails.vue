@@ -17,8 +17,8 @@ const props = defineProps<{
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
+const { $api } = useNuxtApp()
 const documetStore = useDocumentsStore()
-const collectionStore = useCollectionsStore()
 const selectedDocumentIds = ref<string[]>([])
 const collectionId = ref(route.params.collectionId as string)
 const rightValue = ref<string[]>([])
@@ -57,8 +57,8 @@ const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDo
 
 errorHandler(documentError)
 
-const { execute: updateCollection, error: collectionError, status } = await useAsyncData(() => collectionStore.POST_UpdateCollection(payload.value), { immediate: false })
-const { error, execute: getCollection } = await useAsyncData(() => collectionStore.GET_SingleCollection(collectionId?.value), { immediate: false })
+const { execute: updateCollection, error: collectionError, status } = await useAsyncData(() => $api.embedding.UpdateCollectionWithDocuments(payload.value), { immediate: false })
+const { error, execute: getCollection } = await useAsyncData(() => $api.collection.GetSingleCollection(collectionId?.value), { immediate: false })
 
 errorHandler(error)
 

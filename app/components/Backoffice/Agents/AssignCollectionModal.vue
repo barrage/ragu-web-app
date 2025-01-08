@@ -21,7 +21,6 @@ const emits = defineEmits<{
 
 // CONSTANTS & STATES
 
-const collectionStore = useCollectionsStore()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
@@ -41,8 +40,6 @@ const assignCollectionForm = reactive({
   instruction: '',
 })
 
-// COMPUTEDS
-
 const payload = computed(() => ({
 
   add: [
@@ -55,12 +52,20 @@ const payload = computed(() => ({
   ],
 }))
 
+// API CALLS
+
+const { data: allCollections } = await useAsyncData(() => $api.collection.GetAllCollections())
+
+const { execute: putCollection, error, status: updateAgentCollectionStatus } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
+
+// COMPUTEDS
+
 const filteredCollections = computed(() => {
   const existingCollectionNames = new Set(
     props.agentCollections?.map(entry => entry.collection),
   )
 
-  return collectionStore.collections.filter((collection) => {
+  return allCollections.value?.items?.filter((collection) => {
     return (
       !existingCollectionNames.has(collection.name)
     )
@@ -73,12 +78,6 @@ const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
   amount: [{ required: true, message: t('collections.assign_collection.rules.amount'), trigger: 'blur' }],
 }
 ))
-
-// API CALLS
-
-await useAsyncData(() => collectionStore.GET_AllCollections())
-
-const { execute: putCollection, error, status: updateAgentCollectionStatus } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
 
 // FUNCTIONS
 

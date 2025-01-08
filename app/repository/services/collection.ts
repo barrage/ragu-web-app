@@ -71,6 +71,13 @@ export default class CollectionService extends FetchFactory {
     }
   }
 
+  /**
+   * Creates a new collection with the provided details.
+   * @param body - The details of the collection to be created.
+   * @returns A promise that resolves to the created collection data.
+   * @throws Will throw an error if the creation fails, providing the appropriate status code and message.
+   */
+
   async CreateCollection(body: CollectionDetail): Promise<any> {
     try {
       return await this.$fetch(this.endpoint, {
@@ -85,6 +92,13 @@ export default class CollectionService extends FetchFactory {
       })
     }
   }
+
+  /**
+   * Fetches a list of available embedding models for a specific provider.
+   * @param provider - The name of the embedding provider.
+   * @returns A promise that resolves to the list of embedding models.
+   * @throws Will throw an error if the request fails, providing the appropriate status code and message.
+   */
 
   async GetListEmbeddingModels(provider: string): Promise<any> {
     try {

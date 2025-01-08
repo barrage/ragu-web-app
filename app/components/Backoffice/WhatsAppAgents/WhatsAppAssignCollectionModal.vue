@@ -22,7 +22,6 @@ interface Emits {
 
 // CONSTANTS & STATES
 
-const collectionStore = useCollectionsStore()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const route = useRoute()
@@ -42,8 +41,6 @@ const assignCollectionForm = reactive({
   instruction: '',
 })
 
-// COMPUTEDS
-
 const payload = computed(() => ({
   add: [
     {
@@ -55,12 +52,20 @@ const payload = computed(() => ({
   ],
 }))
 
+// API CALLS
+
+const { data: allCollections } = await useAsyncData(() => $api.collection.GetAllCollections())
+
+const { execute: putCollection, error } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, payload.value), { immediate: false })
+
+// COMPUTEDS
+
 const filteredCollections = computed(() => {
   const existingCollectionNames = new Set(
     (props.agentCollections ?? []).map(collection => collection.collection),
   )
 
-  return collectionStore.collections.filter((collection) => {
+  return allCollections.value?.items.filter((collection) => {
     return (
       !existingCollectionNames.has(collection.name)
     )
@@ -78,12 +83,6 @@ const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
 watch(() => props.isOpen, (newVal) => {
   assignCollectionModalVisible.value = newVal
 })
-
-// API CALLS
-
-await useAsyncData(() => collectionStore.GET_AllCollections())
-
-const { execute: putCollection, error } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, payload.value), { immediate: false })
 
 // FUNCTIONS
 

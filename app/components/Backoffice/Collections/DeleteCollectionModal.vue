@@ -1,31 +1,29 @@
 <!-- DeleteCollectionModal.vue -->
 <script lang="ts" setup>
-import { ref } from 'vue'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import { useCollectionsStore } from '~/stores/collections'
 import type { Collection } from '~/types/collection'
 
 // PROPS & EMITS
 
 const props = defineProps<{
   collection: Collection | null
-  visible: boolean
 }>()
 
-const emits = defineEmits(['update:visible'])
+const emits = defineEmits<Emits>()
+
+interface Emits {
+  (event: 'collectionDeleted'): void
+}
 
 // CONSTANTS & STATES
 
 const { t } = useI18n()
-const collectionStore = useCollectionsStore()
 const { $api } = useNuxtApp()
-
-const deleteCollectionModalVisible = ref(props.visible)
+const isOpen = defineModel<boolean>()
 
 // API CALLS
 
-const { execute: getAllCollections } = await useAsyncData(() => collectionStore.GET_AllCollections(), { immediate: false })
-const { execute: deleteCollection, error: deleteCollectionError, status } = await useAsyncData(() => collectionStore.DELETE_Collection(props.collection!.id), { immediate: false })
+const { execute: deleteCollection, error: deleteCollectionError, status } = await useAsyncData(() => $api.collection.DeleteCollection(props.collection!.id), { immediate: false })
 const { execute: deleteCollectionFromALlAgents, error: deleteCollectionAllError } = await useAsyncData(() => $api.agent.DeleteCollectionFromAllAgents(props.collection!.name, props.collection!.provider), { immediate: false })
 
 errorHandler(deleteCollectionAllError)
@@ -33,7 +31,7 @@ errorHandler(deleteCollectionAllError)
 // FUNCTIONS
 
 const closeModal = () => {
-  emits('update:visible', false)
+  isOpen.value = false
 }
 
 const confirmDelete = async () => {
@@ -41,8 +39,7 @@ const confirmDelete = async () => {
 
   await deleteCollection()
   await deleteCollectionFromALlAgents()
-  await getAllCollections()
-  deleteCollectionModalVisible.value = false
+
   if (deleteCollectionError.value) {
     ElNotification({
       title: 'Error',
@@ -52,6 +49,8 @@ const confirmDelete = async () => {
     })
   }
   else {
+    emits('collectionDeleted')
+    closeModal()
     ElNotification({
       title: 'Success',
       message: t('collections.notifications.delete_message'),
@@ -61,17 +60,11 @@ const confirmDelete = async () => {
     })
   }
 }
-
-// WATCHERS
-
-watch(() => props.visible, (newVal) => {
-  deleteCollectionModalVisible.value = newVal
-})
 </script>
 
 <template>
   <ElDialog
-    v-model="deleteCollectionModalVisible"
+    v-model="isOpen"
     destroy-on-close
     align-center
     class="barrage-dialog--small"
