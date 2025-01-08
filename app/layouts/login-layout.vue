@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useMouse, useWindowSize } from '@vueuse/core'
-import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
 import RaguLogo from '~/assets/icons/svg/Ragu_logo_dark.svg'
+import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
 
 // CONSTANTS & STATES
 
