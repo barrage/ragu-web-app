@@ -1,0 +1,199 @@
+$directions: rtl, ltr, ttb, btt;
+
+@layer barrage-drawer {
+  :root {
+    --barrage-overlay-background-color: rgba(0, 0, 0, 0.5);
+
+    --barrage-drawer-transition-duration: 0.3s;
+    --barrage-drawer-padding-primary: var(--spacing-fluid-m);
+    --barrage-drawer-bg-color: var(--color-primary-300);
+  }
+
+  html.dark {
+    .barrage-overlay {
+      & .barrage-drawer {
+        --barrage-drawer-bg-color: var(--color-primary-700);
+
+        &__header {
+          color: var(--color-primary-0);
+        }
+
+        &__close-btn {
+          i {
+            color: var(--color-primary-200);
+          }
+          &:focus,
+          &:hover {
+            i {
+              color: var(--color-primary-0);
+            }
+          }
+        }
+      }
+    }
+  }
+  .barrage-overlay {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    background: var(--barrage-overlay-background-color);
+    overflow: auto;
+
+    & .barrage-drawer {
+      width: 30%;
+      position: absolute;
+      box-sizing: border-box;
+      background-color: var(--barrage-drawer-bg-color);
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--el-box-shadow-dark);
+      overflow: hidden;
+      transition: all var(--barrage-drawer-transition-duration);
+
+      @each $direction in $directions {
+        .#{$direction} {
+          transform: translate(0, 0);
+        }
+      }
+      &__sr-focus:focus {
+        outline: none !important;
+      }
+
+      &__header {
+        align-items: center;
+        color: var(--color-primary-1000);
+        font-weight: var(--font-weight-bold);
+        display: flex;
+        margin-bottom: 32px;
+        padding: var(--barrage-drawer-padding-primary);
+        padding-bottom: 0;
+        & > :first-child {
+          flex: 1;
+        }
+      }
+
+      &__title {
+        margin: 0;
+        flex: 1;
+        line-height: inherit;
+        font-size: var(--font-size-fluid-4);
+      }
+
+      &__close-btn {
+        display: inline-flex;
+        border: none;
+        cursor: pointer;
+        width: 42px;
+        height: 42px;
+        font-size: 32px;
+        color: inherit;
+        background-color: transparent;
+        outline: none;
+
+        i {
+          width: 34px;
+          height: 34px;
+          color: var(--color-primary-700);
+
+          & svg {
+            width: 34px;
+            height: 34px;
+          }
+        }
+
+        &:focus,
+        &:hover {
+          i {
+            color: var(--color-primary-900);
+          }
+        }
+      }
+      &__body {
+        flex: 1;
+        padding: var(--barrage-drawer-padding-primary);
+        overflow: auto;
+        & > * {
+          box-sizing: border-box;
+        }
+      }
+
+      &.ltr,
+      &.rtl {
+        height: 100%;
+        top: 0;
+        bottom: 0;
+      }
+
+      &.ttb,
+      &.btt {
+        width: 100%;
+        left: 0;
+        right: 0;
+      }
+
+      &.ltr {
+        left: 0;
+      }
+
+      &.rtl {
+        right: 0;
+      }
+
+      &.ttb {
+        top: 0;
+      }
+
+      &.btt {
+        bottom: 0;
+      }
+    }
+  }
+}
+
+.barrage-drawer-fade {
+  &-enter-active,
+  &-leave-active {
+    transition: all var(--barrage-drawer-transition-duration);
+  }
+
+  &-enter-from,
+  &-enter-active,
+  &-enter-to,
+  &-leave-from,
+  &-leave-active,
+  &-leave-to {
+    overflow: hidden !important;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    background-color: transparent !important;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    @each $direction in $directions {
+      .#{$direction} {
+        @if $direction == ltr {
+          transform: translateX(-100%);
+        }
+
+        @if $direction == rtl {
+          transform: translateX(100%);
+        }
+
+        @if $direction == ttb {
+          transform: translateY(-100%);
+        }
+
+        @if $direction == btt {
+          transform: translateY(100%);
+        }
+      }
+    }
+  }
+}

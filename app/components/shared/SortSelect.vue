@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
+import ArrowSortIcon from '~/assets/icons/svg/arrow-sort-down-lines.svg'
 import type { SortOption, SortingValues } from '~/types/sort'
 
 const props = withDefaults(defineProps<{
@@ -63,12 +64,13 @@ watch(
   <div class="sorting-actions-wrapper">
     <ClientOnly>
       <ElDropdown
-        trigger="click"
+        trigger="hover"
         role="navigation"
         class="card-dropdown"
         data-testid="sort-by-dropdown"
       >
         <ElButton size="small" data-testid="sort-by-button">
+          <ArrowSortIcon />
           {{
             `${$t("sort.description")} ${selectedSortBy?.name ? selectedSortBy?.name : ''}`
           }}
