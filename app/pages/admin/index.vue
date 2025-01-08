@@ -13,7 +13,6 @@ useHead({
 
 const { $api } = useNuxtApp()
 const statisticStore = useStatisticStore()
-const collectionsStore = useCollectionsStore()
 const documentsStore = useDocumentsStore()
 const currentPeriod = ref('WEEK')
 
@@ -60,7 +59,7 @@ const hasError = computed(() => !!dashboardCountError.value || !!recentUsersErro
 // Collections
 
 const { data: collections } = useAsyncData('collections', () =>
-  collectionsStore.GET_AllCollections(1, 1, 'updated_at', 'desc'))
+  $api.collection.GetAllCollections(1, 1, 'updated_at', 'desc'))
 
 const collectionsCount = computed(() => collections.value?.total || 0)
 

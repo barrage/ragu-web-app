@@ -6,23 +6,18 @@ import type { Pagination } from '~/types/pagination'
 
 const props = defineProps<{
   collections: Collection[] | null | undefined
+  pagination: Pagination
 }>()
 
 const emits = defineEmits<{
   (event: 'pageChange', page: number): number
+  (event: 'collectionDeleted'): void
 }>()
 
 // CONSTANTS & STATES
 
-const collectionStore = useCollectionsStore()
 const isDeleteModalVisible = ref(false)
 const collectionToDelete = ref<Collection | null>(null)
-const pagination = ref<Pagination>({
-  currentPage: 1,
-  pageSize: 10,
-  total: collectionStore.collectionResponse?.total || 0,
-  disabled: false,
-})
 
 // FUNCTIONS
 
@@ -31,21 +26,9 @@ const openDeleteModal = (collection: Collection | null) => {
   isDeleteModalVisible.value = true
 }
 
-const changePage = (page: number) => {
-  pagination.value.currentPage = page
-  emits('pageChange', pagination.value.currentPage)
+const collectionDeleted = () => {
+  emits('collectionDeleted')
 }
-
-// WATCHERS
-
-watch(
-  () => collectionStore.collectionResponse?.total,
-  (newTotal) => {
-    if (newTotal !== undefined) {
-      pagination.value.total = newTotal
-    }
-  },
-)
 </script>
 
 <template>
@@ -62,15 +45,11 @@ watch(
         @open-delete-modal="openDeleteModal(collection)"
       />
     </div>
-    <Pagination
-      :current-page="pagination.currentPage"
-      :page-size="pagination.pageSize"
-      :total="pagination.total"
-      @page-change="(page) => changePage(page)"
-    />
+
     <DeleteCollectionModal
-      v-model:visible="isDeleteModalVisible"
+      v-model="isDeleteModalVisible"
       :collection="collectionToDelete"
+      @collection-deleted="collectionDeleted"
     />
   </div>
 </template>

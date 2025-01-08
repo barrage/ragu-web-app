@@ -7,6 +7,7 @@ definePageMeta({
 })
 
 const { t } = useI18n()
+const { $api } = useNuxtApp()
 
 useHead({
   title: computed(() => t('collections.titles.details')),
@@ -14,12 +15,11 @@ useHead({
 
 // CONSTATNS
 const route = useRoute()
-const collectionStore = useCollectionsStore()
 
 const selectedCollectionId = ref(route.params.collectionId as string)
 
 // API CALLS
-const { error, status } = await useAsyncData(() => collectionStore.GET_SingleCollection(selectedCollectionId?.value), { lazy: true })
+const { error, status: singleCollectionStatus, data: singleCollectionData } = await useAsyncData(() => $api.collection.GetSingleCollection(selectedCollectionId?.value), { lazy: true })
 
 errorHandler(error)
 </script>
@@ -30,13 +30,13 @@ errorHandler(error)
       <ArrowLeftIcon size="20px" /> {{ t('collections.title') }}
     </LlmLink>
 
-    <template v-if="status === 'pending'">
+    <template v-if="singleCollectionStatus === 'pending'">
       <div class="collection-details-loader">
         <MeetUpLoader />
       </div>
     </template>
-    <template v-else-if="collectionStore.singleCollection">
-      <CollectionDetails :single-collection="collectionStore.singleCollection" />
+    <template v-else-if="singleCollectionData">
+      <CollectionDetails :single-collection="singleCollectionData" />
     </template>
     <EmptyState
       v-else
