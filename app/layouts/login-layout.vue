@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useMouse, useWindowSize } from '@vueuse/core'
 import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
+import RaguLogo from '~/assets/icons/svg/Ragu_logo_dark.svg'
 
 // CONSTANTS & STATES
 
@@ -74,7 +75,7 @@ function handleAnimatingOut() {
       />
 
       <div class="logo-wrapper">
-        <BarrageLogo
+        <RaguLogo
           :key="isDarkMode"
           size="220px"
           class="logo"

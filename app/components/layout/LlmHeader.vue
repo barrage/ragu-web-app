@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
+import RaguLogo from '~/assets/icons/svg/Ragu_logo_dark.svg'
 </script>
 
 <template>
   <header>
-    <BarrageLogo
+    <RaguLogo
       width="110px"
       height="40px"
     />

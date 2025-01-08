@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 
 interface Emits {
