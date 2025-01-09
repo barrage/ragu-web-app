@@ -15,7 +15,41 @@ const router = useRouter()
 
 const route = useRoute()
 
-const handleServerMessage = (data: string) => {
+const ensureWsTokenAndConnect = async () => {
+  if (isTokenFetching.value) { return }
+  if ($wsConnectionState.value !== 'open') {
+    try {
+      isTokenFetching.value = true
+      await chatStore.GET_WsToken()
+
+      await $wsConnect(wsToken.value)
+
+      $getWs().onopen = async () => {
+        $wsConnectionState.value = 'open'
+        await handleAgentOrChatChange()
+      }
+      $getWs().onmessage = event => handleServerMessage(event.data)
+      $getWs().onclose = async () => {
+        console.warn('WebSocket closed unexpectedly. Clearing token and attempting reconnection...')
+        $wsConnectionState.value = 'closed'
+        isTokenFetching.value = false
+        wsToken.value = ''
+        await ensureWsTokenAndConnect()
+      }
+    }
+    catch (error) {
+      isTokenFetching.value = false
+      console.error('Error fetching WebSocket token or connecting:', error)
+    }
+    finally {
+      isTokenFetching.value = false
+    }
+  }
+  else {
+    handleAgentOrChatChange()
+  }
+}
+const handleServerMessage = async (data: string) => {
   let parsedData
   const assistantMessage = messages.value?.find(
     msg => msg.id === 'currentlyStreaming',
@@ -76,12 +110,14 @@ const handleServerMessage = (data: string) => {
       if (assistantMessage) {
         assistantMessage.id = ''
       }
+      await ensureWsTokenAndConnect()
       break
     case 'error':
       isWebSocketStreaming.value = false
       if (assistantMessage) {
         assistantMessage.id = ''
       }
+      await ensureWsTokenAndConnect()
       break
     default:
       break
@@ -103,41 +139,6 @@ const handleAgentOrChatChange = async () => {
   }
   else {
     await ensureWsTokenAndConnect()
-  }
-}
-
-const ensureWsTokenAndConnect = async () => {
-  if (isTokenFetching.value) { return }
-  if ($wsConnectionState.value !== 'open') {
-    try {
-      isTokenFetching.value = true
-      await chatStore.GET_WsToken()
-
-      await $wsConnect(wsToken.value)
-
-      $getWs().onopen = async () => {
-        $wsConnectionState.value = 'open'
-        await handleAgentOrChatChange()
-      }
-      $getWs().onmessage = event => handleServerMessage(event.data)
-      $getWs().onclose = async () => {
-        console.warn('WebSocket closed unexpectedly. Clearing token and attempting reconnection...')
-        $wsConnectionState.value = 'closed'
-        isTokenFetching.value = false
-        wsToken.value = ''
-        await ensureWsTokenAndConnect()
-      }
-    }
-    catch (error) {
-      isTokenFetching.value = false
-      console.error('Error fetching WebSocket token or connecting:', error)
-    }
-    finally {
-      isTokenFetching.value = false
-    }
-  }
-  else {
-    handleAgentOrChatChange()
   }
 }
 
