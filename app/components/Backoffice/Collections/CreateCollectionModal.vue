@@ -133,12 +133,12 @@ errorHandler(createError)
     @close="closeModal"
   >
     <template #header>
-      <div class="activate-user-modal-header">
+      <div class="activate-collection-modal-header">
         <CollectionIcon size="42px" />
         <h5> {{ t('collections.titles.create') }}</h5>
       </div>
     </template>
-    <div class="activate-user-modal-body">
+    <div class="activate-collection-modal-body">
       <p>
         {{ t('collections.titles.createDescription') }}
       </p>
@@ -243,12 +243,12 @@ errorHandler(createError)
 </template>
 
 <style lang="scss" scoped>
-.activate-user-modal-header {
+.activate-collection-modal-header {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
-.activate-user-modal-body {
+.activate-collection-modal-body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -274,18 +274,6 @@ errorHandler(createError)
 }
 
 html.dark {
-  & .page-title {
-    color: var(--color-primary-100);
-  }
-  & .description {
-    color: var(--color-primary-300);
-  }
-  & .users-actions-container {
-    & h6 {
-      color: var(--color-primary-100);
-    }
-  }
-
   .container {
     --container-background-color: var(--color-primary-800);
   }
