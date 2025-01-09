@@ -7,6 +7,7 @@ import InfoIcon from '~/assets/icons/svg/info.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import EmptyChatIcon from '~/assets/icons/svg/chat-warning.svg'
+import { useWhatsAppStore } from '~/stores/whatsapp'
 import { isValidPhoneNumber } from '~/utils/useValidation'
 import type { WhatsAppNumber } from '~/types/whatsapp'
 import type { User } from '~/types/users'
@@ -22,6 +23,8 @@ const props = defineProps<{
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const selectedNumber = ref<WhatsAppNumber>()
+const whatsAppStore = useWhatsAppStore()
+const { reloadBOWhatsAppNumbers } = storeToRefs(whatsAppStore)
 const modal = ref<{
   isOpened: boolean
   type: ModalTypes
@@ -54,12 +57,21 @@ const rules = computed<FormRules>(() => ({
 
 // API CALLS
 
-const { execute: getPhoneNumbers, error: getPhoneNumbersError, data: phoneNumbers } = useAsyncData(() => $api.whatsApp.BoGetWhatsAppNumbers(String(props.user?.id)), { immediate: false })
+const { execute: getPhoneNumbers, error: getPhoneNumbersError, data: phoneNumbers, status: getPhoneNumbersStatus } = useAsyncData(() => $api.whatsApp.BoGetWhatsAppNumbers(String(props.user?.id)), { immediate: false })
 const { execute: addNewPhoneNumber, error: addNewPhoneNumberError, status: addPhoneNumberStatus } = useAsyncData(() => $api.whatsApp.BoPostWhatsAppNumber(String(props.user?.id), String(form.phoneNumber)), { immediate: false })
 const { execute: editPhoneNumber, error: editPhoneNumberError, status: editPhoneNumberStatus } = useAsyncData(() => $api.whatsApp.BoPutWhatsAppNumber(String(props.user?.id), String(form.phoneNumber), String(selectedNumber.value?.id)), { immediate: false })
 const { execute: deletePhoneNumber, error: deletePhoneNumberError, status: deletePhoneNumberStatus } = useAsyncData(() => $api.whatsApp.BoDeleteWhatsAppNumber(String(props.user?.id), String(selectedNumber.value?.id)), { immediate: false })
 
 errorHandler(getPhoneNumbersError)
+
+// WATCHERS
+
+watch(() => reloadBOWhatsAppNumbers.value, (newValue) => {
+  if (newValue) {
+    getPhoneNumbers()
+    whatsAppStore.resetReloadBOWhatsAppNumbers()
+  }
+})
 
 // FUNCTIONS
 
@@ -186,8 +198,14 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
       </ElButton>
     </div>
 
+    <template v-if="getPhoneNumbersStatus === 'pending'">
+      <div class="whatsapp-numbers-loader">
+        <MeetUpLoader />
+      </div>
+    </template>
+
     <div
-      v-if="phoneNumbers?.length"
+      v-else-if="phoneNumbers?.length"
       class="numbers-container"
     >
       <div
@@ -373,6 +391,14 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
     }
   }
 
+  .whatsapp-numbers-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--spacing-fluid-3-xl);
+    padding-bottom: 100px;
+  }
+
   .numbers-container {
     display: flex;
     flex-direction: column;
@@ -451,9 +477,9 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
 
 .dark {
   .title-wrapper {
-    color: var(--color-primary-0);
+    color: var(--color-primary-100);
     .title {
-      color: var(--color-primary-0);
+      color: var(--color-primary-100);
     }
   }
 

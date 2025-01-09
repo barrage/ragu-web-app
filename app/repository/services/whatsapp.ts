@@ -1,4 +1,7 @@
+import type { RouteLocationNormalized } from 'vue-router'
 import FetchFactory from '../fetchFactory'
+import { useWhatsAppStore } from '@/stores/whatsapp'
+import { useAuthStore } from '@/stores/auth'
 import type { AssignCollectionPayload } from '~/types/collection'
 import type { AllWhatsAppAgentsResponse, BoChatResponse, BoChatsResponse, BoUpdateAgentRequest, PostWhatsAppAgentBody, SingleWhatsAppAgentResponse, UserChatResponse, WhatsAppAgent, WhatsAppNumber } from '~/types/whatsapp.ts'
 
@@ -55,10 +58,9 @@ export default class whatsAppService extends FetchFactory {
    */
   async BoPostWhatsAppNumber(userId: string, phoneNumber: string): Promise<WhatsAppNumber> {
     try {
-      const payload = phoneNumber.replaceAll(' ', '')
       return await this.$fetch<WhatsAppNumber>(`${this.adminEndpoint}/numbers/${userId}`, {
         method: 'POST',
-        body: JSON.stringify({ payload }),
+        body: JSON.stringify({ phoneNumber: phoneNumber.replaceAll(' ', '') }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -76,20 +78,24 @@ export default class whatsAppService extends FetchFactory {
   /**
    * Create a new user's WhatsApp phone number.
    * @param phoneNumber
+   * @param route
    * @returns A promise that resolves to the created WhatsAppNumber type.
    * @throws Will throw an error if the request fails.
    */
-  async UserPostWhatsAppNumber(phoneNumber: string): Promise<WhatsAppNumber> {
+  async UserPostWhatsAppNumber(phoneNumber: string, route?: RouteLocationNormalized): Promise<WhatsAppNumber> {
     try {
-      const payload = phoneNumber.replaceAll(' ', '')
-      return await this.$fetch<WhatsAppNumber>(`${this.userEndpoint}/numbers`, {
+      const response = await this.$fetch<WhatsAppNumber>(`${this.userEndpoint}/numbers`, {
         method: 'POST',
-        body: JSON.stringify({ payload }),
+        body: JSON.stringify({ phoneNumber: phoneNumber.replaceAll(' ', '') }),
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
       })
+      if (route?.name === 'admin-users-userId' && useAuthStore().user?.id === route.params.userId) {
+        useWhatsAppStore().triggerReloadBOWhatsAppNumbers()
+      }
+      return response
     }
     catch (error: any) {
       throw createError({
@@ -130,12 +136,13 @@ export default class whatsAppService extends FetchFactory {
    * Updates existing user's WhatsApp phone number.
    * @param phoneNumber
    * @param phoneNumberId
+   * @param route
    * @returns A promise that resolves to the WhatsAppNumber type.
    * @throws Will throw an error if the request fails.
    */
-  async UserPutWhatsAppNumber(phoneNumber: string, phoneNumberId: string): Promise<WhatsAppNumber> {
+  async UserPutWhatsAppNumber(phoneNumber: string, phoneNumberId: string, route?: RouteLocationNormalized): Promise<WhatsAppNumber> {
     try {
-      return await this.$fetch<WhatsAppNumber>(`${this.userEndpoint}/numbers/${phoneNumberId}`, {
+      const response = await this.$fetch<WhatsAppNumber>(`${this.userEndpoint}/numbers/${phoneNumberId}`, {
         method: 'PUT',
         body: JSON.stringify({ phoneNumber }),
         headers: {
@@ -143,6 +150,10 @@ export default class whatsAppService extends FetchFactory {
         },
         credentials: 'include',
       })
+      if (route?.name === 'admin-users-userId' && useAuthStore().user?.id === route.params.userId) {
+        useWhatsAppStore().triggerReloadBOWhatsAppNumbers()
+      }
+      return response
     }
     catch (error: any) {
       throw createError({
@@ -177,15 +188,19 @@ export default class whatsAppService extends FetchFactory {
   /**
    * Deletes a user's WhatsApp phone number by ID.
    * @param phoneNumberId
+   * @param route
    * @returns A promise that resolves when the WhatsApp phone number is successfully deleted.
    * @throws Will throw an error if the request fails.
    */
-  async UserDeleteWhatsAppNumber(phoneNumberId: string): Promise<void> {
+  async UserDeleteWhatsAppNumber(phoneNumberId: string, route?: RouteLocationNormalized): Promise<void> {
     try {
       await this.$fetch<void>(`${this.userEndpoint}/numbers/${phoneNumberId}`, {
         method: 'DELETE',
         credentials: 'include',
       })
+      if (route?.name === 'admin-users-userId' && useAuthStore().user?.id === route.params.userId) {
+        useWhatsAppStore().triggerReloadBOWhatsAppNumbers()
+      }
     }
     catch (error: any) {
       throw createError({
