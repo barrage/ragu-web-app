@@ -30,3 +30,23 @@ export interface EditUserPayload {
   lastName: string
   role: string
 }
+
+export interface ImportedUser {
+  fullName: string
+  firstName?: string
+  lastName?: string
+  email: string
+  role: string
+  skipped: boolean
+}
+
+export interface FailedImportUser {
+  line: number | string
+  type: 'validation' | 'missing_fields' | string
+  message: string[]
+}
+
+export interface ImportUsersResult {
+  successful: ImportedUser[]
+  failed: FailedImportUser[]
+}

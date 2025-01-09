@@ -177,4 +177,27 @@ export default class usersService extends FetchFactory {
       })
     }
   }
+
+  /**
+   * Imports users from a CSV file.
+   * @param file
+   * @returns
+   *  @throws Will throw an error if the request fails.
+   */
+
+  async ImportUsersFromCsv(file: File | Blob): Promise<void> {
+    try {
+      return await this.$fetch<void>(`${this.endpoint}/import-csv`, {
+        method: 'POST',
+        body: file,
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to import users with code ${error?.statusCode}`,
+      })
+    }
+  }
 }
