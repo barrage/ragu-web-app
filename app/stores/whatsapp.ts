@@ -5,6 +5,7 @@ export const useWhatsAppStore = defineStore('whatsapp', () => {
 
   const isWhatsAppActive = ref(useRuntimeConfig().public.enableWhatsApp === 'true')
   const editMode = ref<boolean>(false)
+  const reloadBOWhatsAppNumbers = ref<boolean>(false)
 
   /* Functions */
 
@@ -12,9 +13,20 @@ export const useWhatsAppStore = defineStore('whatsapp', () => {
     editMode.value = mode
   }
 
+  function triggerReloadBOWhatsAppNumbers() {
+    reloadBOWhatsAppNumbers.value = true
+  }
+
+  function resetReloadBOWhatsAppNumbers() {
+    reloadBOWhatsAppNumbers.value = false
+  }
+
   return {
     isWhatsAppActive,
     editMode,
+    reloadBOWhatsAppNumbers,
     setEditMode,
+    triggerReloadBOWhatsAppNumbers,
+    resetReloadBOWhatsAppNumbers,
   }
 })

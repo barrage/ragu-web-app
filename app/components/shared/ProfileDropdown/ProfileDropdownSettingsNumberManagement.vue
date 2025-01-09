@@ -16,6 +16,7 @@ type Types = 'add' | 'edit' | 'delete'
 
 const { $api } = useNuxtApp()
 const { t } = useI18n()
+const route = useRoute()
 const dialog = ref<{
   isOpened: boolean
   selectedNumber: WhatsAppNumber | undefined
@@ -85,9 +86,9 @@ const rules = computed<FormRules>(() => ({
 // API CALLS
 
 const { execute: getPhoneNumbers, error: getPhoneNumbersError, data: getPhoneNumbersData, status: getPhoneNumberState } = await useAsyncData(() => $api.whatsApp.UserGetWhatsAppNumbers(), { immediate: false })
-const { execute: addNumber, error: addNumberError, status: addNumberStatus } = await useAsyncData(() => $api.whatsApp.UserPostWhatsAppNumber(String(form.phoneNumber)), { immediate: false })
-const { execute: editNumber, error: editNumberError, status: editNumberStatus } = await useAsyncData(() => $api.whatsApp.UserPutWhatsAppNumber(String(form.editPhoneNumber), String(editingPhoneNumber.value?.id)), { immediate: false })
-const { execute: deleteNumber, error: deleteNumberError, status: deleteNumberStatus } = await useAsyncData(() => $api.whatsApp.UserDeleteWhatsAppNumber(String(dialog.value.selectedNumber?.id)), { immediate: false })
+const { execute: addNumber, error: addNumberError, status: addNumberStatus } = await useAsyncData(() => $api.whatsApp.UserPostWhatsAppNumber(String(form.phoneNumber), route), { immediate: false })
+const { execute: editNumber, error: editNumberError, status: editNumberStatus } = await useAsyncData(() => $api.whatsApp.UserPutWhatsAppNumber(String(form.editPhoneNumber), String(editingPhoneNumber.value?.id), route), { immediate: false })
+const { execute: deleteNumber, error: deleteNumberError, status: deleteNumberStatus } = await useAsyncData(() => $api.whatsApp.UserDeleteWhatsAppNumber(String(dialog.value.selectedNumber?.id), route), { immediate: false })
 
 errorHandler(getPhoneNumbersError)
 
@@ -217,131 +218,133 @@ function showSuccessNotification(type: Types) {
   </template>
 
   <template v-else>
-    <div v-if="getPhoneNumbersData?.length" class="whatsapp-numbers-container">
-      <div
-        v-for="numberData in getPhoneNumbersData"
-        :key="numberData.id"
-        class="number-card grid"
-      >
+    <div class="whatsapp-numbers-container">
+      <template v-if="getPhoneNumbersData?.length">
         <div
-          v-if="editingPhoneNumber?.id !== numberData.id"
-          class="whatsapp-number-wrapper"
+          v-for="numberData in getPhoneNumbersData"
+          :key="numberData.id"
+          class="number-card grid"
         >
-          <WhatsAppLogoIcon size="24" />
-          <p class="whatsapp-number">
-            {{ `+${numberData.phoneNumber}` }}
-          </p>
-        </div>
-        <ElForm
-          v-else
-          ref="formRef"
-          :model="form"
-          :rules="rules"
-          class="edit-form"
-        >
-          <ElFormItem prop="editPhoneNumber" :style="`padding-bottom: ${isEditPhoneNumberValid ? '0px' : '32px'};`">
-            <template #label>
-              <div class="add-phone-number-label-wrapper">
-                <WhatsAppLogoIcon size="24" />
-                {{ `+${numberData.phoneNumber}` }}
+          <div
+            v-if="editingPhoneNumber?.id !== numberData.id"
+            class="whatsapp-number-wrapper"
+          >
+            <WhatsAppLogoIcon size="24" />
+            <p class="whatsapp-number">
+              {{ `+${numberData.phoneNumber}` }}
+            </p>
+          </div>
+          <ElForm
+            v-else
+            ref="formRef"
+            :model="form"
+            :rules="rules"
+            class="edit-form"
+          >
+            <ElFormItem prop="editPhoneNumber" :style="`padding-bottom: ${isEditPhoneNumberValid ? '0px' : '32px'};`">
+              <template #label>
+                <div class="add-phone-number-label-wrapper">
+                  <WhatsAppLogoIcon size="24" />
+                  {{ `+${numberData.phoneNumber}` }}
+                </div>
+              </template>
+              <div class="add-number-form-item-wrapper">
+                <ElInput
+                  v-model="form.editPhoneNumber"
+                  :placeholder="$t('settings.placeholders.mobile_number')"
+                  class="add-number-form-item-input"
+                >
+                  <template #prefix>
+                    <p class="main-text-color">
+                      +
+                    </p>
+                  </template>
+                </ElInput>
+                <ElButton @click="handleCancelingEdit">
+                  {{ $t('settings.cancel') }}
+                </ElButton>
+                <ElButton
+                  type="primary"
+                  :loading="editNumberStatus === 'pending'"
+                  :disabled="!form.editPhoneNumber?.length"
+                  @click="handleEditNumber(formRef)"
+                >
+                  {{ $t('settings.edit') }}
+                </ElButton>
               </div>
-            </template>
-            <div class="add-number-form-item-wrapper">
-              <ElInput
-                v-model="form.editPhoneNumber"
-                :placeholder="$t('settings.placeholders.mobile_number')"
-                class="add-number-form-item-input"
-              >
-                <template #prefix>
-                  <p class="main-text-color">
-                    +
-                  </p>
-                </template>
-              </ElInput>
-              <ElButton @click="handleCancelingEdit">
-                {{ $t('settings.cancel') }}
-              </ElButton>
+            </ElFormItem>
+          </ElForm>
+
+          <div v-if="editingPhoneNumber?.id !== numberData.id" class="whatsapp-number-actions">
+            <LlmTooltip :content="t('users.phone_numbers.edit.title')">
               <ElButton
                 type="primary"
-                :loading="editNumberStatus === 'pending'"
-                :disabled="!form.editPhoneNumber?.length"
-                @click="handleEditNumber(formRef)"
+                plain
+                @click="handleEdit(numberData)"
               >
-                {{ $t('settings.edit') }}
+                <EditIcon size="24" />
               </ElButton>
-            </div>
-          </ElFormItem>
-        </ElForm>
+            </LlmTooltip>
+            <LlmTooltip :content="t('users.phone_numbers.delete.title')">
+              <ElButton
+                type="danger"
+                plain
+                @click="handleOpenDialog(numberData)"
+              >
+                <DeleteIcon size="24" />
+              </ElButton>
+            </LlmTooltip>
+          </div>
+        </div>
+      </template>
 
-        <div v-if="editingPhoneNumber?.id !== numberData.id" class="whatsapp-number-actions">
-          <LlmTooltip :content="t('users.phone_numbers.edit.title')">
+      <EmptyState
+        v-else
+        :title="$t('users.phone_numbers.empty_data')"
+        :description="$t('users.phone_numbers.empty_data_description')"
+      >
+        <template #icon>
+          <EmptyChatIcon size="44px" />
+        </template>
+      </EmptyState>
+
+      <ElForm
+        ref="formRef"
+        :model="form"
+        :rules="rules"
+        class="number-card grid"
+      >
+        <ElFormItem prop="phoneNumber" :style="`padding-bottom: ${isPhoneNumberValid ? '0px' : '32px'};`">
+          <template #label>
+            <div class="add-phone-number-label-wrapper">
+              <AddIcon size="24" />
+              {{ $t('users.phone_numbers.add.title') }}
+            </div>
+          </template>
+          <div class="add-number-form-item-wrapper">
+            <ElInput
+              v-model="form.phoneNumber"
+              :placeholder="$t('settings.placeholders.mobile_number')"
+              class="add-number-form-item-input"
+            >
+              <template #prefix>
+                <p class="main-text-color">
+                  +
+                </p>
+              </template>
+            </ElInput>
             <ElButton
               type="primary"
-              plain
-              @click="handleEdit(numberData)"
+              :loading="addNumberStatus === 'pending'"
+              :disabled="!form.phoneNumber?.length"
+              @click="handleAddNumber(formRef)"
             >
-              <EditIcon size="24" />
+              {{ $t('settings.save') }}
             </ElButton>
-          </LlmTooltip>
-          <LlmTooltip :content="t('users.phone_numbers.delete.title')">
-            <ElButton
-              type="danger"
-              plain
-              @click="handleOpenDialog(numberData)"
-            >
-              <DeleteIcon size="24" />
-            </ElButton>
-          </LlmTooltip>
-        </div>
-      </div>
-    </div>
-
-    <ElForm
-      ref="formRef"
-      :model="form"
-      :rules="rules"
-      class="number-card grid"
-    >
-      <ElFormItem prop="phoneNumber" :style="`padding-bottom: ${isPhoneNumberValid ? '0px' : '32px'};`">
-        <template #label>
-          <div class="add-phone-number-label-wrapper">
-            <AddIcon size="24" />
-            {{ $t('users.phone_numbers.add.title') }}
           </div>
-        </template>
-        <div class="add-number-form-item-wrapper">
-          <ElInput
-            v-model="form.phoneNumber"
-            :placeholder="$t('settings.placeholders.mobile_number')"
-            class="add-number-form-item-input"
-          >
-            <template #prefix>
-              <p class="main-text-color">
-                +
-              </p>
-            </template>
-          </ElInput>
-          <ElButton
-            type="primary"
-            :loading="addNumberStatus === 'pending'"
-            :disabled="!form.phoneNumber?.length"
-            @click="handleAddNumber(formRef)"
-          >
-            {{ $t('settings.save') }}
-          </ElButton>
-        </div>
-      </ElFormItem>
-    </ElForm>
-
-    <EmptyState
-      v-if="!getPhoneNumbersData?.length"
-      :title="$t('users.phone_numbers.empty_data')"
-      :description="$t('users.phone_numbers.empty_data_description')"
-    >
-      <template #icon>
-        <EmptyChatIcon size="44px" />
-      </template>
-    </EmptyState>
+        </ElFormItem>
+      </ElForm>
+    </div>
   </template>
 
   <ElDialog

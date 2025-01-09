@@ -58,7 +58,8 @@ export function isValidEmail(email: string): boolean {
  */
 export function isValidPhoneNumber(phoneNumber: string): boolean {
   const phonePattern = /^\+?[1-9]\d{1,14}(?:\s?[-()\d\s])*$/
-  return phonePattern.test(phoneNumber) && phoneNumber.replace(/\D/g, '').length <= 15
+  const numericLength = phoneNumber.replace(/\D/g, '').length
+  return phonePattern.test(phoneNumber) && numericLength >= 9 && numericLength <= 15
 }
 
 /**
