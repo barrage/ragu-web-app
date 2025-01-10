@@ -15,157 +15,148 @@ interface MenuItem {
   link: string
   icon: string
 }
-const navigationStore = useNavigationStore()
-const { isWhatsAppActive } = storeToRefs(useWhatsAppStore())
-interface MenuCategory {
-  title: string
-  category: 'menu' | 'options'
-  items: MenuItem[]
+interface MenuList {
+  name: string
+  show: boolean
+  list: MenuItem[]
 }
-
+const navigationStore = useNavigationStore()
+const { isAdminSidebarCollapsed } = storeToRefs(navigationStore)
+const { isWhatsAppActive } = storeToRefs(useWhatsAppStore())
 const route = useRoute()
 const { t } = useI18n()
-const menuList = computed<MenuCategory[]>(() => ([
-  {
-    title: '',
-    category: 'menu',
-    items: [
-      {
-        label: t('dashboard.title'),
-        link: '/admin',
-        icon: DashboardIcon,
-      },
-      {
-        label: t('users.title'),
-        link: '/admin/users',
-        icon: TeamIcon,
-      },
-      {
-        label: t('chat.admin.title'),
-        link: '/admin/chats',
-        icon: ChatsIcon,
-      },
-      {
-        label: t('agents.title'),
-        link: '/admin/agents',
-        icon: AgentsIcon,
-      },
-      {
-        label: t('documents.title'),
-        link: '/admin/documents',
-        icon: DocumentIcon,
-      },
-      {
-        label: t('collections.title'),
-        link: '/admin/collections',
-        icon: CollectionIcon,
-      },
-    ],
-  },
-]))
 
-const whatsAppMenuList = computed<MenuCategory[]>(() => ([
-  {
-    title: '',
-    category: 'menu',
-    items: [
-      {
-        label: t('whatsapp_chat.admin.title'),
-        link: '/admin/whatsapp-chats',
-        icon: WhatsAppIcon,
-      },
-      {
-        label: t('whatsapp_agents.title'),
-        link: '/admin/whatsapp-agents',
-        icon: WhatsAppAgentsIcon,
-      },
-    ],
-  },
-]))
-
-const selectedFeature = ref<{ label: string, category: 'menu' | 'options' } | null>(null)
-
-const selectFeature = (feature: MenuItem, category: 'menu' | 'options') => {
-  selectedFeature.value = { ...feature, category }
-}
+const menuLists = computed<MenuList[]>(() => {
+  return [
+    {
+      name: 'main',
+      show: true,
+      list: [
+        {
+          label: t('dashboard.title'),
+          link: '/admin',
+          icon: DashboardIcon,
+        },
+        {
+          label: t('users.title'),
+          link: '/admin/users',
+          icon: TeamIcon,
+        },
+        {
+          label: t('chat.admin.title'),
+          link: '/admin/chats',
+          icon: ChatsIcon,
+        },
+        {
+          label: t('agents.title'),
+          link: '/admin/agents',
+          icon: AgentsIcon,
+        },
+        {
+          label: t('documents.title'),
+          link: '/admin/documents',
+          icon: DocumentIcon,
+        },
+        {
+          label: t('collections.title'),
+          link: '/admin/collections',
+          icon: CollectionIcon,
+        },
+      ],
+    },
+    {
+      name: 'whatsApp',
+      show: isWhatsAppActive.value,
+      list: [
+        {
+          label: t('whatsapp_chat.admin.title'),
+          link: '/admin/whatsapp-chats',
+          icon: WhatsAppIcon,
+        },
+        {
+          label: t('whatsapp_agents.title'),
+          link: '/admin/whatsapp-agents',
+          icon: WhatsAppAgentsIcon,
+        },
+      ],
+    },
+  ]
+})
 </script>
 
 <template>
   <aside v-motion-slide-left :delay="400">
-    <nav class="navigation-container">
-      <div class="sidebar-head-title">
-        <p v-if="!navigationStore.isAdminSidebarCollapsed" class="typing-effect">
-          {{ t('adminPanel') }}
+    <nav
+      class="navigation-container"
+      :class="{ 'collapsed-sidebar': isAdminSidebarCollapsed }"
+    >
+      <div class="sidebar-head-section">
+        <p v-if="!isAdminSidebarCollapsed" class="typing-effect sidebar-title">
+          {{ $t('adminPanel') }}
         </p>
-        <el-button class="toggle-btn" @click="navigationStore.toggleAdminSidebar">
+        <ElButton class="toggle-btn" @click="navigationStore.toggleAdminSidebar">
           <PanelIcon size="24px" />
-        </el-button>
+        </ElButton>
       </div>
+
       <div class="horizontal-divider" />
 
-      <div class="feature-container">
-        <div v-for="menuItem in menuList" :key="menuItem.category">
-          <p v-if="menuItem.title" class="feature-group-title">
-            {{ menuItem.title }}
-          </p>
-          <div class="feature-list">
-            <LlmLink
-              v-for="(item, index2) in menuItem.items"
-              :key="index2"
-              :to="item.link"
-              class="feature-item"
-              :class="{ selected: item.link === route.path }"
-              @click="selectFeature(item, menuItem.category)"
+      <div class="scrollable-container">
+        <div
+          v-for="(list, listIndex) in menuLists"
+          :key="list.name"
+          class="menu-list"
+        >
+          <template v-if="list.show">
+            <div v-if="listIndex" class="horizontal-divider list" />
+            <LlmTooltip
+              v-for="item in list.list"
+              :key="item.link"
+              :content="item.label"
+              :disabled="!isAdminSidebarCollapsed"
+              placement="right"
             >
-              <div class="item-content">
-                <component :is="item.icon" size="20px" />
-                <p v-if="!navigationStore.isAdminSidebarCollapsed" class="item-title">
-                  {{ item.label }}
-                </p>
-              </div>
-            </LlmLink>
-          </div>
-        </div>
-      </div>
-
-      <template v-if="isWhatsAppActive">
-        <div class="horizontal-divider" />
-        <div class="feature-container">
-          <div v-for="menuItem in whatsAppMenuList" :key="menuItem.category">
-            <p v-if="menuItem.title && !navigationStore.isAdminSidebarCollapsed" class="feature-group-title typing-effect">
-              {{ menuItem.title }}
-            </p>
-            <div class="feature-list">
               <LlmLink
-                v-for="(item, index2) in menuItem.items"
-                :key="index2"
+                v-motion-fade-visible-once
+                :delay="300"
                 :to="item.link"
-                class="feature-item"
-                :class="{ selected: item.link === route.path }"
-                @click="selectFeature(item, menuItem.category)"
+                type="link"
+                class="menu-item"
+                :class="{ 'selected': item.link === route.path, 'collapsed-link': isAdminSidebarCollapsed }"
               >
-                <div class="item-content">
-                  <component :is="item.icon" size="20px" />
-                  <p v-if="!navigationStore.isAdminSidebarCollapsed" class="item-title">
-                    {{ item.label }}
-                  </p>
+                <div class="menu-content">
+                  <span>
+                    <component :is="item.icon" size="24px" />
+                  </span>
+                  <span v-if="!isAdminSidebarCollapsed" class="no-wrap">{{ item.label }}</span>
                 </div>
               </LlmLink>
-            </div>
-          </div>
+            </LlmTooltip>
+          </template>
         </div>
-      </template>
-
-      <!-- Get Help Section -->
-      <div class="get-help-section">
-        <LlmLink
-          to="/login"
-          type="link"
-          class="gel-help-content"
-        >
-          <span v-if="!navigationStore.isAdminSidebarCollapsed">{{ t('getHelp.title') }} </span> <QuestionIcon size="24px" />
-        </LlmLink>
       </div>
+
+      <LlmTooltip
+        :disabled="!isAdminSidebarCollapsed"
+        placement="right"
+        :content="$t('getHelp.title')"
+      >
+        <LlmLink
+          v-motion-fade-visible-once
+          :delay="300"
+          to="help"
+          type="link"
+          class="menu-item get-help-section"
+          :class="{ 'selected': '/help' === route.path, 'collapsed-link': isAdminSidebarCollapsed }"
+        >
+          <div class="menu-content">
+            <span>
+              <QuestionIcon size="24px" />
+            </span>
+            <span v-if="!isAdminSidebarCollapsed" class="no-wrap">{{ $t('getHelp.title') }}</span>
+          </div>
+        </LlmLink>
+      </LlmTooltip>
     </nav>
   </aside>
 </template>
@@ -182,19 +173,35 @@ aside {
   box-shadow: 0 0.25rem 0.5rem var(--color-primary-300);
   color: var(--color-primary-900);
 
+  .sidebar-title {
+    color: var(--color-primary-900);
+  }
+
+  .horizontal-divider {
+    background-color: var(--color-primary-300);
+    &.list {
+      margin-top: 12px;
+    }
+  }
+
   .navigation-container {
     display: flex;
     flex-direction: column;
     position: relative;
     padding: 0.75rem;
     height: 100%;
-    max-height: 100%;
-    overflow-y: auto;
+
+    .no-wrap {
+      white-space: nowrap;
+    }
   }
 }
 
-.horizontal-divider {
-  background-color: var(--color-primary-300);
+.sidebar-head-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--spacing-fluid-4-xs);
 }
 
 .toggle-btn {
@@ -213,80 +220,11 @@ aside {
     background: var(--color-primary-300);
   }
 }
-.feature-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
 
 .sidebar-collapsed {
   & .toggle-btn {
     transform: scaleX(-1);
   }
-}
-
-.feature-item {
-  display: flex;
-  align-items: center;
-  padding: 4px 10px;
-  min-height: 40px;
-  transition:
-    background-color 0.2s ease-out,
-    color 0.2s ease-out;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  opacity: 0.8;
-
-  cursor: pointer;
-  &.selected {
-    background: var(--color-primary-300);
-    color: var(--color-primary-900);
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-  }
-
-  &:hover {
-    background: var(--color-primary-300);
-    color: var(--color-primary-900);
-  }
-}
-
-.item-content {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  position: relative;
-}
-
-.item-title {
-  flex: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-  font-size: var(--font-size-desktop-2);
-  color: var(--color-primary-800);
-  transition: color 0.3s ease;
-}
-
-.typing-effect {
-  color: var(--color-primary-800);
-}
-
-.sidebar-head-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: var(--spacing-fluid-4-xs);
-}
-
-.feature-container {
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-  margin-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .get-help-section {
@@ -313,77 +251,98 @@ aside {
     pointer-events: none;
   }
 
-  & .gel-help-content {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-    height: 2.5rem;
-    text-wrap: nowrap;
-  }
-
   &:hover {
     background: var(--color-primary-300);
     cursor: pointer;
   }
 }
 
-.feature-group-title {
+.scrollable-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 1rem;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-500) var(--color-primary-200);
+
+  &.collapsed-sidebar {
+    &::-webkit-scrollbar {
+      width: 1px;
+    }
+  }
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 4px;
+  padding-inline-start: 8px;
+  font-size: var(--font-size-desktop-2);
   color: var(--color-primary-800);
-  font-weight: 700;
-  font-size: var(--font-size-desktop-1);
-  padding: 12px 0px 8px 0px;
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  scroll-snap-align: start;
+  margin-right: 3px;
+
+  &.selected {
+    background: var(--color-primary-300);
+    color: var(--color-primary-900);
+  }
+
+  &:hover {
+    background: var(--color-primary-300);
+    color: var(--color-primary-900);
+  }
+}
+.menu-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  gap: 8px;
+}
+
+.collapsed-link {
+  display: flex;
+  justify-content: center;
 }
 
 .dark {
-  & .feature-group-title {
-    color: var(--color-primary-200);
-  }
   aside {
     background-color: var(--color-primary-800);
     border: 1px solid var(--color-primary-700);
     box-shadow: 0 4px 8px var(--color-primary-700);
     color: var(--color-primary-100);
+
+    .sidebar-title {
+      color: var(--color-primary-100);
+    }
   }
+
   .toggle-btn {
     color: var(--color-primary-100);
     &:hover {
       background: var(--color-primary-700);
     }
-  }
-  .feature-item {
-    color: var(--color-primary-100);
-
-    &:hover {
-      background: var(--color-primary-700);
-      color: var(--color-primary-0);
-    }
-    &.selected {
-      background: var(--color-primary-700);
-      color: var(--color-primary-0);
-      .chat-title::after {
-        background: linear-gradient(
-          to left,
-          var(--color-primary-700),
-          transparent
-        );
-      }
-    }
-  }
-
-  .feature-group-title {
-    color: var(--color-primary-200);
-  }
-  .item-title::after {
-    background: linear-gradient(to left, var(--color-primary-800), transparent);
-  }
-
-  .item-title {
-    color: var(--color-primary-100);
-  }
-
-  .typing-effect {
-    color: var(--color-primary-200);
   }
 
   .get-help-section {
@@ -396,6 +355,19 @@ aside {
         transparent,
         var(--color-primary-800)
       );
+    }
+  }
+
+  .menu-item {
+    color: var(--color-primary-100);
+
+    &:hover {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
+    }
+    &.selected {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
     }
   }
 }

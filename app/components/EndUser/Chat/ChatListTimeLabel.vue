@@ -44,7 +44,7 @@ const shortLocalization = computed(() => {
       :disabled="!isSidebarCollapsed"
       placement="right"
     >
-      <span :class="{ 'collapsed-localization': isSidebarCollapsed }">
+      <span class="timeperiod-title" :class="{ 'collapsed-localization': isSidebarCollapsed }">
         {{ isSidebarCollapsed ? $t(shortLocalization) : $t(localization) }}
       </span>
     </LlmTooltip>
@@ -58,6 +58,11 @@ const shortLocalization = computed(() => {
   font-size: var(--font-size-desktop-1);
   padding: 12px 0px 8px 0px;
   scroll-snap-align: start;
+  height: 52px;
+
+  .timeperiod-title {
+    white-space: nowrap;
+  }
 
   &.collapsed {
     justify-self: center;

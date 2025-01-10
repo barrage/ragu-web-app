@@ -6,10 +6,11 @@ import QuestionIcon from '~/assets/icons/svg/question.svg'
 // CONSTANTS
 const navigationStore = useNavigationStore()
 const { isSidebarCollapsed } = storeToRefs(navigationStore)
+const route = useRoute()
 </script>
 
 <template>
-  <aside v-motion-slide-left :delay="2400">
+  <aside v-motion-slide-left :delay="400">
     <nav class="navigation-container">
       <div class="sidebar-head-section">
         <p v-if="!isSidebarCollapsed" class="typing-effect sidebar-title">
@@ -23,22 +24,28 @@ const { isSidebarCollapsed } = storeToRefs(navigationStore)
       <div class="horizontal-divider" />
 
       <ChatsDisplay />
-      <div class="get-help-section">
-        <LlmTooltip
-          :content="$t('getHelp.title')"
-          delayed
-          :disabled="!isSidebarCollapsed"
-          placement="right"
+
+      <LlmTooltip
+        :disabled="!isSidebarCollapsed"
+        placement="right"
+        :content="$t('getHelp.title')"
+      >
+        <LlmLink
+          v-motion-fade-visible-once
+          :delay="300"
+          to="help"
+          type="link"
+          class="menu-item get-help-section"
+          :class="{ 'selected': '/help' === route.path, 'collapsed-link': isSidebarCollapsed }"
         >
-          <LlmLink
-            to="/login"
-            type="link"
-            class="gel-help-content"
-          >
-            <span v-if="!isSidebarCollapsed">{{ $t('getHelp.title') }}</span> <QuestionIcon size="24px" />
-          </LlmLink>
-        </LlmTooltip>
-      </div>
+          <div class="menu-content">
+            <span>
+              <QuestionIcon size="24px" />
+            </span>
+            <span v-if="!isSidebarCollapsed" class="get-help-title">{{ $t('getHelp.title') }}</span>
+          </div>
+        </LlmLink>
+      </LlmTooltip>
     </nav>
   </aside>
 </template>
@@ -71,17 +78,6 @@ aside {
     height: 100%;
   }
 
-  .chat {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1.25rem;
-    margin-top: 5rem;
-  }
-
-  .chat-icons {
-    align-items: center;
-  }
-
   .toggle-btn {
     width: max-content;
     height: fit-content;
@@ -100,54 +96,56 @@ aside {
   }
 }
 
-.sidebar-collapsed {
-  & .toggle-btn {
-    transform: scaleX(-1);
-  }
-}
-.dark {
-  aside {
-    background-color: var(--color-primary-800);
-    border: 1px solid var(--color-primary-700);
-    box-shadow: 0 4px 8px var(--color-primary-700);
-    color: var(--color-primary-100);
-
-    .sidebar-title {
-      color: var(--color-primary-100);
-    }
-  }
-  .toggle-btn {
-    color: var(--color-primary-100);
-    &:hover {
-      background: var(--color-primary-700);
-    }
-  }
-}
-
-.history {
-  margin-top: 1.25rem;
-  font-size: var(--font-size-fluid-2);
-}
-.sidebar-head-section {
+.menu-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-bottom: var(--spacing-fluid-4-xs);
+  min-height: 40px;
+  padding: 4px;
+  padding-inline-start: 8px;
+  font-size: var(--font-size-desktop-2);
+  color: var(--color-primary-800);
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  scroll-snap-align: start;
+  margin-right: 3px;
+
+  &.selected {
+    background: var(--color-primary-300);
+    color: var(--color-primary-900);
+  }
+
+  &:hover {
+    background: var(--color-primary-300);
+    color: var(--color-primary-900);
+  }
+
+  &:hover .icon-container {
+    opacity: 1;
+    transform: translateX(6px);
+  }
 }
 
-.dark {
-  .get-help-section {
-    &:hover {
-      background: var(--color-primary-700);
-    }
-    &::before {
-      background: linear-gradient(
-        to bottom,
-        transparent,
-        var(--color-primary-800)
-      );
-    }
+.menu-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  gap: 8px;
+
+  .get-help-title {
+    white-space: nowrap;
   }
+}
+
+.collapsed-link {
+  display: flex;
+  justify-content: center;
 }
 
 .get-help-section {
@@ -174,18 +172,67 @@ aside {
     pointer-events: none;
   }
 
-  & .gel-help-content {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-    height: 2.5rem;
-    text-wrap: wrap;
-  }
-
   &:hover {
     background: var(--color-primary-300);
     cursor: pointer;
+  }
+}
+
+.sidebar-head-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--spacing-fluid-4-xs);
+}
+
+.sidebar-collapsed {
+  & .toggle-btn {
+    transform: scaleX(-1);
+  }
+}
+
+.dark {
+  aside {
+    background-color: var(--color-primary-800);
+    border: 1px solid var(--color-primary-700);
+    box-shadow: 0 4px 8px var(--color-primary-700);
+    color: var(--color-primary-100);
+
+    .sidebar-title {
+      color: var(--color-primary-100);
+    }
+  }
+  .toggle-btn {
+    color: var(--color-primary-100);
+    &:hover {
+      background: var(--color-primary-700);
+    }
+  }
+
+  .menu-item {
+    color: var(--color-primary-100);
+
+    &:hover {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
+    }
+    &.selected {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
+    }
+  }
+
+  .get-help-section {
+    &:hover {
+      background: var(--color-primary-700);
+    }
+    &::before {
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--color-primary-800)
+      );
+    }
   }
 }
 </style>

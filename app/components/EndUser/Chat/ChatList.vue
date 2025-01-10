@@ -32,10 +32,10 @@ const chatId = computed(() => {
         :delay="300"
         :to="`/c/${chat.id}`"
         type="link"
-        class="chat-item"
+        class="menu-item"
         :class="{ 'selected': chatId === chat.id, 'collapsed-link': isSidebarCollapsed }"
       >
-        <div class="chat-content">
+        <div>
           <span v-if="isSidebarCollapsed">
             <ChatIcon size="24px" />
           </span>
@@ -53,10 +53,10 @@ const chatId = computed(() => {
   gap: 8px;
 }
 
-.chat-item {
+.menu-item {
   display: flex;
   align-items: center;
-  min-height: 40px;
+  height: 40px;
   padding: 4px;
   padding-inline-start: 8px;
   font-size: var(--font-size-desktop-2);
@@ -74,40 +74,17 @@ const chatId = computed(() => {
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
-    .chat-title::after {
-      background: linear-gradient(
-        to left,
-        var(--color-primary-300),
-        transparent
-      );
-    }
   }
 
   &:hover {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
   }
-
-  &:hover .icon-container {
-    opacity: 1;
-    transform: translateX(6px);
-  }
-  &:hover .chat-title {
-    &::after {
-      display: none;
-    }
-  }
 }
+
 .chat-tooltip {
   display: flex;
   flex-direction: column;
-}
-.chat-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  position: relative;
 }
 
 .collapsed-link {
@@ -121,7 +98,6 @@ const chatId = computed(() => {
   white-space: nowrap;
   position: relative;
   padding-right: 2rem;
-  transition: color 0.3s ease;
 
   &::after {
     content: '';
@@ -136,23 +112,19 @@ const chatId = computed(() => {
 }
 
 .dark {
-  .chat-item {
+  .menu-item {
     color: var(--color-primary-100);
 
     &:hover {
       background: var(--color-primary-700);
       color: var(--color-primary-0);
+      .add-icon {
+        color: var(--color-primary-400);
+      }
     }
     &.selected {
       background: var(--color-primary-700);
       color: var(--color-primary-0);
-      .chat-title::after {
-        background: linear-gradient(
-          to left,
-          var(--color-primary-700),
-          transparent
-        );
-      }
     }
   }
 

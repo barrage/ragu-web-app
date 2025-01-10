@@ -20,24 +20,29 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
     :class="{ 'collapsed-sidebar': isSidebarCollapsed }"
   >
     <LlmTooltip
-      :content="$t('chat.start_new_chat')"
-      delayed
       :disabled="!isSidebarCollapsed"
       placement="right"
+      :content="$t('chat.newChat.title')"
     >
       <LlmLink
+        v-motion-fade-visible-once
+        :delay="300"
         to="/"
         type="link"
-        class="new-chat"
-        :class="{ opened: !isSidebarCollapsed, selected: route.path === '/' }"
+        class="menu-item"
+        :class="{ 'selected': '/' === route.path, 'collapsed-link': isSidebarCollapsed }"
       >
-        <BrainIcon size="24px" />
-        <span v-if="!isSidebarCollapsed">{{ $t('chat.newChat.title') }}</span>
-        <AddIcon
-          v-if="!isSidebarCollapsed"
-          size="24px"
-          class="add-icon"
-        />
+        <div class="menu-content">
+          <span>
+            <BrainIcon size="24px" />
+          </span>
+          <span v-if="!isSidebarCollapsed" class="new-chat-title">{{ $t('chat.newChat.title') }}</span>
+          <AddIcon
+            v-if="!isSidebarCollapsed"
+            size="24px"
+            class="add-icon"
+          />
+        </div>
       </LlmLink>
     </LlmTooltip>
 
@@ -67,7 +72,9 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   padding-bottom: 1rem;
+  scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary-500) var(--color-primary-200);
@@ -77,50 +84,57 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
       width: 1px;
     }
   }
+}
 
-  & .new-chat {
-    margin-inline: auto;
-    height: 3rem;
-    transition: all 0.2s ease-out;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.menu-item {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 4px;
+  padding-inline-start: 8px;
+  font-size: var(--font-size-desktop-2);
+  color: var(--color-primary-800);
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  scroll-snap-align: start;
+  margin-right: 3px;
+
+  &.selected {
+    background: var(--color-primary-300);
     color: var(--color-primary-900);
-    text-wrap: nowrap;
-    width: 100%;
-    margin-top: 1rem;
-    padding-inline: 0.25rem;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border-radius: 8px;
-    background-color: transparent;
-    font-size: var(--font-size-fluid-3);
-    scroll-snap-align: start;
+  }
 
-    &.selected {
-      background: var(--color-primary-300);
+  &:hover {
+    background: var(--color-primary-300);
+    color: var(--color-primary-900);
+    .add-icon {
+      opacity: 1;
+      transform: translateX(-5px);
       color: var(--color-primary-900);
     }
+  }
+}
 
-    &:hover {
-      background: var(--color-primary-300);
-    }
-    &.opened {
-      justify-content: flex-start;
+.collapsed-link {
+  display: flex;
+  justify-content: center;
+}
 
-      &:hover {
-        & .add-icon {
-          opacity: 1;
-          transform: translateX(-5px);
-        }
-      }
-    }
+.menu-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 199px;
+  position: relative;
+  gap: 8px;
 
-    &:deep(.llm-link--template) {
-      justify-content: center;
-      width: 100%;
-    }
+  .new-chat-title {
+    white-space: nowrap;
   }
 }
 
@@ -131,23 +145,21 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   transform: translateX(5px);
 }
 
-html.dark {
-  .new-chat {
+.dark {
+  .menu-item {
     color: var(--color-primary-100);
+
+    &:hover {
+      background: var(--color-primary-700);
+      color: var(--color-primary-0);
+      .add-icon {
+        color: var(--color-primary-400);
+      }
+    }
     &.selected {
       background: var(--color-primary-700);
       color: var(--color-primary-0);
     }
-    &.opened {
-      color: var(--color-primary-100);
-    }
-
-    &:hover {
-      background: var(--color-primary-700);
-    }
-  }
-  & .typing-effect {
-    color: var(--color-primary-200);
   }
 }
 </style>
