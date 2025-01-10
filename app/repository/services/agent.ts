@@ -14,7 +14,7 @@ export default class AgentService extends FetchFactory {
    * @param {number} [perPage=10] - The number of agents to retrieve per page. Defaults to 10.
    * @param {string} [sortBy='status'] - The field by which to sort the results. Defaults to 'status'.
    * @param {'asc' | 'desc'} [sortOrder='asc'] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
-   * @param {boolean} [showDeactivated=true] - Whether to include deactivated agents in the results. Defaults to true.
+   * @param {boolean} [active=true] - Whether to include deactivated agents in the results. Defaults to true.
    *
 
    *
@@ -26,7 +26,7 @@ export default class AgentService extends FetchFactory {
     perPage: number = 10,
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
-    showDeactivated: boolean = true,
+    active: boolean = true,
   ): Promise<AllAgentResponse> {
     try {
       // Build query parameters using function arguments
@@ -35,7 +35,7 @@ export default class AgentService extends FetchFactory {
         perPage: perPage.toString(),
         sortBy,
         sortOrder,
-        showDeactivated: showDeactivated.toString(),
+        active: active.toString(),
       }).toString()
 
       // Make the API request with the constructed URL

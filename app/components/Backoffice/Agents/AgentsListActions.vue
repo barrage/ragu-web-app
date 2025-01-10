@@ -1,19 +1,22 @@
 <script lang="ts" setup>
 import type { SortingValues } from '~/types/sort'
 import FilterIcon from '~/assets/icons/svg/filter.svg'
+import type { AgentListFilterForm } from '~/types/agent'
 
-// EMITS
+const props = defineProps<{
+  selectedSortBy: string
+  selectedSortDirection: 'asc' | 'desc'
+  filterForm: AgentListFilterForm
+}>()
 
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
+  (event: 'filterApplied', filter: AgentListFilterForm): void
 }>()
-
-// CONSTANTS
 
 const { t } = useI18n()
 
-// COMPUTEDS
-
+/* Sort */
 const sortOptions = computed(() => [
   { name: t('agents.labels.status'), value: 'active' },
   { name: t('agents.labels.name'), value: 'name' },
@@ -22,16 +25,19 @@ const sortOptions = computed(() => [
 
 ])
 
-// FUNCTIONS
-
 const updateSort = (sortingValues: SortingValues) => {
   emits('sortChange', sortingValues)
 }
 
-const drawer = ref(false)
+/* Filter */
+const agentFilterOpen = ref(false)
 
 const toggleFilterDrawer = () => {
-  drawer.value = !drawer.value
+  agentFilterOpen.value = !agentFilterOpen.value
+}
+
+const updateFilter = (filter: AgentListFilterForm) => {
+  emits('filterApplied', filter)
 }
 </script>
 
@@ -41,7 +47,13 @@ const toggleFilterDrawer = () => {
       {{ $t('agents.all_agents') }}
     </p>
     <div class="actions-wrapper">
-      <SortSelect :options="sortOptions" @sort-updated="updateSort" />
+      <SortSelect
+        :initial-sort-by="props.selectedSortBy"
+        :initial-sort-direction="props.selectedSortDirection"
+        data-testid="bo-agents-list-sort"
+        :options="sortOptions"
+        @sort-updated="updateSort"
+      />
 
       <el-button
         size="small"
@@ -52,10 +64,10 @@ const toggleFilterDrawer = () => {
       </el-button>
     </div>
   </div>
-  <el-drawer
-    v-model="drawer"
-    direction="rtl"
-    title="Filter"
+  <AgentsListFilterDrawer
+    v-model="agentFilterOpen"
+    :filter="filterForm"
+    @filter-applied="updateFilter"
   />
 </template>
 

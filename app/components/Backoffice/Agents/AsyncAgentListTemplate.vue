@@ -5,6 +5,7 @@ import type { Sort, SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import AddAgentIcon from '~/assets/icons/svg/person-add.svg'
+import type { AgentListFilterForm } from '~/types/agent'
 
 const { $api } = useNuxtApp()
 const route = useRoute()
@@ -22,8 +23,12 @@ const sort = ref<Sort>({
   sortBy: (route.query.sortBy as string) || 'active',
 })
 
+const filterForm = ref<AgentListFilterForm>({
+  status: true,
+})
+
 const { execute: executeGetAgents, error: getAgentsError, status: getAgentsStatus, data: allAgentsData } = await useAsyncData(() =>
-  $api.agent.GetAllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder), { lazy: true })
+  $api.agent.GetAllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder, filterForm.value.status), { lazy: true })
 
 const updateRouteQuery = () => {
   router.replace({
@@ -33,6 +38,7 @@ const updateRouteQuery = () => {
       pageSize: pagination.value.pageSize.toString(),
       sortBy: sort.value.sortBy,
       dir: sort.value.sortOrder,
+      active: filterForm.value.status?.toString(),
     },
   })
 }
@@ -42,6 +48,7 @@ const syncQueryValues = (newQuery: LocationQuery) => {
   pagination.value.pageSize = Number(newQuery.pageSize) || 10
   sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'desc'
   sort.value.sortBy = (newQuery.sortBy as string) || 'active'
+  filterForm.value.status = Boolean(newQuery.active === 'true')
 }
 
 const handlePageChange = async (page: number) => {
@@ -55,6 +62,13 @@ const handleSortChange = async (sortingValues: SortingValues) => {
   sort.value.sortOrder = sortingValues.direction
   sort.value.sortBy = sortingValues.sortProperty.value
   updateRouteQuery()
+  await executeGetAgents()
+}
+
+const handleFilterChange = async (filter: AgentListFilterForm) => {
+  filterForm.value.status = filter.status
+  updateRouteQuery()
+  scrollToTop()
   await executeGetAgents()
 }
 
@@ -119,7 +133,9 @@ onBeforeUnmount(() => {
   <AgentsListActions
     :selected-sort-by="sort.sortBy"
     :selected-sort-direction="sort.sortOrder"
+    :filter-form="filterForm"
     @sort-change="handleSortChange"
+    @filter-applied="handleFilterChange"
   />
   <GlobalCardListLoader
     v-if="(delayedStatus === 'pending') || (delayedStatus === 'idle')"
