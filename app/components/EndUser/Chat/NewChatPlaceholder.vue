@@ -12,6 +12,16 @@ errorHandler(error)
 const activeAgentLength = computed(() => {
   return agentStore.appAgents.filter(agent => agent.active).length
 })
+
+function handleAgentsXScroll(event: WheelEvent) {
+  const container = event.currentTarget as HTMLElement
+  if (container) {
+    event.preventDefault()
+    const dominantDelta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? 'deltaY' : 'deltaX'
+    if (dominantDelta === 'deltaY') { container.scrollLeft += event.deltaY * 10 }
+    else { container.scrollLeft += event.deltaX * 10 }
+  }
+}
 </script>
 
 <template>
@@ -42,11 +52,9 @@ const activeAgentLength = computed(() => {
         {{ $t('chat.newChat.choseFrom') }}
       </p>
       <div
-        class="suggestions-container scrollable-element"
-        :class="
-
-          { 'centered-content': activeAgentLength > 3 }
-        "
+        class="suggestions-container"
+        :class="{ 'centered-content': activeAgentLength > 3 }"
+        @wheel="handleAgentsXScroll"
       >
         <template v-if="status === 'pending'">
           <div>
@@ -133,10 +141,12 @@ const activeAgentLength = computed(() => {
   gap: 1rem;
   overflow-x: auto;
   overflow-y: hidden;
-  justify-content: center;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
   color: var(--color-primary-800);
+  scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 
   & .agent-select-card {
     flex: 0 0 calc(25% - 1rem);
