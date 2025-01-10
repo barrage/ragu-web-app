@@ -95,3 +95,7 @@ export interface Instructions {
   summaryInstruction: string
   promptInstruction: string
 }
+
+export interface AgentListFilterForm {
+  status: boolean | undefined
+}
