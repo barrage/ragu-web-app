@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { version } from './package.json'
+
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2024-07-18',
@@ -14,6 +16,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
+      appVersion: version,
       apiBaseUrl: process.env.API_BASE_URL,
       apiChunkerUrl: process.env.API_CHUCKER_URL,
       wsUrl: process.env.WS_URL,

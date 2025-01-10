@@ -4,6 +4,9 @@ import { useMouse, useWindowSize } from '@vueuse/core'
 import RaguLogo from '~/assets/icons/svg/Ragu_logo_dark.svg'
 import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
 
+const config = useRuntimeConfig()
+const appVersion = config.public.appVersion
+
 // CONSTANTS & STATES
 
 const { x, y } = useMouse()
@@ -80,6 +83,9 @@ function handleAnimatingOut() {
           size="220px"
           class="logo"
         />
+        <div class="app-version-container">
+          v{{ appVersion }}
+        </div>
       </div>
     </div>
   </main>
@@ -201,7 +207,19 @@ main {
   z-index: 1;
 }
 
+.app-version-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0px 22px 22px 0px;
+  font-size: var(--font-size-fluid-3);
+  color: var(--color-primary-0);
+}
+
 .dark {
+  .app-version-container {
+    color: var(--color-primary-900);
+  }
   main {
     background: radial-gradient(
       circle,
