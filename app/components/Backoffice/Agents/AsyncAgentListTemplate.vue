@@ -27,20 +27,35 @@ const filterForm = ref<AgentListFilterForm>({
   status: true,
 })
 
+const searchInput = ref<string | null>('')
+
 const { execute: executeGetAgents, error: getAgentsError, status: getAgentsStatus, data: allAgentsData } = await useAsyncData(() =>
-  $api.agent.GetAllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder, filterForm.value.status), { lazy: true })
+  $api.agent.GetAllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder, searchInput.value, filterForm.value.status), { lazy: true })
 
 const updateRouteQuery = () => {
-  router.replace({
-    query: {
-      ...route.query,
-      page: pagination.value.currentPage.toString(),
-      pageSize: pagination.value.pageSize.toString(),
-      sortBy: sort.value.sortBy,
-      dir: sort.value.sortOrder,
-      active: filterForm.value.status?.toString(),
-    },
-  })
+  const query: LocationQuery = {
+    ...route.query,
+    page: pagination.value.currentPage.toString(),
+    pageSize: pagination.value.pageSize.toString(),
+    sortBy: sort.value.sortBy,
+    dir: sort.value.sortOrder,
+  }
+
+  if (searchInput.value) {
+    query.name = searchInput.value
+  }
+  else {
+    delete query.name
+  }
+
+  if (filterForm.value.status !== null) {
+    query.active = filterForm.value.status.toString()
+  }
+  else {
+    delete query.active
+  }
+
+  router.replace({ query })
 }
 
 const syncQueryValues = (newQuery: LocationQuery) => {
@@ -48,7 +63,16 @@ const syncQueryValues = (newQuery: LocationQuery) => {
   pagination.value.pageSize = Number(newQuery.pageSize) || 10
   sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'desc'
   sort.value.sortBy = (newQuery.sortBy as string) || 'active'
-  filterForm.value.status = Boolean(newQuery.active === 'true')
+  searchInput.value = newQuery.name ? (newQuery.name as string) : null
+  if (newQuery.active === 'true') {
+    filterForm.value.status = true
+  }
+  else if (newQuery.active === 'false') {
+    filterForm.value.status = false
+  }
+  else {
+    filterForm.value.status = null
+  }
 }
 
 const handlePageChange = async (page: number) => {
@@ -67,6 +91,13 @@ const handleSortChange = async (sortingValues: SortingValues) => {
 
 const handleFilterChange = async (filter: AgentListFilterForm) => {
   filterForm.value.status = filter.status
+  updateRouteQuery()
+  scrollToTop()
+  await executeGetAgents()
+}
+
+const handleSearchChange = async (search: string) => {
+  searchInput.value = search
   updateRouteQuery()
   scrollToTop()
   await executeGetAgents()
@@ -134,15 +165,17 @@ onBeforeUnmount(() => {
     :selected-sort-by="sort.sortBy"
     :selected-sort-direction="sort.sortOrder"
     :filter-form="filterForm"
+    :selected-search="searchInput"
     @sort-change="handleSortChange"
     @filter-applied="handleFilterChange"
+    @search-change="handleSearchChange"
   />
+
   <GlobalCardListLoader
     v-if="(delayedStatus === 'pending') || (delayedStatus === 'idle')"
     type="agent"
     :skeleton-count="10"
   />
-
   <AgentsList
     v-else-if="!emptyAgentsData"
     :agents="agentsData"
@@ -165,6 +198,7 @@ onBeforeUnmount(() => {
       </LlmLink>
     </template>
   </EmptyState>
+
   <Pagination
     data-testid="bo-agents-list-pagination"
     :current-page="pagination.currentPage"

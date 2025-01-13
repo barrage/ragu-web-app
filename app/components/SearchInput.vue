@@ -1,31 +1,27 @@
 <script setup lang="ts">
+import { useDebounce } from '@vueuse/core'
 import SearchIcon from '~/assets/icons/svg/search.svg'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   placeholder?: string
   delay?: number
-}>()
+  size?: 'small' | 'default' | 'large'
+  initialValue?: string | null
+}>(), {
+  delay: 300,
+  size: 'small',
+  initialValue: '',
+})
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'updateSearch', value: string): void
 }>()
 
-const searchValue = ref('')
-const delay = props.delay || 300
+const searchValue = ref(props.initialValue || '')
+const debouncedSearchValue = useDebounce(searchValue, props.delay || 300)
 
-let timeoutId: ReturnType<typeof setTimeout> | null = null
-
-const onInput = (value: string) => {
-  if (timeoutId) {
-    clearTimeout(timeoutId)
-  }
-  timeoutId = setTimeout(() => {
-    emit('update:modelValue', value)
-  }, delay)
-}
-
-watch(searchValue, (newValue) => {
-  emit('update:modelValue', newValue)
+watch(debouncedSearchValue, (newValue) => {
+  emit('updateSearch', newValue)
 })
 </script>
 
@@ -33,12 +29,7 @@ watch(searchValue, (newValue) => {
   <el-input
     v-model="searchValue"
     :placeholder="placeholder"
-    size="small"
+    :size="props.size"
     :suffix-icon="SearchIcon"
-    @input="onInput"
   />
 </template>
-
-<style scoped>
-
-</style>

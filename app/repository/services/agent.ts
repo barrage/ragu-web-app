@@ -8,13 +8,14 @@ export default class AgentService extends FetchFactory {
   private readonly endUserendpoint: string = '/agents'
 
   /**
-   * Fetches a list of agents with optional filtering, sorting, and pagination.
+   * Fetches a list of agents with optional filtering, sorting, searching and pagination.
    *
    * @param {number} [page=1] - The current page of the results. Defaults to the first page.
    * @param {number} [perPage=10] - The number of agents to retrieve per page. Defaults to 10.
    * @param {string} [sortBy='status'] - The field by which to sort the results. Defaults to 'status'.
    * @param {'asc' | 'desc'} [sortOrder='asc'] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
-   * @param {boolean} [active=true] - Whether to include deactivated agents in the results. Defaults to true.
+   * @param {string | null} [name] - String used as search parametar for searching agents by name.
+   * @param {boolean | null} [active=true] - Whether to include deactivated agents in the results. Defaults to true.
    *
 
    *
@@ -26,25 +27,32 @@ export default class AgentService extends FetchFactory {
     perPage: number = 10,
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
-    active: boolean = true,
+    name: string | null,
+    active: boolean | null,
   ): Promise<AllAgentResponse> {
     try {
-      // Build query parameters using function arguments
-      const queryParams = new URLSearchParams({
+      const queryParams: Record<string, string> = {
         page: page.toString(),
         perPage: perPage.toString(),
         sortBy,
         sortOrder,
-        active: active.toString(),
-      }).toString()
+      }
 
-      // Make the API request with the constructed URL
-      return await this.$fetch<AllAgentResponse>(`${this.adminEndpoint}?${queryParams}`, {
+      if (name) {
+        queryParams.name = name
+      }
+
+      if (active !== undefined && active !== null) {
+        queryParams.active = active.toString()
+      }
+
+      const queryString = new URLSearchParams(queryParams).toString()
+
+      return await this.$fetch<AllAgentResponse>(`${this.adminEndpoint}?${queryString}`, {
         credentials: 'include',
       })
     }
     catch (error: any) {
-      // Handle errors and throw custom error message
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to fetch agents with code ${error?.statusCode}`,
