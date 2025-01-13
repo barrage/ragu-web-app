@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   size?: 'small' | 'default' | 'large'
   initialValue?: string | null
 }>(), {
-  delay: 300,
+  delay: 500,
   size: 'small',
   initialValue: '',
 })

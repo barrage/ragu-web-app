@@ -700,6 +700,7 @@ export default {
       promptInstruction: 'Entrer l’Instruction de Saisie de l’Agent',
       titleInstruction: 'Entrer l’Instruction de Titre de l’Agent',
       embeddingModel: 'Sélectionner le modèle d\'intégration',
+      filter_by_status: 'Sélectionnez le statut de l\'agent',
     },
 
     notifications: {

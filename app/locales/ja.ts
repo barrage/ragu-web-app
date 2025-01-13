@@ -697,6 +697,7 @@ export default {
       promptInstruction: 'エージェントのプロンプト指示を入力',
       titleInstruction: 'エージェントのタイトル指示を入力',
       embeddingModel: '埋め込みモデルを選択',
+      filter_by_status: 'エージェントのステータスを選択してください',
     },
 
     notifications: {
