@@ -46,6 +46,15 @@ const updateFilter = (filter: AgentListFilterForm) => {
 const updateSearch = (search: string) => {
   emits('searchChange', search)
 }
+const numberOfFiltersApplied = computed(() => {
+  let count = 0
+
+  if (props.filterForm.status !== null && props.filterForm.status !== undefined) {
+    count += 1
+  }
+
+  return count
+})
 </script>
 
 <template>
@@ -68,13 +77,20 @@ const updateSearch = (search: string) => {
         @sort-updated="updateSort"
       />
 
-      <el-button
-        size="small"
-        data-testid="open-filter-button"
-        @click="toggleFilterDrawer"
+      <el-badge
+        :value="numberOfFiltersApplied"
+        :max="10"
+        :show-zero="false"
+        type="info"
       >
-        <FilterIcon />  Filter
-      </el-button>
+        <el-button
+          size="small"
+          data-testid="open-filter-button"
+          @click="toggleFilterDrawer"
+        >
+          <FilterIcon />  Filter
+        </el-button>
+      </el-badge>
     </div>
   </div>
   <AgentsListFilterDrawer
