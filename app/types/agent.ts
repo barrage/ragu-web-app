@@ -97,5 +97,5 @@ export interface Instructions {
 }
 
 export interface AgentListFilterForm {
-  status: boolean | undefined
+  status: boolean | null
 }

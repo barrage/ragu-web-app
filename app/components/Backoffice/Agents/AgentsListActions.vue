@@ -7,11 +7,13 @@ const props = defineProps<{
   selectedSortBy: string
   selectedSortDirection: 'asc' | 'desc'
   filterForm: AgentListFilterForm
+  selectedSearch: string | null
 }>()
 
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
   (event: 'filterApplied', filter: AgentListFilterForm): void
+  (event: 'searchChange', search: string): void
 }>()
 
 const { t } = useI18n()
@@ -39,6 +41,11 @@ const toggleFilterDrawer = () => {
 const updateFilter = (filter: AgentListFilterForm) => {
   emits('filterApplied', filter)
 }
+
+/* Search */
+const updateSearch = (search: string) => {
+  emits('searchChange', search)
+}
 </script>
 
 <template>
@@ -47,6 +54,12 @@ const updateFilter = (filter: AgentListFilterForm) => {
       {{ $t('agents.all_agents') }}
     </p>
     <div class="actions-wrapper">
+      <SearchInput
+        :placeholder="t('agents.placeholder.search')"
+        :initial-value="props.selectedSearch"
+        @update-search="updateSearch"
+      />
+
       <SortSelect
         :initial-sort-by="props.selectedSortBy"
         :initial-sort-direction="props.selectedSortDirection"

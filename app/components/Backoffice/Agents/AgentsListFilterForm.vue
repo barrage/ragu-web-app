@@ -77,7 +77,7 @@ const submitAgentFilterForm = async (formEl: FormInstance | undefined) => {
         <ElFormItem :label="t('agents.labels.status')" prop="status">
           <ElSelect
             v-model="agentsFilterForm.status"
-            :placeholder="t('agents.placeholder.llmProvider')"
+            :placeholder="t('agents.placeholder.filter_by_status')"
             data-testid="bo-agents-list-filter-form-status-select"
           >
             <ElOption

@@ -926,6 +926,7 @@ export default {
       promptInstruction: 'Unesite Uputu za Prompt Agenta',
       titleInstruction: 'Unesite Uputu za Naslov Agenta',
       embeddingModel: 'Odaberite model Embeddinga',
+      filter_by_status: 'Odaberite status agenta',
     },
 
     notifications: {
