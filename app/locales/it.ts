@@ -699,6 +699,7 @@ export default {
       promptInstruction: 'Inserisci Istruzioni Prompt Agente',
       titleInstruction: 'Inserisci Istruzioni Titolo Agente',
       embeddingModel: 'Seleziona modello di incorporamento',
+      filter_by_status: 'Seleziona lo stato dell\'agente',
     },
 
     notifications: {

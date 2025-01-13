@@ -701,6 +701,8 @@ export default {
       promptInstruction: 'Promptanweisung eingeben',
       titleInstruction: 'Titelanweisung eingeben',
       embeddingModel: 'Embedding-Modell auswählen',
+      filter_by_status: 'Wählen Sie den Status des Agenten aus',
+
     },
 
     notifications: {

@@ -701,6 +701,7 @@ export default {
       promptInstruction: 'Ingresar Instrucción de Solicitud del Agente',
       titleInstruction: 'Ingresar Instrucción de Título del Agente',
       embeddingModel: 'Seleccionar modelo de incrustación',
+      filter_by_status: 'Seleccione el estado del agente',
     },
 
     notifications: {

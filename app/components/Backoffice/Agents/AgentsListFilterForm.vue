@@ -14,7 +14,7 @@ const { t } = useI18n()
 
 const agentsFilterFormRef = ref<FormInstance>()
 const agentsFilterForm = reactive<AgentListFilterForm>({
-  status: true,
+  status: undefined,
 })
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -78,6 +78,7 @@ const submitAgentFilterForm = async (formEl: FormInstance | undefined) => {
           <ElSelect
             v-model="agentsFilterForm.status"
             :placeholder="t('agents.placeholder.filter_by_status')"
+            clearable
             data-testid="bo-agents-list-filter-form-status-select"
           >
             <ElOption

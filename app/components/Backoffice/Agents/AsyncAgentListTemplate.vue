@@ -24,7 +24,7 @@ const sort = ref<Sort>({
 })
 
 const filterForm = ref<AgentListFilterForm>({
-  status: true,
+  status: undefined,
 })
 
 const searchInput = ref<string | null>('')
@@ -48,7 +48,7 @@ const updateRouteQuery = () => {
     delete query.name
   }
 
-  if (filterForm.value.status !== null) {
+  if (filterForm.value.status !== undefined) {
     query.active = filterForm.value.status.toString()
   }
   else {
@@ -71,7 +71,7 @@ const syncQueryValues = (newQuery: LocationQuery) => {
     filterForm.value.status = false
   }
   else {
-    filterForm.value.status = null
+    filterForm.value.status = undefined
   }
 }
 

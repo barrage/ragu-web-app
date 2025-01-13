@@ -631,6 +631,7 @@ export default {
       empty_state_desc: 'O agente que você está procurando não existe ou não está disponível no momento. Por favor, verifique novamente os dados do agente ou crie um novo.',
       deactivate_agent: 'Desativar agente',
       activate_agent: 'Ativar agente',
+      filter_by_status: 'Selecione o status do agente',
     },
     activate_agent: {
       title: 'Ativar agente',

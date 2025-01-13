@@ -921,6 +921,7 @@ export default {
       promptInstruction: 'Enter Agent Prompt Instructions',
       titleInstruction: 'Enter Agent Title Instructions',
       embeddingModel: 'Select Embedding Model',
+      filter_by_status: 'Select agent status',
     },
 
     notifications: {
