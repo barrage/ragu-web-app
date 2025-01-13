@@ -4,31 +4,48 @@ import RaguLogo from '~/assets/icons/svg/Ragu_logo_dark.svg'
 
 <template>
   <header>
-    <RaguLogo
-      width="110px"
-      height="40px"
-    />
+    <LlmLink
+      v-motion-slide-top
+      to="/"
+      :delay="500"
+      type="link"
+      tabindex="0"
+    >
+      <RaguLogo
+        width="110px"
+        height="40px"
+        class="logo"
+      />
+    </LlmLink>
     <div class="header-right">
-      <div v-motion-slide-top :delay="1100">
+      <div v-motion-slide-top :delay="1000">
         <ThemeSelector />
       </div>
-      <div class="vertical-divider" />
+      <div
+        v-motion-slide-top
+        class="vertical-divider"
+        :delay="1000"
+      />
 
-      <div v-motion-slide-top :delay="1300">
+      <div v-motion-slide-top :delay="1100">
         <LightDarkModeSelector />
       </div>
 
       <div
+        v-motion-slide-top
         class="vertical-divider"
+        :delay="1200"
       />
 
-      <div v-motion-slide-top :delay="1500">
+      <div v-motion-slide-top :delay="1300">
         <LocalizationSelector />
       </div>
       <div
+        v-motion-slide-top
         class="vertical-divider"
+        :delay="1400"
       />
-      <div>
+      <div v-motion-slide-top :delay="1500">
         <ProfileDropdown />
       </div>
     </div>
@@ -47,6 +64,10 @@ header {
   padding: 1rem;
   background-color: transparent;
 
+  .logo {
+    color: var(--color-primary-900);
+  }
+
   .header-right {
     display: flex;
     align-items: center;
@@ -61,6 +82,10 @@ header {
 
 .dark {
   header {
+    .logo {
+      color: var(--color-primary-0);
+    }
+
     & .vertical-divider {
       background: var(--color-primary-700);
     }
