@@ -11,6 +11,7 @@
     --dialog-margin-top: 15vh;
     --overlay-background-color: rgba(17, 17, 17, 0.15);
     --overlay-padding: clamp(1.25rem, 0.9011rem + 1.4887vw, 2.6875rem);
+    --transition-duration: 0.35s;
   }
 
   html.dark {
@@ -131,8 +132,6 @@
       justify-content: space-between;
     }
 
-    // Dialog modifiers
-    // -- Size types
     &--small {
       max-width: var(--dialog-small);
       margin: auto;
@@ -153,7 +152,6 @@
         }
       }
 
-      // Modifications given by center component prop (centers text inside of dialog body)
       &--center {
         text-align: center;
 
@@ -190,82 +188,61 @@
           }
         }
       }
-
-      .v-modal-enter {
-        animation: v-modal-in var(--transition-duration-fast) ease;
-      }
-
-      .v-modal-leave {
-        animation: v-modal-out var(--transition-duration-fast) ease forwards;
-      }
-
-      @keyframes v-modal-in {
-        0% {
-          opacity: 0;
-        }
-      }
-      @keyframes v-modal-out {
-        100% {
-          opacity: 0;
-        }
-      }
-
-      // Dialog animations
-      .dialog-fade-enter-active {
-        animation: modal-fade-in var(--transition-duration);
-      }
-
-      .dialog-fade-enter-active .barrage-overlay-dialog {
-        animation: dialog-fade-in var(--transition-duration);
-      }
-
-      .dialog-fade-leave-active {
-        animation: modal-fade-out var(--transition-duration);
-      }
-
-      .dialog-fade-leave-active .barrage-overlay-dialog {
-        animation: dialog-fade-out var(--transition-duration);
-      }
-
-      @keyframes dialog-fade-in {
-        0% {
-          transform: translate3d(0, -20px, 0);
-          opacity: 0;
-        }
-        100% {
-          transform: translate3d(0, 0, 0);
-          opacity: 1;
-        }
-      }
-
-      @keyframes dialog-fade-out {
-        0% {
-          transform: translate3d(0, 0, 0);
-          opacity: 1;
-        }
-        100% {
-          transform: translate3d(0, -20px, 0);
-          opacity: 0;
-        }
-      }
-
-      @keyframes modal-fade-in {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-
-      @keyframes modal-fade-out {
-        0% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
     }
+  }
+}
+
+.dialog-fade-enter-active {
+  animation: modal-fade-in var(--transition-duration);
+}
+
+.dialog-fade-enter-active .barrage-overlay-dialog {
+  animation: dialog-fade-in var(--transition-duration);
+}
+
+.dialog-fade-leave-active {
+  animation: modal-fade-out var(--transition-duration);
+}
+
+.dialog-fade-leave-active .barrage-overlay-dialog {
+  animation: dialog-fade-out var(--transition-duration);
+}
+@keyframes dialog-fade-in {
+  0% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-fade-out {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes modal-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
