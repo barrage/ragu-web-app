@@ -156,7 +156,13 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
                 type="link"
                 class="agent-name-type-wrapper"
               >
-                <AgentIcon size="36px" />
+                <LlmAvatar
+                  :avatar="agent.agent?.avatar"
+                  :alt="t('agents.agent_avatar')"
+                  fit="cover"
+                  default-image="agent"
+                  :size="36"
+                />
                 <div class="agent-name-wrapper">
                   <p class="agent-name">
                     {{ agent?.agent?.name }}

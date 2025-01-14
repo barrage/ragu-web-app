@@ -115,6 +115,34 @@ export default {
     signout_text: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
     profile_settings: 'Profileinstellungen',
   },
+  profile: {
+    change_picture: {
+      title: 'Profilbild ändern',
+      delete_title: 'Profilbild löschen',
+      description: 'Laden Sie ein neues Profilbild hoch',
+      description_link: 'oder ziehen und ablegen',
+      upload: 'Hochladen',
+      cancel: 'Abbrechen',
+    },
+    notifications: {
+      error_file_type_title: 'Ungültiger Dateityp',
+      error_file_type_description: 'Bitte laden Sie eine JPEG- oder PNG-Datei hoch.',
+      error_file_size_title: 'Datei zu groß',
+      error_file_size_description: 'Die Dateigröße darf nicht größer als 5MB sein.',
+      import: {
+        error_title: 'Fehler',
+        error_description: 'Beim Hochladen des Profilbildes ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+        success_title: 'Erfolgreich',
+        success_description: 'Das Profilbild wurde erfolgreich hochgeladen.',
+        success_delete_description: 'Das Profilbild wurde erfolgreich gelöscht.',
+      },
+    },
+    delete_picture: {
+      title: 'Bild löschen',
+      description: 'Möchten Sie Ihr Profilbild wirklich löschen?',
+    },
+  },
+
   getHelp: {
     title: 'Hilfe erhalten',
   },
@@ -600,6 +628,8 @@ export default {
   agents: {
     title: 'Agenten',
     all_agents: 'Alle Agenten',
+    agent_avatar: 'Agenten-Avatar',
+    user_avatar: 'Benutzer-Avatar',
     empty_state_title_all: 'Keine Agenten verfügbar',
     empty_state_desc_all: 'Derzeit gibt es keine Agenten, die hier angezeigt werden können.',
     titles: {
@@ -722,6 +752,10 @@ export default {
       form_title: 'Formularfehler',
       form_message: 'Bitte beheben Sie die markierten Fehler im Formular.',
       invalid_agent: 'Oops! Etwas ist schiefgelaufen. Der Agent, den Sie löschen möchten, scheint nicht zu existieren.',
+      upload_success_title: 'Agentenbild erfolgreich hochgeladen',
+      upload_success_description: 'Das Agentenbild wurde erfolgreich hochgeladen.',
+      upload_error_title: 'Fehler beim Hochladen des Agentenbildes',
+      upload_error_description: 'Beim Hochladen des Agentenbildes ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
     },
     rules: {
       name: {
@@ -1101,6 +1135,10 @@ export default {
         success_title: 'Import erfolgreich',
         success_description: 'Die Benutzer wurden erfolgreich importiert.',
       },
+      upload_success_title: 'Profilbild erfolgreich hochgeladen',
+      upload_success_description: 'Das Profilbild wurde erfolgreich hochgeladen.',
+      upload_error_title: 'Fehler beim Hochladen des Profilbildes',
+      upload_error_description: 'Beim Hochladen des Profilbildes ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
     },
     user_card: {
       role: 'Rolle',

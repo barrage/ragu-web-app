@@ -1,24 +1,23 @@
 <script lang="ts" setup>
 import InfoIcon from '~/assets/icons/svg/info.svg'
+import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
 // PROPS & EMITS
-withDefaults(
-  defineProps<{
-    isVisible: boolean
-    title?: string
-    message?: string
-    confirmButtonText?: string
-    cancelButtonText?: string
-  }>(),
-  {
-    title: 'Unsaved Changes',
-    message: 'You have unsaved changes. Are you sure you want to leave this page?',
-    confirmButtonText: 'Leave',
-    cancelButtonText: 'Cancel',
-    isVisible: false,
-  },
+interface Props {
+  isVisible?: boolean
+  title?: string
+  message?: string
+  confirmButtonText?: string
+  cancelButtonText?: string
+}
 
-)
+const {
+  isVisible = false,
+  title = 'Unsaved Changes',
+  message = 'You have unsaved changes. Are you sure you want to leave this page?',
+  confirmButtonText = 'Leave',
+  cancelButtonText = 'Cancel',
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   (event: 'confirm'): void
@@ -31,6 +30,7 @@ const emit = defineEmits<{
     :model-value="isVisible"
     :title="title"
     destroy-on-close
+    :close-icon="CloseCircleIcon"
     align-center
     class="barrage-dialog--small"
     :close-on-click-modal="false"

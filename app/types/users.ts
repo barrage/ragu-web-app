@@ -8,6 +8,10 @@ export interface User {
   active: boolean
   createdAt: string | Date
   updatedAt: string | Date
+  avatar?: {
+    contentType: string
+    data: string
+  }
 }
 
 export interface UsersResponse {

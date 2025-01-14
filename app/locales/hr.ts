@@ -116,6 +116,33 @@ export default {
     signout_text: 'Jeste li sigurni da želite nastaviti s odjavom?',
     profile_settings: 'Postavke profila',
   },
+  profile: {
+    change_picture: {
+      title: 'Promijeni sliku',
+      delete_title: 'Obriši sliku',
+      description: 'Učitajte novu sliku profila',
+      description_link: 'ili povucite i ispustite',
+      upload: 'Učitaj',
+      cancel: 'Odustani',
+    },
+    notifications: {
+      error_file_type_title: 'Neispravan tip datoteke',
+      error_file_type_description: 'Molimo učitajte JPEG ili PNG datoteku.',
+      error_file_size_title: 'Datoteka je prevelika',
+      error_file_size_description: 'Veličina datoteke ne smije prelaziti 5MB.',
+      import: {
+        error_title: 'Greška',
+        error_description: 'Došlo je do pogreške prilikom učitavanja slike profila. Molimo pokušajte ponovno.',
+        success_title: 'Uspješno',
+        success_description: 'Slika profila je uspješno učitana.',
+        success_delete_description: 'Slika profila je uspješno izbrisana.',
+      },
+    },
+    delete_picture: {
+      title: 'Obriši sliku',
+      description: 'Jeste li sigurni da želite izbrisati svoju sliku profila?',
+    },
+  },
   getHelp: {
     title: 'Traži pomoć',
   },
@@ -732,6 +759,10 @@ export default {
         success_title: 'Uvoz Uspješan',
         success_description: 'Korisnici su uspješno uvezeni.',
       },
+      upload_success_title: 'Slika profila uspješno učitana',
+      upload_success_description: 'Slika profila je uspješno učitana.',
+      upload_error_title: 'Greška pri učitavanju slike profila',
+      upload_error_description: 'Došlo je do pogreške prilikom učitavanja slike profila. Molimo pokušajte ponovno.',
     },
     user_card: {
       role: 'Uloga',
@@ -882,6 +913,8 @@ export default {
   agents: {
     title: 'Agenti',
     all_agents: 'Svi agenti',
+    agent_avatar: 'Avatar agenta',
+    user_avatar: 'Avatar korisnika',
     empty_state_title_all: 'Nema dostupnih agenata',
     empty_state_desc_all: 'Trenutno nema agenata za prikazivanje.',
     titles: {
@@ -1003,6 +1036,10 @@ export default {
       form_title: 'Pogreška u obrascu',
       form_message: 'Ispravite istaknute pogreške u obrascu.',
       invalid_agent: 'Oops! Nešto je pošlo po zlu. Čini se da agent kojeg pokušavate izbrisati ne postoji.',
+      upload_success_title: 'Slika agenta uspješno učitana',
+      upload_success_description: 'Slika agenta je uspješno učitana.',
+      upload_error_title: 'Greška pri učitavanju slike agenta',
+      upload_error_description: 'Došlo je do pogreške prilikom učitavanja slike agenta. Molimo pokušajte ponovno.',
     },
     rules: {
       name: {

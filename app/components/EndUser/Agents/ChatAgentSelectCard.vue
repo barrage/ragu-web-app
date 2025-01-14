@@ -7,6 +7,7 @@ defineProps<{
 }>()
 
 const agentStore = useAgentStore()
+const { t } = useI18n()
 </script>
 
 <template>
@@ -30,7 +31,14 @@ const agentStore = useAgentStore()
           </div>
         </template>
         <div class="agent-name-wrapper">
-          <ChatAgentIcon size="32px" class="chat-agent-icon" />
+          <LlmAvatar
+            :avatar="agent?.avatar"
+            :alt="t('agents.agent_avatar')"
+            :size="32"
+            fit="cover"
+            default-image="agent"
+            :content-type="agent?.avatar?.contentType"
+          />
           <p class="agent-select-text">
             {{ formatStringMaxLenght(agent?.name, 60) }}
           </p>

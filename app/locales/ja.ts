@@ -114,6 +114,33 @@ export default {
     signout_text: 'サインアウトを進めてもよろしいですか？',
     profile_settings: 'プロフィール設定',
   },
+  profile: {
+    change_picture: {
+      title: '写真を変更',
+      delete_title: '写真を削除',
+      description: '新しいプロフィール画像をアップロードする',
+      description_link: 'またはドラッグアンドドロップ',
+      upload: 'アップロード',
+      cancel: 'キャンセル',
+    },
+    notifications: {
+      error_file_type_title: '無効なファイルタイプ',
+      error_file_type_description: 'JPEGファイルかPNGファイルをアップロードしてください。',
+      error_file_size_title: 'ファイルが大きすぎます',
+      error_file_size_description: 'ファイルサイズは5MB以下である必要があります。',
+      import: {
+        error_title: 'エラー',
+        error_description: 'プロフィール画像のアップロード中にエラーが発生しました。再試行してください。',
+        success_title: '成功',
+        success_description: 'プロフィール画像は正常にアップロードされました。',
+        success_delete_description: 'プロフィール画像は正常に削除されました。',
+      },
+    },
+    delete_picture: {
+      title: '写真を削除',
+      description: 'プロフィール画像を削除してもよろしいですか？',
+    },
+  },
   getHelp: {
     title: '助けを求める',
   },
@@ -596,6 +623,8 @@ export default {
   agents: {
     title: 'エージェント',
     all_agents: 'すべてのエージェント',
+    agent_avatar: 'エージェントのアバター',
+    user_avatar: 'ユーザーのアバター',
     empty_state_title_all: '利用可能なエージェントがいません',
     empty_state_desc_all: '現在、ここに表示するエージェントはありません。',
     titles: {
@@ -717,6 +746,10 @@ export default {
       form_title: 'フォームエラー',
       form_message: 'フォームのエラーを修正してください。',
       invalid_agent: 'エラーが発生しました。削除しようとしているエージェントが存在しないようです。',
+      upload_success_title: 'エージェント画像のアップロードに成功しました',
+      upload_success_description: 'エージェント画像は正常にアップロードされました。',
+      upload_error_title: 'エージェント画像のアップロードエラー',
+      upload_error_description: 'エージェント画像のアップロード中にエラーが発生しました。もう一度お試しください。',
     },
     rules: {
       name: {
@@ -1095,6 +1128,10 @@ export default {
         success_title: 'インポート成功',
         success_description: 'ユーザーは正常にインポートされました。',
       },
+      upload_success_title: 'プロフィール画像のアップロードに成功しました',
+      upload_success_description: 'プロフィール画像は正常にアップロードされました。',
+      upload_error_title: 'プロフィール画像のアップロードエラー',
+      upload_error_description: 'プロフィール画像のアップロード中にエラーが発生しました。再試行してください。',
     },
     user_card: {
       role: '役割',

@@ -18,17 +18,6 @@ const userData = computed(() => {
   }
 })
 
-const iconSize = computed(() => {
-  switch (props.size) {
-    case 'medium':
-      return '46px'
-    case 'large':
-      return '84px'
-    default:
-      return '40px'
-  }
-})
-
 const textSize = computed(() => {
   switch (props.size) {
     case 'medium':
@@ -47,7 +36,12 @@ const textSize = computed(() => {
     type="link"
     class="user-profile-item"
   >
-    <ProfileIcon :size="iconSize" />
+    <LlmAvatar
+      :avatar="props.user?.avatar"
+      :alt="t('agents.user_avatar')"
+      fit="cover"
+      default-image="user"
+    />
     <div class="username-mail-wrapper">
       <p class="username" :style="{ fontSize: textSize.username }">
         {{ `${userData.fullname}` }}

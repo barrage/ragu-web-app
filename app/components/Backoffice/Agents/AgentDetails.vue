@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import type { Agent } from '~/types/agent'
 import PersonKeyIcon from '~/assets/icons/svg/person-key.svg'
@@ -11,7 +10,7 @@ import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 import { StatusType } from '~/types/statusTypes'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
-
+import DeleteIcon from '~/assets/icons/svg/delete-person.svg'
 // PROPS & EMITS
 
 const props = defineProps<{
@@ -20,18 +19,21 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (event: 'refreshAgent'): void
-  (event: 'agentDeactivated'): void
-  (event: 'agentActivated'): void
 }>()
 
 // STATES
 
 const agentStore = useAgentStore()
 const { t } = useI18n()
+const { $api } = useNuxtApp()
 const handleAgentUpdated = () => {
   emits('refreshAgent')
   agentStore.setEditMode(false)
 }
+
+// API
+
+const { execute: deleteProfilePicture, error } = await useAsyncData(() => $api.agent.DeleteAgentAvatar(props.singleAgent?.agent?.id as string), { immediate: false })
 
 // COMPUTED
 
@@ -53,6 +55,7 @@ const agentData = computed(() => {
     titleInstruction: props.singleAgent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
     promptInstruction: props.singleAgent?.configuration?.agentInstructions?.promptInstruction || t('agents.agent_card.unknown_instruction'),
     createdAt: props.singleAgent?.agent?.createdAt ? formatDate(props.singleAgent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    avatar: props.singleAgent?.agent?.avatar || undefined,
   }
 })
 
@@ -70,7 +73,6 @@ const openActivateAgentModal = () => {
 }
 
 const agentActivated = () => {
-  emits('agentActivated')
   emits('refreshAgent')
 }
 
@@ -82,11 +84,53 @@ const openDeactivateAgentModal = () => {
 }
 
 const agentDeactivated = () => {
-  emits('agentDeactivated')
   emits('refreshAgent')
 }
 const handleGetSingleAgent = () => {
   emits('refreshAgent')
+}
+
+/* Profile Picture */
+
+const isDeleteModalOpen = ref(false)
+
+const closeDeleteModal = () => {
+  isDeleteModalOpen.value = false
+}
+
+const isUploadModalVisible = defineModel<boolean>()
+const openUploadModal = () => {
+  isUploadModalVisible.value = true
+}
+
+const refreshAgent = async () => {
+  emits('refreshAgent')
+  await agentStore.GET_AllAppAgents()
+}
+
+const handleRemovePicture = async () => {
+  await deleteProfilePicture()
+  if (error.value) {
+    ElNotification({
+      title: t('profile.notifications.import.error_title'),
+      message: t('profile.notifications.import.error_description'),
+      type: 'error',
+      customClass: 'error',
+      duration: 2500,
+    })
+  }
+  else {
+    ElNotification({
+      title: t('profile.notifications.import.success_title'),
+      message: t('profile.notifications.import.success_delete_description'),
+      type: 'success',
+      customClass: 'success',
+      duration: 2500,
+    })
+  }
+
+  refreshAgent()
+  closeDeleteModal()
 }
 </script>
 
@@ -94,14 +138,41 @@ const handleGetSingleAgent = () => {
   <template v-if="!agentStore.editMode">
     <div class="agent-details-hero-section">
       <div class="profile-avatar-wrapper">
-        <ChatAgentIcon size="72px" class="agent-icon" />
-        <div>
-          <h6 class="agentname">
-            {{ `${agentData.name}` }}
-          </h6>
-          <el-tag :type="agentData.statusType" size="small">
-            <span class="status-dot" />  {{ agentData?.status }}
-          </el-tag>
+        <div class="avatar-wrapper">
+          <LlmAvatar
+            :avatar="agentData?.avatar"
+            :alt="t('agents.agent_avatar')"
+            fit="cover"
+            default-image="agent"
+            size="large"
+          />
+          <div>
+            <h5 class="username">
+              {{ `${agentData.name}` }}
+            </h5>
+            <ElTag :type="agentData.statusType" size="small">
+              <span class="status-dot" />  {{ agentData?.status }}
+            </ElTag>
+          </div>
+        </div>
+        <div class="change-picture">
+          <el-button
+            class="edit-picture-button"
+            size="small"
+            @click="openUploadModal"
+          >
+            <EditIcon size="16px" />
+            {{ t('profile.change_picture.title') }}
+          </el-button>
+          <el-button
+            v-if="agentData.avatar"
+            class="remove-picture-button"
+            size="small"
+            @click="isDeleteModalOpen = true"
+          >
+            <DeleteIcon size="16px" />
+            {{ t('profile.change_picture.delete_title') }}
+          </el-button>
         </div>
       </div>
       <div class="agent-details-actions-wrapper">
@@ -348,6 +419,22 @@ const handleGetSingleAgent = () => {
     source="details"
     @agent-deactivated="agentDeactivated"
   />
+  <ConformationModal
+    :is-visible="isDeleteModalOpen"
+    :title="t('profile.delete_picture.title')"
+    :message="t('profile.delete_picture.description')"
+    :confirm-button-text="t('settings.delete') "
+    :cancel-button-text="t('settings.cancel')"
+    @confirm="handleRemovePicture"
+    @cancel="closeDeleteModal"
+  />
+
+  <ChangePictureModal
+    v-model="isUploadModalVisible"
+    upload-type="agents"
+    :agent-id="agentData.id"
+    @profile-picture-uploaded="refreshAgent"
+  />
 </template>
 
 <style lang="scss" scoped>
@@ -355,14 +442,14 @@ const handleGetSingleAgent = () => {
   display: flex;
   gap: 2rem;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   padding-block: 1rem;
   flex-wrap: wrap;
 
   & .profile-avatar-wrapper {
     display: flex;
+    flex-direction: column;
     gap: 0.5rem;
-    align-items: center;
     justify-content: flex-start;
     margin-right: 1rem;
     text-overflow: ellipsis;
@@ -423,6 +510,24 @@ const handleGetSingleAgent = () => {
 .agentname {
   font-weight: var(--font-weight-semibold);
   color: var(--color-primary-900);
+}
+
+.avatar-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.change-picture {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-picture-button,
+.remove-picture-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .dark {

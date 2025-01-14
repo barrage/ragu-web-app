@@ -5,7 +5,6 @@ import { StatusType } from '~/types/statusTypes'
 import { useAgentStore } from '~/stores/agents'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
-import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 
@@ -38,6 +37,7 @@ const agentData = computed(() => {
     embeddingModel: props.singleAgent?.agent?.embeddingModel || '-',
     temperature: props.singleAgent?.configuration?.temperature || '-',
     language: props.singleAgent?.agent?.language || '-',
+    avatar: props.singleAgent?.agent?.avatar || undefined,
   }
 })
 
@@ -54,7 +54,13 @@ const editClick = (): void => {
         type="link"
         class="agent-name-type-wrapper"
       >
-        <AgentIcon size="40px" class="agent-icon" />
+        <LlmAvatar
+          :avatar="agentData?.avatar"
+          :alt="t('agents.agent_avatar')"
+          fit="cover"
+          default-image="agent"
+          :size="40"
+        />
         <div class="agent-name-wrapper">
           <p class="agent-name">
             {{ agentData.name }}

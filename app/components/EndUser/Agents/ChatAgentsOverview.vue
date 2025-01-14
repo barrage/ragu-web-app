@@ -45,13 +45,25 @@ watch(
               @keyup.space="selectAgent(agent)"
               @click="selectAgent(agent)"
             >
-              <ChatAgentIcon size="20px" /> {{ agent.name }}
+              <LlmAvatar
+                :avatar="agentStore.selectedAgent?.avatar"
+                :alt="t('agents.agent_avatar')"
+                fit="cover"
+                default-image="agent"
+                :size="20"
+              /> {{ agent.name }}
             </div>
           </template>
         </div>
 
         <div class="selected-agent-wrapper">
-          <ChatAgentIcon size="52px" />
+          <LlmAvatar
+            :avatar="agentStore.selectedAgent?.avatar"
+            :alt="t('agents.agent_avatar')"
+            fit="cover"
+            default-image="agent"
+            :size="52"
+          />
           <h6>{{ selectedAgent?.name }}</h6>
           <div class="agent-info">
             <span>{{ t('agents.labels.language') }}: {{ selectedAgent?.language }}</span>

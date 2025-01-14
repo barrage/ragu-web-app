@@ -4,6 +4,7 @@ import type { CreateUserPayload, EditUserPayload, User, UsersResponse } from '~/
 export default class usersService extends FetchFactory {
   // Endpoint for agent-related API requests.
   private readonly endpoint: string = 'admin/users'
+  private readonly endUserendpoint: string = '/users'
 
   /**
    * Fetches a paginated and sorted list of users.
@@ -197,6 +198,88 @@ export default class usersService extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to import users with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Uploads a profile picture for the current user.
+   * @param formData - The FormData object containing the profile picture file.
+   * @returns A promise that resolves when the profile picture is successfully uploaded.
+   * @throws Will throw an error if the request fails.
+   */
+
+  async PostUploadProfilePicture(file: File | Blob): Promise<void> {
+    try {
+      return await this.$fetch<void>(`${this.endUserendpoint}/avatars`, {
+        method: 'POST',
+        body: file,
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to upload profile picture with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Uploads a profile picture for the current user.
+   * @param formData - The FormData object containing the profile picture file.
+   * @returns A promise that resolves when the profile picture is successfully uploaded.
+   * @throws Will throw an error if the request fails.
+   */
+
+  async PostAdminUploadProfilePicture(userId: string, file: File | Blob): Promise<void> {
+    try {
+      return await this.$fetch<void>(`${this.endpoint}/${userId}/avatars`, {
+        method: 'POST',
+        body: file,
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to upload profile picture with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  async DeleteAdminProfilePicture(userId: string): Promise<void> {
+    try {
+      return await this.$fetch<void>(`${this.endpoint}/${userId}/avatars`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete profile picture with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Deletes the profile picture for the current user.
+   * @returns A promise that resolves when the profile picture is successfully deleted.
+   * @throws Will throw an error if the request fails.
+   */
+
+  async DeleteProfilePicture(): Promise<void> {
+    try {
+      return await this.$fetch<void>(`${this.endUserendpoint}/avatars`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete profile picture with code ${error?.statusCode}`,
       })
     }
   }
