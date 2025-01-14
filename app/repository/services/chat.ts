@@ -254,4 +254,35 @@ export default class ChatServise extends FetchFactory {
       })
     }
   }
+
+  /**
+   * Evaluates a chat message by unique chat and message IDs.
+   * Sends a PATCH request to update the evaluation status of a specific message.
+   *
+   * @param {string} chatId - The ID of the chat containing the message to evaluate.
+   * @param {string} messageId - The ID of the message to evaluate.
+   * @param {boolean} evaluation - The evaluation status to set (e.g., true for positive, false for negative).
+   * @returns {Promise<void>} A promise that resolves when the message evaluation is successfully updated.
+   * @throws Will throw an error if the request fails, including the status code and error message if available.
+   */
+  async PatchEvaluateChatMessage(chatId: string, messageId: string, evaluation: boolean): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.chatsEndpoint}/${chatId}`, {
+        method: 'PATCH',
+        credentials: 'include',
+        body: {
+          evaluation,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to evaluate chat message with ID: ${messageId}`,
+      })
+    }
+  }
 }
