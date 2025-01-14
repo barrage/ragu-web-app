@@ -34,6 +34,7 @@
   .barrage-notification {
     display: flex;
     position: fixed;
+    box-sizing: border-box;
     align-items: flex-start;
     width: var(--barrage-notification-width);
     color: var(--barrage-notification-text-color);
@@ -88,11 +89,12 @@
 
     &__icon {
       --barrage-icon-height: auto;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       color: var(--barrage-notification-icon-color);
       padding-block: var(--barrage-notification-padding-block);
       margin-inline: var(--barrage-notification-padding-inline);
+      margin-top: 8px;
     }
 
     &__group {
@@ -119,6 +121,7 @@
 
     &__content {
       order: 3;
+      font-size: var(--barrage-notification-content-font-size);
       width: calc(
         100% - var(--barrage-notification-content-column-gap) - 1.25rem
       );
