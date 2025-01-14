@@ -387,7 +387,7 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
     .title {
       color: var(--color-primary-800);
       font-size: var(--font-size-fluid-4);
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
     }
   }
 
@@ -435,7 +435,7 @@ function showSuccessNotification(type: 'add' | 'edit' | 'delete') {
         margin: 0;
         font-size: var(--font-size-fluid-2);
         line-height: normal;
-        font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-semibold);
         color: var(--color-primary-900);
       }
     }

@@ -22,7 +22,7 @@ useHead({
           :description="t('chat.admin.description')"
         >
           <template #icon>
-            <ChatsIcon size="58px" />
+            <ChatsIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>

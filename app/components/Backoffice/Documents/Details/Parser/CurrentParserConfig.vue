@@ -76,7 +76,7 @@ const props = defineProps<{
   gap: 4px;
 }
 .current-config-title {
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary-800);
 }
 .current-parser-config {

@@ -54,7 +54,7 @@ const isSemanticChunker = (config: ChunkerConfig | null | undefined): config is 
   width: 100%;
 }
 .current-config-title {
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary-800);
 }
 .current-parser-config {

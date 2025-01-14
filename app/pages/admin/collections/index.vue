@@ -25,7 +25,7 @@ useHead({
           :description="t('collections.titles.subTitle')"
         >
           <template #icon>
-            <CollectionIcon size="58px" />
+            <CollectionIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>

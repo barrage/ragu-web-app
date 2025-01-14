@@ -94,7 +94,7 @@ const handleGetSingleAgent = () => {
   <template v-if="!agentStore.editMode">
     <div class="agent-details-hero-section">
       <div class="profile-avatar-wrapper">
-        <ChatAgentIcon size="80px" class="agent-icon" />
+        <ChatAgentIcon size="72px" class="agent-icon" />
         <div>
           <h6 class="agentname">
             {{ `${agentData.name}` }}
@@ -117,7 +117,7 @@ const handleGetSingleAgent = () => {
         <el-button
           v-if="props.singleAgent?.agent?.active"
           size="small"
-          type="primary"
+          type="danger"
           plain
           @click="openDeactivateAgentModal()"
         >
@@ -388,7 +388,7 @@ const handleGetSingleAgent = () => {
   color: var(--color-primary-800);
   & .agent-configuration-title {
     color: var(--color-primary-800);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
   }
 }
 .agent-informations-section {
@@ -421,7 +421,7 @@ const handleGetSingleAgent = () => {
 }
 
 .agentname {
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary-900);
 }
 

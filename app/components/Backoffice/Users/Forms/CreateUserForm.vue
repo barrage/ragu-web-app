@@ -334,7 +334,7 @@ const isCreateUserLoading = computed(() => {
 
       .role-label {
         color: var(--color-primary-800);
-        font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-semibold);
         font-size: var(--font-size-fluid-2);
       }
     }

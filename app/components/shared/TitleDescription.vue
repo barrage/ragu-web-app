@@ -41,7 +41,7 @@ const props = defineProps({
 }
 
 .title {
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary-800);
   font-size: var(--font-size-fluid-4);
 }

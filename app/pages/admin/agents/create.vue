@@ -133,7 +133,7 @@ errorHandler(createError)
           :description="t('agents.titles.createDescription')"
         >
           <template #icon>
-            <AddPersonIcon size="58px" />
+            <AddPersonIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>

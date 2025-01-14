@@ -345,7 +345,7 @@ watchEffect(() => {
 
 :deep(th) {
   background-color: var(--color-primary-100);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary-900);
   text-transform: uppercase;
   letter-spacing: 0.05em;

@@ -110,7 +110,7 @@ watch(
     & .user-chats-title {
       color: var(--color-primary-800);
       font-size: var(--font-size-fluid-4);
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
     }
   }
 

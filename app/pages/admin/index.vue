@@ -102,7 +102,7 @@ function findMostUsedAgent(): { name: string, stats: { used: number, total: numb
           :description="t('dashboard.description')"
         >
           <template #icon>
-            <DashboardIcon size="58px" />
+            <DashboardIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>

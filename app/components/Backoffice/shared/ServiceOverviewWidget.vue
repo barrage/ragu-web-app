@@ -76,7 +76,7 @@ interface Slots {
     & .service-overview-widget-title {
       color: var(--color-primary-800);
       font-size: var(--font-size-fluid-3);
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
     }
   }
 }
@@ -86,7 +86,7 @@ interface Slots {
 
   & .service-overview-widget-value {
     font-size: var(--font-size-fluid-5);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-primary-900);
   }
 

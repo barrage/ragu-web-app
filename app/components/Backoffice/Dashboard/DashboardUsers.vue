@@ -21,10 +21,10 @@ const hasError = computed(() => !!props.error)
   <section class="dashboard-count-section grid">
     <div class="section-heading-wrapper">
       <div v-motion-pop-visible-once class="title-wrapper">
-        <TeamIcon size="42px" />
-        <h5 class="section-title">
+        <TeamIcon size="36px" />
+        <h4 class="section-title">
           {{ t('users.title') }}
-        </h5>
+        </h4>
       </div>
 
       <LlmLink to="/admin/users" type="buttonPrimary">
@@ -145,7 +145,7 @@ const hasError = computed(() => !!props.error)
       gap: 0.5rem;
 
       & .section-title {
-        font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-semibold);
         color: var(--color-primary-800);
       }
     }
@@ -160,7 +160,7 @@ const hasError = computed(() => !!props.error)
 
     & .total-users-count {
       color: var(--color-primary-800);
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       font-size: var(--font-size-fluid-5);
       display: flex;
       justify-content: center;

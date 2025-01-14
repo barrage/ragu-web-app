@@ -131,7 +131,7 @@ const createAgent = async (formEl: FormInstance | undefined) => {
           :description="$t('whatsapp_agents.create.description')"
         >
           <template #icon>
-            <AddPersonIcon size="58px" />
+            <AddPersonIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>

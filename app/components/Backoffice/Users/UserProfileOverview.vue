@@ -84,7 +84,7 @@ const textSize = computed(() => {
     & .username {
       margin: 0;
       line-height: normal;
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       color: var(--color-primary-900);
     }
 

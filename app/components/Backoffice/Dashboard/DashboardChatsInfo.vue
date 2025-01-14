@@ -36,7 +36,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
   <section class="dashboard-chats-info-section grid">
     <div class="section-heading-wrapper">
       <div v-motion-pop-visible-once class="title-wrapper">
-        <ChatsIcon size="42px" />
+        <ChatsIcon size="36px" />
         <h4 class="section-title">
           {{ t('chat.admin.title') }}
         </h4>
@@ -234,7 +234,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
       margin: 0;
       font-size: var(--font-size-fluid-2);
       line-height: normal;
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       color: var(--color-primary-900);
     }
     & .agent-provider {
@@ -273,7 +273,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
       margin: 0;
       font-size: var(--font-size-fluid-2);
       line-height: normal;
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       color: var(--color-primary-900);
       white-space: nowrap;
       overflow: hidden;
@@ -315,7 +315,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
       gap: 0.5rem;
 
       & .section-title {
-        font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-semibold);
         color: var(--color-primary-800);
       }
     }
@@ -356,7 +356,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
       min-height: 100%;
     }
     & .active-agent-title {
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       margin-bottom: var(--spacing-fluid-m);
       color: var(--color-primary-700);
     }
@@ -375,7 +375,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
     }
 
     & .chat-usage-title {
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       color: var(--color-primary-700);
       font-size: var(--font-size-fluid-4);
     }
@@ -399,7 +399,7 @@ const allActiveAgents = computed(() => activeAgents.value?.items || [])
   }
   & .chats-information {
     & .active-agent-title {
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       margin-bottom: var(--spacing-fluid-m);
       color: var(--color-primary-100);
     }

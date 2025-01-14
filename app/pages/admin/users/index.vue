@@ -21,7 +21,7 @@ useHead({
           :description="t('users.description')"
         >
           <template #icon>
-            <TeamIcon size="58px" />
+            <TeamIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>

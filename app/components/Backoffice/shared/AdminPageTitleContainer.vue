@@ -39,9 +39,9 @@ const props = defineProps<{
     }
 
     & .admin-page-title {
-      font-weight: 600;
+      font-weight: 500;
       color: var(--color-primary-800);
-      font-size: var(--font-size-fluid-8);
+      font-size: var(--font-size-fluid-7);
       line-height: normal;
     }
   }
