@@ -119,12 +119,22 @@ function switchRoute() {
       @keyup.enter="toggleDropdown"
       @keyup.space="toggleDropdown"
     >
-      <ProfileIcon size="36px" />
+      <LlmAvatar
+        :avatar="oAuthStore.user?.avatar"
+        :alt="t('agents.user_avatar')"
+        fit="cover"
+        default-image="user"
+      />
     </el-button>
     <template #dropdown>
       <el-dropdown-menu class="dropdown-menu">
         <div class="user-profile-item">
-          <ProfileIcon size="42px" />
+          <LlmAvatar
+            :avatar="oAuthStore.user?.avatar"
+            :alt="t('agents.user_avatar')"
+            fit="cover"
+            default-image="user"
+          />
           <div class="username-mail-wrapper">
             <p class="username">
               {{ user.fullname }}

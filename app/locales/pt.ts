@@ -113,6 +113,33 @@ export default {
     signout_text: 'Tem certeza de que deseja continuar com o logout?',
     profile_settings: 'Configurações de perfil',
   },
+  profile: {
+    change_picture: {
+      title: 'Alterar imagem',
+      delete_title: 'Excluir imagem',
+      description: 'Carregue uma nova imagem de perfil',
+      description_link: 'ou arraste e solte',
+      upload: 'Carregar',
+      cancel: 'Cancelar',
+    },
+    notifications: {
+      error_file_type_title: 'Tipo de arquivo inválido',
+      error_file_type_description: 'Por favor, carregue um arquivo JPEG ou PNG.',
+      error_file_size_title: 'Arquivo muito grande',
+      error_file_size_description: 'O tamanho do arquivo não deve exceder 5MB.',
+      import: {
+        error_title: 'Erro',
+        error_description: 'Ocorreu um erro ao carregar a imagem do perfil. Por favor, tente novamente.',
+        success_title: 'Sucesso',
+        success_description: 'A imagem do perfil foi carregada com sucesso.',
+        success_delete_description: 'A imagem do perfil foi excluída com sucesso.',
+      },
+    },
+    delete_picture: {
+      title: 'Excluir imagem',
+      description: 'Tem certeza de que deseja excluir sua imagem de perfil?',
+    },
+  },
   getHelp: {
     title: 'Obter ajuda',
   },
@@ -601,6 +628,8 @@ export default {
   agents: {
     title: 'Agentes',
     all_agents: 'Todos os agentes',
+    agent_avatar: 'Avatar do agente',
+    user_avatar: 'Avatar do usuário',
     empty_state_title_all: 'Nenhum agente disponível',
     empty_state_desc_all: 'Atualmente, não há agentes para exibir aqui.',
     titles: {
@@ -722,6 +751,10 @@ export default {
       form_title: 'Erro no formulário',
       form_message: 'Corrija os erros destacados no formulário.',
       invalid_agent: 'Ops! Algo deu errado. O agente que você está tentando excluir parece não existir.',
+      upload_success_title: 'Imagem do agente carregada com sucesso',
+      upload_success_description: 'A imagem do agente foi carregada com sucesso.',
+      upload_error_title: 'Erro ao carregar imagem do agente',
+      upload_error_description: 'Ocorreu um erro ao carregar a imagem do agente. Por favor, tente novamente.',
     },
     rules: {
       name: {

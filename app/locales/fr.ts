@@ -115,6 +115,33 @@ export default {
     signout_text: 'Êtes-vous sûr de vouloir vous déconnecter ?',
     profile_settings: 'Paramètres du profil',
   },
+  profile: {
+    change_picture: {
+      title: 'Changer la photo',
+      delete_title: 'Supprimer la photo',
+      description: 'Téléchargez une nouvelle photo de profil',
+      description_link: 'ou glissez et déposez',
+      upload: 'Télécharger',
+      cancel: 'Annuler',
+    },
+    notifications: {
+      error_file_type_title: 'Type de fichier non valide',
+      error_file_type_description: 'Veuillez télécharger un fichier JPEG ou PNG.',
+      error_file_size_title: 'Fichier trop volumineux',
+      error_file_size_description: 'La taille du fichier ne doit pas dépasser 5MB.',
+      import: {
+        error_title: 'Erreur',
+        error_description: 'Une erreur s\'est produite lors du téléchargement de la photo de profil. Veuillez réessayer.',
+        success_title: 'Succès',
+        success_description: 'La photo de profil a été téléchargée avec succès.',
+        success_delete_description: 'La photo de profil a été supprimée avec succès.',
+      },
+    },
+    delete_picture: {
+      title: 'Supprimer la photo',
+      description: 'Êtes-vous sûr de vouloir supprimer votre photo de profil ?',
+    },
+  },
   getHelp: {
     title: 'Obtenir de l\'aide',
   },
@@ -599,6 +626,8 @@ export default {
   agents: {
     title: 'Agents',
     all_agents: 'Tous les agents',
+    agent_avatar: 'Avatar de l’agent',
+    user_avatar: 'Avatar de l’utilisateur',
     empty_state_title_all: 'Aucun agent disponible',
     empty_state_desc_all: 'Il n\'y a actuellement aucun agent à afficher ici.',
     titles: {
@@ -720,6 +749,10 @@ export default {
       form_title: 'Erreur de formulaire',
       form_message: 'Veuillez corriger les erreurs dans le formulaire.',
       invalid_agent: 'Oups ! Quelque chose a mal tourné. L’agent que vous essayez de supprimer ne semble pas exister.',
+      upload_success_title: 'Image de l’agent téléchargée avec succès',
+      upload_success_description: 'L\'image de l\'agent a été téléchargée avec succès.',
+      upload_error_title: 'Erreur de téléchargement de l’image de l’agent',
+      upload_error_description: 'Une erreur s\'est produite lors du téléchargement de l\'image de l\'agent. Veuillez réessayer.',
     },
     rules: {
       name: {
@@ -1093,6 +1126,10 @@ export default {
         success_title: 'Importation réussie',
         success_description: 'Les utilisateurs ont été importés avec succès.',
       },
+      upload_success_title: 'Image de profil téléchargée avec succès',
+      upload_success_description: 'L\'image de profil a été téléchargée avec succès.',
+      upload_error_title: 'Erreur de téléchargement de l\'image de profil',
+      upload_error_description: 'Une erreur s\'est produite lors du téléchargement de l\'image de profil. Veuillez réessayer.',
     },
     roles: {
       admin_label: 'Administrateur',

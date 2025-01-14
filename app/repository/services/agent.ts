@@ -290,4 +290,48 @@ export default class AgentService extends FetchFactory {
       })
     }
   }
+
+  /**
+   * Deletes an agent avatar from the API
+   * @param id The ID of the agent to delete
+   * @returns Void
+   * @throws Will throw an error if request fails
+   */
+  async DeleteAgentAvatar(agentId: string): Promise<void> {
+    try {
+      await this.$fetch<void>(`${this.adminEndpoint}/${agentId}/avatars`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete agent avatar with id ${agentId}`,
+      })
+    }
+  }
+  /**
+   * Updates an agent avatar from the API
+   * @param id The ID of the agent to update
+   * @param avatar The updated avatar for the agent
+   * @returns A promise that resolves to Agent object
+   * @throws Will throw an error if request fails
+   */
+
+  async UpdateAgentAvatar(agentId: string, avatar: File): Promise<void> {
+    try {
+      return await this.$fetch<void>(`${this.adminEndpoint}/${agentId}/avatars`, {
+        method: 'POST',
+        body: avatar,
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to update agent avatar with code ${error?.statusCode}`,
+      })
+    }
+  }
 }

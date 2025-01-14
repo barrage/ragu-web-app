@@ -114,6 +114,33 @@ export default {
     signout_text: 'Sei sicuro di voler procedere con la disconnessione?',
     profile_settings: 'Impostazioni del profilo',
   },
+  profile: {
+    change_picture: {
+      title: 'Cambia immagine',
+      delete_title: 'Elimina immagine',
+      description: 'Carica una nuova immagine del profilo',
+      description_link: 'o trascina e rilascia',
+      upload: 'Carica',
+      cancel: 'Annulla',
+    },
+    notifications: {
+      error_file_type_title: 'Tipo di file non valido',
+      error_file_type_description: 'Carica un file JPEG o PNG.',
+      error_file_size_title: 'File troppo grande',
+      error_file_size_description: 'La dimensione del file non deve superare i 5MB.',
+      import: {
+        error_title: 'Errore',
+        error_description: 'Si è verificato un errore durante il caricamento dell\'immagine del profilo. Riprova.',
+        success_title: 'Successo',
+        success_description: 'L\'immagine del profilo è stata caricata con successo.',
+        success_delete_description: 'L\'immagine del profilo è stata eliminata con successo.',
+      },
+    },
+    delete_picture: {
+      title: 'Elimina immagine',
+      description: 'Sei sicuro di voler eliminare la tua immagine del profilo?',
+    },
+  },
   getHelp: {
     title: 'Richiedi aiuto',
   },
@@ -598,6 +625,8 @@ export default {
   agents: {
     title: 'Agenti',
     all_agents: 'Tutti gli agenti',
+    agent_avatar: 'Avatar agente',
+    user_avatar: 'Avatar utente',
     empty_state_title_all: 'Nessun agente disponibile',
     empty_state_desc_all: 'Attualmente non ci sono agenti da visualizzare qui.',
     titles: {
@@ -719,6 +748,10 @@ export default {
       form_title: 'Errore nel modulo',
       form_message: 'Correggi gli errori evidenziati nel modulo.',
       invalid_agent: 'Oops! Qualcosa è andato storto. L’agente che stai tentando di eliminare sembra non esistere.',
+      upload_success_title: 'Immagine agente caricata con successo',
+      upload_success_description: 'L\'immagine dell\'agente è stata caricata con successo.',
+      upload_error_title: 'Errore durante il caricamento dell\'immagine dell\'agente',
+      upload_error_description: 'Si è verificato un errore durante il caricamento dell\'immagine dell\'agente. Riprova.',
     },
     rules: {
       name: {
@@ -1090,6 +1123,10 @@ export default {
         success_title: 'Importazione riuscita',
         success_description: 'Gli utenti sono stati importati con successo.',
       },
+      upload_success_title: 'Immagine del profilo caricata con successo',
+      upload_success_description: 'L\'immagine del profilo è stata caricata con successo.',
+      upload_error_title: 'Errore durante il caricamento dell\'immagine del profilo',
+      upload_error_description: 'Si è verificato un errore durante il caricamento dell\'immagine del profilo. Riprova.',
     },
     roles: {
       admin_label: 'Amministratore',

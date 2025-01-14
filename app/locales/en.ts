@@ -114,6 +114,33 @@ export default {
     signout_text: 'Are you sure you want to proceed with signing out?',
     profile_settings: 'Profile Settings',
   },
+  profile: {
+    change_picture: {
+      title: 'Change picture',
+      delete_title: 'Delete picture',
+      description: 'Upload a new profile picture',
+      description_link: 'or drag and drop',
+      upload: 'Upload',
+      cancel: 'Cancel',
+    },
+    notifications: {
+      error_file_type_title: 'Invalid file type',
+      error_file_type_description: 'Please upload a JPEG or PNG file.',
+      error_file_size_title: 'File too large',
+      error_file_size_description: 'The file size should not exceed 5MB.',
+      import: {
+        error_title: 'Error',
+        error_description: 'An error occurred while uploading the profile picture. Please try again.',
+        success_title: 'Success',
+        success_description: 'The profile picture has been successfully uploaded.',
+        success_delete_description: 'The profile picture has been successfully deleted.',
+      },
+    },
+    delete_picture: {
+      title: 'Delete picture',
+      description: 'Are you sure you want to delete your profile picture?',
+    },
+  },
   getHelp: {
     title: 'Get help',
   },
@@ -632,8 +659,8 @@ export default {
         missing_fields: 'Some fields are missing',
         unknown: 'Unknown error',
       },
-
     },
+
     edit_user: {
       title: 'Edit User',
       description: 'Make changes to the user\'s details below.',
@@ -717,6 +744,10 @@ export default {
         success_title: 'Import Successful',
         success_description: 'CSV for users have been successfully imported.',
       },
+      upload_success_title: 'Profile picture uploaded successfully',
+      upload_success_description: 'The profile picture has been successfully uploaded.',
+      upload_error_title: 'Error uploading profile picture',
+      upload_error_description: 'An error occurred while uploading the profile picture. Please try again.',
     },
     user_card: {
       role: 'Role',
@@ -778,6 +809,14 @@ export default {
       empty_data: 'No WhatsApp numbers available',
       empty_data_description: 'Currently, there are no WhatApp numbers to display here.',
       cancel: 'Cancel',
+    },
+  },
+  adminUsers: {
+    notifications: {
+      upload_success_title: 'Profile picture uploaded successfully',
+      upload_success_description: 'The profile picture has been successfully uploaded.',
+      upload_error_title: 'Error uploading profile picture',
+      upload_error_description: 'An error occurred while uploading the profile picture. Please try again.',
     },
   },
   dashboard: {
@@ -869,6 +908,8 @@ export default {
     all_agents: 'All Agents',
     empty_state_title_all: 'No agents available',
     empty_state_desc_all: 'Currently, there are no agents to display here.',
+    agent_avatar: 'Agent Avatar',
+    user_avatar: 'User Avatar',
     titles: {
       mainTitle: 'Agents',
       details: 'Agent Details',
@@ -990,6 +1031,10 @@ export default {
       form_title: 'Form Error',
       form_message: 'Please fix the highlighted errors in the form.',
       invalid_agent: 'Oops! Something went wrong. The agent you are trying to delete doesn’t seem to exist.',
+      upload_success_title: 'Agent picture uploaded successfully',
+      upload_success_description: 'The agent picture has been successfully uploaded.',
+      upload_error_title: 'Error uploading agent picture',
+      upload_error_description: 'An error occurred while uploading the agent picture. Please try again.',
     },
     rules: {
       name: {

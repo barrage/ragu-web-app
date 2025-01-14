@@ -115,6 +115,33 @@ export default {
     signout_text: '¿Estás seguro de que deseas proceder con cerrar sesión?',
     profile_settings: 'Configuración de perfil',
   },
+  profile: {
+    change_picture: {
+      title: 'Cambiar imagen',
+      delete_title: 'Eliminar imagen',
+      description: 'Sube una nueva imagen de perfil',
+      description_link: 'o arrastra y suelta',
+      upload: 'Subir',
+      cancel: 'Cancelar',
+    },
+    notifications: {
+      error_file_type_title: 'Tipo de archivo no válido',
+      error_file_type_description: 'Por favor, sube un archivo JPEG o PNG.',
+      error_file_size_title: 'Archivo demasiado grande',
+      error_file_size_description: 'El tamaño del archivo no debe superar los 5MB.',
+      import: {
+        error_title: 'Error',
+        error_description: 'Ocurrió un error al subir la imagen de perfil. Por favor, inténtalo de nuevo.',
+        success_title: 'Éxito',
+        success_description: 'La imagen de perfil se ha subido correctamente.',
+        success_delete_description: 'La imagen de perfil se ha eliminado correctamente.',
+      },
+    },
+    delete_picture: {
+      title: 'Eliminar imagen',
+      description: '¿Estás seguro de que deseas eliminar tu imagen de perfil?',
+    },
+  },
   getHelp: {
     title: 'Obtener ayuda',
   },
@@ -600,6 +627,8 @@ export default {
   agents: {
     title: 'Agentes',
     all_agents: 'Todos los agentes',
+    agent_avatar: 'Avatar del agente',
+    user_avatar: 'Avatar del usuario',
     empty_state_title_all: 'No hay agentes disponibles',
     empty_state_desc_all: 'Actualmente no hay agentes para mostrar aquí.',
     titles: {
@@ -721,6 +750,10 @@ export default {
       form_title: 'Error en el formulario',
       form_message: 'Por favor, corrija los errores resaltados en el formulario.',
       invalid_agent: '¡Vaya! Algo salió mal. Parece que el agente que intentas eliminar no existe.',
+      upload_success_title: 'Imagen del agente cargada correctamente',
+      upload_success_description: 'La imagen del agente se ha cargado correctamente.',
+      upload_error_title: 'Error al cargar la imagen del agente',
+      upload_error_description: 'Ocurrió un error al cargar la imagen del agente. Por favor, inténtelo de nuevo.',
     },
     rules: {
       name: {
@@ -1094,6 +1127,10 @@ export default {
         success_title: 'Importación exitosa',
         success_description: 'Los usuarios se importaron correctamente.',
       },
+      upload_success_title: 'Imagen de perfil cargada correctamente',
+      upload_success_description: 'La imagen de perfil se ha cargado correctamente.',
+      upload_error_title: 'Error al cargar la imagen de perfil',
+      upload_error_description: 'Ocurrió un error al cargar la imagen de perfil. Por favor, inténtelo de nuevo.',
     },
     roles: {
       admin_label: 'Administrador',
