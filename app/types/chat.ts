@@ -9,7 +9,7 @@ export interface Message {
   content: string
   chatId: string
   responseTo: string | null
-  evaluation: string | null
+  evaluation: boolean | null
   createdAt: string
   updatedAt: string
 }

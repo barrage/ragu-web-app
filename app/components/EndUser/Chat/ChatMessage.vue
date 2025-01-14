@@ -5,7 +5,9 @@ import BrainIcon from '~/assets/icons/svg/brain.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import MicrophoneIcon from '~/assets/icons/svg/microphone.svg'
 import LikeIcon from '~/assets/icons/svg/like.svg'
+import LikeFilledIcon from '~/assets/icons/svg/like-filled.svg'
 import DislikeIcon from '~/assets/icons/svg/dislike.svg'
+import DislikeFilledIcon from '~/assets/icons/svg/dislike-filled.svg'
 import CopyIcon from '~/assets/icons/svg/copy.svg'
 import StopIcon from '~/assets/icons/svg/stop.svg'
 import type { Message } from '~/types/chat'
@@ -184,9 +186,73 @@ const copyItem = () => {
   }
 }
 
-const handleLike = () => {}
+const optimisticEvaluationUpdate = (messageId: string, status: boolean) => {
+  if (!chatStore || !chatStore.messages) {
+    console.error('Chat store or messages array is undefined.')
+    return
+  }
 
-const handleDislike = () => {}
+  const messageIndex = chatStore.messages.findIndex(message => message.id === messageId)
+
+  if (messageIndex !== -1 && chatStore.messages[messageIndex]) {
+    const message = chatStore.messages[messageIndex]
+
+    if (message) {
+      message.evaluation = status
+    }
+    else {
+      console.error(`Message with ID ${messageId} is undefined.`)
+    }
+  }
+  else {
+    console.error(`Message with ID ${messageId} not found.`)
+  }
+}
+
+const { $api } = useNuxtApp()
+
+const evaluateMessage = async (status: boolean) => {
+  const messageId = props.message?.id
+  const chatId = props.message?.chatId
+
+  if (!messageId || !chatId) {
+    ElNotification({
+      title: 'Error Evaluating Message',
+      message: 'Message ID or Chat ID is missing.',
+      type: 'error',
+      customClass: 'error',
+      duration: 2500,
+    })
+    return
+  }
+
+  try {
+    await $api.chat.PatchEvaluateChatMessage(chatId, messageId, status)
+
+    optimisticEvaluationUpdate(messageId, status)
+  }
+  catch (err) {
+    optimisticEvaluationUpdate(messageId, status)
+
+    ElNotification({
+      title: 'Error Evaluating Message',
+      message: 'Something went wrong. Please try again later.',
+      type: 'error',
+      customClass: 'error',
+      duration: 2500,
+    })
+
+    console.error(err)
+  }
+}
+
+const handleLike = () => {
+  evaluateMessage(true)
+}
+
+const handleDislike = () => {
+  evaluateMessage(false)
+}
 
 const highlightCodeBlocks = () => {
   const codeBlocks = document.querySelectorAll('pre code:not([data-highlighted])')
@@ -295,20 +361,43 @@ watchEffect(() => {
       </LlmTooltip>
       <LlmTooltip :content="$t('chat.quick_action_tooltip.good_answer')">
         <div
+          v-if="message?.evaluation === null || message?.evaluation === false"
           tabindex="0"
           @click="handleLike"
           @keyup.enter="handleLike"
         >
           <LikeIcon size="18px" />
         </div>
+        <div v-else>
+          <div
+            tabindex="0"
+            @click="handleLike"
+            @keyup.enter="handleLike"
+          >
+            <LikeFilledIcon
+              v-motion-pop-visible-once
+              size="18px"
+            />
+          </div>
+        </div>
       </LlmTooltip>
       <LlmTooltip :content="$t('chat.quick_action_tooltip.bad_answer')">
         <div
+          v-if="message?.evaluation === null || message?.evaluation === true"
           tabindex="0"
           @click="handleDislike"
           @keyup.enter="handleDislike"
         >
           <DislikeIcon size="18px" />
+        </div>
+        <div v-else>
+          <div
+            tabindex="0"
+            @click="handleLike"
+            @keyup.enter="handleLike"
+          >
+            <DislikeFilledIcon v-motion-pop-visible-once size="18px" />
+          </div>
         </div>
       </LlmTooltip>
     </div>
