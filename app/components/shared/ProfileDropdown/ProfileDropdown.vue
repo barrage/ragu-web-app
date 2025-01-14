@@ -299,7 +299,7 @@ function switchRoute() {
     margin: 0;
     font-size: var(--font-size-fluid-2);
     line-height: normal;
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
   }
   & .user-mail {
     margin: 0;

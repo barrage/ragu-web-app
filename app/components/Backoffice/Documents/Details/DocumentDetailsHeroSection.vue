@@ -120,7 +120,7 @@ async function handleDocumentDeleted() {
     gap: 2rem;
   }
   & .documentname {
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
     line-height: normal;
   }
 }

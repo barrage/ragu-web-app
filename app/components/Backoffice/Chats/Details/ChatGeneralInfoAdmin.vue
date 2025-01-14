@@ -145,7 +145,7 @@ const chatData = computed(() => {
     grid-column: span 12;
 
     & .chat-details-title {
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       color: var(--color-primary-800);
       font-size: var(--font-size-fluid-5);
     }
@@ -214,7 +214,7 @@ const chatData = computed(() => {
     margin: 0;
     font-size: var(--font-size-fluid-2);
     line-height: normal;
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-primary-900);
   }
   & .user-mail {

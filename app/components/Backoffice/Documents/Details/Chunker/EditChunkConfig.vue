@@ -110,7 +110,7 @@ const selectedButtonType = (name: string) => {
 
   & .edit-title {
     color: var(--color-primary-100);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
   }
 
   & .select-chunker-type-wrapper {

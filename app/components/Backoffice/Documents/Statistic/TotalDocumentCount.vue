@@ -47,7 +47,7 @@ const { t } = useI18n()
 
   & h4 {
     color: var(--color-primary-900);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
   }
 }
 .dark {

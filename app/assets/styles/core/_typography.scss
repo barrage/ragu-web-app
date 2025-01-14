@@ -6,8 +6,8 @@
     --font-serif: ui-serif, serif;
     --font-mono: Dank Mono, Operator Mono, Inconsolata, Fira Mono, ui-monospace,
       SF Mono, Monaco, Droid Sans Mono, Source Code Pro, monospace;
-    --font-asap: 'Asap', 'Arial', 'Helvetica', sans-serif;
-    --font-primary: var(--font-asap, var(--font-sans));
+    --font-kanit: 'Kanit';
+    --font-primary: var(--font-kanit, var(--font-sans));
 
     // Font weights
     --font-weight-thin: 100;
@@ -77,24 +77,29 @@
 
   // Fonts
   @font-face {
-    font-family: 'Asap';
-    src: url('../fonts/Asap/Asap-Regular.ttf') format('ttf');
+    font-family: 'Kanit';
+    src: url('/fonts/Kanit/Kanit-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
-
   @font-face {
-    font-family: 'Asap';
-    src: url('../fonts/Asap/Asap-Medium.ttf') format('ttf');
+    font-family: 'Kanit';
+    src: url('/fonts/Kanit/Kanit-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
   }
-
   @font-face {
-    font-family: 'Asap';
-    src: url('../fonts/Asap/Asap-Bold.ttf') format('ttf');
+    font-family: 'Kanit';
+    src: url('/fonts/Kanit/Kanit-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Kanit';
+    src: url('/fonts/Kanit/Kanit-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;

@@ -44,11 +44,7 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/styles/styles.scss'],
   elementPlus: {
-
     importStyle: false,
-    /**
-     * Changes the Element Plus namespace/prefix to be `project-name` instead of the default `el`
-     */
     namespace: 'barrage',
   },
   vite: {

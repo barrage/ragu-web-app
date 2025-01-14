@@ -17,10 +17,10 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
   <section class="dashboard-count-section grid">
     <div class="section-heading-wrapper">
       <div v-motion-pop-visible-once class="title-wrapper">
-        <AgentsIcon size="42px" />
-        <h5 class="section-title">
+        <AgentsIcon size="36px" />
+        <h4 class="section-title">
           {{ t('agents.title') }}
-        </h5>
+        </h4>
       </div>
 
       <LlmLink to="/admin/agents" type="buttonPrimary">
@@ -118,7 +118,7 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
       gap: 0.5rem;
 
       & .section-title {
-        font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-semibold);
         color: var(--color-primary-800);
       }
     }
@@ -132,7 +132,7 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
 
     & .total-agents-count {
       color: var(--color-primary-800);
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       font-size: var(--font-size-fluid-5);
       display: flex;
       justify-content: center;
@@ -149,7 +149,7 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
     grid-row: span 2;
 
     & .agent-usage-title {
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       color: var(--color-primary-700);
       font-size: var(--font-size-fluid-4);
     }

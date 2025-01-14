@@ -181,7 +181,7 @@ const handleUserDeactivated = () => {
     gap: 2rem;
   }
   & .username {
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
     line-height: normal;
     color: var(--color-primary-900);
   }

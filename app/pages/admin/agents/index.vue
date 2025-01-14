@@ -21,7 +21,7 @@ definePageMeta({
           :description="t('agents.titles.description')"
         >
           <template #icon>
-            <AgentsIcon size="58px" />
+            <AgentsIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>

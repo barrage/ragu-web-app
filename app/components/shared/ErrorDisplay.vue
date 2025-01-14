@@ -54,7 +54,7 @@ const { t } = useI18n()
       font-size: var(--font-size-fluid-10);
       line-height: normal;
       color: var(--color-primary-600);
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
     }
 
     & .title {

@@ -46,7 +46,7 @@ function handleSortChange(sortingValues: SortingValues) {
           :description="$t('whatsapp_chat.admin.description')"
         >
           <template #icon>
-            <WhatsAppChatsIcon size="58px" />
+            <WhatsAppChatsIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>

@@ -195,7 +195,7 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
   & h5 {
     transition: all 0.3s ease-out;
     color: var(--color-primary-900);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-fluid-5);
     white-space: nowrap;
     overflow: hidden;

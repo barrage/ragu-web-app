@@ -179,7 +179,7 @@ const editClick = (): void => {
           margin: 0;
           font-size: var(--font-size-fluid-2);
           line-height: normal;
-          font-weight: var(--font-weight-bold);
+          font-weight: var(--font-weight-semibold);
           color: var(--color-primary-900);
         }
         & .agent-provider {

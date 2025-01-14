@@ -133,7 +133,7 @@ const handleCollectionDeleted = () => {
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-semibold);
       font-size: var(--font-size-fluid-5);
       color: var(--color-primary-900);
     }

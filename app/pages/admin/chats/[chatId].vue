@@ -57,7 +57,7 @@ const isGetChatLoading = computed(() => {
           :description="t('chat.admin.chat_details.description')"
         >
           <template #icon>
-            <ChatIcon size="58px" />
+            <ChatIcon size="48px" />
           </template>
         </AdminPageTitleContainer>
       </template>
