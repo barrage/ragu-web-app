@@ -141,6 +141,7 @@ watch(
   <DocumentsListActions
     :selected-sort-by="sort.sortBy"
     :selected-sort-direction="sort.sortOrder"
+    selected-search=""
     @sort-change="handleSortChange"
   />
 

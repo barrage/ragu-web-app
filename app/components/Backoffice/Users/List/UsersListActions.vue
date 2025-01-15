@@ -5,10 +5,13 @@ import FilterIcon from '~/assets/icons/svg/filter.svg'
 const props = defineProps<{
   selectedSortBy: string
   selectedSortDirection: 'asc' | 'desc'
+  selectedSearch: string | null
 }>()
 
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
+  /*  (event: 'filterApplied', filter: UsersListFilterForm): void */
+  (event: 'searchChange', search: string): void
 }>()
 
 const { t } = useI18n()
@@ -23,10 +26,20 @@ const sortOptions = computed(() => [
 const updateSort = (sortingValues: SortingValues) => {
   emits('sortChange', sortingValues)
 }
-const drawer = ref(false)
+/* Filter */
+const usersFilterOpen = ref(false)
 
 const toggleFilterDrawer = () => {
-  drawer.value = !drawer.value
+  usersFilterOpen.value = !usersFilterOpen.value
+}
+
+/* const updateFilter = (filter: UsersListFilterForm) => {
+  emits('filterApplied', filter)
+} */
+
+/* Search */
+const updateSearch = (search: string) => {
+  emits('searchChange', search)
 }
 </script>
 
@@ -41,6 +54,12 @@ const toggleFilterDrawer = () => {
       :delay="300"
       class="actions-wrapper"
     >
+      <SearchInput
+        :placeholder="t('users.placeholders.search_users')"
+        :initial-value="props.selectedSearch"
+        @update-search="updateSearch"
+      />
+
       <SortSelect
         :initial-sort-by="props.selectedSortBy"
         :initial-sort-direction="props.selectedSortDirection"
@@ -58,7 +77,7 @@ const toggleFilterDrawer = () => {
     </div>
   </div>
   <el-drawer
-    v-model="drawer"
+    v-model="usersFilterOpen"
     direction="rtl"
     title="Filter"
   />
@@ -70,6 +89,7 @@ const toggleFilterDrawer = () => {
   justify-content: space-between;
   align-items: center;
   padding-inline: 1rem;
+  flex-wrap: wrap;
   margin-bottom: 0.7rem;
 
   & .user-list-title {

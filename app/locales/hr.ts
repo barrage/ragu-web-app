@@ -138,6 +138,10 @@ export default {
     inactive_agent: 'Ovaj agent više nije aktivan. Molimo odaberite aktivnog agenta za započinjanje novog razgovora.',
     copy_title: 'Kopirano',
     copy_message: 'Kopirano u međuspremnik',
+    placeholders: {
+      search_chats: 'Pretraži razgovore',
+    },
+
     quick_action_tooltip: {
       read_aloud: 'Čitaj naglas',
       stop_reading: 'Zaustavi čitanje',
@@ -329,6 +333,7 @@ export default {
   },
   documents: {
     title: 'Dokumenti',
+    all_documents: 'Svi dokumenti',
     document_details: 'Detalji Dokumenta',
     document_search: 'Pretraži dokumente...',
     description: 'Upravljajte i organizirajte sve dokumente koji pomažu AI-ju u učenju.',
@@ -348,6 +353,9 @@ export default {
     sync_docs: 'Sinkroniziraj dokumente',
     empty_state_title: 'Nema dostupnih dokumenata',
     empty_state_desc: 'Trenutno nema dokumenata za prikazivanje ovdje.',
+    placeholders: {
+      search_documents: 'Pretraži dokumente',
+    },
     tooltip: {
       delete_document: 'Izbriši svoj dokument',
       manage_document: 'Upravljaj svojim dokumentom',
@@ -529,6 +537,9 @@ export default {
     empty_state: {
       title: 'Nema pronađenih korisnika',
       description: 'Vaša pretraga nije dala rezultate. Molimo provjerite filtere ili pokušajte s drugačijim kriterijima pretrage.',
+    },
+    placeholders: {
+      search_users: 'Pretraži korisnike',
     },
     delete_user: {
       title: 'Izbriši Korisnika',

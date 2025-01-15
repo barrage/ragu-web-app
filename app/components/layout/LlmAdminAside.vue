@@ -99,7 +99,7 @@ const menuLists = computed<MenuList[]>(() => {
         </ElButton>
       </div>
 
-      <div class="horizontal-divider" />
+      <el-divider class="is-weak" />
 
       <div class="scrollable-container">
         <div
@@ -108,7 +108,7 @@ const menuLists = computed<MenuList[]>(() => {
           class="menu-list"
         >
           <template v-if="list.show">
-            <div v-if="listIndex" class="horizontal-divider list" />
+            <el-divider v-if="listIndex" class="list is-weak" />
             <LlmTooltip
               v-for="item in list.list"
               :key="item.link"
@@ -177,11 +177,8 @@ aside {
     color: var(--color-primary-900);
   }
 
-  .horizontal-divider {
-    background-color: var(--color-primary-300);
-    &.list {
-      margin-top: 12px;
-    }
+  & .list {
+    margin-top: 12px;
   }
 
   .navigation-container {
@@ -224,6 +221,10 @@ aside {
 .sidebar-collapsed {
   & .toggle-btn {
     transform: scaleX(-1);
+  }
+  & .menu-item {
+    margin: 0;
+    padding-inline-start: 0;
   }
 }
 

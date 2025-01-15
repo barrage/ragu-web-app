@@ -2,17 +2,20 @@
 import type { SortingValues } from '~/types/sort'
 import FilterIcon from '~/assets/icons/svg/filter.svg'
 
-// EMITS
+const props = defineProps<{
+  selectedSortBy: string
+  selectedSortDirection: 'asc' | 'desc'
+  /*  filterForm: CollectionListFilterForm */
+  selectedSearch: string | null
+}>()
 
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
+  /*   (event: 'filterApplied', filter: CollectionListFilterForm): void */
+  (event: 'searchChange', search: string): void
 }>()
 
-// CONSTANTS
-
 const { t } = useI18n()
-
-// COMPUTEDS
 
 const sortOptions = computed(() => [
   { name: t('collections.labels.created_at'), value: 'created_at' },
@@ -26,10 +29,20 @@ const updateSort = (sortingValues: SortingValues) => {
   emits('sortChange', sortingValues)
 }
 
-const drawer = ref(false)
+/* Filter */
+const collectionsListFilterOpen = ref(false)
 
 const toggleFilterDrawer = () => {
-  drawer.value = !drawer.value
+  collectionsListFilterOpen.value = !collectionsListFilterOpen.value
+}
+
+/* const updateFilter = (filter: CollectionListFilterForm) => {
+  emits('filterApplied', filter)
+} */
+
+/* Search */
+const updateSearch = (search: string) => {
+  emits('searchChange', search)
 }
 </script>
 
@@ -39,7 +52,19 @@ const toggleFilterDrawer = () => {
       {{ $t('collections.all_collections') }}
     </p>
     <div class="actions-wrapper">
-      <SortSelect :options="sortOptions" @sort-updated="updateSort" />
+      <SearchInput
+        :placeholder="t('collections.placeholders.search')"
+        :initial-value="props.selectedSearch"
+        @update-search="updateSearch"
+      />
+
+      <SortSelect
+        :initial-sort-by="props.selectedSortBy"
+        :initial-sort-direction="props.selectedSortDirection"
+        data-testid="bo-collections-list-sort"
+        :options="sortOptions"
+        @sort-updated="updateSort"
+      />
 
       <el-button
         size="small"
@@ -51,7 +76,7 @@ const toggleFilterDrawer = () => {
     </div>
   </div>
   <el-drawer
-    v-model="drawer"
+    v-model="collectionsListFilterOpen"
     direction="rtl"
     title="Filter"
   />

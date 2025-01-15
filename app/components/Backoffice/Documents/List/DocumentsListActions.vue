@@ -5,10 +5,14 @@ import FilterIcon from '~/assets/icons/svg/filter.svg'
 const props = defineProps<{
   selectedSortBy: string
   selectedSortDirection: 'asc' | 'desc'
+  /*  filterForm: DocumentListFilterForm */
+  selectedSearch: string | null
 }>()
 
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
+  /*   (event: 'filterApplied', filter: DocumentListFilterForm): void */
+  (event: 'searchChange', search: string): void
 }>()
 
 const { t } = useI18n()
@@ -22,23 +26,38 @@ const updateSort = (sortingValues: SortingValues) => {
   emits('sortChange', sortingValues)
 }
 
-const drawer = ref(false)
+/* Filter */
+const documentsFilterOpen = ref(false)
 
 const toggleFilterDrawer = () => {
-  drawer.value = !drawer.value
+  documentsFilterOpen.value = !documentsFilterOpen.value
+}
+
+/* const updateFilter = (filter: DocumentListFilterForm) => {
+  emits('filterApplied', filter)
+} */
+
+/* Search */
+const updateSearch = (search: string) => {
+  emits('searchChange', search)
 }
 </script>
 
 <template>
   <div class="documents-actions-container">
     <p class="documents-list-title">
-      {{ $t('documents.title') }}
+      {{ $t('documents.all_documents') }}
     </p>
     <div
       v-motion-pop
       :delay="300"
       class="actions-wrapper"
     >
+      <SearchInput
+        :placeholder="t('documents.placeholders.search_documents')"
+        :initial-value="props.selectedSearch"
+        @update-search="updateSearch"
+      />
       <SortSelect
         :initial-sort-by="props.selectedSortBy"
         :initial-sort-direction="props.selectedSortDirection"
@@ -55,7 +74,7 @@ const toggleFilterDrawer = () => {
     </div>
   </div>
   <el-drawer
-    v-model="drawer"
+    v-model="documentsFilterOpen"
     direction="rtl"
     title="Filter"
   />
@@ -66,6 +85,7 @@ const toggleFilterDrawer = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
   margin-top: 1rem;
 

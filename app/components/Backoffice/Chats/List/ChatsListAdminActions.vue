@@ -5,10 +5,12 @@ import FilterIcon from '~/assets/icons/svg/filter.svg'
 const props = defineProps<{
   selectedSortBy: string
   selectedSortDirection: 'asc' | 'desc'
+  selectedSearch: string | null
 }>()
 
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
+  (event: 'searchChange', search: string): void
 }>()
 
 const { t } = useI18n()
@@ -28,6 +30,10 @@ const drawer = ref(false)
 const toggleFilterDrawer = () => {
   drawer.value = !drawer.value
 }
+/* Search */
+const updateSearch = (search: string) => {
+  emits('searchChange', search)
+}
 </script>
 
 <template>
@@ -40,6 +46,12 @@ const toggleFilterDrawer = () => {
       :delay="300"
       class="actions-wrapper"
     >
+      <SearchInput
+        :placeholder="t('chat.placeholders.search_chats')"
+        :initial-value="props.selectedSearch"
+        @update-search="updateSearch"
+      />
+
       <SortSelect
         :initial-sort-by="props.selectedSortBy"
         :initial-sort-direction="props.selectedSortDirection"
@@ -68,6 +80,7 @@ const toggleFilterDrawer = () => {
   justify-content: space-between;
   align-items: center;
   padding-inline: 1rem;
+  flex-wrap: wrap;
   margin-bottom: 0.7rem;
 
   & .chats-list-title {
