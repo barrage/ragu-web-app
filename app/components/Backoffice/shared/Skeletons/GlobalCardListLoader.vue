@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const props = defineProps<{
   skeletonCount: number
-  type: 'user' | 'chat' | 'agent' | 'collection' | 'document'
+  type: 'user' | 'chat' | 'agent' | 'whatsAppAgent' | 'collection' | 'document'
 }>()
 
 const skeletonCardData = computed(() => {
@@ -10,7 +10,6 @@ const skeletonCardData = computed(() => {
       numberOfLabelDescriptions: 3,
       numberOfActions: 4,
       hasProfileDescription: true,
-
     }
   }
   if (props.type === 'chat') {
@@ -24,6 +23,15 @@ const skeletonCardData = computed(() => {
     return {
       numberOfLabelDescriptions: 4,
       numberOfActions: 3,
+      hasProfileDescription: true,
+      gridColumns: 7,
+      mergeButtons: true,
+    }
+  }
+  if (props.type === 'whatsAppAgent') {
+    return {
+      numberOfLabelDescriptions: 4,
+      numberOfActions: 4,
       hasProfileDescription: true,
       gridColumns: 7,
     }
