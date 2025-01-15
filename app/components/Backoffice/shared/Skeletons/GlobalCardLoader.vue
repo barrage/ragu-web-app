@@ -4,11 +4,13 @@ const props = withDefaults(defineProps<{
   numberOfActions?: number
   hasProfileDescription?: boolean
   gridColumns?: number
+  mergeButtons?: boolean
 }>(), {
   numberOfLabelDescriptions: 3,
   numberOfActions: 3,
   hasProfileDescription: true,
   gridColumns: 6,
+  mergeButtons: false,
 })
 
 const gridTemplateColumns = computed(() => `repeat(${props.gridColumns}, 1fr)`)
@@ -34,7 +36,7 @@ const gridTemplateColumns = computed(() => `repeat(${props.gridColumns}, 1fr)`)
       </template>
       <div class="skeleton-actions">
         <template v-for="n in props.numberOfActions" :key="n">
-          <div class="skeleton-button" :class="{ 'last-button': n === props.numberOfActions }" />
+          <div class="skeleton-button" :class="{ 'last-button': !props.mergeButtons && n === props.numberOfActions }" />
         </template>
       </div>
     </div>

@@ -131,6 +131,21 @@ const handleRefreshAgent = () => {
       </div>
     </div>
     <div v-if="singleAgent" class="agent-details-actions-wrapper">
+      <LlmTooltip
+        :content="agentData.status === 'Active' ? $t('whatsapp_agents.delete.active_agent_tooltip') : $t('whatsapp_agents.delete.dialog_title')"
+      >
+        <ElButton
+          plain
+          size="small"
+          type="danger"
+          class="delete-action"
+          :disabled="agentData.status === 'Active'"
+          @click="openDialog('delete', singleAgent?.agent)"
+        >
+          <DeleteIcon size="20px" />
+          {{ $t('whatsapp_agents.delete.label') }}
+        </ElButton>
+      </LlmTooltip>
       <ElButton
         v-if="!singleAgent?.agent.active"
         size="small"
@@ -148,20 +163,6 @@ const handleRefreshAgent = () => {
       >
         <EditIcon />  {{ t('agents.buttons.edit') }}
       </ElButton>
-      <LlmTooltip
-        :content="agentData.status === 'Active' ? $t('whatsapp_agents.delete.active_agent_tooltip') : $t('whatsapp_agents.delete.dialog_title')"
-      >
-        <ElButton
-          plain
-          type="danger"
-          class="delete-action"
-          :disabled="agentData.status === 'Active'"
-          @click="openDialog('delete', singleAgent?.agent)"
-        >
-          <DeleteIcon size="20px" />
-          {{ $t('whatsapp_agents.delete.label') }}
-        </ElButton>
-      </LlmTooltip>
     </div>
   </div>
   <div v-if="singleAgent" class="agent-informations-section">
