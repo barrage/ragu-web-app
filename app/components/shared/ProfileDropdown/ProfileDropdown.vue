@@ -107,6 +107,8 @@ function switchRoute() {
 <template>
   <el-dropdown
     ref="dropdownRef"
+    v-motion-slide-top
+    :delay="1500"
     trigger="hover"
     :popper-options="popperOptions"
     @visible-change="handleDropdownVisibleChange"

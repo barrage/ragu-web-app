@@ -45,9 +45,7 @@ import RaguLogo from '~/assets/icons/svg/Ragu_logo_dark.svg'
         class="vertical-divider"
         :delay="1400"
       />
-      <div v-motion-slide-top :delay="1500">
-        <ProfileDropdown />
-      </div>
+      <ProfileDropdown />
     </div>
   </header>
 </template>
