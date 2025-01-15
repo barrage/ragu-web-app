@@ -135,6 +135,9 @@ export default {
     inactive_agent: 'Dieser Agent ist nicht mehr aktiv. Bitte wählen Sie einen aktiven Agenten, um ein neues Gespräch zu beginnen.',
     copy_title: 'Kopiert',
     copy_message: 'In die Zwischenablage kopiert',
+    placeholders: {
+      search_chats: 'Gespräche durchsuchen',
+    },
     empty_state: {
       title: 'Kein Chat verfügbar',
       description: 'Dieser Chat hat derzeit keine zugehörigen Nachrichten.',
@@ -326,6 +329,7 @@ export default {
   },
   documents: {
     title: 'Dokumente',
+    all_documents: 'Alle Dokumente',
     document_details: 'Dokument Details',
     document_search: 'Dokumente suchen...',
     description: 'Verwalten und organisieren Sie alle Dokumente, die der KI beim Lernen helfen.',
@@ -345,6 +349,9 @@ export default {
     sync_docs: 'Dokumente synchronisieren',
     empty_state_title: 'Keine Dokumente verfügbar',
     empty_state_desc: 'Derzeit gibt es keine Dokumente, die hier angezeigt werden können.',
+    placeholders: {
+      search_documents: 'Dokumente durchsuchen',
+    },
     tooltip: {
       delete_document: 'Löschen Sie Ihr Dokument',
       manage_document: 'Verwalten Sie Ihr Dokument',
@@ -906,6 +913,9 @@ export default {
     empty_state: {
       title: 'Keine Benutzer gefunden',
       description: 'Ihre Suche hat keine Ergebnisse geliefert. Bitte überprüfen Sie die Filter oder versuchen Sie es mit anderen Suchkriterien.',
+    },
+    placeholders: {
+      search_users: 'Benutzer durchsuchen',
     },
     delete_user: {
       title: 'Benutzer löschen',

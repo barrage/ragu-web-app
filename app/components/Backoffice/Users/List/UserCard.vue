@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'

@@ -104,6 +104,7 @@ const numberOfFiltersApplied = computed(() => {
 .agents-actions-container {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   padding-inline: 1rem;
   margin-bottom: 0.7rem;

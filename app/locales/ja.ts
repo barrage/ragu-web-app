@@ -133,6 +133,9 @@ export default {
     inactive_agent: 'このエージェントはもうアクティブではありません。新しい会話を始めるには、アクティブなエージェントを選択してください。',
     copy_title: 'コピーしました',
     copy_message: 'クリップボードにコピーしました',
+    placeholders: {
+      search_chats: 'チャットを検索',
+    },
     empty_state: {
       title: '利用可能なチャットはありません',
       description: 'このチャットには現在、関連するメッセージがありません。',
@@ -324,6 +327,7 @@ export default {
   },
   documents: {
     title: 'ドキュメント',
+    all_documents: 'すべてのドキュメント',
     document_details: 'ドキュメントの詳細',
     document_search: 'ドキュメントを検索...',
     description: 'AIの学習を支援するすべてのドキュメントを管理および整理します。',
@@ -343,6 +347,9 @@ export default {
     sync_docs: 'ドキュメントを同期する',
     empty_state_title: '利用可能なドキュメントはありません',
     empty_state_desc: '現在、ここに表示するドキュメントはありません。',
+    placeholders: {
+      search_documents: 'ドキュメントを検索',
+    },
     tooltip: {
       delete_document: 'ドキュメントを削除します',
       manage_document: 'ドキュメントを管理します',
@@ -902,7 +909,9 @@ export default {
       title: 'ユーザーが見つかりません',
       description: '検索結果が見つかりませんでした。フィルターを確認するか、別の検索条件をお試しください。',
     },
-
+    placeholders: {
+      search_users: 'ユーザーを検索',
+    },
     delete_user: {
       title: 'ユーザーを削除',
       description: 'このユーザーを削除してもよろしいですか？この操作は取り消せません。',

@@ -134,6 +134,9 @@ export default {
     inactive_agent: 'This agent is no longer active. Please select an active agent to begin a new conversation.',
     copy_title: 'Copied',
     copy_message: 'Copied to clipboard',
+    placeholders: {
+      search_chats: 'Search chats',
+    },
     quick_action_tooltip: {
       read_aloud: 'Read aloud',
       stop_reading: 'Stop reading',
@@ -325,6 +328,7 @@ export default {
   },
   documents: {
     title: 'Documents',
+    all_documents: 'All documents',
     document_details: 'Document Details',
     document_search: 'Search documents...',
     description: 'Manage and organize all documents that help AI in learning.',
@@ -344,6 +348,9 @@ export default {
     sync_docs: 'Sync docs',
     empty_state_title: 'No documents available',
     empty_state_desc: 'Currently, there are no documents to display here.',
+    placeholders: {
+      search_documents: 'Search documents',
+    },
     tooltip: {
       delete_document: 'Delete your document',
       manage_document: 'Manage your document',
@@ -522,6 +529,9 @@ export default {
     empty_state: {
       title: 'No users found',
       description: 'Your search did not return any results. Please check the filters or try different search criteria.',
+    },
+    placeholders: {
+      search_users: 'Search users',
     },
     delete_user: {
       title: 'Delete User',

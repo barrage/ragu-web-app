@@ -23,30 +23,25 @@ const handleDocumentDeleted = () => {
 </script>
 
 <template>
-  <div class="document-list">
-    <div class="documents-container grid">
-      <DocumentCard
-        v-for="(document, index) in props.documents"
-        :key="document.id"
-        v-motion-fade
-        :delay="(index * 100)"
-        :duration="400"
-        :document="document"
-        @delete-document="openDeleteModal(document)"
-      />
-      <DeleteDocumentDialog
-        v-model="isDeleteDialogVisible"
-        :document="documentToDelete"
-        @document-deleted="handleDocumentDeleted"
-      />
-    </div>
+  <div class="documents-container grid">
+    <DocumentCard
+      v-for="(document, index) in props.documents"
+      :key="document.id"
+      v-motion-fade
+      :delay="(index * 100)"
+      :duration="400"
+      :document="document"
+      @delete-document="openDeleteModal(document)"
+    />
+    <DeleteDocumentDialog
+      v-model="isDeleteDialogVisible"
+      :document="documentToDelete"
+      @document-deleted="handleDocumentDeleted"
+    />
   </div>
 </template>
 
   <style lang="scss"  scoped>
-.document-list {
-  padding-left: var(--spacing-desktop-m);
-}
 .list-title {
   color: var(--color-primary-700);
 }

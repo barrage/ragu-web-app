@@ -9,17 +9,15 @@ import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 
-
 // PROPS
 const props = defineProps<{
   singleAgent: Agents | null | undefined
 }>()
 
+const emits = defineEmits<Emits>()
 // CONSTANTS
 const agentStore = useAgentStore()
 const { t } = useI18n()
-const emits = defineEmits<Emits>()
-
 interface Emits {
 
   (event: 'activateAgent', agent: Agents): void
@@ -51,12 +49,12 @@ const editClick = (): void => {
 <template>
   <el-card class="agent-card is-primary">
     <div class="agent-card-body">
-      <LlmLink 
-      :to="`/admin/agents/${singleAgent?.agent?.id}`" 
-      type="link" 
-      class="agent-name-type-wrapper"
-    >
-        <AgentIcon size="40px" />
+      <LlmLink
+        :to="`/admin/agents/${singleAgent?.agent?.id}`"
+        type="link"
+        class="agent-name-type-wrapper"
+      >
+        <AgentIcon size="40px" class="agent-icon" />
         <div class="agent-name-wrapper">
           <p class="agent-name">
             {{ agentData.name }}
@@ -71,36 +69,32 @@ const editClick = (): void => {
         class="agent-model"
       />
 
-        <LabelDescriptionItem
-          :label="t('agents.labels.status')"
-          size="small"
-          :description="agentData?.status"
-        >
-          <template #customDescription>
-            <el-tag :type="agentData.statusType" size="small">
-              <span class="status-dot" />  {{ agentData?.status }}
-            </el-tag>
-          </template>
-        </LabelDescriptionItem>
-        <LabelDescriptionItem
-          :label="t('agents.labels.created_at')"
-          :description="agentData.createdAt"
-          size="small"
-        />
+      <LabelDescriptionItem
+        :label="t('agents.labels.status')"
+        size="small"
+        :description="agentData?.status"
+      >
+        <template #customDescription>
+          <el-tag :type="agentData.statusType" size="small">
+            <span class="status-dot" /> {{ agentData?.status }}
+          </el-tag>
+        </template>
+      </LabelDescriptionItem>
+      <LabelDescriptionItem
+        :label="t('agents.labels.created_at')"
+        :description="agentData.createdAt"
+        size="small"
+      />
 
-        <LabelDescriptionItem
-          :label="t('agents.labels.language')"
-          :description="agentData?.language.toString()"
-          size="small"
-        />
-
+      <LabelDescriptionItem
+        :label="t('agents.labels.language')"
+        :description="agentData?.language.toString()"
+        size="small"
+      />
 
       <div class="agent-actions">
         <LlmTooltip :content="$t('agents.agent_card.view_more')">
-          <LlmLink
-            :to="`/admin/agents/${singleAgent?.agent?.id}`"
-            type="plainButtonPrimary"
-          >
+          <LlmLink :to="`/admin/agents/${singleAgent?.agent?.id}`" type="plainButtonPrimary">
             <EyeIcon size="20px" />
           </LlmLink>
         </LlmTooltip>
@@ -113,18 +107,12 @@ const editClick = (): void => {
             <EditIcon size="20px" />
           </LlmLink>
         </LlmTooltip>
-        <LlmTooltip
-          v-if="props.singleAgent?.agent.active"
-          :content="$t('agents.agent_card.deactivate_agent')"
-        >
+        <LlmTooltip v-if="props.singleAgent?.agent.active" :content="$t('agents.agent_card.deactivate_agent')">
           <el-button plain @click="emits('deactivateAgent', props.singleAgent)">
             <PersonLockIcon size="20px" />
           </el-button>
         </LlmTooltip>
-        <LlmTooltip
-          v-if="!props.singleAgent?.agent.active"
-          :content="$t('agents.agent_card.activate_agent')"
-        >
+        <LlmTooltip v-if="!props.singleAgent?.agent.active" :content="$t('agents.agent_card.activate_agent')">
           <el-button plain @click="emits('activateAgent', props.singleAgent as Agents)">
             <PersonPasskeyIcon size="20px" />
           </el-button>
@@ -138,6 +126,7 @@ const editClick = (): void => {
 .agent-card {
   padding-inline: 0.6rem;
   padding-block: 0.8rem;
+
   & .agent-card-body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -146,24 +135,26 @@ const editClick = (): void => {
     @include viewport-s {
       grid-template-columns: repeat(3, 1fr);
     }
+
     @include viewport-m {
       grid-template-columns: repeat(6, 1fr);
     }
-    
+
     @include viewport-ml {
       grid-template-columns: repeat(7, 1fr);
     }
+
     & .agent-name-type-wrapper {
       grid-column: span 2;
-      align-items: center;
-      text-overflow: ellipsis;
       display: flex;
-      min-width: fit-content;
-      gap: 6px;
-      color: var(--color-primary-800);
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      color: var(--color-primary-900);
 
-      & svg {
-        flex-shrink: 0;
+      & .agent-icon {
+        min-width: fit-content;
       }
 
       &:hover {
@@ -174,14 +165,24 @@ const editClick = (): void => {
       & .agent-name-wrapper {
         display: flex;
         flex-direction: column;
+        overflow: hidden;
         justify-content: space-between;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        overflow: hidden;
+
         .agent-name {
           margin: 0;
           font-size: var(--font-size-fluid-2);
           line-height: normal;
           font-weight: var(--font-weight-semibold);
           color: var(--color-primary-900);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 100%;
         }
+
         & .agent-provider {
           margin: 0;
           line-height: normal;
@@ -190,14 +191,12 @@ const editClick = (): void => {
         }
       }
     }
-
   }
 
   &.agent-model {
     grid-column: 4/6;
   }
 
- 
   & .agent-actions {
     grid-column: span 1;
     display: flex;
@@ -220,21 +219,23 @@ const editClick = (): void => {
   }
 }
 
-
 .dark {
   .agent-card {
-    & .agent-card-body { & .agent-name-type-wrapper {
-      color: var(--color-primary-100);
-    }
-    & .agent-name-wrapper {
-      & .agent-name {
-        color: var(--color-primary-0);
-      }
-      & .agent-provider {
+    & .agent-card-body {
+      & .agent-name-type-wrapper {
         color: var(--color-primary-100);
       }
-    }}
-   
+
+      & .agent-name-wrapper {
+        & .agent-name {
+          color: var(--color-primary-0);
+        }
+
+        & .agent-provider {
+          color: var(--color-primary-100);
+        }
+      }
+    }
   }
 }
 </style>
