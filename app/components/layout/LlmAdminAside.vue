@@ -122,12 +122,14 @@ const menuLists = computed<MenuList[]>(() => {
                 :to="item.link"
                 type="link"
                 class="menu-item"
-                :class="{ 'selected': item.link === route.path, 'collapsed-link': isAdminSidebarCollapsed }"
+                :class="{ selected: item.link === route.path }"
               >
                 <div class="menu-content">
-                  <span>
-                    <component :is="item.icon" size="24px" />
-                  </span>
+                  <component
+                    :is="item.icon"
+                    class="sidebar-icon"
+                    size="24px"
+                  />
                   <span v-if="!isAdminSidebarCollapsed" class="no-wrap">{{ item.label }}</span>
                 </div>
               </LlmLink>
@@ -144,15 +146,13 @@ const menuLists = computed<MenuList[]>(() => {
         <LlmLink
           v-motion-fade-visible-once
           :delay="300"
-          to="help"
+          to="/help"
           type="link"
           class="menu-item get-help-section"
-          :class="{ 'selected': '/help' === route.path, 'collapsed-link': isAdminSidebarCollapsed }"
+          :class="{ selected: '/help' === route.path }"
         >
           <div class="menu-content">
-            <span>
-              <QuestionIcon size="24px" />
-            </span>
+            <QuestionIcon class="sidebar-icon" size="24px" />
             <span v-if="!isAdminSidebarCollapsed" class="no-wrap">{{ $t('getHelp.title') }}</span>
           </div>
         </LlmLink>
@@ -221,10 +221,6 @@ aside {
 .sidebar-collapsed {
   & .toggle-btn {
     transform: scaleX(-1);
-  }
-  & .menu-item {
-    margin: 0;
-    padding-inline-start: 0;
   }
 }
 
@@ -320,11 +316,11 @@ aside {
   width: 100%;
   position: relative;
   gap: 8px;
-}
 
-.collapsed-link {
-  display: flex;
-  justify-content: center;
+  .sidebar-icon {
+    min-width: 24px;
+    min-height: 24px;
+  }
 }
 
 .dark {

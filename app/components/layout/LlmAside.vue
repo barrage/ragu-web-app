@@ -39,9 +39,7 @@ const route = useRoute()
           :class="{ 'selected': '/help' === route.path, 'collapsed-link': isSidebarCollapsed }"
         >
           <div class="menu-content">
-            <span>
-              <QuestionIcon size="24px" />
-            </span>
+            <QuestionIcon class="sidebar-icon" size="24px" />
             <span v-if="!isSidebarCollapsed" class="get-help-title">{{ $t('getHelp.title') }}</span>
           </div>
         </LlmLink>
@@ -101,7 +99,6 @@ aside {
   align-items: center;
   min-height: 40px;
   padding: 4px;
-  padding-inline-start: 8px;
   font-size: var(--font-size-desktop-2);
   color: var(--color-primary-800);
   transition:
@@ -140,6 +137,11 @@ aside {
 
   .get-help-title {
     white-space: nowrap;
+  }
+
+  .sidebar-icon {
+    min-width: 24px;
+    min-height: 24px;
   }
 }
 
