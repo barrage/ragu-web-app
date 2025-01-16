@@ -924,6 +924,51 @@ export default {
         error_description: 'エラーが発生しました。ユーザーを削除できませんでした。',
       },
     },
+    info: {
+      title: 'ユーザー管理に関する情報',
+      description: 'ユーザーページでは、システム内のすべてのユーザーを管理できます。ここで、新しいユーザーを招待したり、ステータスを管理したり、詳細を表示することができます。',
+      what_can_you_do_here: {
+        title: 'ここで何ができますか？',
+        items: {
+          labels: {
+            create_users: 'ユーザーの作成',
+            manage_status: 'ステータスの管理：',
+            delete_edit: '削除と編集',
+          },
+          descriptions: {
+            create_users: 'メールを使って個別に、またはCSVファイルを使って一括でユーザーを招待できます。',
+            manage_status: 'ユーザーをアクティブまたは非アクティブに設定します。アクティブなユーザーはアプリにアクセスでき、非アクティブなユーザーはアクセスできません。',
+            delete_edit: 'ユーザーを完全に削除するか、詳細ビューから情報を編集します。',
+          },
+        },
+      },
+      how_to_find: {
+        title: 'ユーザーの見つけ方',
+        items: {
+          labels: {
+            search_users: '検索',
+            filter_sort_users: 'フィルタと並べ替え',
+          },
+          descriptions: {
+            search_users: 'キーワードを使ってユーザーをすばやく見つけます。',
+            filter_sort_users: 'アクティブまたは非アクティブなユーザーのみを表示したり、さまざまな基準で並べ替えます。',
+          },
+        },
+      },
+      important_notes: {
+        title: '重要な注意点',
+        items: {
+          labels: {
+            user_roles: 'ユーザーの役割',
+            access_security: 'アクセスとセキュリティ',
+          },
+          descriptions: {
+            user_roles: '管理者はアプリとバックオフィスの完全なアクセス権を持ち、ユーザーはエンドユーザーアプリのみを利用できます。',
+            access_security: '認可されたユーザーのみがアクティブであることを確認してください。リストを定期的に確認して、システムの安全性と正確性を維持してください。',
+          },
+        },
+      },
+    },
     import: {
       card_title: 'インポート成功',
       faild_card_title: 'インポート失敗',

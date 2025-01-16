@@ -925,6 +925,51 @@ export default {
         error_description: 'Si è verificato un errore. L\'utente non è stato eliminato.',
       },
     },
+    info: {
+      title: 'Informazioni sulla gestione degli utenti',
+      description: 'La pagina Utenti consente di gestire tutti gli utenti nel sistema. Qui è possibile invitare nuovi utenti, gestirne lo stato e visualizzarne i dettagli.',
+      what_can_you_do_here: {
+        title: 'Cosa puoi fare qui?',
+        items: {
+          labels: {
+            create_users: 'Creazione di utenti',
+            manage_status: 'Gestione dello stato:',
+            delete_edit: 'Eliminazione e modifica',
+          },
+          descriptions: {
+            create_users: 'Invita utenti singolarmente tramite e-mail o in blocco utilizzando un file CSV.',
+            manage_status: 'Attiva o disattiva gli utenti. Gli utenti attivi hanno accesso all\'applicazione, mentre quelli inattivi no.',
+            delete_edit: 'Elimina definitivamente gli utenti o modifica i loro dati tramite la vista dettagli.',
+          },
+        },
+      },
+      how_to_find: {
+        title: 'Come trovare gli utenti?',
+        items: {
+          labels: {
+            search_users: 'Ricerca',
+            filter_sort_users: 'Filtraggio e ordinamento',
+          },
+          descriptions: {
+            search_users: 'Trova rapidamente gli utenti utilizzando parole chiave.',
+            filter_sort_users: 'Mostra solo utenti attivi o inattivi oppure ordina in base a diversi criteri.',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Note importanti',
+        items: {
+          labels: {
+            user_roles: 'Ruoli degli utenti',
+            access_security: 'Accesso e sicurezza',
+          },
+          descriptions: {
+            user_roles: 'Gli amministratori hanno accesso completo all\'applicazione e al Backoffice, mentre gli utenti hanno accesso solo all\'applicazione per utenti finali.',
+            access_security: 'Assicurati che siano attivi solo gli utenti autorizzati. Controlla regolarmente l\'elenco per mantenere la sicurezza e la precisione del sistema.',
+          },
+        },
+      },
+    },
     import: {
       card_title: 'Importazione riuscita',
       faild_card_title: 'Importazione fallita',

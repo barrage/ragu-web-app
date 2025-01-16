@@ -928,6 +928,52 @@ export default {
         error_description: 'Ocurrió un error. No se pudo eliminar el usuario.',
       },
     },
+    info: {
+      title: 'Información sobre la gestión de usuarios',
+      description: 'La página Usuarios le permite gestionar a todos los usuarios en el sistema. Aquí puede invitar a nuevos usuarios, gestionar su estado y ver sus detalles.',
+      what_can_you_do_here: {
+        title: '¿Qué puedes hacer aquí?',
+        items: {
+          labels: {
+            create_users: 'Crear usuarios',
+            manage_status: 'Gestionar estado:',
+            delete_edit: 'Eliminar y editar',
+          },
+          descriptions: {
+            create_users: 'Invite a usuarios individualmente por correo electrónico o en masa utilizando un archivo CSV.',
+            manage_status: 'Active o desactive usuarios. Los usuarios activos tienen acceso a la aplicación, mientras que los inactivos no.',
+            delete_edit: 'Elimine usuarios de forma permanente o edite sus datos a través de la vista de detalles.',
+          },
+        },
+
+      },
+      how_to_find: {
+        title: '¿Cómo encontrar usuarios?',
+        items: {
+          labels: {
+            search_users: 'Buscar',
+            filter_sort_users: 'Filtrar y ordenar usuarios',
+          },
+          descriptions: {
+            search_users: 'Encuentre rápidamente usuarios utilizando palabras clave.',
+            filter_sort_users: 'Muestre solo usuarios activos o inactivos o ordénelos según diferentes criterios.',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Notas importantes',
+        items: {
+          labels: {
+            user_roles: 'Roles de usuario',
+            access_security: 'Acceso y seguridad',
+          },
+          descriptions: {
+            user_roles: 'Los administradores tienen acceso completo a la aplicación y al Backoffice, mientras que los usuarios solo tienen acceso a la aplicación de usuario final.',
+            access_security: 'Asegúrese de que solo los usuarios autorizados estén activos. Revise regularmente la lista para mantener la seguridad y precisión del sistema.',
+          },
+        },
+      },
+    },
     import: {
       card_title: 'Importación exitosa',
       faild_card_title: 'Importación fallida',

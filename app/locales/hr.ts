@@ -553,6 +553,59 @@ export default {
         error_description: 'Došlo je do pogreške. Korisnik nije mogao biti izbrisan.',
       },
     },
+    info: {
+      title: 'Informacije o upravljanju korisnicima',
+      description: 'Stranica Korisnici omogućuje vam upravljanje svim korisnicima u sustavu. Ovdje možete pozivati nove korisnike, upravljati njihovim statusom i pregledavati njihove detalje.',
+
+      what_can_you_do_here: {
+        title: 'Što možete raditi ovdje?',
+        items: {
+          labels: {
+            create_users: 'Kreiranje korisnika',
+            manage_status: 'Upravljanje statusom:',
+            delete_edit: 'Brisanje i uređivanje',
+          },
+          descriptions: {
+            create_users: 'Pozovite korisnike pojedinačno putem e-maila ili masovno koristeći CSV datoteku.',
+            manage_status: 'Aktivirajte ili deaktivirajte korisnike. Aktivni korisnici imaju pristup aplikaciji, dok neaktivni nemaju',
+            delete_edit: 'Trajno uklonite korisnike ili uredite njihove podatke kroz pregled detalja.',
+
+          },
+        },
+
+      },
+      how_to_find: {
+        title: 'Kako pronaći korisnike?',
+        items: {
+          labels: {
+            search_users: 'Pretraživanje',
+            filter_sort_users: 'Filtriranje i sortiranje',
+
+          },
+          descriptions: {
+            search_users: 'Brzo pronađite korisnike pomoću ključnih riječi.',
+            filter_sort_users: 'Prikažite samo aktivne ili neaktivne korisnike, ili poredajte prema različitim kriterijima',
+
+          },
+        },
+      },
+
+      important_notes: {
+        title: 'Važne napomene',
+        items: {
+          labels: {
+            user_roles: 'Role korisnika',
+            access_security: 'Pristup i sigurnost',
+
+          },
+          descriptions: {
+            user_roles: 'Admin ima puni pristup aplikaciji i Backoffice-u dok User ima pristup samo End User aplikaciji.',
+            access_security: 'Osigurajte da su aktivni samo ovlašteni korisnici. Redovito provjeravajte popis kako biste održali sigurnost i ažurnost sustava',
+          },
+        },
+      },
+    },
+
     import: {
       card_title: 'Uspješno uvezeno',
       faild_card_title: 'Neuspješno uvezeno',

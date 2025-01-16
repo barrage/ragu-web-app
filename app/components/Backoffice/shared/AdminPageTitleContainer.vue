@@ -1,7 +1,18 @@
 <script lang="ts" setup>
-const props = defineProps<{
+import InfoIcon from '@/assets/icons/svg/info.svg'
+
+const props = withDefaults(defineProps<{
   title: string | null | undefined
   description: string | null | undefined
+  hasInfo?: boolean
+}>(), {
+  title: '',
+  description: '',
+  hasInfo: false,
+})
+
+const emit = defineEmits<{
+  (e: 'infoclicked'): void
 }>()
 </script>
 
@@ -14,6 +25,13 @@ const props = defineProps<{
       <h1 class="admin-page-title">
         {{ props.title }}
       </h1>
+      <el-button
+        v-if="hasInfo"
+        class="info-button"
+        @click="emit('infoclicked')"
+      >
+        <InfoIcon />
+      </el-button>
     </div>
 
     <p class="admin-page-description typing-effect">
@@ -42,7 +60,17 @@ const props = defineProps<{
       font-weight: 500;
       color: var(--color-primary-800);
       font-size: var(--font-size-fluid-7);
-      line-height: normal;
+    }
+
+    .info-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--color-primary-500);
+      margin-top: auto;
+      &:hover {
+        color: var(--color-primary-800);
+      }
     }
   }
 
@@ -62,6 +90,13 @@ const props = defineProps<{
     }
     & .admin-page-description {
       color: var(--color-primary-200);
+    }
+    & .info-button {
+      color: var(--color-primary-300);
+
+      &:hover {
+        color: var(--color-primary-0);
+      }
     }
   }
 }

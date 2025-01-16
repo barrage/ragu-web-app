@@ -545,6 +545,52 @@ export default {
         error_description: 'An error occurred. The user could not be deleted.',
       },
     },
+    info: {
+      title: 'Information about managing users',
+      description: 'The Users page allows you to manage all users in the system. Here, you can invite new users, manage their status, and view their details.',
+      what_can_you_do_here: {
+        title: 'What can you do here?',
+        items: {
+          labels: {
+            create_users: 'Creating users',
+            manage_status: 'Managing status:',
+            delete_edit: 'Deleting and editing',
+          },
+          descriptions: {
+            create_users: 'Invite users individually via email or in bulk using a CSV file.',
+            manage_status: 'Activate or deactivate users. Active users have access to the application, while inactive users do not.',
+            delete_edit: 'Permanently delete users or edit their details through the detail view.',
+          },
+        },
+
+      },
+      how_to_find: {
+        title: 'How to find users?',
+        items: {
+          labels: {
+            search_users: 'Search',
+            filter_sort_users: 'Filter and sort users',
+          },
+          descriptions: {
+            search_users: 'Quickly find users using keywords.',
+            filter_sort_users: 'Display only active or inactive users or sort them by different criteria.',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Important notes',
+        items: {
+          labels: {
+            user_roles: 'User roles',
+            access_security: 'Access and security',
+          },
+          descriptions: {
+            user_roles: 'Admins have full access to the application and Backoffice, while Users have access to the End User application only.',
+            access_security: 'Ensure that only authorized users are active. Regularly check the list to maintain system security and accuracy.',
+          },
+        },
+      },
+    },
     import: {
       card_title: 'Successfully imported',
       faild_card_title: 'Failed imported',
