@@ -32,6 +32,12 @@ const userData = computed(() => {
   }
 })
 
+const oAuthStore = useAuthStore()
+
+const isLoggedInUserViewingOwnProfile = computed(() => {
+  return oAuthStore.user?.id === props.user?.id
+})
+
 /* Edit User */
 const selectedUserEdit = ref<User | undefined | null >(props.user)
 const editUserModalVisible = ref(false)
@@ -111,7 +117,7 @@ const handleUserDeactivated = () => {
         <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
       </ElButton>
       <ElButton
-        v-if="props.user?.active"
+        v-if="props.user?.active && !isLoggedInUserViewingOwnProfile"
         size="small"
         type="primary"
         plain
@@ -120,6 +126,7 @@ const handleUserDeactivated = () => {
         <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
       </ElButton>
       <ElButton
+        v-if="!isLoggedInUserViewingOwnProfile"
         plain
         type="danger"
         size="small"
