@@ -928,6 +928,52 @@ export default {
         error_description: 'Une erreur est survenue. L\'utilisateur n\'a pas pu être supprimé.',
       },
     },
+    info: {
+      title: 'Informations sur la gestion des utilisateurs',
+      description: 'La page Utilisateurs vous permet de gérer tous les utilisateurs du système. Ici, vous pouvez inviter de nouveaux utilisateurs, gérer leur statut et consulter leurs détails.',
+      what_can_you_do_here: {
+        title: 'Que pouvez-vous faire ici ?',
+        items: {
+          labels: {
+            create_users: 'Créer des utilisateurs',
+            manage_status: 'Gérer le statut :',
+            delete_edit: 'Supprimer et modifier',
+          },
+          descriptions: {
+            create_users: 'Invitez des utilisateurs individuellement par e-mail ou en masse à l\'aide d\'un fichier CSV.',
+            manage_status: 'Activez ou désactivez les utilisateurs. Les utilisateurs actifs ont accès à l\'application, tandis que les inactifs n\'y ont pas accès.',
+            delete_edit: 'Supprimez définitivement des utilisateurs ou modifiez leurs informations via la vue des détails.',
+          },
+        },
+
+      },
+      how_to_find: {
+        title: 'Comment trouver des utilisateurs ?',
+        items: {
+          labels: {
+            search_users: 'Rechercher',
+            filter_sort_users: 'Filtrer et trier les utilisateurs',
+          },
+          descriptions: {
+            search_users: 'Trouvez rapidement des utilisateurs à l\'aide de mots-clés.',
+            filter_sort_users: 'Affichez uniquement les utilisateurs actifs ou inactifs ou triez-les selon différents critères.',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Notes importantes',
+        items: {
+          labels: {
+            user_roles: 'Rôles des utilisateurs',
+            access_security: 'Accès et sécurité',
+          },
+          descriptions: {
+            user_roles: 'Les administrateurs ont un accès complet à l\'application et au Backoffice, tandis que les utilisateurs ont accès uniquement à l\'application utilisateur final.',
+            access_security: 'Assurez-vous que seuls les utilisateurs autorisés sont actifs. Vérifiez régulièrement la liste pour garantir la sécurité et l\'exactitude du système.',
+          },
+        },
+      },
+    },
     import: {
       card_title: 'Importation réussie',
       faild_card_title: 'Importation échouée',

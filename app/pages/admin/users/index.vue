@@ -10,6 +10,12 @@ const { t } = useI18n()
 useHead({
   title: computed(() => t('users.title')),
 })
+
+const infoDrawerOpen = ref(false)
+
+const toggleInfoDrawer = () => {
+  infoDrawerOpen.value = !infoDrawerOpen.value
+}
 </script>
 
 <template>
@@ -19,6 +25,8 @@ useHead({
         <AdminPageTitleContainer
           :title="t('users.title')"
           :description="t('users.description')"
+          :has-info="true"
+          @infoclicked="toggleInfoDrawer"
         >
           <template #icon>
             <TeamIcon size="48px" />
@@ -30,5 +38,6 @@ useHead({
       </template>
     </AdminPageHeadingTemplate>
     <AsyncUsersListTemplate />
+    <UsersInfoDrawer :model-value="infoDrawerOpen" />
   </AdminPageContainer>
 </template>

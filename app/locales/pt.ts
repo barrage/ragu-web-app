@@ -926,6 +926,51 @@ export default {
         error_description: 'Ocorreu um erro. Não foi possível excluir o usuário.',
       },
     },
+    info: {
+      title: 'Informações sobre a gestão de usuários',
+      description: 'A página Usuários permite gerenciar todos os usuários do sistema. Aqui você pode convidar novos usuários, gerenciar seu status e visualizar seus detalhes.',
+      what_can_you_do_here: {
+        title: 'O que você pode fazer aqui?',
+        items: {
+          labels: {
+            create_users: 'Criar usuários',
+            manage_status: 'Gerenciar status:',
+            delete_edit: 'Excluir e editar',
+          },
+          descriptions: {
+            create_users: 'Convide usuários individualmente por e-mail ou em massa usando um arquivo CSV.',
+            manage_status: 'Ative ou desative usuários. Usuários ativos têm acesso ao aplicativo, enquanto os inativos não.',
+            delete_edit: 'Exclua usuários permanentemente ou edite suas informações por meio da visualização de detalhes.',
+          },
+        },
+      },
+      how_to_find: {
+        title: 'Como encontrar usuários?',
+        items: {
+          labels: {
+            search_users: 'Pesquisar',
+            filter_sort_users: 'Filtrar e classificar usuários',
+          },
+          descriptions: {
+            search_users: 'Encontre rapidamente usuários usando palavras-chave.',
+            filter_sort_users: 'Exiba apenas usuários ativos ou inativos, ou classifique por diferentes critérios.',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Notas importantes',
+        items: {
+          labels: {
+            user_roles: 'Funções de usuários',
+            access_security: 'Acesso e segurança',
+          },
+          descriptions: {
+            user_roles: 'Os administradores têm acesso total ao aplicativo e ao Backoffice, enquanto os usuários têm acesso apenas ao aplicativo do usuário final.',
+            access_security: 'Certifique-se de que apenas usuários autorizados estejam ativos. Verifique regularmente a lista para manter a segurança e a precisão do sistema.',
+          },
+        },
+      },
+    },
     import: {
       card_title: 'Importação bem-sucedida',
       faild_card_title: 'Importação falhou',

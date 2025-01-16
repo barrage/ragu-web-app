@@ -929,6 +929,52 @@ export default {
         error_description: 'Ein Fehler ist aufgetreten. Der Benutzer konnte nicht gelöscht werden.',
       },
     },
+    info: {
+      title: 'Informationen zur Benutzerverwaltung',
+      description: 'Die Seite Benutzer ermöglicht es Ihnen, alle Benutzer im System zu verwalten. Hier können Sie neue Benutzer einladen, deren Status verwalten und deren Details einsehen.',
+      what_can_you_do_here: {
+        title: 'Was können Sie hier tun?',
+        items: {
+          labels: {
+            create_users: 'Benutzer erstellen',
+            manage_status: 'Status verwalten:',
+            delete_edit: 'Löschen und Bearbeiten',
+          },
+          descriptions: {
+            create_users: 'Laden Sie Benutzer einzeln per E-Mail oder in großen Mengen über eine CSV-Datei ein.',
+            manage_status: 'Aktivieren oder deaktivieren Sie Benutzer. Aktive Benutzer haben Zugriff auf die Anwendung, während inaktive Benutzer keinen Zugriff haben.',
+            delete_edit: 'Löschen Sie Benutzer dauerhaft oder bearbeiten Sie deren Daten über die Detailansicht.',
+          },
+        },
+
+      },
+      how_to_find: {
+        title: 'Wie findet man Benutzer?',
+        items: {
+          labels: {
+            search_users: 'Suche',
+            filter_sort_users: 'Filtern und Sortieren',
+          },
+          descriptions: {
+            search_users: 'Finden Sie Benutzer schnell mithilfe von Schlüsselwörtern.',
+            filter_sort_users: 'Zeigen Sie nur aktive oder inaktive Benutzer an oder sortieren Sie sie nach verschiedenen Kriterien.',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Wichtige Hinweise',
+        items: {
+          labels: {
+            user_roles: 'Benutzerrollen',
+            access_security: 'Zugriff und Sicherheit',
+          },
+          descriptions: {
+            user_roles: 'Admins haben vollen Zugriff auf die Anwendung und Backoffice, während Benutzer nur Zugriff auf die Endbenutzer-Anwendung haben.',
+            access_security: 'Stellen Sie sicher, dass nur autorisierte Benutzer aktiv sind. Überprüfen Sie regelmäßig die Liste, um die Sicherheit und Genauigkeit des Systems zu gewährleisten.',
+          },
+        },
+      },
+    },
     import: {
       card_title: 'Erfolgreich importiert',
       faild_card_title: 'Import fehlgeschlagen',
