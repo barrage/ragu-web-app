@@ -19,6 +19,14 @@ const skeletonCardData = computed(() => {
       hasProfileDescription: false,
     }
   }
+  if (props.type === 'whatsAppChat') {
+    return {
+      numberOfLabelDescriptions: 2,
+      numberOfActions: 1,
+      hasProfileDescription: false,
+      gridColumns: 5,
+    }
+  }
   if (props.type === 'agent') {
     return {
       numberOfLabelDescriptions: 4,

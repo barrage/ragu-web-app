@@ -1,40 +1,15 @@
 <script lang="ts" setup>
 import WhatsAppChatsIcon from '~/assets/icons/svg/whatsapp-chat-multiple.svg'
-import type { SortingValues } from '~/types/sort'
+
+const { t } = useI18n()
 
 definePageMeta({
   layout: 'admin-layout',
 })
 
-// CONSTANTS & STATES
-
-const { $api } = useNuxtApp()
-const sort = ref<SortingValues>({
-  direction: 'desc',
-  sortProperty: { name: '', value: 'createdAt' },
+useHead({
+  title: computed(() => t('whatsapp_chat.admin.title')),
 })
-const pagination = ref({
-  currentPage: 1,
-  pageSize: 10,
-})
-
-// API CALLS
-
-const { error, execute, data: chatData } = await useAsyncData(() => $api.whatsApp.BoGetAllChats(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortProperty.value, sort.value?.direction), { lazy: true })
-errorHandler(error)
-
-// FUNCTIONS
-
-function handlePageChange(page: number) {
-  pagination.value.currentPage = page
-  execute()
-}
-
-function handleSortChange(sortingValues: SortingValues) {
-  sort.value.direction = sortingValues.direction
-  sort.value.sortProperty = sortingValues.sortProperty
-  execute()
-}
 </script>
 
 <template>
@@ -42,6 +17,7 @@ function handleSortChange(sortingValues: SortingValues) {
     <AdminPageHeadingTemplate>
       <template #title>
         <AdminPageTitleContainer
+          data-testid="backoffice-whatsapp-chat-page-title-container"
           :title="$t('whatsapp_chat.admin.title')"
           :description="$t('whatsapp_chat.admin.description')"
         >
@@ -50,13 +26,9 @@ function handleSortChange(sortingValues: SortingValues) {
           </template>
         </AdminPageTitleContainer>
       </template>
+      <template #actions />
     </AdminPageHeadingTemplate>
-    <WhatsAppChatsListAdminActions @sort-change="handleSortChange" />
-    <WhatsAppChatsListAdmin
-      :chats="chatData"
-      @page-change="handlePageChange"
-      @chat-deleted="(handlePageChange(1))"
-      @chat-title-edited="(handlePageChange(1))"
-    />
+
+    <AsyncWhatsAppChatListTemplate />
   </AdminPageContainer>
 </template>
