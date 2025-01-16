@@ -35,12 +35,12 @@ const chatId = computed(() => {
         class="menu-item"
         :class="{ 'selected': chatId === chat.id, 'collapsed-link': isSidebarCollapsed }"
       >
-        <div>
-          <span v-if="isSidebarCollapsed">
-            <ChatIcon size="24px" />
-          </span>
-          <span v-else class="chat-title">{{ chat.title || $t('chat.chat') }}</span>
-        </div>
+        <ChatIcon
+          v-if="isSidebarCollapsed"
+          class="sidebar-icon"
+          size="24px"
+        />
+        <span v-else class="chat-title">{{ chat.title || $t('chat.chat') }}</span>
       </LlmLink>
     </LlmTooltip>
   </div>
@@ -51,6 +51,11 @@ const chatId = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  .sidebar-icon {
+    min-width: 24px;
+    min-height: 24px;
+  }
 }
 
 .menu-item {

@@ -33,9 +33,7 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
         :class="{ 'selected': '/' === route.path, 'collapsed-link': isSidebarCollapsed }"
       >
         <div class="menu-content">
-          <span>
-            <BrainIcon size="24px" />
-          </span>
+          <BrainIcon class="sidebar-icon" size="24px" />
           <span v-if="!isSidebarCollapsed" class="new-chat-title">{{ $t('chat.newChat.title') }}</span>
           <AddIcon
             v-if="!isSidebarCollapsed"
@@ -76,6 +74,7 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary-500) var(--color-primary-200);
 
@@ -89,7 +88,7 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
 .menu-item {
   display: flex;
   align-items: center;
-  height: 40px;
+  min-height: 40px;
   padding: 4px;
   padding-inline-start: 8px;
   font-size: var(--font-size-desktop-2);
@@ -135,6 +134,11 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
 
   .new-chat-title {
     white-space: nowrap;
+  }
+
+  .sidebar-icon {
+    min-width: 24px;
+    min-height: 24px;
   }
 }
 
