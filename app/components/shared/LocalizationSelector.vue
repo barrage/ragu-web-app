@@ -57,24 +57,26 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
         <LocaleIcon size="20px" />
       </ElButton>
       <template #dropdown>
-        <ElDropdownMenu>
-          <div class="lozalization-options-container">
-            <template
-              v-for="language in locales"
-              :key="language.value"
+        <ElDropdownMenu class="dropdown-menu">
+          <ElDropdownItem
+            v-for="language in locales"
+            :key="language.value"
+            @click="setLocale(language.code)"
+          >
+            <div
+              class="language-option"
+              tabindex="0"
             >
-              <div
-                class="language-option"
-                tabindex="0"
-                @click="setLocale(language.code)"
-              >
-                <span :class="{ selected: language.code === locale }">
-                  {{ language.name }}
-                </span>
-                <CheckIcon v-if="language.code === locale" size="16px" />
-              </div>
-            </template>
-          </div>
+              <p :class="{ selected: language.code === locale }">
+                {{ language.name }}
+              </p>
+              <CheckIcon
+                v-if="language.code === locale"
+                class="selected"
+                size="16px"
+              />
+            </div>
+          </ElDropdownItem>
         </ElDropdownMenu>
       </template>
     </ElDropdown>
@@ -82,8 +84,14 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
 </template>
 
 <style lang="scss" scoped>
-.lozalization-options-container {
+.dropdown-menu {
   min-width: 138px;
+  padding: 8px 12px;
+
+  &:deep(.barrage-dropdown-menu__item) {
+    border-radius: 0.5rem;
+    padding: 2px 8px;
+  }
 }
 
 .selected {
@@ -108,15 +116,13 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
 }
 .language-option {
   display: flex;
+  gap: 0.5rem;
   align-items: center;
-  gap: 8px;
-  padding: 2px 10px;
-  color: var(--color-primary-700);
-  font-size: var(--font-size-fluid-2);
+  justify-content: flex-start;
+  color: var(--color-primary-1000);
 
-  &:hover {
-    color: var(--color-primary-900);
-    cursor: pointer;
+  & p {
+    font-size: var(--font-size-fluid-2);
   }
 }
 
@@ -135,10 +141,8 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
     }
   }
   & .language-option {
-    color: var(--color-primary-100);
-    &:hover {
-      color: var(--color-primary-300);
-    }
+    background-color: transparent;
+    color: var(--color-primary-0);
   }
   & .selected {
     color: var(--color-primary-0);

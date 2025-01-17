@@ -228,6 +228,10 @@
       --barrage-notification-background-color: #131f7b;
       --barrage-notification-group-background-color: #131f7b;
 
+      &__title {
+        color: var(--barrage-notification-text-color);
+      }
+
       &:not(&.toast) {
         .barrage-notification__icon {
           .barrage-icon--fill,
