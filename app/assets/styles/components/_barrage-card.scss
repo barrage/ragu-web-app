@@ -32,6 +32,18 @@
       &.is-deep-accent {
         --card-background-color: var(--color-primary-700);
       }
+      &.is-disabled {
+        opacity: 0.8;
+        cursor: not-allowed;
+        pointer-events: none;
+        --card-border-color: var(--color-primary-800);
+        --card-background-color: var(--color-primary-900);
+
+        :deep(*) {
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+      }
     }
   }
 
@@ -56,6 +68,19 @@
 
     &.is-deep-accent {
       --card-background-color: var(--color-primary-300);
+    }
+
+    &.is-disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+      pointer-events: none;
+      --card-border-color: var(--color-primary-300);
+      --card-background-color: var(--color-primary-100);
+
+      :deep(*) {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
     }
   }
 }
