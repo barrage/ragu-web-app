@@ -52,7 +52,7 @@ export const useAgentStore = defineStore('agent', () => {
   }
 
   return {
-
+    appAgentsResponse,
     agentsResponse,
     selectedAgent,
     editMode,

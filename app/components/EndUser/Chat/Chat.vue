@@ -148,7 +148,7 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
         v-for="message in props.messages"
         :key="message.id"
       >
-        <ChatMessage :message="message" />
+        <ChatMessage :message="message" :agent-id="props.chat?.agentId" />
       </template>
     </div>
 

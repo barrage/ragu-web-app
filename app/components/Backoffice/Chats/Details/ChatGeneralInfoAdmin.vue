@@ -31,6 +31,7 @@ const chatData = computed(() => {
       status: props.user?.active ? t('users.user_card.active_status') : t('users.user_card.inactive_status'),
       role: props.user?.role === 'admin' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
       statusType: props.user?.active ? StatusType.Success : StatusType.Danger,
+      avatar: props.user?.avatar || undefined,
     },
     agent: {
       username: props.agent?.name || '-',
@@ -40,6 +41,7 @@ const chatData = computed(() => {
       status: props.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
       statusType: props.agent?.active ? StatusType.Success : StatusType.Danger,
       embeddingModel: props.agent?.embeddingModel || '-',
+      avatar: props.agent?.avatar || undefined,
     },
   }
 })
@@ -63,7 +65,13 @@ const chatData = computed(() => {
         type="link"
         class="user-profile-item"
       >
-        <ProfileIcon size="36px" />
+        <LlmAvatar
+          :avatar="chatData.user?.avatar"
+          :alt="t('agents.user_avatar')"
+          fit="cover"
+          default-image="user"
+          :size="36"
+        />
         <div class="username-mail-wrapper">
           <p class="username">
             {{ `${chatData.user.username}` }}
@@ -102,7 +110,13 @@ const chatData = computed(() => {
         type="link"
         class="user-profile-item"
       >
-        <AgentIcon size="36px" />
+        <LlmAvatar
+          :avatar="chatData.agent?.avatar"
+          :alt="t('agents.agent_avatar')"
+          fit="cover"
+          default-image="brain"
+          :size="36"
+        />
         <div class="username-mail-wrapper">
           <p class="username">
             {{ `${chatData.agent.username}` }}

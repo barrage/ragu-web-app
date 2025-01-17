@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { marked } from 'marked'
 import hljs from 'highlight.js'
-import BrainIcon from '~/assets/icons/svg/brain.svg'
-import ProfileIcon from '~/assets/icons/svg/account.svg'
 import MicrophoneIcon from '~/assets/icons/svg/microphone.svg'
 import LikeIcon from '~/assets/icons/svg/like.svg'
 import LikeFilledIcon from '~/assets/icons/svg/like-filled.svg'
@@ -12,9 +10,11 @@ import CopyIcon from '~/assets/icons/svg/copy.svg'
 import StopIcon from '~/assets/icons/svg/stop.svg'
 import type { Message } from '~/types/chat'
 import { sanitizeHtml } from '~/utils/sanitizeHtml'
+import AgentCard from '~/components/Backoffice/Agents/AgentCard.vue'
 
 const props = defineProps<{
   message: Message | null
+  agentId: string | number | undefined
 }>()
 
 const isDark = useDark()
@@ -38,11 +38,17 @@ watch(isDark, (newVal) => {
 }, { immediate: true })
 
 const { t } = useI18n()
-
+const authStore = useAuthStore()
 const chatStore = useChatStore()
+const agentStore = useAgentStore()
 const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 const displayedContent = ref('')
 const pendingContent = ref('')
+
+const agentAvatar = computed(() => {
+  const agent = agentStore.appAgentsResponse?.items.find(agent => agent.id === props.agentId)
+  return agent?.avatar || null
+})
 
 const isTable = computed(() => {
   if (!props.message?.content) {
@@ -276,11 +282,22 @@ watchEffect(() => {
       :class="[props.message.senderType]"
     >
       <div class="sender">
-        <BrainIcon
+        <LlmAvatar
           v-if="props.message.senderType === 'assistant'"
-          size="32px"
+          :avatar="agentAvatar"
+          :alt="t('agents.agent_avatar')"
+          fit="cover"
+          default-image="brain"
+          :size="32"
         />
-        <ProfileIcon v-else size="32px" />
+        <LlmAvatar
+          v-else
+          :avatar="authStore.user?.avatar"
+          :alt="t('agents.user_avatar')"
+          fit="cover"
+          default-image="user"
+          :size="32"
+        />
       </div>
       <template v-if="props.message.senderType === 'assistant' && chatStore.isWebSocketStreaming && !props.message.content">
         <MeetUpLoader class="assistant-message-loader" />
