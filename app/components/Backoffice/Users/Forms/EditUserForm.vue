@@ -18,6 +18,7 @@ const props = withDefaults(
 const emits = defineEmits<Emits>()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
+const authStore = useAuthStore()
 
 interface Emits {
   (event: 'userEdited'): void
@@ -87,8 +88,14 @@ const rules = computed<FormRules<EditUserPayload>>(() => ({
   ],
 }))
 
+const isEditingOwnProfile = computed(() => {
+  return props.selectedUser?.id === authStore.user?.id
+})
+
 const selectUserRole = (role: string) => {
-  return editUserForm.role = role
+  if (!isEditingOwnProfile.value) {
+    editUserForm.role = role
+  }
 }
 
 const { execute: executeEditUser, error: editUserError, status: editUserStatus } = await useAsyncData(() => $api.user.PutEditUser(props.selectedUser!.id, editUserForm), {
@@ -225,8 +232,10 @@ const isEditUserLoading = computed(() => {
             class="is-accent select-role-card"
             :data-testid="`bo-edit-user-form-role-select-card-${role.value}`"
             :class="{
-              selected: role.value === editUserForm.role,
+              'selected': role.value === editUserForm.role,
+              'is-disabled': isEditingOwnProfile,
             }"
+
             @click="selectUserRole(role.value)"
           >
             <div class="select-role-card-body">
@@ -331,6 +340,7 @@ const isEditUserLoading = computed(() => {
       }
     }
   }
+
   .edit-user-form-items-wrapper {
     & .form-description {
       color: var(--color-primary-0);

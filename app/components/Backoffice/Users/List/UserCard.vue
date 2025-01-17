@@ -21,6 +21,7 @@ interface Emits {
 }
 
 const { t } = useI18n()
+const authStore = useAuthStore()
 
 const userData = computed(() => {
   return {
@@ -32,6 +33,10 @@ const userData = computed(() => {
     updatedAt: props.user?.updatedAt ? useRelativeDate(props.user.updatedAt) : t('users.user_card.unknown_date'),
     createdAt: props.user?.createdAt ? useRelativeDate(props.user.createdAt) : t('users.user_card.unknown_date'),
   }
+})
+
+const isDeleteingOwnProfile = computed(() => {
+  return props.user.id === authStore.user?.id
 })
 </script>
 
@@ -120,6 +125,7 @@ const userData = computed(() => {
             type="danger"
             data-testid="bo-user-card-delete-button"
             class="delete-action"
+            :disabled="isDeleteingOwnProfile"
             @click="emits('deleteUser', props.user)"
           >
             <DeleteIcon size="20px" />
