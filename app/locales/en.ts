@@ -261,7 +261,7 @@ export default {
   },
   whatsapp_chat: {
     user: 'User',
-    whatsapp_chat: 'WhatsApp chat',
+    whatsapp_chat: 'WhatsApp Chat',
     assistant: 'Assistant',
     whatsapp_agent_description: 'View your conversation with a WhatsApp agent.',
     you: 'You',
