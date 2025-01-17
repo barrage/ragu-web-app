@@ -136,8 +136,24 @@ const tableData = computed(() => {
         :to="message?.senderType === 'user' ? `/admin/users/${message?.sender}` : `/admin/agents/${message?.sender}`"
         class="message-profile-item"
       >
-        <ProfileIcon v-if="messageData.iconType === 'user'" size="36px" />
-        <BrainIcon v-else-if="messageData.iconType === 'assistant'" size="36px" />
+        <LlmAvatar
+          v-if="messageData.iconType === 'user'"
+          :avatar="selectedUser?.avatar"
+          :alt="t('agents.user_avatar')"
+          fit="cover"
+          default-image="user"
+          :size="36"
+        />
+
+        <LlmAvatar
+          v-else-if="messageData.iconType === 'assistant'"
+          :avatar="selectedAgent?.avatar"
+          :alt="t('agents.agent_avatar')"
+          fit="cover"
+          default-image="brain"
+          :size="36"
+        />
+
         <div class="messagename-mail-wrapper">
           <p class="messagename">
             {{ `${messageData.sender}` }}

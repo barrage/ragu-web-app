@@ -2,6 +2,7 @@
 // IMPORTS
 import UserIcon from '~/assets/icons/svg/account.svg'
 import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
+import BrainIcon from '~/assets/icons/svg/brain.svg'
 
 // PROPS
 interface Avatar {
@@ -11,10 +12,10 @@ interface Avatar {
 
 interface Props {
   size?: number | 'large' | 'default' | 'small'
-  avatar?: Avatar
+  avatar?: Avatar | null
   alt?: string
   fit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
-  defaultImage?: 'user' | 'agent'
+  defaultImage?: 'user' | 'agent' | 'brain'
 }
 
 const {
@@ -46,13 +47,22 @@ const avatarSrc = computed(() => {
   if (avatar && avatar.contentType && avatar.data) {
     return `data:${avatar.contentType};base64,${avatar.data}`
   }
-
   return ''
 })
 
 const showImage = computed(() => Boolean(avatarSrc.value))
 
-const DefaultIcon = computed(() => defaultImage === 'user' ? UserIcon : AgentIcon)
+const DefaultIcon = computed(() => {
+  switch (defaultImage) {
+    case 'agent':
+      return AgentIcon
+    case 'brain':
+      return BrainIcon
+    case 'user':
+    default:
+      return UserIcon
+  }
+})
 </script>
 
 <template>

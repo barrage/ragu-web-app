@@ -46,7 +46,7 @@ watch(
               @click="selectAgent(agent)"
             >
               <LlmAvatar
-                :avatar="agentStore.selectedAgent?.avatar"
+                :avatar="agent.avatar"
                 :alt="t('agents.agent_avatar')"
                 fit="cover"
                 default-image="agent"
