@@ -277,19 +277,10 @@ function switchRoute() {
   gap: 0.5rem;
   align-items: center;
   justify-content: flex-start;
+  color: var(--color-primary-1000);
 
   & p {
     font-size: var(--font-size-fluid-2);
-  }
-  & :deep(svg) {
-    transition: color 0.3s ease;
-  }
-
-  &:hover,
-  &:focus {
-    & :deep(svg) {
-      color: var(--color-primary-600);
-    }
   }
 }
 
@@ -355,12 +346,7 @@ function switchRoute() {
 
   & .dropdown-item {
     background-color: transparent;
-    &:hover,
-    &:focus {
-      & :deep(svg) {
-        color: var(--color-primary-300);
-      }
-    }
+    color: var(--color-primary-0);
   }
 }
 </style>

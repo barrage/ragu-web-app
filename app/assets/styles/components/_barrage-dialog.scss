@@ -22,6 +22,19 @@
     .barrage-dialog {
       --dialog-background-color: var(--color-primary-800);
 
+      header {
+        color: var(--color-primary-0);
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        p,
+        span {
+          color: var(--color-primary-0);
+        }
+      }
+
       &__headerbtn {
         &:focus-visible {
           border: 1px solid var(--color-primary-200);
