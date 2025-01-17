@@ -3,41 +3,33 @@ import { useI18n } from 'vue-i18n'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import { sanitizeHtml } from '~/utils/sanitizeHtml'
-import type { Message } from '~/types/chat'
 import type { WhatsAppMessage } from '~/types/whatsapp'
 import type { User } from '~/types/users'
 
 const props = defineProps<{
-  message: Message | WhatsAppMessage
-  user?: User | undefined
+  whatsAppMessage: WhatsAppMessage | null | undefined
+  whatsAppUser: User | null | undefined
 }>()
 
 // CONSTANTS & STATES
 
 const { t } = useI18n()
-const relativeCreatedDate = ref(props.message?.createdAt ? useRelativeDate(props.message.createdAt) : '-')
-const chatStore = useChatStore()
-const selectedUser = computed(() => {
-  return chatStore.selectedChatAdmin?.user || null
-})
 
 const messageData = computed(() => {
-  const rawContent = props.message.content || ''
+  const rawContent = props.whatsAppMessage.content || ''
   const formattedContent = rawContent.replace(/\n/g, '<br>')
   const sanitizedContent = sanitizeHtml(formattedContent)
 
   let sender = ''
-  if (props.message.senderType === 'user') {
-    if (props.user) { sender = props.user.fullName }
-    else { sender = selectedUser.value?.fullName || t('whatsapp_chat.you') }
+  if (props.whatsAppMessage.senderType === 'user') {
+    sender = props.whatsAppUser.fullName || t('whatsapp_chat.you')
   }
   else { sender = t('whatsapp_chat.admin.whatsapp_agent') }
 
   return {
-    senderType: props.message?.senderType === 'user' ? t('chat.user') : t('chat.assistant'),
-    iconType: props.message?.senderType === 'user' ? 'user' : 'assistant',
-    createdAt: props.message.createdAt ? formatDate(props.message.createdAt, 'dddd, MMMM D, YYYY h:mm A') : '-',
-    createdAtRealtiveTime: relativeCreatedDate.value,
+    senderType: props.whatsAppMessage?.senderType === 'user' ? t('chat.user') : t('chat.assistant'),
+    iconType: props.whatsAppMessage?.senderType === 'user' ? 'user' : 'assistant',
+    createdAt: props.whatsAppMessage.createdAt ? formatDate(props.whatsAppMessage.createdAt, 'dddd, MMMM D, YYYY h:mm A') : '-',
     content: sanitizedContent,
     sender,
   }
@@ -46,27 +38,27 @@ const messageData = computed(() => {
 
 <template>
   <div>
-    <div class="message-card">
+    <div class="whatsapp-message-card">
       <LlmLink
-        :to="message?.senderType === 'user' ? `/admin/users/${message?.sender}` : `/admin/whatsapp-agents`"
-        class="message-profile-item"
+        :to="whatsAppMessage?.senderType === 'user' ? `/admin/users/${whatsAppMessage?.sender}` : `/admin/whatsapp-agents`"
+        class="whatsapp-message-profile-item"
       >
         <ProfileIcon v-if="messageData.iconType === 'user'" size="36px" />
-        <BrainIcon v-else-if="messageData.iconType === 'assistant'" size="36px" />
-        <div class="messagename-mail-wrapper">
-          <p class="messagename">
+        <BrainIcon v-else size="36px" />
+        <div class="whatsapp-messagename-mail-wrapper">
+          <p class="whatsapp-messagename">
             {{ messageData.sender }}
           </p>
-          <!-- <span class="message-mail">{{ messageData.createdAt }}</span> -->
+          <span class="whatsapp-message-mail">{{ messageData.createdAt }}</span>
         </div>
       </LlmLink>
-      <div class="message-content" v-html="messageData.content" />
+      <div class="whatsapp-message-content" v-html="messageData.content" />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.message-card {
+.whatsapp-message-card {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -77,7 +69,7 @@ const messageData = computed(() => {
   border-radius: 16px;
   padding: 1rem;
 
-  & .message-content {
+  & .whatsapp-message-content {
     width: 100%;
     margin-right: 1.5rem;
     background: var(--color-primary-100);
@@ -87,17 +79,7 @@ const messageData = computed(() => {
   }
 }
 
-.message-actions {
-  display: flex;
-  gap: 12px;
-  justify-self: flex-end;
-
-  & .delete-action {
-    margin-left: 2rem;
-  }
-}
-
-.message-profile-item {
+.whatsapp-message-profile-item {
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -106,21 +88,27 @@ const messageData = computed(() => {
   text-overflow: ellipsis;
   flex: 0 0 calc(30% - 22px);
   color: var(--color-primary-900);
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
 }
 
-.messagename-mail-wrapper {
+.whatsapp-messagename-mail-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  & .messagename {
+  & .whatsapp-messagename {
     margin: 0;
     font-size: var(--font-size-fluid-2);
     line-height: normal;
     font-weight: var(--font-weight-semibold);
     color: var(--color-primary-900);
   }
-  & .message-mail {
+
+  & .whatsapp-message-mail {
     margin: 0;
     line-height: normal;
     font-size: var(--font-size-fluid-1);
@@ -129,28 +117,22 @@ const messageData = computed(() => {
 }
 
 .dark {
-  .message-card {
+  .whatsapp-message-card {
     border: 0.5px solid var(--color-primary-700);
     background: var(--color-primary-900);
     box-shadow: 0 0.2rem 0.3rem var(--color-primary-800);
   }
-  .messagename-title-wrapper {
-    color: var(--color-primary-0);
-    & .messagename {
-      color: var(--color-primary-0);
-    }
-  }
-  .message-content {
+  .whatsapp-message-content {
     background: var(--color-primary-800);
   }
-  .message-profile-item {
+  .whatsapp-message-profile-item {
     color: var(--color-primary-0);
   }
-  .messagename-mail-wrapper {
-    & .messagename {
+  .whatsapp-messagename-mail-wrapper {
+    & .whatsapp-messagename {
       color: var(--color-primary-0);
     }
-    & .message-mail {
+    & .whatsapp-message-mail {
       color: var(--color-primary-100);
     }
   }

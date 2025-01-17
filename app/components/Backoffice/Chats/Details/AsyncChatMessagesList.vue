@@ -7,7 +7,7 @@ const props = defineProps<{
 
 const { $api } = useNuxtApp()
 
-const { execute: executeGetChatMessages, error: getChatMessagesError, status: getMessagesStatus, data: chatMessagesData } = await useAsyncData(`chatId-${props.chatId}`, () => $api.chat.GetAllChatMessagesAdmin(props.chatId), { lazy: true })
+const { error: getChatMessagesError, status: getMessagesStatus, data: chatMessagesData } = await useAsyncData(`chatId-${props.chatId}`, () => $api.chat.GetAllChatMessagesAdmin(props.chatId), { lazy: true })
 
 const delayedStatus = ref(getMessagesStatus.value)
 const MIN_LOADING_TIME = 600
