@@ -48,6 +48,7 @@ const submitDeleteChat = async () => {
         duration: 2500,
       })
     }
+    closeModal()
   }
 }
 const isDeleteChatLoading = computed(() => {
