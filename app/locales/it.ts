@@ -1157,6 +1157,7 @@ export default {
       last_name: 'Cognome',
       username: 'Nome utente',
       email: 'Email',
+      action_not_supported_for_user: 'L\'azione non è supportata per questo utente',
     },
     phone_numbers: {
       title: 'Numeri WhatsApp',

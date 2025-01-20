@@ -1156,6 +1156,7 @@ export default {
       last_name: '姓',
       username: 'ユーザー名',
       email: 'メール',
+      action_not_supported_for_user: 'このアクションはこのユーザーではサポートされていません',
     },
     phone_numbers: {
       title: 'WhatsApp番号',

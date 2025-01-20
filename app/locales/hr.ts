@@ -787,6 +787,7 @@ export default {
       last_name: 'Prezime',
       username: 'Korisničko ime',
       email: 'Email',
+      action_not_supported_for_user: 'Akcija nije podržana za ovoga korisnika',
     },
     phone_numbers: {
       title: 'WhatsApp brojevi',
