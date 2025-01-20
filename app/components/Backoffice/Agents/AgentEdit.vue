@@ -51,17 +51,69 @@ const form = reactive({
 
 const selectedLlmProvider = computed(() => form.configuration.llmProvider)
 
+const validateField = (
+  value: string,
+  options: { requiredMessage: string, min?: number, max?: number, lengthMessage?: string },
+  callback: (error?: Error) => void,
+) => {
+  if (!value || !value.trim()) {
+    callback(new Error(t(options.requiredMessage)))
+  }
+  else if (
+    (options.min && value.trim().length < options.min)
+    || (options.max && value.trim().length > options.max)
+  ) {
+    callback(
+      new Error(
+        t(options.lengthMessage || '', { min: options.min, max: options.max }),
+      ),
+    )
+  }
+  else {
+    callback()
+  }
+}
+
+const validateFieldWrapper
+  = (options: { requiredMessage: string, min?: number, max?: number, lengthMessage?: string }) =>
+    (_rule: any, value: string, callback: (error?: Error) => void) => {
+      validateField(value, options, callback)
+    }
+
 const rules = computed<FormRules>(() => ({
   'name': [
     { required: true, message: t('agents.rules.name.required_message'), trigger: 'blur' },
-    { min: 3, max: 50, message: t('agents.rules.name.length_message', { min: 3, max: 50 }), trigger: 'blur' },
+    {
+      validator: validateFieldWrapper({
+        requiredMessage: 'agents.rules.name.required_message',
+        min: 3,
+        max: 50,
+        lengthMessage: 'agents.rules.name.length_message',
+      }),
+      trigger: 'blur',
+    },
+
   ],
   'configuration.context': [
     { required: true, message: t('agents.rules.context.required_message'), trigger: 'blur' },
-    { min: 30, max: maxContext, message: t('agents.rules.context.length_message', { min: 30, max: maxContext }), trigger: 'blur' },
+    {
+      validator: validateFieldWrapper({
+        requiredMessage: 'agents.rules.context.required_message',
+        min: 30,
+        max: maxContext,
+        lengthMessage: 'agents.rules.context.length_message',
+      }),
+      trigger: 'blur',
+    },
   ],
   'description': [
     { required: true, message: t('agents.rules.description.required_message'), trigger: 'blur' },
+    {
+      validator: validateFieldWrapper({
+        requiredMessage: 'agents.rules.description.required_message',
+      }),
+      trigger: 'blur',
+    },
   ],
   'configuration.llmProvider': [
     { required: true, message: t('agents.rules.llmProvider.required_message'), trigger: 'change' },
@@ -71,6 +123,12 @@ const rules = computed<FormRules>(() => ({
   ],
   'language': [
     { required: true, message: t('agents.rules.language.required_message'), trigger: 'blur' },
+    {
+      validator: validateFieldWrapper({
+        requiredMessage: 'agents.rules.language.required_message',
+      }),
+      trigger: 'blur',
+    },
   ],
   'configuration.temperature': [
     { required: true, message: t('agents.rules.temperature.required_message'), trigger: 'change' },
