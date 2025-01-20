@@ -241,6 +241,7 @@ const tableData = computed(() => {
     :deep(ol),
     :deep(ul) {
       color: var(--color-primary-900);
+      padding-left: 1rem;
 
       li {
         margin-block: 12px;
@@ -248,7 +249,7 @@ const tableData = computed(() => {
     }
 
     :deep(ul) {
-      list-style: circle inside;
+      list-style: circle;
 
       > li {
         list-style-type: inherit;
