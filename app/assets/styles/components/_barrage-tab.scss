@@ -25,16 +25,17 @@
 
   html.dark {
     .barrage-tabs {
-      /*   background: var(--color-primary-800);
-      border: 1px solid var(--color-primary-700); */
       &__nav-wrap {
         &::after {
           --barrage-tab-runway-color: var(--color-primary-500);
         }
       }
+      &__active-bar {
+        background-color: var(--color-primary-0);
+      }
 
       &__item {
-        --barrage-tab-color: var(--color-primary-500);
+        color: var(--color-primary-200);
 
         &:hover {
           --barrage-tab-color: var(--color-primary-100);
@@ -46,8 +47,9 @@
         }
 
         &.is-active {
-          --barrage-tab-color: var(--color-primary-200);
-          border-bottom: 2px solid var(--color-blue-100);
+          --barrage-tab-color: var(--color-primary-100);
+          color: var(--color-primary-0);
+          /*  border-bottom: 2px solid var(--color-primary-0); */
         }
       }
     }
@@ -74,7 +76,7 @@
       bottom: 0;
       left: 0;
       height: 2px;
-      background-color: getCssVar('color-primary');
+      background-color: var(--color-primary-900);
       z-index: 1;
       transition:
         width 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
@@ -95,7 +97,7 @@
       border-radius: 3px;
       text-align: center;
       font-size: 12px;
-      color: getCssVar('text-color', 'primary');
+      color: var(--color-primary-900);
       cursor: pointer;
       transition: all 0.15s;
 
@@ -110,7 +112,7 @@
       }
 
       &:hover {
-        color: getCssVar('color-primary');
+        color: var(--color-primary-700);
       }
     }
 

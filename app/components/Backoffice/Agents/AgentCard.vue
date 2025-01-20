@@ -137,6 +137,7 @@ const editClick = (): void => {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    align-items: center;
 
     @include viewport-s {
       grid-template-columns: repeat(3, 1fr);

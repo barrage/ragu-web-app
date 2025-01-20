@@ -38,7 +38,7 @@ const openDeleteModal = () => {
 
 <template>
   <el-card class="collection-card is-primary">
-    <div class=" grid">
+    <div class="grid">
       <LlmLink
         :to="`/admin/collections/${collection?.id}`"
         type="link"

@@ -5,12 +5,14 @@ const props = withDefaults(defineProps<{
   hasProfileDescription?: boolean
   gridColumns?: number
   mergeButtons?: boolean
+  hasProfile?: boolean
 }>(), {
   numberOfLabelDescriptions: 3,
   numberOfActions: 3,
   hasProfileDescription: true,
   gridColumns: 6,
   mergeButtons: false,
+  hasProfile: true,
 })
 
 const gridTemplateColumns = computed(() => `repeat(${props.gridColumns}, 1fr)`)
@@ -21,7 +23,7 @@ const gridTemplateColumns = computed(() => `repeat(${props.gridColumns}, 1fr)`)
     class="skeleton-card"
   >
     <div class="skeleton-card-body" :style="{ gridTemplateColumns }">
-      <div class="skeleton-profile">
+      <div v-if="hasProfile" class="skeleton-profile">
         <div class="skeleton-avatar" />
         <div class="skeleton-name-wrapper">
           <div class="skeleton-line" />

@@ -267,7 +267,7 @@ export default class ChatServise extends FetchFactory {
    */
   async PatchEvaluateChatMessage(chatId: string, messageId: string, evaluation: boolean): Promise<void> {
     try {
-      await this.$fetch<void>(`${this.chatsEndpoint}/${chatId}`, {
+      await this.$fetch<void>(`${this.chatsEndpoint}/${chatId}/messages/${messageId}`, {
         method: 'PATCH',
         credentials: 'include',
         body: {

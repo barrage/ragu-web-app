@@ -19,6 +19,22 @@ export interface AgentCollection {
   updatedAt: Date | string
 }
 
+export interface EvaluationCounts {
+  positive: number
+  negative: number
+  total: number
+}
+
+export interface AgentVersion {
+  configuration: Configuration
+  evaluationCounts: EvaluationCounts
+}
+
+export interface AgentVersions {
+  items: Configuration[]
+  total: number
+}
+
 export interface AllAgentResponse {
   items: Agents[]
   total: number
@@ -29,6 +45,23 @@ export interface AllAppAgentsResponse {
   total: number
 }
 
+export interface AgentVersionEvaluationMessages {
+  items: EvaluationMessage[]
+  total: number
+}
+
+export interface EvaluationMessage {
+  chatId: string
+  content: string
+  createdAt: Date | string
+  evaluation: boolean | null
+  feedback: string
+  id: string
+  responseTo: null
+  sender: string
+  senderType: string
+  updatedAt: Date | string
+}
 export interface Agents {
   agent: SingleAgent
   configuration: Configuration

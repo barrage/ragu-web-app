@@ -1,13 +1,9 @@
 <script lang="ts" setup>
 import DeactivateAgentModalBackoffice from './DeactivateAgentModalBackoffice.vue'
 import type { Agents } from '~/types/agent'
-import type { Pagination } from '~/types/pagination'
-
-// PROPS & EMITS
 
 const props = defineProps<{
   agents: Agents[] | null | undefined
-  pagination: Pagination
 }>()
 
 const emits = defineEmits<{
@@ -15,10 +11,6 @@ const emits = defineEmits<{
   (event: 'agentDeactivated'): void
   (event: 'agentActivated'): void
 }>()
-
-// CONSTANTS
-
-// FUNCTIONS
 
 /* Activate Agent */
 const selectedAgentActivate = ref<Agents | null>(null)
@@ -49,7 +41,7 @@ const agentDeactivated = () => {
 <template>
   <div class="agents-list-container">
     <div class="agents-list">
-      <div
+      <template
         v-for="(agent, index) in props.agents"
         :key="agent.agent.id"
       >
@@ -61,7 +53,7 @@ const agentDeactivated = () => {
           @activate-agent="openActivateAgentModal(agent)"
           @deactivate-agent="openDeactivateAgentModal(agent)"
         />
-      </div>
+      </template>
     </div>
     <ActivateAgentModalBackoffice
       v-model="activateAgentModalVisible"
