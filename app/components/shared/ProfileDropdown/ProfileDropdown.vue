@@ -109,7 +109,7 @@ function switchRoute() {
     ref="dropdownRef"
     v-motion-slide-top
     :delay="1500"
-    trigger="click"
+    trigger="hover"
     :popper-options="popperOptions"
     @visible-change="handleDropdownVisibleChange"
   >
