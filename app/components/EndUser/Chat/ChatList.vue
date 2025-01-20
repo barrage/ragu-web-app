@@ -79,11 +79,22 @@ const chatId = computed(() => {
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
+
+    & .chat-title::after {
+      background: linear-gradient(
+        to left,
+        var(--color-primary-300),
+        transparent
+      );
+    }
   }
 
   &:hover {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
+    & .chat-title::after {
+      display: none;
+    }
   }
 }
 
@@ -122,14 +133,30 @@ const chatId = computed(() => {
 
     &:hover {
       background: var(--color-primary-700);
-      color: var(--color-primary-0);
+      color: var(--color-primary-100);
       .add-icon {
         color: var(--color-primary-400);
+      }
+
+      & .chat-title::after {
+        background: linear-gradient(
+          to left,
+          var(--color-primary-700),
+          transparent
+        );
       }
     }
     &.selected {
       background: var(--color-primary-700);
-      color: var(--color-primary-0);
+      color: var(--color-primary-100);
+
+      & .chat-title::after {
+        background: linear-gradient(
+          to left,
+          var(--color-primary-700),
+          transparent
+        );
+      }
     }
   }
 
