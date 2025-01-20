@@ -772,6 +772,7 @@ export default {
       last_name: 'Last Name',
       username: 'Username',
       email: 'Email',
+      action_not_supported_for_user: 'Action is not supported for this user',
     },
     phone_numbers: {
       title: 'WhatsApp Numbers',

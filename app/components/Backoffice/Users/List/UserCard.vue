@@ -22,6 +22,8 @@ interface Emits {
 
 const { t } = useI18n()
 const authStore = useAuthStore()
+const { user: authUser } = storeToRefs(authStore)
+const authUserId = ref(authUser.value.id)
 
 const userData = computed(() => {
   return {
@@ -33,10 +35,6 @@ const userData = computed(() => {
     updatedAt: props.user?.updatedAt ? useRelativeDate(props.user.updatedAt) : t('users.user_card.unknown_date'),
     createdAt: props.user?.createdAt ? useRelativeDate(props.user.createdAt) : t('users.user_card.unknown_date'),
   }
-})
-
-const isDeleteingOwnProfile = computed(() => {
-  return props.user.id === authStore.user?.id
 })
 </script>
 
@@ -96,11 +94,11 @@ const isDeleteingOwnProfile = computed(() => {
 
         <LlmTooltip
           v-if="props.user.active"
-          :content="t('users.user_card.deactivate_user')"
+          :content="authUserId === user.id ? $t('users.user_card.action_not_supported_for_user') : $t('users.user_card.deactivate_user')"
         >
           <el-button
-            plain
             data-testid="bo-user-card-deactivate-button"
+            :disabled="authUserId === user.id"
             @click="emits('deactivateUser', props.user)"
           >
             <PersonLockIcon size="20px" />
@@ -119,13 +117,12 @@ const isDeleteingOwnProfile = computed(() => {
           </el-button>
         </LlmTooltip>
 
-        <LlmTooltip :content="$t('users.user_card.delete_user')">
+        <LlmTooltip :content="authUserId === user.id ? $t('users.user_card.action_not_supported_for_user') : $t('users.user_card.delete_user')">
           <el-button
-            plain
-            type="danger"
+            :type="authUserId === user.id ? undefined : 'danger'"
             data-testid="bo-user-card-delete-button"
+            :disabled="authUserId === user.id"
             class="delete-action"
-            :disabled="isDeleteingOwnProfile"
             @click="emits('deleteUser', props.user)"
           >
             <DeleteIcon size="20px" />

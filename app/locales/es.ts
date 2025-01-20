@@ -1161,6 +1161,7 @@ export default {
       last_name: 'Apellido',
       username: 'Nombre de usuario',
       email: 'Correo electrónico',
+      action_not_supported_for_user: 'La acción no es compatible con este usuario',
     },
     phone_numbers: {
       title: 'Números de WhatsApp',
