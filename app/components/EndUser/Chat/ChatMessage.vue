@@ -100,13 +100,23 @@ marked.setOptions({
   },
 })
 
-const formatContent = (content: string) => {
+const formatContent = (content: string, isAssistantMessage: boolean) => {
   if (!content) { return '' }
-  const rawHtml = marked(content)
+
+  let rawHtml
+
+  if (isAssistantMessage) {
+    rawHtml = marked(content)
+  }
+  else {
+    const escapedContent = content.replace(/[-_*~`>#+=|.!]/g, '\\$&')
+    rawHtml = marked(escapedContent)
+  }
+
   return sanitizeHtml(rawHtml)
 }
 
-const sanitizedDisplayedContent = computed(() => formatContent(displayedContent.value))
+const sanitizedDisplayedContent = computed(() => formatContent(displayedContent.value, isAssistantMessage.value))
 
 const isAnimating = ref(false)
 let animationTimeout: number | null = null
