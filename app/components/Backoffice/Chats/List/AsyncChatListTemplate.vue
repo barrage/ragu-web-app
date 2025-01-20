@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { type LocationQuery, useRoute, useRouter } from 'vue-router'
-import GlobalCardListLoader from '../../shared/Skeletons/GlobalCardListLoader.vue'
+import type { LocationQuery } from 'vue-router'
 import type { Sort, SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
 import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'

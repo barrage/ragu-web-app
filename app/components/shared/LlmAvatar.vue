@@ -89,7 +89,7 @@ const DefaultIcon = computed(() => {
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
-
+  background-color: var(--color-primary-200);
   img {
     width: 100%;
     height: 100%;

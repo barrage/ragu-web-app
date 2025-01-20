@@ -1,3 +1,5 @@
+import { version } from 'vue'
+
 export default {
   seo: {
     defaultTitle: 'LLMAO - Interakcija s prilagođenim AI agentima',
@@ -920,14 +922,26 @@ export default {
     empty_state_desc_all: 'Trenutno nema agenata za prikazivanje.',
     titles: {
       mainTitle: 'Agenti',
-      details: 'Detalji agenta',
+      details: 'Detalji',
       configuration: 'Konfiguracija',
+      evaluations: 'Evaluacije',
+      statistic: 'Statistika',
+      versions: 'Verzije',
+      instructions: 'Upute',
       description: 'Upravljajte agentima odgovornim za interakciju s AI',
       edit: 'Uredi agenta',
       create: 'Stvori agenta',
       createDescription: 'Stvorite novog agenta unosom njegovog imena i konteksta kako biste započeli!',
       deleteTitle: 'Izbrisati agenta?',
       deleteDescription: 'Jeste li sigurni da želite izbrisati agenta?',
+      rollback_version_modal: 'Vraćanje verzije agenta',
+    },
+    tooltips: {
+      version_details: 'Pogledajte detalje verzije',
+      rollback_version: 'Postavi verziju kao aktivnu',
+    },
+    descriptions: {
+      rollback_version_modal: 'Ovom akcijom agent će biti vraćen na prethodno odabranu verziju. Sve promjene napravljene nakon odabrane verzije bit će zamijenjene podacima iz te verzije. Agent ce biti vracen na verziju broj {version}',
     },
     agent_card: {
       unknown_id: 'Nepoznati ID agenta',
@@ -999,6 +1013,7 @@ export default {
       summaryInstruction: 'Uputa za Sažetak',
       promptInstruction: 'Uputa za Prompt',
       titleInstruction: 'Uputa za Naslov',
+      version: 'Verzija',
     },
     buttons: {
       create: 'Stvori Agenta',
@@ -1008,6 +1023,7 @@ export default {
       save: 'Spremi',
       overview: 'Pregled Agenta',
       filter: 'Filtriraj',
+      submit: 'Potvrdi',
     },
     placeholder: {
       llmProvider: 'Odaberite LLM Pružatelja',
@@ -1041,6 +1057,10 @@ export default {
       upload_success_description: 'Slika agenta je uspješno učitana.',
       upload_error_title: 'Greška pri učitavanju slike agenta',
       upload_error_description: 'Došlo je do pogreške prilikom učitavanja slike agenta. Molimo pokušajte ponovno.',
+      rollback_version_success_title: 'Verzija uspješno vraćena',
+      rollback_version_success_description: 'Agent je uspješno vraćen na odabranu verziju. Sve promjene su ažurirane prema verziji koju ste odabrali.',
+      rollback_version_error_title: 'Pogreška prilikom vraćanja verzije',
+      rollback_version_error_description: 'Došlo je do pogreške prilikom pokušaja vraćanja agenta na odabranu verziju. Pokušajte ponovo ili kontaktirajte podršku.',
     },
     rules: {
       name: {

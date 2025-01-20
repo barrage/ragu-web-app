@@ -1,13 +1,7 @@
 <script lang="ts" setup>
 import type { TabsPaneContext } from 'element-plus'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
-import type { Agent } from '~/types/agent'
-import PersonKeyIcon from '~/assets/icons/svg/person-key.svg'
-import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
-import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
-import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
-import BrainIcon from '~/assets/icons/svg/brain.svg'
-import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
+import type { Agent, Configuration } from '~/types/agent'
 import { StatusType } from '~/types/statusTypes'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
@@ -20,6 +14,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (event: 'refreshAgent'): void
+  (event: 'agentVersionRollback', config: Configuration): Configuration
 }>()
 
 // STATES
@@ -31,12 +26,6 @@ const handleAgentUpdated = () => {
   emits('refreshAgent')
   agentStore.setEditMode(false)
 }
-
-// API
-
-const { execute: deleteProfilePicture, error } = await useAsyncData(() => $api.agent.DeleteAgentAvatar(props.singleAgent?.agent?.id as string), { immediate: false })
-
-// COMPUTED
 
 const agentData = computed(() => {
   return {
@@ -57,10 +46,11 @@ const agentData = computed(() => {
     promptInstruction: props.singleAgent?.configuration?.agentInstructions?.promptInstruction || t('agents.agent_card.unknown_instruction'),
     createdAt: props.singleAgent?.agent?.createdAt ? formatDate(props.singleAgent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
     avatar: props.singleAgent?.agent?.avatar || undefined,
+    version: props.singleAgent?.configuration?.version || '-',
   }
 })
 
-// FUNCTIONS
+const { execute: deleteProfilePicture, error } = await useAsyncData(() => $api.agent.DeleteAgentAvatar(props.singleAgent?.agent?.id as string), { immediate: false })
 
 const editClick = (): void => {
   agentStore.setEditMode(true)
@@ -92,7 +82,6 @@ const handleGetSingleAgent = () => {
 }
 
 /* Profile Picture */
-
 const isDeleteModalOpen = ref(false)
 
 const closeDeleteModal = () => {
@@ -133,10 +122,14 @@ const handleRemovePicture = async () => {
   refreshAgent()
   closeDeleteModal()
 }
-const activeName = ref('agent')
+const activeName = ref('details')
 
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event)
+const handleTabClick = (tab: TabsPaneContext, event: Event) => {
+  console.warn(tab, event)
+}
+
+const handleAgentVersionRollback = async (agentConfig: Configuration) => {
+  emits('agentVersionRollback', agentConfig)
 }
 </script>
 
@@ -150,17 +143,24 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
             :alt="t('agents.agent_avatar')"
             fit="cover"
             default-image="agent"
-            size="large"
+            :size="96"
           />
           <div>
-            <h5 class="username">
+            <h1 class="agentname">
               {{ `${agentData.name}` }}
-            </h5>
-            <ElTag :type="agentData.statusType" size="small">
-              <span class="status-dot" />  {{ agentData?.status }}
-            </ElTag>
+            </h1>
+            <div class="agent-tags-wrapper">
+              <ElTag :type="agentData.statusType" size="small">
+                <span class="status-dot" />  {{ agentData?.status }}
+              </ElTag>
+              <ElTag type="primary" size="small">
+                v.{{ agentData?.version }}
+              </ElTag>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="agent-details-actions-wrapper">
         <div class="change-picture">
           <el-button
             class="edit-picture-button"
@@ -180,8 +180,6 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
             {{ t('profile.change_picture.delete_title') }}
           </el-button>
         </div>
-      </div>
-      <div class="agent-details-actions-wrapper">
         <el-button
           v-if="!props.singleAgent?.agent?.active"
           size="small"
@@ -191,6 +189,16 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
         >
           <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
         </el-button>
+
+        <el-button
+          size="small"
+          type="primary"
+          plain
+          @click="editClick()"
+        >
+          <EditIcon size="20px" />  {{ t('agents.buttons.edit') }}
+        </el-button>
+
         <el-button
           v-if="props.singleAgent?.agent?.active"
           size="small"
@@ -200,230 +208,44 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
         >
           <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
         </el-button>
-        <el-button
-          size="small"
-          type="primary"
-          plain
-          @click="editClick()"
-        >
-          <EditIcon size="20px" />  {{ t('agents.buttons.edit') }}
-        </el-button>
       </div>
     </div>
 
     <el-tabs
       v-model="activeName"
       class="agent-details-tabs"
-      @tab-click="handleClick"
+      data-testid="bo-agent-details-tabs"
+      @tab-click="handleTabClick"
     >
-      <el-tab-pane label="Agent" name="agent">
-        <div class="agent-informations-section">
-          <LabelDescriptionItem
-            :label="t('agents.labels.name')"
-            :description="agentData.name"
-            horizontal
-          >
-            <template #customLabel>
-              <div class="agent-details-custom-label">
-                <PersonInfoIcon size="18px" />
-                <span>  {{ t('agents.labels.name') }}</span>
-              </div>
-            </template>
-          </LabelDescriptionItem>
-
-          <LabelDescriptionItem
-            :label="t('agents.labels.id')"
-            :description="agentData.id"
-            horizontal
-          >
-            <template #customLabel>
-              <div class="agent-details-custom-label">
-                <PersonKeyIcon size="18px" />
-                <span>  {{ t('agents.labels.id') }}</span>
-              </div>
-            </template>
-          </LabelDescriptionItem>
-
-          <LabelDescriptionItem
-            :label="t('agents.labels.description') "
-            :description="agentData.description"
-            horizontal
-          >
-            <template #customLabel>
-              <div class="agent-details-custom-label">
-                <PersonInfoIcon size="18px" />
-                <span>  {{ t('agents.labels.description') }}</span>
-              </div>
-            </template>
-          </LabelDescriptionItem>
-
-          <LabelDescriptionItem
-            :label=" t('agents.labels.language')"
-            :description="agentData.language"
-            horizontal
-          >
-            <template #customLabel>
-              <div class="agent-details-custom-label">
-                <PersonInfoIcon size="18px" />
-                <span>  {{ t('agents.labels.language') }}</span>
-              </div>
-            </template>
-          </LabelDescriptionItem>
-          <LabelDescriptionItem
-            :label="t('agents.labels.created_at') "
-            :description="agentData.createdAt"
-            horizontal
-          >
-            <template #customLabel>
-              <div class="agent-details-custom-label">
-                <PersonCalendarIcon size="18px" />
-                <span>  {{ t('agents.labels.created_at') }}</span>
-              </div>
-            </template>
-          </LabelDescriptionItem>
-          <LabelDescriptionItem
-            :label="t('agents.labels.updated_at')"
-            :description="agentData.updatedAt"
-            horizontal
-          >
-            <template #customLabel>
-              <div class="agent-details-custom-label">
-                <PersonClockIcon size="18px" />
-                <span>  {{ t('agents.labels.updated_at') }}</span>
-              </div>
-            </template>
-          </LabelDescriptionItem>
-        </div>
+      <el-tab-pane :label="t('agents.titles.details')" name="details">
+        <template v-if="activeName === 'details'">
+          <AgentOverallDetails :single-agent="props.singleAgent" />
+        </template>
       </el-tab-pane>
-      <el-tab-pane label="Configuration" name="configuration">
-        <div class="configuration-title-wrapper">
-          <PersonSettingsIcon size="32px" /> <h6 class="agent-configuration-title">
-            {{ t('agents.titles.configuration') }}
-          </h6>
-        </div>
-        <LabelDescriptionItem
-          :label=" t('agents.labels.llmProvider')"
-          :description="agentData.llmProvider"
-          horizontal
-        >
-          <template #customLabel>
-            <div class="agent-details-custom-label">
-              <BrainIcon size="18px" />
-              <span>  {{ t('agents.labels.llmProvider') }}</span>
-            </div>
-          </template>
-        </LabelDescriptionItem>
-        <LabelDescriptionItem
-          :label="t('agents.labels.model')"
-          :description="agentData.model"
-          horizontal
-        >
-          <template #customLabel>
-            <div class="agent-details-custom-label">
-              <BrainIcon size="18px" />
-              <span>  {{ t('agents.labels.model') }}</span>
-            </div>
-          </template>
-        </LabelDescriptionItem>
-
-        <LabelDescriptionItem
-          :label="t('agents.labels.temperature')"
-          :description="agentData.temperature?.toString()"
-          horizontal
-        >
-          <template #customLabel>
-            <div class="agent-details-custom-label">
-              <BrainIcon size="18px" />
-              <span>  {{ t('agents.labels.temperature') }}</span>
-            </div>
-          </template>
-        </LabelDescriptionItem>
-
-        <LabelDescriptionItem
-          :label="t('agents.labels.languageInstruction')"
-          :description="agentData.languageInstruction"
-        >
-          <template #customLabel>
-            <div class="agent-details-custom-label">
-              <PersonClockIcon size="18px" />
-              <span>  {{ t('agents.labels.languageInstruction') }}</span>
-            </div>
-          </template>
-          <template #customDescription>
-            <HighlightedText :text="agentData.languageInstruction" />
-          </template>
-        </LabelDescriptionItem>
-        <LabelDescriptionItem
-          :label="t('agents.labels.summaryInstruction')"
-          :description="agentData.summaryInstruction"
-        >
-          <template #customLabel>
-            <div class="agent-details-custom-label">
-              <PersonClockIcon size="18px" />
-              <span>  {{ t('agents.labels.summaryInstruction') }}</span>
-            </div>
-          </template>
-          <template #customDescription>
-            <HighlightedText :text="agentData.summaryInstruction" />
-          </template>
-        </LabelDescriptionItem>
-        <LabelDescriptionItem
-          :label="t('agents.labels.titleInstruction')"
-          :description="agentData.titleInstruction"
-        >
-          <template #customLabel>
-            <div class="agent-details-custom-label">
-              <PersonClockIcon size="18px" />
-              <span>  {{ t('agents.labels.titleInstruction') }}</span>
-            </div>
-          </template>
-          <template #customDescription>
-            <HighlightedText :text="agentData.titleInstruction" />
-          </template>
-        </LabelDescriptionItem>
-
-        <LabelDescriptionItem
-          :label="t('agents.labels.context')"
-          :description="agentData.context"
-        >
-          <template #customLabel>
-            <div class="agent-details-custom-label">
-              <PersonInfoIcon size="18px" />
-              <span>  {{ t('agents.labels.context') }}</span>
-            </div>
-          </template>
-          <template #customDescription>
-            <HighlightedText :text="agentData.context" />
-          </template>
-        </LabelDescriptionItem>
-
-        <LabelDescriptionItem
-          :label="t('agents.labels.promptInstruction')"
-          :description="agentData.promptInstruction"
-        >
-          <template #customLabel>
-            <div class="agent-details-custom-label">
-              <PersonInfoIcon size="18px" />
-              <span>  {{ t('agents.labels.promptInstruction') }}</span>
-            </div>
-          </template>
-          <template #customDescription>
-            <HighlightedText :text="agentData.promptInstruction" />
-          </template>
-        </LabelDescriptionItem>
+      <el-tab-pane :label="t('agents.titles.configuration')" name="configuration">
+        <template v-if="activeName === 'configuration'" />
+        <AgentConfigurationDetails :single-agent="props.singleAgent" />
       </el-tab-pane>
-      <el-tab-pane label="Collections" name="collections">
-        <AgentCollections :agent-collections="props.singleAgent?.collections" @refresh-agent="handleGetSingleAgent" />
+      <el-tab-pane :label="t('collections.title')" name="collections">
+        <template v-if="activeName === 'collections'">
+          <AgentCollections :agent-collections="props.singleAgent?.collections" @refresh-agent="handleGetSingleAgent" />
+        </template>
       </el-tab-pane>
 
-      <el-tab-pane label="Evaluations" name="evaluations">
-        Evaluations
+      <el-tab-pane :label="t('agents.titles.evaluations')" name="evaluations">
+        <template v-if="activeName === 'evaluations'">
+          <AgentEvaluationsList />
+        </template>
       </el-tab-pane>
-      <el-tab-pane label="Statistics" name="statistics">
-        Statistics
+      <el-tab-pane :label="t('agents.titles.statistic')" name="statistics">
+        <template v-if="activeName === 'statistics'">
+          <AgentStatistic />
+        </template>
       </el-tab-pane>
-      <el-tab-pane label="Versions" name="versions">
-        Versions
+      <el-tab-pane :label="t('agents.titles.versions')" name="versions">
+        <template v-if="activeName === 'versions'">
+          <AsyncAgentVersionList :agent="props.singleAgent" @rollback-agent-version="handleAgentVersionRollback" />
+        </template>
       </el-tab-pane>
     </el-tabs>
   </template>
@@ -470,7 +292,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
   display: flex;
   gap: 2rem;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   padding-block: 1rem;
   flex-wrap: wrap;
 
@@ -494,54 +316,28 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
     flex-wrap: wrap;
   }
 }
-.configuration-title-wrapper {
-  grid-column: span 2;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 22px 0px 0px;
-  color: var(--color-primary-800);
-  & .agent-configuration-title {
-    color: var(--color-primary-800);
-    font-weight: var(--font-weight-semibold);
-  }
-}
-.agent-informations-section {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto;
-  padding-block: 2rem;
-  row-gap: 1.5rem;
-  column-gap: 32px;
 
-  :deep(.description) {
-    font-size: var(--font-size-fluid-2);
-  }
-}
-
-.agent-details-custom-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 0 0 calc(30% - 0.5rem);
-  color: var(--color-primary-900);
-  font-size: var(--font-size-fluid-3);
-  max-height: fit-content;
-
-  svg {
-    flex-shrink: 0;
-  }
+.agent-details-tabs {
+  margin-top: var(--spacing-fluid-xs);
 }
 
 .agentname {
+  font-size: var(--font-size-fluid-6);
   font-weight: var(--font-weight-semibold);
   color: var(--color-primary-900);
+}
+
+.agent-tags-wrapper {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding-top: 8px;
 }
 
 .avatar-wrapper {
   display: flex;
   gap: 0.5rem;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .change-picture {
@@ -571,16 +367,10 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
   & .label,
   .agentname {
-    color: var(--color-primary-100);
+    color: var(--color-primary-0);
   }
   & .description {
     color: var(--color-primary-0);
-  }
-  & .configuration-title-wrapper {
-    color: var(--color-primary-100);
-    & .agent-configuration-title {
-      color: var(--color-primary-100);
-    }
   }
 }
 </style>

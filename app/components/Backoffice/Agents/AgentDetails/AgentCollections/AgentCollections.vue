@@ -55,10 +55,10 @@ const handleCollectionDeleted = () => {
 <template>
   <section class="agent-collections-section grid">
     <div class="agent-collections-header-container">
-      <h3 class="agent-collections-title">
-        <FolderPersonIcon size="42px" />
+      <h5 class="agent-collections-title">
+        <FolderPersonIcon size="38px" />
         {{ t('collections.assign_collection.agent_collections') }}
-      </h3>
+      </h5>
       <div v-if="agentCollections?.length" class="agent-collections-header-actions-container">
         <el-button
           size="small"
@@ -122,7 +122,6 @@ const handleCollectionDeleted = () => {
 <style lang="scss" scoped>
 .agent-collections-section {
   margin-top: 22px;
-  padding-block: var(--spacing-fluid-l);
   & .agent-collections-header-container {
     grid-column: span 12;
     display: flex;

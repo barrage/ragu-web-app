@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import ArrowLeftIcon from '~/assets/icons/svg/arrow-left.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
+import type { Configuration } from '~/types/agent'
 
 const { t } = useI18n()
 const { $api } = useNuxtApp()
@@ -12,16 +13,18 @@ useHead({
   title: computed(() => t('agents.titles.details')),
 })
 
-// CONSTATNS
-
 const route = useRoute()
-
 const selectedAgentId = ref(route.params.agentId as string)
 
-// API CALLS
 const { execute: getAgentData, error: getSingleAgentError, status: getSingleAgentStatus, data: singleAgentData } = await useAsyncData(() => $api.agent.GetSingleAgent(selectedAgentId.value), { lazy: true })
 
 errorHandler(getSingleAgentError)
+
+const handleAgentVersionRollback = async (agentConfig: Configuration) => {
+  if (agentConfig?.id) {
+    await getAgentData()
+  }
+}
 </script>
 
 <template>
@@ -40,12 +43,12 @@ errorHandler(getSingleAgentError)
       <AgentDetails
         :single-agent="singleAgentData"
         @refresh-agent="getAgentData"
+        @agent-version-rollback="handleAgentVersionRollback"
       />
     </template>
 
     <template v-else>
       <EmptyState
-
         :title="t('agents.agent_card.empty_state_title')"
         :description="t('agents.agent_card.empty_state_desc')"
       >

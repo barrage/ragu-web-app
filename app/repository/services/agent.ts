@@ -1,13 +1,14 @@
 import FetchFactory from '../fetchFactory'
 import type { AssignCollectionPayload } from '~/types/collection'
-import type { Agent, AgentDetail, Agents, AllAgentResponse, AllAppAgentsResponse } from '~/types/agent'
+import type { Agent, AgentDetail, AgentVersion, AgentVersionEvaluationMessages, AgentVersions, Agents, AllAgentResponse, AllAppAgentsResponse } from '~/types/agent'
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
-  private readonly adminEndpoint: string = 'admin/agents'
-  private readonly endUserendpoint: string = '/agents'
+  private readonly adminAgentsEndpoint: string = 'admin/agents'
+  private readonly endUserAgentsEndpoint: string = '/agents'
 
   /**
+   *
    * Fetches a list of agents with optional filtering, sorting, searching and pagination.
    *
    * @param {number} [page=1] - The current page of the results. Defaults to the first page.
@@ -48,7 +49,7 @@ export default class AgentService extends FetchFactory {
 
       const queryString = new URLSearchParams(queryParams).toString()
 
-      return await this.$fetch<AllAgentResponse>(`${this.adminEndpoint}?${queryString}`, {
+      return await this.$fetch<AllAgentResponse>(`${this.adminAgentsEndpoint}?${queryString}`, {
         credentials: 'include',
       })
     }
@@ -61,6 +62,7 @@ export default class AgentService extends FetchFactory {
   }
 
   /**
+   *
    * Fetches a list of agents with optional filtering, sorting, and pagination.
    *
    * @param {number} [page=1] - The current page of the results. Defaults to the first page.
@@ -91,7 +93,7 @@ export default class AgentService extends FetchFactory {
       }).toString()
 
       // Make the API request with the constructed URL
-      return await this.$fetch<AllAppAgentsResponse>(`${this.endUserendpoint}?${queryParams}`, {
+      return await this.$fetch<AllAppAgentsResponse>(`${this.endUserAgentsEndpoint}?${queryParams}`, {
         credentials: 'include',
       })
     }
@@ -105,6 +107,7 @@ export default class AgentService extends FetchFactory {
   }
 
   /**
+   *
    * Fetches single agent for a specific agent by its ID.
    * @param id - The ID of the agent.
    * @returns A promise that resolves to an Agent object.
@@ -112,7 +115,7 @@ export default class AgentService extends FetchFactory {
    */
   async GetSingleAgent(agentId: string): Promise<Agent> {
     try {
-      return await this.$fetch<Agent>(`${this.adminEndpoint}/${agentId}`, {
+      return await this.$fetch<Agent>(`${this.adminAgentsEndpoint}/${agentId}`, {
         credentials: 'include',
       })
     }
@@ -132,7 +135,7 @@ export default class AgentService extends FetchFactory {
    */
   async CreateAgent(body: AgentDetail): Promise<Agents> {
     try {
-      return await this.$fetch(this.adminEndpoint, {
+      return await this.$fetch<Agents>(this.adminAgentsEndpoint, {
         credentials: 'include',
         method: 'POST',
         body: JSON.stringify(body),
@@ -155,7 +158,7 @@ export default class AgentService extends FetchFactory {
    */
   async UpdateAgent(id: string, body: Agent): Promise<Agent> {
     try {
-      return await this.$fetch(`${this.adminEndpoint}/${id}`, {
+      return await this.$fetch<Agents>(`${this.adminAgentsEndpoint}/${id}`, {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(body),
@@ -177,7 +180,7 @@ export default class AgentService extends FetchFactory {
    */
   async DeleteAgent(id: number): Promise<number> {
     try {
-      await this.$fetch(`${this.adminEndpoint}/${id}`, {
+      await this.$fetch(`${this.adminAgentsEndpoint}/${id}`, {
         credentials: 'include',
         method: 'DELETE',
       })
@@ -202,7 +205,7 @@ export default class AgentService extends FetchFactory {
   async UpdateAgentCollection(id: string, body: AssignCollectionPayload): Promise<any> {
     const plainPayload = toRaw(body)
     try {
-      await this.$fetch(`${this.adminEndpoint}/${id}/collections`, {
+      await this.$fetch(`${this.adminAgentsEndpoint}/${id}/collections`, {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(plainPayload),
@@ -230,7 +233,7 @@ export default class AgentService extends FetchFactory {
         provider,
       }).toString()
 
-      return await this.$fetch(`${this.adminEndpoint}/collections?${queryParams}`, {
+      return await this.$fetch<void>(`${this.adminAgentsEndpoint}/collections?${queryParams}`, {
         method: 'DELETE',
         credentials: 'include',
       })
@@ -251,7 +254,7 @@ export default class AgentService extends FetchFactory {
    */
   async PutActiveAgent(agentId: string): Promise<void> {
     try {
-      await this.$fetch<void>(`${this.adminEndpoint}/${agentId}`, {
+      await this.$fetch<void>(`${this.adminAgentsEndpoint}/${agentId}`, {
         method: 'PUT',
         credentials: 'include',
         body: {
@@ -275,7 +278,7 @@ export default class AgentService extends FetchFactory {
    */
   async PutDeactivateAgent(agentId: string): Promise<void> {
     try {
-      await this.$fetch<void>(`${this.adminEndpoint}/${agentId}`, {
+      await this.$fetch<void>(`${this.adminAgentsEndpoint}/${agentId}`, {
         method: 'PUT',
         credentials: 'include',
         body: {
@@ -299,7 +302,7 @@ export default class AgentService extends FetchFactory {
    */
   async DeleteAgentAvatar(agentId: string): Promise<void> {
     try {
-      await this.$fetch<void>(`${this.adminEndpoint}/${agentId}/avatars`, {
+      await this.$fetch<void>(`${this.adminAgentsEndpoint}/${agentId}/avatars`, {
         method: 'DELETE',
         credentials: 'include',
       })
@@ -321,7 +324,7 @@ export default class AgentService extends FetchFactory {
 
   async UpdateAgentAvatar(agentId: string, avatar: File): Promise<void> {
     try {
-      return await this.$fetch<void>(`${this.adminEndpoint}/${agentId}/avatars`, {
+      return await this.$fetch<void>(`${this.adminAgentsEndpoint}/${agentId}/avatars`, {
         method: 'POST',
         body: avatar,
         credentials: 'include',
@@ -331,6 +334,115 @@ export default class AgentService extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to update agent avatar with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Fetches single agent versions by unique agent ID.
+   * @param agentId - The ID of the agent.
+   * @returns A promise that resolves to an AgentVersions object.
+   * @throws Will throw an error if the request fails.
+   */
+  async GetAgentVersions(agentId: string): Promise<AgentVersions> {
+    try {
+      return await this.$fetch<AgentVersions>(`${this.adminAgentsEndpoint}/${agentId}/versions`, {
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch agent versions with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Fetches single agent version by unique agent ID and version ID.
+   * @param agentId - The ID of the agent.
+   * @param versionId - The ID of the version.
+   * @returns A promise that resolves to an AgentVersion object.
+   * @throws Will throw an error if the request fails.
+   */
+  async GetAgentVersion(agentId: string, versionId: string): Promise<AgentVersion> {
+    try {
+      return await this.$fetch<AgentVersion>(`${this.adminAgentsEndpoint}/${agentId}/versions/${versionId}`, {
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch agent version with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Fetches single agent version evaluation messages by unique agent ID and version ID.
+   * @param agentId - The ID of the agent.
+   * @param versionId - The ID of the version.
+   *
+   * @param {number} [page] - The current page of the results. Defaults to the first page.
+   * @param {number} [perPage] - The number of agents to retrieve per page. Defaults to 10.
+   * @param {string} [sortBy] - The field by which to sort the results. Defaults to 'status'.
+   * @param {'asc' | 'desc'} [sortOrder] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
+   * @param {string | null} [name] - String used as search parametar for searching agents by name.
+   * @param {boolean | null} [evaluation] - Whether to include evaluation messages filter by evaluation type.
+   * @returns A promise that resolves to an AgentVersionEvaluationMessages object.
+   * @throws Will throw an error if the request fails.
+   */
+  async GetAgentVersionEvaluationMessages(agentId: string, versionId: string, page: number = 1, perPage: number = 10, sortBy: string = 'active', sortOrder: 'asc' | 'desc' = 'desc', name: string | null, evaluation: boolean | undefined): Promise<AgentVersionEvaluationMessages> {
+    try {
+      const queryParams: Record<string, string> = {
+        page: page.toString(),
+        perPage: perPage.toString(),
+        sortBy,
+        sortOrder,
+      }
+
+      if (name) {
+        queryParams.name = name
+      }
+
+      if (evaluation !== undefined && evaluation !== null) {
+        queryParams.active = evaluation.toString()
+      }
+
+      const queryString = new URLSearchParams(queryParams).toString()
+
+      return await this.$fetch<AgentVersionEvaluationMessages>(`${this.adminAgentsEndpoint}/${agentId}/versions/${versionId}/messages?${queryString}`, {
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch agent version messages with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Updates an agent version
+   * @param agentId The ID of the agent to update
+   * @param versionID The ID of the version
+   * @returns A promise that resolves to AgentVersion object
+   * @throws Will throw an error if request fails
+   */
+
+  async RollbackAgentVersion(agentId: string, versionID: string): Promise<any> {
+    try {
+      await this.$fetch(`${this.adminAgentsEndpoint}/${agentId}/versions/${versionID}/rollback`, {
+        credentials: 'include',
+        method: 'PUT',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to update agent version`,
       })
     }
   }

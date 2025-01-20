@@ -142,6 +142,7 @@ const userData = computed(() => {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 16px;
+    align-items: center;
 
     & .label-description-item-container {
       grid-column: span 2;
