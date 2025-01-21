@@ -33,7 +33,7 @@ const route = useRoute()
         <LlmLink
           v-motion-fade-visible-once
           :delay="300"
-          to="help"
+          to="/help"
           type="link"
           class="menu-item get-help-section"
           :class="{ 'selected': '/help' === route.path, 'collapsed-link': isSidebarCollapsed }"
