@@ -123,15 +123,23 @@ onBeforeUnmount(() => shouldSyncQuery.value = false)
     type="whatsAppChat"
     :skeleton-count="10"
   />
+  <template v-else-if="!emptyChatData">
+    <WhatsAppChatsListAdmin
+      :whats-app-chats="whatsAppChatDataItems"
+      :pagination="pagination"
+      @chat-deleted="(handlePageChange(1))"
+      @chat-title-edited="(handlePageChange(1))"
+    />
 
-  <WhatsAppChatsListAdmin
-    v-else-if="!emptyChatData"
-    :whats-app-chats="whatsAppChatDataItems"
-    :pagination="pagination"
-    @chat-deleted="(handlePageChange(1))"
-    @chat-title-edited="(handlePageChange(1))"
-  />
-
+    <Pagination
+      data-testid="bo-whatsapp-chat-list-pagination"
+      :current-page="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :total="pagination.total"
+      :disabled="pagination.disabled"
+      @page-change="handlePageChange"
+    />
+  </template>
   <EmptyState
     v-else
     :title="$t('whatsapp_chat.empty_title_chats')"
@@ -141,13 +149,4 @@ onBeforeUnmount(() => shouldSyncQuery.value = false)
       <ChatWarningIcon size="44px" />
     </template>
   </EmptyState>
-
-  <Pagination
-    data-testid="bo-whatsapp-chat-list-pagination"
-    :current-page="pagination.currentPage"
-    :page-size="pagination.pageSize"
-    :total="pagination.total"
-    :disabled="pagination.disabled"
-    @page-change="handlePageChange"
-  />
 </template>

@@ -177,14 +177,22 @@ onBeforeUnmount(() => {
     type="agent"
     :skeleton-count="10"
   />
-  <AgentsList
-    v-else-if="!emptyAgentsData"
-    :agents="agentsData"
-    :pagination="pagination"
-    @page-change="handlePageChange"
-    @agent-activated="(handlePageChange(1))"
-    @agent-deactivated="(handlePageChange(1))"
-  />
+  <template v-else-if="!emptyAgentsData">
+    <AgentsList
+      :agents="agentsData"
+      :pagination="pagination"
+      @page-change="handlePageChange"
+      @agent-activated="(handlePageChange(1))"
+      @agent-deactivated="(handlePageChange(1))"
+    />
+    <Pagination
+      data-testid="bo-agents-list-pagination"
+      :current-page="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :total="pagination.total"
+      @page-change="handlePageChange"
+    />
+  </template>
   <EmptyState
     v-else
     :title="$t('agents.empty_state_title_all')"
@@ -199,12 +207,4 @@ onBeforeUnmount(() => {
       </LlmLink>
     </template>
   </EmptyState>
-
-  <Pagination
-    data-testid="bo-agents-list-pagination"
-    :current-page="pagination.currentPage"
-    :page-size="pagination.pageSize"
-    :total="pagination.total"
-    @page-change="handlePageChange"
-  />
 </template>

@@ -115,13 +115,21 @@ onBeforeUnmount(() => shouldSyncQuery.value = false)
     :skeleton-count="10"
   />
 
-  <WhatsAppAgentsList
-    v-else-if="!emptyAgentsData"
-    :whats-app-agents="agentsData"
-    :pagination="pagination"
-    @page-change="handlePageChange"
-    @refresh-whats-app-agents="(handlePageChange(1))"
-  />
+  <template v-else-if="!emptyAgentsData">
+    <WhatsAppAgentsList
+      :whats-app-agents="agentsData"
+      :pagination="pagination"
+      @page-change="handlePageChange"
+      @refresh-whats-app-agents="(handlePageChange(1))"
+    />
+    <Pagination
+      data-testid="bo-agents-list-pagination"
+      :current-page="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :total="pagination.total"
+      @page-change="handlePageChange"
+    />
+  </template>
 
   <EmptyState
     v-else
@@ -137,12 +145,4 @@ onBeforeUnmount(() => shouldSyncQuery.value = false)
       </LlmLink>
     </template>
   </EmptyState>
-
-  <Pagination
-    data-testid="bo-agents-list-pagination"
-    :current-page="pagination.currentPage"
-    :page-size="pagination.pageSize"
-    :total="pagination.total"
-    @page-change="handlePageChange"
-  />
 </template>

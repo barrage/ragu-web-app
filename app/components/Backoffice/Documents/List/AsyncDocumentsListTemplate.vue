@@ -153,13 +153,24 @@ watch(
     type="document"
     :skeleton-count="10"
   />
-  <DocumentList
-    v-else-if="!emptyDocumentsData"
-    :documents="documentDataItems"
-    :pagination="pagination"
-    @page-change="handlePageChange"
-    @document-deleted="(handlePageChange(1))"
-  />
+  <template v-else-if="!emptyDocumentsData">
+    <DocumentList
+      :documents="documentDataItems"
+      :pagination="pagination"
+      @page-change="handlePageChange"
+      @document-deleted="(handlePageChange(1))"
+    />
+
+    <Pagination
+      data-testid="bo-documents-list-pagination"
+      :current-page="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :total="pagination.total"
+      :disabled="pagination.disabled"
+      @page-change="handlePageChange"
+    />
+  </template>
+
   <EmptyState
     v-else
     :title="$t('documents.empty_state_title')"
@@ -169,13 +180,4 @@ watch(
       <DocumentErrorIcon size="44px" />
     </template>
   </EmptyState>
-
-  <Pagination
-    data-testid="bo-documents-list-pagination"
-    :current-page="pagination.currentPage"
-    :page-size="pagination.pageSize"
-    :total="pagination.total"
-    :disabled="pagination.disabled"
-    @page-change="handlePageChange"
-  />
 </template>

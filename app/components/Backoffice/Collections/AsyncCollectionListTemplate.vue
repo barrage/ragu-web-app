@@ -125,13 +125,23 @@ onBeforeUnmount(() => {
     type="collection"
     :skeleton-count="10"
   />
-  <CollectionList
-    v-else-if="!emptyCollectionsData"
-    :collections="collectionsData"
-    :pagination="pagination"
-    @page-change="handlePageChange"
-    @collection-deleted="(handlePageChange(1))"
-  />
+  <template v-else-if="!emptyCollectionsData">
+    <CollectionList
+      data-testid="bo-collections-list"
+      :collections="collectionsData"
+      :pagination="pagination"
+      @page-change="handlePageChange"
+      @collection-deleted="(handlePageChange(1))"
+    />
+
+    <Pagination
+      data-testid="bo-collections-list-pagination"
+      :current-page="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :total="pagination.total"
+      @page-change="handlePageChange"
+    />
+  </template>
 
   <EmptyState
     v-else
@@ -148,11 +158,4 @@ onBeforeUnmount(() => {
       </LlmLink>
     </template>
   </EmptyState>
-  <Pagination
-    data-testid="bo-collections-list-pagination"
-    :current-page="pagination.currentPage"
-    :page-size="pagination.pageSize"
-    :total="pagination.total"
-    @page-change="handlePageChange"
-  />
 </template>
