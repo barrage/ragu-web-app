@@ -1,4 +1,4 @@
-export type OAuthProvider = 'google' | 'microsoft'
+export type OAuthProvider = 'google' | 'carnet' | 'microsoft'
 
 export interface OAuthPayload {
   code: string | string[]

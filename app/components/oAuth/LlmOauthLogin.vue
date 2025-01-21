@@ -1,47 +1,62 @@
 <script lang="ts" setup>
 import type { OAuthProvider } from '~/types/auth'
 import GoogleLogo from '~/assets/icons/svg/google.svg'
-import MicrosoftLogo from '~/assets/icons/svg/microsoft.svg'
+import AaiEduLogo from '~/assets/icons/svg/aai-edu.svg'
 
 interface Emits {
   (event: 'redirection'): void
 }
+interface AuthProviderConfig {
+  name: OAuthProvider
+  show: boolean
+  logo: string | Component
+  text: string
+  authUrl: string
+  client_id: string
+  additionalParams: string | null
+  scopes: string
+}
+type AuthConfig = Record<string, AuthProviderConfig>
+type AuthScope = Record<string, string[]>
+
 const emits = defineEmits<Emits>()
 
 // CONSTANTS
 const runtimeConfig = useRuntimeConfig()
+const enableCarnetLogin = ref(runtimeConfig.public.enableAAIEduLogin === 'true')
 
-const scopes = {
+const scopes: AuthScope = {
   google: [
     'https://www.googleapis.com/auth/userinfo.profile',
     'https://www.googleapis.com/auth/userinfo.email',
     'openid',
   ],
-  microsoft: [
+  carnet: [
     'openid',
     'email',
-    'offline_access',
-    'profile',
-    'Group.Read.All',
-    'User.ReadBasic.All',
-    'User.Read',
-    'User.Read.All',
-    'User.ReadWrite',
   ],
 }
 
-const oAuthConfig = {
+const oAuthConfig: AuthConfig = {
   google: {
+    name: 'google',
+    show: true,
+    logo: GoogleLogo,
+    text: 'Google',
     authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
     client_id: runtimeConfig.public.oAuthGoogleId as string,
     additionalParams: '&access_type=offline&include_granted_scopes=true',
-    scopes: scopes.google.join(' '),
+    scopes: scopes.google?.join(' ') as string,
   },
-  microsoft: {
-    authUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-    client_id: import.meta.env?.OAUTH_MICROSOFT_LOGIN_CLIENTID as string,
-    additionalParams: '&response_mode=query',
-    scopes: scopes.microsoft.join(' '),
+  carnet: {
+    name: 'carnet',
+    show: enableCarnetLogin.value,
+    logo: AaiEduLogo,
+    text: 'AAI@Edu',
+    authUrl: 'https://fed-lab.aaiedu.hr/sso/module.php/oidc/authorize.php',
+    client_id: runtimeConfig.public.oAuthAAIEduLoginClientId as string,
+    additionalParams: '&access_type=offline&include_granted_scopes=true',
+    scopes: scopes.carnet?.join(' ') as string,
   },
 }
 
@@ -81,14 +96,14 @@ async function socialSignIn(provider: OAuthProvider) {
   const URI = `${protocol}//${hostname}${port}/auth/${provider}`
 
   if (provider === 'google') {
-    redirectUrl = `${oAuthConfig.google.authUrl}?client_id=${oAuthConfig.google.client_id}&scope=${encodeURIComponent(
-      oAuthConfig.google.scopes,
-    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}${oAuthConfig.google.additionalParams}`
+    redirectUrl = `${oAuthConfig.google?.authUrl}?client_id=${oAuthConfig.google?.client_id}&scope=${encodeURIComponent(
+      oAuthConfig.google?.scopes ?? '',
+    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}${oAuthConfig.google?.additionalParams}`
   }
-  else if (provider === 'microsoft') {
-    redirectUrl = `${oAuthConfig.microsoft.authUrl}?client_id=${oAuthConfig.microsoft.client_id}&scope=${encodeURIComponent(
-      oAuthConfig.microsoft.scopes,
-    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}${oAuthConfig.microsoft.additionalParams}`
+  else if (provider === 'carnet' && enableCarnetLogin.value) {
+    redirectUrl = `${oAuthConfig.carnet?.authUrl}?client_id=${oAuthConfig.carnet?.client_id}&scope=${encodeURIComponent(
+      oAuthConfig.carnet?.scopes ?? '',
+    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}${oAuthConfig.carnet?.additionalParams}`
   }
 
   if (redirectUrl) {
@@ -101,36 +116,28 @@ async function socialSignIn(provider: OAuthProvider) {
 
 <template>
   <div class="social-container">
-    <div
-      class="social"
-      tabindex="0"
-      @click="socialSignIn('google')"
-      @keyup.enter="socialSignIn('google')"
+    <template
+      v-for="option in oAuthConfig"
+      :key="option.name"
     >
-      <GoogleLogo
-        size="24px"
-        name="google"
-        original
-      />
-      <p class="semi-bold">
-        {{ $t('login.continueWith') }} Google
-      </p>
-    </div>
-    <!--  <div
-      class="social microsoft"
-      tabindex="0"
-      @click="socialSignIn('microsoft')"
-      @keyup.enter="socialSignIn('microsoft')"
-    >
-      <MicrosoftLogo
-        size="24px"
-        name="microsoft"
-        original
-      />
-      <p class="semi-bold">
-        {{ $t('login.continueWith') }} Microsoft
-      </p>
-    </div> -->
+      <div
+        v-if="option.show"
+        class="social"
+        tabindex="0"
+        @click="socialSignIn(option.name)"
+        @keyup.enter="socialSignIn(option.name)"
+      >
+        <component
+          :is="option.logo"
+          size="24px"
+          name="google"
+          original
+        />
+        <p class="semi-bold">
+          {{ `${$t('login.continueWith')} ${option.text}` }}
+        </p>
+      </div>
+    </template>
   </div>
 </template>
 

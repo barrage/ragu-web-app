@@ -32,10 +32,9 @@ useSeoMeta({
 })
 
 onMounted(async () => {
-  const isLoginRoute = route.path === '/login'
-  const isAuthGoogleRoute = route.path === '/auth/google'
+  const publicRouteNames = ['login', 'auth-provider']
 
-  if (!authStore.isAuthenticated && !isLoginRoute && !isAuthGoogleRoute) {
+  if (!authStore.isAuthenticated && !publicRouteNames.includes(String(route.name))) {
     router.push('/login')
   }
 })

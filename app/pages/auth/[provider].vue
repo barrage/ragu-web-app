@@ -32,6 +32,7 @@ onMounted(async () => {
       await router.push('/login')
     }
   }
+  await router.push('/login')
 })
 </script>
 

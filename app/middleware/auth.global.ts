@@ -1,9 +1,8 @@
 export default defineNuxtRouteMiddleware(async (to) => {
   const authStore = useAuthStore()
+  const publicRouteNames = ['login', 'auth-provider']
 
-  const publicRoutes = ['/login', '/auth/google']
-
-  if (!publicRoutes.includes(to.path) && import.meta.client) {
+  if (!publicRouteNames.includes(String(to.name)) && import.meta.client) {
     if (!authStore.isAuthenticated && !authStore.iscurrentUserLoading) {
       console.warn('User not authenticated, redirecting to login')
 
