@@ -351,7 +351,7 @@ function showSuccessNotification(type: Types) {
     v-model="dialog.isOpened"
     align-center
     class="barrage-dialog--small"
-    :close-icon="CloseCircleIcon"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     :close-on-click-modal="false"
     @close="handleCloseDialog(formRef)"
   >

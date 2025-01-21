@@ -73,7 +73,7 @@ const handleDeleteAgent = async () => {
     align-center
     class="barrage-dialog--small"
     :close-on-click-modal="false"
-    :close-icon="CloseCircleIcon"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
   >
     <template #header>
       <div class="activate-whatsapp-agent-modal-header">

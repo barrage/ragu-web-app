@@ -11,6 +11,8 @@ const statisticStore = useStatisticStore()
 const chatStore = useChatStore()
 const { $api } = useNuxtApp()
 
+const withAvatar = ref<boolean | undefined>(true)
+
 const chatCount = computed<number>(() => {
   return statisticStore.dashboardCount?.chat.total || 0
 })
@@ -27,7 +29,7 @@ const mostRecentChats = computed(() => recentChats.value?.items || [])
 
 // Active agents
 const { data: activeAgents, status: activeAgentsStatus } = useAsyncData('activeAgents', () =>
-  $api.agent.GetAllAgents(1, 20, 'updatedAt', 'desc', false), { lazy: true })
+  $api.agent.GetAllAgents(1, 20, 'updatedAt', 'desc', null, true, withAvatar.value), { lazy: true })
 
 const allActiveAgents = computed(() => activeAgents.value?.items || [])
 </script>

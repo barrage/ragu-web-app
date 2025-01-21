@@ -62,7 +62,7 @@ const isDeleteDocumentLoading = computed(() => {
     v-model="isOpen"
     destroy-on-close
     align-center
-    :close-icon="CloseCircleIcon"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     class="barrage-dialog--small"
     @close="closeModal"
   >

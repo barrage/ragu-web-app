@@ -30,7 +30,7 @@ const emit = defineEmits<{
     :model-value="isVisible"
     :title="title"
     destroy-on-close
-    :close-icon="CloseCircleIcon"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     align-center
     class="barrage-dialog--small"
     :close-on-click-modal="false"

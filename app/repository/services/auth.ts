@@ -72,8 +72,12 @@ export default class AuthService extends FetchFactory {
    */
   async GetCurrentUser(): Promise<User> {
     try {
+      const queryParams = new URLSearchParams({
+        withAvatar: 'true',
+      })
+
       return await this.$fetch<User>(
-        `${this.userEndpoint}/current`,
+        `${this.userEndpoint}/current?${queryParams}`,
         {
           credentials: 'include',
           method: 'GET',

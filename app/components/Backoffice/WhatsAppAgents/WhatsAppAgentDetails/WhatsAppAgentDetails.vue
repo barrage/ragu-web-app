@@ -368,7 +368,7 @@ const handleRefreshAgent = () => {
     align-center
     class="barrage-dialog--small"
     :close-on-click-modal="false"
-    :close-icon="CloseCircleIcon"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     @close="closeDialog"
   >
     <template #header>

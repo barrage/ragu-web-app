@@ -127,7 +127,7 @@ errorHandler(createError)
     align-center
     destroy-on-close
     class="barrage-dialog--medium"
-    :close-icon="CloseCircleIcon"
+ :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     @close="closeModal"

@@ -14,7 +14,7 @@ useHead({
   title: computed(() => t('documents.title')),
 })
 
-const openedUploadDialog = ref(false)
+const isUploadModalVisible = ref(false)
 </script>
 
 <template>
@@ -31,7 +31,7 @@ const openedUploadDialog = ref(false)
         </AdminPageTitleContainer>
       </template>
       <template #actions>
-        <DocumentsQuickActionsContainer v-if="!(documentStore.documentsDataEmpty)" v-model="openedUploadDialog" />
+        <DocumentsQuickActionsContainer v-if="!(documentStore.documentsDataEmpty)" v-model="isUploadModalVisible" />
       </template>
     </AdminPageHeadingTemplate>
 
@@ -55,7 +55,7 @@ const openedUploadDialog = ref(false)
       </template>
       <template #cta>
         <ElButton
-          @click="openedUploadDialog = true"
+          @click="isUploadModalVisible = true"
         >
           <DocumentAddIcon size="20px" />  {{ $t('documents.upload') }}
         </ElButton>

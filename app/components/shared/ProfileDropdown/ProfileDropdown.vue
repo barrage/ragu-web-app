@@ -216,7 +216,7 @@ function switchRoute() {
     v-model="isAgentsModalVisible"
     align-center
     class="barrage-dialog--large"
-    :close-icon="CloseCircleIcon"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
   >
     <template #header>
       <h5>{{ t('profileDropdown.agents') }}</h5>
@@ -229,7 +229,7 @@ function switchRoute() {
     v-model="isSignOutModalVisible"
     align-center
     class="barrage-dialog--small"
-    :close-icon="CloseCircleIcon"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
   >
     <template #header>
       <h5>{{ t('profileDropdown.signOut') }}</h5>
@@ -251,7 +251,7 @@ function switchRoute() {
     v-model="isProfileModelVisible"
     align-center
     class="barrage-dialog--medium"
-    :close-icon="CloseCircleIcon"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
   >
     <template #header>
       <h5>{{ t('profileDropdown.profile_settings') }}</h5>

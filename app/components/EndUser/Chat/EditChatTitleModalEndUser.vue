@@ -120,7 +120,7 @@ const closeModal = () => {
       :destroy-on-close="true"
       align-center
       class="barrage-dialog--small"
-      :close-icon="CloseCircleIcon"
+      :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
       :close-on-click-modal="false"
       :close-on-press-escape="true"
       @close="closeModal"

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 
@@ -58,7 +57,7 @@ watch(
 
         <div class="selected-agent-wrapper">
           <LlmAvatar
-            :avatar="agentStore.selectedAgent?.avatar"
+            :avatar="selectedAgent?.avatar"
             :alt="t('agents.agent_avatar')"
             fit="cover"
             default-image="agent"

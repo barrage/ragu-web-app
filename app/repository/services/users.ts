@@ -16,10 +16,10 @@ export default class usersService extends FetchFactory {
    * @throws Will throw an error if the request fails.
    */
   async GetAllUsers(
-  page: number = 1,
-  perPage: number = 10,
-  sortBy: string = 'firstName',
-  sortOrder: 'asc' | 'desc' = 'asc',
+    page: number = 1,
+    perPage: number = 10,
+    sortBy: string = 'firstName',
+    sortOrder: 'asc' | 'desc' = 'asc',
   ): Promise<UsersResponse> {
     try {
       const queryParams = new URLSearchParams({
@@ -27,7 +27,8 @@ export default class usersService extends FetchFactory {
         perPage: perPage.toString(),
         sortBy,
         sortOrder,
-      }).toString()
+        withAvatar: 'true',
+      })
 
       return await this.$fetch<UsersResponse>(`${this.endpoint}?${queryParams}`, {
         credentials: 'include',
@@ -48,7 +49,11 @@ export default class usersService extends FetchFactory {
    */
   async GetSingleUser(userId: string): Promise<User> {
     try {
-      return await this.$fetch<User>(`${this.endpoint}/${userId}`, {
+      const queryParams = new URLSearchParams({
+        withAvatar: 'true',
+      })
+
+      return await this.$fetch<User>(`${this.endpoint}/${userId}?${queryParams}`, {
         credentials: 'include',
       })
     }

@@ -14,6 +14,7 @@ const props = defineProps<{
 const { t } = useI18n()
 
 const relativeCreatedDate = ref(props.message?.createdAt ? useRelativeDate(props.message.createdAt) : '-')
+const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 
 const chatStore = useChatStore()
 const selectedAgent = computed(() => {
@@ -38,12 +39,23 @@ const messageData = computed(() => {
   }
 })
 
-const formatContent = (content: string) => {
+const formatContent = (content: string, isAssistantMessage: boolean) => {
   if (!content) { return '' }
-  const rawHtml = marked(content)
+
+  let rawHtml
+
+  if (isAssistantMessage) {
+    rawHtml = marked(content)
+  }
+  else {
+    const escapedContent = content.replace(/[-_*~`>#+=|.!]/g, '\\$&')
+    rawHtml = marked(escapedContent)
+  }
+
   return sanitizeHtml(rawHtml)
 }
-const sanitizedDisplayedContent = computed(() => formatContent(props.message.content))
+
+const sanitizedDisplayedContent = computed(() => formatContent(props.message.content, isAssistantMessage.value))
 
 marked.setOptions({
   breaks: true,

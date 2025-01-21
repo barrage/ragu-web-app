@@ -31,7 +31,7 @@ const closeModal = () => {
       align-center
       data-testid="bo-edit-user-dialog"
       class="edit-user-modal-backoffice barrage-dialog--medium"
-      :close-icon="CloseCircleIcon"
+      :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       @close="closeModal"
