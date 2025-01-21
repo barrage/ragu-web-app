@@ -45,8 +45,6 @@ Example
 
     <ElDropdown ref="dropdownRef">...</ElDropdown>
 
-    TODO
-
     useDropdownKeyboard(
       items,
       0,
