@@ -114,6 +114,7 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
       >
         <MoreIcon
           size="20px"
+          class="dropdown-icon"
           @keyup.enter="toggleDropdown"
           @keyup.space="toggleDropdown"
         />
@@ -220,6 +221,10 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
   .edit-input {
     max-width: 31.25rem;
     width: 100%;
+  }
+
+  .dropdown-icon {
+    cursor: pointer;
   }
 }
 

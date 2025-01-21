@@ -64,6 +64,10 @@ header {
 
   .logo {
     color: var(--color-primary-900);
+    transition: 0.2s ease-in-out;
+    &:hover {
+      color: var(--color-primary-600);
+    }
   }
 
   .header-right {
@@ -81,7 +85,10 @@ header {
 .dark {
   header {
     .logo {
-      color: var(--color-primary-0);
+      color: var(--color-primary-100);
+      &:hover {
+        color: var(--color-primary-400);
+      }
     }
 
     & .vertical-divider {
