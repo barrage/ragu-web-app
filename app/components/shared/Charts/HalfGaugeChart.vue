@@ -20,7 +20,7 @@ const props = defineProps<{
 
 const halfGaugeData = computed(() => {
   return {
-    value: (props.data.used / props.data.total) * 100,
+    value: Number(((props.data.used / props.data.total) * 100).toFixed(2)),
     name: props.usedText,
   }
 })
@@ -131,7 +131,9 @@ const updateChartOptions = () => {
         center: ['50%', '50%'],
         emphasis: {
           itemStyle: {
-            opacity: 0.6,
+            color: isDark.value
+              ? 'var(--color-primary-300)'
+              : 'var(--color-primary-500)',
           },
         },
         progress: {
