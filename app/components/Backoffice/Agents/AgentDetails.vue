@@ -234,14 +234,14 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
 
       <el-tab-pane :label="t('agents.titles.evaluations')" name="evaluations">
         <template v-if="activeName === 'evaluations'">
-          <AgentEvaluationsList />
+          <AsyncAgentEvaluationList :agent="props.singleAgent" />
         </template>
       </el-tab-pane>
-      <el-tab-pane :label="t('agents.titles.statistic')" name="statistics">
+      <!--  <el-tab-pane :label="t('agents.titles.statistic')" name="statistics">
         <template v-if="activeName === 'statistics'">
           <AgentStatistic />
         </template>
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane :label="t('agents.titles.versions')" name="versions">
         <template v-if="activeName === 'versions'">
           <AsyncAgentVersionList :agent="props.singleAgent" @rollback-agent-version="handleAgentVersionRollback" />

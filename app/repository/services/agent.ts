@@ -393,13 +393,12 @@ export default class AgentService extends FetchFactory {
    * @param {number} [page] - The current page of the results. Defaults to the first page.
    * @param {number} [perPage] - The number of agents to retrieve per page. Defaults to 10.
    * @param {string} [sortBy] - The field by which to sort the results. Defaults to 'status'.
-   * @param {'asc' | 'desc'} [sortOrder] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
    * @param {string | null} [name] - String used as search parametar for searching agents by name.
    * @param {boolean | null} [evaluation] - Whether to include evaluation messages filter by evaluation type.
    * @returns A promise that resolves to an AgentVersionEvaluationMessages object.
    * @throws Will throw an error if the request fails.
    */
-  async GetAgentVersionEvaluationMessages(agentId: string, versionId: string, page: number = 1, perPage: number = 10, sortBy: string = 'active', sortOrder: 'asc' | 'desc' = 'desc', name: string | null, evaluation: boolean | undefined): Promise<AgentVersionEvaluationMessages> {
+  async GetAgentVersionEvaluationMessages(agentId: string, versionId: string, page: number = 1, perPage: number = 10, sortBy: string = 'createAt', sortOrder: 'asc' | 'desc' = 'desc', evaluation: boolean | undefined): Promise<AgentVersionEvaluationMessages> {
     try {
       const queryParams: Record<string, string> = {
         page: page.toString(),
@@ -408,12 +407,8 @@ export default class AgentService extends FetchFactory {
         sortOrder,
       }
 
-      if (name) {
-        queryParams.name = name
-      }
-
       if (evaluation !== undefined && evaluation !== null) {
-        queryParams.active = evaluation.toString()
+        queryParams.evaluation = evaluation.toString()
       }
 
       const queryString = new URLSearchParams(queryParams).toString()

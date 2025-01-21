@@ -634,14 +634,19 @@ export default {
     empty_state_desc_all: 'Derzeit gibt es keine Agenten, die hier angezeigt werden können.',
     titles: {
       mainTitle: 'Agenten',
-      details: 'Agentendetails',
+      details: 'Details',
       configuration: 'Konfiguration',
-      description: 'Verwalten Sie die Agenten, die für die Interaktion mit der KI verantwortlich sind',
+      evaluations: 'Bewertungen',
+      statistic: 'Statistik',
+      versions: 'Versionen',
+      instructions: 'Anweisungen',
+      description: 'Verwalten Sie Agenten, die für die Interaktion mit KI verantwortlich sind',
       edit: 'Agent bearbeiten',
       create: 'Agent erstellen',
       createDescription: 'Erstellen Sie einen neuen Agenten, indem Sie seinen Namen und Kontext eingeben, um loszulegen!',
       deleteTitle: 'Agent löschen?',
       deleteDescription: 'Sind Sie sicher, dass Sie den Agenten löschen möchten?',
+      rollback_version_modal: 'Agentenversion zurücksetzen',
     },
     agent_card: {
       unknown_id: 'Unbekannte Agenten-ID',
@@ -667,6 +672,17 @@ export default {
       empty_state_desc: 'Der gesuchte Agent existiert nicht oder ist derzeit nicht verfügbar. Bitte überprüfen Sie die Agentendaten erneut oder erstellen Sie einen neuen Agenten.',
       deactivate_agent: 'Agent deaktivieren',
       activate_agent: 'Agent aktivieren',
+    },
+    tooltips: {
+      version_details: 'Details zur Version anzeigen',
+      rollback_version: 'Version als aktiv setzen',
+      open_chat_details: 'Details zum Chat anzeigen',
+      open_evaluation_details: 'Details zur Bewertung anzeigen',
+    },
+    descriptions: {
+      rollback_version_modal: 'Durch diese Aktion wird der Agent auf die ausgewählte vorherige Version zurückgesetzt. Alle Änderungen nach dieser Version werden durch die Daten aus dieser Version ersetzt. Der Agent wird auf Version {version} zurückgesetzt.',
+      evaluation_positive: 'Positive Bewertung',
+      evaluation_negative: 'Negative Bewertung',
     },
     activate_agent: {
       title: 'Agent aktivieren',
@@ -711,8 +727,12 @@ export default {
       status: 'Agentenstatus',
       languageInstruction: 'Sprachanweisung',
       summaryInstruction: 'Zusammenfassungsanweisung',
-      promptInstruction: 'Promptanweisung',
+      promptInstruction: 'Prompt-Anweisung',
       titleInstruction: 'Titelanweisung',
+      version: 'Version',
+      evaluation: 'Bewertung',
+      feedback: 'Rückmeldung',
+      message: 'Nachricht',
     },
     buttons: {
       create: 'Agent Erstellen',
@@ -739,6 +759,8 @@ export default {
       titleInstruction: 'Titelanweisung eingeben',
       embeddingModel: 'Embedding-Modell auswählen',
       filter_by_status: 'Wählen Sie den Status des Agenten aus',
+      filter_by_version: 'Nach Agentenversion filtern',
+      filter_by_evaluation: 'Nach Evaluierungsstatus filtern',
 
     },
 

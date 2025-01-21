@@ -116,7 +116,7 @@ async function socialSignIn(provider: OAuthProvider) {
         {{ $t('login.continueWith') }} Google
       </p>
     </div>
-    <div
+    <!--  <div
       class="social microsoft"
       tabindex="0"
       @click="socialSignIn('microsoft')"
@@ -130,7 +130,7 @@ async function socialSignIn(provider: OAuthProvider) {
       <p class="semi-bold">
         {{ $t('login.continueWith') }} Microsoft
       </p>
-    </div>
+    </div> -->
   </div>
 </template>
 

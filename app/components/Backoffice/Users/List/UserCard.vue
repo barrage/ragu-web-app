@@ -121,6 +121,7 @@ const userData = computed(() => {
           <el-button
             :type="authUserId === user.id ? undefined : 'danger'"
             data-testid="bo-user-card-delete-button"
+            plain
             :disabled="authUserId === user.id"
             class="delete-action"
             @click="emits('deleteUser', props.user)"

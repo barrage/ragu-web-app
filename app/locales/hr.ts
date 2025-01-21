@@ -939,9 +939,13 @@ export default {
     tooltips: {
       version_details: 'Pogledajte detalje verzije',
       rollback_version: 'Postavi verziju kao aktivnu',
+      open_chat_details: 'Pogledaj detalje razgovora',
+      open_evaluation_details: 'Pogledaj detalje evaluacije',
     },
     descriptions: {
       rollback_version_modal: 'Ovom akcijom agent će biti vraćen na prethodno odabranu verziju. Sve promjene napravljene nakon odabrane verzije bit će zamijenjene podacima iz te verzije. Agent ce biti vracen na verziju broj {version}',
+      evaluation_positive: 'Pozitivna procjena',
+      evaluation_negative: 'Negativna procjena',
     },
     agent_card: {
       unknown_id: 'Nepoznati ID agenta',
@@ -1014,6 +1018,9 @@ export default {
       promptInstruction: 'Uputa za Prompt',
       titleInstruction: 'Uputa za Naslov',
       version: 'Verzija',
+      evaluation: 'Evaluacija',
+      feedback: 'Povratna informacija',
+      message: 'Poruka',
     },
     buttons: {
       create: 'Stvori Agenta',
@@ -1041,6 +1048,8 @@ export default {
       titleInstruction: 'Unesite Uputu za Naslov Agenta',
       embeddingModel: 'Odaberite model Embeddinga',
       filter_by_status: 'Odaberite status agenta',
+      filter_by_version: 'Filtriraj po verziji agenta',
+      filter_by_evaluation: 'Filtriraj po statusu evaluacije',
     },
 
     notifications: {
