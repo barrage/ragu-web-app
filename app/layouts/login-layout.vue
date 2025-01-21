@@ -41,10 +41,10 @@ function handleAnimatingOut() {
       class="header"
       :class="{ 'animate-header-container-exit': isAnimatingOut }"
     >
-      <BarrageLogo
-        class="header-logo"
+      <RaguLogo
         width="110px"
-        height="48px"
+        height="40px"
+        class="logo"
       />
       <div class="header-right">
         <ThemeSelector login-layout />
@@ -124,8 +124,8 @@ main {
     justify-content: space-between;
     align-items: center;
 
-    .header-logo {
-      color: var(--color-primary-600);
+    .logo {
+      color: var(--color-primary-900);
     }
 
     .animate-header-container-exit {
@@ -228,8 +228,8 @@ main {
     );
 
     .header {
-      .header-logo {
-        color: var(--color-primary-300);
+      .logo {
+        color: var(--color-primary-100);
       }
     }
 

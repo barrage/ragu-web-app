@@ -79,14 +79,6 @@ const chatId = computed(() => {
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
-
-    & .chat-title::after {
-      background: linear-gradient(
-        to left,
-        var(--color-primary-300),
-        transparent
-      );
-    }
   }
 
   &:hover {
@@ -124,6 +116,17 @@ const chatId = computed(() => {
     width: 2rem;
     background: linear-gradient(to left, var(--color-primary-200), transparent);
     pointer-events: none;
+    opacity: 0;
+    animation: fade-in-after 0.2s ease forwards;
+  }
+
+  @keyframes fade-in-after {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
