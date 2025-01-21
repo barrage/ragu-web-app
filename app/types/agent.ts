@@ -136,3 +136,8 @@ export interface Instructions {
 export interface AgentListFilterForm {
   status: boolean | undefined
 }
+
+export interface AgentVersionEvaluationMessagesFilter {
+  evaluation: boolean | undefined
+  agentVersion: string
+}

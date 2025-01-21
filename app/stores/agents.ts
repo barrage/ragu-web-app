@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { AllAgentResponse, AllAppAgentsResponse, SingleAgent } from '~/types/agent'
+import type { AllAgentResponse, AllAppAgentsResponse, Configuration, SingleAgent } from '~/types/agent'
 
 export const useAgentStore = defineStore('agent', () => {
   // CONSTANTS
@@ -24,6 +24,11 @@ export const useAgentStore = defineStore('agent', () => {
     selectedAgent.value = agent
   }
 
+  const backofficeSelectedAgentDetailsVersions = ref<Configuration[] | undefined>(undefined)
+
+  const setBackofficeSelectedAgentDetailsVersions = (versions: Configuration[] | undefined) => {
+    backofficeSelectedAgentDetailsVersions.value = versions
+  }
   // API
 
   async function GET_AllAppAgents(
@@ -57,6 +62,8 @@ export const useAgentStore = defineStore('agent', () => {
     selectedAgent,
     editMode,
     appAgents,
+    backofficeSelectedAgentDetailsVersions,
+    setBackofficeSelectedAgentDetailsVersions,
     setEditMode,
     setSelectedAgent,
     GET_AllAppAgents,
