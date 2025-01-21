@@ -61,7 +61,7 @@ watch(
   <el-dialog
     v-model="isParserDialogVisible"
     :before-close="closeParserDialog"
-    :close-icon="CloseCircleIcon"
+  :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     class="barrage-dialog--large"
   >
     <template #header>

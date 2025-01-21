@@ -5,9 +5,6 @@ import DocumentSyncIcon from '~/assets/icons/svg/document-sync.svg'
 const isUploadModalVisible = defineModel<boolean>()
 
 const { $api } = useNuxtApp()
-const openUploadModal = () => {
-  isUploadModalVisible.value = true
-}
 
 const { t } = useI18n()
 
@@ -54,7 +51,7 @@ const syncDocuments = async () => {
     >
       <DocumentSyncIcon v-if="!loading" size="20px" /> <LlmLoader v-else /> {{ t('documents.sync') }}
     </el-button>
-    <el-button @click="openUploadModal">
+    <el-button @click="isUploadModalVisible = true">
       <DocumentAddIcon size="20px" />  {{ t('documents.upload') }}
     </el-button>
   </div>

@@ -65,7 +65,7 @@ const isRollbackAgentVersionLoading = computed(() => {
       data-testid="bo-rollback-agent-version-dialog"
       align-center
       class="barrage-dialog--small"
-      :close-icon="CloseCircleIcon"
+      :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
       @close="closeModal"
     >
       <template #header>

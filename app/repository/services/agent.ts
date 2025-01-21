@@ -30,6 +30,7 @@ export default class AgentService extends FetchFactory {
     sortOrder: 'asc' | 'desc' = 'desc',
     name: string | null,
     active: boolean | undefined,
+    withAvatar: boolean | undefined,
   ): Promise<AllAgentResponse> {
     try {
       const queryParams: Record<string, string> = {
@@ -45,6 +46,10 @@ export default class AgentService extends FetchFactory {
 
       if (active !== undefined && active !== null) {
         queryParams.active = active.toString()
+      }
+
+      if (withAvatar !== undefined && withAvatar !== null) {
+        queryParams.withAvatar = withAvatar.toString()
       }
 
       const queryString = new URLSearchParams(queryParams).toString()
@@ -65,11 +70,11 @@ export default class AgentService extends FetchFactory {
    *
    * Fetches a list of agents with optional filtering, sorting, and pagination.
    *
-   * @param {number} [page=1] - The current page of the results. Defaults to the first page.
-   * @param {number} [perPage=10] - The number of agents to retrieve per page. Defaults to 10.
-   * @param {string} [sortBy='status'] - The field by which to sort the results. Defaults to 'status'.
-   * @param {'asc' | 'desc'} [sortOrder='asc'] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
-   * @param {boolean} [showDeactivated=true] - Whether to include deactivated agents in the results. Defaults to true.
+   * @param {number} [page] - The current page of the results. Defaults to the first page.
+   * @param {number} [perPage] - The number of agents to retrieve per page. Defaults to 10.
+   * @param {string} [sortBy] - The field by which to sort the results. Defaults to 'status'.
+   * @param {'asc' | 'desc'} [sortOrder] - The order in which to sort the results: 'asc' for ascending, 'desc' for descending. Defaults to 'asc'.
+   * @param {boolean} [showDeactivated] - Whether to include deactivated agents in the results. Defaults to true.
    *
    * @returns {Promise<AllAppAgentsResponse>} - A promise that resolves to the list of agents.
    *
@@ -81,24 +86,21 @@ export default class AgentService extends FetchFactory {
     perPage: number = 10,
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
-
   ): Promise<AllAppAgentsResponse> {
     try {
-      // Build query parameters using function arguments
       const queryParams = new URLSearchParams({
         page: page.toString(),
         perPage: perPage.toString(),
         sortBy,
         sortOrder,
-      }).toString()
+        withAvatar: 'true',
+      })
 
-      // Make the API request with the constructed URL
       return await this.$fetch<AllAppAgentsResponse>(`${this.endUserAgentsEndpoint}?${queryParams}`, {
         credentials: 'include',
       })
     }
     catch (error: any) {
-      // Handle errors and throw custom error message
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to fetch agents with code ${error?.statusCode}`,
@@ -115,7 +117,11 @@ export default class AgentService extends FetchFactory {
    */
   async GetSingleAgent(agentId: string): Promise<Agent> {
     try {
-      return await this.$fetch<Agent>(`${this.adminAgentsEndpoint}/${agentId}`, {
+      const queryParams = new URLSearchParams({
+        withAvatar: 'true',
+      })
+
+      return await this.$fetch<Agent>(`${this.adminAgentsEndpoint}/${agentId}?${queryParams}`, {
         credentials: 'include',
       })
     }

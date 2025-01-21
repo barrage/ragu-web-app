@@ -64,7 +64,7 @@ const isDeleteChatLoading = computed(() => {
       :destroy-on-close="true"
       align-center
       class="barrage-dialog--small"
-      :close-icon="CloseCircleIcon"
+      :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
       @close="closeModal"
     >
       <template #header>

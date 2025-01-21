@@ -126,7 +126,7 @@ const setEmptyList = () => {
       v-model="isUploadModalVisible"
       align-center
       class="barrage-dialog--large"
-      :close-icon="CloseCircleIcon"
+      :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
       destroy-on-close
       :before-close="setEmptyList"
       :close-on-click-modal="false"
