@@ -125,15 +125,24 @@ onBeforeUnmount(() => {
     type="user"
     :skeleton-count="10"
   />
+  <template v-else-if="!emptyUsersData">
+    <UsersList
+      :users="usersData"
+      @user-deleted="(handlePageChange(1))"
+      @user-edited="(handlePageChange(1))"
+      @user-activated="(handlePageChange(1))"
+      @user-deactivated="(handlePageChange(1))"
+    />
 
-  <UsersList
-    v-else-if="!emptyUsersData"
-    :users="usersData"
-    @user-deleted="(handlePageChange(1))"
-    @user-edited="(handlePageChange(1))"
-    @user-activated="(handlePageChange(1))"
-    @user-deactivated="(handlePageChange(1))"
-  />
+    <Pagination
+      data-testid="bo-users-list-pagination"
+      :current-page="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :total="pagination.total"
+      @page-change="handlePageChange"
+    />
+  </template>
+
   <EmptyState
     v-else
     :title="$t('users.empty_state.title')"
@@ -143,11 +152,4 @@ onBeforeUnmount(() => {
       <PersonInfoIcon size="44px" />
     </template>
   </EmptyState>
-  <Pagination
-    data-testid="bo-users-list-pagination"
-    :current-page="pagination.currentPage"
-    :page-size="pagination.pageSize"
-    :total="pagination.total"
-    @page-change="handlePageChange"
-  />
 </template>

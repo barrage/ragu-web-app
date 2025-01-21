@@ -136,14 +136,23 @@ onBeforeUnmount(() => {
     type="chat"
     :skeleton-count="10"
   />
+  <template v-else-if="!emptyChatData">
+    <ChatsListAdmin
+      :chats="chatDataItems"
+      :pagination="pagination"
+      @chat-deleted="(handlePageChange(1))"
+      @chat-title-edited="(handlePageChange(1))"
+    />
+    <Pagination
+      data-testid="bo-chat-list-pagination"
+      :current-page="pagination.currentPage"
+      :page-size="pagination.pageSize"
+      :total="pagination.total"
+      :disabled="pagination.disabled"
+      @page-change="handlePageChange"
+    />
+  </template>
 
-  <ChatsListAdmin
-    v-else-if="!emptyChatData"
-    :chats="chatDataItems"
-    :pagination="pagination"
-    @chat-deleted="(handlePageChange(1))"
-    @chat-title-edited="(handlePageChange(1))"
-  />
   <EmptyState
     v-else
     :title="$t('chat.admin.chat_card.empty_state_title')"
@@ -153,12 +162,4 @@ onBeforeUnmount(() => {
       <ChatWarningIcon size="44px" />
     </template>
   </EmptyState>
-  <Pagination
-    data-testid="bo-chat-list-pagination"
-    :current-page="pagination.currentPage"
-    :page-size="pagination.pageSize"
-    :total="pagination.total"
-    :disabled="pagination.disabled"
-    @page-change="handlePageChange"
-  />
 </template>
