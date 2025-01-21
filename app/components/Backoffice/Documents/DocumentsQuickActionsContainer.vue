@@ -5,7 +5,7 @@ import DocumentSyncIcon from '~/assets/icons/svg/document-sync.svg'
 const isUploadModalVisible = defineModel<boolean>()
 
 const { $api } = useNuxtApp()
-
+const documentStore = useDocumentsStore()
 const { t } = useI18n()
 
 const { error, execute, status } = await useAsyncData(() => $api.document.GetSyncFs(), { immediate: false })
@@ -25,6 +25,7 @@ const syncDocuments = async () => {
         customClass: 'success',
         duration: 2500,
       })
+      documentStore.documentsSynced = true
     }
   }
   catch (error) {

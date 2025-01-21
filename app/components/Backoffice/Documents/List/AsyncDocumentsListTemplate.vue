@@ -8,6 +8,9 @@ import DocumentErrorIcon from '~/assets/icons/svg/document-error.svg'
 const { $api } = useNuxtApp()
 const route = useRoute()
 const router = useRouter()
+const documentStore = useDocumentsStore()
+
+const documentSynced = computed(() => documentStore.documentsSynced)
 
 const pagination = ref<Pagination>({
   currentPage: Number(route.query.page) || 1,
@@ -32,7 +35,7 @@ const {
     pagination.value.pageSize,
     sort.value.sortBy,
     sort.value.sortOrder,
-  ), { lazy: true })
+  ), { lazy: true, watch: [documentSynced] })
 
 const updateRouteQuery = () => {
   router.replace({
@@ -104,7 +107,7 @@ watch(
     }
   },
 )
-const documentStore = useDocumentsStore()
+
 watch(
   () => documentsData.value?.total,
   (newTotal) => {

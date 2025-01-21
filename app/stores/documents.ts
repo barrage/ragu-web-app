@@ -4,6 +4,8 @@ import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, Par
 export const useDocumentsStore = defineStore('document', () => {
   // State
   const documentsDataEmpty = ref(false)
+  const documentsSynced = ref(false)
+
   const documentResponse = ref<DocumentListResponse | null >()
   const { $api } = useNuxtApp()
 
@@ -110,6 +112,7 @@ export const useDocumentsStore = defineStore('document', () => {
     loadingChunkPreview,
     newDocumentUploaded,
     documentDeleted,
+    documentsSynced,
     GET_AllDocuments,
     GET_SingleDocument,
     DELETE_Document,
