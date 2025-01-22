@@ -19,7 +19,7 @@ const documentData = computed(() => {
     name: props.document?.name ? formatName(props.document?.name, 35) : t('documents.document_card.unknown_name'),
     extension: props.document?.ext || t('documents.document_card.unknown_email'),
     path: props.document?.path ? formatName(props.document?.path, 35) : t('documents.document_card.path'),
-    id: props.document?.id ? formatName(props.document?.hash, 40) : t('documents.document_card.id'),
+    id: props.document?.id || t('documents.document_card.id'),
     hash: props.document?.hash ? formatName(props.document?.hash, 40) : t('documents.document_card.hash'),
     source: props.document?.src || t('documents.document_card.src'),
   }
