@@ -375,6 +375,7 @@ export default {
     sync_docs: 'Synchroniser les documents',
     empty_state_title: 'Aucun document disponible',
     empty_state_desc: 'Il n\'y a actuellement aucun document à afficher ici.',
+    google_drive: 'Google Drive',
     placeholders: {
       search_documents: 'Rechercher des documents',
     },

@@ -55,6 +55,7 @@ const syncDocuments = async () => {
     <el-button @click="isUploadModalVisible = true">
       <DocumentAddIcon size="20px" />  {{ t('documents.upload') }}
     </el-button>
+    <GoogleDrivePicker />
   </div>
 
   <UploadDocumentDialog v-model="isUploadModalVisible" />
