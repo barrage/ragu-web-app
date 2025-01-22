@@ -34,12 +34,12 @@ defineProps<{
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="$t('documents.chunker.snapping.form.skip_foward')"
-      :description="config.snapping.skipF.join(', ')"
+      :description="undefined"
     >
       <template #customDescription>
         <div class="tag-list">
           <el-tag
-            v-for="item in config.snapping.skipB"
+            v-for="item in config.snapping.skipF"
             :key="item"
             size="small"
           >
@@ -51,7 +51,7 @@ defineProps<{
     <div class="horizontal-divider" />
     <LabelDescriptionItem
       :label="$t('documents.chunker.snapping.form.skip_back')"
-      :description="config.snapping.skipB.join(', ')"
+      :description="undefined"
     >
       <template #customDescription>
         <div class="tag-list">
