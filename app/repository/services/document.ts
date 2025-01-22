@@ -1,9 +1,11 @@
 import FetchFactory from '../fetchFactory'
-import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document.ts'
+import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, GoogleDriveImportResponse, ParserConfig } from '~/types/document.ts'
 
 export default class DocumentServise extends FetchFactory {
+  [x: string]: any
   // Endpoint for documents-related API requests.
   private readonly endpoint: string = '/documents'
+  private readonly googleEndpoint: string = '/external/google'
 
   /**
    * Fetches a paginated and sorted list of documents.
@@ -179,6 +181,35 @@ export default class DocumentServise extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to chunk document with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Import Google Drive file.
+   * @param payload - The payload object containing the file ID and name.
+   * @returns A promise that resolves to the Document type.
+   * @throws Will throw an error if the upload fails.
+   */
+  async ImportGoogleDriveFile(payload: { files: string[], force?: boolean }, accessToken: string): Promise<GoogleDriveImportResponse> {
+    try {
+      return await this.$fetch(`${this.googleEndpoint}/documents/import`, {
+        method: 'POST',
+        query: {
+          force: payload.force,
+        },
+        body: {
+          files: payload.files,
+        },
+        headers: {
+          'X-Google-Drive-Access-Token': accessToken,
+        },
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to import Google Drive files with code ${error?.statusCode}`,
       })
     }
   }

@@ -374,6 +374,7 @@ export default {
     sync_docs: 'ドキュメントを同期する',
     empty_state_title: '利用可能なドキュメントはありません',
     empty_state_desc: '現在、ここに表示するドキュメントはありません。',
+    google_drive: 'Google Drive',
     placeholders: {
       search_documents: 'ドキュメントを検索',
     },

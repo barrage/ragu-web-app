@@ -2,6 +2,7 @@
 import { version } from './package.json'
 
 export default defineNuxtConfig({
+
   ssr: false,
   compatibilityDate: '2024-07-18',
   future: {
@@ -26,6 +27,9 @@ export default defineNuxtConfig({
       // AAI@Edu
       enableAAIEduLogin: process.env.ENABLE_AAIEDU_LOGIN,
       oAuthAAIEduLoginClientId: process.env.OAUTH_AAIEDU_LOGIN_CLIENTID,
+      googleOAuthClientId: process.env.GOOGLE_OAUTH_CLIENT_ID,
+      googleAppId: process.env.GOOGLE_APP_ID,
+
     },
   },
   app: {
@@ -37,6 +41,7 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
         { rel: 'manifest', href: '/site.webmanifest' },
       ],
+
     },
   },
   modules: ['@nuxt/eslint', '@vueuse/nuxt', 'nuxt-svgo', '@pinia/nuxt', '@nuxtjs/i18n', '@element-plus/nuxt', '@vueuse/motion/nuxt'],

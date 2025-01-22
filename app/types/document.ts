@@ -66,3 +66,28 @@ export interface DocumentConfig {
   parser: ParserConfig | null
   chunker: ChunkerConfig | null
 }
+
+export interface GoogleDriveImportResponse {
+  failed: Failed[]
+  skipped: Success[]
+  success: Success[]
+}
+
+export interface Failed {
+  error: string
+  fileId: string
+  fileName: string
+}
+
+export interface Success {
+  createdAt: Date | string
+  ext: string
+  hash: string
+  id: string
+  label: string
+  name: string
+  path: string
+  src: string
+  tags: string[]
+  updatedAt: Date | string
+}

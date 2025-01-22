@@ -382,6 +382,7 @@ export default {
     sync_docs: 'Sinkroniziraj dokumente',
     empty_state_title: 'Nema dostupnih dokumenata',
     empty_state_desc: 'Trenutno nema dokumenata za prikazivanje ovdje.',
+    google_drive: 'Google Drive',
     placeholders: {
       search_documents: 'Pretraži dokumente',
     },
