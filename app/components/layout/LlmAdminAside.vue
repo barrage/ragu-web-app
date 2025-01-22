@@ -233,6 +233,7 @@ aside {
   margin-top: auto;
   border-radius: 8px;
   position: relative;
+  pointer-events: none;
 
   &::before {
     content: '';
