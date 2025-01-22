@@ -14,8 +14,8 @@ export interface Document {
 }
 
 export interface DocumentListResponse {
-  total: number
-  items: Document[]
+  documents: Document[]
+  errors: any
 }
 
 export interface ParserConfig {
