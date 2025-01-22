@@ -52,9 +52,10 @@ const upload = async () => {
   for (const file of files) {
     const formData = new FormData()
     formData.append('file', file)
-    const { execute: uploadDocument, error } = await useAsyncData(() => $api.document.PostUploadDocument(formData), { immediate: false })
+    const { execute: uploadDocument, error, data: uploadedDocument } = await useAsyncData(() => $api.document.PostUploadDocument(formData), { immediate: false })
     await uploadDocument()
-    if (error.value) {
+
+    if (error.value || uploadedDocument.value?.errors) {
       if (error.value?.statusCode === 409) {
         ElNotification({
           title: t('documents.notifications.create.error_existing_document_title'),
