@@ -2,12 +2,16 @@
 import InfoIcon from '~/assets/icons/svg/info.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
+type ConfirmButtonType = undefined | 'primary' | 'success' | 'info' | 'warning' | 'danger'
+
 // PROPS & EMITS
 interface Props {
   isVisible?: boolean
   title?: string
   message?: string
   confirmButtonText?: string
+  confirmButtonType?: ConfirmButtonType
+  confirmButtonLoading?: boolean
   cancelButtonText?: string
 }
 
@@ -16,6 +20,8 @@ const {
   title = 'Unsaved Changes',
   message = 'You have unsaved changes. Are you sure you want to leave this page?',
   confirmButtonText = 'Leave',
+  confirmButtonType = 'primary',
+  confirmButtonLoading = false,
   cancelButtonText = 'Cancel',
 } = defineProps<Props>()
 
@@ -55,7 +61,8 @@ const emit = defineEmits<{
         {{ cancelButtonText }}
       </el-button>
       <el-button
-        type="primary"
+        :type="confirmButtonType"
+        :loading="confirmButtonLoading"
         @click="emit('confirm')"
       >
         {{ confirmButtonText }}

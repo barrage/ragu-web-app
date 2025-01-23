@@ -79,6 +79,15 @@ const chatId = computed(() => {
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
+    cursor: auto;
+
+    & .chat-title::after {
+      background: linear-gradient(
+        to left,
+        var(--color-primary-300),
+        transparent
+      );
+    }
   }
 
   &:hover {
@@ -139,14 +148,6 @@ const chatId = computed(() => {
       color: var(--color-primary-100);
       .add-icon {
         color: var(--color-primary-400);
-      }
-
-      & .chat-title::after {
-        background: linear-gradient(
-          to left,
-          var(--color-primary-700),
-          transparent
-        );
       }
     }
     &.selected {
