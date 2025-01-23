@@ -24,6 +24,7 @@ const emits = defineEmits<Emits>()
 // CONSTANTS
 const runtimeConfig = useRuntimeConfig()
 const enableCarnetLogin = ref(runtimeConfig.public.enableAAIEduLogin === 'true')
+const btnLoading = ref(false)
 
 const scopes: AuthScope = {
   google: [
@@ -84,6 +85,7 @@ async function generateCodeChallenge(codeVerifier: string): Promise<string> {
 }
 
 async function socialSignIn(provider: OAuthProvider) {
+  btnLoading.value = true
   const codeVerifier = await generateCodeVerifier()
   const codeChallenge = await generateCodeChallenge(codeVerifier)
 
@@ -111,6 +113,7 @@ async function socialSignIn(provider: OAuthProvider) {
     // Wait for out-animation
     setTimeout(() => window.location.href = redirectUrl, 1000)
   }
+  else { btnLoading.value = false }
 }
 </script>
 
@@ -120,10 +123,11 @@ async function socialSignIn(provider: OAuthProvider) {
       v-for="option in oAuthConfig"
       :key="option.name"
     >
-      <div
+      <ElButton
         v-if="option.show"
+        type="primary"
         class="social"
-        tabindex="0"
+        :loading="btnLoading"
         @click="socialSignIn(option.name)"
         @keyup.enter="socialSignIn(option.name)"
       >
@@ -136,7 +140,7 @@ async function socialSignIn(provider: OAuthProvider) {
         <p class="semi-bold">
           {{ `${$t('login.continueWith')} ${option.text}` }}
         </p>
-      </div>
+      </ElButton>
     </template>
   </div>
 </template>
@@ -148,24 +152,21 @@ async function socialSignIn(provider: OAuthProvider) {
   min-width: max-content;
   & .social {
     height: 58px;
-    cursor: pointer;
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
     padding: 12px 20px;
-    background-color: var(--color-primary-200);
     border: 1px solid var(--color-primary-300);
+    width: 100%;
 
     border-radius: 8px;
     transition: 0.3s;
     &:not(:last-child) {
       margin-bottom: 1.25rem;
     }
-    &:hover {
-      background-color: var(--color-primary-300);
-    }
     & p {
-      margin-left: 20px;
+      margin-left: 10px;
       color: var(--color-primary-900);
     }
     &.social--disabled {
@@ -186,12 +187,8 @@ async function socialSignIn(provider: OAuthProvider) {
 
 .dark {
   & .social {
-    background: var(--color-primary-700);
     border: 1px solid var(--color-primary-600);
     color: var(--color-primary-0);
-    &:hover {
-      background-color: var(--color-primary-600);
-    }
     & p {
       color: var(--color-primary-0);
     }

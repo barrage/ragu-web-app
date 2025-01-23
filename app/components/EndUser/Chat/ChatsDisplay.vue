@@ -106,6 +106,7 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   &.selected {
     background: var(--color-primary-300);
     color: var(--color-primary-900);
+    cursor: auto;
   }
 
   &:hover {

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import RaguLogo from '~/assets/icons/svg/Ragu_logo_dark.svg'
+
+const route = useRoute()
 </script>
 
 <template>
@@ -10,11 +12,13 @@ import RaguLogo from '~/assets/icons/svg/Ragu_logo_dark.svg'
       :delay="500"
       type="link"
       tabindex="0"
+      :class="{ 'not-active-link': route.name === 'index' }"
     >
       <RaguLogo
         width="110px"
         height="40px"
         class="logo"
+        :class="{ 'active-link': route.name === 'index' }"
       />
     </LlmLink>
     <div class="header-right">
@@ -62,11 +66,18 @@ header {
   padding: 1rem;
   background-color: transparent;
 
+  .not-active-link {
+    cursor: auto;
+  }
+
   .logo {
     color: var(--color-primary-900);
     transition: 0.2s ease-in-out;
     &:hover {
       color: var(--color-primary-600);
+      &.active-link {
+        color: var(--color-primary-900);
+      }
     }
   }
 
@@ -88,6 +99,9 @@ header {
       color: var(--color-primary-100);
       &:hover {
         color: var(--color-primary-400);
+        &.active-link {
+          color: var(--color-primary-100);
+        }
       }
     }
 

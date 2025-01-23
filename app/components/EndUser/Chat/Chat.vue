@@ -224,6 +224,7 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
   }
 
   .dropdown-icon {
+    color: var(--color-primary-900);
     cursor: pointer;
   }
 }
@@ -286,6 +287,9 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
         var(--color-primary-1000),
         transparent
       );
+    }
+    .dropdown-icon {
+      color: var(--color-primary-0);
     }
   }
 

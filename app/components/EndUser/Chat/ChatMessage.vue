@@ -44,6 +44,7 @@ const agentStore = useAgentStore()
 const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 const displayedContent = ref('')
 const pendingContent = ref('')
+const likeDislikeLoading = ref(false)
 
 const agentAvatar = computed(() => {
   const agent = agentStore.appAgentsResponse?.items.find(agent => agent.id === props.agentId)
@@ -228,37 +229,43 @@ const optimisticEvaluationUpdate = (messageId: string, status: boolean) => {
 const { $api } = useNuxtApp()
 
 const evaluateMessage = async (status: boolean) => {
-  const messageId = props.message?.id
-  const chatId = props.message?.chatId
+  if (!likeDislikeLoading.value) {
+    likeDislikeLoading.value = true
+    const messageId = props.message?.id
+    const chatId = props.message?.chatId
 
-  if (!messageId || !chatId) {
-    ElNotification({
-      title: 'Error Evaluating Message',
-      message: 'Message ID or Chat ID is missing.',
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-    return
-  }
+    if (!messageId || !chatId) {
+      ElNotification({
+        title: 'Error Evaluating Message',
+        message: 'Message ID or Chat ID is missing.',
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+      return
+    }
 
-  try {
-    await $api.chat.PatchEvaluateChatMessage(chatId, messageId, status)
+    try {
+      await $api.chat.PatchEvaluateChatMessage(chatId, messageId, status)
 
-    optimisticEvaluationUpdate(messageId, status)
-  }
-  catch (err) {
-    optimisticEvaluationUpdate(messageId, status)
+      optimisticEvaluationUpdate(messageId, status)
+    }
+    catch (err) {
+      optimisticEvaluationUpdate(messageId, status)
 
-    ElNotification({
-      title: 'Error Evaluating Message',
-      message: 'Something went wrong. Please try again later.',
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
+      ElNotification({
+        title: 'Error Evaluating Message',
+        message: 'Something went wrong. Please try again later.',
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
 
-    console.error(err)
+      console.error(err)
+    }
+    finally {
+      likeDislikeLoading.value = false
+    }
   }
 }
 
@@ -388,43 +395,28 @@ watchEffect(() => {
       </LlmTooltip>
       <LlmTooltip :content="$t('chat.quick_action_tooltip.good_answer')">
         <div
-          v-if="message?.evaluation === null || message?.evaluation === false"
           tabindex="0"
           @click="handleLike"
           @keyup.enter="handleLike"
         >
-          <LikeIcon size="18px" />
-        </div>
-        <div v-else>
-          <div
-            tabindex="0"
-            @click="handleLike"
-            @keyup.enter="handleLike"
-          >
-            <LikeFilledIcon
-              v-motion-pop-visible-once
-              size="18px"
-            />
-          </div>
+          <component
+            :is="message?.evaluation === null || message?.evaluation === false ? LikeIcon : LikeFilledIcon"
+            size="18"
+            :class="{ 'icon-loading': likeDislikeLoading }"
+          />
         </div>
       </LlmTooltip>
       <LlmTooltip :content="$t('chat.quick_action_tooltip.bad_answer')">
         <div
-          v-if="message?.evaluation === null || message?.evaluation === true"
           tabindex="0"
           @click="handleDislike"
           @keyup.enter="handleDislike"
         >
-          <DislikeIcon size="18px" />
-        </div>
-        <div v-else>
-          <div
-            tabindex="0"
-            @click="handleLike"
-            @keyup.enter="handleLike"
-          >
-            <DislikeFilledIcon v-motion-pop-visible-once size="18px" />
-          </div>
+          <component
+            :is="message?.evaluation === null || message?.evaluation === true ? DislikeIcon : DislikeFilledIcon"
+            size="18"
+            :class="{ 'icon-loading': likeDislikeLoading }"
+          />
         </div>
       </LlmTooltip>
     </div>
@@ -545,6 +537,9 @@ watchEffect(() => {
     &:hover {
       color: var(--color-primary-900);
       cursor: pointer;
+      &.icon-loading {
+        cursor: not-allowed;
+      }
     }
   }
 }

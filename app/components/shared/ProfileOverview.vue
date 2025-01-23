@@ -12,7 +12,7 @@ const userAuth = useAuthStore()
 const { t } = useI18n()
 const { $api } = useNuxtApp()
 
-const { execute: deleteProfilePicture, error } = await useAsyncData (() => $api.user.DeleteProfilePicture(), { immediate: false })
+const { execute: deleteProfilePicture, error, status: deleteProfilePictureStatus } = await useAsyncData (() => $api.user.DeleteProfilePicture(), { immediate: false })
 
 const { execute: getCurrentUser, data: user } = await useAsyncData(() => $api.auth.GetCurrentUser(), { immediate: false })
 
@@ -170,6 +170,8 @@ const handleRemovePicture = async () => {
     :title="t('profile.delete_picture.title')"
     :message="t('profile.delete_picture.description')"
     :confirm-button-text="t('settings.delete') "
+    confirm-button-type="danger"
+    :confirm-button-loading="deleteProfilePictureStatus === 'pending'"
     :cancel-button-text="t('settings.cancel')"
     @confirm="handleRemovePicture"
     @cancel="closeDeleteModal"

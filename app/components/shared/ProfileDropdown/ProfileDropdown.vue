@@ -35,7 +35,7 @@ const openSettingsModal = () => {
   isSettingsModalVisible.value = !isSettingsModalVisible.value
 }
 
-const { execute, error } = await useAsyncData(() => oAuthStore.POST_Logout(), {
+const { execute, error, status: signoutStatus } = await useAsyncData(() => oAuthStore.POST_Logout(), {
   immediate: false,
 })
 
@@ -241,6 +241,7 @@ function switchRoute() {
       </el-button>
       <el-button
         type="primary"
+        :loading="signoutStatus === 'pending'"
         @click="handleSignOut"
       >
         {{ t('profileDropdown.signOut') }}
