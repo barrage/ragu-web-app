@@ -2,7 +2,6 @@
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import AddIcon from '~/assets/icons/svg/add.svg'
 import { groupChatsByTime } from '~/utils/groupChatsByTime'
-import type { Chat } from '~/types/chat'
 
 const route = useRoute()
 const chatStore = useChatStore()
@@ -89,6 +88,7 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   display: flex;
   align-items: center;
   min-height: 40px;
+  width: calc(100% - 3px);
   padding: 4px;
   padding-inline-start: 8px;
   font-size: var(--font-size-desktop-2);
@@ -128,7 +128,7 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 199px;
+  width: 295px;
   position: relative;
   gap: 8px;
 
