@@ -420,6 +420,8 @@ export default {
         error_file_size_description: 'File size cannot exceed 100 MB!',
         error_file_type_title: 'File Format Issue',
         error_file_type_description: 'File must be in PDF, TXT, JSON, or DOCX format!',
+        error_too_large_title: 'File too large',
+        error_too_large_description: 'The uploaded image exceeds the maximum allowed upload size. Please upload an image smaller than 5MB.',
 
       },
     },

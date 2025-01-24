@@ -86,13 +86,24 @@ const upload = async () => {
   await execute()
 
   if (error.value) {
-    ElNotification({
-      title: t(`${props.uploadType}.notifications.upload_error_title`),
-      message: t(`${props.uploadType}.notifications.upload_error_description`),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
+    if (error.value?.statusCode === 413) {
+      ElNotification({
+        title: t('documents.notifications.create.error_too_large_title'),
+        message: t('documents.notifications.create.error_too_large_description'),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
+    else {
+      ElNotification({
+        title: t(`${props.uploadType}.notifications.upload_error_title`),
+        message: t(`${props.uploadType}.notifications.upload_error_description`),
+        type: 'error',
+        customClass: 'error',
+        duration: 2500,
+      })
+    }
   }
   else {
     ElNotification({

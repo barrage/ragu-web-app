@@ -427,6 +427,8 @@ export default {
         error_file_size_description: 'Veličina datoteke ne smije prelaziti 100 MB!',
         error_file_type_title: 'Problem s Formatom Datoteke',
         error_file_type_description: 'Datoteka mora biti u PDF, TXT, JSON ili DOCX formatu!',
+        error_too_large_title: 'Datoteka je prevelika',
+        error_too_large_description: 'Učitana slika prelazi maksimalnu dopuštenu veličinu učitavanja. Molimo učitajte sliku manju od 5MB.',
       },
     },
     edit_configuration: 'Uredi konfiguraciju',
