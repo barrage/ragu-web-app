@@ -938,6 +938,10 @@ export default {
       rollback_version_modal: 'This action will roll the agent back to the selected previous version. All changes made after the selected version will be replaced with data from that version. The agent will be reverted to version {version}.',
       evaluation_positive: 'Positive evaluation',
       evaluation_negative: 'Negative evaluation',
+      general_agent_details: 'General details about the agent\'s identity and purpose.',
+      language_form: 'Define the agent\'s communication language and tone.',
+      instructions_form: 'Provide instructions to align the agent’s output with your needs.',
+
     },
     agent_card: {
       unknown_id: 'Unknown agent id',

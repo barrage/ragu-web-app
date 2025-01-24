@@ -654,6 +654,10 @@ export default {
       rollback_version_modal: 'この操作により、エージェントは選択した以前のバージョンにロールバックされます。選択したバージョン以降に行われた変更は、そのバージョンのデータに置き換えられます。エージェントはバージョン{version}に戻されます。',
       evaluation_positive: 'ポジティブな評価',
       evaluation_negative: 'ネガティブな評価',
+      general_agent_details: 'エージェントのアイデンティティと目的に関する一般的な詳細。',
+      language_form: 'エージェントのコミュニケーション言語とトーンを定義します。',
+      instructions_form: 'エージェントの出力をニーズに合わせるための指示を提供します。',
+
     },
     agent_card: {
       unknown_id: '不明なエージェントID',

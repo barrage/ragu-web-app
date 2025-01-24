@@ -180,6 +180,8 @@
     --color-sage-1000: #202220;
 
     // Main font colors
+    --color-app-background: linear-gradient(to bottom, #ece9e6, #ffffff);
+
     --shade-0: #ffffff;
     --color-primary: var(--color-gray-900);
     --color-primary-subtle: #ffffff;
@@ -211,6 +213,12 @@
     --color-primary-800: #212656;
     --color-primary-900: #21233d;
     --color-primary-1000: #21233d;
+
+    --color-app-background: linear-gradient(
+      to bottom,
+      #c9d6ff,
+      #e2e2e2
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
   .theme-violet {
     --color-primary-subtle: #e4dbfb;
@@ -225,6 +233,8 @@
     --color-primary-800: #5024ab;
     --color-primary-900: #411c8c;
     --color-primary-1000: #33186a;
+
+    --color-app-background: var(--color-primary-subtle);
   }
 
   .theme-red {
@@ -240,6 +250,8 @@
     --color-primary-800: #6c1313;
     --color-primary-900: #5a0505;
     --color-primary-1000: #460808;
+
+    --color-app-background: var(--color-primary-subtle);
   }
   .theme-green {
     --color-primary-subtle: #ccf0e1;
@@ -254,6 +266,8 @@
     --color-primary-800: #055134;
     --color-primary-900: #203930;
     --color-primary-1000: #1f332c;
+
+    --color-app-background: var(--color-primary-subtle);
   }
   .theme-orange {
     --color-primary-subtle: #ffeccc;
@@ -268,6 +282,8 @@
     --color-primary-800: #7a2f00;
     --color-primary-900: #612300;
     --color-primary-1000: #491901;
+
+    --color-app-background: var(--color-primary-subtle);
   }
   .theme-magenta {
     --color-primary-subtle: #ffecf8;
@@ -282,6 +298,8 @@
     --color-primary-800: #64244a;
     --color-primary-900: #3d2232;
     --color-primary-1000: #321f2a;
+
+    --color-app-background: var(--color-primary-subtle);
   }
   .theme-yellow {
     --color-primary-subtle: #f6f0d6;
@@ -296,6 +314,8 @@
     --color-primary-800: #533f04;
     --color-primary-900: #332e1b;
     --color-primary-1000: #2c2819;
+
+    --color-app-background: var(--color-primary-subtle);
   }
   .theme-lime {
     --color-primary-subtle: #eaf7d5;
@@ -310,6 +330,8 @@
     --color-primary-800: #37471f;
     --color-primary-900: #28311b;
     --color-primary-1000: #252d1b;
+
+    --color-app-background: var(--color-primary-subtle);
   }
   .theme-teal {
     --color-primary-subtle: #e2f2f7;
@@ -324,6 +346,12 @@
     --color-primary-800: #164555;
     --color-primary-900: #1e3137;
     --color-primary-1000: #192529;
+
+    --color-app-background: linear-gradient(
+      to top,
+      #e0eafc,
+      #cfdef3
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
   .theme-brown {
     --color-primary-subtle: #fcf7f1;
@@ -338,6 +366,8 @@
     --color-primary-800: #543818;
     --color-primary-900: #3b2711;
     --color-primary-1000: #2e1f10;
+
+    --color-app-background: linear-gradient(to top, #603813, #b29f94);
   }
   .theme-sage {
     --color-primary-subtle: #f7f8f6;
@@ -352,6 +382,12 @@
     --color-primary-800: #2b3a2c;
     --color-primary-900: #1a2a1b;
     --color-primary-1000: #182419;
+
+    --color-app-background: linear-gradient(
+      to bottom,
+      #ece9e6,
+      #ffffff
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
 
   .dark {
@@ -368,6 +404,8 @@
     --color-primary-0: #bfbfbf;
     --color-primary-subtle: #bfbfbf;
 
+    --color-app-background: linear-gradient(to bottom, #151414, #1e1c1c);
+
     &.theme-blue {
       --color-primary-subtle: #d8f5f9;
       --color-primary-0: #c8eef3;
@@ -381,6 +419,8 @@
       --color-primary-800: #132d49;
       --color-primary-900: #1d2837;
       --color-primary-1000: #171f2a;
+
+      --color-app-background: linear-gradient(to bottom, #141e30, #243b55);
     }
     &.theme-violet {
       --color-primary-subtle: #f9f4fd;
@@ -395,6 +435,13 @@
       --color-primary-800: #361261;
       --color-primary-900: #2a1741;
       --color-primary-1000: #2b2137;
+
+      --color-app-background: linear-gradient(
+        to top,
+        #0f0c29,
+        #302b63,
+        #24243e
+      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
     &.theme-red {
       --color-primary-subtle: #fae8e8;
@@ -409,6 +456,8 @@
       --color-primary-800: #5a1c1c;
       --color-primary-900: #3a1616;
       --color-primary-1000: #321414;
+
+      --color-app-background: linear-gradient(to top, #4e2a29, #52201f);
     }
     &.theme-green {
       --color-primary-subtle: #e7fbe7;
@@ -423,6 +472,8 @@
       --color-primary-800: #005132;
       --color-primary-900: #053f27;
       --color-primary-1000: #0a2e1d;
+
+      --color-app-background: linear-gradient(to top, #237a57, #093028);
     }
     &.theme-orange {
       --color-primary-subtle: #fbf2ec;
@@ -437,6 +488,8 @@
       --color-primary-800: #5a2d0a;
       --color-primary-900: #462812;
       --color-primary-1000: #362214;
+
+      --color-app-background: linear-gradient(to bottom, #38291e, #442714);
     }
     &.theme-magenta {
       --color-primary-subtle: #ffecf8;
@@ -451,6 +504,8 @@
       --color-primary-800: #50253f;
       --color-primary-900: #3d2232;
       --color-primary-1000: #321e2a;
+
+      --color-app-background: linear-gradient(to top, #612c4e, #3b1a37);
     }
     &.theme-yellow {
       --color-primary-subtle: #f6f0d6;
@@ -465,6 +520,8 @@
       --color-primary-800: #4b3f1a;
       --color-primary-900: #383321;
       --color-primary-1000: #322e1f;
+
+      --color-app-background: linear-gradient(to bottom, #272315, #4a3906);
     }
     &.theme-lime {
       --color-primary-subtle: #eaf7d5;
@@ -479,6 +536,8 @@
       --color-primary-800: #37471f;
       --color-primary-900: #28311b;
       --color-primary-1000: #222918;
+
+      --color-app-background: linear-gradient(to top, #26350c, #1d281a);
     }
     &.theme-teal {
       --color-primary-subtle: #e2f2f7;
@@ -493,6 +552,13 @@
       --color-primary-800: #164555;
       --color-primary-900: #1e3137;
       --color-primary-1000: #19262b;
+
+      --color-app-background: linear-gradient(
+        to bottom,
+        #0f2027,
+        #203a43,
+        #2c5364
+      );
     }
     &.theme-brown {
       --color-primary-subtle: #efdbcb;
@@ -507,6 +573,8 @@
       --color-primary-800: #272019;
       --color-primary-900: #1e1813;
       --color-primary-1000: #17130f;
+
+      --color-app-background: linear-gradient(to bottom, #181410, #281e15);
     }
     &.theme-sage {
       --color-primary-subtle: #f4f7f0;
@@ -521,6 +589,8 @@
       --color-primary-800: #353b35;
       --color-primary-900: #2a2d2a;
       --color-primary-1000: #212321;
+
+      --color-app-background: linear-gradient(to bottom, #232526, #414345);
     }
   }
 }

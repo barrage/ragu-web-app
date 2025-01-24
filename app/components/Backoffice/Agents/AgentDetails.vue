@@ -6,7 +6,6 @@ import { StatusType } from '~/types/statusTypes'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 import DeleteIcon from '~/assets/icons/svg/delete-person.svg'
-// PROPS & EMITS
 
 const props = defineProps<{
   singleAgent: Agent | null | undefined
@@ -17,15 +16,9 @@ const emits = defineEmits<{
   (event: 'agentVersionRollback', config: Configuration): Configuration
 }>()
 
-// STATES
-
 const agentStore = useAgentStore()
 const { t } = useI18n()
 const { $api } = useNuxtApp()
-const handleAgentUpdated = () => {
-  emits('refreshAgent')
-  agentStore.setEditMode(false)
-}
 
 const agentData = computed(() => {
   return {
@@ -51,10 +44,6 @@ const agentData = computed(() => {
 })
 
 const { execute: deleteProfilePicture, error } = await useAsyncData(() => $api.agent.DeleteAgentAvatar(props.singleAgent?.agent?.id as string), { immediate: false })
-
-const editClick = (): void => {
-  agentStore.setEditMode(true)
-}
 
 /* Activate Agent */
 const activateAgentModalVisible = ref(false)
@@ -134,127 +123,118 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
 </script>
 
 <template>
-  <template v-if="!agentStore.editMode">
-    <div class="agent-details-hero-section">
-      <div class="profile-avatar-wrapper">
-        <div class="avatar-wrapper">
-          <LlmAvatar
-            :avatar="agentData?.avatar"
-            :alt="t('agents.agent_avatar')"
-            fit="cover"
-            default-image="agent"
-            :size="96"
-          />
-          <div>
-            <h1 class="agentname">
-              {{ `${agentData.name}` }}
-            </h1>
-            <div class="agent-tags-wrapper">
-              <ElTag :type="agentData.statusType" size="small">
-                <span class="status-dot" />  {{ agentData?.status }}
-              </ElTag>
-              <ElTag type="primary" size="small">
-                v.{{ agentData?.version }}
-              </ElTag>
-            </div>
+  <div class="agent-details-hero-section">
+    <div class="profile-avatar-wrapper">
+      <div class="avatar-wrapper">
+        <LlmAvatar
+          :avatar="agentData?.avatar"
+          :alt="t('agents.agent_avatar')"
+          fit="cover"
+          default-image="agent"
+          :size="112"
+        />
+        <div>
+          <h1 class="agentname">
+            {{ `${agentData.name}` }}
+          </h1>
+          <div class="agent-tags-wrapper">
+            <ElTag :type="agentData.statusType" size="small">
+              <span class="status-dot" />  {{ agentData?.status }}
+            </ElTag>
+            <ElTag type="primary" size="small">
+              v.{{ agentData?.version }}
+            </ElTag>
           </div>
         </div>
       </div>
-      <div class="agent-details-actions-wrapper">
-        <div class="change-picture">
-          <el-button
-            class="edit-picture-button"
-            size="small"
-            @click="openUploadModal"
-          >
-            <EditIcon size="16px" />
-            {{ t('profile.change_picture.title') }}
-          </el-button>
-          <el-button
-            v-if="agentData.avatar"
-            class="remove-picture-button"
-            size="small"
-            @click="isDeleteModalOpen = true"
-          >
-            <DeleteIcon size="16px" />
-            {{ t('profile.change_picture.delete_title') }}
-          </el-button>
-        </div>
+    </div>
+    <div class="agent-details-actions-wrapper">
+      <div class="change-picture">
         <el-button
-          v-if="!props.singleAgent?.agent?.active"
+          class="edit-picture-button"
           size="small"
-          type="primary"
-          plain
-          @click="openActivateAgentModal()"
+          @click="openUploadModal"
         >
-          <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
+          <EditIcon size="16px" />
+          {{ t('profile.change_picture.title') }}
         </el-button>
-
         <el-button
+          v-if="agentData.avatar"
+          class="remove-picture-button"
           size="small"
-          type="primary"
-          plain
-          @click="editClick()"
+          @click="isDeleteModalOpen = true"
         >
-          <EditIcon size="20px" />  {{ t('agents.buttons.edit') }}
-        </el-button>
-
-        <el-button
-          v-if="props.singleAgent?.agent?.active"
-          size="small"
-          type="danger"
-          plain
-          @click="openDeactivateAgentModal()"
-        >
-          <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
+          <DeleteIcon size="16px" />
+          {{ t('profile.change_picture.delete_title') }}
         </el-button>
       </div>
+      <el-button
+        v-if="!props.singleAgent?.agent?.active"
+        size="small"
+        type="primary"
+        plain
+        @click="openActivateAgentModal()"
+      >
+        <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
+      </el-button>
+
+      <LlmLink :to="`/admin/agents/${props.singleAgent?.agent?.id}/edit`">
+        <template #default>
+          <el-button size="small">
+            <EditIcon size="20px" />  {{ t('agents.buttons.edit') }}
+          </el-button>
+        </template>
+      </LlmLink>
+
+      <el-button
+        v-if="props.singleAgent?.agent?.active"
+        size="small"
+        type="danger"
+        plain
+        @click="openDeactivateAgentModal()"
+      >
+        <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
+      </el-button>
     </div>
+  </div>
 
-    <el-tabs
-      v-model="activeName"
-      class="agent-details-tabs"
-      data-testid="bo-agent-details-tabs"
-      @tab-click="handleTabClick"
-    >
-      <el-tab-pane :label="t('agents.titles.details')" name="details">
-        <template v-if="activeName === 'details'">
-          <AgentOverallDetails :single-agent="props.singleAgent" />
-        </template>
-      </el-tab-pane>
-      <el-tab-pane :label="t('agents.titles.configuration')" name="configuration">
-        <template v-if="activeName === 'configuration'" />
-        <AgentConfigurationDetails :single-agent="props.singleAgent" />
-      </el-tab-pane>
-      <el-tab-pane :label="t('collections.title')" name="collections">
-        <template v-if="activeName === 'collections'">
-          <AgentCollections :agent-collections="props.singleAgent?.collections" @refresh-agent="handleGetSingleAgent" />
-        </template>
-      </el-tab-pane>
+  <el-tabs
+    v-model="activeName"
+    class="agent-details-tabs"
+    data-testid="bo-agent-details-tabs"
+    @tab-click="handleTabClick"
+  >
+    <el-tab-pane :label="t('agents.titles.details')" name="details">
+      <template v-if="activeName === 'details'">
+        <AgentOverallDetails :single-agent="props.singleAgent" />
+      </template>
+    </el-tab-pane>
+    <el-tab-pane :label="t('agents.titles.configuration')" name="configuration">
+      <template v-if="activeName === 'configuration'" />
+      <AgentConfigurationDetails :single-agent="props.singleAgent" />
+    </el-tab-pane>
+    <el-tab-pane :label="t('collections.title')" name="collections">
+      <template v-if="activeName === 'collections'">
+        <AgentCollections :agent-collections="props.singleAgent?.collections" @refresh-agent="handleGetSingleAgent" />
+      </template>
+    </el-tab-pane>
 
-      <el-tab-pane :label="t('agents.titles.evaluations')" name="evaluations">
-        <template v-if="activeName === 'evaluations'">
-          <AsyncAgentEvaluationList :agent="props.singleAgent" />
-        </template>
-      </el-tab-pane>
-      <!--  <el-tab-pane :label="t('agents.titles.statistic')" name="statistics">
+    <el-tab-pane :label="t('agents.titles.evaluations')" name="evaluations">
+      <template v-if="activeName === 'evaluations'">
+        <AsyncAgentEvaluationList :agent="props.singleAgent" />
+      </template>
+    </el-tab-pane>
+    <!--  <el-tab-pane :label="t('agents.titles.statistic')" name="statistics">
         <template v-if="activeName === 'statistics'">
           <AgentStatistic />
         </template>
       </el-tab-pane> -->
-      <el-tab-pane :label="t('agents.titles.versions')" name="versions">
-        <template v-if="activeName === 'versions'">
-          <AsyncAgentVersionList :agent="props.singleAgent" @rollback-agent-version="handleAgentVersionRollback" />
-        </template>
-      </el-tab-pane>
-    </el-tabs>
-  </template>
-
-  <AgentEdit
-    v-else
-    :single-agent="singleAgent"
-    @agent-updated="handleAgentUpdated"
-  />
+    <el-tab-pane :label="t('agents.titles.versions')" name="versions">
+      <template v-if="activeName === 'versions'">
+        <AsyncAgentVersionList :agent="props.singleAgent" @rollback-agent-version="handleAgentVersionRollback" />
+      </template>
+    </el-tab-pane>
+  </el-tabs>
 
   <ActivateAgentModalBackoffice
     v-model="activateAgentModalVisible"
