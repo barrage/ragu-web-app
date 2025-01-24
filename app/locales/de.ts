@@ -422,6 +422,8 @@ export default {
         error_file_size_description: 'Die Dateigröße darf 100 MB nicht überschreiten!',
         error_file_type_title: 'Dateiformatproblem',
         error_file_type_description: 'Die Datei muss im PDF-, TXT-, JSON- oder DOCX-Format vorliegen!',
+        error_too_large_title: 'Datei zu groß',
+        error_too_large_description: 'Das hochgeladene Bild überschreitet die maximal zulässige Upload-Größe. Bitte laden Sie ein Bild kleiner als 5MB hoch.',
       },
     },
     edit_configuration: 'Konfiguration bearbeiten',

@@ -418,6 +418,8 @@ export default {
         error_file_size_description: 'ファイルサイズは100 MBを超えてはいけません！',
         error_file_type_title: 'ファイル形式の問題',
         error_file_type_description: 'ファイルはPDF、TXT、JSON、またはDOCX形式である必要があります！',
+        error_too_large_title: 'ファイルが大きすぎます',
+        error_too_large_description: 'アップロードされた画像は、最大許容アップロードサイズを超えています。5MB未満の画像をアップロードしてください。',
       },
     },
     edit_configuration: '設定を編集',

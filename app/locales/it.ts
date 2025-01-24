@@ -419,6 +419,8 @@ export default {
         error_file_size_description: 'La dimensione del file non può superare i 100 MB!',
         error_file_type_title: 'Problema di Formato del File',
         error_file_type_description: 'Il file deve essere in formato PDF, TXT, JSON o DOCX!',
+        error_too_large_title: 'File troppo grande',
+        error_too_large_description: 'L\'immagine caricata supera la dimensione massima consentita per il caricamento. Carica un\'immagine inferiore a 5MB.',
       },
     },
     edit_configuration: 'Modifica configurazione',
