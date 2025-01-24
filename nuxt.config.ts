@@ -21,15 +21,16 @@ export default defineNuxtConfig({
       apiBaseUrl: process.env.API_BASE_URL,
       apiChunkerUrl: process.env.API_CHUCKER_URL,
       wsUrl: process.env.WS_URL,
+      oAuthGoogleUrl: process.env.OAUTH_GOOGLE_URL,
       oAuthGoogleId: process.env.OAUTH_GOOGLE_LOGIN_CLIENTID,
+      googleOAuthClientId: process.env.GOOGLE_OAUTH_CLIENT_ID,
+      googleAppId: process.env.GOOGLE_APP_ID,
       // WhatsApp
       enableWhatsApp: process.env.ENABLE_WHATSAPP,
       // AAI@Edu
       enableAAIEduLogin: process.env.ENABLE_AAIEDU_LOGIN,
+      oAuthAAIEduUrl: process.env.OAUTH_AAIEDU_URL,
       oAuthAAIEduLoginClientId: process.env.OAUTH_AAIEDU_LOGIN_CLIENTID,
-      googleOAuthClientId: process.env.GOOGLE_OAUTH_CLIENT_ID,
-      googleAppId: process.env.GOOGLE_APP_ID,
-
     },
   },
   app: {
