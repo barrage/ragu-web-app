@@ -10,7 +10,6 @@ import CopyIcon from '~/assets/icons/svg/copy.svg'
 import StopIcon from '~/assets/icons/svg/stop.svg'
 import type { Message } from '~/types/chat'
 import { sanitizeHtml } from '~/utils/sanitizeHtml'
-import AgentCard from '~/components/Backoffice/Agents/AgentCard.vue'
 
 const props = defineProps<{
   message: Message | null
@@ -41,12 +40,17 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 const chatStore = useChatStore()
 const agentStore = useAgentStore()
+const route = useRoute()
 const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 const displayedContent = ref('')
 const pendingContent = ref('')
 const likeDislikeLoading = ref(false)
 
 const agentAvatar = computed(() => {
+  if (!route.params.chatId) {
+    return agentStore.selectedAgent?.avatar || null
+  }
+
   const agent = agentStore.appAgentsResponse?.items.find(agent => agent.id === props.agentId)
   return agent?.avatar || null
 })
