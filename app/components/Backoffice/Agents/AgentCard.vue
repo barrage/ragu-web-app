@@ -15,7 +15,6 @@ const props = defineProps<{
 
 const emits = defineEmits<Emits>()
 // CONSTANTS
-const agentStore = useAgentStore()
 const { t } = useI18n()
 interface Emits {
 
@@ -40,9 +39,9 @@ const agentData = computed(() => {
     avatar: props.singleAgent?.agent?.avatar || undefined,
   }
 })
-
+const router = useRouter()
 const editClick = (): void => {
-  agentStore.setEditMode(true)
+  router.push(`/admin/agents/${props.singleAgent?.agent.id}/edit`)
 }
 </script>
 

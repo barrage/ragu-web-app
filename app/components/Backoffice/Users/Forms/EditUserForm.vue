@@ -16,18 +16,15 @@ const props = withDefaults(
 )
 
 const emits = defineEmits<Emits>()
-const { $api } = useNuxtApp()
-const { t } = useI18n()
-const authStore = useAuthStore()
 
 interface Emits {
   (event: 'userEdited'): void
   (event: 'userEditCanceled'): void
 }
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) { return }
-  formEl.resetFields()
-}
+
+const { $api } = useNuxtApp()
+const { t } = useI18n()
+const authStore = useAuthStore()
 
 const editUserFormRef = ref<FormInstance>()
 
@@ -39,6 +36,11 @@ const editUserForm = reactive<EditUserPayload>({
   lastName: '',
   role: '',
 })
+
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) { return }
+  formEl.resetFields()
+}
 
 const userRoles = computed(() => [
   {

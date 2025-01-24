@@ -44,7 +44,7 @@ watch(width, (newWidth) => {
   max-height: 100vh;
   position: relative;
   transition: grid-template-columns 0.3s ease;
-  background: var(--color-primary-subtle);
+  background: var(--color-app-background);
   opacity: 0;
   animation: fadeIn 0.5s ease-out forwards;
 
@@ -83,12 +83,6 @@ watch(width, (newWidth) => {
   }
   to {
     opacity: 1;
-  }
-}
-
-.dark {
-  .main-layout {
-    background: var(--color-primary-1000);
   }
 }
 </style>

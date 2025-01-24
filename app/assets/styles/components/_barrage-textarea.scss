@@ -4,12 +4,12 @@
     --textarea-height: max-content !important;
     --textarea-color: var(--color-primary-700);
     --textarea-error-color: var(--color-red-500);
-    --textarea-background-color: transparent;
-    --textarea-border: var(--border-global-2);
-    --textarea-border-color: var(--color-primary-500);
+    --textarea-background-color: var(--color-primary-subtle);
+    --textarea-border: var(--border-global-1);
+    --textarea-border-color: var(--color-primary-100);
     --textarea-border-radius: var(--radius-4);
     --textarea-icon-size: 1rem;
-    --textarea-padding-block-start: var(--spacing-mobile-m);
+    --textarea-padding-block-start: var(--spacing-mobile-5-xs);
     --textarea-padding-block-end: var(--spacing-mobile-7-xs);
     --textarea-padding-inline-start: clamp(
       0.625rem,
@@ -31,8 +31,12 @@
   }
 
   html.dark {
-    .barrage-textarea {
-      --textarea-color: var(--color-primary-50);
+    & .barrage-textarea {
+      --textarea-color: var(--color-primary-0);
+      --textarea-border: var(--border-global-1);
+      --textarea-border-color: var(--color-primary-100);
+      --textarea-background-color: var(--color-primary-700);
+
       &__inner {
         --textarea-border-color: var(--color-primary-600);
 
@@ -76,7 +80,8 @@
       text-overflow: ellipsis;
       background-color: var(--textarea-background-color);
       border: none;
-      border-bottom: var(--textarea-border);
+      border: var(--textarea-border);
+      border-radius: var(--textarea-border-radius);
       border-color: var(--textarea-border-color);
       padding-block: var(--textarea-padding-block-start)
         var(--textarea-padding-block-end);
@@ -107,7 +112,7 @@
       }
 
       &:not(:placeholder-shown) {
-        --textarea-border-color: var(--color-primary-600);
+        --textarea-border-color: var(--textarea-border-color);
       }
 
       &:disabled {

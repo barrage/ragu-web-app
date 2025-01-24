@@ -947,6 +947,9 @@ export default {
       rollback_version_modal: 'Ovom akcijom agent će biti vraćen na prethodno odabranu verziju. Sve promjene napravljene nakon odabrane verzije bit će zamijenjene podacima iz te verzije. Agent ce biti vracen na verziju broj {version}',
       evaluation_positive: 'Pozitivna procjena',
       evaluation_negative: 'Negativna procjena',
+      general_agent_details: 'Opći detalji o identitetu i svrsi agenta.',
+      language_form: 'Definirajte jezik i ton komunikacije agenta.',
+      instructions_form: 'Pružite upute kako biste prilagodili izlaz agenta vašim potrebama.',
     },
     agent_card: {
       unknown_id: 'Nepoznati ID agenta',

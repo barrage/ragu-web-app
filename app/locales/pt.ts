@@ -659,6 +659,9 @@ export default {
       rollback_version_modal: 'Esta ação reverterá o agente para a versão anterior selecionada. Todas as alterações feitas após a versão selecionada serão substituídas pelos dados dessa versão. O agente será revertido para a versão {version}.',
       evaluation_positive: 'Avaliação positiva',
       evaluation_negative: 'Avaliação negativa',
+      general_agent_details: 'Detalhes gerais sobre a identidade e o propósito do agente.',
+      language_form: 'Defina o idioma e o tom de comunicação do agente.',
+      instructions_form: 'Forneça instruções para alinhar a saída do agente às suas necessidades.',
     },
     agent_card: {
       unknown_id: 'ID do agente desconhecido',

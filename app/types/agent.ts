@@ -102,6 +102,7 @@ export interface Instructions {
   languageInstruction: string
   summaryInstruction: string
   titleInstruction: string
+  promptInstruction: string
 }
 
 export interface AgentDetail {
@@ -140,4 +141,12 @@ export interface AgentListFilterForm {
 export interface AgentVersionEvaluationMessagesFilter {
   evaluation: boolean | undefined
   agentVersion: string
+}
+
+export interface EditAgentPayload {
+  active: boolean
+  description: string
+  language: string
+  name: string
+  configuration: AgentConfiguration
 }

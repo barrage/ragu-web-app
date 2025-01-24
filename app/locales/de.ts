@@ -684,6 +684,9 @@ export default {
       rollback_version_modal: 'Durch diese Aktion wird der Agent auf die ausgewählte vorherige Version zurückgesetzt. Alle Änderungen nach dieser Version werden durch die Daten aus dieser Version ersetzt. Der Agent wird auf Version {version} zurückgesetzt.',
       evaluation_positive: 'Positive Bewertung',
       evaluation_negative: 'Negative Bewertung',
+      general_agent_details: 'Allgemeine Details zur Identität und dem Zweck des Agenten.',
+      language_form: 'Definieren Sie die Kommunikationssprache und den Ton des Agenten.',
+      instructions_form: 'Geben Sie Anweisungen, um die Ausgabe des Agenten an Ihre Bedürfnisse anzupassen.',
     },
     activate_agent: {
       title: 'Agent aktivieren',
