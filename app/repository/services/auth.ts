@@ -16,7 +16,7 @@ export default class AuthService extends FetchFactory {
    */
   async Login(payload: OAuthPayload) {
     try {
-      const response = await this.$fetch<AuthResponse>(
+      return await this.$fetch<AuthResponse>(
         `${this.endpoint}/login`,
         {
           credentials: 'include',
@@ -31,11 +31,6 @@ export default class AuthService extends FetchFactory {
           }),
         },
       )
-      // Set authProvider cookie
-      const authProvider = useCookie<string | null>('authProvider')
-      authProvider.value = payload.provider
-
-      return response
     }
     catch (error: any) {
       throw createError({
@@ -60,17 +55,6 @@ export default class AuthService extends FetchFactory {
 
         },
       )
-      // Load & remove authProvider cookie
-      const authProvider = useCookie<string | null>('authProvider')
-      if (authProvider.value === 'carnet') {
-        // Close AAI Edu logout page after 500 milliseconds
-        const newWindow = window.open(`https://fed-lab.aaiedu.hr/sso/module.php/oidc/logout.php`, '_blank')
-        setTimeout(() => {
-          if (newWindow) { newWindow.close() }
-          else { console.error('Unable to open new window.') }
-        }, 500)
-      }
-      authProvider.value = null
     }
     catch (error: any) {
       throw createError({
