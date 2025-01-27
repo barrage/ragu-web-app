@@ -17,7 +17,6 @@ const emits = defineEmits<{
   (event: 'userActivated'): void
 }>()
 
-const { $api } = useNuxtApp()
 const { t } = useI18n()
 const router = useRouter()
 
@@ -39,9 +38,6 @@ const oAuthStore = useAuthStore()
 const isLoggedInUserViewingOwnProfile = computed(() => {
   return oAuthStore.user?.id === props.user?.id
 })
-/* Api */
-
-const { execute: deleteProfilePicture, error } = await useAsyncData (() => $api.user.DeleteAdminProfilePicture(props.user?.id as string), { immediate: false })
 
 /* Edit User */
 const selectedUserEdit = ref<User | undefined | null >(props.user)
@@ -91,43 +87,19 @@ const handleUserDeactivated = () => {
 
 /* Profile Picture */
 
-const isDeleteModalOpen = ref(false)
-
-const closeDeleteModal = () => {
-  isDeleteModalOpen.value = false
+const isProfileModalVisible = defineModel<boolean>()
+const openProfileModal = () => {
+  isProfileModalVisible.value = true
 }
 
-const isUploadModalVisible = defineModel<boolean>()
-const openUploadModal = () => {
-  isUploadModalVisible.value = true
-}
-
-const refreshCurrentUser = async () => {
+const handleChangePicture = () => {
+  isProfileModalVisible.value = false
   emits('userEdited')
 }
 
-const handleRemovePicture = async () => {
-  await deleteProfilePicture()
-  if (error.value) {
-    ElNotification({
-      title: t('profile.notifications.import.error_title'),
-      message: t('profile.notifications.import.error_description'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-  }
-  else {
-    ElNotification({
-      title: t('profile.notifications.import.success_title'),
-      message: t('profile.notifications.import.success_delete_description'),
-      type: 'success',
-      customClass: 'success',
-      duration: 2500,
-    })
-  }
-  await refreshCurrentUser()
-  closeDeleteModal()
+const handleDeletePicture = () => {
+  isProfileModalVisible.value = false
+  emits('userEdited')
 }
 </script>
 
@@ -141,6 +113,8 @@ const handleRemovePicture = async () => {
           fit="cover"
           default-image="user"
           :size="112"
+          editable
+          @edit="openProfileModal"
         />
         <div>
           <h5 class="username">
@@ -153,25 +127,6 @@ const handleRemovePicture = async () => {
       </div>
     </div>
     <div class="user-details-actions-wrapper">
-      <div class="change-picture">
-        <el-button
-          class="edit-picture-button"
-          size="small"
-          @click="openUploadModal"
-        >
-          <EditIcon size="16px" />
-          {{ t('profile.change_picture.title') }}
-        </el-button>
-        <el-button
-          v-if="userData.avatar"
-          class="remove-picture-button"
-          size="small"
-          @click="isDeleteModalOpen = true"
-        >
-          <DeleteIcon size="16px" />
-          {{ t('profile.change_picture.delete_title') }}
-        </el-button>
-      </div>
       <ElButton
         size="small"
         type="primary"
@@ -232,21 +187,10 @@ const handleRemovePicture = async () => {
       :selected-user="selectedUserDeactivate"
       @user-deactivated="handleUserDeactivated"
     />
-    <ConformationModal
-      :is-visible="isDeleteModalOpen"
-      :title="t('profile.delete_picture.title')"
-      :message="t('profile.delete_picture.description')"
-      :confirm-button-text="t('settings.delete') "
-      :cancel-button-text="t('settings.cancel')"
-      @confirm="handleRemovePicture"
-      @cancel="closeDeleteModal"
-    />
-
-    <ChangePictureModal
-      v-model="isUploadModalVisible"
-      upload-type="adminUsers"
-      :user-id="props.user?.id"
-      @profile-picture-uploaded="refreshCurrentUser"
+    <ProfileOverviewModal
+      v-model="isProfileModalVisible"
+      @change-picture="handleChangePicture"
+      @delete-picture="handleDeletePicture"
     />
   </section>
 </template>

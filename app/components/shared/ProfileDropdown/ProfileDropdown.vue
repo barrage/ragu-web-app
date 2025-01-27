@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // IMPORTS
+import ProfileOverviewModal from '../ProfileOverviewModal.vue'
 import { useDropdownKeyboard } from '~/utils/useDropdownKeyboard'
 import AdminIcon from '~/assets/icons/svg/admin.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
@@ -248,19 +249,7 @@ function switchRoute() {
       </el-button>
     </template>
   </ElDialog>
-  <ElDialog
-    v-model="isProfileModelVisible"
-    align-center
-    class="barrage-dialog--medium"
-    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
-  >
-    <template #header>
-      <h5>{{ t('profileDropdown.profile_settings') }}</h5>
-    </template>
-    <ProfileOverview />
-  </ElDialog>
-
-  <ProfileDropdownSettings v-model="isSettingsModalVisible" />
+  <ProfileOverviewModal v-model="isProfileModelVisible" />
 </template>
 
 <style lang="scss" scoped>

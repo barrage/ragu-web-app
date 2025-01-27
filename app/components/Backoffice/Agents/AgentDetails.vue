@@ -5,7 +5,6 @@ import type { Agent, Configuration } from '~/types/agent'
 import { StatusType } from '~/types/statusTypes'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
-import DeleteIcon from '~/assets/icons/svg/delete-person.svg'
 import FolderPersonIcon from '~/assets/icons/svg/folder-person.svg'
 import LikeDislikeIcon from '~/assets/icons/svg/like_dislike.svg'
 import PersonTagIcon from '~/assets/icons/svg/person-tag.svg'
@@ -21,9 +20,7 @@ const emits = defineEmits<{
   (event: 'agentVersionRollback', config: Configuration): Configuration
 }>()
 
-const agentStore = useAgentStore()
 const { t } = useI18n()
-const { $api } = useNuxtApp()
 
 const agentData = computed(() => {
   return {
@@ -48,17 +45,11 @@ const agentData = computed(() => {
   }
 })
 
-const { execute: deleteProfilePicture, error } = await useAsyncData(() => $api.agent.DeleteAgentAvatar(props.singleAgent?.agent?.id as string), { immediate: false })
-
 /* Activate Agent */
 const activateAgentModalVisible = ref(false)
 
 const openActivateAgentModal = () => {
   activateAgentModalVisible.value = true
-}
-
-const agentActivated = () => {
-  emits('refreshAgent')
 }
 
 /* Deactivate Agent */
@@ -68,53 +59,25 @@ const openDeactivateAgentModal = () => {
   deactivateAgentModalVisible.value = true
 }
 
-const agentDeactivated = () => {
-  emits('refreshAgent')
-}
 const handleGetSingleAgent = () => {
   emits('refreshAgent')
 }
 
 /* Profile Picture */
-const isDeleteModalOpen = ref(false)
 
-const closeDeleteModal = () => {
-  isDeleteModalOpen.value = false
+const isAgentModalVisible = defineModel<boolean>()
+const openAgentModal = () => {
+  isAgentModalVisible.value = true
 }
 
-const isUploadModalVisible = defineModel<boolean>()
-const openUploadModal = () => {
-  isUploadModalVisible.value = true
-}
-
-const refreshAgent = async () => {
+const handleChangePicture = () => {
+  isAgentModalVisible.value = false
   emits('refreshAgent')
-  await agentStore.GET_AllAppAgents()
 }
 
-const handleRemovePicture = async () => {
-  await deleteProfilePicture()
-  if (error.value) {
-    ElNotification({
-      title: t('profile.notifications.import.error_title'),
-      message: t('profile.notifications.import.error_description'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-  }
-  else {
-    ElNotification({
-      title: t('profile.notifications.import.success_title'),
-      message: t('profile.notifications.import.success_delete_description'),
-      type: 'success',
-      customClass: 'success',
-      duration: 2500,
-    })
-  }
-
-  refreshAgent()
-  closeDeleteModal()
+const handleDeletePicture = () => {
+  isAgentModalVisible.value = false
+  emits('refreshAgent')
 }
 const activeName = ref('details')
 
@@ -137,6 +100,8 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
           fit="cover"
           default-image="agent"
           :size="112"
+          editable
+          @edit="openAgentModal"
         />
         <div>
           <h1 class="agentname">
@@ -154,25 +119,6 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
       </div>
     </div>
     <div class="agent-details-actions-wrapper">
-      <div class="change-picture">
-        <el-button
-          class="edit-picture-button"
-          size="small"
-          @click="openUploadModal"
-        >
-          <EditIcon size="16px" />
-          {{ t('profile.change_picture.title') }}
-        </el-button>
-        <el-button
-          v-if="agentData.avatar"
-          class="remove-picture-button"
-          size="small"
-          @click="isDeleteModalOpen = true"
-        >
-          <DeleteIcon size="16px" />
-          {{ t('profile.change_picture.delete_title') }}
-        </el-button>
-      </div>
       <el-button
         v-if="!props.singleAgent?.agent?.active"
         size="small"
@@ -275,30 +221,20 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
     v-model="activateAgentModalVisible"
     :selected-agent="props.singleAgent"
     source="details"
-    @agent-activated="agentActivated"
+    @agent-activated="handleGetSingleAgent"
   />
 
   <DeactivateAgentModalBackoffice
     v-model="deactivateAgentModalVisible"
     :selected-agent="props.singleAgent"
     source="details"
-    @agent-deactivated="agentDeactivated"
+    @agent-deactivated="handleGetSingleAgent"
   />
-  <ConformationModal
-    :is-visible="isDeleteModalOpen"
-    :title="t('profile.delete_picture.title')"
-    :message="t('profile.delete_picture.description')"
-    :confirm-button-text="t('settings.delete') "
-    :cancel-button-text="t('settings.cancel')"
-    @confirm="handleRemovePicture"
-    @cancel="closeDeleteModal"
-  />
-
-  <ChangePictureModal
-    v-model="isUploadModalVisible"
-    upload-type="agents"
-    :agent-id="agentData.id"
-    @profile-picture-uploaded="refreshAgent"
+  <ChangeAgentPictureModal
+    v-model="isAgentModalVisible"
+    :agent="props.singleAgent"
+    @change-picture="handleChangePicture"
+    @delete-picture="handleDeletePicture"
   />
 </template>
 

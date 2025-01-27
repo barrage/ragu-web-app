@@ -1,41 +1,44 @@
 <script lang="ts" setup>
-import PersonMailIcon from '~/assets/icons/svg/person-mail.svg'
-import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
-import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
+import PersonKeyIcon from '~/assets/icons/svg/person-key.svg'
+import PersonClockIcon from '~/assets/icons/svg/clock.svg'
+import LocaleIcon from '~/assets/icons/svg/locale.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
-import { StatusType } from '~/types/statusTypes'
+import type { Agent } from '~/types/agent'
+
+const props = defineProps<{
+  agent: Agent | null | undefined
+}>()
 
 const emits = defineEmits<{
   (e: 'changePicture'): void
   (e: 'deletePicture'): void
 }>()
+
 // CONSTANTS
-const userAuth = useAuthStore()
 const { t } = useI18n()
 const { $api } = useNuxtApp()
 
-const { execute: deleteProfilePicture, error, status: deleteProfilePictureStatus } = await useAsyncData (() => $api.user.DeleteProfilePicture(), { immediate: false })
-
-const { execute: getCurrentUser, data: user } = await useAsyncData(() => $api.auth.GetCurrentUser(), { immediate: false })
+const { execute: deleteAgentPicture, error, status: deleteAgentPictureStatus } = await useAsyncData(
+  () => $api.agent.DeleteAgentAvatar(props.agent?.agent?.id),
+  { immediate: false },
+)
 
 const isDeleteModalOpen = ref(false)
+const isUploadModalVisible = defineModel<boolean>()
 
 const closeDeleteModal = () => {
   isDeleteModalOpen.value = false
 }
 
-const isUploadModalVisible = defineModel<boolean>()
 const openUploadModal = () => {
   isUploadModalVisible.value = true
 }
 
-const refreshCurrentUser = async () => {
+const refreshCurrentAgent = async () => {
   isUploadModalVisible.value = false
-  userAuth.user = user.value
   emits('changePicture')
-  await getCurrentUser()
 }
 
 const handleChangePicture = () => {
@@ -46,21 +49,8 @@ const handleDeletePicture = () => {
   isDeleteModalOpen.value = true
 }
 
-// HELPERS
-const userProfileData = computed(() => {
-  return {
-    name: userAuth.user?.fullName || t('users.user_card.username'),
-    role: userAuth.user?.role === 'admin' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
-    email: userAuth.user?.email,
-    statusType: userAuth.user?.active ? StatusType.Success : StatusType.Danger,
-    status: userAuth.user?.active ? t('users.user_card.active_status') : t('users.user_card.inactive_status'),
-    updatedAt: userAuth.user?.updatedAt ? formatDate(userAuth.user?.updatedAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
-    createdAt: userAuth.user?.updatedAt ? formatDate(userAuth.user?.createdAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
-  }
-})
-
 const handleRemovePicture = async () => {
-  await deleteProfilePicture()
+  await deleteAgentPicture()
   if (error.value) {
     ElNotification({
       title: t('profile.notifications.import.error_title'),
@@ -82,23 +72,23 @@ const handleRemovePicture = async () => {
     emits('deletePicture')
   }
 
-  await refreshCurrentUser()
+  await refreshCurrentAgent()
   closeDeleteModal()
 }
 </script>
 
 <template>
-  <div class="profile-container">
-    <div class="profile-top">
-      <div class="profile-picture-container">
-        <div class="profile-avatar-wrapper">
+  <div class="agent-overview-container">
+    <div class="agent-top">
+      <div class="agent-picture-container">
+        <div class="agent-avatar-wrapper">
           <LlmAvatar
-            :avatar="userAuth.user?.avatar"
-            :alt="t('agents.user_avatar')"
+            :avatar="agent?.agent?.avatar"
+            :alt="t('agents.agent_avatar')"
             size="large"
             fit="cover"
-            default-image="user"
-            :content-type="userAuth.user?.avatar?.contentType"
+            default-image="agent"
+            :content-type="agent?.agent?.avatar?.contentType"
           />
         </div>
       </div>
@@ -111,7 +101,7 @@ const handleRemovePicture = async () => {
         {{ t('profile.change_picture.title') }}
       </el-button>
       <el-button
-        v-if="userAuth.user?.avatar"
+        v-if="agent?.agent?.avatar"
         class="remove-picture-button"
         size="small"
         @click="handleDeletePicture"
@@ -120,61 +110,66 @@ const handleRemovePicture = async () => {
         {{ t('profile.change_picture.delete_title') }}
       </el-button>
     </div>
-    <div class="profile-title">
-      <p>{{ userProfileData.name }}</p>
-      <div class="profile-avatar-wrapper">
-        <el-tag :type="userProfileData.statusType" size="small">
-          <span class="status-dot" />  {{ userProfileData?.status }}
+
+    <div class="agent-title">
+      <p>{{ agent?.agent?.name }}</p>
+      <div class="agent-status-wrapper">
+        <el-tag :type="agent?.agent?.active ? 'success' : 'danger'" size="small">
+          <span class="status-dot" />
+          {{ agent?.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status') }}
         </el-tag>
       </div>
     </div>
-    <div class="profile-informations-section">
+
+    <div class="agent-informations-section">
       <LabelDescriptionItem
-        :label="t('users.user_card.email')"
-        :description="userProfileData.email"
+        :label="t('agents.labels.llmProvider')"
+        :description="agent?.configuration?.llmProvider"
         horizontal
       >
         <template #customLabel>
-          <div class="profile-details-custom-label">
-            <PersonMailIcon size="18px" />
-            <span>  {{ t('users.user_card.email') }}:</span>
+          <div class="agent-details-custom-label">
+            <PersonKeyIcon size="18px" />
+            <span>{{ t('agents.labels.llmProvider') }}:</span>
           </div>
         </template>
       </LabelDescriptionItem>
 
       <LabelDescriptionItem
-        :label=" t('agents.labels.language')"
-        :description="userProfileData.role"
+        :label="t('agents.labels.model')"
+        :description="agent?.configuration?.model"
         horizontal
       >
         <template #customLabel>
-          <div class="profile-details-custom-label">
+          <div class="agent-details-custom-label">
             <PersonInfoIcon size="18px" />
-            <span>  {{ t('users.user_card.role') }}:</span>
+            <span>{{ t('agents.labels.model') }}:</span>
           </div>
         </template>
       </LabelDescriptionItem>
+
       <LabelDescriptionItem
-        :label="t('agents.labels.created_at') "
-        :description="userProfileData.createdAt"
+        :label="t('agents.labels.language')"
+        :description="agent?.agent?.language"
         horizontal
       >
         <template #customLabel>
-          <div class="profile-details-custom-label">
-            <PersonCalendarIcon size="18px" />
-            <span>  {{ t('agents.labels.created_at') }}:</span>
+          <div class="agent-details-custom-label">
+            <LocaleIcon size="18px" />
+            <span>{{ t('agents.labels.language') }}:</span>
           </div>
         </template>
       </LabelDescriptionItem>
+
       <LabelDescriptionItem
-        :label="t('agents.labels.updated_at')"
-        :description="userProfileData.updatedAt"
+        :label="t('agents.labels.created_at')"
+        :description="agent?.agent?.createdAt ? formatDate(agent.agent.createdAt, 'MMMM DD, YYYY') : '-'"
         horizontal
       >
         <template #customLabel>
-          <div class="profile-details-custom-label">
+          <div class="agent-details-custom-label">
             <PersonClockIcon size="18px" />
-            <span>  {{ t('agents.labels.updated_at') }}:</span>
+            <span>{{ t('agents.labels.created_at') }}:</span>
           </div>
         </template>
       </LabelDescriptionItem>
@@ -185,9 +180,9 @@ const handleRemovePicture = async () => {
     :is-visible="isDeleteModalOpen"
     :title="t('profile.delete_picture.title')"
     :message="t('profile.delete_picture.description')"
-    :confirm-button-text="t('settings.delete') "
+    :confirm-button-text="t('settings.delete')"
     confirm-button-type="danger"
-    :confirm-button-loading="deleteProfilePictureStatus === 'pending'"
+    :confirm-button-loading="deleteAgentPictureStatus === 'pending'"
     :cancel-button-text="t('settings.cancel')"
     @confirm="handleRemovePicture"
     @cancel="closeDeleteModal"
@@ -195,30 +190,38 @@ const handleRemovePicture = async () => {
 
   <ChangePictureModal
     v-model="isUploadModalVisible"
-    upload-type="users"
-    @profile-picture-uploaded="refreshCurrentUser"
+    upload-type="agents"
+    :agent-id="agent?.agent?.id"
+    @profile-picture-uploaded="refreshCurrentAgent"
   />
 </template>
 
 <style lang="scss" scoped>
-.profile-top {
+.agent-avatar-wrapper {
+  display: flex;
+  margin-right: 1rem;
+}
+
+.agent-overview-container {
+  padding: 1rem;
+}
+
+.agent-top {
   display: flex;
   align-items: center;
   gap: 22px;
   margin-bottom: 10px;
 }
 
-.profile-picture-container {
+.agent-picture-container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.profile-picture-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+.edit-picture-button {
+  margin-left: auto;
 }
 
 .edit-picture-button,
@@ -228,7 +231,7 @@ const handleRemovePicture = async () => {
   gap: 0.25rem;
 }
 
-.profile-title {
+.agent-title {
   margin-bottom: 22px;
   p {
     font-weight: var(--font-weight-semibold);
@@ -236,12 +239,11 @@ const handleRemovePicture = async () => {
   }
 }
 
-.profile-avatar-wrapper {
+.agent-status-wrapper {
   display: flex;
-  margin-right: 1rem;
 }
 
-.profile-informations-section {
+.agent-informations-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
@@ -255,7 +257,7 @@ const handleRemovePicture = async () => {
   }
 }
 
-.profile-details-custom-label {
+.agent-details-custom-label {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -267,6 +269,15 @@ const handleRemovePicture = async () => {
   }
 }
 
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  background-color: currentColor;
+}
+
 .barrage-button {
   padding-block: 0;
 
@@ -276,21 +287,8 @@ const handleRemovePicture = async () => {
 }
 
 .dark {
-  & .profile-details-custom-label {
+  .agent-details-custom-label {
     color: var(--color-primary-100);
-  }
-
-  & .label,
-  .agentname {
-    color: var(--color-primary-100);
-  }
-  & .description {
-    color: var(--color-primary-0);
-  }
-  .profile-title {
-    h6 {
-      color: var(--color-primary-100);
-    }
   }
 }
 </style>

@@ -74,7 +74,7 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scrollbar-color: var(--color-primary-500) var(--color-primary-200);
 
   &.collapsed-sidebar {
