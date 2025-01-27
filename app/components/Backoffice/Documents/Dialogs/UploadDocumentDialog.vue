@@ -55,7 +55,9 @@ const upload = async () => {
     const { execute: uploadDocument, error, data: uploadedDocument } = await useAsyncData(() => $api.document.PostUploadDocument(formData), { immediate: false })
     await uploadDocument()
 
-    if (error.value || uploadedDocument.value?.errors) {
+    const hasErrors = uploadedDocument.value?.errors && Object.keys(uploadedDocument.value.errors).length > 0
+
+    if (error.value || hasErrors) {
       if (error.value?.statusCode === 409) {
         ElNotification({
           title: t('documents.notifications.create.error_existing_document_title'),
