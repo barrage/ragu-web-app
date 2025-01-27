@@ -121,6 +121,6 @@ const handleUserDeactivated = () => {
 .users-list {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: var(--spacing-fluid-3-xs);
 }
 </style>

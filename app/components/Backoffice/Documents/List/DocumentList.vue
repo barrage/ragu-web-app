@@ -46,7 +46,7 @@ const handleDocumentDeleted = () => {
   color: var(--color-primary-700);
 }
 .documents-container {
-  row-gap: 0.8rem;
+  gap: var(--spacing-fluid-3-xs);
 
   & .document-card {
     grid-column: span 12;

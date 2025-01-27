@@ -20,7 +20,6 @@ const emits = defineEmits<{
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const router = useRouter()
-const userAuth = useAuthStore()
 
 const userData = computed(() => {
   return {
@@ -43,7 +42,6 @@ const isLoggedInUserViewingOwnProfile = computed(() => {
 /* Api */
 
 const { execute: deleteProfilePicture, error } = await useAsyncData (() => $api.user.DeleteAdminProfilePicture(props.user?.id as string), { immediate: false })
-const { execute: getCurrentUser, data: user } = await useAsyncData(() => $api.auth.GetCurrentUser(), { immediate: false })
 
 /* Edit User */
 const selectedUserEdit = ref<User | undefined | null >(props.user)
@@ -105,8 +103,6 @@ const openUploadModal = () => {
 }
 
 const refreshCurrentUser = async () => {
-  await getCurrentUser()
-  userAuth.user = user.value
   emits('userEdited')
 }
 
@@ -144,7 +140,7 @@ const handleRemovePicture = async () => {
           :alt="t('agents.user_avatar')"
           fit="cover"
           default-image="user"
-          size="large"
+          :size="112"
         />
         <div>
           <h5 class="username">
@@ -155,6 +151,8 @@ const handleRemovePicture = async () => {
           </ElTag>
         </div>
       </div>
+    </div>
+    <div class="user-details-actions-wrapper">
       <div class="change-picture">
         <el-button
           class="edit-picture-button"
@@ -174,8 +172,6 @@ const handleRemovePicture = async () => {
           {{ t('profile.change_picture.delete_title') }}
         </el-button>
       </div>
-    </div>
-    <div class="user-details-actions-wrapper">
       <ElButton
         size="small"
         type="primary"
@@ -196,7 +192,7 @@ const handleRemovePicture = async () => {
       <ElButton
         v-if="props.user?.active && !isLoggedInUserViewingOwnProfile"
         size="small"
-        type="primary"
+        type="danger"
         plain
         @click="openDeactivateUserModal"
       >
@@ -281,8 +277,8 @@ const handleRemovePicture = async () => {
     gap: 2rem;
   }
   & .username {
+    font-size: var(--font-size-fluid-6);
     font-weight: var(--font-weight-semibold);
-    line-height: normal;
     color: var(--color-primary-900);
   }
 }
@@ -290,7 +286,7 @@ const handleRemovePicture = async () => {
 .avatar-wrapper {
   display: flex;
   gap: 0.5rem;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .change-picture {

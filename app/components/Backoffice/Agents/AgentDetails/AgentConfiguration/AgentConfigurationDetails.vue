@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import BrainIcon from '~/assets/icons/svg/brain.svg'
-import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 import type { Agent } from '~/types/agent'
 import { StatusType } from '~/types/statusTypes'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
@@ -39,7 +38,6 @@ const agentData = computed(() => {
 <template>
   <div class="agent-informations-section">
     <div class="configuration-title-wrapper">
-      <PersonSettingsIcon size="38px" />
       <h5 class="agent-configuration-title">
         {{ t('agents.titles.configuration') }}
       </h5>
@@ -194,14 +192,17 @@ const agentData = computed(() => {
   align-items: center;
   gap: 0.5rem;
   color: var(--color-primary-800);
+  padding-inline: 0.8rem;
   & .agent-configuration-title {
-    color: var(--color-primary-800);
-    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-900);
+    font-size: var(--font-size-fluid-4);
   }
 }
 
 .instructions-title-wrapper {
   grid-column: span 2;
+  margin-top: var(--spacing-fluid-l);
+  padding-inline: 0.8rem;
 
   & .instructions-title {
     color: var(--color-primary-900);
@@ -229,7 +230,7 @@ const agentData = computed(() => {
   & .configuration-title-wrapper {
     color: var(--color-primary-100);
     & .agent-configuration-title {
-      color: var(--color-primary-100);
+      color: var(--color-primary-0);
     }
   }
 
@@ -237,6 +238,14 @@ const agentData = computed(() => {
     & .instructions-title {
       color: var(--color-primary-0);
     }
+  }
+}
+.label-description-item-container {
+  grid-column: span 2;
+  padding-inline: var(--spacing-fluid-m);
+
+  @include viewport-ml {
+    grid-column: span 1;
   }
 }
 </style>

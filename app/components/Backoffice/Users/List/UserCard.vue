@@ -97,6 +97,7 @@ const userData = computed(() => {
           :content="authUserId === user.id ? $t('users.user_card.action_not_supported_for_user') : $t('users.user_card.deactivate_user')"
         >
           <el-button
+            plain
             data-testid="bo-user-card-deactivate-button"
             :disabled="authUserId === user.id"
             @click="emits('deactivateUser', props.user)"

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { Agent, Configuration } from '~/types/agent'
-import PersonTagIcon from '~/assets/icons/svg/person-tag.svg'
 
 const props = defineProps<{
   agent: Agent | undefined | null
@@ -31,8 +30,7 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
 <template>
   <div>
     <div class="agent-versions-list-title-wrapper">
-      <PersonTagIcon size="38px" />
-      <h5 class="agent-version-title">
+      <h5 class="agent-versions-list-title">
         {{ t('agents.titles.versions') }}
       </h5>
     </div>
@@ -63,9 +61,18 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
   font-size: var(--font-size-fluid-5);
   color: var(--color-primary-900);
   margin-block: var(--spacing-fluid-m);
+  padding-inline: 0.8rem;
+
+  & .agent-versions-list-title {
+    color: var(--color-primary-900);
+    font-size: var(--font-size-fluid-4);
+  }
 }
 .dark {
   .agent-versions-list-title-wrapper {
+    color: var(--color-primary-0);
+  }
+  & .agent-versions-list-title {
     color: var(--color-primary-0);
   }
 }
