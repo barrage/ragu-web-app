@@ -2,7 +2,6 @@
 import PersonKeyIcon from '~/assets/icons/svg/person-key.svg'
 import PersonClockIcon from '~/assets/icons/svg/clock.svg'
 import LocaleIcon from '~/assets/icons/svg/locale.svg'
-import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import { StatusType } from '~/types/statusTypes'
 import type { Agent } from '~/types/agent'
@@ -40,7 +39,6 @@ const agentData = computed(() => {
 <template>
   <div class="agent-informations-section">
     <div class="agent-informations-title-wrapper">
-      <PersonInfoIcon size="38px" />
       <h5 class="agent-informations-title">
         {{ t('agents.titles.details') }}
       </h5>
@@ -59,19 +57,6 @@ const agentData = computed(() => {
     </LabelDescriptionItem>
 
     <LabelDescriptionItem
-      :label="t('agents.labels.id')"
-      :description="agentData.id"
-      horizontal
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <PersonKeyIcon size="18px" />
-          <span>  {{ t('agents.labels.id') }}</span>
-        </div>
-      </template>
-    </LabelDescriptionItem>
-
-    <LabelDescriptionItem
       :label="t('agents.labels.description') "
       :description="agentData.description"
       horizontal
@@ -84,6 +69,18 @@ const agentData = computed(() => {
       </template>
     </LabelDescriptionItem>
 
+    <LabelDescriptionItem
+      :label="t('agents.labels.id')"
+      :description="agentData.id"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonKeyIcon size="18px" />
+          <span>  {{ t('agents.labels.id') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
     <LabelDescriptionItem
       :label=" t('agents.labels.language')"
       :description="agentData.language"
@@ -103,7 +100,7 @@ const agentData = computed(() => {
     >
       <template #customLabel>
         <div class="agent-details-custom-label">
-          <PersonCalendarIcon size="18px" />
+          <PersonClockIcon size="18px" />
           <span>  {{ t('agents.labels.created_at') }}</span>
         </div>
       </template>
@@ -143,9 +140,10 @@ const agentData = computed(() => {
   align-items: center;
   gap: 0.5rem;
   color: var(--color-primary-800);
+  padding-inline: 0.8rem;
   & .agent-informations-title {
-    color: var(--color-primary-800);
-    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-900);
+    font-size: var(--font-size-fluid-4);
   }
 }
 
@@ -173,8 +171,17 @@ const agentData = computed(() => {
   & .agent-informations-title-wrapper {
     color: var(--color-primary-100);
     & .agent-informations-title {
-      color: var(--color-primary-100);
+      color: var(--color-primary-0);
     }
+  }
+}
+
+.label-description-item-container {
+  grid-column: span 2;
+  padding-inline: var(--spacing-fluid-m);
+
+  @include viewport-ml {
+    grid-column: span 1;
   }
 }
 </style>

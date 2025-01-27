@@ -180,7 +180,7 @@
     --color-sage-1000: #202220;
 
     // Main font colors
-    --color-app-background: linear-gradient(to bottom, #ece9e6, #ffffff);
+    --color-app-background: linear-gradient(to top, #ece9e6, #ffffff);
 
     --shade-0: #ffffff;
     --color-primary: var(--color-gray-900);
@@ -214,11 +214,7 @@
     --color-primary-900: #21233d;
     --color-primary-1000: #21233d;
 
-    --color-app-background: linear-gradient(
-      to bottom,
-      #c9d6ff,
-      #e2e2e2
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    --color-app-background: linear-gradient(to bottom, #e9f2ff, #cce0ff);
   }
   .theme-violet {
     --color-primary-subtle: #e4dbfb;
@@ -234,7 +230,7 @@
     --color-primary-900: #411c8c;
     --color-primary-1000: #33186a;
 
-    --color-app-background: var(--color-primary-subtle);
+    --color-app-background: linear-gradient(to top, #dfd8fd, #f3f0ff);
   }
 
   .theme-red {
@@ -251,7 +247,7 @@
     --color-primary-900: #5a0505;
     --color-primary-1000: #460808;
 
-    --color-app-background: var(--color-primary-subtle);
+    --color-app-background: linear-gradient(to bottom, #ffeceb, #ffd5d2);
   }
   .theme-green {
     --color-primary-subtle: #ccf0e1;
@@ -267,7 +263,7 @@
     --color-primary-900: #203930;
     --color-primary-1000: #1f332c;
 
-    --color-app-background: var(--color-primary-subtle);
+    --color-app-background: linear-gradient(to bottom, #dcfff1, #baf3db);
   }
   .theme-orange {
     --color-primary-subtle: #ffeccc;
@@ -283,7 +279,7 @@
     --color-primary-900: #612300;
     --color-primary-1000: #491901;
 
-    --color-app-background: var(--color-primary-subtle);
+    --color-app-background: linear-gradient(to bottom, #fff3eb, #fedec8);
   }
   .theme-magenta {
     --color-primary-subtle: #ffecf8;
@@ -299,7 +295,7 @@
     --color-primary-900: #3d2232;
     --color-primary-1000: #321f2a;
 
-    --color-app-background: var(--color-primary-subtle);
+    --color-app-background: linear-gradient(to bottom, #ffecf8, #fdd0ec);
   }
   .theme-yellow {
     --color-primary-subtle: #f6f0d6;
@@ -315,7 +311,7 @@
     --color-primary-900: #332e1b;
     --color-primary-1000: #2c2819;
 
-    --color-app-background: var(--color-primary-subtle);
+    --color-app-background: linear-gradient(to bottom, #fff7d6, #f8e6a0);
   }
   .theme-lime {
     --color-primary-subtle: #eaf7d5;
@@ -331,7 +327,7 @@
     --color-primary-900: #28311b;
     --color-primary-1000: #252d1b;
 
-    --color-app-background: var(--color-primary-subtle);
+    --color-app-background: linear-gradient(to bottom, #f2fbe4, #e5fac4);
   }
   .theme-teal {
     --color-primary-subtle: #e2f2f7;
@@ -347,11 +343,7 @@
     --color-primary-900: #1e3137;
     --color-primary-1000: #192529;
 
-    --color-app-background: linear-gradient(
-      to top,
-      #e0eafc,
-      #cfdef3
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    --color-app-background: linear-gradient(to bottom, #e7f9ff, #c6edfb);
   }
   .theme-brown {
     --color-primary-subtle: #fcf7f1;
@@ -367,7 +359,7 @@
     --color-primary-900: #3b2711;
     --color-primary-1000: #2e1f10;
 
-    --color-app-background: linear-gradient(to top, #603813, #b29f94);
+    --color-app-background: linear-gradient(to bottom, #fef4e9, #fee9ce);
   }
   .theme-sage {
     --color-primary-subtle: #f7f8f6;
@@ -383,11 +375,7 @@
     --color-primary-900: #1a2a1b;
     --color-primary-1000: #182419;
 
-    --color-app-background: linear-gradient(
-      to bottom,
-      #ece9e6,
-      #ffffff
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    --color-app-background: linear-gradient(to bottom, #eae9e8, #d3d3d3);
   }
 
   .dark {
@@ -404,7 +392,7 @@
     --color-primary-0: #bfbfbf;
     --color-primary-subtle: #bfbfbf;
 
-    --color-app-background: linear-gradient(to bottom, #151414, #1e1c1c);
+    --color-app-background: linear-gradient(to top, #1f1e1e, #181717);
 
     &.theme-blue {
       --color-primary-subtle: #d8f5f9;
@@ -537,7 +525,7 @@
       --color-primary-900: #28311b;
       --color-primary-1000: #222918;
 
-      --color-app-background: linear-gradient(to top, #26350c, #1d281a);
+      --color-app-background: linear-gradient(to top, #29380e, #1d2919);
     }
     &.theme-teal {
       --color-primary-subtle: #e2f2f7;

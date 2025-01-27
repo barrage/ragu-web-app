@@ -6,6 +6,11 @@ import { StatusType } from '~/types/statusTypes'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 import DeleteIcon from '~/assets/icons/svg/delete-person.svg'
+import FolderPersonIcon from '~/assets/icons/svg/folder-person.svg'
+import LikeDislikeIcon from '~/assets/icons/svg/like_dislike.svg'
+import PersonTagIcon from '~/assets/icons/svg/person-tag.svg'
+import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
+import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 
 const props = defineProps<{
   singleAgent: Agent | null | undefined
@@ -205,21 +210,45 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
     @tab-click="handleTabClick"
   >
     <el-tab-pane :label="t('agents.titles.details')" name="details">
+      <template #label>
+        <div class="custom-tab-label-wrapper">
+          <PersonInfoIcon size="22px" />
+          <span>{{ $t('agents.titles.details') }}</span>
+        </div>
+      </template>
       <template v-if="activeName === 'details'">
         <AgentOverallDetails :single-agent="props.singleAgent" />
       </template>
     </el-tab-pane>
     <el-tab-pane :label="t('agents.titles.configuration')" name="configuration">
+      <template #label>
+        <div class="custom-tab-label-wrapper">
+          <PersonSettingsIcon size="22px" />
+          <span>{{ $t('agents.titles.configuration') }}</span>
+        </div>
+      </template>
       <template v-if="activeName === 'configuration'" />
       <AgentConfigurationDetails :single-agent="props.singleAgent" />
     </el-tab-pane>
     <el-tab-pane :label="t('collections.title')" name="collections">
+      <template #label>
+        <div class="custom-tab-label-wrapper">
+          <FolderPersonIcon size="22px" />
+          <span>{{ $t('collections.title') }}</span>
+        </div>
+      </template>
       <template v-if="activeName === 'collections'">
         <AgentCollections :agent-collections="props.singleAgent?.collections" @refresh-agent="handleGetSingleAgent" />
       </template>
     </el-tab-pane>
 
     <el-tab-pane :label="t('agents.titles.evaluations')" name="evaluations">
+      <template #label>
+        <div class="custom-tab-label-wrapper">
+          <LikeDislikeIcon size="22px" />
+          <span>{{ $t('agents.titles.evaluations') }}</span>
+        </div>
+      </template>
       <template v-if="activeName === 'evaluations'">
         <AsyncAgentEvaluationList :agent="props.singleAgent" />
       </template>
@@ -230,6 +259,12 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
         </template>
       </el-tab-pane> -->
     <el-tab-pane :label="t('agents.titles.versions')" name="versions">
+      <template #label>
+        <div class="custom-tab-label-wrapper">
+          <PersonTagIcon size="22px" />
+          <span>{{ $t('agents.titles.versions') }}</span>
+        </div>
+      </template>
       <template v-if="activeName === 'versions'">
         <AsyncAgentVersionList :agent="props.singleAgent" @rollback-agent-version="handleAgentVersionRollback" />
       </template>
@@ -299,6 +334,12 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
 
 .agent-details-tabs {
   margin-top: var(--spacing-fluid-xs);
+
+  & .custom-tab-label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-fluid-5-xs);
+  }
 }
 
 .agentname {

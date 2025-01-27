@@ -96,7 +96,7 @@ const skeletonCardData = computed(() => {
 .skeleton-users-list-container {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: var(--spacing-fluid-3-xs);
   width: 100%;
 }
 </style>

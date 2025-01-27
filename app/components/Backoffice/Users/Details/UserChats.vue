@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import PersonMessageIcon from '~/assets/icons/svg/person-message.svg'
 import EmptyChatIcon from '~/assets/icons/svg/chat-warning.svg'
 import type { User } from '~/types/users'
 import type { SortingValues } from '~/types/sort'
@@ -53,12 +52,6 @@ watch(
 
 <template>
   <section class="user-chats-section">
-    <div class="user-chats-section-title-wrapper">
-      <PersonMessageIcon size="36px" />
-      <h4 class="user-chats-title">
-        {{ $t('users.user_chats_history') }}
-      </h4>
-    </div>
     <template v-if="loadingUserChats === 'pending' && !userHasChats">
       <div class="user-chats-loading-container">
         <MeetUpLoader />
@@ -101,35 +94,11 @@ watch(
     justify-content: center;
   }
 
-  & .user-chats-section-title-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-primary-800);
-
-    & .user-chats-title {
-      color: var(--color-primary-800);
-      font-size: var(--font-size-fluid-4);
-      font-weight: var(--font-weight-semibold);
-    }
-  }
-
   & .user-chats-container {
     display: flex;
     flex-direction: column;
     padding-top: var(--spacing-fluid-m);
     gap: var(--spacing-fluid-2-xs);
-  }
-}
-
-html.dark {
-  .user-chats-section {
-    & .user-chats-section-title-wrapper {
-      color: var(--color-primary-100);
-      & .user-chats-title {
-        color: var(--color-primary-100);
-      }
-    }
   }
 }
 </style>

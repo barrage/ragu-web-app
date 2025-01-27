@@ -89,7 +89,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid getCssVar('border-color');
+      border: 1px solid var(--color-primary-0);
       height: 20px;
       width: 20px;
       line-height: 20px;
@@ -137,7 +137,7 @@
         z-index: 1;
       }
 
-      & .is-scrollable {
+      &.is-scrollable {
         padding: 0 20px;
         box-sizing: border-box;
       }
@@ -148,12 +148,12 @@
     }
 
     &__nav-next,
-    __nav-prev {
+    &__nav-prev {
       position: absolute;
       cursor: pointer;
       line-height: 44px;
       font-size: 12px;
-      color: getCssVar('text-color', 'secondary');
+      color: var(--color-primary-0);
       width: 20px;
       text-align: center;
     }
@@ -276,7 +276,7 @@
         content: none;
       }
       & .barrage-tabs__header .barrage-tabs__nav {
-        border: 1px solid getCssVar('border-color-light');
+        border: 1px solid var(--color-primary-0);
         border-bottom: none;
         border-radius: 4px 4px 0 0;
         box-sizing: border-box;
@@ -295,12 +295,12 @@
       }
       & .barrage-tabs__header .barrage-tabs__item {
         border-bottom: 1px solid transparent;
-        border-left: 1px solid getCssVar('border-color-light');
+        border-left: 1px solid var(--color-primary-0);
         transition:
           color var(--barrage-tab-transition-duration)
-            getCssVar('transition-function-ease-in-out-bezier'),
+            cubic-bezier(0.645, 0.045, 0.355, 1),
           padding var(--barrage-tab-transition-duration)
-            getCssVar('transition-function-ease-in-out-bezier');
+            cubic-bezier(0.645, 0.045, 0.355, 1);
 
         &:first-child {
           border-left: none;
@@ -333,15 +333,15 @@
     }
 
     &__border-card {
-      background: getCssVar('bg-color', 'overlay');
-      border: 1px solid getCssVar('border-color');
+      background: var(--color-primary-0);
+      border: 1px solid var(--color-primary-0);
 
       & .barrage-tabs__content {
         padding: 15px;
       }
       & .barrage-tabs__header {
-        background-color: getCssVar('fill-color', 'light');
-        border-bottom: 1px solid red;
+        background-color: var(--color-primary-0);
+        border-bottom: 1px solid var(--color-primary-0);
         margin: 0;
       }
       & .barrage-tabs__header .barrage-tabs__nav-wrap::after {
@@ -352,7 +352,7 @@
           getCssVar('transition-function-ease-in-out-bezier');
         border: 1px solid transparent;
         margin-top: -1px;
-        color: getCssVar('text-color', 'secondary');
+        color: var(--color-primary-0);
 
         &:first-child {
           margin-left: -1px;
@@ -363,18 +363,18 @@
         }
 
         &.is-active {
-          color: getCssVar('color-primary');
-          background-color: getCssVar('bg-color', 'overlay');
-          border-right-color: getCssVar('border-color');
-          border-left-color: getCssVar('border-color');
+          color: var(--color-primary-0);
+          background-color: var(--color-primary-0);
+          border-right-color: var(--color-primary-0);
+          border-left-color: var(--color-primary-0);
         }
 
         &:not(.is-disabled):hover {
-          color: getCssVar('color-primary');
+          color: var(--color-primary-0);
         }
 
         &.is-disabled {
-          color: getCssVar('disabled-text-color');
+          color: var(--color-primary-100);
         }
       }
 
@@ -393,7 +393,7 @@
       &.barrage-tabs--border-card {
         & .barrage-tabs__header.is-bottom {
           border-bottom: 0;
-          border-top: 1px solid getCssVar('border-color');
+          border-top: 1px solid var(--color-primary-0);
         }
 
         & .barrage-tabs__nav-wrap.is-bottom {
@@ -514,19 +514,19 @@
 
         .barrage-tabs__item.is-left {
           border-left: none;
-          border-right: 1px solid getCssVar('border-color-light');
+          border-right: 1px solid var(--color-primary-0);
           border-bottom: none;
-          border-top: 1px solid getCssVar('border-color-light');
+          border-top: 1px solid var(--color-primary-0);
           text-align: left;
         }
 
         .barrage-tabs__item.is-left:first-child {
-          border-right: 1px solid getCssVar('border-color-light');
+          border-right: 1px solid var(--color-primary-0);
           border-top: none;
         }
 
         .barrage-tabs__item.is-left.is-active {
-          border: 1px solid getCssVar('border-color-light');
+          border: 1px solid var(--color-primary-0);
           border-right-color: #fff;
           border-left: none;
           border-bottom: none;
@@ -553,7 +553,7 @@
 
       &.barrage-tabs--border-card {
         .barrage-tabs__header.is-left {
-          border-right: 1px solid getCssVar('border-color');
+          border-right: 1px solid var(--color-primary-0);
         }
 
         .barrage-tabs__item.is-left {
@@ -595,16 +595,16 @@
 
         .barrage--tabs__item.is-right {
           border-bottom: none;
-          border-top: 1px solid getCssVar('border-color-light');
+          border-top: 1px solid var(--color-primary-0);
         }
 
         .barrage--tabs__item.is-right:first-child {
-          border-left: 1px solid getCssVar('border-color-light');
+          border-left: 1px solid var(--color-primary-0);
           border-top: none;
         }
 
         .barrage--tabs__item.is-right.is-active {
-          border: 1px solid getCssVar('border-color-light');
+          border: 1px solid var(--color-primary-0);
           border-left-color: #fff;
           border-right: none;
           border-bottom: none;
@@ -626,7 +626,7 @@
       }
       &.barrage--tabs--border-card {
         .barrage--tabs__header.is-right {
-          border-left: 1px solid getCssVar('border-color');
+          border-left: 1px solid var(--color-primary-0);
         }
 
         .barrage--tabs__item.is-right {

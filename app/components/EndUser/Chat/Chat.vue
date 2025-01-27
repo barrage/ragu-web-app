@@ -190,7 +190,8 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
   justify-content: center;
   width: 100%;
   z-index: 2;
-  background: var(--color-primary-subtle);
+  background: transparent;
+  backdrop-filter: blur(5px);
   padding: var(--spacing-fluid-5-xs);
 
   & h5 {
@@ -202,20 +203,6 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-  }
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -64px;
-    left: 0;
-    width: 100%;
-    height: 64px;
-    background: linear-gradient(
-      to bottom,
-      var(--color-primary-subtle),
-      transparent
-    );
-    pointer-events: none;
   }
 
   .edit-input {
@@ -276,17 +263,9 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
 
 .dark {
   & .chat-title {
-    background: var(--color-primary-1000);
     & h5 {
       margin-bottom: 4px;
       color: var(--color-primary-0);
-    }
-    &::after {
-      background: linear-gradient(
-        to bottom,
-        var(--color-primary-1000),
-        transparent
-      );
     }
     .dropdown-icon {
       color: var(--color-primary-0);

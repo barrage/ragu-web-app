@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import type { AgentCollection } from '~/types/agent'
-import FolderPersonIcon from '~/assets/icons/svg/folder-person.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
 import CollectionDelete from '~/assets/icons/svg/folder-remove.svg'
 import FolderWarningIcon from '~/assets/icons/svg/folder-warning.svg'
-
-// PROPS & EMITS
 
 const props = defineProps<{
   agentCollections: AgentCollection[] | undefined
@@ -15,15 +12,11 @@ const emits = defineEmits<{
   (event: 'refreshAgent'): void
 }>()
 
-// CONSTATNTS & STATES
-
 const assignCollectionModalVisible = ref(false)
 const deleteCollectionModalVisible = ref(false)
 const { t } = useI18n()
 
 const selectedCollectionDelete = ref<AgentCollection | null>(null)
-
-// FUNCTIONS
 
 const openAssignCollectionModal = () => {
   assignCollectionModalVisible.value = true
@@ -56,7 +49,6 @@ const handleCollectionDeleted = () => {
   <section class="agent-collections-section grid">
     <div class="agent-collections-header-container">
       <h5 class="agent-collections-title">
-        <FolderPersonIcon size="38px" />
         {{ t('collections.assign_collection.agent_collections') }}
       </h5>
       <div v-if="agentCollections?.length" class="agent-collections-header-actions-container">
@@ -127,14 +119,13 @@ const handleCollectionDeleted = () => {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-
+    padding-inline: 0.8rem;
     & .agent-collections-title {
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      font-weight: var(--font-weight-semibold);
-      font-size: var(--font-size-fluid-5);
       color: var(--color-primary-900);
+      font-size: var(--font-size-fluid-4);
     }
 
     & .agent-collections-header-actions-container {
@@ -158,7 +149,7 @@ const handleCollectionDeleted = () => {
   .agent-collections-section {
     & .agent-collections-header-container {
       & .agent-collections-title {
-        color: var(--color-primary-100);
+        color: var(--color-primary-0);
       }
     }
   }

@@ -57,7 +57,6 @@ const numberOfFiltersApplied = computed(() => {
 <template>
   <div class="agent-evaluations-list-actions-container">
     <p class="agent-evaluations-list-title">
-      <LikeDislikeIcon size="38px" />
       {{ t('agents.titles.evaluations') }}
     </p>
     <div class="actions-wrapper">
@@ -98,7 +97,7 @@ const numberOfFiltersApplied = computed(() => {
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  padding-inline: 1rem;
+  padding-inline: 0.8rem;
   margin-bottom: 0.7rem;
   margin-top: 18px;
 
@@ -106,9 +105,8 @@ const numberOfFiltersApplied = computed(() => {
     display: flex;
     gap: 0.75rem;
     align-items: center;
-    font-weight: var(--font-weight-semibold);
-    font-size: var(--font-size-fluid-5);
-    color: var(--color-primary-800);
+    color: var(--color-primary-900);
+    font-size: var(--font-size-fluid-4);
   }
   & .actions-wrapper {
     display: flex;
@@ -120,7 +118,7 @@ const numberOfFiltersApplied = computed(() => {
 .dark {
   .agent-evaluations-list-actions-container {
     & .agent-evaluations-list-title {
-      color: var(--color-primary-100);
+      color: var(--color-primary-0);
     }
   }
 }
