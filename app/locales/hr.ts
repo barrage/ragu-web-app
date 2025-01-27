@@ -156,7 +156,7 @@ export default {
   },
 
   chat: {
-    llm_chat: 'LLM razgovor',
+    llm_chat: 'Novi Razgovor',
     chat: 'Chat',
     toggle_sidebar: 'Prebaci bočnu traku',
     start_new_chat: 'Započni novi chat',

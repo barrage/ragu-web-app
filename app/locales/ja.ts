@@ -150,7 +150,7 @@ export default {
     max_length: '最大文字数は {max} です',
   },
   chat: {
-    llm_chat: 'LLMチャット',
+    llm_chat: '新しい会話 (Atarashii Kaiwa)',
     chat: 'チャット',
     toggle_sidebar: 'サイドバーを切り替える',
     start_new_chat: '新しいチャットを開始',

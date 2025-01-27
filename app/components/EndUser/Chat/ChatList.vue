@@ -11,6 +11,7 @@ const route = useRoute()
 const chatId = computed(() => {
   return route.params.chatId
 })
+const { t } = useI18n()
 </script>
 
 <template>
@@ -33,14 +34,18 @@ const chatId = computed(() => {
         :to="`/c/${chat.id}`"
         type="link"
         class="menu-item"
-        :class="{ 'selected': chatId === chat.id, 'collapsed-link': isSidebarCollapsed }"
+        :class="{ selected: chatId === chat.id }"
       >
-        <ChatIcon
-          v-if="isSidebarCollapsed"
-          class="sidebar-icon"
-          size="24px"
+        <LlmAvatar
+          :avatar="useAgentStore().getAgentStoredAvatar(chat.agentId)"
+          :alt="t('agents.agent_avatar')"
+          :size="24"
+          fit="cover"
+          default-image="agent"
+          :content-type="useAgentStore().getAgentStoredAvatar(chat.agentId)?.contentType"
         />
-        <span v-else class="chat-title">{{ chat.title || $t('chat.chat') }}</span>
+
+        <span v-if="!isSidebarCollapsed" class="chat-title">{{ chat.title || $t('chat.chat') }}</span>
       </LlmLink>
     </LlmTooltip>
   </div>

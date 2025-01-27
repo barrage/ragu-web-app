@@ -150,7 +150,7 @@ export default {
   },
 
   chat: {
-    llm_chat: 'Chat LLM',
+    llm_chat: 'Nova Conversa',
     chat: 'Chat',
     toggle_sidebar: 'Alternar barra lateral',
     start_new_chat: 'Iniciar um novo chat',

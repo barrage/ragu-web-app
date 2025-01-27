@@ -45,13 +45,13 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
 
     <div v-for="_, group in groupedChats" :key="group">
       <template v-if="group === 'monthsThisYear'">
-        <div
+        <template
           v-for="(chat, month) in groupedChats.monthsThisYear"
           :key="month"
         >
           <ChatListTimeLabel :localization="`month${month}`" />
           <ChatList v-if="chat" :chats="chat" />
-        </div>
+        </template>
       </template>
       <div v-else-if="groupedChats[group].length">
         <ChatListTimeLabel :localization="group" />
@@ -80,6 +80,10 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
   &.collapsed-sidebar {
     &::-webkit-scrollbar {
       width: 1px;
+    }
+
+    & .menu-item {
+      justify-content: center;
     }
   }
 }
