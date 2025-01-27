@@ -266,7 +266,7 @@ aside {
   scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scrollbar-color: var(--color-primary-500) var(--color-primary-200);
 
   &.collapsed-sidebar {
