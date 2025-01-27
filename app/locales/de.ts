@@ -153,7 +153,7 @@ export default {
   },
 
   chat: {
-    llm_chat: 'LLM-Chat',
+    llm_chat: 'Neues Gespräch',
     chat: 'Chat',
     toggle_sidebar: 'Seitenleiste umschalten',
     start_new_chat: 'Neuen Chat starten',

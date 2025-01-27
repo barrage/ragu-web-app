@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import BrainIcon from '~/assets/icons/svg/brain.svg'
+import BrainIcon from '~/assets/icons/svg/Ragu_logo_dark.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import PersonAddIcon from '~/assets/icons/svg/person-add.svg'
 
@@ -57,15 +57,21 @@ function handleAgentsXScroll(event: WheelEvent) {
         @wheel="handleAgentsXScroll"
       >
         <template v-if="status === 'pending'">
-          <div>
-            <LlmLoader />
-          </div>
+          <template v-for="i in 10" :key="i">
+            <SelectAgentCardSkeleton
+              v-motion-fade
+              :delay="(i * 100)"
+              :duration="400"
+            />
+          </template>
         </template>
         <template v-else-if="agentStore.appAgents.length">
-          <template v-for="(agent) in agentStore.appAgents" :key="agent.id">
+          <template v-for="(agent, index) in agentStore.appAgents" :key="agent.id">
             <ChatAgentSelectCard
-              v-motion-slide-left
-              :delay="1300"
+              v-motion-fade
+              :data-testid="`bo-chat-data-card-${index + 1}`"
+              :delay="(index * 100)"
+              :duration="400"
               :agent="agent"
             />
           </template>
@@ -107,13 +113,18 @@ function handleAgentsXScroll(event: WheelEvent) {
 }
 
 .ai-logo {
-  color: var(--color-primary-600);
+  color: var(--color-primary-1000);
   padding: 0.5rem;
-  border: 0.0625rem solid var(--color-primary-200);
+  border: 0.0625rem solid var(--color-primary-400);
   border-radius: 0.625rem;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
   margin-block: 9.375rem 1rem;
   min-height: 64px;
+  background: linear-gradient(
+    to top,
+    var(--color-primary-100),
+    var(--color-primary-200)
+  );
 }
 
 .description {
@@ -166,7 +177,13 @@ function handleAgentsXScroll(event: WheelEvent) {
     }
   }
   .ai-logo {
-    color: var(--color-primary-200);
+    color: var(--color-primary-0);
+    border: 0.0625rem solid var(--color-primary-600);
+    background: linear-gradient(
+      to top,
+      var(--color-primary-700),
+      var(--color-primary-900)
+    );
   }
   .description {
     color: var(--color-primary-100);

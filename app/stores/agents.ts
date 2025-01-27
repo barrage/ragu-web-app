@@ -31,6 +31,11 @@ export const useAgentStore = defineStore('agent', () => {
   }
   // API
 
+  const getAgentStoredAvatar = (agentId: string) => {
+    const agent = appAgentsResponse.value?.items.find(agent => agent.id === agentId)
+    return agent?.avatar || undefined
+  }
+
   async function GET_AllAppAgents(
     page: number = 1,
     perPage: number = 20,
@@ -67,6 +72,7 @@ export const useAgentStore = defineStore('agent', () => {
     setEditMode,
     setSelectedAgent,
     GET_AllAppAgents,
+    getAgentStoredAvatar,
 
   }
 })

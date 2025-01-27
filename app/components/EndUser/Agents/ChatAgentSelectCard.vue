@@ -69,8 +69,12 @@ const { t } = useI18n()
   padding-bottom: 1rem;
   display: flex;
   scroll-snap-align: start;
+  border: 0.5px solid var(--color-primary-400);
+  background: var(--color-primary-100);
 
   &.selected {
+    background: var(--color-primary-200);
+    border: 0.5px solid var(--color-primary-500);
     & .agent-select-text {
       color: var(--color-primary-900);
       font-weight: var(--font-weight-medium);
@@ -121,8 +125,7 @@ const { t } = useI18n()
   }
 
   &:hover {
-    border: 0.5px solid var(--color-primary-500);
-    background: var(--color-primary-100);
+    border: 0.5px solid var(--color-primary-600);
     cursor: pointer;
 
     & .agent-select-text {
@@ -140,9 +143,9 @@ const { t } = useI18n()
 
 .dark {
   & .agent-select-card {
+    background: var(--color-primary-800);
     &:hover {
-      border: 0.5px solid var(--color-primary-500);
-      background: var(--color-primary-800);
+      border: 0.5px solid var(--color-primary-300);
 
       & .agent-select-text {
         color: var(--color-primary-100);
@@ -150,13 +153,24 @@ const { t } = useI18n()
     }
     & .agent-body-wrapper {
       &.selected {
+        background: var(--color-primary-700);
         & .agent-select-text {
           color: var(--color-primary-0);
+          background: var(--color-primary-700);
           font-weight: var(--font-weight-medium);
         }
       }
       & .agent-select-text {
         color: var(--color-primary-100);
+      }
+    }
+
+    &.selected {
+      background: var(--color-primary-700);
+      border: 0.5px solid var(--color-primary-400);
+      & .agent-select-text {
+        color: var(--color-primary-0);
+        font-weight: var(--font-weight-medium);
       }
     }
   }

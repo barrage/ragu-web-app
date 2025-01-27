@@ -150,7 +150,7 @@ export default {
     max_length: 'The maximum number of characters is {max}',
   },
   chat: {
-    llm_chat: 'LLM Chat',
+    llm_chat: 'New Conversation',
     chat: 'Chat',
     toggle_sidebar: 'Toggle sidebar',
     start_new_chat: 'Start a new chat',
