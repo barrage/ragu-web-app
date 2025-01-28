@@ -1,16 +1,19 @@
 <script lang="ts" setup>
 import type { SortingValues } from '~/types/sort'
 import FilterIcon from '~/assets/icons/svg/filter.svg'
+import type { ChatListFilterForm } from '~/types/chat'
 
 const props = defineProps<{
   selectedSortBy: string
   selectedSortDirection: 'asc' | 'desc'
   selectedSearch: string | null
+  filterForm: ChatListFilterForm
 }>()
 
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
   (event: 'searchChange', search: string): void
+  (event: 'filterApplied', filter: ChatListFilterForm): void
 }>()
 
 const { t } = useI18n()
@@ -25,15 +28,25 @@ const updateSort = (sortingValues: SortingValues) => {
   emits('sortChange', sortingValues)
 }
 
-const drawer = ref(false)
+/* Filter */
+const chatListFilterOpen = ref(false)
 
 const toggleFilterDrawer = () => {
-  drawer.value = !drawer.value
+  chatListFilterOpen.value = !chatListFilterOpen.value
+}
+
+const updateFilter = (filter: ChatListFilterForm) => {
+  emits('filterApplied', filter)
 }
 /* Search */
 const updateSearch = (search: string) => {
   emits('searchChange', search)
 }
+
+/* Computed */
+const numberOfFiltersApplied = computed(() =>
+  Object.values(props.filterForm).filter(value => value !== null && value !== undefined).length,
+)
 </script>
 
 <template>
@@ -58,19 +71,26 @@ const updateSearch = (search: string) => {
         :options="sortOptions"
         @sort-updated="updateSort"
       />
-      <el-button
-        size="small"
-        data-testid="open-filter-button"
-        @click="toggleFilterDrawer"
+      <el-badge
+        :value="numberOfFiltersApplied"
+        :max="10"
+        :show-zero="false"
+        type="info"
       >
-        <FilterIcon />  Filter
-      </el-button>
+        <el-button
+          size="small"
+          data-testid="open-filter-button"
+          @click="toggleFilterDrawer"
+        >
+          <FilterIcon />  Filter
+        </el-button>
+      </el-badge>
     </div>
   </div>
-  <el-drawer
-    v-model="drawer"
-    direction="rtl"
-    title="Filter"
+  <ChatListAdminFilterDrawer
+    v-model="chatListFilterOpen"
+    :filter="filterForm"
+    @filter-applied="updateFilter"
   />
 </template>
 
