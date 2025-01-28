@@ -1,16 +1,18 @@
 <script lang="ts" setup>
 import type { SortingValues } from '~/types/sort'
 import FilterIcon from '~/assets/icons/svg/filter.svg'
+import type { UsersListFilterForm } from '~/types/users'
 
 const props = defineProps<{
   selectedSortBy: string
   selectedSortDirection: 'asc' | 'desc'
+  filterForm: UsersListFilterForm
   selectedSearch: string | null
 }>()
 
 const emits = defineEmits<{
   (event: 'sortChange', sort: SortingValues): void
-  /*  (event: 'filterApplied', filter: UsersListFilterForm): void */
+  (event: 'filterApplied', filter: UsersListFilterForm): void
   (event: 'searchChange', search: string): void
 }>()
 
@@ -33,14 +35,18 @@ const toggleFilterDrawer = () => {
   usersFilterOpen.value = !usersFilterOpen.value
 }
 
-/* const updateFilter = (filter: UsersListFilterForm) => {
+const updateFilter = (filter: UsersListFilterForm) => {
   emits('filterApplied', filter)
-} */
+}
 
 /* Search */
 const updateSearch = (search: string) => {
   emits('searchChange', search)
 }
+
+const numberOfFiltersApplied = computed(() =>
+  Object.values(props.filterForm).filter(value => value !== null && value !== undefined).length,
+)
 </script>
 
 <template>
@@ -67,19 +73,27 @@ const updateSearch = (search: string) => {
         :options="sortOptions"
         @sort-updated="updateSort"
       />
-      <el-button
-        size="small"
-        data-testid="open-filter-button"
-        @click="toggleFilterDrawer"
+
+      <el-badge
+        :value="numberOfFiltersApplied"
+        :max="10"
+        :show-zero="false"
+        type="info"
       >
-        <FilterIcon />  Filter
-      </el-button>
+        <el-button
+          size="small"
+          data-testid="open-filter-button"
+          @click="toggleFilterDrawer"
+        >
+          <FilterIcon />  Filter
+        </el-button>
+      </el-badge>
     </div>
   </div>
-  <el-drawer
+  <UsersListFilterDrawer
     v-model="usersFilterOpen"
-    direction="rtl"
-    title="Filter"
+    :filter="filterForm"
+    @filter-applied="updateFilter"
   />
 </template>
 

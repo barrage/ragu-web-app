@@ -20,17 +20,37 @@ export default class usersService extends FetchFactory {
     perPage: number = 10,
     sortBy: string = 'firstName',
     sortOrder: 'asc' | 'desc' = 'asc',
+    name: string | null,
+    active: boolean | undefined,
+    role: string | undefined,
+    withAvatar: boolean | undefined,
   ): Promise<UsersResponse> {
     try {
-      const queryParams = new URLSearchParams({
+      const queryParams: Record<string, string> = {
         page: page.toString(),
         perPage: perPage.toString(),
         sortBy,
         sortOrder,
-        withAvatar: 'true',
-      })
+      }
 
-      return await this.$fetch<UsersResponse>(`${this.endpoint}?${queryParams}`, {
+      if (name) {
+        queryParams.name = name
+      }
+
+      if (active !== undefined && active !== null) {
+        queryParams.active = active.toString()
+      }
+      if (role !== undefined && role !== null) {
+        queryParams.role = role
+      }
+
+      if (withAvatar !== undefined && withAvatar !== null) {
+        queryParams.withAvatar = withAvatar.toString()
+      }
+
+      const queryString = new URLSearchParams(queryParams).toString()
+
+      return await this.$fetch<UsersResponse>(`${this.endpoint}?${queryString}`, {
         credentials: 'include',
       })
     }

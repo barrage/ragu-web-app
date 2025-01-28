@@ -54,3 +54,8 @@ export interface ImportUsersResult {
   successful: ImportedUser[]
   failed: FailedImportUser[]
 }
+
+export interface UsersListFilterForm {
+  status?: boolean | undefined
+  role?: string | undefined
+}
