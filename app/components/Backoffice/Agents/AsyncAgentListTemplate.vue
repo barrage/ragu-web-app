@@ -24,10 +24,14 @@ const sort = ref<Sort>({
 })
 
 const filterForm = ref<AgentListFilterForm>({
-  status: undefined,
+  status: route.query.active === 'true'
+    ? true
+    : route.query.active === 'false'
+      ? false
+      : undefined,
 })
 
-const searchInput = ref<string | null>('')
+const searchInput = ref<string | null>(route.query.name ? String(route.query.name) : null)
 const withAvatar = ref<boolean | undefined>(true)
 
 const { execute: executeGetAgents, error: getAgentsError, status: getAgentsStatus, data: allAgentsData } = await useAsyncData(() =>
@@ -65,15 +69,11 @@ const syncQueryValues = (newQuery: LocationQuery) => {
   sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'desc'
   sort.value.sortBy = (newQuery.sortBy as string) || 'active'
   searchInput.value = newQuery.name ? (newQuery.name as string) : null
-  if (newQuery.active === 'true') {
-    filterForm.value.status = true
-  }
-  else if (newQuery.active === 'false') {
-    filterForm.value.status = false
-  }
-  else {
-    filterForm.value.status = undefined
-  }
+  filterForm.value.status = newQuery.active === 'true'
+    ? true
+    : newQuery.active === 'false'
+      ? false
+      : undefined
 }
 
 const handlePageChange = async (page: number) => {
