@@ -8,6 +8,14 @@ const router = useRouter()
 const handleAgentCreated = (id: string) => {
   router.push(`/admin/agents/${id}`)
 }
+
+definePageMeta({
+  layout: 'admin-layout',
+})
+
+useHead({
+  title: computed(() => t('agents.titles.create')),
+})
 </script>
 
 <template>
