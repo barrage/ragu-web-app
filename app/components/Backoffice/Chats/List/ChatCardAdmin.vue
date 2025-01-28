@@ -101,6 +101,7 @@ interface Emits {
 .chat-card {
   padding-inline: 0.6rem;
   padding-block: 0.8rem;
+
   & .chat-profile-item {
     grid-column: span 3;
     display: flex;
@@ -146,6 +147,7 @@ interface Emits {
     display: flex;
     gap: 12px;
     justify-self: flex-end;
+    align-items: center;
 
     & .delete-action {
       margin-left: 2rem;

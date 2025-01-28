@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { LocationQuery } from 'vue-router'
 import type { Sort, SortingValues } from '~/types/sort'
+import type { ChatListFilterForm } from '~/types/chat'
 import type { Pagination } from '~/types/pagination'
 import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 
@@ -8,6 +9,15 @@ const { $api } = useNuxtApp()
 const route = useRoute()
 const router = useRouter()
 
+const MIN_LOADING_TIME = 600
+
+/* Sort */
+const sort = ref<Sort>({
+  sortOrder: (route.query.dir as 'asc' | 'desc') || 'desc',
+  sortBy: (route.query.sortBy as string) || 'createdAt',
+})
+
+/* Pagination */
 const pagination = ref<Pagination>({
   currentPage: Number(route.query.page) || 1,
   pageSize: Number(route.query.pageSize) || 10,
@@ -15,11 +25,56 @@ const pagination = ref<Pagination>({
   disabled: false,
 })
 
-const sort = ref<Sort>({
-  sortOrder: (route.query.dir as 'asc' | 'desc') || 'desc',
-  sortBy: (route.query.sortBy as string) || 'createdAt',
+/* Filter */
+const filterForm = ref<ChatListFilterForm>({
+  userId: undefined,
+  agentId: undefined,
 })
 
+/* Search */
+const searchInput = ref<string | null>(route.query.title ? String(route.query.title) : null)
+
+/* Sync Query */
+const shouldSyncQuery = ref(true)
+
+const syncQueryValues = (newQuery: LocationQuery) => {
+  pagination.value.currentPage = Number(newQuery.page) || 1
+  pagination.value.pageSize = Number(newQuery.pageSize) || 10
+  sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'asc'
+  sort.value.sortBy = (newQuery.sortBy as string) || 'createdAt'
+  searchInput.value = newQuery.title ? (newQuery.title as string) : null
+  filterForm.value.agentId = newQuery.agentId ? (newQuery.agentId as string) : undefined
+  filterForm.value.userId = newQuery.userId ? (newQuery.userId as string) : undefined
+}
+
+const updateRouteQuery = () => {
+  const query: LocationQuery = {
+    ...route.query,
+    page: pagination.value.currentPage.toString(),
+    pageSize: pagination.value.pageSize.toString(),
+    sortBy: sort.value.sortBy,
+    dir: sort.value.sortOrder,
+    ...(searchInput.value ? { title: searchInput.value } : {}),
+  }
+
+  if (filterForm.value.userId) {
+    query.userId = filterForm.value.userId.toString()
+  }
+  else {
+    delete query.userId
+  }
+
+  if (filterForm.value.agentId) {
+    query.agentId = filterForm.value.agentId.toString()
+  }
+  else {
+    delete query.agentId
+  }
+
+  router.replace({ query })
+}
+
+/* API Call */
 const {
   execute: executeGetChats,
   error: getChatsError,
@@ -33,42 +88,17 @@ const {
     sort.value.sortOrder,
   ), { lazy: true })
 
-const updateRouteQuery = () => {
-  router.replace({
-    query: {
-      ...route.query,
-      page: pagination.value.currentPage.toString(),
-      pageSize: pagination.value.pageSize.toString(),
-      sortBy: sort.value.sortBy,
-      dir: sort.value.sortOrder,
-    },
-  })
-}
-
-const syncQueryValues = (newQuery: LocationQuery) => {
-  pagination.value.currentPage = Number(newQuery.page) || 1
-  pagination.value.pageSize = Number(newQuery.pageSize) || 10
-  sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'asc'
-  sort.value.sortBy = (newQuery.sortBy as string) || 'createdAt'
-}
-
-const handlePageChange = async (page: number) => {
-  pagination.value.currentPage = page
-  updateRouteQuery()
-  scrollToTop()
-  await executeGetChats()
-}
-
-const handleSortChange = async (sortingValues: SortingValues) => {
-  sort.value.sortOrder = sortingValues.direction
-  sort.value.sortBy = sortingValues.sortProperty.value
-  updateRouteQuery()
-  await executeGetChats()
-}
-
+/* Computed */
 const delayedStatus = ref(getChatsStatus.value)
-const MIN_LOADING_TIME = 600
 
+const emptyChatData = computed(() => {
+  const items = chatsData.value?.items
+  return !Array.isArray(items) || items.length === 0
+})
+
+const chatDataItems = computed(() => chatsData.value?.items)
+
+/* Watchers */
 watch(
   getChatsStatus,
   (newStatus) => {
@@ -83,17 +113,6 @@ watch(
   },
   { immediate: true },
 )
-
-errorHandler(getChatsError)
-
-const emptyChatData = computed(() => {
-  const items = chatsData.value?.items
-  return !Array.isArray(items) || items.length === 0
-})
-
-const chatDataItems = computed(() => chatsData.value?.items)
-
-const shouldSyncQuery = ref(true)
 
 watch(
   () => route.query,
@@ -112,6 +131,37 @@ watch(
   { immediate: true },
 )
 
+/* Handlers */
+const handleSortChange = async (sortingValues: SortingValues) => {
+  sort.value.sortOrder = sortingValues.direction
+  sort.value.sortBy = sortingValues.sortProperty.value
+  updateRouteQuery()
+  await executeGetChats()
+}
+
+const handleFilterChange = async (filter: ChatListFilterForm) => {
+  filterForm.value.userId = filter.userId
+  filterForm.value.agentId = filter.agentId
+  updateRouteQuery()
+  scrollToTop()
+  await executeGetChats()
+}
+
+const handleSearchChange = async (search: string) => {
+  searchInput.value = search
+  updateRouteQuery()
+  scrollToTop()
+  await executeGetChats()
+}
+
+const handlePageChange = async (page: number) => {
+  pagination.value.currentPage = page
+  updateRouteQuery()
+  scrollToTop()
+  await executeGetChats()
+}
+
+/* Lifecycle Hooks */
 onMounted(async () => {
   shouldSyncQuery.value = true
   syncQueryValues(route.query)
@@ -121,14 +171,20 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   shouldSyncQuery.value = false
 })
+
+/* Error Handler */
+errorHandler(getChatsError)
 </script>
 
 <template>
   <ChatsListAdminActions
     :selected-sort-by="sort.sortBy"
     :selected-sort-direction="sort.sortOrder"
-    selected-search=""
+    :filter-form="filterForm"
+    :selected-search="searchInput"
     @sort-change="handleSortChange"
+    @search-change="handleSearchChange"
+    @filter-applied="handleFilterChange"
   />
 
   <GlobalCardListLoader

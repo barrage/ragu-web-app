@@ -69,3 +69,8 @@ export interface EndUserChatDetails {
 export interface EditChatTitlePayload {
   title: string
 }
+
+export interface ChatListFilterForm {
+  userId: undefined | string
+  agentId: undefined | string
+}

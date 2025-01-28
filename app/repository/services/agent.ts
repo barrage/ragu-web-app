@@ -28,9 +28,9 @@ export default class AgentService extends FetchFactory {
     perPage: number = 10,
     sortBy: string = 'active',
     sortOrder: 'asc' | 'desc' = 'desc',
-    name: string | null,
-    active: boolean | undefined,
-    withAvatar: boolean | undefined,
+    name?: string | null,
+    active?: boolean | undefined,
+    withAvatar?: boolean | undefined,
   ): Promise<AllAgentResponse> {
     try {
       const queryParams: Record<string, string> = {
