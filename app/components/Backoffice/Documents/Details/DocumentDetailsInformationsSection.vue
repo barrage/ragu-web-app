@@ -10,17 +10,13 @@ const props = defineProps<{
 }>()
 const { t } = useI18n()
 
-const formatName = (str: string, n: number) => {
-  return str.length > n ? `${str.slice(0, n)}...` : str
-}
-
 const documentData = computed(() => {
   return {
-    name: props.document?.name ? formatName(props.document?.name, 35) : t('documents.document_card.unknown_name'),
+    name: props.document?.name ? props.document?.name : t('documents.document_card.unknown_name'),
     extension: props.document?.ext || t('documents.document_card.unknown_email'),
-    path: props.document?.path ? formatName(props.document?.path, 35) : t('documents.document_card.path'),
+    path: props.document?.path ? props.document?.path : t('documents.document_card.path'),
     id: props.document?.id || t('documents.document_card.id'),
-    hash: props.document?.hash ? formatName(props.document?.hash, 40) : t('documents.document_card.hash'),
+    hash: props.document?.hash ? props.document?.hash : t('documents.document_card.hash'),
     source: props.document?.src || t('documents.document_card.src'),
   }
 })
@@ -31,6 +27,7 @@ const documentData = computed(() => {
     <LabelDescriptionItem
       :label="t('documents.name')"
       :description="documentData.name"
+      :truncate-description="35"
       horizontal
       can-copy
     >
@@ -71,6 +68,7 @@ const documentData = computed(() => {
     <LabelDescriptionItem
       :label="t('documents.path')"
       :description="documentData.path"
+      :truncate-description="35"
       horizontal
       can-copy
     >
@@ -97,6 +95,7 @@ const documentData = computed(() => {
     <LabelDescriptionItem
       :label="t('documents.hash')"
       :description="documentData.hash"
+      :truncate-description="40"
       horizontal
       can-copy
     >
