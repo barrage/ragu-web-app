@@ -252,7 +252,7 @@ function switchRoute() {
   <ProfileOverviewModal
     v-model="isProfileModelVisible"
     :avatar="oAuthStore.user?.avatar"
-    :user-id="oAuthStore.user?.id"
+    :user="oAuthStore.user"
     upload-type="users"
   />
 </template>
