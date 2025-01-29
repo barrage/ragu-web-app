@@ -6,9 +6,10 @@ import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import { StatusType } from '~/types/statusTypes'
+import type { User } from '~/types/users'
 
 const props = defineProps<{
-  userId: string | undefined
+  user: User | undefined | null
   uploadType: 'users' | 'agents' | 'adminUsers'
   avatar?: object
 }>()
@@ -24,7 +25,7 @@ const { $api } = useNuxtApp()
 
 const { execute: deleteProfilePicture, error, status: deleteProfilePictureStatus } = await useAsyncData(() => {
   if (props.uploadType === 'adminUsers') {
-    return $api.user.DeleteAdminProfilePicture(props.userId)
+    return $api.user.DeleteAdminProfilePicture(props.user?.id as string)
   }
   return $api.user.DeleteProfilePicture()
 }, { immediate: false })
@@ -59,14 +60,16 @@ const handleDeletePicture = () => {
 
 // HELPERS
 const userProfileData = computed(() => {
+  const userData = props.uploadType === 'adminUsers' ? props.user : userAuth.user
+
   return {
-    name: userAuth.user?.fullName || t('users.user_card.username'),
-    role: userAuth.user?.role === 'admin' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
-    email: userAuth.user?.email,
-    statusType: userAuth.user?.active ? StatusType.Success : StatusType.Danger,
-    status: userAuth.user?.active ? t('users.user_card.active_status') : t('users.user_card.inactive_status'),
-    updatedAt: userAuth.user?.updatedAt ? formatDate(userAuth.user?.updatedAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
-    createdAt: userAuth.user?.updatedAt ? formatDate(userAuth.user?.createdAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
+    name: userData?.fullName || t('users.user_card.username'),
+    role: userData?.role === 'admin' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
+    email: userData?.email || t('users.user_card.unknown_email'),
+    statusType: userData?.active ? StatusType.Success : StatusType.Danger,
+    status: userData?.active ? t('users.user_card.active_status') : t('users.user_card.inactive_status'),
+    updatedAt: userData?.updatedAt ? formatDate(userData.updatedAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
+    createdAt: userData?.createdAt ? formatDate(userData.createdAt, 'MMMM DD, YYYY') : t('users.user_card.unknown_date'),
   }
 })
 
@@ -207,7 +210,7 @@ const handleRemovePicture = async () => {
   <ChangePictureModal
     v-model="isUploadModalVisible"
     :upload-type="props.uploadType"
-    :user-id="userId"
+    :user-id="props.user?.id"
     @profile-picture-uploaded="refreshCurrentUser"
   />
 </template>

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { h } from 'vue'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
+import type { User } from '~/types/users'
 
-defineProps<{
-  userId: string | undefined
+const props = defineProps<{
+  user: User | undefined | null
   uploadType?: 'users' | 'agents' | 'adminUsers'
   avatar?: object
 }>()
@@ -41,7 +42,7 @@ const closeModal = () => {
     </template>
     <ProfileOverview
       :avatar="avatar"
-      :user-id="userId"
+      :user="props.user"
       upload-type="adminUsers"
       @change-picture="handleChangePicture"
       @delete-picture="handleDeletePicture"
