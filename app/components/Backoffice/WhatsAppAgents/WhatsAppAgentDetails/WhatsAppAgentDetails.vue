@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import WhatsAppAgentOverallDetails from '~/components/Backoffice/WhatsAppAgents/WhatsAppAgentDetails/WhatsAppAgentOverallDetails.vue'
-import WhatsAppAgentConfigurationDetails from '~/components/Backoffice/WhatsAppAgents/WhatsAppAgentDetails/WhatsAppAgentConfigurationDetails.vue'
-import WhatsAppAgentCollections from '~/components/Backoffice/WhatsAppAgents/WhatsAppAgentDetails/WhatsAppAgentCollections.vue'
 import AgentIcon from '~/assets/icons/svg/whatsapp-chat-agent.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
@@ -13,6 +10,7 @@ import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 import FolderPersonIcon from '~/assets/icons/svg/folder-person.svg'
 import type { SingleWhatsAppAgentResponse, WhatsAppAgent } from '~/types/whatsapp'
 import type { AgentCollection } from '~/types/agent'
+import type { TabOption } from '~/types/tab'
 
 // TYPES
 type DialogType = 'delete' | 'setAsActive'
@@ -45,7 +43,6 @@ const emits = defineEmits<{
 const { $api } = useNuxtApp()
 const localePath = useLocalePath()
 const { t } = useI18n()
-const activeTab = ref('details')
 const dialog = ref<{
   isOpened: boolean
   type: DialogType | undefined
@@ -56,28 +53,35 @@ const dialog = ref<{
   agent: undefined,
 })
 
-const tabOptions = computed(() => {
+const tabOptions = computed((): TabOption[] => {
   return [
     {
       name: 'details',
       label: t('agents.titles.details'),
       icon: PersonInfoIcon,
-      component: WhatsAppAgentOverallDetails,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/WhatsAppAgents/WhatsAppAgentDetails/WhatsAppAgentOverallDetails.vue'),
+      ),
     },
     {
       name: 'configuration',
       label: t('agents.titles.configuration'),
       icon: PersonSettingsIcon,
-      component: WhatsAppAgentConfigurationDetails,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/WhatsAppAgents/WhatsAppAgentDetails/WhatsAppAgentConfigurationDetails.vue'),
+      ),
     },
     {
       name: 'collections',
       label: t('collections.title'),
       icon: FolderPersonIcon,
-      component: WhatsAppAgentCollections,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/WhatsAppAgents/WhatsAppAgentDetails/WhatsAppAgentCollections.vue'),
+      ),
     },
   ]
 })
+const { activeTab } = useTabQuery('details', tabOptions.value.map(tab => tab.name))
 
 const whatsAppAgentData = computed((): WhatsAppAgentData => {
   return {
@@ -214,6 +218,7 @@ const handleDeleteAgent = async () => {
       </template>
       <component
         :is="tab.component"
+        v-if="activeTab === tab.name"
         :whats-app-agent="whatsAppAgentData"
         @refresh-whats-app-agent="emits('refreshWhatsAppAgent')"
       />

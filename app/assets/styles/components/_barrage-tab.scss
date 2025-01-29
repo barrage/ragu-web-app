@@ -43,7 +43,7 @@
 
         &:active {
           --barrage-tab-color: var(--color-primary-0);
-          border-bottom: 1px solid var(--color-primary-100);
+          color: var(--color-primary-300);
         }
 
         &.is-active {
@@ -219,6 +219,7 @@
 
       &:active {
         --barrage-tab-color: var(--color-primary-900);
+        color: var(--color-primary-700);
       }
 
       &.is-focus {
@@ -269,7 +270,6 @@
 
     &__card {
       & .barrage-tabs__header {
-        border-bottom: 1px solid red;
         height: 40px;
       }
       & .barrage-tabs__header .barrage-tabs__nav-wrap::after {
