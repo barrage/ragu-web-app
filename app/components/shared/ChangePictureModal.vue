@@ -71,17 +71,20 @@ const upload = async () => {
 
   let execute, error
 
-  if (props.uploadType === 'users') {
-    ({ execute, error } = await useAsyncData(() => $api.user.PostUploadProfilePicture(resizedFile), { immediate: false }))
+  if (props.uploadType === 'users' && props.userId) {
+    ({ execute, error } = await useAsyncData(() =>
+      $api.user.PostUploadProfilePicture(props.userId as string, resizedFile), { immediate: false }))
   }
   else if (props.uploadType === 'agents' && props.agentId) {
-    ({ execute, error } = await useAsyncData(() => $api.agent.UpdateAgentAvatar(props.agentId as string, resizedFile), { immediate: false }))
+    ({ execute, error } = await useAsyncData(() =>
+      $api.agent.UpdateAgentAvatar(props.agentId as string, resizedFile), { immediate: false }))
   }
   else if (props.uploadType === 'adminUsers' && props.userId) {
-    ({ execute, error } = await useAsyncData(() => $api.user.PostAdminUploadProfilePicture(props.userId as string, resizedFile), { immediate: false }))
+    ({ execute, error } = await useAsyncData(() =>
+      $api.user.PostAdminUploadProfilePicture(props.userId as string, resizedFile), { immediate: false }))
   }
   else {
-    console.error('Invalid upload type or missing agent ID')
+    console.error('Invalid upload type or missing ID')
     return
   }
 

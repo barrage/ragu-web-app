@@ -189,6 +189,9 @@ const handleDeletePicture = () => {
     />
     <ProfileOverviewModal
       v-model="isProfileModalVisible"
+      :avatar="props.user?.avatar"
+      :user-id="props.user?.id"
+      upload-type="adminUsers"
       @change-picture="handleChangePicture"
       @delete-picture="handleDeletePicture"
     />
