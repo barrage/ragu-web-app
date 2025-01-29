@@ -663,7 +663,9 @@ export default {
       general_agent_details: 'Detalles generales sobre la identidad y el propósito del agente.',
       language_form: 'Define el idioma y el tono de comunicación del agente.',
       instructions_form: 'Proporcione instrucciones para alinear la salida del agente con sus necesidades.',
-
+      configuration_description: 'Configure la configuración técnica para el agente.',
+      providers_description: 'Seleccione {provider} como proveedor de LLM',
+      model_description: 'Seleccione {model} como modelo de LLM',
     },
     agent_card: {
       unknown_id: 'ID de agente desconocido',
