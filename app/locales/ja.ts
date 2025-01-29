@@ -659,7 +659,9 @@ export default {
       general_agent_details: 'エージェントのアイデンティティと目的に関する一般的な詳細。',
       language_form: 'エージェントのコミュニケーション言語とトーンを定義します。',
       instructions_form: 'エージェントの出力をニーズに合わせるための指示を提供します。',
-
+      configuration_description: 'エージェントの技術設定を構成します。',
+      providers_description: '{provider}をLLMプロバイダーとして選択します',
+      model_description: '{model}をLLMモデルとして選択します',
     },
     agent_card: {
       unknown_id: '不明なエージェントID',

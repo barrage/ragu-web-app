@@ -329,7 +329,7 @@ const handleRemovePicture = async () => {
         <h5 class="group-title">
           {{ t('agents.titles.configuration') }}
         </h5>
-        <span class="group-description">Set technical parameters for the AI model.</span>
+        <span class="group-description">{{ t('agents.descriptions.configuration_description') }}</span>
       </div>
       <ElFormItem
         class="context-form-item"
@@ -370,7 +370,7 @@ const handleRemovePicture = async () => {
                   <CheckIcon v-if="provider === editAgentForm.configuration.llmProvider" size="22px" />
                 </div>
 
-                <span class="provider-description">Choose {{ provider }} as your LLM provider</span>
+                <span class="provider-description">{{ t('agents.descriptions.providers_description', { provider }) }}</span>
               </div>
             </el-card>
           </template>
@@ -410,7 +410,7 @@ const handleRemovePicture = async () => {
                     <CheckIcon v-if="model === editAgentForm.configuration.model" size="22px" />
                   </div>
 
-                  <span class="provider-description">Choose {{ model }} as your LLM model</span>
+                  <span class="provider-description">{{ t('agents.descriptions.model_description', { model }) }}</span>
                 </div>
               </el-card>
             </template>

@@ -914,6 +914,7 @@ export default {
     empty_state_desc_all: 'Currently, there are no agents to display here.',
     agent_avatar: 'Agent Avatar',
     user_avatar: 'User Avatar',
+
     titles: {
       mainTitle: 'Agents',
       details: 'Details',
@@ -943,7 +944,9 @@ export default {
       general_agent_details: 'General details about the agent\'s identity and purpose.',
       language_form: 'Define the agent\'s communication language and tone.',
       instructions_form: 'Provide instructions to align the agent’s output with your needs.',
-
+      configuration_description: 'Configure the technical settings for the agent.',
+      providers_description: 'Choose {provider} as your LLM provider',
+      model_description: 'Choose {model} as your LLM model',
     },
     agent_card: {
       unknown_id: 'Unknown agent id',

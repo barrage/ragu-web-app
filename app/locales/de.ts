@@ -689,6 +689,9 @@ export default {
       general_agent_details: 'Allgemeine Details zur Identität und dem Zweck des Agenten.',
       language_form: 'Definieren Sie die Kommunikationssprache und den Ton des Agenten.',
       instructions_form: 'Geben Sie Anweisungen, um die Ausgabe des Agenten an Ihre Bedürfnisse anzupassen.',
+      configuration_description: 'Konfigurieren Sie die technischen Einstellungen für den Agenten.',
+      providers_description: 'Wählen Sie {provider} als Ihren LLM-Anbieter aus',
+      model_description: 'Wählen Sie {model} als Ihr LLM-Modell aus',
     },
     activate_agent: {
       title: 'Agent aktivieren',
