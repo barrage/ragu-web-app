@@ -328,6 +328,7 @@ export default {
   whatsapp_agents: {
     title: 'WhatsApp Agenti',
     description: 'Upravljajte WhatsApp agentima odgovornim za interakciju s AI',
+    details_title: 'WhatsApp Agent',
     empty_state_title_details: 'WhatsApp agent nije pronađen',
     empty_state_desc_details: 'Traženi WhatsApp agent ne postoji ili trenutno nije dostupan. Provjerite informacije o WhatsApp agentu ili pokušajte s novim pretraživanjem.',
     empty_title_agents: 'Nema dostupnih WhatsApp agenata',

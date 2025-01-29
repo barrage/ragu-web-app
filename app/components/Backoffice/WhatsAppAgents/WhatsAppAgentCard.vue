@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import type { WhatsAppAgent } from '~/types/whatsapp'
 import { StatusType } from '~/types/statusTypes'
-import { useAgentStore } from '~/stores/agents'
-import type { Dialog, DialogType } from '~/components/Backoffice/WhatsAppAgents/shared/WhatsAppAgentSetAsActiveAndDelete.vue'
+import type { DialogType } from '~/components/Backoffice/WhatsAppAgents/shared/WhatsAppAgentSetAsActiveAndDelete.vue'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
 import WhatsAppAgentIcon from '~/assets/icons/svg/whatsapp-chat-agent.svg'
-import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import InfoIcon from '~/assets/icons/svg/info.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
@@ -118,7 +116,7 @@ const openDialog = (type: DialogType, whatsAppAgent: WhatsAppAgent) => {
         </LlmTooltip>
         <LlmTooltip :content="$t('agents.agent_card.edit_agent')">
           <LlmLink
-            :to="`/admin/whatsapp-agents/${singleWhatsAppAgent?.id}`"
+            :to="`/admin/whatsapp-agents/${singleWhatsAppAgent?.id}/edit`"
             type="plainButtonPrimary"
             @click="editClick"
           >

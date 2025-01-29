@@ -320,6 +320,7 @@ export default {
   whatsapp_agents: {
     title: 'WhatsAppエージェント',
     description: 'AIとのやり取りを担当するWhatsAppエージェントを管理します。',
+    details_title: 'WhatsAppエージェント',
     empty_state_title_details: 'WhatsAppエージェントが見つかりません',
     empty_state_desc_details: '探しているWhatsAppエージェントは存在しないか、現在利用できません。WhatsAppエージェントの情報を再確認するか、別の検索を試してください。',
     empty_title_agents: '利用可能なWhatsAppエージェントがありません',

@@ -3,17 +3,13 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 import type { AgentCollection } from '~/types/agent'
 
-const props = defineProps<{
-  agentCollections: AgentCollection[] | undefined
-  isOpen: boolean
-}>()
-
-const emits = defineEmits<Emits>()
-
 interface Emits {
-  (event: 'closeModal'): void
-  (event: 'refreshAgent'): void
+  (event: 'refreshWhatsAppAgent'): void
 }
+
+defineProps<{ agentCollections: AgentCollection[] | undefined }>()
+const emits = defineEmits<Emits>()
+const isOpen = defineModel<boolean>()
 
 // CONSTANTS & STATES
 
@@ -22,7 +18,6 @@ const { t } = useI18n()
 const route = useRoute()
 const deleteCollections = ref<string[]>([])
 const agentId = route.params.agentId as string
-const deleteCollectionModalVisible = ref(props.isOpen)
 
 const payload = computed(() => ({
   remove: deleteCollections.value.map(collectionName => ({
@@ -38,15 +33,14 @@ const { execute: deleteCollection, error: deleteCollectionError } = await useAsy
 // FUNCTIONS
 
 const closeModal = () => {
-  deleteCollectionModalVisible.value = false
-  emits('closeModal')
+  isOpen.value = false
   deleteCollections.value = []
 }
 
 const submitDeleteCollection = async () => {
   await deleteCollection()
 
-  deleteCollectionModalVisible.value = false
+  isOpen.value = false
 
   if (deleteCollectionError.value) {
     ElNotification({
@@ -58,7 +52,7 @@ const submitDeleteCollection = async () => {
     })
   }
   else {
-    emits('refreshAgent')
+    emits('refreshWhatsAppAgent')
     ElNotification({
       title: t('collections.notifications.delete_title'),
       message: t('collections.notifications.delete_message'),
@@ -68,18 +62,12 @@ const submitDeleteCollection = async () => {
     })
   }
 }
-
-// WATCHERS
-
-watch(() => props.isOpen, (newVal) => {
-  deleteCollectionModalVisible.value = newVal
-})
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="deleteCollectionModalVisible"
+      v-model="isOpen"
       destroy-on-close
       align-center
       class="barrage-dialog--small"

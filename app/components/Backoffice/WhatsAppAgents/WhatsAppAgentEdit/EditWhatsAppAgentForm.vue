@@ -1,33 +1,28 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import type { Agent, EditAgentPayload } from '~/types/agent'
 import CheckIcon from '~/assets/icons/svg/check.svg'
 import OpenAiIcon from '~/assets/icons/svg/openai.svg'
 import AzureIcon from '~/assets/icons/svg/azure.svg'
 import OllamaIcon from '~/assets/icons/svg/ollama.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import MeetUpLoader from '~/components/MeetUpLoader.vue'
-import EditIcon from '~/assets/icons/svg/edit-user.svg'
-import DeleteIcon from '~/assets/icons/svg/delete-person.svg'
-
-const props = defineProps<{
-  singleAgent: Agent | null | undefined
-}>()
-
-const emits = defineEmits<Emits>()
+import type { SingleWhatsAppAgentResponse } from '~/types/whatsapp'
 
 interface Emits {
-  (event: 'agentUpdated'): void
-  (event: 'agentEditCanceled'): void
+  (event: 'update', id: string): void
 }
+
+const props = defineProps<{
+  whatsAppAgent: SingleWhatsAppAgentResponse | null | undefined
+}>()
+const emits = defineEmits<Emits>()
 
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const MAX_CONTEXT = 1000
-
 const editAgentFormRef = ref<FormInstance>()
-const editAgentForm = reactive<EditAgentPayload>({
-  active: true,
+const editAgentForm = reactive({
+  active: false,
   description: '',
   language: '',
   name: '',
@@ -38,13 +33,10 @@ const editAgentForm = reactive<EditAgentPayload>({
     temperature: 0.1,
     instructions: {
       titleInstruction: '',
-      languageInstruction: '',
       summaryInstruction: '',
-      promptInstruction: '',
     },
   },
 })
-
 const selectedLlmProvider = computed(() => editAgentForm.configuration.llmProvider)
 
 const validateField = (
@@ -134,18 +126,12 @@ const rules = computed<FormRules>(() => ({
   ],
 }))
 
-const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => $api.agent.UpdateAgent(props.singleAgent?.agent?.id as string, editAgentForm), {
-  immediate: false,
-})
+const { execute: updateExecute, error: updateError, status: updateStatus } = await useAsyncData(() => $api.whatsApp.BoUpdateAgent(props.whatsAppAgent?.agent?.id as string, editAgentForm), { immediate: false })
 const { data: providers } = await useAsyncData(() => $api.provider.GetListProviders(), { lazy: true })
-
 const { data: availableLLms, status: getLlmModelsStatus } = await useAsyncData(() => $api.provider.GetListAvailableLLms(editAgentForm.configuration.llmProvider), { immediate: false, watch: [selectedLlmProvider] })
-
-const isLlmModelsLoading = computed(() => {
-  return getLlmModelsStatus.value === 'pending'
-})
-
 errorHandler(updateError)
+
+const isLlmModelsLoading = computed(() => getLlmModelsStatus.value === 'pending')
 
 const updateAgent = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
@@ -159,12 +145,12 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
         if (updateStatus.value === 'success') {
           ElNotification({
             title: t('agents.notifications.update_title'),
-            message: t('agents.notifications.update_message', { name: props.singleAgent?.agent?.name }),
+            message: t('agents.notifications.update_message', { name: props.whatsAppAgent?.agent?.name }),
             type: 'success',
             customClass: 'success',
             duration: 2500,
           })
-          emits('agentUpdated')
+          emits('update', props.whatsAppAgent?.agent.id as string)
         }
       }
     })
@@ -182,23 +168,19 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
 }
 
 const setForm = () => {
-  editAgentForm.name = props.singleAgent?.agent?.name ?? ''
-  editAgentForm.configuration.context = props.singleAgent?.configuration?.context ?? ''
-  editAgentForm.description = props.singleAgent?.agent?.description ?? ''
-  editAgentForm.configuration.llmProvider = props.singleAgent?.configuration?.llmProvider ?? ''
-  editAgentForm.configuration.model = props.singleAgent?.configuration?.model ?? ''
-  editAgentForm.language = props.singleAgent?.agent?.language ?? ''
-  editAgentForm.configuration.temperature = props.singleAgent?.configuration?.temperature ?? 0.1
-  editAgentForm.configuration.instructions.titleInstruction = props.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
-  editAgentForm.configuration.instructions.languageInstruction = props.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
-  editAgentForm.configuration.instructions.summaryInstruction = props.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
-  editAgentForm.configuration.instructions.promptInstruction = props.singleAgent?.configuration?.agentInstructions?.promptInstruction ?? ''
-  editAgentForm.active = props.singleAgent?.agent?.active ?? true
+  editAgentForm.name = props.whatsAppAgent?.agent?.name ?? ''
+  editAgentForm.configuration.context = props.whatsAppAgent?.agent.context ?? ''
+  editAgentForm.description = props.whatsAppAgent?.agent?.description ?? ''
+  editAgentForm.configuration.llmProvider = props.whatsAppAgent?.agent?.llmProvider ?? ''
+  editAgentForm.configuration.model = props.whatsAppAgent?.agent?.model ?? ''
+  editAgentForm.language = props.whatsAppAgent?.agent?.language ?? ''
+  editAgentForm.configuration.temperature = props.whatsAppAgent?.agent?.temperature ?? 0.1
+  editAgentForm.configuration.instructions.summaryInstruction = props.whatsAppAgent?.agent?.agentInstructions?.summaryInstruction ?? ''
+  editAgentForm.configuration.instructions.titleInstruction = props.whatsAppAgent?.agent?.agentInstructions?.titleInstruction ?? ''
+  editAgentForm.active = props.whatsAppAgent?.agent?.active ?? true
 }
 
-onMounted(() => {
-  setForm()
-})
+onMounted(() => setForm())
 
 const selectLlmProvider = (provider: string) => {
   editAgentForm.configuration.llmProvider = provider
@@ -214,42 +196,6 @@ const scrollIntoViewOptions = {
   behavior: 'smooth',
   block: 'center',
 }
-/* Profile Picture */
-const isDeleteModalOpen = ref(false)
-
-const closeDeleteModal = () => {
-  isDeleteModalOpen.value = false
-}
-
-const isUploadModalVisible = defineModel<boolean>()
-const openUploadModal = () => {
-  isUploadModalVisible.value = true
-}
-
-const { execute: deleteProfilePicture, error } = await useAsyncData(() => $api.agent.DeleteAgentAvatar(props.singleAgent?.agent?.id as string), { immediate: false })
-const handleRemovePicture = async () => {
-  await deleteProfilePicture()
-  if (error.value) {
-    ElNotification({
-      title: t('profile.notifications.import.error_title'),
-      message: t('profile.notifications.import.error_description'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-  }
-  else {
-    ElNotification({
-      title: t('profile.notifications.import.success_title'),
-      message: t('profile.notifications.import.success_delete_description'),
-      type: 'success',
-      customClass: 'success',
-      duration: 2500,
-    })
-  }
-
-  closeDeleteModal()
-}
 </script>
 
 <template>
@@ -262,44 +208,14 @@ const handleRemovePicture = async () => {
       :scroll-to-error="true"
       :scroll-into-view-options="scrollIntoViewOptions"
     >
-      <div class="group-heading-wrapper agent-details-title">
+      <div class="group-heading-wrapper span-2">
         <h5 class="group-title">
           {{ t('agents.titles.details') }}
         </h5>
         <span class="group-description">   {{ t('agents.descriptions.general_agent_details') }}</span>
       </div>
-      <div class="edit-agent-avatar-wrapper">
-        <LlmAvatar
-          :avatar="props.singleAgent?.agent?.avatar"
-          :alt="t('agents.agent_avatar')"
-          fit="cover"
-          default-image="agent"
-          :size="176"
-        />
-        <div class="change-picture">
-          <el-button
-            class="edit-picture-button"
-            size="small"
-            @click="openUploadModal"
-          >
-            <EditIcon size="16px" />
-            {{ t('profile.change_picture.title') }}
-          </el-button>
-          <el-button
-            v-if="props.singleAgent?.agent?.avatar"
-            class="remove-picture-button"
-            type="danger"
-            plain
-            size="small"
-            @click="isDeleteModalOpen = true"
-          >
-            <DeleteIcon size="16px" />
-            {{ t('profile.change_picture.delete_title') }}
-          </el-button>
-        </div>
-      </div>
       <ElFormItem
-        class="agent-name-form-item"
+        class="span-4"
         :label="t('agents.labels.name')"
         prop="name"
       >
@@ -307,8 +223,8 @@ const handleRemovePicture = async () => {
           v-model="editAgentForm.name"
           data-testid="bo-edit-agent-form-name-input"
           size="small"
-          class="agent-name-form-item"
           :placeholder="t('agents.placeholder.agentName')"
+          class="span-2"
         />
       </ElFormItem>
 
@@ -342,7 +258,7 @@ const handleRemovePicture = async () => {
             v-for="provider in providers?.llm"
             :key="provider"
           >
-            <el-card
+            <ElCard
               class="is-accent select-provider-card"
               :data-testid="`bo-edit-agent-form-provider-select-card-${provider}`"
               :class="{
@@ -371,9 +287,11 @@ const handleRemovePicture = async () => {
                   <CheckIcon v-if="provider === editAgentForm.configuration.llmProvider" size="22px" />
                 </div>
 
-                <span class="provider-description">{{ t('agents.descriptions.providers_description', { provider }) }}</span>
+                <span class="provider-description">
+                  {{ t('agents.descriptions.providers_description', { provider }) }}
+                </span>
               </div>
-            </el-card>
+            </ElCard>
           </template>
         </div>
       </ElFormItem>
@@ -389,7 +307,7 @@ const handleRemovePicture = async () => {
               v-for="(model, index) in availableLLms"
               :key="model"
             >
-              <el-card
+              <ElCard
                 v-motion-pop
                 :delay="(index * 80)"
                 :duration="250"
@@ -411,9 +329,11 @@ const handleRemovePicture = async () => {
                     <CheckIcon v-if="model === editAgentForm.configuration.model" size="22px" />
                   </div>
 
-                  <span class="provider-description">{{ t('agents.descriptions.model_description', { model }) }}</span>
+                  <span class="provider-description">
+                    {{ t('agents.descriptions.model_description', { model }) }}
+                  </span>
                 </div>
-              </el-card>
+              </ElCard>
             </template>
           </template>
           <div v-else class="loading-container">
@@ -423,11 +343,11 @@ const handleRemovePicture = async () => {
       </ElFormItem>
 
       <ElFormItem
-        class="agent-temperature-form-item"
+        class="span-2"
         :label="t('agents.labels.temperature')"
         prop="configuration.temperature"
       >
-        <el-card class="is-accent">
+        <ElCard class="is-accent">
           <div class="card-body ">
             <ElTag
               type="primary"
@@ -442,11 +362,12 @@ const handleRemovePicture = async () => {
               data-testid="bo-edit-agent-form-temperature-input"
             />
           </div>
-        </el-card>
+        </ElCard>
       </ElFormItem>
+
       <!-- Active Status -->
-      <ElFormItem :label="t('agents.labels.status')" class="agent-temperature-form-item">
-        <el-card class="is-accent">
+      <ElFormItem :label="t('agents.labels.status')" class="span-2">
+        <ElCard class="is-accent">
           <div class="card-body">
             <ElTag
               :type="editAgentForm?.active === true ? 'success' : 'danger'"
@@ -456,8 +377,9 @@ const handleRemovePicture = async () => {
             </ElTag>
             <el-switch v-model="editAgentForm.active" data-testid="bo-edit-agent-form-active-input" />
           </div>
-        </el-card>
+        </ElCard>
       </ElFormItem>
+
       <!-- Context -->
       <ElFormItem
         class="group context-form-item"
@@ -485,32 +407,19 @@ const handleRemovePicture = async () => {
         <ElInput
           v-model="editAgentForm.language"
           data-testid="bo-edit-agent-form-language-input"
+          :placeholder="t('agents.placeholder.language')"
           size="small"
         />
       </ElFormItem>
 
-      <!-- Language Instruction -->
-      <ElFormItem
-        class="context-form-item"
-        :label="t('agents.labels.languageInstruction')"
-        prop="configuration.instructions.language"
-      >
-        <ElInput
-          v-model="editAgentForm.configuration.instructions.languageInstruction"
-          data-testid="bo-edit-agent-form-language-instruction-input"
-          size="small"
-          type="textarea"
-          :placeholder="t('agents.placeholder.language')"
-        />
-      </ElFormItem>
       <div class="group-heading-wrapper">
         <h5 class="group-title">
           {{ t('agents.titles.instructions') }}
         </h5>
         <span class="group-description"> {{ t('agents.descriptions.instructions_form') }}</span>
       </div>
-      <!-- Title Instruction -->
 
+      <!-- Title Instruction -->
       <ElFormItem
         :label="t('agents.labels.titleInstruction')"
         prop="configuration.instructions.titleInstruction"
@@ -520,21 +429,6 @@ const handleRemovePicture = async () => {
           v-model="editAgentForm.configuration.instructions.titleInstruction"
           :placeholder="t('agents.placeholder.titleInstruction')"
           data-testid="bo-edit-agent-form-title-instruction-input"
-          type="textarea"
-          size="small"
-        />
-      </ElFormItem>
-
-      <!-- Prompt Instruction -->
-      <ElFormItem
-        :label="t('agents.labels.promptInstruction')"
-        prop="configuration.instructions.promptInstruction"
-        class="context-form-item"
-      >
-        <ElInput
-          v-model="editAgentForm.configuration.instructions.promptInstruction"
-          :placeholder="t('agents.placeholder.promptInstruction')"
-          data-testid="bo-edit-agent-form-prompt-instruction-input"
           type="textarea"
           size="small"
         />
@@ -568,21 +462,6 @@ const handleRemovePicture = async () => {
       </ElFormItem>
     </ElForm>
   </div>
-  <ConformationModal
-    :is-visible="isDeleteModalOpen"
-    :title="t('profile.delete_picture.title')"
-    :message="t('profile.delete_picture.description')"
-    :confirm-button-text="t('settings.delete') "
-    :cancel-button-text="t('settings.cancel')"
-    @confirm="handleRemovePicture"
-    @cancel="closeDeleteModal"
-  />
-
-  <ChangePictureModal
-    v-model="isUploadModalVisible"
-    upload-type="agents"
-    :agent-id="props.singleAgent?.agent?.id"
-  />
 </template>
 
 <style lang="scss" scoped>
@@ -597,25 +476,17 @@ const handleRemovePicture = async () => {
   gap: 22px;
   margin-bottom: var(--spacing-fluid-m);
 }
-.agent-name-form-item {
+.span-2 {
   grid-column: span 2;
 }
-
-.agent-temperature-form-item {
-  grid-column: span 2;
-}
-
-.agent-status-form-item {
-  grid-column: span 2;
+.span-4 {
+  grid-column: span 4;
 }
 .card-body {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.375rem;
-}
-.agent-name-form-item {
-  grid-column: span 2;
 }
 .select-provider-card {
   border: 1.5px solid var(--color-primary-200);
@@ -657,21 +528,6 @@ const handleRemovePicture = async () => {
       line-height: normal;
       font-size: var(--font-size-fluid-1);
     }
-  }
-}
-
-.edit-agent-avatar-wrapper {
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
-  grid-column: span 2;
-  grid-row: span 2;
-  justify-content: center;
-
-  & .change-picture {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
   }
 }
 
@@ -756,10 +612,6 @@ const handleRemovePicture = async () => {
   .left-button {
     margin-right: var(--spacing-fluid-m);
   }
-}
-
-.agent-details-title {
-  grid-column: span 2;
 }
 
 .dark {

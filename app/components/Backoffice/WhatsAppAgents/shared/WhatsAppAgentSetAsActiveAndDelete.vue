@@ -30,8 +30,8 @@ const { $api } = useNuxtApp()
 
 // API CALLS
 
-const { execute: setAsActive, error: setAsActiveError, status: setAsActiveStatus } = await useAsyncData(() => $api.whatsApp.BoSetActiveAgent(props.dialog.whatsAppAgent.id), { immediate: false })
-const { execute: deleteAgent, error: deleteAgentError, status: deleteAgentStatus } = await useAsyncData(() => $api.whatsApp.BoDeleteWhatsAppAgent(props.dialog.whatsAppAgent.id), { immediate: false })
+const { execute: setAsActive, error: setAsActiveError, status: setAsActiveStatus } = await useAsyncData(() => $api.whatsApp.BoSetActiveAgent(props.dialog?.whatsAppAgent.id as string), { immediate: false })
+const { execute: deleteAgent, error: deleteAgentError, status: deleteAgentStatus } = await useAsyncData(() => $api.whatsApp.BoDeleteWhatsAppAgent(props.dialog?.whatsAppAgent.id as string), { immediate: false })
 errorHandler(setAsActiveError)
 errorHandler(deleteAgentError)
 
@@ -77,17 +77,17 @@ const handleDeleteAgent = async () => {
   >
     <template #header>
       <div class="activate-whatsapp-agent-modal-header">
-        <PersonLockIcon v-if="dialog.type === 'delete'" size="42px" />
+        <PersonLockIcon v-if="dialog?.type === 'delete'" size="42px" />
         <PersonPasskeyIcon v-else size="42px" />
-        <h5>{{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.dialog_title') : $t('whatsapp_agents.set_as_active.dialog_title') }}</h5>
+        <h5>{{ dialog?.type === 'delete' ? $t('whatsapp_agents.delete.dialog_title') : $t('whatsapp_agents.set_as_active.dialog_title') }}</h5>
       </div>
     </template>
     <div class="activate-whatsapp-agent-modal-body">
       <p>
-        {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.dialog_description') : $t('agents.activate_agent.description') }}
+        {{ dialog?.type === 'delete' ? $t('whatsapp_agents.delete.dialog_description') : $t('agents.activate_agent.description') }}
       </p>
       <ElCard class="is-primary">
-        <WhatsAppAgentProfileOverview :agent="dialog.whatsAppAgent" />
+        <WhatsAppAgentProfileOverview :whats-app-agent="dialog?.whatsAppAgent" />
       </ElCard>
     </div>
     <template #footer>
@@ -95,11 +95,11 @@ const handleDeleteAgent = async () => {
         {{ $t('whatsapp_agents.close') }}
       </ElButton>
       <ElButton
-        :type="dialog.type === 'delete' ? 'danger' : 'primary'"
+        :type="dialog?.type === 'delete' ? 'danger' : 'primary'"
         :loading="setAsActiveStatus === 'pending' || deleteAgentStatus === 'pending' "
         @click="dialog.type === 'delete' ? handleDeleteAgent() : handleSetAsActive()"
       >
-        {{ dialog.type === 'delete' ? $t('whatsapp_agents.delete.label') : $t('agents.activate_agent.title') }}
+        {{ dialog?.type === 'delete' ? $t('whatsapp_agents.delete.label') : $t('agents.activate_agent.title') }}
       </ElButton>
     </template>
   </ElDialog>

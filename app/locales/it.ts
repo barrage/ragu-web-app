@@ -320,6 +320,7 @@ export default {
   whatsapp_agents: {
     title: 'Agenti WhatsApp',
     description: 'Gestisci gli agenti WhatsApp responsabili dell\'interazione con l\'IA',
+    details_title: 'Agente WhatsApp',
     empty_state_title_details: 'Agente WhatsApp non trovato',
     empty_state_desc_details: 'L\'agente WhatsApp che stai cercando non esiste o non è attualmente disponibile. Controlla le informazioni dell\'agente WhatsApp o prova una ricerca diversa.',
     empty_title_agents: 'Nessun agente WhatsApp disponibile',

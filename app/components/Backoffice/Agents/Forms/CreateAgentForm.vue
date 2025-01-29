@@ -221,6 +221,7 @@ const scrollIntoViewOptions = {
           data-testid="bo-Create-agent-form-name-input"
           size="small"
           class="agent-name-form-item"
+          :placeholder="t('agents.placeholder.agentName')"
         />
       </ElFormItem>
 
@@ -398,6 +399,7 @@ const scrollIntoViewOptions = {
           v-model="createAgentForm.language"
           data-testid="bo-Create-agent-form-language-input"
           size="small"
+          :placeholder="t('agents.placeholder.language')"
         />
       </ElFormItem>
 

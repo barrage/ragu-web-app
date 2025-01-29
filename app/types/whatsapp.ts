@@ -23,8 +23,7 @@ export interface WhatsAppAgent {
   embeddingProvider: string
   embeddingModel: string
   agentInstructions: {
-    promptInstruction: string | null
-    languageInstruction: string | null
+    titleInstruction: string | null
     summaryInstruction: string | null
   }
   createdAt: string | Date
@@ -52,9 +51,8 @@ export interface PostWhatsAppAgentBody {
     model: string
     temperature: number
     instructions: {
-      languageInstruction: string | null
+      titleInstruction: string | null
       summaryInstruction: string | null
-      promptInstruction: string | null
     }
   }
 }
@@ -70,9 +68,8 @@ export interface BoUpdateAgentRequest {
     model: string
     temperature: number
     instructions: {
-      languageInstruction: string
+      titleInstruction: string
       summaryInstruction: string
-      promptInstruction: string
     }
   }
 }
