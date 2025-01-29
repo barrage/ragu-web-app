@@ -214,9 +214,9 @@ export default class usersService extends FetchFactory {
    * @throws Will throw an error if the request fails.
    */
 
-  async PostUploadProfilePicture(file: File | Blob): Promise<void> {
+  async PostUploadProfilePicture(userId: string, file: File | Blob): Promise<void> {
     try {
-      return await this.$fetch<void>(`${this.endUserendpoint}/avatars`, {
+      return await this.$fetch<void>(`${this.endpoint}/${userId}/avatars`, {
         method: 'POST',
         body: file,
         credentials: 'include',

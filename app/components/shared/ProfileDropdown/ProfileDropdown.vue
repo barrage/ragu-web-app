@@ -249,7 +249,12 @@ function switchRoute() {
       </el-button>
     </template>
   </ElDialog>
-  <ProfileOverviewModal v-model="isProfileModelVisible" />
+  <ProfileOverviewModal
+    v-model="isProfileModelVisible"
+    :avatar="oAuthStore.user?.avatar"
+    :user-id="oAuthStore.user?.id"
+    upload-type="users"
+  />
 </template>
 
 <style lang="scss" scoped>

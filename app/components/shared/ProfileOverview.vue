@@ -7,6 +7,12 @@ import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 import { StatusType } from '~/types/statusTypes'
 
+const props = defineProps<{
+  userId: string | undefined
+  uploadType: 'users' | 'agents' | 'adminUsers'
+  avatar?: object
+}>()
+
 const emits = defineEmits<{
   (e: 'changePicture'): void
   (e: 'deletePicture'): void
@@ -16,7 +22,12 @@ const userAuth = useAuthStore()
 const { t } = useI18n()
 const { $api } = useNuxtApp()
 
-const { execute: deleteProfilePicture, error, status: deleteProfilePictureStatus } = await useAsyncData (() => $api.user.DeleteProfilePicture(), { immediate: false })
+const { execute: deleteProfilePicture, error, status: deleteProfilePictureStatus } = await useAsyncData(() => {
+  if (props.uploadType === 'adminUsers') {
+    return $api.user.DeleteAdminProfilePicture(props.userId)
+  }
+  return $api.user.DeleteProfilePicture()
+}, { immediate: false })
 
 const { execute: getCurrentUser, data: user } = await useAsyncData(() => $api.auth.GetCurrentUser(), { immediate: false })
 
@@ -33,9 +44,9 @@ const openUploadModal = () => {
 
 const refreshCurrentUser = async () => {
   isUploadModalVisible.value = false
+  await getCurrentUser()
   userAuth.user = user.value
   emits('changePicture')
-  await getCurrentUser()
 }
 
 const handleChangePicture = () => {
@@ -93,7 +104,7 @@ const handleRemovePicture = async () => {
       <div class="profile-picture-container">
         <div class="profile-avatar-wrapper">
           <LlmAvatar
-            :avatar="userAuth.user?.avatar"
+            :avatar="props.avatar"
             :alt="t('agents.user_avatar')"
             size="large"
             fit="cover"
@@ -111,7 +122,7 @@ const handleRemovePicture = async () => {
         {{ t('profile.change_picture.title') }}
       </el-button>
       <el-button
-        v-if="userAuth.user?.avatar"
+        v-if="props.avatar"
         class="remove-picture-button"
         size="small"
         @click="handleDeletePicture"
@@ -195,7 +206,8 @@ const handleRemovePicture = async () => {
 
   <ChangePictureModal
     v-model="isUploadModalVisible"
-    upload-type="users"
+    :upload-type="props.uploadType"
+    :user-id="userId"
     @profile-picture-uploaded="refreshCurrentUser"
   />
 </template>
