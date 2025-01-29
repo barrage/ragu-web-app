@@ -4,6 +4,7 @@ import type { User } from '~/types/users'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 import WhatsAppIcon from '~/assets/icons/svg/whatsapp-chat-multiple.svg'
+import type { TabOption } from '~/types/tab'
 
 defineProps<{
   user: User | null
@@ -19,7 +20,43 @@ const emits = defineEmits<{
 const { t } = useI18n()
 const { isWhatsAppActive } = storeToRefs(useWhatsAppStore())
 
-const activeTab = ref('details')
+const tabOptions = computed((): TabOption[] => {
+  return [
+    {
+      show: true,
+      name: 'details',
+      label: t('details'),
+      icon: PersonInfoIcon,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Users/Details/UserDetailsInformationsSection.vue'),
+      ),
+    },
+    {
+      show: true,
+      name: 'userChats',
+      label: t('chat.admin.title'),
+      icon: ChatIcon,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Users/Details/UserChats.vue'),
+      ),
+    },
+    {
+      show: isWhatsAppActive.value,
+      name: 'whatsAppNumbers',
+      label: 'WhatsApp',
+      icon: WhatsAppIcon,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Users/Details/UserWhatsAppNumbersSection.vue'),
+      ),
+    },
+  ]
+})
+const { activeTab } = useTabQuery(
+  'details',
+  tabOptions.value
+    .filter(tab => tab.show)
+    .map(tab => tab.name),
+)
 
 const handleTabClick = (tab: TabsPaneContext, event: Event) => {
   console.warn(tab, event)
@@ -36,49 +73,32 @@ const handleTabClick = (tab: TabsPaneContext, event: Event) => {
       @user-deactivated="(emits('userActivated'))"
     />
 
-    <el-tabs
+    <ElTabs
       v-model="activeTab"
       class="user-details-tabs"
       data-testid="bo-user-details-tabs"
       @tab-click="handleTabClick"
     >
-      <el-tab-pane :label="t('details')" name="details">
-        <template #label>
-          <div class="custom-tab-label-wrapper">
-            <PersonInfoIcon size="22px" />
-            <span>{{ $t('details') }}</span>
-          </div>
-        </template>
-        <template v-if="activeTab === 'details'">
-          <UserDetailsInformationsSection :user="user" />
-        </template>
-      </el-tab-pane>
-      <el-tab-pane :label="t('chat.admin.title')" name="userChats">
-        <template #label>
-          <div class="custom-tab-label-wrapper">
-            <ChatIcon size="22px" />
-            <span>{{ $t('chat.admin.title') }}</span>
-          </div>
-        </template>
-        <template v-if="activeTab === 'userChats'" />
-        <UserChats :user="user" />
-      </el-tab-pane>
-      <el-tab-pane
-        v-if="isWhatsAppActive"
-        label="WhatsApp"
-        name="whatsAppNumbers"
-      >
-        <template #label>
-          <div class="custom-tab-label-wrapper">
-            <WhatsAppIcon size="22px" />
-            <span> WhatsApp</span>
-          </div>
-        </template>
-        <template v-if="activeTab === 'whatsAppNumbers'">
-          <UserWhatsAppNumbersSection :user="user" />
-        </template>
-      </el-tab-pane>
-    </el-tabs>
+      <template v-for="tab in tabOptions" :key="tab.name">
+        <ElTabPane
+          v-if="tab.show"
+          :label="tab.label"
+          :name="tab.name"
+        >
+          <template #label>
+            <div class="custom-tab-label-wrapper">
+              <component :is="tab.icon" size="22px" />
+              <span>{{ tab.label }}</span>
+            </div>
+          </template>
+          <component
+            :is="tab.component"
+            v-if="activeTab === tab.name"
+            :user="user"
+          />
+        </ElTabPane>
+      </template>
+    </ElTabs>
   </div>
 </template>
 

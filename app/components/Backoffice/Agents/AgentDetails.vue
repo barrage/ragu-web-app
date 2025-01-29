@@ -10,6 +10,7 @@ import LikeDislikeIcon from '~/assets/icons/svg/like_dislike.svg'
 import PersonTagIcon from '~/assets/icons/svg/person-tag.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
+import type { TabOption } from '~/types/tab'
 
 const props = defineProps<{
   singleAgent: Agent | null | undefined
@@ -79,7 +80,60 @@ const handleDeletePicture = () => {
   isAgentModalVisible.value = false
   emits('refreshAgent')
 }
-const activeName = ref('details')
+
+const tabOptions = computed((): TabOption[] => {
+  return [
+    {
+      name: 'details',
+      label: t('agents.titles.details'),
+      icon: PersonInfoIcon,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Agents/AgentDetails/AgentOverall/AgentOverallDetails.vue'),
+      ),
+    },
+    {
+      name: 'configuration',
+      label: t('agents.titles.configuration'),
+      icon: PersonSettingsIcon,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Agents/AgentDetails/AgentConfiguration/AgentConfigurationDetails.vue'),
+      ),
+    },
+    {
+      name: 'collections',
+      label: t('collections.title'),
+      icon: FolderPersonIcon,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Agents/AgentDetails/AgentCollections/AgentCollections.vue'),
+      ),
+    },
+    {
+      name: 'evaluations',
+      label: t('agents.titles.evaluations'),
+      icon: LikeDislikeIcon,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Agents/AgentDetails/AgentVersions/AsyncAgentVersionList.vue'),
+      ),
+    },
+    /* {
+      name: 'statistic',
+      label: t('agents.titles.statistic'),
+      icon: ,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Agents/AgentDetails/AgentVersions/AgentStatistic.vue'),
+      ),
+    }, */
+    {
+      name: 'versions',
+      label: t('agents.titles.versions'),
+      icon: PersonTagIcon,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Agents/AgentDetails/AgentVersions/AsyncAgentVersionList.vue'),
+      ),
+    },
+  ]
+})
+const { activeTab } = useTabQuery('details', tabOptions.value.map(tab => tab.name))
 
 const handleTabClick = (tab: TabsPaneContext, event: Event) => {
   console.warn(tab, event)
@@ -149,73 +203,35 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
     </div>
   </div>
 
-  <el-tabs
-    v-model="activeName"
+  <ElTabs
+    v-model="activeTab"
     class="agent-details-tabs"
     data-testid="bo-agent-details-tabs"
     @tab-click="handleTabClick"
   >
-    <el-tab-pane :label="t('agents.titles.details')" name="details">
+    <ElTabPane
+      v-for="tab in tabOptions"
+      :key="tab.name"
+      :label="tab.label"
+      :name="tab.name"
+    >
       <template #label>
         <div class="custom-tab-label-wrapper">
-          <PersonInfoIcon size="22px" />
-          <span>{{ $t('agents.titles.details') }}</span>
+          <component :is="tab.icon" size="22px" />
+          <span>{{ tab.label }}</span>
         </div>
       </template>
-      <template v-if="activeName === 'details'">
-        <AgentOverallDetails :single-agent="props.singleAgent" />
-      </template>
-    </el-tab-pane>
-    <el-tab-pane :label="t('agents.titles.configuration')" name="configuration">
-      <template #label>
-        <div class="custom-tab-label-wrapper">
-          <PersonSettingsIcon size="22px" />
-          <span>{{ $t('agents.titles.configuration') }}</span>
-        </div>
-      </template>
-      <template v-if="activeName === 'configuration'" />
-      <AgentConfigurationDetails :single-agent="props.singleAgent" />
-    </el-tab-pane>
-    <el-tab-pane :label="t('collections.title')" name="collections">
-      <template #label>
-        <div class="custom-tab-label-wrapper">
-          <FolderPersonIcon size="22px" />
-          <span>{{ $t('collections.title') }}</span>
-        </div>
-      </template>
-      <template v-if="activeName === 'collections'">
-        <AgentCollections :agent-collections="props.singleAgent?.collections" @refresh-agent="handleGetSingleAgent" />
-      </template>
-    </el-tab-pane>
-
-    <el-tab-pane :label="t('agents.titles.evaluations')" name="evaluations">
-      <template #label>
-        <div class="custom-tab-label-wrapper">
-          <LikeDislikeIcon size="22px" />
-          <span>{{ $t('agents.titles.evaluations') }}</span>
-        </div>
-      </template>
-      <template v-if="activeName === 'evaluations'">
-        <AsyncAgentEvaluationList :agent="props.singleAgent" />
-      </template>
-    </el-tab-pane>
-    <!--  <el-tab-pane :label="t('agents.titles.statistic')" name="statistics">
-        <template v-if="activeName === 'statistics'">
-          <AgentStatistic />
-        </template>
-      </el-tab-pane> -->
-    <el-tab-pane :label="t('agents.titles.versions')" name="versions">
-      <template #label>
-        <div class="custom-tab-label-wrapper">
-          <PersonTagIcon size="22px" />
-          <span>{{ $t('agents.titles.versions') }}</span>
-        </div>
-      </template>
-      <template v-if="activeName === 'versions'">
-        <AsyncAgentVersionList :agent="props.singleAgent" @rollback-agent-version="handleAgentVersionRollback" />
-      </template>
-    </el-tab-pane>
-  </el-tabs>
+      <component
+        :is="tab.component"
+        v-if="activeTab === tab.name"
+        :single-agent="props.singleAgent"
+        :agent="props.singleAgent"
+        :agent-collections="props.singleAgent?.collections"
+        @refresh-agent="handleGetSingleAgent"
+        @rollback-agent-version="handleAgentVersionRollback"
+      />
+    </ElTabPane>
+  </ElTabs>
 
   <ActivateAgentModalBackoffice
     v-model="activateAgentModalVisible"
