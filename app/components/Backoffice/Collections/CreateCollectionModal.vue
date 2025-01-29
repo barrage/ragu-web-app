@@ -24,7 +24,7 @@ useHead({
 })
 
 const vectorProviders = ['qdrant', 'weaviate']
-const embeddingProviders = ['fembed', 'openai']
+const embeddingProviders = ['openai']
 const isOpen = defineModel<boolean>()
 const formRef = ref<FormInstance>()
 const form = reactive<CollectionDetail>({
@@ -127,7 +127,7 @@ errorHandler(createError)
     align-center
     destroy-on-close
     class="barrage-dialog--medium"
- :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     @close="closeModal"
