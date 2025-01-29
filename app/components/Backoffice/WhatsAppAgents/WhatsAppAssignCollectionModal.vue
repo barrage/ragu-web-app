@@ -7,18 +7,17 @@ import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 import type { AssignCollectionPayload } from '~/types/collection'
 import type { AgentCollection } from '~/types/agent'
 
-// PROPS & EMITS
+interface Emits {
+  (event: 'refreshWhatsAppAgent'): void
+}
+
+// PROPS & EMITS & MODELS
 
 const props = defineProps<{
-  isOpen: boolean
   agentCollections: AgentCollection[] | undefined
 }>()
 const emits = defineEmits<Emits>()
-
-interface Emits {
-  (event: 'closeModal'): void
-  (event: 'refreshAgent'): void
-}
+const isOpen = defineModel<boolean>()
 
 // CONSTANTS & STATES
 
@@ -32,7 +31,6 @@ const scrollIntoViewOptions = {
   block: 'center',
 }
 
-const assignCollectionModalVisible = ref(props.isOpen)
 const assignCollectionFormRef = ref<FormInstance>()
 const assignCollectionForm = reactive({
   provider: 'weaviate',
@@ -78,12 +76,6 @@ const rules = computed<FormRules<AssignCollectionPayload>>(() => ({
   amount: [{ required: true, message: t('collections.assign_collection.rules.amount'), trigger: 'blur' }],
 }))
 
-// WATCHERS
-
-watch(() => props.isOpen, (newVal) => {
-  assignCollectionModalVisible.value = newVal
-})
-
 // FUNCTIONS
 
 const submitAssignCollectionForm = async () => {
@@ -94,7 +86,7 @@ const submitAssignCollectionForm = async () => {
   await assignCollectionFormRef.value.validate(async (valid) => {
     if (valid) {
       await putCollection()
-      assignCollectionModalVisible.value = false
+      isOpen.value = false
       if (error.value) {
         ElNotification({
           title: t('collections.assign_collection.notification.error_title'),
@@ -105,7 +97,7 @@ const submitAssignCollectionForm = async () => {
         })
       }
       else {
-        emits('refreshAgent')
+        emits('refreshWhatsAppAgent')
         ElNotification({
           title: t('collections.notifications.delete_title'),
           message: t('collections.assign_collection.notification.assign_cuccess_title'),
@@ -123,17 +115,16 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields()
 }
 const closeModal = () => {
-  assignCollectionModalVisible.value = false
+  isOpen.value = false
   resetForm(assignCollectionFormRef.value)
-  emits('closeModal')
 }
 </script>
 
 <template>
   <ClientOnly>
     <ElDialog
-      v-model="assignCollectionModalVisible"
-      :destroy-on-close="true"
+      v-model="isOpen"
+      destroy-on-close
       align-center
       class="barrage-dialog--large"
       :close-icon="() => h(CloseCircleIcon, { size: '20px' })"

@@ -1,24 +1,18 @@
 <script lang="ts" setup>
-import type { AgentCollection } from '~/types/agent'
-import FolderPersonIcon from '~/assets/icons/svg/folder-person.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
 import CollectionDelete from '~/assets/icons/svg/folder-remove.svg'
 import FolderWarningIcon from '~/assets/icons/svg/folder-warning.svg'
-import type { WhatsAppAgent } from '~/types/whatsapp'
+import type { WhatsAppAgentData } from '~/components/Backoffice/WhatsAppAgents/WhatsAppAgentDetails/WhatsAppAgentDetails.vue'
 
 // PROPS & EMITS
-
-const props = defineProps<{
-  agentCollections: AgentCollection[] | undefined
-  singleAgent: WhatsAppAgent | null | undefined
+defineProps<{
+  whatsAppAgent: WhatsAppAgentData | undefined
 }>()
-
 const emits = defineEmits<{
-  (event: 'refreshAgent'): void
+  (event: 'refreshWhatsAppAgent'): void
 }>()
 
-// CONSTATNTS & STATES
-
+// CONSTANTS & STATES
 const assignCollectionModalVisible = ref(false)
 const deleteCollectionModalVisible = ref(false)
 const { t } = useI18n()
@@ -29,55 +23,45 @@ const openAssignCollectionModal = () => {
   assignCollectionModalVisible.value = true
 }
 
-const closeAssignCollectionModal = () => {
-  assignCollectionModalVisible.value = false
-}
-
 const openDeleteCollectionModal = () => {
   deleteCollectionModalVisible.value = true
-}
-
-const closeDeleteCollectionModal = () => {
-  deleteCollectionModalVisible.value = false
-}
-
-const handleRefreshAgent = () => {
-  emits('refreshAgent')
 }
 </script>
 
 <template>
-  <section class="agent-collections-section grid">
-    <div class="agent-collections-header-container">
-      <h3 class="agent-collections-title">
-        <FolderPersonIcon size="42px" />
+  <section class="whatsapp-agent-collections-section grid">
+    <div class="whatsapp-agent-collections-header-container">
+      <h5 class="whatsapp-agent-collections-title">
         {{ t('collections.assign_collection.agent_collections') }}
-      </h3>
-      <div v-if="agentCollections?.length" class="agent-collections-header-actions-container">
-        <el-button
+      </h5>
+      <div v-if="whatsAppAgent?.collections?.length" class="whatsapp-agent-collections-header-actions-container">
+        <ElButton
           size="small"
           type="primary"
           plain
           @click="openAssignCollectionModal()"
         >
           <CollectionIcon /> {{ t('collections.assign_collection.title') }}
-        </el-button>
+        </ElButton>
 
-        <el-button
+        <ElButton
           size="small"
           type="primary"
           plain
-          :disabled="agentCollections.length === 0"
+          :disabled="!whatsAppAgent?.collections.length"
           @click="openDeleteCollectionModal()"
         >
           <CollectionDelete />  {{ t('collections.deleteModal.title') }}
-        </el-button>
+        </ElButton>
       </div>
     </div>
-    <div class="agent-collection-list-container">
-      <template v-if="props.agentCollections?.length && props.agentCollections?.length > 0">
-        <template v-for="agentCollection in props.agentCollections" :key="agentCollection.id">
-          <AgentCollectionCard :agent-collection="agentCollection" />
+    <div class="whatsapp-agent-collection-list-container">
+      <template v-if="whatsAppAgent?.collections?.length">
+        <template
+          v-for="collection in whatsAppAgent?.collections"
+          :key="collection.id"
+        >
+          <AgentCollectionCard :agent-collection="collection" />
         </template>
       </template>
       <template v-else>
@@ -91,49 +75,44 @@ const handleRefreshAgent = () => {
             <FolderWarningIcon size="44px" />
           </template>
           <template #cta>
-            <el-button @click="openAssignCollectionModal">
+            <ElButton @click="openAssignCollectionModal">
               <CollectionIcon /> {{ t('collections.assign_collection.title') }}
-            </el-button>
+            </ElButton>
           </template>
         </EmptyState>
       </template>
     </div>
   </section>
-
   <WhatsAppAssignCollectionModal
-    :is-open="assignCollectionModalVisible"
-    :agent-collections="props.agentCollections"
-    @close-modal="closeAssignCollectionModal"
-    @refresh-agent="handleRefreshAgent"
+    v-model="assignCollectionModalVisible"
+    :agent-collections="whatsAppAgent?.collections"
+    @refresh-whats-app-agent="emits('refreshWhatsAppAgent')"
   />
   <WhatsAppDeleteAgentCollectionModal
-    :is-open="deleteCollectionModalVisible"
-    :agent-collections="props.agentCollections"
-    @close-modal="closeDeleteCollectionModal"
-    @refresh-agent="handleRefreshAgent"
+    v-model="deleteCollectionModalVisible"
+    :agent-collections="whatsAppAgent?.collections"
+    @refresh-whats-app-agent="emits('refreshWhatsAppAgent')"
   />
 </template>
 
 <style lang="scss" scoped>
-.agent-collections-section {
+.whatsapp-agent-collections-section {
   margin-top: 22px;
-  padding-block: var(--spacing-fluid-l);
-  & .agent-collections-header-container {
+  & .whatsapp-agent-collections-header-container {
     grid-column: span 12;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-
-    & .agent-collections-title {
+    padding-inline: 0.8rem;
+    & .whatsapp-agent-collections-title {
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      font-weight: var(--font-weight-semibold);
-      font-size: var(--font-size-fluid-5);
       color: var(--color-primary-900);
+      font-size: var(--font-size-fluid-4);
     }
 
-    & .agent-collections-header-actions-container {
+    & .whatsapp-agent-collections-header-actions-container {
       display: flex;
       align-items: center;
       gap: 22px;
@@ -141,7 +120,7 @@ const handleRefreshAgent = () => {
     }
   }
 
-  & .agent-collection-list-container {
+  & .whatsapp-agent-collection-list-container {
     margin-top: 1rem;
     grid-column: span 12;
     display: flex;
@@ -151,10 +130,10 @@ const handleRefreshAgent = () => {
 }
 
 .dark {
-  .agent-collections-section {
-    & .agent-collections-header-container {
-      & .agent-collections-title {
-        color: var(--color-primary-100);
+  .whatsapp-agent-collections-section {
+    & .whatsapp-agent-collections-header-container {
+      & .whatsapp-agent-collections-title {
+        color: var(--color-primary-0);
       }
     }
   }

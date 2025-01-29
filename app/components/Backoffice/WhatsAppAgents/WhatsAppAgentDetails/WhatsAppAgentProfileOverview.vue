@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import WhatsAppAgentIcon from '~/assets/icons/svg/whatsapp-chat-agent.svg'
+import type { WhatsAppAgentData } from '~/components/Backoffice/WhatsAppAgents/WhatsAppAgentDetails/WhatsAppAgentDetails.vue'
 import type { WhatsAppAgent } from '~/types/whatsapp'
 
 // PROPS
 
 const props = withDefaults(defineProps<{
-  agent: WhatsAppAgent | null | undefined
+  whatsAppAgent: WhatsAppAgentData | WhatsAppAgent | undefined
   size?: 'small' | 'medium' | 'large'
 }>(), {
   size: 'small',
@@ -17,9 +18,11 @@ const { t } = useI18n()
 
 // COMPUTEDS
 
-const agentData = computed(() => {
+const whatsAppData = computed(() => {
   return {
-    fullname: props.agent?.name || t('agents.agent_card.unknown_name'),
+    id: props.whatsAppAgent?.id || t('agents.agent_card.unknown_id'),
+    fullname: props.whatsAppAgent?.name || t('agents.agent_card.unknown_agentname'),
+    llmProvider: props.whatsAppAgent?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
   }
 })
 
@@ -48,22 +51,22 @@ const textSize = computed(() => {
 
 <template>
   <LlmLink
-    :to="`/admin/whatsapp-agents/${agent?.id}`"
+    :to="`/admin/whatsapp-agents/${whatsAppData.id}`"
     type="link"
-    class="agent-profile-item"
+    class="whatsapp-agent-profile-item"
   >
     <WhatsAppAgentIcon :size="iconSize" />
-    <div class="agent-wrapper">
-      <p class="agent-name" :style="{ fontSize: textSize.username }">
-        {{ `${agentData.fullname}` }}
+    <div class="whatsapp-agent-wrapper">
+      <p class="whatsapp-agent-name" :style="{ fontSize: textSize.username }">
+        {{ `${whatsAppData.fullname}` }}
       </p>
-      <span class="agent-provider" :style="{ fontSize: textSize.email }">{{ agent?.llmProvider }}</span>
+      <span class="whatsapp-agent-provider" :style="{ fontSize: textSize.email }">{{ whatsAppData.llmProvider }}</span>
     </div>
   </LlmLink>
 </template>
 
 <style lang="scss" scoped>
-.agent-profile-item {
+.whatsapp-agent-profile-item {
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -81,19 +84,19 @@ const textSize = computed(() => {
     cursor: pointer;
   }
 
-  & .agent-wrapper {
+  & .whatsapp-agent-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    & .agent-name {
+    & .whatsapp-agent-name {
       margin: 0;
       line-height: normal;
       font-weight: var(--font-weight-semibold);
       color: var(--color-primary-900);
     }
 
-    & .agent-provider {
+    & .whatsapp-agent-provider {
       margin: 0;
       line-height: normal;
       color: var(--color-primary-800);
@@ -102,14 +105,14 @@ const textSize = computed(() => {
 }
 
 .dark {
-  .agent-profile-item {
+  .whatsapp-agent-profile-item {
     color: var(--color-primary-0);
   }
-  .agent-wrapper {
-    & .agent-name {
+  .whatsapp-agent-wrapper {
+    & .whatsapp-agent-name {
       color: var(--color-primary-0);
     }
-    & .agent-provider {
+    & .whatsapp-agent-provider {
       color: var(--color-primary-100);
     }
   }
