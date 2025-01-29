@@ -141,7 +141,7 @@ const prefillForm = () => {
     form.semantic.embeddingProvider = chunkConfig.semantic.embeddingProvider
   }
 }
-const embeddingProviders = ['fembed', 'openai']
+const embeddingProviders = ['openai']
 const getModelsByProvider = (providerName: string) => {
   const models = appConfigStore.embeddingProviders[providerName]
   if (!models) {

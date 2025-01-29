@@ -40,10 +40,6 @@ export const useAppConfigStore = defineStore('appConfig', () => {
     defaultChunkers.value.filter(chunker => 'semantic' in chunker),
   )
 
-  const fembedEmbeddingModels = computed(() =>
-    embeddingProviders.value?.fembed || {},
-  )
-
   const openaiEmbeddingModels = computed(() =>
     embeddingProviders.value?.openai || {},
   )
@@ -57,7 +53,6 @@ export const useAppConfigStore = defineStore('appConfig', () => {
     slidingChunker,
     snappingChunker,
     semanticChunkers,
-    fembedEmbeddingModels,
     openaiEmbeddingModels,
   }
 })
