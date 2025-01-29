@@ -15,6 +15,7 @@ const props = defineProps<{
   canCopy?: boolean
   centered?: boolean
   size?: 'small' | 'medium' | 'large'
+  truncateDescription?: number
 }>()
 
 const slots = defineSlots<Slots>()
@@ -22,6 +23,13 @@ const slots = defineSlots<Slots>()
 const { t } = useI18n()
 
 const { copy } = useClipboard()
+
+const descriptionValue = computed(() => {
+  if (props.truncateDescription && typeof props.description === 'string') {
+    return formatStringMaxLenght(props.description, props.truncateDescription)
+  }
+  return props.description
+})
 
 const copyItem = () => {
   if (props.canCopy && props.description) {
@@ -58,7 +66,7 @@ const copyItem = () => {
       :class="{ canCopy }"
       @click="copyItem"
     >
-      {{ props.description }}  <CopyIcon v-if="canCopy" size="20px" />
+      {{ descriptionValue }}  <CopyIcon v-if="canCopy" size="20px" />
     </span>
   </div>
 </template>
