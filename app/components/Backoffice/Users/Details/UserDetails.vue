@@ -86,15 +86,13 @@ const { activeTab } = useTabQuery(
               <span>{{ tab.label }}</span>
             </div>
           </template>
-          <div
-            v-if="activeTab === tab.name"
-            v-motion-slide-bottom
-            :duration="400"
-          >
+          <div>
             <component
               :is="tab.component"
               v-if="activeTab === tab.name"
+              v-motion-slide-bottom
               :user="user"
+              :duration="400"
             />
           </div>
         </ElTabPane>

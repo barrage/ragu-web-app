@@ -221,21 +221,17 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
           <span>{{ tab.label }}</span>
         </div>
       </template>
-      <div
+      <component
+        :is="tab.component"
         v-if="activeTab === tab.name"
         v-motion-slide-bottom
         :duration="400"
-      >
-        <component
-          :is="tab.component"
-          v-if="activeTab === tab.name"
-          :single-agent="props.singleAgent"
-          :agent="props.singleAgent"
-          :agent-collections="props.singleAgent?.collections"
-          @refresh-agent="handleGetSingleAgent"
-          @rollback-agent-version="handleAgentVersionRollback"
-        />
-      </div>
+        :single-agent="props.singleAgent"
+        :agent="props.singleAgent"
+        :agent-collections="props.singleAgent?.collections"
+        @refresh-agent="handleGetSingleAgent"
+        @rollback-agent-version="handleAgentVersionRollback"
+      />
     </ElTabPane>
   </ElTabs>
 
