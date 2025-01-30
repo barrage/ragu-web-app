@@ -19,6 +19,7 @@ const emits = defineEmits<Emits>()
 interface Emits {
   (event: 'agentUpdated'): void
   (event: 'agentEditCanceled'): void
+  (event: 'agentPictureChganged'): void
 }
 
 const { $api } = useNuxtApp()
@@ -226,6 +227,10 @@ const openUploadModal = () => {
   isUploadModalVisible.value = true
 }
 
+const handleChangePicture = () => {
+  emits('agentPictureChganged')
+}
+
 const { execute: deleteProfilePicture, error } = await useAsyncData(() => $api.agent.DeleteAgentAvatar(props.singleAgent?.agent?.id as string), { immediate: false })
 const handleRemovePicture = async () => {
   await deleteProfilePicture()
@@ -248,6 +253,7 @@ const handleRemovePicture = async () => {
     })
   }
 
+  emits('agentPictureChganged')
   closeDeleteModal()
 }
 </script>
@@ -582,6 +588,7 @@ const handleRemovePicture = async () => {
     v-model="isUploadModalVisible"
     upload-type="agents"
     :agent-id="props.singleAgent?.agent?.id"
+    @profile-picture-uploaded="handleChangePicture"
   />
 </template>
 
