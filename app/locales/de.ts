@@ -414,6 +414,10 @@ export default {
     empty_state_title: 'Keine Dokumente verfügbar',
     empty_state_desc: 'Derzeit gibt es keine Dokumente, die hier angezeigt werden können.',
     google_drive: 'Google Drive',
+    chart: {
+      title: 'Keine Formate verfügbar',
+      description: 'Derzeit sind keine Formate hier anzuzeigen.',
+    },
     placeholders: {
       search_documents: 'Dokumente durchsuchen',
     },

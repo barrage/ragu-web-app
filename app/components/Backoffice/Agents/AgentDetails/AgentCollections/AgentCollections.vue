@@ -1,15 +1,19 @@
 <script lang="ts" setup>
-import type { AgentCollection } from '~/types/agent'
+import type { Agent, AgentCollection, Configuration } from '~/types/agent'
 import CollectionIcon from '~/assets/icons/svg/folder-add.svg'
 import CollectionDelete from '~/assets/icons/svg/folder-remove.svg'
 import FolderWarningIcon from '~/assets/icons/svg/folder-warning.svg'
 
 const props = defineProps<{
-  agentCollections: AgentCollection[] | undefined
+  agentCollections?: AgentCollection[]
+  agentId?: string
+  configurationAgentId?: string
+  agent?: Agent
 }>()
 
 const emits = defineEmits<{
   (event: 'refreshAgent'): void
+  (event: 'rollbackAgentVersion', agent: Configuration): void
 }>()
 
 const assignCollectionModalVisible = ref(false)

@@ -7,31 +7,31 @@ import { StatusType } from '~/types/statusTypes'
 import type { Agent } from '~/types/agent'
 
 const props = defineProps<{
-  singleAgent: Agent | null | undefined
+  agent: Agent | null | undefined
 }>()
 
 const { t } = useI18n()
 
 const agentData = computed(() => {
   return {
-    id: props.singleAgent?.agent?.id || t('agents.agent_card.unknown_id'),
-    name: props.singleAgent?.agent?.name || t('agents.agent_card.unknown_agentname'),
-    context: props.singleAgent?.configuration?.context || t('agents.agent_card.unknown_agentcontext'),
-    description: props.singleAgent?.agent?.description || t('agents.agent_card.unknown_description'),
-    statusType: props.singleAgent?.agent?.active ? StatusType.Success : StatusType.Danger,
-    status: props.singleAgent?.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
-    llmProvider: props.singleAgent?.configuration?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
-    model: props.singleAgent?.configuration?.model || t('agents.agent_card.unknown_model'),
-    language: props.singleAgent?.agent?.language || t('agents.agent_card.unknown_language'),
-    temperature: props.singleAgent?.configuration?.temperature || t('agents.agent_card.unknown_temperature'),
-    updatedAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    languageInstruction: props.singleAgent?.configuration?.agentInstructions?.languageInstruction || t('agents.agent_card.unknown_instruction'),
-    summaryInstruction: props.singleAgent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
-    titleInstruction: props.singleAgent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
-    promptInstruction: props.singleAgent?.configuration?.agentInstructions?.promptInstruction || t('agents.agent_card.unknown_instruction'),
-    createdAt: props.singleAgent?.agent?.createdAt ? formatDate(props.singleAgent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    avatar: props.singleAgent?.agent?.avatar || undefined,
-    version: props.singleAgent?.configuration?.version || '-',
+    id: props.agent?.agent?.id || t('agents.agent_card.unknown_id'),
+    name: props.agent?.agent?.name || t('agents.agent_card.unknown_agentname'),
+    context: props.agent?.configuration?.context || t('agents.agent_card.unknown_agentcontext'),
+    description: props.agent?.agent?.description || t('agents.agent_card.unknown_description'),
+    statusType: props.agent?.agent?.active ? StatusType.Success : StatusType.Danger,
+    status: props.agent?.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
+    llmProvider: props.agent?.configuration?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
+    model: props.agent?.configuration?.model || t('agents.agent_card.unknown_model'),
+    language: props.agent?.agent?.language || t('agents.agent_card.unknown_language'),
+    temperature: props.agent?.configuration?.temperature || t('agents.agent_card.unknown_temperature'),
+    updatedAt: props.agent?.agent?.updatedAt ? formatDate(props.agent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    languageInstruction: props.agent?.configuration?.agentInstructions?.languageInstruction || t('agents.agent_card.unknown_instruction'),
+    summaryInstruction: props.agent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
+    titleInstruction: props.agent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
+    promptInstruction: props.agent?.configuration?.agentInstructions?.promptInstruction || t('agents.agent_card.unknown_instruction'),
+    createdAt: props.agent?.agent?.createdAt ? formatDate(props.agent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    avatar: props.agent?.agent?.avatar || undefined,
+    version: props.agent?.configuration?.version || '-',
   }
 })
 </script>

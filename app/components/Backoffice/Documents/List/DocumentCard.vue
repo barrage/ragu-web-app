@@ -26,6 +26,7 @@ const { t } = useI18n()
 
 const documentData = computed(() => {
   return {
+    id: props.document?.id,
     name: props.document?.name || t('users.user_card.unknown_name'),
     extension: props.document?.ext || t('users.user_card.unknown_email'),
     updatedAt: props.document?.updatedAt || t('users.user_card.unknown_date'),
@@ -37,7 +38,7 @@ const documentData = computed(() => {
 <template>
   <el-card class="document-card is-primary">
     <div class="grid">
-      <LlmLink :to="`documents/${document.id}`" class="document-name-type-wrapper">
+      <LlmLink :to="`documents/${documentData.id}`" class="document-name-type-wrapper">
         <PdfIcon
           v-if="documentData.extension === 'pdf'"
           size="40px"
@@ -89,7 +90,7 @@ const documentData = computed(() => {
       <div class="document-actions">
         <LlmTooltip :content="$t('documents.tooltip.manage_document')">
           <LlmLink
-            :to="`documents/${document.id}`"
+            :to="`documents/${documentData.id}`"
             type="plainButtonPrimary"
           >
             <EyeIcon size="24px" />

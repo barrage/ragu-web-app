@@ -2,10 +2,17 @@
 import { type LocationQuery, useRoute, useRouter } from 'vue-router'
 import type { Sort, SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
-import type { Agent, AgentVersionEvaluationMessagesFilter } from '~/types/agent'
+import type { Agent, AgentCollection, AgentVersionEvaluationMessagesFilter, Configuration } from '~/types/agent'
 
 const props = defineProps<{
-  agent: Agent | undefined | null
+  configurationAgentId: string
+  agentId: string
+  agent?: Agent
+  agentCollections?: AgentCollection[]
+}>()
+defineEmits<{
+  (event: 'refreshAgent'): void
+  (event: 'rollbackAgentVersion', agent: Configuration): void
 }>()
 
 const { $api } = useNuxtApp()
@@ -26,10 +33,23 @@ const sort = ref<Sort>({
 
 const filterForm = ref<AgentVersionEvaluationMessagesFilter>({
   evaluation: undefined,
-  agentVersion: props.agent?.configuration?.id || '',
+  agentVersion: props.agentId || '',
 })
 
-const { execute: executeGetAgentVersionEvaluationMessages, error: getAgentVersionEvaluationMessagesError, status: getAgentVersionEvaluationMessagesStatus, data: agentVersionEvaluationsData } = await useAsyncData(() => $api.agent.GetAgentVersionEvaluationMessages(props.agent?.configuration?.agentId as string, filterForm.value.agentVersion as string, pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder, filterForm.value?.evaluation), { lazy: true })
+const {
+  execute: executeGetAgentVersionEvaluationMessages,
+  error: getAgentVersionEvaluationMessagesError,
+  status: getAgentVersionEvaluationMessagesStatus,
+  data: agentVersionEvaluationsData,
+} = await useAsyncData(() => $api.agent.GetAgentVersionEvaluationMessages(
+  props.agentId,
+  props.configurationAgentId,
+  pagination.value.currentPage,
+  pagination.value.pageSize,
+  sort.value.sortBy,
+  sort.value.sortOrder,
+  filterForm.value?.evaluation,
+), { lazy: true })
 
 const updateRouteQuery = () => {
   router.replace({
@@ -128,7 +148,7 @@ const handleFilterChange = async (filter: any) => {
   await executeGetAgentVersionEvaluationMessages()
 }
 
-const { error: getAgentVersionsError, data: agentVersionsData } = await useAsyncData(() => $api.agent.GetAgentVersions(props.agent?.agent?.id as string), { lazy: true })
+const { error: getAgentVersionsError, data: agentVersionsData } = await useAsyncData(() => $api.agent.GetAgentVersions(props.agentId), { lazy: true })
 
 errorHandler(getAgentVersionsError)
 
