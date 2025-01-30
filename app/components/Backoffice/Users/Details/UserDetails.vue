@@ -57,10 +57,6 @@ const { activeTab } = useTabQuery(
     .filter(tab => tab.show)
     .map(tab => tab.name),
 )
-
-const handleTabClick = (tab: TabsPaneContext, event: Event) => {
-  console.warn(tab, event)
-}
 </script>
 
 <template>
@@ -77,7 +73,6 @@ const handleTabClick = (tab: TabsPaneContext, event: Event) => {
       v-model="activeTab"
       class="user-details-tabs"
       data-testid="bo-user-details-tabs"
-      @tab-click="handleTabClick"
     >
       <template v-for="tab in tabOptions" :key="tab.name">
         <ElTabPane

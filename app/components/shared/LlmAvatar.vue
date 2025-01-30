@@ -96,7 +96,7 @@ const DefaultIcon = computed(() => {
       class="edit-button"
       @click="emits('edit')"
     >
-      <EditIcon :size="Number(avatarSize.replace('px', '')) / 3" />
+      <EditIcon size="100%" />
     </button>
   </div>
 </template>

@@ -60,8 +60,9 @@ watch(
     <template v-else-if="userHasChats">
       <div class="user-chats-container">
         <ChatsListAdminActions
-          :selected-sort-by="sort.sortProperty"
+          :selected-sort-by="sort.sortProperty.value"
           :selected-sort-direction="sort.direction"
+          :selected-search="null"
           @sort-change="handleSortChange"
         />
         <ChatsListAdmin
