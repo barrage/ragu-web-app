@@ -45,7 +45,7 @@ const oAuthConfig: AuthConfig = {
     logo: GoogleLogo,
     text: 'Google',
     authUrl: runtimeConfig.public.oAuthGoogleUrl,
-    client_id: runtimeConfig.public.oAuthGoogleId as string,
+    client_id: runtimeConfig.public.googleOAuthClientId as string,
     additionalParams: '&access_type=offline&include_granted_scopes=true',
     scopes: scopes.google?.join(' ') as string,
   },
