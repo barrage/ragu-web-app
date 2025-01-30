@@ -216,12 +216,19 @@ const handleDeleteAgent = async () => {
           <span>{{ tab.label }}</span>
         </div>
       </template>
-      <component
-        :is="tab.component"
+      <div
         v-if="activeTab === tab.name"
-        :whats-app-agent="whatsAppAgentData"
-        @refresh-whats-app-agent="emits('refreshWhatsAppAgent')"
-      />
+        v-motion-slide-bottom
+        :duration="400"
+      >
+        <component
+          :is="tab.component"
+          v-if="activeTab === tab.name"
+
+          :whats-app-agent="whatsAppAgentData"
+          @refresh-whats-app-agent="emits('refreshWhatsAppAgent')"
+        />
+      </div>
     </ElTabPane>
   </ElTabs>
 
