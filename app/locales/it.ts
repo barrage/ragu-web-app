@@ -391,6 +391,13 @@ export default {
       title: 'Carica file',
       description: 'Trascina qui il file oppure',
       description_link: 'clicca per caricare',
+      note_supported_types: 'Tipi di file supportati: {types}',
+      note_file_size: 'Dimensione massima del file per documento: {size}',
+      note_multiple_files: 'Puoi caricare più documenti contemporaneamente selezionandoli o utilizzando il trascinamento e rilascio',
+      failed_documents: 'Documenti falliti',
+      error_too_large_title: 'File troppo grande',
+      error_file_type_title: 'Tipo di file non valido',
+      clear_all: 'Cancella tutto',
     },
 
     details: {

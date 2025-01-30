@@ -391,6 +391,13 @@ export default {
       title: 'ファイルをアップロード',
       description: 'ここにファイルをドロップするか',
       description_link: 'クリックしてアップロード',
+      note_supported_types: 'サポートされているファイル形式: {types}',
+      note_file_size: 'ドキュメントごとの最大ファイルサイズ: {size}',
+      note_multiple_files: 'ドキュメントを選択するか、ドラッグアンドドロップを使用して、一度に複数のドキュメントをアップロードできます',
+      failed_documents: '失敗したドキュメント',
+      error_too_large_title: 'ファイルが大きすぎます',
+      error_file_type_title: '無効なファイル形式',
+      clear_all: 'すべて消去',
     },
 
     details: {

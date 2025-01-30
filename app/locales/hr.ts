@@ -399,6 +399,13 @@ export default {
       title: 'Učitaj datoteku',
       description: 'Ispustite datoteku ovdje ili',
       description_link: 'kliknite za učitavanje',
+      note_supported_types: 'Podržani formati datoteka: {types}',
+      note_file_size: 'Maksimalna veličina datoteke po dokumentu: {size}',
+      note_multiple_files: 'Možete učitati više dokumenata odjednom ili koristiti povlačenje i ispuštanje',
+      failed_documents: 'Neuspješno učitavani dokumenti',
+      error_too_large_title: 'Datoteka je prevelika',
+      error_file_type_title: 'Nepodržani format datoteke',
+      clear_all: 'Očisti sve',
     },
 
     details: {

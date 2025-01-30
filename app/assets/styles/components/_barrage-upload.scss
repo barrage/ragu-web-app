@@ -1,29 +1,28 @@
 @layer barrage-upload {
   :root {
-    --upload-background-color: var(--color-primary-50);
+    --upload-background-color: var(--color-primary-100);
     --upload-border-color: var(--color-primary-200);
-    --upload-hover-color: var(--color-primary-100);
     --upload-icon-color: var(--color-primary-500);
     --upload-success-color: var(--color-green-600);
     --upload-error-color: var(--color-red-600);
-    --upload-remove-color: var(--color-gray-700);
+    --upload-remove-color: var(--color-primary-600);
     --upload-remove-hover-color: var(--color-red-600);
-    --upload-padding: var(--spacing-fluid-2-xs);
-    --upload-margin: var(--spacing-fluid-1-xs);
-    --upload-border-radius: var(--radius-2);
+    --upload-padding: 8px;
+    --upload-margin: 12px;
+    --upload-border-radius: 4px;
     --upload-icon-size: 1rem;
-    --upload-font-size: var(--font-size-base);
+    --upload-font-size: 0.875rem;
+    --upload-file-name-max-width: 160px;
+    --upload-file-name-color: var(--body-color);
   }
 
   html.dark {
-    .barrage-upload {
-      --upload-background-color: var(--color-primary-900);
-      --upload-border-color: var(--color-primary-300);
-      --upload-hover-color: var(--color-primary-800);
-      --upload-icon-color: var(--color-primary-300);
-      --upload-success-color: var(--color-green-400);
-      --upload-remove-color: var(--color-gray-300);
-    }
+    --upload-background-color: var(--color-primary-700);
+    --upload-border-color: var(--color-primary-300);
+    --upload-icon-color: var(--color-primary-300);
+    --upload-success-color: var(--color-green-400);
+    --upload-remove-color: var(--color-primary-300);
+    --upload-file-name-color: var(--color-primary-0);
   }
 
   .barrage-upload {
@@ -32,12 +31,13 @@
       border-radius: var(--upload-border-radius);
       padding: var(--upload-padding);
       margin-top: var(--upload-margin);
-      transition: background-color var(--transition-duration) ease-out;
+      transition: background-color 0.2s ease-out;
       position: relative;
+      margin-bottom: 2rem;
 
       &.is-drag {
         border: 2px dashed var(--upload-border-color);
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0.05);
       }
     }
 
@@ -46,9 +46,9 @@
     }
 
     &-list {
-      margin-top: 22px;
       list-style: none;
       padding: 0;
+      margin-top: var(--upload-margin);
 
       &--text {
         display: flex;
@@ -59,20 +59,20 @@
       &__item {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        border: var(--border-size-1) solid var(--upload-border-color);
+        border: 1px solid var(--upload-border-color);
         border-radius: var(--upload-border-radius);
         padding: var(--upload-padding);
         background-color: var(--upload-background-color);
-        transition: background-color var(--transition-duration) ease-out;
+        transition: background-color 0.2s ease-out;
         cursor: pointer;
+        min-height: 3rem;
 
         &:hover {
-          background-color: var(--upload-hover-color);
+          background-color: var(--upload-border-color);
         }
 
         &.is-ready {
-          border-color: var(--color-green-600);
+          border-color: var(--color-primary-400);
         }
 
         &.is-error {
@@ -84,37 +84,39 @@
           }
         }
 
-        &.is-success {
-          border-color: var(--upload-success-color);
-        }
-
         &:focus,
         &:focus-within {
           outline: none;
           border-color: var(--color-primary-600);
-          box-shadow: 0 0 0 var(--border-size-1) var(--color-primary-300);
+          box-shadow: 0 0 0 1px var(--color-primary-300);
         }
       }
 
       &__item-info {
         display: flex;
         align-items: center;
-        gap: var(--spacing-fluid-1-xs);
+        gap: 6px;
       }
 
       &__item-name {
-        color: var(--upload-icon-color);
+        display: flex;
+        align-items: center;
         font-size: var(--upload-font-size);
-        text-decoration: none;
+        color: var(--upload-icon-color);
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 200px; // Adjust this to control truncation
+        text-decoration: none;
+
+        .barrage-upload-list__item-file-name {
+          color: var(--upload-file-name-color);
+        }
       }
 
       &__item-status-label {
-        font-size: var(--font-size-small);
+        font-size: 1rem;
         color: var(--upload-success-color);
+        width: var(--upload-icon-size);
+        height: var(--upload-icon-size);
+        margin-left: 1rem;
       }
 
       &__item-remove-btn {
@@ -122,7 +124,7 @@
         border: none;
         color: var(--upload-remove-color);
         cursor: pointer;
-        font-size: var(--font-size-small);
+        font-size: 1rem;
 
         &:hover {
           color: var(--upload-remove-hover-color);
@@ -130,11 +132,11 @@
 
         &--tooltip {
           display: none;
-          font-size: var(--font-size-small);
+          font-size: 1rem;
           color: var(--upload-remove-color);
           background-color: var(--color-gray-200);
-          padding: var(--spacing-fluid-1-xs);
-          border-radius: var(--radius-1);
+          padding: 4px;
+          border-radius: 4px;
         }
 
         &:focus-within + &--tooltip {
@@ -143,8 +145,8 @@
       }
 
       &__item-file-name {
-        font-size: var(--font-size-small);
-        margin-left: var(--spacing-fluid-2-xs);
+        font-size: 1rem;
+        margin-left: var(--upload-padding);
         color: var(--upload-icon-color);
       }
 
@@ -154,12 +156,11 @@
         &--close {
           width: var(--upload-icon-size) !important;
           height: var(--upload-icon-size) !important;
+          margin-left: auto;
         }
 
         &--close-tip {
-          font-size: var(--font-size-small) !important;
-          color: var(--upload-remove-color) !important;
-          margin-left: var(--spacing-fluid-2-xs) !important;
+          display: none;
         }
       }
     }

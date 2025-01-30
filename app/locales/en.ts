@@ -391,8 +391,15 @@ export default {
       title: 'Upload file',
       description: 'Drop file here or',
       description_link: 'click to upload',
-
+      note_supported_types: 'Supported file types: {types}',
+      note_file_size: 'Maximum file size per document: {size}',
+      note_multiple_files: 'You can upload multiple documents at once by selecting them or using drag and drop',
+      failed_documents: 'Failed documents',
+      error_too_large_title: 'File too large',
+      error_file_type_title: 'Invalid file type',
+      clear_all: 'Clear All',
     },
+
     details: {
       empty_state_title: 'Document not found',
       empty_state_desc: 'The document you are looking for does not exist or is currently unavailable. Please check the documents\'s information again or try a different search.',
