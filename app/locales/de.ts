@@ -394,6 +394,13 @@ export default {
       title: 'Datei hochladen',
       description: 'Datei hier ablegen oder',
       description_link: 'klicken, um hochzuladen',
+      note_supported_types: 'Unterstützte Dateitypen: {types}',
+      note_file_size: 'Maximale Dateigröße pro Dokument: {size}',
+      note_multiple_files: 'Sie können mehrere Dokumente gleichzeitig hochladen, indem Sie sie auswählen oder per Drag & Drop verwenden',
+      failed_documents: 'Fehlgeschlagene Dokumente',
+      error_too_large_title: 'Datei zu groß',
+      error_file_type_title: 'Ungültiger Dateityp',
+      clear_all: 'Alles löschen',
     },
 
     details: {

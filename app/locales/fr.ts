@@ -392,6 +392,13 @@ export default {
       title: 'Téléverser un fichier',
       description: 'Déposez le fichier ici ou',
       description_link: 'cliquez pour téléverser',
+      note_supported_types: 'Types de fichiers pris en charge : {types}',
+      note_file_size: 'Taille maximale du fichier par document : {size}',
+      note_multiple_files: 'Vous pouvez téléverser plusieurs documents en les sélectionnant ou en les glissant-déposant',
+      failed_documents: 'Documents ayant échoué',
+      error_too_large_title: 'Fichier trop volumineux',
+      error_file_type_title: 'Type de fichier non valide',
+      clear_all: 'Tout effacer',
     },
 
     details: {

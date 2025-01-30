@@ -392,6 +392,13 @@ export default {
       title: 'Carregar arquivo',
       description: 'Solte o arquivo aqui ou',
       description_link: 'clique para carregar',
+      note_supported_types: 'Tipos de arquivo suportados: {types}',
+      note_file_size: 'Tamanho máximo do arquivo por documento: {size}',
+      note_multiple_files: 'Você pode carregar vários documentos de uma vez selecionando-os ou usando arrastar e soltar',
+      failed_documents: 'Documentos com falha',
+      error_too_large_title: 'Arquivo muito grande',
+      error_file_type_title: 'Tipo de arquivo inválido',
+      clear_all: 'Limpar tudo',
     },
 
     details: {

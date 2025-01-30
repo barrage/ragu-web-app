@@ -10,4 +10,6 @@ export interface AppConfig {
   vectorProviders: string[]
   embeddingProviders: EmbeddingProvider
   defaultChunkers: (ChunkerConfig)[]
+  supportedDocumentTypes: string[]
+  documentProviders: string[]
 }

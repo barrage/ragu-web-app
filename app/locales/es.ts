@@ -392,6 +392,13 @@ export default {
       title: 'Subir archivo',
       description: 'Suelta el archivo aquí o',
       description_link: 'haz clic para subir',
+      note_supported_types: 'Tipos de archivo admitidos: {types}',
+      note_file_size: 'Tamaño máximo de archivo por documento: {size}',
+      note_multiple_files: 'Puedes subir varios documentos a la vez seleccionándolos o usando arrastrar y soltar',
+      failed_documents: 'Documentos fallidos',
+      error_too_large_title: 'Archivo demasiado grande',
+      error_file_type_title: 'Tipo de archivo no válido',
+      clear_all: 'Limpiar todo',
     },
 
     details: {
