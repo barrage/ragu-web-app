@@ -7,7 +7,7 @@ const props = defineProps<{
   selectedSortBy: string
   selectedSortDirection: 'asc' | 'desc'
   selectedSearch: string | null
-  filterForm: ChatListFilterForm
+  filterForm?: ChatListFilterForm
 }>()
 
 const emits = defineEmits<{
@@ -44,8 +44,10 @@ const updateSearch = (search: string) => {
 }
 
 /* Computed */
-const numberOfFiltersApplied = computed(() =>
-  Object.values(props.filterForm).filter(value => value !== null && value !== undefined).length,
+const numberOfFiltersApplied = computed(() => {
+  if (props.filterForm) { return Object.values(props.filterForm).filter(value => value !== null && value !== undefined).length }
+  return 0
+},
 )
 </script>
 
@@ -88,6 +90,7 @@ const numberOfFiltersApplied = computed(() =>
     </div>
   </div>
   <ChatListAdminFilterDrawer
+    v-if="filterForm"
     v-model="chatListFilterOpen"
     :filter="filterForm"
     @filter-applied="updateFilter"

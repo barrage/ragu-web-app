@@ -112,7 +112,7 @@ const tabOptions = computed((): TabOption[] => {
       label: t('agents.titles.evaluations'),
       icon: LikeDislikeIcon,
       component: defineAsyncComponent(() =>
-        import('~/components/Backoffice/Agents/AgentDetails/AgentVersions/AsyncAgentVersionList.vue'),
+        import('~/components/Backoffice/Agents/AgentDetails/AgentEvaluations/AsyncAgentEvaluationList.vue'),
       ),
     },
     /* {
