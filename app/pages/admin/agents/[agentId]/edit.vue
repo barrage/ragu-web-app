@@ -46,6 +46,7 @@ const handleAgentUpdated = () => {
       <AgentEdit
         :single-agent="singleAgentData"
         @agent-updated="handleAgentUpdated"
+        @agent-picture-chganged="getAgentData"
       />
     </template>
 

@@ -8,12 +8,17 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (event: 'agentUpdated'): void
+  (event: 'agentPictureChganged'): void
 }>()
 
 const { t } = useI18n()
 
 const handleAgentUpdate = () => {
   emits('agentUpdated')
+}
+
+const handleAgentPictureChange = () => {
+  emits('agentPictureChganged')
 }
 </script>
 
@@ -26,7 +31,11 @@ const handleAgentUpdate = () => {
       </h1>
     </div>
 
-    <EditAgentForm :single-agent="props.singleAgent" @agent-updated="handleAgentUpdate" />
+    <EditAgentForm
+      :single-agent="props.singleAgent"
+      @agent-updated="handleAgentUpdate"
+      @agent-picture-chganged="handleAgentPictureChange"
+    />
   </section>
 </template>
 
