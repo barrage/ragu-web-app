@@ -47,17 +47,18 @@ const openAgentVersionDetailsModal = (config: Configuration) => {
       </template>
     </div>
   </div>
+  <Teleport to="body">
+    <RollbackAgentVersionModal
+      v-model="rollbackAgentModalVisible"
+      :selected-agent-version="selectedAgentRollback"
+      @agent-version-rollback="agentVersionRollbacked"
+    />
 
-  <RollbackAgentVersionModal
-    v-model="rollbackAgentModalVisible"
-    :selected-agent-version="selectedAgentRollback"
-    @agent-version-rollback="agentVersionRollbacked"
-  />
-
-  <AgentVersionDetailsModal
-    v-model="agentVersionDetailsModalVisible"
-    :selected-agent-version="selectedAgentVersionDetails"
-  />
+    <AgentVersionDetailsModal
+      v-model="agentVersionDetailsModalVisible"
+      :selected-agent-version="selectedAgentVersionDetails"
+    />
+  </Teleport>
 </template>
 
 <style lang="scss" scoped>

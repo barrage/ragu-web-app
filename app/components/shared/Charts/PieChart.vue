@@ -153,6 +153,7 @@ onMounted(() => {
       :style="{ width: chartWidth, height: chartHeight }"
     >
       <VChart
+        v-if="isMounted"
         :option="chartOptions"
         :autoresize="true"
         :theme="isDark ? 'dark' : ''"

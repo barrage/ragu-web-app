@@ -94,7 +94,7 @@ watch(
       <LastModifiedDocuments :documents="lastModifiedDocuments" />
     </div>
     <div class="documents-formats">
-      <DocumentFormatsCount :formats="documentFormats" />
+      <DocumentFormatsCount :formats="documentFormats" :chart-loading="getDocumentsStatus" />
     </div>
     <!--  <div class="last-modified-documents">
       <MostUsedTag :most-used-tag="mostUsedTag" />

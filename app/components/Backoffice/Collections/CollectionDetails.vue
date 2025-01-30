@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { RouteLocationNormalizedGeneric } from 'vue-router'
+import type { TransferKey } from 'element-plus'
 import CollectionIcon from '~/assets/icons/svg/folder-icon.svg'
 import PersonClockIcon from '~/assets/icons/svg/person-clock.svg'
 import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
@@ -24,7 +26,7 @@ const collectionId = ref(route.params.collectionId as string)
 const rightValue = ref<string[]>([])
 const hasUnsavedChanges = ref(false)
 const showLeaveConfirmation = ref(false)
-const nextRoute = ref(null)
+const nextRoute = ref<RouteLocationNormalizedGeneric | null>(null)
 
 // COMPUTEDS
 
@@ -64,12 +66,12 @@ errorHandler(error)
 
 // FUNCTIONS
 
-const handleTransferChange = (newValue: string[]) => {
-  const addedDocs = newValue.filter(id => !rightValue.value.includes(id))
+const handleTransferChange = (newValue: TransferKey[]) => {
+  const addedDocs = newValue.filter(id => !rightValue.value.includes(String(id)))
   const removedDocs = rightValue.value.filter(id => !newValue.includes(id))
 
   addedDocs.forEach((id) => {
-    if (!payload.value.remove.includes(id)) { payload.value.add.push(id) }
+    if (!payload.value.remove.includes(String(id))) { payload.value.add.push(String(id)) }
     payload.value.remove = payload.value.remove.filter(removeId => removeId !== id)
   })
 
@@ -78,7 +80,7 @@ const handleTransferChange = (newValue: string[]) => {
     payload.value.add = payload.value.add.filter(addId => addId !== id)
   })
 
-  rightValue.value = newValue
+  rightValue.value = newValue as Array<string>
   hasUnsavedChanges.value = true
 }
 
@@ -140,7 +142,7 @@ const handleLeaveConfirmation = (confirm: boolean) => {
   showLeaveConfirmation.value = false
   if (confirm) {
     hasUnsavedChanges.value = false
-    nextRoute.value && router.push(nextRoute.value)
+    if (nextRoute.value) { router.push(nextRoute.value) }
   }
   else {
     nextRoute.value = null

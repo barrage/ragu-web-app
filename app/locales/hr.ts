@@ -418,6 +418,10 @@ export default {
     empty_state_title: 'Nema dostupnih dokumenata',
     empty_state_desc: 'Trenutno nema dokumenata za prikaz.',
     google_drive: 'Google Drive',
+    chart: {
+      title: 'Nema dostupnih formata',
+      description: 'Trenutno nema formata za prikaz.',
+    },
     placeholders: {
       search_documents: 'Pretraži dokumente',
     },

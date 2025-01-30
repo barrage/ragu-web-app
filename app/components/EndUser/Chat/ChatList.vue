@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ChatIcon from '~/assets/icons/svg/chat-icon.svg'
 import type { Chat } from '~/types/chat'
 
 const props = defineProps<{
@@ -37,12 +36,12 @@ const { t } = useI18n()
         :class="{ selected: chatId === chat.id }"
       >
         <LlmAvatar
-          :avatar="useAgentStore().getAgentStoredAvatar(chat.agentId)"
+          :avatar="useAgentStore().getAgentStoredAvatar(String(chat.agentId))"
           :alt="t('agents.agent_avatar')"
           :size="24"
           fit="cover"
           default-image="agent"
-          :content-type="useAgentStore().getAgentStoredAvatar(chat.agentId)?.contentType"
+          :content-type="useAgentStore().getAgentStoredAvatar(String(chat.agentId))?.contentType"
         />
 
         <span v-if="!isSidebarCollapsed" class="chat-title">{{ chat.title || $t('chat.chat') }}</span>

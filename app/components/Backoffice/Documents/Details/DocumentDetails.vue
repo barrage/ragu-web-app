@@ -6,10 +6,6 @@ import type { Document } from '~/types/document'
 const props = defineProps<{
   document: Document | null | undefined
 }>()
-
-definePageMeta({
-  layout: 'admin-layout',
-})
 </script>
 
 <template>

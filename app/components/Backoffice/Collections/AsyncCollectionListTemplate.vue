@@ -23,6 +23,7 @@ const sort = ref<Sort>({
   sortOrder: (route.query.dir as 'asc' | 'desc') || 'desc',
   sortBy: (route.query.sortBy as string) || 'name',
 })
+const searchValue = ('')
 const { execute: executeGetCollections, error: getCollectionError, status: getCollectionsStatus, data: allCollectionsData } = await useAsyncData(() => $api.collection.GetAllCollections(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder), { lazy: true })
 errorHandler(getCollectionError)
 
@@ -118,6 +119,7 @@ onBeforeUnmount(() => {
   <CollectionListActions
     :selected-sort-by="sort.sortBy"
     :selected-sort-direction="sort.sortOrder"
+    :selected-search="searchValue"
     @sort-change="handleSortChange"
   />
   <GlobalCardListLoader

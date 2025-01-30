@@ -15,10 +15,6 @@ const router = useRouter()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 
-definePageMeta({
-  layout: 'admin-layout',
-})
-
 useHead({
   title: computed(() => t('collections.titles.create')),
 })

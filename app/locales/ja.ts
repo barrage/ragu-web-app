@@ -410,6 +410,10 @@ export default {
     empty_state_title: '利用可能なドキュメントはありません',
     empty_state_desc: '現在、ここに表示するドキュメントはありません。',
     google_drive: 'Google Drive',
+    chart: {
+      title: '利用可能な形式はありません',
+      description: '現在、ここに表示する形式はありません。',
+    },
     placeholders: {
       search_documents: 'ドキュメントを検索',
     },

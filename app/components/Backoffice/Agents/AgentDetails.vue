@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { TabsPaneContext } from 'element-plus'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import type { Agent, Configuration } from '~/types/agent'
 import { StatusType } from '~/types/statusTypes'
@@ -13,7 +12,7 @@ import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 import type { TabOption } from '~/types/tab'
 
 const props = defineProps<{
-  singleAgent: Agent | null | undefined
+  agent: Agent | null | undefined
 }>()
 
 const emits = defineEmits<{
@@ -25,24 +24,24 @@ const { t } = useI18n()
 
 const agentData = computed(() => {
   return {
-    id: props.singleAgent?.agent?.id || t('agents.agent_card.unknown_id'),
-    name: props.singleAgent?.agent?.name || t('agents.agent_card.unknown_agentname'),
-    context: props.singleAgent?.configuration?.context || t('agents.agent_card.unknown_agentcontext'),
-    description: props.singleAgent?.agent?.description || t('agents.agent_card.unknown_description'),
-    statusType: props.singleAgent?.agent?.active ? StatusType.Success : StatusType.Danger,
-    status: props.singleAgent?.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
-    llmProvider: props.singleAgent?.configuration?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
-    model: props.singleAgent?.configuration?.model || t('agents.agent_card.unknown_model'),
-    language: props.singleAgent?.agent?.language || t('agents.agent_card.unknown_language'),
-    temperature: props.singleAgent?.configuration?.temperature || t('agents.agent_card.unknown_temperature'),
-    updatedAt: props.singleAgent?.agent?.updatedAt ? formatDate(props.singleAgent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    languageInstruction: props.singleAgent?.configuration?.agentInstructions?.languageInstruction || t('agents.agent_card.unknown_instruction'),
-    summaryInstruction: props.singleAgent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
-    titleInstruction: props.singleAgent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
-    promptInstruction: props.singleAgent?.configuration?.agentInstructions?.promptInstruction || t('agents.agent_card.unknown_instruction'),
-    createdAt: props.singleAgent?.agent?.createdAt ? formatDate(props.singleAgent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    avatar: props.singleAgent?.agent?.avatar || undefined,
-    version: props.singleAgent?.configuration?.version || '-',
+    id: props.agent?.agent?.id || t('agents.agent_card.unknown_id'),
+    name: props.agent?.agent?.name || t('agents.agent_card.unknown_agentname'),
+    context: props.agent?.configuration?.context || t('agents.agent_card.unknown_agentcontext'),
+    description: props.agent?.agent?.description || t('agents.agent_card.unknown_description'),
+    statusType: props.agent?.agent?.active ? StatusType.Success : StatusType.Danger,
+    status: props.agent?.agent?.active ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status'),
+    llmProvider: props.agent?.configuration?.llmProvider || t('agents.agent_card.unknown_llmProvider'),
+    model: props.agent?.configuration?.model || t('agents.agent_card.unknown_model'),
+    language: props.agent?.agent?.language || t('agents.agent_card.unknown_language'),
+    temperature: props.agent?.configuration?.temperature || t('agents.agent_card.unknown_temperature'),
+    updatedAt: props.agent?.agent?.updatedAt ? formatDate(props.agent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    languageInstruction: props.agent?.configuration?.agentInstructions?.languageInstruction || t('agents.agent_card.unknown_instruction'),
+    summaryInstruction: props.agent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
+    titleInstruction: props.agent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
+    promptInstruction: props.agent?.configuration?.agentInstructions?.promptInstruction || t('agents.agent_card.unknown_instruction'),
+    createdAt: props.agent?.agent?.createdAt ? formatDate(props.agent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
+    avatar: props.agent?.agent?.avatar || undefined,
+    version: props.agent?.configuration?.version || '-',
   }
 })
 
@@ -135,11 +134,7 @@ const tabOptions = computed((): TabOption[] => {
 })
 const { activeTab } = useTabQuery('details', tabOptions.value.map(tab => tab.name))
 
-const handleTabClick = (tab: TabsPaneContext, event: Event) => {
-  console.warn(tab, event)
-}
-
-const handleAgentVersionRollback = async (agentConfig: Configuration) => {
+const handleAgentVersionRollback = (agentConfig: Configuration) => {
   emits('agentVersionRollback', agentConfig)
 }
 </script>
@@ -174,7 +169,7 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
     </div>
     <div class="agent-details-actions-wrapper">
       <el-button
-        v-if="!props.singleAgent?.agent?.active"
+        v-if="!agent?.agent?.active"
         size="small"
         type="primary"
         plain
@@ -183,7 +178,7 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
         <PersonPasskeyIcon size="20px" />   {{ t('users.user_card.activate_user_title') }}
       </el-button>
 
-      <LlmLink :to="`/admin/agents/${props.singleAgent?.agent?.id}/edit`">
+      <LlmLink :to="`/admin/agents/${agent?.agent?.id}/edit`">
         <template #default>
           <el-button size="small">
             <EditIcon size="20px" />  {{ t('agents.buttons.edit') }}
@@ -192,7 +187,7 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
       </LlmLink>
 
       <el-button
-        v-if="props.singleAgent?.agent?.active"
+        v-if="agent?.agent?.active"
         size="small"
         type="danger"
         plain
@@ -207,7 +202,6 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
     v-model="activeTab"
     class="agent-details-tabs"
     data-testid="bo-agent-details-tabs"
-    @tab-click="handleTabClick"
   >
     <ElTabPane
       v-for="tab in tabOptions"
@@ -221,36 +215,38 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
           <span>{{ tab.label }}</span>
         </div>
       </template>
+
       <component
         :is="tab.component"
         v-if="activeTab === tab.name"
         v-motion-slide-bottom
         :duration="400"
-        :single-agent="props.singleAgent"
-        :agent="props.singleAgent"
-        :agent-collections="props.singleAgent?.collections"
-        @refresh-agent="handleGetSingleAgent"
+        :agent-collections="agent?.collections"
+        :agent-id="agent?.agent?.id"
+        :configuration-agent-id="agent?.configuration?.id"
+        :agent="agent"
         @rollback-agent-version="handleAgentVersionRollback"
+        @refresh-agent="handleGetSingleAgent"
       />
     </ElTabPane>
   </ElTabs>
 
   <ActivateAgentModalBackoffice
     v-model="activateAgentModalVisible"
-    :selected-agent="props.singleAgent"
+    :selected-agent="agent"
     source="details"
     @agent-activated="handleGetSingleAgent"
   />
 
   <DeactivateAgentModalBackoffice
     v-model="deactivateAgentModalVisible"
-    :selected-agent="props.singleAgent"
+    :selected-agent="agent"
     source="details"
     @agent-deactivated="handleGetSingleAgent"
   />
   <ChangeAgentPictureModal
     v-model="isAgentModalVisible"
-    :agent="props.singleAgent"
+    :agent="agent"
     @change-picture="handleChangePicture"
     @delete-picture="handleDeletePicture"
   />

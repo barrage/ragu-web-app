@@ -16,7 +16,7 @@ useHead({
 const route = useRoute()
 const selectedAgentId = ref(route.params.agentId as string)
 
-const { execute: getAgentData, error: getSingleAgentError, status: getSingleAgentStatus, data: singleAgentData } = await useAsyncData(() => $api.agent.GetSingleAgent(selectedAgentId.value), { lazy: true })
+const { execute: getAgentData, error: getSingleAgentError, status: getSingleAgentStatus, data: agentData } = await useAsyncData(() => $api.agent.GetSingleAgent(selectedAgentId.value), { lazy: true })
 
 errorHandler(getSingleAgentError)
 
@@ -41,7 +41,7 @@ const handleAgentVersionRollback = async (agentConfig: Configuration) => {
 
     <template v-else-if="getSingleAgentStatus === 'success'">
       <AgentDetails
-        :single-agent="singleAgentData"
+        :agent="agentData"
         @refresh-agent="getAgentData"
         @agent-version-rollback="handleAgentVersionRollback"
       />

@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import type { Agent, Configuration } from '~/types/agent'
+import type { Configuration } from '~/types/agent'
 
 const props = defineProps<{
-  agent: Agent | undefined | null
+  agentId: string
 }>()
 const emits = defineEmits<Emits>()
 const { t } = useI18n()
 const { $api } = useNuxtApp()
-const { error: getAgentVersionsError, status: getAgentVersionsStatus, data: agentVersionsData } = await useAsyncData(() => $api.agent.GetAgentVersions(props.agent?.agent?.id as string), { lazy: true })
+const { error: getAgentVersionsError, status: getAgentVersionsStatus, data: agentVersionsData } = await useAsyncData(() => $api.agent.GetAgentVersions(props.agentId), { lazy: true })
 
 errorHandler(getAgentVersionsError)
 

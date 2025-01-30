@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const props = defineProps<{ formats: { value: number, name: string }[] }>()
+import type { AsyncDataRequestStatus } from '#app'
+import FolderWarningIcon from '~/assets/icons/svg/folder-warning.svg'
+
+const props = defineProps<{
+  formats: { value: number, name: string }[]
+  chartLoading: AsyncDataRequestStatus
+}>()
 
 const { t } = useI18n()
 
@@ -16,18 +22,33 @@ const customTitle = computed(() => {
     <div class="document-formats-count">
       <h6>{{ t('documents.formats') }}</h6>
 
+      <div v-if="chartLoading === 'pending'" class="loader-container">
+        <MeetUpLoader />
+      </div>
       <PieChart
+        v-else-if="formats.length"
         :data="formats"
         :series-name="t('documents.series_name')"
         :title-text="customTitle"
         :title-subtext="t('documents.specific_formats')"
       />
+      <div v-else class="recent-chat-list">
+        <EmptyState
+          :title="$t('documents.chart.title')"
+          :description="$t('documents.chart.description')"
+        >
+          <template #icon>
+            <FolderWarningIcon size="44px" />
+          </template>
+        </EmptyState>
+      </div>
     </div>
   </LlmTooltip>
 </template>
 
   <style lang="scss" scoped>
   .document-formats-count {
+  height: 377px;
   background: var(--color-primary-100);
   padding: 16px;
   border-radius: 10px;
@@ -49,6 +70,13 @@ const customTitle = computed(() => {
       margin-bottom: 6px;
       line-height: normal;
     }
+  }
+
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 }
 .dark {
