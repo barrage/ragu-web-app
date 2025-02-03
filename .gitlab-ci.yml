@@ -4,7 +4,7 @@ include:
     file: GitlabFlow/Deploy-custom.yml
 
 variables:
-    HELM_RELEASE_PREFIX: llmao-webapp
+  HELM_RELEASE_PREFIX: llmao-webapp
 
 build: 
   extends: .build-vault
@@ -51,6 +51,7 @@ development:
 staging:
   extends: .pre-production
   variables:
+    HELM_RELEASE_PREFIX: llmao-webapp-pevex
     ADDITIONAL_HOSTS: ragu-demo-pevex.barrage.dev
   needs:
     - job: build
