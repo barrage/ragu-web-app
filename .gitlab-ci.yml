@@ -1,6 +1,6 @@
 include:
   - project: devops/ci-template
-    ref: v1.1.0
+    ref: v1.2.0
     file: GitlabFlow/Deploy-custom.yml
 
 variables:
@@ -46,6 +46,16 @@ development:
     - job: build
   rules:
     - !reference [.development, rules]
+    - when: on_success
+
+staging:
+  extends: .pre-production
+  variables:
+    ADDITIONAL_HOSTS: ragu-demo-pevex.barrage.cloud
+  needs:
+    - job: build
+  rules:
+    - !reference [.pre-production, rules]
     - when: on_success
 
 production:
