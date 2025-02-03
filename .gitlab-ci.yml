@@ -51,7 +51,7 @@ development:
 staging:
   extends: .pre-production
   variables:
-    ADDITIONAL_HOSTS: ragu-demo-pevex.barrage.cloud
+    ADDITIONAL_HOSTS: ragu-demo-pevex.barrage.dev
   needs:
     - job: build
   rules:
