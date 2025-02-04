@@ -23,6 +23,8 @@ watch(
   },
   { immediate: true },
 )
+
+const activeTab = agentStore.appAgents[0].name
 </script>
 
 <template>
@@ -34,7 +36,50 @@ watch(
     </template>
     <template v-else-if="agentStore.appAgents.length">
       <div class="agents-overview-container">
-        <div class="agents-names-wrapper">
+        <ElTabs
+          v-model="activeTab"
+          class="user-details-tabs"
+          data-testid="bo-user-details-tabs"
+        >
+          <template v-for="agent in agentStore.appAgents" :key="agent.id">
+            <ElTabPane
+              v-if="agent.active"
+              :label="agent.name"
+              :name="agent.name"
+              @keyup.enter="selectAgent(agent)"
+              @keyup.space="selectAgent(agent)"
+              @click="selectAgent(agent)"
+            >
+              <template #label>
+                <div class="custom-tab-label-wrapper">
+                  <LlmAvatar
+                    :avatar="agent.avatar"
+                    :alt="t('agents.agent_avatar')"
+                    fit="cover"
+                    default-image="agent"
+                    :size="20"
+                  /> {{ agent.name }}
+                </div>
+              </template>
+              <div class="selected-agent-wrapper">
+                <LlmAvatar
+                  :avatar="selectedAgent?.avatar"
+                  :alt="t('agents.agent_avatar')"
+                  fit="cover"
+                  default-image="agent"
+                  :size="52"
+                />
+                <h6>{{ selectedAgent?.name }}</h6>
+                <div class="agent-info">
+                  <span>{{ t('agents.labels.language') }}: {{ selectedAgent?.language }}</span>
+                  <span>{{ t('agents.labels.updated_at') }}: {{ formatDate(selectedAgent?.updatedAt) }}</span>
+                  <p>{{ t('agents.labels.description') }}: {{ selectedAgent?.description }}</p>
+                </div>
+              </div>
+            </ElTabPane>
+          </template>
+        </ElTabs>
+        <!--    <div class="agents-names-wrapper">
           <template v-for="agent in agentStore.appAgents" :key="agent.id">
             <div
               class="agent-name"
@@ -53,23 +98,7 @@ watch(
               /> {{ agent.name }}
             </div>
           </template>
-        </div>
-
-        <div class="selected-agent-wrapper">
-          <LlmAvatar
-            :avatar="selectedAgent?.avatar"
-            :alt="t('agents.agent_avatar')"
-            fit="cover"
-            default-image="agent"
-            :size="52"
-          />
-          <h6>{{ selectedAgent?.name }}</h6>
-          <div class="agent-info">
-            <span>{{ t('agents.labels.language') }}: {{ selectedAgent?.language }}</span>
-            <span>{{ t('agents.labels.updated_at') }}: {{ formatDate(selectedAgent?.updatedAt) }}</span>
-            <p>{{ t('agents.labels.description') }}: {{ selectedAgent?.description }}</p>
-          </div>
-        </div>
+        </div> -->
       </div>
     </template>
     <EmptyState
