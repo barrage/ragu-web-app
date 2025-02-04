@@ -21,7 +21,7 @@ const allowedTypes = [
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   'text/csv',
-  'application/xml',
+  'text/xml',
 ]
 
 const maxFileSize = 100 * 1024 * 1024
