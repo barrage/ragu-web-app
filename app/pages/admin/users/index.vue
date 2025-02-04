@@ -25,7 +25,7 @@ const toggleInfoDrawer = () => {
         <AdminPageTitleContainer
           :title="t('users.title')"
           :description="t('users.description')"
-          :has-info="true"
+          has-info
           @infoclicked="toggleInfoDrawer"
         >
           <template #icon>
@@ -38,6 +38,6 @@ const toggleInfoDrawer = () => {
       </template>
     </AdminPageHeadingTemplate>
     <AsyncUsersListTemplate />
-    <UsersInfoDrawer :model-value="infoDrawerOpen" />
+    <UsersInfoDrawer v-model="infoDrawerOpen" />
   </AdminPageContainer>
 </template>

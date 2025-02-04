@@ -230,6 +230,40 @@ export default {
       empty: '現在、会話に利用できるエージェントがいません。チャットを開始するには、少なくとも1人のエージェントを追加または有効にする必要があります。システム管理者に連絡するか、エージェントの設定を確認してください。',
       empty_cta: 'エージェントを作成',
     },
+    info: {
+      title: 'チャットの管理に関する情報',
+      description: 'このチャットページでは、システム内のすべてのチャット会話を管理できます。ここでは、ユーザーとAIエージェント間のすべてのチャット会話を監視および管理できます。',
+      what_can_you_do_here: {
+        title: 'ここで何ができますか？',
+        items: {
+          labels: {
+            monitor_chats: 'アクティブなチャットを監視',
+            view_details: 'チャットの詳細を表示',
+            manage_conversations: '会話を管理',
+            manage_chats: 'チャットを管理',
+          },
+          descriptions: {
+            monitor_chats: 'リアルタイムでアクティブなチャット会話を追跡し、監視します',
+            view_details: '特定のチャットセッションに関する詳細な情報を表示します。ユーザーのデータと会話履歴が含まれます。',
+            manage_conversations: 'ユーザーとAIエージェント間のチャットの相互作用をレビュー、分析、管理します',
+            search_filter: 'ユーザー、日付、コンテンツに基づいて特定のチャットを検索し、フィルタリング、編集、削除します',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'チャットの管理方法',
+        items: {
+          labels: {
+            search_filter: 'チャットの検索とフィルタリング',
+            analyze_interactions: 'チャットの相互作用の分析',
+          },
+          descriptions: {
+            search_filter: 'ユーザー、日付、コンテンツに基づいて特定のチャットを検索し、フィルタリングします',
+            analyze_interactions: 'チャットのメトリクス、ユーザーのエンゲージメント、会話の品質をレビューします',
+          },
+        },
+      },
+    },
   },
   settings: {
     title: '設定',
@@ -546,6 +580,55 @@ export default {
       },
     },
 
+    info: {
+      title: 'ドキュメント管理に関する情報',
+      description: 'ドキュメントページでは、AIエージェントとコレクションで使用するために、システム内のすべてのドキュメントをアップロード、管理、整理できます。',
+      what_can_you_do_here: {
+        title: 'ここで何ができますか？',
+        items: {
+          labels: {
+            upload_documents: 'ドキュメントのアップロード',
+            manage_documents: 'ドキュメントの管理',
+            view_details: 'ドキュメントの詳細を表示',
+          },
+          descriptions: {
+            upload_documents: 'さまざまな形式で1つまたは複数のドキュメントをアップロードします',
+            manage_documents: 'ドキュメントを必要に応じて整理、編集、削除します',
+            view_details: '各ドキュメントに関する詳細な情報にアクセスします。メタデータと解析設定が含まれます。',
+          },
+        },
+      },
+      document_types: {
+        title: 'ドキュメントの種類と仕様',
+        items: {
+          labels: {
+            supported_formats: 'サポートされている形式',
+            size_limits: 'サイズの制限',
+            parsing_options: '解析オプション',
+          },
+          descriptions: {
+            supported_formats: 'PDF、JSON、TXT、MD、DOCX、XLSX、CSV、XML、その他のテキストベースの形式',
+            size_limits: 'ファイルサイズの最大値と推奨されるドキュメントの長さ',
+            parsing_options: 'ドキュメントの処理方法と解析方法をカスタマイズします',
+          },
+        },
+      },
+      management_features: {
+        title: '管理機能',
+        items: {
+          labels: {
+            collections: 'コレクションの統合',
+            metadata: 'メタデータの管理',
+            search: '検索とフィルタリング',
+          },
+          descriptions: {
+            collections: 'ドキュメントをコレクションに追加して、整理されたアクセスを提供します',
+            metadata: 'ドキュメントのメタデータとプロパティを表示して編集します',
+            search: '高度な検索とフィルタリングオプションを使用してドキュメントを検索します',
+          },
+        },
+      },
+    },
   },
   dashboard: {
     title: 'ダッシュボード',
@@ -679,7 +762,7 @@ export default {
       unknown_llmProvider: '不明なllmProvider',
       unknown_model: '不明なモデル',
       unknown_language: '不明な言語',
-      unknown_temperature: '不明な温度',
+      unknown_temperature: '不明な創造性レベル',
       unknown_vectorProvider: '不明なベクトルプロバイダー',
       unknown_embeddingProvider: '不明な埋め込みプロバイダー',
       unknown_embeddingModel: '不明な埋め込みモデル',
@@ -731,7 +814,7 @@ export default {
       llmProvider: 'LLMプロバイダー',
       model: 'モデル',
       language: '言語',
-      temperature: '温度',
+      temperature: '創造性レベル',
       vectorProvider: 'ベクタープロバイダー',
       embeddingProvider: '埋め込みプロバイダー',
       embeddingModel: '埋め込みモデル',
@@ -812,7 +895,7 @@ export default {
         required_message: '言語を指定してください',
       },
       temperature: {
-        required_message: '0から1までの温度を設定してください',
+        required_message: '0から1までの創造性レベルを設定してください',
       },
       vectorProvider: {
         required_message: '有効なベクタープロバイダーを選択してください',
@@ -825,6 +908,54 @@ export default {
       },
       active: {
         required_message: 'エージェントがアクティブかどうかを指定してください',
+      },
+    },
+
+    info: {
+      title: 'エージェント管理に関する情報',
+      description: 'エージェントページでは、システム内のすべてのエージェントを管理できます。ここで、新しいエージェントを作成、設定、管理し、アプリケーション用のAIエージェントを使用できます。',
+      what_can_you_do_here: {
+        title: 'ここで何ができますか？',
+        items: {
+          labels: {
+            create_agents: 'エージェントの作成と編集',
+            manage_models: '言語モデルの設定',
+            configure_settings: 'バージョンとエージェントの評価',
+            assign_collections: 'エージェントにコレクションを割り当て',
+          },
+          descriptions: {
+            create_agents: '特定のロールと機能を持つ新しいAIエージェントを作成します',
+            manage_models: 'エージェント用の言語モデルを選択し、設定します',
+            configure_settings: 'エージェントのバージョンを管理し、パフォーマンスを評価します',
+            assign_collections: 'エージェントの知識ベースを導くコンテンツコレクションを割り当てます',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'エージェントの管理方法',
+        items: {
+          labels: {
+            search_agents: 'エージェントの検索とフィルタリング',
+            customize_behavior: 'エージェントの動作のカスタマイズ',
+          },
+          descriptions: {
+            search_agents: '検索バーとフィルタを使用して特定のエージェントを検索します',
+            customize_behavior: 'プロンプト、温度、その他のパラメータを調整してエージェントの応答を微調整します',
+          },
+        },
+      },
+      important_notes: {
+        title: '重要な注意点',
+        items: {
+          labels: {
+            performance: 'コレクションの割り当て',
+            security: 'エージェントにコレクションを割り当てることを忘れないでください',
+          },
+          descriptions: {
+            performance: 'エージェントのパフォーマンスを監視し、最適な結果を得るために設定を調整します',
+            security: '適切なアクセス制御とセキュリティ対策が実装されていることを確認してください',
+          },
+        },
       },
     },
   },
@@ -960,6 +1091,54 @@ export default {
         delete_collection: '削除するコレクションがありません。新しいコレクションを割り当ててください！',
         update_error_collection: 'コレクションの更新に失敗しました。',
         update_collection: 'コレクションが正常に更新されました！',
+      },
+    },
+
+    info: {
+      title: 'コレクション管理に関する情報',
+      description: 'コレクションページでは、システム内のすべてのドキュメントを管理できます。ここでは、AIエージェントの知識ベースを導くコンテンツコレクションを作成および管理できます。',
+      what_can_you_do_here: {
+        title: 'ここで何ができますか？',
+        items: {
+          labels: {
+            create_collections: 'コレクションの作成',
+            manage_documents: 'ドキュメントの管理',
+            view_details: 'コレクションの詳細を表示',
+          },
+          descriptions: {
+            create_collections: 'ドキュメント用の特定の埋め込みツールとモデルを使用して、新しいコレクションを作成します',
+            manage_documents: 'コレクション内にドキュメントを追加、削除、整理します',
+            view_details: 'コレクションに関する詳細な情報にアクセスします。ドキュメントと設定が含まれます。',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'コレクションの管理方法',
+        items: {
+          labels: {
+            add_documents: 'ドキュメントの追加',
+            assign_agents: 'エージェントへの割り当て',
+            embeddings: '埋め込みの管理',
+          },
+          descriptions: {
+            add_documents: '転送インターフェイスを使用して、コレクションにドキュメントをアップロードし整理します',
+            assign_agents: 'AIエージェントにコレクションを接続して、知識ベースを向上させます',
+            embeddings: '最適なドキュメント処理のために、埋め込みモデルを選択し、設定します',
+          },
+        },
+      },
+      important_notes: {
+        title: '重要な注意事項',
+        items: {
+          labels: {
+            performance: 'コレクションの割り当て',
+            compatibility: '互換性に関する注意',
+          },
+          descriptions: {
+            performance: '大きなコレクションは、応答の生成に時間がかかる場合があります。これにより、エージェントのパフォーマンスに影響を与える可能性があります。',
+            compatibility: 'ドキュメントが最適な処理のためにサポートされている形式とサイズであることを確認してください。',
+          },
+        },
       },
     },
   },

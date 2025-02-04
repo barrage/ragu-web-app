@@ -238,6 +238,40 @@ export default {
       empty: 'Trenutno nema dostupnih agenata za razgovor. Da biste započeli razgovor, potrebno je dodati ili omogućiti barem jednog agenta. Molimo kontaktirajte svog sistemskog administratora ili provjerite postavke agenata za nastavak.',
       empty_cta: 'Dodajte agenta',
     },
+    info: {
+      title: 'Informacije o upravljanju razgovorima',
+      description: 'Ova stranica razgovora omogućuje vam upravljanje svim razgovorima u sustavu. Ovdje možete nadzirati i upravljati svim razgovorima između korisnika i AI agenata.',
+      what_can_you_do_here: {
+        title: 'Što možete ovdje raditi?',
+        items: {
+          labels: {
+            monitor_chats: 'Nadzirajte aktivne razgovore',
+            view_details: 'Pregledajte detalje razgovora',
+            manage_conversations: 'Upravljajte razgovorima',
+            manage_chats: 'Upravljajte razgovorima',
+          },
+          descriptions: {
+            monitor_chats: 'Pratite i nadzirajte aktivne razgovore u stvarnom vremenu',
+            view_details: 'Pogledajte detalje o određenom razgovoru, uključujući korisničke podatke i povijest razgovora',
+            manage_conversations: 'Pregledajte, analizirajte i upravljajte interakcijama u razgovoru između korisnika i AI agenata',
+            search_filter: 'Pretražite, filtrirajte, uredite i izbrišite razgovore',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'Kako upravljati razgovorima',
+        items: {
+          labels: {
+            search_filter: 'Pretraživanje i filtriranje razgovora',
+            analyze_interactions: 'Analiza interakcija u razgovoru',
+          },
+          descriptions: {
+            search_filter: 'Koristite funkciju pretraživanja i filtre za pronalaženje određenih razgovora prema korisniku, datumu ili sadržaju',
+            analyze_interactions: 'Pregledajte metrike razgovora, uključujući učinkovitost korisnika i kvalitetu razgovora',
+          },
+        },
+      },
+    },
   },
   settings: {
     title: 'Postavke',
@@ -560,6 +594,55 @@ export default {
       },
     },
 
+    info: {
+      title: 'Informacije o upravljanju dokumentima',
+      description: 'Stranica Dokumenti omogućuje vam učitavanje, upravljanje i organizaciju vaših dokumenata za korištenje s AI agentima i kolekcijama.',
+      what_can_you_do_here: {
+        title: 'Što možete ovdje raditi?',
+        items: {
+          labels: {
+            upload_documents: 'Učitajte dokumente',
+            manage_documents: 'Upravljajte dokumentima',
+            view_details: 'Pregledajte detalje dokumenta',
+          },
+          descriptions: {
+            upload_documents: 'Učitajte jedan ili više dokumenata u različitim formatima',
+            manage_documents: 'Organizirajte, uredite i izbrišite dokumente prema potrebi',
+            view_details: 'Pristupite detaljnim informacijama o svakom dokumentu, uključujući metapodatke i konfiguraciju parsiranja',
+          },
+        },
+      },
+      document_types: {
+        title: 'Vrste dokumenata i specifikacije',
+        items: {
+          labels: {
+            supported_formats: 'Podržani formati',
+            size_limits: 'Ograničenja veličine',
+            parsing_options: 'Opcije parsiranja',
+          },
+          descriptions: {
+            supported_formats: 'PDF, JSON, TXT, MD, DOCX, XLSX, CSV, XML i drugi tekstualni formati',
+            size_limits: 'Maksimalna veličina datoteke po dokumentu i preporučene duljine dokumenata',
+            parsing_options: 'Prilagodite način obrade i parsiranja dokumenata',
+          },
+        },
+      },
+      management_features: {
+        title: 'Značajke upravljanja',
+        items: {
+          labels: {
+            collections: 'Integracija kolekcija',
+            metadata: 'Upravljanje metapodacima',
+            search: 'Pretraživanje i filtriranje',
+          },
+          descriptions: {
+            collections: 'Dodajte dokumente u kolekcije za organizirani pristup',
+            metadata: 'Pregledajte i uredite metapodatke i osobine dokumenta',
+            search: 'Pronađite dokumente pomoću naprednih opcija pretraživanja i filtriranja',
+          },
+        },
+      },
+    },
   },
   users: {
     details: 'Detalji korisnika',
@@ -972,7 +1055,7 @@ export default {
       unknown_llmProvider: 'Nepoznati llmProvider',
       unknown_model: 'Nepoznati model',
       unknown_language: 'Nepoznati jezik',
-      unknown_temperature: 'Nepoznata temperatura',
+      unknown_temperature: 'Nepoznata razina kreativnosti',
       unknown_vectorProvider: 'Nepoznati pružatelj vektora',
       unknown_embeddingProvider: 'Nepoznati pružatelj embeddinga',
       unknown_embeddingModel: 'Nepoznati model embeddinga',
@@ -1024,7 +1107,7 @@ export default {
       llmProvider: 'LLM pružatelj',
       model: 'Model',
       language: 'Jezik',
-      temperature: 'Temperatura',
+      temperature: 'Razina kreativnosti',
       vectorProvider: 'Pružatelj vektora',
       embeddingProvider: 'Pružatelj embeddinga',
       embeddingModel: 'Embedding model',
@@ -1110,7 +1193,7 @@ export default {
         required_message: 'Odaberite jezik',
       },
       temperature: {
-        required_message: 'Postavite temperaturu između 0 i 1',
+        required_message: 'Postavite razinu kreativnosti između 0 i 1',
       },
       vectorProvider: {
         required_message: 'Odaberite valjanog pružatelja vektora',
@@ -1123,6 +1206,53 @@ export default {
       },
       active: {
         required_message: 'Odaberite status agenta (aktivno ili neaktivno)',
+      },
+    },
+    info: {
+      title: 'Informacije o upravljanju agentima',
+      description: 'Stranica Agenti omogućuje vam upravljanje svim agentima u sustavu. Ovdje možete stvoriti, konfigurirati i upravljati agentima za vašu aplikaciju.',
+      what_can_you_do_here: {
+        title: 'Što možete ovdje raditi?',
+        items: {
+          labels: {
+            create_agents: 'Stvaranje i uređivanje agenta',
+            manage_models: 'Postavljanje konfiguracija modela jezika',
+            configure_settings: 'Upravljanje verzijama i evaluacijom agenta',
+            assign_collections: 'Dodjeljivanje kolekcija agentima',
+          },
+          descriptions: {
+            create_agents: 'Stvorite nove umjetne inteligentne agente s određenim ulogama i sposobnostima',
+            manage_models: 'Odaberite i konfigurirajte model jezika za vaše agente',
+            configure_settings: 'Upravljajte verzijama agenata i procijenite njihove performanse',
+            assign_collections: 'Dodjelite kolekcije sadržaja da bi vodili bazu znanja agenata',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'Kako upravljati agentima',
+        items: {
+          labels: {
+            search_agents: 'Pretraživanje i filtriranje agenata',
+            customize_behavior: 'Prilagodba ponašanja agenata',
+          },
+          descriptions: {
+            search_agents: 'Koristite traku za pretraživanje i filtre za pronalaženje određenih agenata',
+            customize_behavior: 'Prilagodite upite, razine kreativnosti i druge parametre za precizno prilagodbu odgovora agenata',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Važne napomene',
+        items: {
+          labels: {
+            performance: 'Dodjeljivanje kolekcija',
+            security: 'Ne zaboravite dodjeljivati kolekcije agentima',
+          },
+          descriptions: {
+            performance: 'Monitorirajte performanse agenata i prilagodite postavke za optimalne rezultate',
+            security: 'Provjerite da li su u mjestu odgovarajući kontrolni mehanizmi i sigurnosne mjere',
+          },
+        },
       },
     },
   },
@@ -1262,6 +1392,54 @@ export default {
         update_collection: 'Kolekcija uspješno ažurirana!',
       },
     },
+    info: {
+      title: 'Informacije o upravljanju kolekcijama',
+      description: 'Stranica Kolekcije vam omogućuje upravljanje dokumentima u sustavu. Ovdje možete stvoriti i upravljati kolekcijama dokumenata za vaše AI agente da bi im pristupali i učili od njih.',
+      what_can_you_do_here: {
+        title: 'Što možete ovdje raditi?',
+        items: {
+          labels: {
+            create_collections: 'Stvaranje kolekcija',
+            manage_documents: 'Upravljanje dokumentima',
+            view_details: 'Pregled detalja kolekcije',
+          },
+          descriptions: {
+            create_collections: 'Stvorite nove kolekcije s određenim vektorima i modelima za vaše dokumente',
+            manage_documents: 'Dodajte, uklonite i organizirajte dokumente unutar svojih kolekcija',
+            view_details: 'Pristupite detaljnim informacijama o kolekcijama, uključujući dokumente i postavke',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'Kako upravljati kolekcijama',
+        items: {
+          labels: {
+            add_documents: 'Dodavanje dokumenata',
+            assign_agents: 'Dodjeljivanje agentima',
+            embeddings: 'Upravljanje vektorskim modelima',
+          },
+          descriptions: {
+            add_documents: 'Prenesite i organizirajte dokumente u svojim kolekcijama pomoću sučelja za prenos',
+            assign_agents: 'Povežite kolekcije s AI agentima da bi ih poboljšali u znanju',
+            embeddings: 'Odaberite i konfigurirajte vektorske modele za optimalno obradu dokumenata',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Važne napomene',
+        items: {
+          labels: {
+            performance: 'Dodjeljivanje kolekcija',
+            compatibility: 'Vodič za kompatibilnost',
+          },
+          descriptions: {
+            performance: 'Velike kolekcije mogu zahtijevati više procesorskog vremena za generiranje vektorskih modela',
+            compatibility: 'Provjerite da li su dokumenti u podržanim formatima i veličinama za optimalno obradu',
+          },
+        },
+      },
+    },
+
   },
 
   auth: {

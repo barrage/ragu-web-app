@@ -10,6 +10,12 @@ useHead({
 definePageMeta({
   layout: 'admin-layout',
 })
+
+const infoDrawerOpen = ref(false)
+
+const toggleInfoDrawer = () => {
+  infoDrawerOpen.value = !infoDrawerOpen.value
+}
 </script>
 
 <template>
@@ -19,6 +25,8 @@ definePageMeta({
         <AdminPageTitleContainer
           :title="t('agents.titles.mainTitle')"
           :description="t('agents.titles.description')"
+          has-info
+          @infoclicked="toggleInfoDrawer"
         >
           <template #icon>
             <AgentsIcon size="48px" />
@@ -30,7 +38,6 @@ definePageMeta({
       </template>
     </AdminPageHeadingTemplate>
     <AsyncAgentListTemplate />
+    <AgentsInfoDrawer v-model="infoDrawerOpen" />
   </AdminPageContainer>
 </template>
-
-<style scoped lang="scss" />
