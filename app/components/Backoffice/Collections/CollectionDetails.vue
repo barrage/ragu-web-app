@@ -53,7 +53,7 @@ const payload = computed(() => {
 
 // API CALLS
 
-const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDocuments(undefined, undefined, undefined, undefined, true))
+const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDocuments(1, 1000, undefined, undefined, true))
 
 errorHandler(documentError)
 
