@@ -226,7 +226,7 @@ export default {
     newChat: {
       title: 'Nouveau chat',
       description: 'Choisissez un agent pour commencer à discuter',
-      choseFrom: 'Agents :',
+      choseFrom: 'Agent sélectionné :',
       empty_title: 'Aucun agent disponible',
       empty: 'Il n\'y a actuellement aucun agent disponible pour la conversation. Pour commencer un chat, il est nécessaire d\'ajouter ou d\'activer au moins un agent. Veuillez contacter votre administrateur système ou vérifier les paramètres des agents pour continuer.',
       empty_cta: 'Créer un agent',

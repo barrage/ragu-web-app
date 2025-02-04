@@ -1,0 +1,306 @@
+@layer barrage-carousel {
+  :root {
+    /* Border */
+    --carousel-border-style: var(--border-type-solid);
+    --carousel-border-width: 0.5px;
+    --carousel-border-color: var(--color-primary-300);
+    --carousel-border-radius: var(--radius-6);
+
+    /* Colors */
+    --carousel-background-color: transparent;
+    --carousel-box-shadow: 0 0.2rem 0.3rem var(--color-primary-100);
+    --barrage-carousel-arrow-font-size: 12px;
+    --barrage-carousel-arrow-size: 36px;
+    --barrage-carousel-arrow-background: rgba(31, 45, 61, 0.11);
+    --barrage-carousel-arrow-hover-background: rgba(31, 45, 61, 0.23);
+    --barrage-carousel-indicator-width: 30px;
+    --barrage-carousel-indicator-height: 2px;
+    --barrage-carousel-indicator-padding-horizontal: 4px;
+    --barrage-carousel-indicator-padding-vertical: 12px;
+    --barrage-carousel-indicator-out-color: var(--el-border-color-hover);
+    /* Spacings */
+    --carousel-padding-block: var(--spacing-fluid-s);
+    --carousel-padding-inline: var(--spacing-fluid-s);
+
+    /* ARROW */
+    --barrage-carousel-arrow-size: 36px;
+
+    /* TRANSITIONS */
+    --barrage-transition-duration-fast: 0.2s;
+
+    /* FONT */
+    --barrage-carousel-arrow-font-size: 12px;
+
+    /* COLORS */
+    /* arrow */
+    --barrage-carousel-arrow-background: var(--color-primary-500);
+
+    /* item */
+    --barrage-carousel-item-background: var(--color-primary-200);
+    --barrage-carousel-item-border-color: var(--color-primary-300);
+
+    --barrage-carousel-item-selected-background: var(--color-primary-300);
+    --barrage-carousel-item-selected-border-color: var(--color-primary-500);
+
+    /* indicator */
+    --barrage-carousel-indicator-background: var(--color-primary-800);
+  }
+
+  html.dark {
+    .barrage-carousel {
+      /* arrow */
+      --barrage-carousel-arrow-background: var(--color-primary-600);
+
+      /* indicator */
+      --barrage-carousel-indicator-background: var(--color-primary-200);
+
+      /* item */
+      --barrage-carousel-item-background: var(--color-primary-800);
+      --barrage-carousel-item-border-color: var(--color-primary-700);
+
+      --barrage-carousel-item-selected-background: var(--color-primary-700);
+      --barrage-carousel-item-selected-border-color: var(--color-primary-400);
+    }
+  }
+
+  .barrage-carousel {
+    position: relative;
+
+    &--horizontal {
+      overflow: hidden;
+    }
+
+    & --vertical {
+      overflow: hidden;
+    }
+
+    &__container {
+      position: relative;
+      height: 300px;
+    }
+
+    &__arrow {
+      border: none;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      height: var(--barrage-carousel-arrow-size);
+      width: var(--barrage-carousel-arrow-size);
+      cursor: pointer;
+      transition: 0.2s all ease;
+      border-radius: 50%;
+      background-color: var(--barrage-carousel-arrow-background);
+      color: var(--color-primary-0);
+      position: absolute;
+      top: 50%;
+      z-index: 10;
+      transform: translateY(-50%);
+      text-align: center;
+      font-size: var(--barrage-carousel-arrow-font-size);
+
+      /*  @include utils-inline-flex-center; */
+
+      &--left {
+        left: 16px;
+      }
+
+      &--right {
+        right: 16px;
+      }
+
+      &:hover {
+        background-color: var(--color-primary-300);
+      }
+
+      & i {
+        cursor: pointer;
+        color: var(--color-primary-0);
+      }
+    }
+
+    &__indicators {
+      position: absolute;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      z-index: 2;
+
+      &--horizontal {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &--vertical {
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      &--outside {
+        bottom: calc(
+          var(--barrage-carousel-indicator-height) +
+            var(--barrage-carousel-indicator-padding-vertical) * 2
+        );
+        text-align: center;
+        position: static;
+        transform: none;
+
+        .barrage-carousel__indicator:hover button {
+          opacity: 0.64;
+        }
+
+        button {
+          background-color: var(--color-primary-100);
+          opacity: 0.24;
+        }
+      }
+
+      &--right {
+        right: 0;
+      }
+
+      &__labels {
+        left: 0;
+        right: 0;
+        transform: none;
+        text-align: center;
+
+        .barrage-carousel__button {
+          height: auto;
+          width: auto;
+          padding: 2px 18px;
+          font-size: 12px;
+          color: var(--color-primary-300);
+        }
+
+        .barrage-carousel__indicator {
+          padding: 6px 4px;
+        }
+      }
+    }
+
+    &__indicator {
+      background-color: transparent;
+      cursor: pointer;
+
+      &:hover button {
+        opacity: 0.72;
+      }
+
+      &--horizontal {
+        display: inline-block;
+        padding: var(--barrage-carousel-indicator-padding-vertical)
+          var(--barrage-carousel-indicator-padding-horizontal);
+      }
+
+      &--vertical {
+        padding: var(--barrage-carousel-indicator-padding-vertical)
+          var(--barrage-carousel-indicator-padding-horizontal);
+
+        .barrage-carousel__button {
+          width: var(--barrage-carousel-indicator-width);
+          height: calc(var(--barrage-carousel-indicator-width) / 2);
+        }
+      }
+
+      &.is-active {
+        button {
+          opacity: 1;
+        }
+      }
+    }
+
+    &__button {
+      display: block;
+      opacity: 0.48;
+      width: var(--barrage-carousel-indicator-width);
+      height: var(--barrage-carousel-indicator-height);
+      background-color: var(--barrage-carousel-indicator-background);
+      border: none;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      transition: var(--barrage-transition-duration-fast);
+    }
+
+    &__item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: inline-block;
+      overflow: hidden;
+      z-index: 1;
+      background: var(--barrage-carousel-item-background);
+      border-radius: var(--radius-6);
+      border: 2px solid var(--barrage-carousel-item-border-color);
+
+      &::active {
+        z-index: 1;
+      }
+
+      &::animating {
+        transition: transform 0.4s ease-in-out;
+      }
+
+      &--card {
+        width: 50%;
+        transition: transform 0.4s ease-in-out;
+
+        &.is-in-stage {
+          cursor: pointer;
+          z-index: 0;
+
+          &:hover .barrage-carousel__mask,
+          &.is-hover .barrage-carousel__mask {
+            opacity: 0.12;
+          }
+        }
+
+        &.is-active {
+          z-index: 1;
+          background: var(--barrage-carousel-item-selected-background);
+          border: 2px solid var(--barrage-carousel-item-selected-border-color);
+        }
+      }
+
+      &--card-vertical {
+        width: 100%;
+        height: 50%;
+      }
+
+      &--mask {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--color-primary-0);
+        opacity: 0.24;
+        transition: var(--barrage-transition-duration-fast);
+      }
+    }
+  }
+
+  .carousel-arrow-left-enter-from,
+  .carousel-arrow-left-leave-active {
+    transform: translateY(-50%) translateX(-10px);
+    opacity: 0;
+  }
+
+  .carousel-arrow-right-enter-from,
+  .carousel-arrow-right-leave-active {
+    transform: translateY(-50%) translateX(10px);
+    opacity: 0;
+  }
+
+  .barrage-transitioning {
+    filter: url('#elCarouselHorizontal');
+  }
+
+  .barrage-transitioning-vertical {
+    filter: url('#elCarouselVertical');
+  }
+}

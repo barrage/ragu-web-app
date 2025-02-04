@@ -225,7 +225,7 @@ export default {
     newChat: {
       title: 'Nuova chat',
       description: 'Scegli un agente per avviare la chat',
-      choseFrom: 'Agenti:',
+      choseFrom: 'Agente selezionato:',
       empty_title: 'Nessun agente disponibile',
       empty: 'Al momento non ci sono agenti disponibili per la conversazione. Per avviare una chat, è necessario aggiungere o abilitare almeno un agente. Contatta l\'amministratore di sistema o controlla le impostazioni degli agenti per continuare.',
       empty_cta: 'Crea agente',

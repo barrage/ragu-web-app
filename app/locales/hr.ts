@@ -233,7 +233,7 @@ export default {
     newChat: {
       title: 'Novi razgovor',
       description: 'Odaberite agenta za razgovor',
-      choseFrom: 'Dostupni agenti:',
+      choseFrom: 'Odabran agent:',
       empty_title: 'Nema dostupnih agenata',
       empty: 'Trenutno nema dostupnih agenata za razgovor. Da biste započeli razgovor, potrebno je dodati ili omogućiti barem jednog agenta. Molimo kontaktirajte svog sistemskog administratora ili provjerite postavke agenata za nastavak.',
       empty_cta: 'Dodajte agenta',

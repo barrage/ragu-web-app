@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import type { SingleAgent } from '~/types/agent.ts'
 
 defineProps<{
@@ -74,7 +73,7 @@ const { t } = useI18n()
 
   &.selected {
     background: var(--color-primary-200);
-    border: 0.5px solid var(--color-primary-500);
+    border: 2px solid var(--color-primary-500);
     & .agent-select-text {
       color: var(--color-primary-900);
       font-weight: var(--font-weight-medium);
@@ -166,8 +165,8 @@ const { t } = useI18n()
     }
 
     &.selected {
-      background: var(--color-primary-700);
-      border: 0.5px solid var(--color-primary-400);
+      background: var(--color-primary-600);
+      border: 2px solid var(--color-primary-400);
       & .agent-select-text {
         color: var(--color-primary-0);
         font-weight: var(--font-weight-medium);

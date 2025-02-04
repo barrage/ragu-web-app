@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import type { ElCarousel } from 'element-plus'
 import BrainIcon from '~/assets/icons/svg/Ragu_logo_dark.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import PersonAddIcon from '~/assets/icons/svg/person-add.svg'
+import type { SingleAgent } from '~/types/agent'
 
 const agentStore = useAgentStore()
 const { selectedRole } = storeToRefs(useAuthStore())
@@ -9,17 +11,18 @@ const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents()
 
 errorHandler(error)
 
-const activeAgentLength = computed(() => {
-  return agentStore.appAgents.filter(agent => agent.active).length
-})
+const carouselRef = ref<InstanceType<typeof ElCarousel> | null>(null)
+const setActiveSlide = (index: number, agent: SingleAgent) => {
+  if (carouselRef.value) {
+    agentStore.setSelectedAgent(agent)
+    carouselRef.value.setActiveItem(index)
+  }
+}
 
-function handleAgentsXScroll(event: WheelEvent) {
-  const container = event.currentTarget as HTMLElement
-  if (container) {
-    event.preventDefault()
-    const dominantDelta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? 'deltaY' : 'deltaX'
-    if (dominantDelta === 'deltaY') { container.scrollLeft += event.deltaY * 10 }
-    else { container.scrollLeft += event.deltaX * 10 }
+const handleCarouselChange = (currentIndex: number) => {
+  const selectedAgent = agentStore.appAgents[currentIndex]
+  if (selectedAgent) {
+    agentStore.setSelectedAgent(selectedAgent)
   }
 }
 </script>
@@ -27,36 +30,33 @@ function handleAgentsXScroll(event: WheelEvent) {
 <template>
   <div class="new-chat-placeholder-container">
     <BrainIcon
-      width="64px"
-      height="64px"
+      width="72px"
+      height="72px"
       class="ai-logo"
     />
-    <h5
+    <h1
       v-motion-fade
       :delay="100"
       :duration="800"
+      class="new-chat-title"
     >
       {{ $t('chat.llm_chat') }}
-    </h5>
+    </h1>
     <p
       class="description typing-effect"
     >
       {{ $t('chat.newChat.description') }}
     </p>
+    <p
+      v-motion-fade
+      :delay="1100"
+      class="chose-from-label"
+    >
+      {{ $t('chat.newChat.choseFrom') }}
+    </p>
     <div class="about-container">
-      <p
-        v-motion-fade
-        :delay="1100"
-        class="chose-from-label"
-      >
-        {{ $t('chat.newChat.choseFrom') }}
-      </p>
-      <div
-        class="suggestions-container"
-        :class="{ 'centered-content': activeAgentLength > 3 }"
-        @wheel="handleAgentsXScroll"
-      >
-        <template v-if="status === 'pending'">
+      <template v-if="status === 'pending'">
+        <div class="skeleton-wrapper">
           <template v-for="i in 10" :key="i">
             <SelectAgentCardSkeleton
               v-motion-fade
@@ -64,33 +64,49 @@ function handleAgentsXScroll(event: WheelEvent) {
               :duration="400"
             />
           </template>
-        </template>
-        <template v-else-if="agentStore.appAgents.length">
-          <template v-for="(agent, index) in agentStore.appAgents" :key="agent.id">
-            <ChatAgentSelectCard
-              v-motion-fade
-              :data-testid="`bo-chat-data-card-${index + 1}`"
-              :delay="(index * 100)"
-              :duration="400"
+        </div>
+      </template>
+      <template v-else-if="agentStore.appAgents.length">
+        <ElCarousel
+          ref="carouselRef"
+          :autoplay="false"
+          type="card"
+          height="180px"
+          :card-scale="0.8"
+          indicator-position="none"
+          @change="handleCarouselChange"
+        >
+          <ElCarouselItem
+            v-for="(agent, index) in agentStore.appAgents"
+            :key="agent.id"
+            v-motion-fade
+            :name="agent.id"
+            :delay="(index * 100)"
+            :duration="400"
+            @keyup.enter="setActiveSlide(index, agent)"
+            @keyup.space="setActiveSlide(index, agent)"
+          >
+            <AgentCarouselInfo
+              :data-testid="`agent-carousel-card-${index + 1}`"
               :agent="agent"
             />
-          </template>
+          </ElCarouselItem>
+        </ElCarousel>
+      </template>
+      <EmptyState
+        v-else
+        :title="$t('chat.newChat.empty_title')"
+        :description="$t('chat.newChat.empty')"
+      >
+        <template #icon>
+          <AccountWarningIcon size="44px" />
         </template>
-        <EmptyState
-          v-else
-          :title="$t('chat.newChat.empty_title')"
-          :description="$t('chat.newChat.empty')"
-        >
-          <template #icon>
-            <AccountWarningIcon size="44px" />
-          </template>
-          <template v-if="selectedRole === 'admin'" #cta>
-            <LlmLink to="/admin/agents" type="button">
-              <PersonAddIcon /> {{ $t('chat.newChat.empty_cta') }}
-            </LlmLink>
-          </template>
-        </EmptyState>
-      </div>
+        <template v-if="selectedRole === 'admin'" #cta>
+          <LlmLink to="/admin/agents" type="button">
+            <PersonAddIcon /> {{ $t('chat.newChat.empty_cta') }}
+          </LlmLink>
+        </template>
+      </EmptyState>
     </div>
   </div>
 </template>
@@ -105,10 +121,10 @@ function handleAgentsXScroll(event: WheelEvent) {
   flex-direction: column;
   align-items: center;
   background: transparent;
-  h5 {
-    margin-bottom: 0.9375rem;
-    font-weight: bold;
+  & .new-chat-title {
     color: var(--color-primary-800);
+    font-size: var(--font-size-fluid-6);
+    line-height: normal;
   }
 }
 
@@ -118,7 +134,7 @@ function handleAgentsXScroll(event: WheelEvent) {
   border: 0.0625rem solid var(--color-primary-400);
   border-radius: 0.625rem;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
-  margin-block: 9.375rem 1rem;
+  margin-block: 3.375rem 1rem;
   min-height: 64px;
   background: linear-gradient(
     to top,
@@ -127,52 +143,30 @@ function handleAgentsXScroll(event: WheelEvent) {
   );
 }
 
-.description {
-  text-align: center;
-  font-weight: 300;
-  margin-bottom: 1rem;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  color: var(--color-primary-700);
-}
-
 .about-container {
   text-align: center;
-  max-width: 100%;
-
-  p {
-    margin-bottom: 1.25rem;
-    font-size: 1rem;
-    color: var(--color-primary-700);
-  }
-}
-.suggestions-container {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem;
+  width: 100%;
+  z-index: 0;
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 1rem;
+}
+
+.suggestions-container {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: 1rem;
   margin-bottom: 1rem;
   color: var(--color-primary-800);
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-
-  & .agent-select-card {
-    flex: 0 0 calc(25% - 1rem);
-    min-width: 200px;
-    min-height: 175px;
-  }
-}
-
-.centered-content {
-  justify-content: start;
 }
 
 .dark {
   .new-chat-placeholder-container {
-    & h5 {
+    & .new-chat-title {
       color: var(--color-primary-0);
     }
   }
@@ -198,5 +192,10 @@ function handleAgentsXScroll(event: WheelEvent) {
   .suggestions-container {
     color: var(--color-primary-100);
   }
+}
+
+.skeleton-wrapper {
+  display: flex;
+  gap: 1rem;
 }
 </style>
