@@ -15,6 +15,12 @@ useHead({
 })
 
 const isUploadModalVisible = ref(false)
+
+const isInfoDrawerOpen = ref(false)
+
+const toggleInfoDrawer = () => {
+  isInfoDrawerOpen.value = !isInfoDrawerOpen.value
+}
 </script>
 
 <template>
@@ -24,6 +30,8 @@ const isUploadModalVisible = ref(false)
         <AdminPageTitleContainer
           :title="t('documents.title')"
           :description="t('documents.description')"
+          has-info
+          @infoclicked="toggleInfoDrawer"
         >
           <template #icon>
             <DocumentIcon size="52px" />
@@ -34,7 +42,9 @@ const isUploadModalVisible = ref(false)
         <DocumentsQuickActionsContainer v-if="!(documentStore.documentsDataEmpty)" v-model="isUploadModalVisible" />
       </template>
     </AdminPageHeadingTemplate>
-
+    <DocumentsInfoDrawer
+      v-model="isInfoDrawerOpen"
+    />
     <template v-if="!(documentStore.documentsDataEmpty)">
       <div class="active-screen-container grid">
         <div class="documents-overview">

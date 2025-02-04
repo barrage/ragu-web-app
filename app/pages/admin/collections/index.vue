@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 // IMPORTS
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
-import AddCollectionIcon from '~/assets/icons/svg/folder-add.svg'
-import EmptyCollectionIcon from '~/assets/icons/svg/collection-question-mark.svg'
-import type { SortingValues } from '~/types/sort'
 
 const { t } = useI18n()
 
@@ -14,6 +11,12 @@ definePageMeta({
 useHead({
   title: computed(() => t('collections.titles.title')),
 })
+
+const infoDrawerOpen = ref(false)
+
+const toggleInfoDrawer = () => {
+  infoDrawerOpen.value = !infoDrawerOpen.value
+}
 </script>
 
 <template>
@@ -23,6 +26,8 @@ useHead({
         <AdminPageTitleContainer
           :title="t('collections.titles.title')"
           :description="t('collections.titles.subTitle')"
+          has-info
+          @infoclicked="toggleInfoDrawer"
         >
           <template #icon>
             <CollectionIcon size="48px" />
@@ -34,5 +39,6 @@ useHead({
       </template>
     </AdminPageHeadingTemplate>
     <AsyncCollectionListTemplate />
+    <CollectionsInfoDrawer v-model="infoDrawerOpen" />
   </AdminPageContainer>
 </template>

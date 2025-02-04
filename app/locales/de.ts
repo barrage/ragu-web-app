@@ -233,6 +233,41 @@ export default {
       empty: 'Derzeit sind keine verfügbaren Agenten für Gespräche vorhanden. Um einen Chat zu starten, muss mindestens ein Agent hinzugefügt oder aktiviert werden. Bitte kontaktieren Sie Ihren Systemadministrator oder überprüfen Sie die Agenteneinstellungen, um fortzufahren.',
       empty_cta: 'Agent erstellen',
     },
+
+    info: {
+      title: 'Informationen zur Chat-Verwaltung',
+      description: 'Diese Chat-Seite ermöglicht es Ihnen, alle Chat-Unterhaltungen im System zu verwalten. Hier können Sie alle Chat-Unterhaltungen zwischen Benutzern und KI-Agenten überwachen und verwalten.',
+      what_can_you_do_here: {
+        title: 'Was können Sie hier tun?',
+        items: {
+          labels: {
+            monitor_chats: 'Aktive Chats überwachen',
+            view_details: 'Chat-Details anzeigen',
+            manage_conversations: 'Unterhaltungen verwalten',
+            manage_chats: 'Chats verwalten',
+          },
+          descriptions: {
+            monitor_chats: 'Verfolgen und beobachten Sie aktive Chat-Unterhaltungen in Echtzeit',
+            view_details: 'Greifen Sie auf detaillierte Informationen zu spezifischen Chat-Sitzungen zu, einschließlich Benutzerdaten und Gesprächsverlauf',
+            manage_conversations: 'Überprüfen, analysieren und verwalten Sie Chat-Interaktionen zwischen Benutzern und KI-Agenten',
+            search_filter: 'Suchen, filtern, bearbeiten und löschen Sie Chats',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'So verwalten Sie Chats',
+        items: {
+          labels: {
+            search_filter: 'Chats suchen und filtern',
+            analyze_interactions: 'Chat-Interaktionen analysieren',
+          },
+          descriptions: {
+            search_filter: 'Verwenden Sie die Suchfunktion und Filter, um spezifische Chats nach Benutzer, Datum oder Inhalt zu finden',
+            analyze_interactions: 'Überprüfen Sie Chat-Metriken, Benutzer-Engagement und Gesprächsqualität',
+          },
+        },
+      },
+    },
   },
   settings: {
     title: 'Einstellungen',
@@ -551,6 +586,56 @@ export default {
       },
     },
 
+    info: {
+      title: 'Informationen zur Dokumentenverwaltung',
+      description: 'Die Dokumente-Seite ermöglicht es Ihnen, Dokumente im System hochzuladen, zu verwalten und zu organisieren, um sie mit KI-Agenten und Sammlungen zu verwenden.',
+      what_can_you_do_here: {
+        title: 'Was können Sie hier tun?',
+        items: {
+          labels: {
+            upload_documents: 'Dokumente hochladen',
+            manage_documents: 'Dokumente verwalten',
+            view_details: 'Dokumentendetails anzeigen',
+          },
+          descriptions: {
+            upload_documents: 'Laden Sie einzelne oder mehrere Dokumente in verschiedenen Formaten hoch',
+            manage_documents: 'Organisieren, bearbeiten und löschen Sie Dokumente nach Bedarf',
+            view_details: 'Greifen Sie auf detaillierte Informationen zu jedem Dokument zu, einschließlich Metadaten und Parser-Konfiguration',
+          },
+        },
+      },
+      document_types: {
+        title: 'Dokumenttypen & Spezifikationen',
+        items: {
+          labels: {
+            supported_formats: 'Unterstützte Formate',
+            size_limits: 'Größenlimits',
+            parsing_options: 'Parser-Optionen',
+          },
+          descriptions: {
+            supported_formats: 'PDF, JSON, TXT, MD, DOCX, XLSX, CSV, XML und andere textbasierte Formate',
+            size_limits: 'Maximale Dateigröße und empfohlene Dokumentlängen',
+            parsing_options: 'Passen Sie an, wie Dokumente verarbeitet und analysiert werden',
+          },
+        },
+      },
+      management_features: {
+        title: 'Verwaltungsfunktionen',
+        items: {
+          labels: {
+            collections: 'Sammlungsintegration',
+            metadata: 'Metadatenverwaltung',
+            search: 'Suche & Filterung',
+          },
+          descriptions: {
+            collections: 'Fügen Sie Dokumente zu Sammlungen hinzu für organisierten Zugriff',
+            metadata: 'Sehen Sie sich Metadaten und Eigenschaften von Dokumenten an und bearbeiten Sie sie',
+            search: 'Suchen Sie nach Dokumenten mit erweiterten Such- und Filteroptionen',
+          },
+        },
+      },
+
+    },
   },
   dashboard: {
     title: 'Dashboard',
@@ -667,7 +752,7 @@ export default {
       unknown_llmProvider: 'Unbekannter llmProvider',
       unknown_model: 'Unbekanntes Modell',
       unknown_language: 'Unbekannte Sprache',
-      unknown_temperature: 'Unbekannte Temperatur',
+      unknown_temperature: 'Unbekannte Kreativitätsebene',
       unknown_vectorProvider: 'Unbekannter Vektoranbieter',
       unknown_embeddingProvider: 'Unbekannter Einbettungsanbieter',
       unknown_embeddingModel: 'Unbekanntes Einbettungsmodell',
@@ -736,7 +821,7 @@ export default {
       llmProvider: 'LLM-Anbieter',
       model: 'Modell',
       language: 'Sprache',
-      temperature: 'Temperatur',
+      temperature: 'Kreativitätsebene',
       vectorProvider: 'Vektor-Anbieter',
       embeddingProvider: 'Embedding-Anbieter',
       embeddingModel: 'Embedding-Modell',
@@ -818,7 +903,7 @@ export default {
         required_message: 'Bitte wählen Sie eine Sprache',
       },
       temperature: {
-        required_message: 'Bitte legen Sie eine Temperatur zwischen 0 und 1 fest',
+        required_message: 'Bitte legen Sie eine Kreativitätsebene zwischen 0 und 1 fest',
       },
       vectorProvider: {
         required_message: 'Bitte wählen Sie einen gültigen Vektoranbieter',
@@ -831,6 +916,53 @@ export default {
       },
       active: {
         required_message: 'Bitte geben Sie an, ob der Agent aktiv ist',
+      },
+    },
+    info: {
+      title: 'Informationen zur Verwaltung von Agenten',
+      description: 'Die Seite Agenten ermöglicht es Ihnen, alle Agenten im System zu verwalten. Hier können Sie neue Agenten erstellen, konfigurieren und verwalten, um sie für Ihre Anwendung zu verwenden.',
+      what_can_you_do_here: {
+        title: 'Was können Sie hier tun?',
+        items: {
+          labels: {
+            create_agents: 'Agenten erstellen und bearbeiten',
+            manage_models: 'Konfigurationen für Sprachmodelle festlegen',
+            configure_settings: 'Versionen und Agenten bewerten',
+            assign_collections: 'Sammlungen Agenten zuweisen',
+          },
+          descriptions: {
+            create_agents: 'Erstellen Sie neue KI-Agenten mit spezifischen Rollen und Fähigkeiten',
+            manage_models: 'Wählen Sie und konfigurieren Sie Sprachmodelle für Ihre Agenten',
+            configure_settings: 'Verwalten Sie Agentenversionen und bewerten Sie ihre Leistung',
+            assign_collections: 'Weisen Sie Sammlungen von Inhalten zu, um die Wissensbasis der Agenten zu leiten',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'So verwalten Sie Agenten',
+        items: {
+          labels: {
+            search_agents: 'Agenten suchen und filtern',
+            customize_behavior: 'Agentenverhalten anpassen',
+          },
+          descriptions: {
+            search_agents: 'Verwenden Sie die Suchleiste und Filter, um spezifische Agenten zu finden',
+            customize_behavior: 'Passen Sie die Prompts, die Kreativitätsebene und andere Parameter an, um die Antworten der Agenten genauer zu steuern',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Wichtige Hinweise',
+        items: {
+          labels: {
+            performance: 'Sammlungen zuweisen',
+            security: 'Denken Sie daran, Sammlungen Agenten zuzuweisen',
+          },
+          descriptions: {
+            performance: 'Überwachen Sie die Leistung der Agenten und passen Sie die Einstellungen für optimale Ergebnisse an',
+            security: 'Stellen Sie sicher, dass die entsprechenden Steuermechanismen und Sicherheitsmaßnahmen vorhanden sind',
+          },
+        },
       },
     },
   },
@@ -966,6 +1098,53 @@ export default {
         delete_collection: 'Sie haben keine Sammlung zum Löschen, bitte weisen Sie eine neue Sammlung zu!',
         update_error_collection: 'Aktualisierung der Sammlung fehlgeschlagen.',
         update_collection: 'Sammlung erfolgreich aktualisiert!',
+      },
+    },
+    info: {
+      title: 'Informationen zur Sammlungsverwaltung',
+      description: 'Die Sammlungen-Seite ermöglicht es Ihnen, Dokumente im System zu verwalten. Hier können Sie Sammlungen von Dokumenten für Ihre KI-Agenten erstellen und verwalten, um auf sie zuzugreifen und von ihnen zu lernen.',
+      what_can_you_do_here: {
+        title: 'Was können Sie hier tun?',
+        items: {
+          labels: {
+            create_collections: 'Sammlungen erstellen',
+            manage_documents: 'Dokumente verwalten',
+            view_details: 'Sammlungsdetails anzeigen',
+          },
+          descriptions: {
+            create_collections: 'Erstellen Sie neue Sammlungen mit spezifischen Einbettungen und Modellen für Ihre Dokumente',
+            manage_documents: 'Fügen Sie, entfernen Sie und organisieren Sie Dokumente innerhalb Ihrer Sammlungen',
+            view_details: 'Greifen Sie auf detaillierte Informationen zu Sammlungen zu, einschließlich Dokumente und Einstellungen zu',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'So verwalten Sie Sammlungen',
+        items: {
+          labels: {
+            add_documents: 'Dokumente hinzufügen',
+            assign_agents: 'Agenten zuweisen',
+            embeddings: 'Einbettungen verwalten',
+          },
+          descriptions: {
+            add_documents: 'Laden Sie Dokumente in Ihre Sammlungen hoch und organisieren Sie sie mit der Transfer-Schnittstelle',
+            assign_agents: 'Verbinden Sie Sammlungen mit KI-Agenten, um ihre Wissensbasis zu verbessern',
+            embeddings: 'Wählen Sie und konfigurieren Sie Einbettungsmodelle für optimale Dokumentverarbeitung',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Wichtige Hinweise',
+        items: {
+          labels: {
+            performance: 'Sammlung zuweisen',
+            compatibility: 'Kompatibilitätshinweis',
+          },
+          descriptions: {
+            performance: 'Große Sammlungen können mehr Prozessorzeit für die Generierung von Vektormodellen benötigen',
+            compatibility: 'Stellen Sie sicher, dass Dokumente in unterstützten Formaten und Größen für optimale Verarbeitung vorliegen',
+          },
+        },
       },
     },
   },

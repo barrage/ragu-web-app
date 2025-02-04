@@ -231,6 +231,40 @@ export default {
       empty: 'Actualmente no hay agentes disponibles para la conversación. Para iniciar un chat, es necesario agregar o habilitar al menos un agente. Comuníquese con su administrador del sistema o revise la configuración de agentes para continuar.',
       empty_cta: 'Crear agente',
     },
+    info: {
+      title: 'Información sobre la gestión de chats',
+      description: 'Esta página de chat te permite administrar todas las conversaciones de chat en el sistema. Aquí puedes supervisar y administrar todas las conversaciones de chat entre usuarios y agentes de IA.',
+      what_can_you_do_here: {
+        title: '¿Qué puedes hacer aquí?',
+        items: {
+          labels: {
+            monitor_chats: 'Supervisar chats activos',
+            view_details: 'Ver detalles del chat',
+            manage_conversations: 'Administrar conversaciones',
+            manage_chats: 'Administrar chats',
+          },
+          descriptions: {
+            monitor_chats: 'Supervisa y observa las conversaciones de chat activas en tiempo real',
+            view_details: 'Accede a información detallada sobre sesiones de chat específicas, incluyendo datos de usuario y historial de conversación',
+            manage_conversations: 'Revisa, analiza y administra las interacciones de chat entre usuarios y agentes de IA',
+            search_filter: 'Busca, filtra, edita y elimina chats',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'Cómo administrar chats',
+        items: {
+          labels: {
+            search_filter: 'Buscar y filtrar chats',
+            analyze_interactions: 'Analizar interacciones de chat',
+          },
+          descriptions: {
+            search_filter: 'Utiliza la funcionalidad de búsqueda y los filtros para encontrar chats específicos por usuario, fecha o contenido',
+            analyze_interactions: 'Revisa las métricas de chat, el engagement del usuario y la calidad de la conversación',
+          },
+        },
+      },
+    },
   },
   settings: {
     title: 'Configuraciones',
@@ -550,6 +584,55 @@ export default {
       },
     },
 
+    info: {
+      title: 'Información sobre la gestión de documentos',
+      description: 'La página Documentos te permite cargar, administrar y organizar tus documentos para su uso con agentes de IA y colecciones.',
+      what_can_you_do_here: {
+        title: '¿Qué puedes hacer aquí?',
+        items: {
+          labels: {
+            upload_documents: 'Cargar documentos',
+            manage_documents: 'Administrar documentos',
+            view_details: 'Ver detalles del documento',
+          },
+          descriptions: {
+            upload_documents: 'Carga un solo o varios documentos en diferentes formatos',
+            manage_documents: 'Organiza, edita y elimina documentos según sea necesario',
+            view_details: 'Accede a información detallada sobre cada documento, incluyendo metadatos y configuración de análisis',
+          },
+        },
+      },
+      document_types: {
+        title: 'Tipos de documentos y especificaciones',
+        items: {
+          labels: {
+            supported_formats: 'Formatos compatibles',
+            size_limits: 'Límites de tamaño',
+            parsing_options: 'Opciones de análisis',
+          },
+          descriptions: {
+            supported_formats: 'PDF, JSON, TXT, MD, DOCX, XLSX, CSV, XML y otros formatos basados en texto',
+            size_limits: 'Tamaño máximo de archivo por documento y longitudes de documentos recomendadas',
+            parsing_options: 'Personaliza cómo se procesan y analizan los documentos',
+          },
+        },
+      },
+      management_features: {
+        title: 'Características de administración',
+        items: {
+          labels: {
+            collections: 'Integración de colecciones',
+            metadata: 'Administración de metadatos',
+            search: 'Búsqueda y filtrado',
+          },
+          descriptions: {
+            collections: 'Agrega documentos a colecciones para un acceso organizado',
+            metadata: 'Consulta y edita metadatos y propiedades de documentos',
+            search: 'Busca y filtra documentos con opciones de búsqueda y filtrado avanzadas',
+          },
+        },
+      },
+    },
   },
   dashboard: {
     title: 'Panel de control',
@@ -683,7 +766,7 @@ export default {
       unknown_llmProvider: 'llmProvider desconocido',
       unknown_model: 'Modelo desconocido',
       unknown_language: 'Idioma desconocido',
-      unknown_temperature: 'Temperatura desconocida',
+      unknown_temperature: 'Nivel de creatividad desconocido',
       unknown_vectorProvider: 'Proveedor de vectores desconocido',
       unknown_embeddingProvider: 'Proveedor de embeddings desconocido',
       unknown_embeddingModel: 'Modelo de embeddings desconocido',
@@ -735,7 +818,7 @@ export default {
       llmProvider: 'Proveedor de LLM',
       model: 'Modelo',
       language: 'Idioma',
-      temperature: 'Temperatura',
+      temperature: 'Nivel de Creatividad',
       vectorProvider: 'Proveedor de Vectores',
       embeddingProvider: 'Proveedor de Embedding',
       embeddingModel: 'Modelo de Embedding',
@@ -817,7 +900,7 @@ export default {
         required_message: 'Por favor, selecciona un idioma',
       },
       temperature: {
-        required_message: 'Por favor, establece una temperatura entre 0 y 1',
+        required_message: 'Por favor, establece una Nivel de Creatividad entre 0 y 1',
       },
       vectorProvider: {
         required_message: 'Por favor, selecciona un proveedor de vectores válido',
@@ -830,6 +913,54 @@ export default {
       },
       active: {
         required_message: 'Por favor, especifica si el agente está activo',
+      },
+    },
+
+    info: {
+      title: 'Información sobre la administración de agentes',
+      description: 'La página Agentes te permite administrar todos los agentes en el sistema. Aquí puedes crear, configurar y administrar agentes de IA para tu aplicación.',
+      what_can_you_do_here: {
+        title: '¿Qué puedes hacer aquí?',
+        items: {
+          labels: {
+            create_agents: 'Crear y editar agentes',
+            manage_models: 'Configurar configuraciones de modelos de lenguaje',
+            configure_settings: 'Versiones y evaluar agentes',
+            assign_collections: 'Asignar colecciones a agentes',
+          },
+          descriptions: {
+            create_agents: 'Crea nuevos agentes de IA con roles y capacidades específicas',
+            manage_models: 'Selecciona y configura modelos de lenguaje para tus agentes',
+            configure_settings: 'Administra las versiones de los agentes y evalúa su rendimiento',
+            assign_collections: 'Asigna colecciones de contenido para guiar la base de conocimiento de los agentes',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'Cómo administrar agentes',
+        items: {
+          labels: {
+            search_agents: 'Buscar y filtrar agentes',
+            customize_behavior: 'Personalizar el comportamiento del agente',
+          },
+          descriptions: {
+            search_agents: 'Utiliza la barra de búsqueda y los filtros para encontrar agentes específicos',
+            customize_behavior: 'Ajusta los prompts, la Nivel de Creatividad y otros parámetros para afinar las respuestas del agente',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Notas importantes',
+        items: {
+          labels: {
+            performance: 'Asignar colecciones',
+            security: 'No olvides asignar colecciones a los agentes',
+          },
+          descriptions: {
+            performance: 'Supervisa el rendimiento de los agentes y ajusta la configuración para resultados óptimos',
+            security: 'Asegúrate de que los controles de acceso y las medidas de seguridad adecuadas estén en su lugar',
+          },
+        },
       },
     },
   },
@@ -965,6 +1096,53 @@ export default {
         delete_collection: 'No tienes colección para eliminar, ¡por favor asigna una nueva colección!',
         update_error_collection: 'Error al actualizar la colección.',
         update_collection: '¡Colección actualizada con éxito!',
+      },
+    },
+    info: {
+      title: 'Información sobre la gestión de colecciones',
+      description: 'La página Colecciones te permite administrar documentos en el sistema. Aquí puedes crear y administrar colecciones de documentos para tus agentes de IA para acceder a ellos y aprender de ellos.',
+      what_can_you_do_here: {
+        title: '¿Qué puedes hacer aquí?',
+        items: {
+          labels: {
+            create_collections: 'Crear colecciones',
+            manage_documents: 'Administrar documentos',
+            view_details: 'Ver detalles de la colección',
+          },
+          descriptions: {
+            create_collections: 'Crea nuevas colecciones con incrustaciones y modelos específicos para tus documentos',
+            manage_documents: 'Agrega, elimina y organiza documentos dentro de tus colecciones',
+            view_details: 'Accede a información detallada sobre las colecciones, incluidos los documentos y la configuración',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'Cómo administrar colecciones',
+        items: {
+          labels: {
+            add_documents: 'Agregar documentos',
+            assign_agents: 'Asignar a agentes',
+            embeddings: 'Administrar incrustaciones',
+          },
+          descriptions: {
+            add_documents: 'Carga y organiza documentos en tus colecciones usando la interfaz de transferencia',
+            assign_agents: 'Conecta colecciones con agentes de IA para mejorar su base de conocimiento',
+            embeddings: 'Elige y configura modelos de incrustación para un procesamiento óptimo de documentos',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Notas importantes',
+        items: {
+          labels: {
+            performance: 'Asignar colección',
+            compatibility: 'Nota de compatibilidad',
+          },
+          descriptions: {
+            performance: 'Las colecciones grandes pueden requerir más tiempo de procesador para la generación de modelos de vectores',
+            compatibility: 'Asegúrate de que los documentos estén en formatos y tamaños compatibles para un procesamiento óptimo',
+          },
+        },
       },
     },
   },

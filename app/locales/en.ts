@@ -231,6 +231,42 @@ export default {
       empty: 'Currently, there are no available agents for conversation. To start a chat, it is necessary to add or enable at least one agent. Please contact your system administrator or check agent settings to continue.',
       empty_cta: 'Create Agent',
     },
+
+    info: {
+      title: 'Information about managing chats',
+      description: 'This chat page allows you to manage all chat conversations in the system. Here you can monitor and manage all chat conversations between users and AI agents.',
+      what_can_you_do_here: {
+        title: 'What Can You Do Here?',
+        items: {
+          labels: {
+            monitor_chats: 'Monitor Active Chats',
+            view_details: 'View Chat Details',
+            manage_conversations: 'Manage Conversations',
+            manage_chats: 'Manage Chats',
+
+          },
+          descriptions: {
+            monitor_chats: 'Track and observe ongoing chat conversations in real-time',
+            view_details: 'Access detailed information about specific chat sessions, including user data and conversation history',
+            manage_conversations: 'Review, analyze,and manage chat interactions between users and AI agents',
+            search_filter: 'Search, filter, edit and delete chats',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'How to Manage Chats',
+        items: {
+          labels: {
+            search_filter: 'Search and Filter Chats',
+            analyze_interactions: 'Analyze Chat Interactions',
+          },
+          descriptions: {
+            search_filter: 'Use search functionality and filters to find specific chats by user, date, or content',
+            analyze_interactions: 'Review chat metrics, user engagement, and conversation quality',
+          },
+        },
+      },
+    },
   },
   settings: {
     title: 'Settings',
@@ -549,7 +585,55 @@ export default {
         },
       },
     },
-
+    info: {
+      title: 'Documents Management Guide',
+      description: 'Welcome to the Documents section. Here you can upload, manage, and organize your documents for use with AI agents and collections.',
+      what_can_you_do_here: {
+        title: 'What Can You Do Here?',
+        items: {
+          labels: {
+            upload_documents: 'Upload Documents',
+            manage_documents: 'Manage Documents',
+            view_details: 'View Document Details',
+          },
+          descriptions: {
+            upload_documents: 'Upload single or multiple documents in various formats',
+            manage_documents: 'Organize, edit, and delete documents as needed',
+            view_details: 'Access detailed information about each document, including metadata and parsing configuration',
+          },
+        },
+      },
+      document_types: {
+        title: 'Document Types & Specifications',
+        items: {
+          labels: {
+            supported_formats: 'Supported Formats',
+            size_limits: 'Size Limits',
+            parsing_options: 'Parsing Options',
+          },
+          descriptions: {
+            supported_formats: 'PDF, JSON, TXT, MD, DOCX, XLSX, CSV, XML and other text-based formats',
+            size_limits: 'Maximum file size and recommended document lengths',
+            parsing_options: 'Customize how documents are processed and parsed',
+          },
+        },
+      },
+      management_features: {
+        title: 'Management Features',
+        items: {
+          labels: {
+            collections: 'Collections Integration',
+            metadata: 'Metadata Management',
+            search: 'Search & Filter',
+          },
+          descriptions: {
+            collections: 'Add documents to collections for organized access',
+            metadata: 'View and edit document metadata and properties',
+            search: 'Find documents using advanced search and filtering options',
+          },
+        },
+      },
+    },
   },
   users: {
     details: 'User Details',
@@ -964,7 +1048,7 @@ export default {
       unknown_llmProvider: 'Unknown llmProvider',
       unknown_model: 'Unknown model',
       unknown_language: 'Unknown language',
-      unknown_temperature: 'Unknown temperature',
+      unknown_temperature: 'Unknown creativity level',
       unknown_vectorProvider: 'Unknown vectorProvider',
       unknown_embeddingProvider: 'Unknown embeddingProvider',
       unknown_embeddingModel: 'Unknown embeddingModel',
@@ -1016,7 +1100,7 @@ export default {
       llmProvider: 'LLM Provider',
       model: 'Model',
       language: 'Language',
-      temperature: 'Temperature',
+      temperature: 'Creativity level',
       vectorProvider: 'Vector Provider',
       embeddingProvider: 'Embedding Provider',
       embeddingModel: 'Embedding Model',
@@ -1098,7 +1182,7 @@ export default {
         required_message: 'Please specify a language',
       },
       temperature: {
-        required_message: 'Please set a temperature between 0 and 1',
+        required_message: 'Please set a creativity level between 0 and 1',
       },
       vectorProvider: {
         required_message: 'Please select a valid vector provider',
@@ -1113,7 +1197,53 @@ export default {
         required_message: 'Please specify whether the agent is active',
       },
     },
-
+    info: {
+      title: 'Information about managing agents',
+      description: 'This chat page. Here you can create, configure, and manage AI agents for your application.',
+      what_can_you_do_here: {
+        title: 'What Can You Do Here?',
+        items: {
+          labels: {
+            create_agents: 'Create and edit agents',
+            manage_models: 'Set configurations for language models',
+            configure_settings: 'Version and evaluate agents',
+            assign_collections: 'Assign collections to agents',
+          },
+          descriptions: {
+            create_agents: 'Create new AI agents with specific roles and capabilities',
+            manage_models: 'Select and configure language models for your agents',
+            configure_settings: 'Manage agent versions and evaluate their performance',
+            assign_collections: 'Assign collections of content to guide the agents\' knowledge base',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'How to Manage Agents',
+        items: {
+          labels: {
+            search_agents: 'Search and Filter Agents',
+            customize_behavior: 'Customize Agent Behavior',
+          },
+          descriptions: {
+            search_agents: 'Use the search bar and filters to find specific agents',
+            customize_behavior: 'Adjust prompts, creativity level, and other parameters to fine-tune agent responses',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Important Notes',
+        items: {
+          labels: {
+            performance: 'Assign collections',
+            security: 'Dont forget to assign collections to agents',
+          },
+          descriptions: {
+            performance: 'Monitor agent performance and adjust settings for optimal results',
+            security: 'Ensure proper access controls and security measures are in place',
+          },
+        },
+      },
+    },
   },
 
   collections: {
@@ -1253,6 +1383,54 @@ export default {
         update_collection: 'Collection updated successfully!',
       },
 
+    },
+
+    info: {
+      title: 'Information about managing collections',
+      description: 'Welcome to the Collections section. Here you can create and manage document collections for your AI agents to access and learn from.',
+      what_can_you_do_here: {
+        title: 'What Can You Do Here?',
+        items: {
+          labels: {
+            create_collections: 'Create Collections',
+            manage_documents: 'Manage Documents',
+            view_details: 'View Collection Details',
+          },
+          descriptions: {
+            create_collections: 'Create new collections with specific embedders and models for your documents',
+            manage_documents: 'Add, remove, and organize documents within your collections',
+            view_details: 'Access detailed information about collections, including documents and settings',
+          },
+        },
+      },
+      how_to_manage: {
+        title: 'How to Manage Collections',
+        items: {
+          labels: {
+            add_documents: 'Add Documents',
+            assign_agents: 'Assign to Agents',
+            embeddings: 'Manage Embeddings',
+          },
+          descriptions: {
+            add_documents: 'Upload and organize documents in your collections using the transfer interface',
+            assign_agents: 'Connect collections to AI agents to enhance their knowledge base',
+            embeddings: 'Choose and configure embedding models for optimal document processing',
+          },
+        },
+      },
+      important_notes: {
+        title: 'Important Notes',
+        items: {
+          labels: {
+            performance: 'Performance Considerations',
+            compatibility: 'Compatibility Guidelines',
+          },
+          descriptions: {
+            performance: 'Large collections may require more processing time for embedding generation',
+            compatibility: 'Ensure documents are in supported formats and sizes for optimal processing',
+          },
+        },
+      },
     },
 
   },
