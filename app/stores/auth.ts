@@ -17,6 +17,9 @@ export const useAuthStore = defineStore('auth', () => {
   const iscurrentUserLoading = ref<boolean>(true)
   const codeVerifier = sessionStorage.getItem('pkce_code_verifier')
 
+  const isAdmin = computed(() => {
+    return selectedRole.value === 'admin'
+  })
   // ACTIONS
 
   /**
@@ -80,6 +83,7 @@ export const useAuthStore = defineStore('auth', () => {
     selectedRole,
     isAuthenticated,
     iscurrentUserLoading,
+    isAdmin,
     POST_Login,
     POST_Logout,
     GET_CurrentUser,

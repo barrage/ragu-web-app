@@ -7,6 +7,8 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
+const oAuthStore = useAuthStore()
+
 const { t } = useI18n()
 interface Emits {
   (event: 'agentSelectedForChat', agent: SingleAgent): void
@@ -23,6 +25,11 @@ const agentData = computed(() => {
     avatar: props.agent?.avatar || undefined,
   }
 })
+
+const router = useRouter()
+const redirectToAgentEdit = () => {
+  if (props.agent?.id && oAuthStore.isAdmin) { router.push(`/admin/agents/${props.agent.id}/edit`) }
+}
 </script>
 
 <template>
@@ -64,7 +71,15 @@ const agentData = computed(() => {
         type="primary"
         @click="emits('agentSelectedForChat', props.agent)"
       >
-        Chat now
+        {{ t('chat_now') }}
+      </el-button>
+      <el-button
+        v-if="oAuthStore.isAdmin"
+        size="small"
+        type="primary"
+        @click="redirectToAgentEdit"
+      >
+        {{ t('settings.edit') }}
       </el-button>
     </div>
   </el-card>
@@ -125,6 +140,9 @@ const agentData = computed(() => {
 
   &-footer {
     margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 
