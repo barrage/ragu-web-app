@@ -1,44 +1,91 @@
+// Outgoing chat message
+
 export interface WsChatMessage {
   type: 'chat'
   text: string
 }
 
+// Outgoing system messages
+
 export interface WsPayload {
-  type: 'chat_open_new' | 'chat_open_existing' | 'chat_close' | 'chat_stop_stream'
+  type:
+    | 'workflow.new'
+    | 'workflow.existing'
+    | 'workflow.close'
+    | 'workflow.cancel_stream'
+  payload:
+    | WsNewWorkflowMessage
+    | WsOpenWorkflowMessage
+    | WsCloseWorkflowMessage
+    | WsCancelStreamMessage
   agentId?: string
-  chatId?: string
+  workflowId?: string
 }
+
+export interface WsNewWorkflowMessage {
+  type: 'workflow.new'
+}
+
+export interface WsOpenWorkflowMessage {
+  type: 'workflow.open'
+  workflowId: string
+}
+
+export interface WsCloseWorkflowMessage {
+  type: 'workflow.close'
+}
+
+export interface WsCancelStreamMessage {
+  type: 'workflow.cancel_stream'
+}
+
+// Incoming system messages
 
 export interface WsSystemMessage {
   type: 'system'
-  payload: WsPayload
+  payload:
+    | WsResponseChatOpen
+    | WsResponseChatClosed
+    | WsResponseAgentDeactivated
 }
 
 export interface WsResponseChatOpen {
-  type: 'chat_open'
+  type: 'system.workflow.open'
   chatId: string
 }
 
+export interface WsResponseChatClosed {
+  type: 'system.workflow.closed'
+}
+
+// Incoming system events
+
+export interface WsResponseAgentDeactivated {
+  type: 'system.event.agent.deactivated'
+}
+
+// Incoming chat messages
+
 export interface WsResponseChatTitle {
-  type: 'chat_title'
+  type: 'chat.title'
   chatId: string
   title: string
 }
 
-export interface WsResponseChatClosed {
-  type: 'chat_closed'
-}
-
 export interface WsResponseFinishEvent {
-  type: 'finish_event'
+  type: 'chat.stream_complete'
   chatId: string
   messageId: string
   reason: string
-  content: string | null
+}
+
+export interface WsResponseStreamChunk {
+  type: 'chat.stream_chunk'
+  chunk: string
 }
 
 export interface WsResponseError {
-  type: 'error'
-  reason: string
-  description: string
+  errorType: 'API' | 'Internal'
+  errorReason: string
+  errorDescription: string
 }

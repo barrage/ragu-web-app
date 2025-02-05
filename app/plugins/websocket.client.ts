@@ -58,7 +58,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     sendSocketMessage({
       type: 'system',
       payload: {
-        type: 'chat_close',
+        type: 'workflow.close',
       },
     })
   }
@@ -69,14 +69,14 @@ export default defineNuxtPlugin((nuxtApp) => {
       ? {
           type: 'system',
           payload: {
-            type: 'chat_open_existing',
-            chatId,
+            type: 'workflow.existing',
+            workflowId: chatId,
           },
         }
       : {
           type: 'system',
           payload: {
-            type: 'chat_open_new',
+            type: 'workflow.new',
             agentId,
           },
         }
@@ -94,7 +94,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     sendSocketMessage({
       type: 'system',
       payload: {
-        type: 'chat_stop_stream',
+        type: 'workflow.cancel_stream',
       },
     })
   }
