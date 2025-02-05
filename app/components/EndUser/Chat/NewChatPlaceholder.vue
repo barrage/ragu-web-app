@@ -226,6 +226,10 @@ const selectAgentForChat = (agent: SingleAgent) => {
   -webkit-overflow-scrolling: touch;
 }
 
+.chose-from-label {
+  margin-bottom: 20px;
+}
+
 .dark {
   .new-chat-placeholder-container {
     & .new-chat-title {

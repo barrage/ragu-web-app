@@ -4,19 +4,30 @@ import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
 import StopStreamIcon from '~/assets/icons/svg/stop-stream.svg'
 import { useNuxtApp } from '#app'
 
-const { $getWs, $wsConnect, $wsSendChatMessage, $wsConnectionState, $wsSendInitialMessage, $wsStopStream, $wsAddMessageHandler } = useNuxtApp()
+const {
+  $getWs,
+  $wsConnect,
+  $wsSendChatMessage,
+  $wsConnectionState,
+  $wsSendInitialMessage,
+  $wsStopStream,
+  $wsAddMessageHandler,
+} = useNuxtApp()
 
 const agentStore = useAgentStore()
 const chatStore = useChatStore()
-const { currentChatId, isWebSocketStreaming, messages, wsToken } = storeToRefs(useChatStore())
+const { currentChatId, isWebSocketStreaming, messages, wsToken }
+  = storeToRefs(useChatStore())
 const isTokenFetching = ref(false)
 const message = ref('')
 const router = useRouter()
 
 const route = useRoute()
 
-const ensureWsTokenAndConnect = async () => {
-  if (isTokenFetching.value) { return }
+async function ensureWsTokenAndConnect() {
+  if (isTokenFetching.value) {
+    return
+  }
   if ($wsConnectionState.value !== 'open') {
     try {
       isTokenFetching.value = true
@@ -30,7 +41,9 @@ const ensureWsTokenAndConnect = async () => {
       }
       $getWs().onmessage = event => handleServerMessage(event.data)
       $getWs().onclose = async () => {
-        console.warn('WebSocket closed unexpectedly. Clearing token and attempting reconnection...')
+        console.warn(
+          'WebSocket closed unexpectedly. Clearing token and attempting reconnection...',
+        )
         $wsConnectionState.value = 'closed'
         isTokenFetching.value = false
         wsToken.value = ''
@@ -49,51 +62,42 @@ const ensureWsTokenAndConnect = async () => {
     handleAgentOrChatChange()
   }
 }
-const handleServerMessage = async (data: string) => {
+
+async function handleServerMessage(data: string) {
   let parsedData
   const assistantMessage = messages.value?.find(
     msg => msg.id === 'currentlyStreaming',
   )
+
   try {
     parsedData = JSON.parse(data)
   }
   catch (error) {
-    if (isWebSocketStreaming.value && assistantMessage) {
-      assistantMessage.content += data
-    }
+    console.error('Error parsing WebSocket message:', error)
     return
   }
-  if (parsedData) {
-    if (isWebSocketStreaming.value && assistantMessage) {
-      if (typeof parsedData === 'number' || !Number.isNaN(Number(parsedData))) {
-        assistantMessage.content += String(parsedData)
-      }
-      else if (parsedData.content) {
-        assistantMessage.content += parsedData.content
-      }
+
+  // Check if the parsed JSON is an error
+  if (parsedData.errorType) {
+    isWebSocketStreaming.value = false
+    if (assistantMessage) {
+      assistantMessage.id = ''
     }
+    await ensureWsTokenAndConnect()
+    return
   }
 
   switch (parsedData?.type) {
-    case 'chat_title':
+    case 'chat.title':
       handleChatTitleEvent(parsedData)
       break
-    case 'chat_closed':
+    case 'workflow.closed':
       isWebSocketStreaming.value = false
       if (assistantMessage) {
         assistantMessage.id = ''
       }
       break
-    case 'chat_stop_stream':
-      isWebSocketStreaming.value = false
-      if (assistantMessage) {
-        assistantMessage.id = ''
-      }
-      if (route.params.chatId) {
-        chatStore.GET_ChatMessages(parsedData.chatId)
-      }
-      break
-    case 'finish_event':
+    case 'chat.stream_complete':
       isWebSocketStreaming.value = false
       if (assistantMessage) {
         assistantMessage.id = ''
@@ -105,19 +109,8 @@ const handleServerMessage = async (data: string) => {
         router.push(`/c/${parsedData.chatId}`)
       }
       break
-    case 'API':
-      isWebSocketStreaming.value = false
-      if (assistantMessage) {
-        assistantMessage.id = ''
-      }
-      await ensureWsTokenAndConnect()
-      break
-    case 'error':
-      isWebSocketStreaming.value = false
-      if (assistantMessage) {
-        assistantMessage.id = ''
-      }
-      await ensureWsTokenAndConnect()
+    case 'chat.stream_chunk':
+      assistantMessage.content += parsedData.chunk
       break
     default:
       break
@@ -133,7 +126,7 @@ const agentId = computed(() => {
   }
 })
 
-const handleAgentOrChatChange = async () => {
+async function handleAgentOrChatChange() {
   if ($wsConnectionState.value === 'open') {
     await $wsSendInitialMessage(route.params.chatId, agentId.value)
   }
@@ -143,8 +136,12 @@ const handleAgentOrChatChange = async () => {
 }
 
 const sendMessage = () => {
-  if (!($wsConnectionState.value === 'open') || isWebSocketStreaming.value) { return }
-  if (!message.value.trim()) { return }
+  if (!($wsConnectionState.value === 'open') || isWebSocketStreaming.value) {
+    return
+  }
+  if (!message.value.trim()) {
+    return
+  }
   const userMessage = {
     id: '',
     sender: '1',
@@ -184,7 +181,9 @@ const isWatcherActive = ref(false)
 watch(
   [agentId, currentChatId],
   async ([newAgentId, newChatId], [oldAgentId, oldChatId]) => {
-    if (!isWatcherActive.value) { return }
+    if (!isWatcherActive.value) {
+      return
+    }
     if (newAgentId !== oldAgentId || newChatId !== oldChatId) {
       await handleAgentOrChatChange()
     }
@@ -217,7 +216,9 @@ const isSelectedAgentActive = computed(() => {
     return true
   }
 })
-const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
+const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents(), {
+  lazy: true,
+})
 errorHandler(error)
 
 function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
@@ -242,8 +243,14 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
 
 <template>
   <section class="chat-input-section">
-    <ElCard v-if="chatStore.selectedChat?.chat?.id && !(chatStore?.selectedChat?.agent?.active)" class="inactive-agent-card is-accent">
-      {{ $t('chat.inactive_agent') }}
+    <ElCard
+      v-if="
+        chatStore.selectedChat?.chat?.id
+          && !chatStore?.selectedChat?.agent?.active
+      "
+      class="inactive-agent-card is-accent"
+    >
+      {{ $t("chat.inactive_agent") }}
     </ElCard>
     <div v-else-if="agentStore.appAgents.length" class="input-button-wrapper">
       <ElInput
@@ -259,7 +266,10 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
         <template #suffix>
           <div
             class="input-suffix-wrapper"
-            :class="{ 'input-suffix-wrapper--active': message.length || isWebSocketStreaming }"
+            :class="{
+              'input-suffix-wrapper--active':
+                message.length || isWebSocketStreaming,
+            }"
           >
             <StopStreamIcon
               v-if="isWebSocketStreaming"
@@ -297,6 +307,7 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
     gap: 6px;
     max-width: 768px;
     max-height: 62px;
+
     & .barrage-chat-input {
       width: 100%;
       max-width: 768px;
@@ -315,9 +326,11 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
         color: var(--color-primary-300);
         border: var(--border-size-1) var(--border-type-solid)
           var(--color-primary-300);
+
         transition:
           color 0.3s ease-in-out,
           border-color 0.3s ease-in-out;
+
         &--active {
           color: var(--color-primary-700);
           border-color: var(--color-primary-700);
@@ -326,10 +339,12 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
     }
   }
 }
+
 .inactive-agent-card {
   width: fit-content;
   height: fit-content;
 }
+
 html.dark {
   .chat-input-section {
     & .input-button-wrapper {
@@ -337,9 +352,11 @@ html.dark {
         ::v-deep(.barrage-input__inner) {
           background-color: var(--color-primary-800);
         }
+
         .input-suffix-wrapper {
           color: var(--color-primary-700);
           border-color: var(--color-primary-700);
+
           &--active {
             color: var(--color-primary-400);
             border-color: var(--color-primary-400);
