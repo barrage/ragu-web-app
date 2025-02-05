@@ -4,11 +4,12 @@ import BrainIcon from '~/assets/icons/svg/Ragu_logo_dark.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import PersonAddIcon from '~/assets/icons/svg/person-add.svg'
 import type { SingleAgent } from '~/types/agent'
+import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
 const agentStore = useAgentStore()
 const { selectedRole } = storeToRefs(useAuthStore())
 const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
-
+const { t } = useI18n()
 errorHandler(error)
 
 const carouselRef = ref<InstanceType<typeof ElCarousel> | null>(null)
@@ -24,6 +25,26 @@ const handleCarouselChange = (currentIndex: number) => {
   if (selectedAgent) {
     agentStore.setSelectedAgent(selectedAgent)
   }
+}
+
+const isAgentSelected = (id: string) => {
+  return id === agentStore.selectedAgent?.id
+}
+
+/* Agent */
+const isAgentsModalVisible = ref(false)
+const openAgentsModal = () => {
+  isAgentsModalVisible.value = true
+}
+
+const findAgentIndex = (agentId: string): number => {
+  return agentStore.appAgents.findIndex(agent => agent.id === agentId)
+}
+
+const selectAgentForChat = (agent: SingleAgent) => {
+  isAgentsModalVisible.value = false
+  const index = findAgentIndex(agent.id)
+  setActiveSlide(index, agent)
 }
 </script>
 
@@ -47,13 +68,23 @@ const handleCarouselChange = (currentIndex: number) => {
     >
       {{ $t('chat.newChat.description') }}
     </p>
-    <p
+    <div
       v-motion-fade
       :delay="1100"
-      class="chose-from-label"
+      class="choose-agent-wrapper"
     >
-      {{ $t('chat.newChat.choseFrom') }}
-    </p>
+      <p>
+        {{ $t('chat.newChat.choseFrom') }}
+      </p>
+      <el-button
+        class="view-all-button"
+        size="small"
+        @click="openAgentsModal"
+      >
+        {{ $t('view_all') }}
+      </el-button>
+    </div>
+
     <div class="about-container">
       <template v-if="status === 'pending'">
         <div class="skeleton-wrapper">
@@ -88,6 +119,7 @@ const handleCarouselChange = (currentIndex: number) => {
           >
             <AgentCarouselInfo
               :data-testid="`agent-carousel-card-${index + 1}`"
+              :is-selected="isAgentSelected(agent.id)"
               :agent="agent"
             />
           </ElCarouselItem>
@@ -109,6 +141,19 @@ const handleCarouselChange = (currentIndex: number) => {
       </EmptyState>
     </div>
   </div>
+
+  <ElDialog
+    v-model="isAgentsModalVisible"
+    align-center
+    class="barrage-dialog--large"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
+  >
+    <template #header>
+      <h4>{{ t('profileDropdown.agents') }}</h4>
+    </template>
+    <p>{{ t('profileDropdown.browse_agents') }}</p>
+    <ChatAgentsOverview @agent-selected-for-chat="selectAgentForChat" />
+  </ElDialog>
 </template>
 
 <style lang="scss" scoped>
@@ -150,6 +195,23 @@ const handleCarouselChange = (currentIndex: number) => {
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 1rem;
+}
+
+.choose-agent-wrapper {
+  display: flex;
+  position: relative;
+  width: 100%;
+  padding-block: 0.75rem;
+
+  & p {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  & .view-all-button {
+    margin-left: auto;
+  }
 }
 
 .suggestions-container {

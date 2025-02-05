@@ -22,14 +22,17 @@
       --card-box-shadow: 0 0.15rem 0.25rem var(--color-primary-800);
 
       &.is-primary {
+        --card-border-color: var(--color-primary-600);
         --card-background-color: var(--color-primary-900);
       }
 
       &.is-accent {
+        --card-border-color: var(--color-primary-500);
         --card-background-color: var(--color-primary-800);
       }
 
       &.is-deep-accent {
+        --card-border-color: var(--color-primary-400);
         --card-background-color: var(--color-primary-700);
       }
       &.is-disabled {

@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
+import type { SingleAgent } from '~/types/agent.ts'
 
+const emits = defineEmits<Emits>()
 const agentStore = useAgentStore()
 const { selectedRole } = storeToRefs(useAuthStore())
 
-const { t } = useI18n()
+interface Emits {
+  (event: 'agentSelectedForChat', agent: SingleAgent): void
+}
 
 const selectedAgent = ref(agentStore.appAgents?.[0])
 const selectAgent = (agent: any) => {
@@ -24,7 +28,9 @@ watch(
   { immediate: true },
 )
 
-const activeTab = agentStore.appAgents[0].name
+const handleAgentSelectedForChat = (agent: SingleAgent) => {
+  emits('agentSelectedForChat', agent)
+}
 </script>
 
 <template>
@@ -35,70 +41,14 @@ const activeTab = agentStore.appAgents[0].name
       </div>
     </template>
     <template v-else-if="agentStore.appAgents.length">
-      <div class="agents-overview-container">
-        <ElTabs
-          v-model="activeTab"
-          class="user-details-tabs"
-          data-testid="bo-user-details-tabs"
-        >
-          <template v-for="agent in agentStore.appAgents" :key="agent.id">
-            <ElTabPane
-              v-if="agent.active"
-              :label="agent.name"
-              :name="agent.name"
-              @keyup.enter="selectAgent(agent)"
-              @keyup.space="selectAgent(agent)"
-              @click="selectAgent(agent)"
-            >
-              <template #label>
-                <div class="custom-tab-label-wrapper">
-                  <LlmAvatar
-                    :avatar="agent.avatar"
-                    :alt="t('agents.agent_avatar')"
-                    fit="cover"
-                    default-image="agent"
-                    :size="20"
-                  /> {{ agent.name }}
-                </div>
-              </template>
-              <div class="selected-agent-wrapper">
-                <LlmAvatar
-                  :avatar="selectedAgent?.avatar"
-                  :alt="t('agents.agent_avatar')"
-                  fit="cover"
-                  default-image="agent"
-                  :size="52"
-                />
-                <h6>{{ selectedAgent?.name }}</h6>
-                <div class="agent-info">
-                  <span>{{ t('agents.labels.language') }}: {{ selectedAgent?.language }}</span>
-                  <span>{{ t('agents.labels.updated_at') }}: {{ formatDate(selectedAgent?.updatedAt) }}</span>
-                  <p>{{ t('agents.labels.description') }}: {{ selectedAgent?.description }}</p>
-                </div>
-              </div>
-            </ElTabPane>
-          </template>
-        </ElTabs>
-        <!--    <div class="agents-names-wrapper">
-          <template v-for="agent in agentStore.appAgents" :key="agent.id">
-            <div
-              class="agent-name"
-              :class="{ selected: agent.id === selectedAgent?.id }"
-              tabindex="0"
-              @keyup.enter="selectAgent(agent)"
-              @keyup.space="selectAgent(agent)"
-              @click="selectAgent(agent)"
-            >
-              <LlmAvatar
-                :avatar="agent.avatar"
-                :alt="t('agents.agent_avatar')"
-                fit="cover"
-                default-image="agent"
-                :size="20"
-              /> {{ agent.name }}
-            </div>
-          </template>
-        </div> -->
+      <div class="agents-overview-container grid">
+        <template v-for="agent in agentStore.appAgents" :key="agent.id">
+          <AgentOverviewCard
+            class="agent-card"
+            :agent="agent"
+            @agent-selected-for-chat="handleAgentSelectedForChat"
+          />
+        </template>
       </div>
     </template>
     <EmptyState
@@ -128,85 +78,13 @@ const activeTab = agentStore.appAgents[0].name
 }
 
 .agents-overview-container {
-  display: flex;
-
-  & .agents-names-wrapper {
-    flex: 0 0 calc(50%);
-    & .agent-name {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 16px;
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
-      color: var(--color-primary-900);
-      &:hover {
-        background: var(--color-primary-100);
-        cursor: pointer;
-      }
-
-      &.selected {
-        background: var(--color-primary-100);
-      }
-    }
-  }
-  & .selected-agent-wrapper {
-    flex: 0 0 calc(50%);
-    background: var(--color-primary-100);
-    padding: 1.5rem;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.625rem;
-
-    & h6 {
-      color: var(--color-primary-900);
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .agent-info {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      & span {
-        color: var(--color-primary-600);
-      }
-      & p {
-        color: var(--color-primary-800);
-      }
-    }
+  & .agent-card {
+    grid-column: span 4;
   }
 }
 
 .dark {
   .agents-overview-container {
-    & .agents-names-wrapper {
-      & .agent-name {
-        color: var(--color-primary-100);
-        &:hover {
-          background: var(--color-primary-700);
-        }
-
-        &.selected {
-          background: var(--color-primary-700);
-        }
-      }
-    }
-    & .selected-agent-wrapper {
-      background: var(--color-primary-700);
-      & h6 {
-        color: var(--color-primary-0);
-      }
-      & span {
-        color: var(--color-primary-300);
-      }
-      & p {
-        color: var(--color-primary-100);
-      }
-    }
   }
 }
 </style>

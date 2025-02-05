@@ -36,6 +36,8 @@ export default {
 
   empty_title: 'Ovdje još nema ništa za prikaz',
   empty_description: 'Trenutno nema elemenata za prikaz.',
+  view_all: 'Prikaži sve',
+  chat_now: 'Započnite chat',
   details: 'Detalji',
   chatDock: 'Chat panel',
   adminPanel: 'Admin Panel',
