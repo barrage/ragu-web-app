@@ -5,7 +5,7 @@ import type { SingleAgent } from '~/types/agent.ts'
 
 const emits = defineEmits<Emits>()
 const agentStore = useAgentStore()
-const { selectedRole } = storeToRefs(useAuthStore())
+const oAuthStore = useAuthStore()
 
 interface Emits {
   (event: 'agentSelectedForChat', agent: SingleAgent): void
@@ -59,7 +59,7 @@ const handleAgentSelectedForChat = (agent: SingleAgent) => {
       <template #icon>
         <AccountWarningIcon size="44px" />
       </template>
-      <template v-if="selectedRole === 'admin'" #cta>
+      <template v-if="oAuthStore.isAdmin" #cta>
         <LlmLink to="/admin/agents" type="button">
           <AddPersonIcon /> {{ $t('chat.newChat.empty_cta') }}
         </LlmLink>

@@ -7,6 +7,7 @@ import type { SingleAgent } from '~/types/agent'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
 const agentStore = useAgentStore()
+const oAuthStore = useAuthStore()
 const { selectedRole } = storeToRefs(useAuthStore())
 const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
 const { t } = useI18n()
@@ -151,7 +152,17 @@ const selectAgentForChat = (agent: SingleAgent) => {
     <template #header>
       <h4>{{ t('profileDropdown.agents') }}</h4>
     </template>
-    <p>{{ t('profileDropdown.browse_agents') }}</p>
+    <div class="modal-description-wrapper">
+      <p>{{ t('profileDropdown.browse_agents') }}</p>
+      <LlmLink
+        v-if="oAuthStore.isAdmin"
+        to="/admin/agents/create"
+        type="button"
+      >
+        <PersonAddIcon size="24px" />  {{ t('agents.buttons.create') }}
+      </LlmLink>
+    </div>
+
     <ChatAgentsOverview @agent-selected-for-chat="selectAgentForChat" />
   </ElDialog>
 </template>
@@ -195,6 +206,13 @@ const selectAgentForChat = (agent: SingleAgent) => {
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 1rem;
+}
+
+.modal-description-wrapper {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .choose-agent-wrapper {

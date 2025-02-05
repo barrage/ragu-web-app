@@ -5,7 +5,6 @@ import { useDropdownKeyboard } from '~/utils/useDropdownKeyboard'
 import AdminIcon from '~/assets/icons/svg/admin.svg'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 import LogoutIcon from '~/assets/icons/svg/logout.svg'
-import ChatAgentIcon from '~/assets/icons/svg/chat-agent.svg'
 import SupportIcon from '~/assets/icons/svg/support.svg'
 import SettingsIcon from '~/assets/icons/svg/settings.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
@@ -15,11 +14,6 @@ const route = useRoute()
 const oAuthStore = useAuthStore()
 const { t } = useI18n()
 
-/* Agent */
-const isAgentsModalVisible = ref(false)
-const openAgentsModal = () => {
-  isAgentsModalVisible.value = true
-}
 /* Sign OUT */
 const isSignOutModalVisible = ref(false)
 const openSignOutModal = () => {
@@ -90,7 +84,7 @@ const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/ad
 // Keyboard accessability
 const dropdownRef = ref<HTMLElement | null>(null)
 const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
-  [switchRoute, openProfileModal, openSettingsModal, openAgentsModal, undefined, openSignOutModal],
+  [switchRoute, openProfileModal, openSettingsModal, undefined, openSignOutModal],
   0,
   'dropdown-item',
   (selectedItem) => {
@@ -143,7 +137,7 @@ function switchRoute() {
             <span class="user-mail">{{ user.email }}</span>
           </div>
         </div>
-        <template v-if="oAuthStore.selectedRole === 'admin'">
+        <template v-if="oAuthStore.isAdmin">
           <div class="horizontal-divider" />
           <LlmLink
             :to="route.path.includes('/admin') ? '/' : '/admin'"
@@ -181,15 +175,7 @@ function switchRoute() {
           </div>
         </el-dropdown-item>
         <div class="horizontal-divider" />
-        <el-dropdown-item @click="openAgentsModal">
-          <div
-            class="dropdown-item"
-            tabindex="0"
-            @keyup.escape="dropdownRef.handleClose"
-          >
-            <ChatAgentIcon size="20px" />  <p>{{ t('profileDropdown.agents') }}</p>
-          </div>
-        </el-dropdown-item>
+
         <el-dropdown-item disabled>
           <div
             class="dropdown-item"
@@ -212,19 +198,6 @@ function switchRoute() {
       </el-dropdown-menu>
     </template>
   </el-dropdown>
-
-  <ElDialog
-    v-model="isAgentsModalVisible"
-    align-center
-    class="barrage-dialog--large"
-    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
-  >
-    <template #header>
-      <h5>{{ t('profileDropdown.agents') }}</h5>
-    </template>
-    <p>{{ t('profileDropdown.browse_agents') }}</p>
-    <ChatAgentsOverview />
-  </ElDialog>
 
   <ElDialog
     v-model="isSignOutModalVisible"
