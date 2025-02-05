@@ -34,6 +34,8 @@ export default {
 
   empty_title: 'Rien à voir ici encore',
   empty_description: 'Il n\'y a actuellement aucun élément à afficher ici.',
+  view_all: 'Voir tout',
+  chat_now: 'Commencez à discuter',
   details: 'Détails',
   chatDock: 'Panneau de chat',
   adminPanel: 'Panneau d\'administration',

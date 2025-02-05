@@ -33,6 +33,8 @@ export default {
 
   empty_title: 'Ainda não há nada para ver aqui',
   empty_description: 'Não há itens para exibir aqui.',
+  view_all: 'Ver tudo',
+  chat_now: 'Iniciar chat',
   details: 'Detalhes',
   chatDock: 'Painel de chat',
   adminPanel: 'Painel de administração',

@@ -3,14 +3,10 @@ import type { SingleAgent } from '~/types/agent.ts'
 
 const props = defineProps<{
   agent: SingleAgent | null
+  isSelected: boolean
 }>()
 
-const agentStore = useAgentStore()
 const { t } = useI18n()
-
-const isAgentSelected = computed(() => {
-  return props.agent?.id === agentStore.selectedAgent?.id
-})
 </script>
 
 <template>
@@ -18,7 +14,7 @@ const isAgentSelected = computed(() => {
     v-if="agent?.active"
     class="agent-carousel-info"
     tabindex="0"
-    :class="{ selected: isAgentSelected }"
+    :class="{ selected: props.isSelected }"
   >
     <div class="agent-body-wrapper">
       <div class="agent-name-wrapper">
@@ -35,7 +31,7 @@ const isAgentSelected = computed(() => {
         </p>
       </div>
       <span
-        v-if="isAgentSelected"
+        v-if="props.isSelected"
         v-motion-fade
         class="agent-description"
       >
