@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { errorMessages } from 'vue/compiler-sfc'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import type { Agent } from '~/types/agent'
 import { StatusType } from '~/types/statusTypes'
@@ -31,6 +32,7 @@ const agentData = computed(() => {
     createdAt: props.agent?.agent?.createdAt ? formatDate(props.agent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
     avatar: props.agent?.agent?.avatar || undefined,
     version: props.agent?.configuration?.version || '-',
+    errorMessages: props.agent?.configuration?.agentInstructions?.errorMessage || t('agents.agent_card.unknown_instruction'),
   }
 })
 </script>
@@ -166,6 +168,20 @@ const agentData = computed(() => {
       </template>
       <template #customDescription>
         <HighlightedText :text="agentData.context" />
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      :label="t('agents.labels.errorMessage')"
+      :description="agentData.e"
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <PersonInfoIcon size="18px" />
+          <span>  {{ t('agents.labels.errorMessage') }}</span>
+        </div>
+      </template>
+      <template #customDescription>
+        <HighlightedText :text="agentData.errorMessages" />
       </template>
     </LabelDescriptionItem>
   </div>

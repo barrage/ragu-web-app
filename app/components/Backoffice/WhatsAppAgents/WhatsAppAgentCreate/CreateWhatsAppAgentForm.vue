@@ -185,7 +185,7 @@ const scrollIntoViewOptions = {
 </script>
 
 <template>
-  <div class="Create-form">
+  <div class="create-form">
     <ElForm
       ref="createAgentFormRef"
       class="container"
@@ -527,7 +527,7 @@ const scrollIntoViewOptions = {
   }
 }
 
-.Create-form {
+.create-form {
   grid-column: 1/-1;
 }
 .container {

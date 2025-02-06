@@ -3,7 +3,7 @@ import type { Chat } from '~/types/chat'
 
 const chatStore = useChatStore()
 const messages = computed(() => {
-  return [...(chatStore?.messages || [])].reverse()
+  return [...(chatStore?.messages || [])]
 })
 
 const selectedChat = computed(() => {
