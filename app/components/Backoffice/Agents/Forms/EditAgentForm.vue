@@ -42,6 +42,7 @@ const editAgentForm = reactive<EditAgentPayload>({
       languageInstruction: '',
       summaryInstruction: '',
       promptInstruction: '',
+      errorMessage: '',
     },
   },
 })
@@ -193,6 +194,7 @@ const setForm = () => {
   editAgentForm.configuration.instructions.titleInstruction = props.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
   editAgentForm.configuration.instructions.languageInstruction = props.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
   editAgentForm.configuration.instructions.summaryInstruction = props.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
+  editAgentForm.configuration.instructions.errorMessage = props.singleAgent?.configuration?.agentInstructions?.errorMessage ?? ''
   editAgentForm.configuration.instructions.promptInstruction = props.singleAgent?.configuration?.agentInstructions?.promptInstruction ?? ''
   editAgentForm.active = props.singleAgent?.agent?.active ?? true
 }
@@ -555,6 +557,21 @@ const handleRemovePicture = async () => {
         <ElInput
           v-model="editAgentForm.configuration.instructions.summaryInstruction"
           :placeholder="t('agents.placeholder.summaryInstruction')"
+          data-testid="bo-edit-agent-form-summary-instruction-input"
+          type="textarea"
+          size="small"
+        />
+      </ElFormItem>
+
+      <!-- Error message Instruction -->
+      <ElFormItem
+        :label="t('agents.labels.errro_message')"
+        prop="configuration.instructions.errorMessage"
+        class="context-form-item"
+      >
+        <ElInput
+          v-model="editAgentForm.configuration.instructions.errorMessage"
+          :placeholder="t('agents.placeholder.errorInstruction')"
           data-testid="bo-edit-agent-form-summary-instruction-input"
           type="textarea"
           size="small"

@@ -7,7 +7,7 @@ const props = defineProps<{
 }>()
 
 const messagesListData = computed(() => {
-  return props.messages && props.messages.length ? [...props.messages].reverse() : []
+  return props.messages && props.messages.length ? [...props.messages] : []
 })
 </script>
 

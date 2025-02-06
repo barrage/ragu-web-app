@@ -839,10 +839,12 @@ export default {
       summaryInstruction: 'Instrução de Resumo',
       promptInstruction: 'Instrução de Prompt',
       titleInstruction: 'Instrução de Título',
+      errro_message: 'Instrução de Mensagem de Erro',
       version: 'Versão',
       evaluation: 'Avaliação',
       feedback: 'Feedback',
       message: 'Mensagem',
+      errorMessage: 'Mensagem de erro personalizada',
     },
 
     buttons: {
@@ -868,6 +870,7 @@ export default {
       summaryInstruction: 'Inserir Instruções de Resumo do Agente',
       promptInstruction: 'Inserir Instruções de Prompt do Agente',
       titleInstruction: 'Inserir Instruções de Título do Agente',
+      errorInstruction: 'Inserir uma mensagem de erro personalizada...',
       embeddingModel: 'Selecionar modelo de incorporação',
     },
 

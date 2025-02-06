@@ -834,10 +834,12 @@ export default {
       summaryInstruction: 'Instrucción de Resumen',
       promptInstruction: 'Instrucción de Prompt',
       titleInstruction: 'Instrucción de Título',
+      errro_message: 'Instrucción de Mensaje de Error',
       version: 'Versión',
       evaluation: 'Evaluación',
       feedback: 'Comentarios',
       message: 'Mensaje',
+      errorMessage: 'Mensaje de error personalizado',
     },
 
     buttons: {
@@ -863,6 +865,7 @@ export default {
       summaryInstruction: 'Ingresar Instrucción de Resumen del Agente',
       promptInstruction: 'Ingresar Instrucción de Solicitud del Agente',
       titleInstruction: 'Ingresar Instrucción de Título del Agente',
+      errorInstruction: 'Ingresar un mensaje de error personalizado...',
       embeddingModel: 'Seleccionar modelo de incrustación',
       filter_by_status: 'Seleccione el estado del agente',
       filter_by_version: 'Filtrar por versión del agente',

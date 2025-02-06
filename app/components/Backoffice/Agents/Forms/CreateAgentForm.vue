@@ -35,6 +35,7 @@ const createAgentForm = reactive<AgentDetail>({
       languageInstruction: '',
       summaryInstruction: '',
       promptInstruction: '',
+      errorMessage: '',
     },
   },
 })
@@ -195,7 +196,7 @@ const scrollIntoViewOptions = {
 </script>
 
 <template>
-  <div class="Create-form">
+  <div class="create-form">
     <ElForm
       ref="createAgentFormRef"
       class="container"
@@ -357,6 +358,7 @@ const scrollIntoViewOptions = {
           </div>
         </el-card>
       </ElFormItem>
+
       <!-- Active Status -->
       <ElFormItem :label="t('agents.labels.status')" class="agent-temperature-form-item">
         <el-card class="is-accent">
@@ -371,6 +373,7 @@ const scrollIntoViewOptions = {
           </div>
         </el-card>
       </ElFormItem>
+
       <!-- Context -->
       <ElFormItem
         class="group context-form-item"
@@ -422,8 +425,8 @@ const scrollIntoViewOptions = {
         </h5>
         <span class="group-description"> {{ t('agents.descriptions.instructions_form') }}</span>
       </div>
-      <!-- Title Instruction -->
 
+      <!-- Title Instruction -->
       <ElFormItem
         :label="t('agents.labels.titleInstruction')"
         prop="configuration.instructions.titleInstruction"
@@ -462,6 +465,21 @@ const scrollIntoViewOptions = {
         <ElInput
           v-model="createAgentForm.configuration.instructions.summaryInstruction"
           :placeholder="t('agents.placeholder.summaryInstruction')"
+          data-testid="bo-Create-agent-form-summary-instruction-input"
+          type="textarea"
+          size="small"
+        />
+      </ElFormItem>
+
+      <!-- Error message Instruction -->
+      <ElFormItem
+        :label="t('agents.labels.errro_message')"
+        prop="configuration.instructions.errorMessage"
+        class="context-form-item"
+      >
+        <ElInput
+          v-model="createAgentForm.configuration.instructions.errorMessage"
+          :placeholder="t('agents.placeholder.errorInstruction')"
           data-testid="bo-Create-agent-form-summary-instruction-input"
           type="textarea"
           size="small"
@@ -582,7 +600,7 @@ const scrollIntoViewOptions = {
   }
 }
 
-.Create-form {
+.create-form {
   grid-column: 1/-1;
 }
 .container {

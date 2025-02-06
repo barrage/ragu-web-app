@@ -69,6 +69,7 @@ const redirectToAgentEdit = () => {
       <el-button
         size="small"
         type="primary"
+        class="agent-card-footer-button"
         @click="emits('agentSelectedForChat', props.agent)"
       >
         {{ t('chat_now') }}
@@ -77,6 +78,7 @@ const redirectToAgentEdit = () => {
         v-if="oAuthStore.isAdmin"
         size="small"
         type="primary"
+        class="agent-card-footer-button"
         @click="redirectToAgentEdit"
       >
         {{ t('settings.edit') }}
@@ -144,6 +146,10 @@ const redirectToAgentEdit = () => {
     align-items: center;
     justify-content: space-between;
   }
+}
+
+.agent-card-footer-button {
+  padding-block: 0;
 }
 
 .dark {

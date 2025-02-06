@@ -132,6 +132,7 @@ export interface Instructions {
   languageInstruction: string
   summaryInstruction: string
   promptInstruction: string
+  errorMessage: string
 }
 
 export interface AgentListFilterForm {

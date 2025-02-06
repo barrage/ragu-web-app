@@ -30,6 +30,7 @@ const agentVersionData = computed(() => {
     model: props.selectedAgentVersion?.model || '-',
     temperature: props.selectedAgentVersion?.temperature || '-',
     version: props.selectedAgentVersion?.version || '-',
+    errorMessage: props.selectedAgentVersion?.agentInstructions.errorMessage || '-',
   }
 })
 </script>
@@ -99,6 +100,11 @@ const agentVersionData = computed(() => {
         <LabelDescriptionItem
           :label="t('agents.labels.titleInstruction')"
           :description="agentVersionData.titleInstruction"
+          size="small"
+        />
+        <LabelDescriptionItem
+          :label="t('agents.labels.errorMessage')"
+          :description="agentVersionData.errorMessage"
           size="small"
         />
       </div>
