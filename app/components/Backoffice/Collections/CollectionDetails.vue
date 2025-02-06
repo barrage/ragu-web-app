@@ -7,6 +7,7 @@ import PersonCalendarIcon from '~/assets/icons/svg/person-calendar.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
+import NoteIcon from '~/assets/icons/svg/notes.svg'
 import type { CollectionResponse } from '~/types/collection'
 
 // PROPS
@@ -264,6 +265,19 @@ onMounted(() => {
       <DocumentIcon size="18px" />
       <span>  {{ t('collections.labels.add_document') }}</span>
     </div>
+    <div class="notes">
+      <div class="note-title">
+        <NoteIcon size="32px" />
+        <h6>{{ t('collections.transfer.title') }}</h6>
+      </div>
+      <div class="note-body">
+        <ul>
+          <li>{{ t('collections.transfer.search_hint') }}</li>
+          <li>{{ t('collections.transfer.move_hint') }}</li>
+          <li>{{ t('collections.transfer.save_hint') }}</li>
+        </ul>
+      </div>
+    </div>
     <el-transfer
       v-model="rightValue"
       :titles="[t('documents.title'), t('collections.single_collection')]"
@@ -391,6 +405,36 @@ onMounted(() => {
     font-size: var(--font-size-fluid-3);
   }
 
+  .notes {
+    padding: 10px;
+    margin-block: 16px;
+    background-color: var(--color-primary-100);
+    border-radius: 12px;
+    margin-left: 12px;
+    margin-bottom: 24px;
+
+    .note-title {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: var(--color-primary-800);
+    }
+
+    .note-body {
+      padding-left: 2em;
+      margin-top: 10px;
+
+      ul {
+        list-style: square;
+        margin: 16px;
+
+        li {
+          margin-block: 4px;
+        }
+      }
+    }
+  }
+
   .barrage-transfer {
     border: 0;
     margin-top: 1.5rem;
@@ -419,6 +463,20 @@ onMounted(() => {
   }
   & .description {
     color: var(--color-primary-0);
+  }
+
+  .notes {
+    background-color: var(--color-primary-700);
+    color: var(--color-primary-0);
+
+    .note-title {
+      h6 {
+        color: var(--color-primary-0);
+      }
+      svg {
+        color: var(--color-primary-100);
+      }
+    }
   }
 }
 </style>

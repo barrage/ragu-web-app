@@ -1129,6 +1129,7 @@ export default {
       save: 'Save',
       overview: 'Agent overview',
       filter: 'Filter',
+      submit: 'Submit',
     },
 
     placeholder: {
@@ -1165,6 +1166,10 @@ export default {
       upload_success_description: 'The agent picture has been successfully uploaded.',
       upload_error_title: 'Error uploading agent picture',
       upload_error_description: 'An error occurred while uploading the agent picture. Please try again.',
+      rollback_version_error_title: 'Error rolling back agent version',
+      rollback_version_error_description: 'An error occurred while rolling back the agent version. Please try again or contact support.',
+      rollback_version_success_title: 'Agent version rolled back successfully',
+      rollback_version_success_description: 'The agent has been successfully rolled back to the selected version. All changes made after the selected version have been replaced with data from that version.',
     },
     rules: {
       name: {
@@ -1438,7 +1443,12 @@ export default {
         },
       },
     },
-
+    transfer: {
+      title: 'How to Manage Documents',
+      search_hint: 'Use the search box to filter documents by name',
+      move_hint: 'Select documents from the left panel and click the arrow to add them to the collection, or select documents from the right panel and click the arrow to remove them',
+      save_hint: 'Click the Save button to apply your changes',
+    },
   },
 
   auth: {
@@ -1463,6 +1473,53 @@ export default {
     status_422: 'Unprocessable Entity: There was an issue with the provided data.',
     status_500: 'Server Error: Something went wrong on our end. Please try again later.',
     status_503: 'Service Unavailable: The server is currently unable to handle the request.',
+  },
+
+  help: {
+    title: 'Support and Documentation',
+    subtitle: 'Quick answers to quesstions you may have. Cant find what you’re looking for? Check out our',
+    full_documentation: 'full documentation',
+    whatWeDo: {
+      title: 'What do We Do?',
+      description: 'We provide a powerful AI platform that enables organizations to create, customize, and deploy intelligent chatbots. Our solution combines advanced language models with your specific knowledge base to deliver accurate, context-aware responses to your users.',
+    },
+    gettingStarted: {
+      title: 'Getting Started',
+      description: 'Begin your journey with our platform in minutes. We provide you with the necessary tools to set up your workspace, create your first AI agent, upload documents, and start engaging in meaningful conversations. We\'ll guide you through each step to ensure a smooth onboarding experience.',
+    },
+    howChatWorks: {
+      title: 'How Chat Works',
+      description: 'Our chat system leverages advanced AI technology to provide intelligent responses based on your documents and configurations. Discover how our platform processes queries, maintains context, and delivers relevant information while ensuring data security and user privacy.',
+    },
+    users: {
+      title: 'Users Guide',
+      description: 'Manage your organization effectively with our comprehensive user system. Learn about different user roles (Admin, Regular User), permission settings, user invitation process, and best practices for maintaining security while ensuring smooth collaboration.',
+    },
+    documents: {
+      title: 'Documents Management',
+      description: 'Transform your documents into valuable knowledge sources for AI agents. Understand supported file formats, learn best practices for document preparation, and master our powerful document processing features including metadata management and content organization.',
+    },
+    agents: {
+      title: 'AI Agents',
+      description: 'Create specialized AI agents tailored to your needs. Configure language models, set up knowledge bases, customize response behaviors, and optimize performance. Learn how to monitor agent activities and adjust settings for better results.',
+    },
+    collections: {
+      title: 'Collections',
+      description: 'Organize your documents efficiently with collections. Learn how to create themed knowledge bases, manage document groups, and link collections to specific agents. Discover strategies for maintaining well-structured information architecture.',
+    },
+    chats: {
+      title: 'Chat Management',
+      description: 'Take control of your chat interactions with our advanced chat management system. Access chat history, analyze conversation patterns, export chat logs, and utilize features like real-time editing and multi-language support.',
+    },
+  },
+  common: {
+    backTo: 'Back to {page}',
+  },
+  admin: {
+    title: 'Backoffice',
+  },
+  app: {
+    title: 'App',
   },
 
 }

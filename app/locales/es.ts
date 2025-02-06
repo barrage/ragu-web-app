@@ -1449,4 +1449,47 @@ export default {
     status_503: 'Servicio no disponible: El servidor no puede manejar la solicitud en este momento.',
   },
 
+  help: {
+    title: 'Soporte y documentación',
+    subtitle: 'Respuestas rápidas a preguntas que quizás tengas. ¿No encuentras lo que buscas? Echa un vistazo a nuestra',
+    full_documentation: 'documentación completa',
+    whatWeDo: {
+      title: '¿Qué hacemos?',
+      description: 'Proporcionamos una potente plataforma de IA que permite a las organizaciones crear, personalizar y desplegar chatbots inteligentes. Nuestra solución combina modelos de lenguaje avanzados con tu base de conocimientos específica para brindar respuestas precisas y contextualizadas a tus usuarios.',
+    },
+    gettingStarted: {
+      title: 'Empezando',
+      description: 'Comienza tu viaje con nuestra plataforma en minutos. Te proporcionamos las herramientas necesarias para configurar tu espacio de trabajo, crear tu primer agente de IA, cargar documentos y comenzar a interactuar en conversaciones significativas. Te guiaremos a través de cada paso para garantizar una experiencia de incorporación fluida.',
+    },
+    howChatWorks: {
+      title: 'Cómo funciona el chat',
+      description: 'Nuestro sistema de chat aprovecha tecnología de IA avanzada para proporcionar respuestas inteligentes basadas en tus documentos y configuraciones. Descubre cómo nuestra plataforma procesa consultas, mantiene el contexto y entrega información relevante mientras garantiza la seguridad de los datos y la privacidad de los usuarios.',
+    },
+    users: {
+      title: 'Guía de usuarios',
+      description: 'Administra eficazmente tu organización con nuestro sistema de usuarios completo. Aprende sobre diferentes roles de usuarios (Administrador, Usuario Regular), configuración de permisos, proceso de invitación de usuarios y mejores prácticas para mantener la seguridad mientras se garantiza una colaboración fluida.',
+    },
+    documents: {
+      title: 'Guía de administración de documentos',
+      description: 'Transforma tus documentos en fuentes valiosas de conocimiento para agentes de IA. Entiende los formatos de archivo admitidos, aprende las mejores prácticas para la preparación de documentos y maestra nuestras potentes características de procesamiento de documentos, incluyendo la administración de metadatos y la organización de contenido.',
+    },
+    agents: {
+      title: 'Guía de agentes',
+      description: 'Crea agentes de IA especializados que se adapten a tus necesidades. Configura modelos de lenguaje, establece bases de conocimiento, personaliza comportamientos de respuesta y optimiza el rendimiento. Aprende a supervisar las actividades de los agentes y ajustar la configuración para mejores resultados.',
+    },
+    collections: {
+      title: 'Guía de colecciones',
+      description: 'Organiza tus documentos de manera eficiente con colecciones. Aprende a crear bases de conocimiento temáticas, administrar grupos de documentos y vincular colecciones a agentes específicos. Descubre estrategias para mantener una arquitectura de información bien estructurada.',
+    },
+  },
+  common: {
+    backTo: 'Volver a {page}',
+  },
+  admin: {
+    title: 'Backoffice',
+  },
+  app: {
+    title: 'App',
+  },
+
 }
