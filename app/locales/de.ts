@@ -1451,4 +1451,51 @@ export default {
     status_503: 'Dienst nicht verfügbar: Der Server kann die Anfrage derzeit nicht bearbeiten.',
   },
 
+  help: {
+    title: 'Support und Dokumentation',
+    subtitle: 'Schnelle Antworten auf Fragen, die Sie haben möchten. Kann nicht finden, wonach Sie suchen? Schauen Sie sich unsere an',
+    full_documentation: 'vollständige Dokumentation',
+    whatWeDo: {
+      title: 'Was tun wir?',
+      description: 'Wir bieten eine leistungsstarke AI-Plattform an, die es Organisationen ermöglicht, intelligente Chatbots zu erstellen, anzupassen und bereitzustellen. Unsere Lösung kombiniert fortschrittliche Sprachmodelle mit Ihrer spezifischen Wissensbasis, um genaue, kontextbezogene Antworten an Ihre Benutzer zu liefern.',
+    },
+    gettingStarted: {
+      title: 'Loslegen',
+      description: 'Beginnen Sie mit unserer Plattform in Minuten. Wir bieten Ihnen die notwendigen Tools, um Ihren Arbeitsbereich einzurichten, Ihren ersten AI-Agenten zu erstellen, Dokumente hochzuladen und mit bedeutenden Gesprächen zu beginnen. Wir werden Sie durch jeden Schritt führen, um eine reibungslose Onboarding-Erfahrung zu gewährleisten.',
+    },
+    howChatWorks: {
+      title: 'Wie Chat funktioniert',
+      description: 'Unser Chat-System nutzt fortschrittliche AI-Technologien, um intelligente Antworten basierend auf Ihren Dokumenten und Konfigurationen bereitzustellen. Entdecken Sie, wie unsere Plattform Abfragen verarbeitet, Kontext pflegt und relevante Informationen bereitstellt, während die Daten-Sicherheit und die Privatsphäre der Benutzer gewährleistet werden.',
+    },
+    users: {
+      title: 'Benutzerhandbuch',
+      description: 'Verwalten Sie Ihre Organisation effektiv mit unserem umfassenden Benutzersystem. Erfahren Sie mehr über verschiedene Benutzerrollen (Administrator, regulärer Benutzer), Berechtigungseinstellungen, den Benutzer-Einladungsprozess und bewährte Praktiken für die Wahrung der Sicherheit, während eine reibungslose Zusammenarbeit sichergestellt wird.',
+    },
+    documents: {
+      title: 'Dokumentenverwaltungshandbuch',
+      description: 'Transformieren Sie Ihre Dokumente in wertvolle Wissensquellen für KI-Agenten. Lernen Sie unterstützte Dateiformate kennen, erfahren Sie bewährte Praktiken für die Dokumentenbereitstellung und beherrschen Sie unsere leistungsstarken Dokumentenverarbeitungsfunktionen, einschließlich Metadatenverwaltung und Inhaltsorganisation.',
+    },
+    agents: {
+      title: 'Agentenhandbuch',
+      description: 'Erstellen Sie spezialisierte KI-Agenten, die Ihren Bedürfnissen angepasst sind. Konfigurieren Sie Sprachmodelle, richten Sie Wissensbasen ein, passen Sie Antwortverhalten an und optimieren Sie die Leistung. Lernen Sie, Agentenaktivitäten zu überwachen und Einstellungen für bessere Ergebnisse anzupassen.',
+    },
+    collections: {
+      title: 'Sammlungenhandbuch',
+      description: 'Organisieren Sie Ihre Dokumente effektiv mit Sammlungen. Erfahren Sie, wie Sie thematische Wissensbasen erstellen, Dokumentgruppen verwalten und Sammlungen spezifischen Agenten zuordnen. Entdecken Sie Strategien für die Wahrung einer gut strukturierten Informationsarchitektur.',
+    },
+    chats: {
+      title: 'Chat-Management',
+      description: 'Nehmen Sie die Kontrolle über Ihre Chat-Interaktionen mit unserem fortschrittlichen Chat-Management-System. Greifen Sie auf den Chat-Verlauf zu, analysieren Sie Gesprächsmuster, exportieren Sie Chat-Protokolle und nutzen Sie Funktionen wie Echtzeitbearbeitung und Mehrsprachigkeit.',
+    },
+  },
+  common: {
+    backTo: 'Zurück zu {page}',
+  },
+  admin: {
+    title: 'Backoffice',
+  },
+  app: {
+    title: 'App',
+  },
+
 }

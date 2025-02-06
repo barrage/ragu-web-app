@@ -146,7 +146,7 @@ const menuLists = computed<MenuList[]>(() => {
         <LlmLink
           v-motion-fade-visible-once
           :delay="300"
-          to="/help"
+          to="/help?from=admin"
           type="link"
           class="menu-item get-help-section"
           :class="{ selected: '/help' === route.path }"
@@ -233,7 +233,6 @@ aside {
   margin-top: auto;
   border-radius: 8px;
   position: relative;
-  pointer-events: none;
 
   &::before {
     content: '';

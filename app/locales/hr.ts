@@ -1472,4 +1472,51 @@ export default {
     status_503: 'Usluga nije dostupna: Poslužitelj trenutno ne može obraditi zahtjev.',
   },
 
+  help: {
+    title: 'Podrška i dokumentacija',
+    subtitle: 'Brze odgovore na pitanja koja možda imate. Ne možete pronaći ono što tražite? Pogledajte našu',
+    full_documentation: 'potpunu dokumentaciju',
+    whatWeDo: {
+      title: 'Što radimo?',
+      description: 'Nudimo AI platformu koja omogućuje organizacijama da stvore, prilagode i implementiraju pametne chatbota. Naša rješenja kombiniraju napredne jezične modele s vašom specifičnom bazom znanja kako bi vam pružale točne, kontekstno svjesne odgovore korisnicima.',
+    },
+    gettingStarted: {
+      title: 'Započnite sada',
+      description: 'Prijavite se na svoj račun i započnite s korištenjem naše AI platforme. Slijedite upute za konfiguraciju i prilagodbu chatbota kako bi se prilagodili vašim potrebama.',
+    },
+    howChatWorks: {
+      title: 'Kako radi chat',
+      description: 'Naš chat sustav koristi napredne AI tehnologije za pružanje pametnih odgovora temeljenih na vašim dokumentima i konfiguracijama. Saznajte kako naš sustav obrađuje upite, održava kontekst i pruža relevantne informacije dok osigurava sigurnost podataka i privatnost korisnika.',
+    },
+    users: {
+      title: 'Korisnici',
+      description: 'Upravljajte članovima svog tima i postavite njihove razine pristupa. Dodajte nove korisnike, pregledajte njihove detalje i upravljajte njihovim pristupom.',
+    },
+    chats: {
+      title: 'Razgovori',
+      description: 'Pregledajte povijest razgovora s chatbotom i pristupite njihovim porukama. Pregledajte povijest razgovora i pristupite porukama.',
+    },
+    documents: {
+      title: 'Dokumenti',
+      description: 'Upravljajte dokumentima i njihovim sadržajem. Dodajte, pregledajte i organizirajte dokumente za korištenje u chatbotu.',
+    },
+    agents: {
+      title: 'Agenti',
+      description: 'Upravljajte AI agentima i njihovim postavkama. Konfigurirajte agente za odgovarajuće potrebe i prilagodite ih za vaše potrebe.',
+    },
+    collections: {
+      title: 'Kolekcije',
+      description: 'Upravljajte kolekcijama i njihovim sadržajem. Dodajte, pregledajte i organizirajte kolekcije za korištenje u chatbotu.',
+    },
+  },
+  common: {
+    backTo: 'Povratak na {page}',
+  },
+  admin: {
+    title: 'Backoffice',
+  },
+  app: {
+    title: 'App',
+  },
+
 }

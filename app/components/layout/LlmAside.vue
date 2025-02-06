@@ -6,7 +6,6 @@ import QuestionIcon from '~/assets/icons/svg/question.svg'
 // CONSTANTS
 const navigationStore = useNavigationStore()
 const { isSidebarCollapsed } = storeToRefs(navigationStore)
-const route = useRoute()
 </script>
 
 <template>
@@ -33,10 +32,10 @@ const route = useRoute()
         <LlmLink
           v-motion-fade-visible-once
           :delay="300"
-          to="/help"
+          to="/help?from=user"
           type="link"
           class="menu-item get-help-section"
-          :class="{ 'selected': '/help' === route.path, 'collapsed-link': isSidebarCollapsed }"
+          :class="{ 'collapsed-link': isSidebarCollapsed }"
         >
           <div class="menu-content">
             <QuestionIcon class="sidebar-icon" size="24px" />
@@ -159,7 +158,6 @@ aside {
   margin-top: auto;
   border-radius: 8px;
   position: relative;
-  pointer-events: none;
 
   &::before {
     content: '';
