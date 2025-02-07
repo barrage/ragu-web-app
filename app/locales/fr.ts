@@ -1152,6 +1152,13 @@ export default {
         },
       },
     },
+
+    transfer: {
+      title: 'Comment gérer les documents',
+      search_hint: 'Utilisez la zone de recherche pour filtrer les documents par nom',
+      move_hint: 'Sélectionnez des documents dans le panneau de gauche et cliquez sur la flèche pour les ajouter à la collection, ou sélectionnez des documents dans le panneau de droite et cliquez sur la flèche pour les supprimer',
+      save_hint: 'Cliquez sur le bouton Enregistrer pour appliquer vos modifications',
+    },
   },
 
   users: {

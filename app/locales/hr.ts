@@ -1462,6 +1462,12 @@ export default {
         },
       },
     },
+    transfer: {
+      title: 'Upravljanje dokumentima',
+      search_hint: 'Koristite polje za pretraživanje i filtriranje dokumenata po nazivu',
+      move_hint: 'Odaberite dokumente s lijeve strane i kliknite strelicu za dodavanje u kolekciju, ili odaberite dokumente s desne strane i kliknite strelicu za uklanjanje',
+      save_hint: 'Kliknite na gumb Spremi za primjenu promjena',
+    },
 
   },
 

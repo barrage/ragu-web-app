@@ -1150,6 +1150,12 @@ export default {
         },
       },
     },
+    transfer: {
+      title: 'Como gerenciar documentos',
+      search_hint: 'Use o campo de pesquisa para pesquisar e filtrar documentos por nome',
+      move_hint: 'Selecione documentos do painel esquerdo e clique na seta para adicioná-los à coleção, ou selecione documentos do painel direito e clique na seta para removê-los',
+      save_hint: 'Clique no botão Salvar para aplicar suas alterações',
+    },
   },
 
   users: {

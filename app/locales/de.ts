@@ -1153,6 +1153,13 @@ export default {
         },
       },
     },
+
+    transfer: {
+      title: 'Dokumentenverwaltung',
+      search_hint: 'Verwenden Sie das Suchfeld, um Dokumente nach Namen zu durchsuchen und zu filtern',
+      move_hint: 'Wählen Sie Dokumente aus dem linken Panel aus und klicken Sie auf den Pfeil, um sie zur Sammlung hinzuzufügen, oder wählen Sie Dokumente aus dem rechten Panel aus und klicken Sie auf den Pfeil, um sie zu entfernen',
+      save_hint: 'Klicken Sie auf die Schaltfläche "Speichern", um Ihre Änderungen zu übernehmen',
+    },
   },
 
   users: {

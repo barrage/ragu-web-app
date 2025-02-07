@@ -1148,6 +1148,12 @@ export default {
         },
       },
     },
+    transfer: {
+      title: 'Come gestire i documenti',
+      search_hint: 'Utilizza la casella di ricerca per filtrare i documenti per nome',
+      move_hint: 'Seleziona documenti dal pannello sinistro e fai clic sulla freccia per aggiungerli alla collezione, o seleziona documenti dal pannello destro e fai clic sulla freccia per rimuoverli',
+      save_hint: 'Fai clic sul pulsante Salva per applicare le tue modifiche',
+    },
   },
 
   users: {
