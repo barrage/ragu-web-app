@@ -1,61 +1,76 @@
 <script lang="ts" setup>
+import DocumentConfigurationTab from './DocumentConfigurationTab.vue'
 import DocumentConfigurationIcon from '~/assets/icons/svg/document-configuration.svg'
-import DocumentEditIcon from '~/assets/icons/svg/document-edit.svg'
+
+import DocumentIcon from '~/assets/icons/svg/document.svg'
 import type { Document } from '~/types/document'
 
 const props = defineProps<{
-  document: Document | null | undefined
+  document: Document
 }>()
+
+const { t } = useI18n()
+const tabOptions = computed(() => {
+  return ['details', 'configuration']
+})
+const { activeTab } = useTabQuery(
+  'details',
+  tabOptions.value,
+)
 </script>
 
 <template>
   <div class="admin-document-page-container">
     <DocumentDetailsHeroSection :document="props.document" />
-    <div class="horizontal-divider" />
-    <DocumentDetailsInformationsSection :document="props.document" />
+    <ElTabs
+      v-model="activeTab"
+      class="document-details-tabs"
+      data-testid="bo-document-details-tabs"
+    >
+      <ElTabPane
+        label="details"
+        name="details"
+      >
+        <template #label>
+          <div class="custom-tab-label-wrapper">
+            <DocumentIcon size="24px" />
+            <span>{{ t('details') }}</span>
+          </div>
+        </template>
+        <template v-if="activeTab === 'details'">
+          <DocumentDetailsInformationsSection :document="props.document" />
+        </template>
+      </ElTabPane>
 
-    <div class="horizontal-divider" />
-
-    <div class="icon-title-container">
-      <DocumentConfigurationIcon size="42px" />
-      <h5> {{ $t('documents.configuration') }} </h5>
-    </div>
-    <div class="current-configuration grid">
-      <div class="parser-template">
-        <CurrentParserConfig :config="props.document?.parseConfig" />
-      </div>
-      <div class="chunker-template">
-        <CurrentChunkerConfig :config="props.document?.chunkConfig" />
-      </div>
-    </div>
-    <div class="icon-title-container">
-      <DocumentEditIcon size="32px" />
-      <h5> {{ $t('documents.configuration') }} </h5>
-    </div>
-    <div class="horizontal-divider" />
-    <ParserConfigTab />
-    <div class="horizontal-divider" />
-    <ChunkerConfigTab />
+      <ElTabPane
+        :label="t('documents.configuration')"
+        name="configuration"
+      >
+        <template #label>
+          <div class="custom-tab-label-wrapper">
+            <DocumentConfigurationIcon size="24px" />
+            <span>{{ t('documents.configuration') }}</span>
+          </div>
+        </template>
+        <template v-if="activeTab === 'configuration'">
+          <DocumentConfigurationTab :document="props.document" />
+        </template>
+      </ElTabPane>
+    </ElTabs>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.current-configuration {
-  height: max-content;
+.document-details-tabs {
+  margin-top: var(--spacing-fluid-xs);
 
-  & .parser-template {
-    grid-column: span 6;
-    & .current-parser-config-card {
-      height: 100%;
-    }
-  }
-  & .chunker-template {
-    grid-column: span 6;
-    & .current-chunker-config-card {
-      height: 100%;
-    }
+  & .custom-tab-label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-fluid-5-xs);
   }
 }
+
 .admin-document-page-header {
   display: flex;
   gap: 22px;
@@ -63,27 +78,5 @@ const props = defineProps<{
 }
 .admin-document-page-container {
   padding: 1rem 2rem;
-}
-
-.icon-title-container {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--color-primary-900);
-
-  & h5 {
-    color: var(--color-primary-900);
-    font-weight: var(--font-weight-semibold);
-  }
-}
-.dark {
-  & .icon-title-container {
-    color: var(--color-primary-0);
-  }
-  & h5 {
-    color: var(--color-primary-0);
-  }
 }
 </style>
