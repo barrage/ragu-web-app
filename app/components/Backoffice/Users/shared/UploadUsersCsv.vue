@@ -18,6 +18,14 @@ const isUploadLoading = ref(false)
 const successStatusType = computed(() => StatusType.Success)
 const failureStatusType = computed(() => StatusType.Danger)
 
+const noteItems = computed(() => [
+  t('users.import.note_file_format'),
+  t('users.import.note_headers'),
+  `${t('users.import.note_data_types')}Admin, User.`,
+  t('users.import.note_file_size'),
+  t('users.import.note_download_template'),
+])
+
 const beforeUploadCheck: UploadProps['beforeUpload'] = (rawFile) => {
   isUploadLoading.value = true
   const allowedTypes = ['text/csv']
@@ -135,21 +143,11 @@ const getErrorMessage = (failedUser: FailedImportUser) => {
 
 <template>
   <div>
-    <div class="notes">
-      <div class="note-title">
-        <NoteIcon size="32px" />
-        <h6>{{ t('users.import.notes_title') }}</h6>
-      </div>
-      <div class="note-body">
-        <ul>
-          <li>{{ t('users.import.note_file_format') }}</li>
-          <li>{{ t('users.import.note_headers') }}</li>
-          <li>{{ t('users.import.note_data_types') }}Admin, User.</li>
-          <li>{{ t('users.import.note_file_size') }}</li>
-          <li>{{ t('users.import.note_download_template') }}</li>
-        </ul>
-      </div>
-    </div>
+    <Note
+      :title="t('users.import.notes_title')"
+      :items="noteItems"
+      :icon="NoteIcon"
+    />
 
     <ElButton
       type="primary"
@@ -296,36 +294,6 @@ const getErrorMessage = (failedUser: FailedImportUser) => {
   }
 }
 
-.notes {
-  padding: 10px;
-  margin-block: 16px;
-  border-radius: 12px;
-  margin-left: 12px;
-
-  .note-title {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    color: var(--color-primary-800);
-  }
-
-  .note-body {
-    padding-left: 2em;
-    margin-top: 10px;
-
-    ul {
-      list-style: disc;
-      margin: 16px;
-      color: var(--color-primary-800);
-
-      li {
-        margin-block: 4px;
-        font-size: var(--font-size-fluid-3);
-      }
-    }
-  }
-}
-
 .user-general-info-card {
   grid-column: 1/-1;
   border: 0.5px solid var(--color-primary-300);
@@ -392,29 +360,6 @@ const getErrorMessage = (failedUser: FailedImportUser) => {
 }
 
 .dark {
-  .notes {
-    color: var(--color-primary-0);
-
-    .note-title {
-      h6 {
-        color: var(--color-primary-0);
-      }
-      svg {
-        color: var(--color-primary-100);
-      }
-    }
-    ul {
-      list-style: disc;
-      margin: 16px;
-      color: var(--color-primary-100);
-
-      li {
-        margin-block: 4px;
-        font-size: var(--font-size-fluid-3);
-      }
-    }
-  }
-
   .user-general-info-card {
     border: 0.5px solid var(--color-primary-700);
     background: var(--color-primary-900);

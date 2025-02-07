@@ -27,6 +27,12 @@ const allowedTypes = [
 const maxFileSize = 100 * 1024 * 1024
 const failedFiles = ref<{ name: string, reason: string }[]>([])
 
+const noteItems = computed(() => [
+  t('documents.uploads.note_supported_types', { types: 'PDF, JSON, TXT, MD, DOCX, XLSX, CSV, XML' }),
+  t('documents.uploads.note_file_size', { size: '100MB' }),
+  t('documents.uploads.note_multiple_files'),
+])
+
 const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
   const file = uploadFile.raw
   if (!file) { return }
@@ -189,20 +195,11 @@ const setEmptyList = () => {
           </h5>
         </div>
       </template>
-
-      <div class="notes">
-        <div class="note-title">
-          <NoteIcon size="32px" />
-          <h6>{{ t('users.import.notes_title') }}</h6>
-        </div>
-        <div class="note-body">
-          <ul>
-            <li>{{ t('documents.uploads.note_supported_types', { types: 'PDF, JSON, TXT, MD, DOCX, XLSX, CSV, XML' }) }}</li>
-            <li>{{ t('documents.uploads.note_file_size', { size: '100MB' }) }}</li>
-            <li>{{ t('documents.uploads.note_multiple_files') }}</li>
-          </ul>
-        </div>
-      </div>
+      <Note
+        :title="t('users.import.notes_title')"
+        :items="noteItems"
+        :icon="NoteIcon"
+      />
       <div v-if="failedFiles.length > 0" class="failed-documents">
         <div class="documents-actions-container">
           <h6>{{ t('documents.uploads.failed_documents') }}</h6>
@@ -290,35 +287,6 @@ const setEmptyList = () => {
   }
 }
 
-.notes {
-  padding: 10px;
-  margin-block: 16px;
-  background-color: var(--color-primary-100);
-  border-radius: 12px;
-  margin-left: 12px;
-
-  .note-title {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    color: var(--color-primary-800);
-  }
-
-  .note-body {
-    padding-left: 2em;
-    margin-top: 10px;
-
-    ul {
-      list-style: square;
-      margin: 16px;
-
-      li {
-        margin-block: 4px;
-      }
-    }
-  }
-}
-
 .dialog-footer {
   display: flex;
   justify-content: space-between;
@@ -363,20 +331,6 @@ const setEmptyList = () => {
 }
 
 .dark {
-  .notes {
-    background-color: var(--color-primary-700);
-
-    color: var(--color-primary-0);
-    .note-title {
-      h6 {
-        color: var(--color-primary-0);
-      }
-      svg {
-        color: var(--color-primary-100);
-      }
-    }
-  }
-
   .add-document-modal-header {
     color: var(--color-primary-0);
 

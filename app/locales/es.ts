@@ -1151,6 +1151,12 @@ export default {
         },
       },
     },
+    transfer: {
+      title: 'Cómo administrar documentos',
+      search_hint: 'Utiliza el campo de búsqueda para buscar y filtrar documentos por nombre',
+      move_hint: 'Selecciona documentos del panel izquierdo y haz clic en la flecha para agregarlos a la colección, o selecciona documentos del panel derecho y haz clic en la flecha para eliminarlos',
+      save_hint: 'Haz clic en el botón Guardar para aplicar tus cambios',
+    },
   },
 
   users: {
