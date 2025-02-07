@@ -60,7 +60,7 @@ const { activeTab } = useTabQuery(
 </script>
 
 <template>
-  <div class="user-details-wrapper">
+  <div>
     <UserDetailsHeroSection
       :user="user"
       @user-deleted="(emits('userDeleted'))"
@@ -82,7 +82,7 @@ const { activeTab } = useTabQuery(
         >
           <template #label>
             <div class="custom-tab-label-wrapper">
-              <component :is="tab.icon" size="22px" />
+              <component :is="tab.icon" size="24px" />
               <span>{{ tab.label }}</span>
             </div>
           </template>
@@ -102,12 +102,6 @@ const { activeTab } = useTabQuery(
 </template>
 
 <style lang="scss" scoped>
-.users-list-container {
-  width: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
 .user-details-tabs {
   margin-top: var(--spacing-fluid-xs);
 

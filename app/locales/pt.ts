@@ -1178,6 +1178,18 @@ export default {
     placeholders: {
       search_users: 'Pesquisar usuários',
     },
+    titles: {
+      invite_users: 'Convidar usuários',
+      invite_user: 'Convidar usuário',
+      single_user: 'Usuário único',
+      multiple_users_csv: 'Vários usuários',
+      invite_users_options: 'Opções de convite de usuários',
+    },
+    descriptions: {
+      invite_users: 'Escolha a opção que melhor se adapta a você e simplifique o processo de convite de usuários.',
+      invite_single_user: 'Convide um novo usuário em apenas alguns passos.',
+      invite_multiple_users_csv: 'Adicione rapidamente vários usuários de uma só vez usando um arquivo CSV.',
+    },
     delete_user: {
       title: 'Excluir Usuário',
       description: 'Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita.',
