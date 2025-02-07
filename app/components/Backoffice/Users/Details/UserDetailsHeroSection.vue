@@ -117,9 +117,9 @@ const handleDeletePicture = () => {
           @edit="openProfileModal"
         />
         <div>
-          <h5 class="username">
+          <h1 class="username">
             {{ `${userData.fullName}` }}
-          </h5>
+          </h1>
           <ElTag :type="userData.statusType" size="small">
             <span class="status-dot" />  {{ userData?.status }}
           </ElTag>

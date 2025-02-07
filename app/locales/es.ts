@@ -1179,6 +1179,18 @@ export default {
     placeholders: {
       search_users: 'Buscar usuarios',
     },
+    titles: {
+      invite_users: 'Invitar usuarios',
+      invite_user: 'Invitar usuario',
+      single_user: 'Usuario único',
+      multiple_users_csv: 'Varios usuarios',
+      invite_users_options: 'Opciones de invitación de usuarios',
+    },
+    descriptions: {
+      invite_users: 'Elige la opción que mejor se adapte a ti y simplifica el proceso de invitación de usuarios.',
+      invite_single_user: 'Invita a un nuevo usuario en solo unos pasos.',
+      invite_multiple_users_csv: 'Agrega rápidamente varios usuarios a la vez con un archivo CSV.',
+    },
     delete_user: {
       title: 'Eliminar Usuario',
       description: '¿Está seguro de que desea eliminar este usuario? Esta acción no se puede deshacer.',

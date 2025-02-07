@@ -58,7 +58,7 @@ const collectionDeleted = () => {
 .collection-list-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-fluid-3-xs);
   width: 100%;
   border-radius: 10px;
   overflow: hidden;

@@ -1182,6 +1182,18 @@ export default {
     placeholders: {
       search_users: 'Benutzer durchsuchen',
     },
+    titles: {
+      invite_users: 'Benutzer einladen',
+      invite_user: 'Benutzer einladen',
+      single_user: 'Einzelner Benutzer',
+      multiple_users_csv: 'Mehrere Benutzer',
+      invite_users_options: 'Benutzereinladungsoptionen',
+    },
+    descriptions: {
+      invite_users: 'Wählen Sie die passende Option und vereinfachen Sie den Einladungsprozess.',
+      invite_single_user: 'Laden Sie einen neuen Benutzer in nur wenigen Schritten ein.',
+      invite_multiple_users_csv: 'Fügen Sie schnell mehrere Benutzer gleichzeitig über eine CSV-Datei hinzu.',
+    },
     delete_user: {
       title: 'Benutzer löschen',
       description: 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',

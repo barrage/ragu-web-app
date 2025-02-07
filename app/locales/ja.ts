@@ -1175,6 +1175,18 @@ export default {
     placeholders: {
       search_users: 'ユーザーを検索',
     },
+    titles: {
+      invite_users: 'ユーザーを招待する',
+      invite_user: 'ユーザーを招待',
+      single_user: '単一ユーザー',
+      multiple_users_csv: '複数ユーザー',
+      invite_users_options: 'ユーザー招待オプション',
+    },
+    descriptions: {
+      invite_users: '最適なオプションを選択し、ユーザー招待プロセスを簡素化します。',
+      invite_single_user: 'わずか数ステップで新しいユーザーを招待できます。',
+      invite_multiple_users_csv: 'CSVファイルを使用して、一度に複数のユーザーを迅速に追加できます。',
+    },
     delete_user: {
       title: 'ユーザーを削除',
       description: 'このユーザーを削除してもよろしいですか？この操作は取り消せません。',

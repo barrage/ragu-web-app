@@ -212,7 +212,7 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
     >
       <template #label>
         <div class="custom-tab-label-wrapper">
-          <component :is="tab.icon" size="22px" />
+          <component :is="tab.icon" size="24px" />
           <span>{{ tab.label }}</span>
         </div>
       </template>

@@ -661,6 +661,19 @@ export default {
     placeholders: {
       search_users: 'Search users',
     },
+    titles: {
+      invite_users: 'Invite Users',
+      invite_user: 'Invite User',
+      single_user: 'Single User',
+      multiple_users_csv: 'Multiple Users',
+      invite_users_options: 'User Invitation Options',
+    },
+    descriptions: {
+      invite_users: 'Choose the option that suits you best and simplify the user invitation process.',
+      invite_single_user: 'Invite a new user in just a few steps.',
+      invite_multiple_users_csv: 'Quickly add multiple users at once using a CSV file.',
+    },
+
     delete_user: {
       title: 'Delete User',
       description: 'Are you sure you want to delete this user? This action cannot be undone.',
