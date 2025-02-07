@@ -10,7 +10,7 @@ import type { Document } from '~/types/document'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
 
 const props = defineProps<{
-  document: Document | null | undefined
+  document: Document
 }>()
 const { t } = useI18n()
 const router = useRouter()
@@ -80,6 +80,7 @@ async function handleDocumentDeleted() {
       </div>
     </div>
     <div class="document-details-actions-wrapper">
+      <CopyAddressButton />
       <el-button
         plain
         type="danger"

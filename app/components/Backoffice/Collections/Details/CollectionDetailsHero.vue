@@ -42,6 +42,7 @@ const handleCollectionDeleted = () => {
       </div>
     </div>
     <div class="collection-details-actions-wrapper">
+      <CopyAddressButton />
       <ElButton
         plain
         type="danger"
