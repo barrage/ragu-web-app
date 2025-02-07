@@ -59,3 +59,11 @@ export interface UsersListFilterForm {
   status?: boolean | undefined
   role?: string | undefined
 }
+
+export interface CreateUserOption {
+  name: string
+  description: string
+  id: string
+  href: string
+  icon: string
+}
