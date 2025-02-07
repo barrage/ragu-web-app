@@ -6,14 +6,10 @@ import BrainIcon from '~/assets/icons/svg/brain.svg'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 
 // PROPS
-interface Avatar {
-  contentType?: string
-  data?: string
-}
 
 interface Props {
   size?: number | 'large' | 'default' | 'small'
-  avatar?: Avatar | null
+  avatar?: string | null
   alt?: string
   fit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
   defaultImage?: 'user' | 'agent' | 'brain'
@@ -22,7 +18,7 @@ interface Props {
 
 const {
   size = 'default',
-  avatar = {} as Avatar,
+  avatar = '',
   alt = 'Avatar',
   fit = 'cover',
   defaultImage = 'user',
@@ -32,6 +28,8 @@ const {
 const emits = defineEmits<{
   (e: 'edit'): void
 }>()
+
+const config = useRuntimeConfig()
 
 // STATES
 
@@ -51,10 +49,8 @@ const avatarSize = computed(() => {
 })
 
 const avatarSrc = computed(() => {
-  if (avatar && avatar.contentType && avatar.data) {
-    return `data:${avatar.contentType};base64,${avatar.data}`
-  }
-  return ''
+  if (!avatar) { return '' }
+  return `${config.public.apiBaseUrl}/avatars/${avatar}`
 })
 
 const showImage = computed(() => Boolean(avatarSrc.value))
