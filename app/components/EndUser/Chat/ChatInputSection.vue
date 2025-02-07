@@ -168,8 +168,8 @@ const sendMessage = () => {
     messages.value = []
   }
 
-  messages.value.unshift(userMessage)
-  messages.value.unshift(assistantMessage)
+  messages.value.push(userMessage)
+  messages.value.push(assistantMessage)
 
   $wsSendChatMessage(message.value)
   isWebSocketStreaming.value = true

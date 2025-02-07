@@ -78,10 +78,7 @@ export interface SingleAgent {
   vectorProvider?: string
   embeddingProvider?: EmbeddingProvider
   embeddingModel?: string
-  avatar?: {
-    contentType: string
-    data: string
-  }
+  avatar?: string
 
 }
 

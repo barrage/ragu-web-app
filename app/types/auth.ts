@@ -30,8 +30,5 @@ export interface User {
   role: string
   createdAt: string | Date
   updatedAt: string | Date
-  avatar?: {
-    contentType: string
-    data: string
-  }
+  avatar?: string
 }
