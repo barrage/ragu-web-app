@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import TeamIcon from '~/assets/icons/svg/team.svg'
+import AddPersonIcon from '~/assets/icons/svg/person-add.svg'
 import PersonQuestionMarkIcon from '~/assets/icons/svg/person-question-mark.svg'
 import type { UserStatistic } from '~/types/statistic'
 import type { User } from '~/types/users'
@@ -26,10 +27,14 @@ const hasError = computed(() => !!props.error)
           {{ t('users.title') }}
         </h4>
       </div>
-
-      <LlmLink to="/admin/users" type="buttonPrimary">
-        {{ t('users.title') }}
-      </LlmLink>
+      <div class="quick-actions-wrapper">
+        <LlmLink to="/admin/users/create" type="button">
+          <AddPersonIcon size="24px" /> {{ $t('users.invite_user') }}
+        </LlmLink>
+        <LlmLink to="/admin/users" type="buttonPrimary">
+          <TeamIcon size="24px" />  {{ t('users.title') }}
+        </LlmLink>
+      </div>
     </div>
 
     <el-card
@@ -201,6 +206,10 @@ const hasError = computed(() => !!props.error)
       gap: 6px;
     }
   }
+}
+.quick-actions-wrapper {
+  display: flex;
+  gap: 22px;
 }
 .loader-container {
   display: flex;

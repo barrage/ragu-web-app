@@ -3,6 +3,7 @@ import AgentsIcon from '~/assets/icons/svg/agents.svg'
 import AccountWarningIcon from '~/assets/icons/svg/account-warning.svg'
 import FolderWarningIcon from '~/assets/icons/svg/folder-warning.svg'
 import type { AgentStatistic, PieChartDataEntry } from '~/types/statistic'
+import AddAgentIcon from '~/assets/icons/svg/person-add.svg'
 
 defineProps<{
   agentProvidersPieChartData: PieChartDataEntry[] | null
@@ -22,10 +23,14 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
           {{ t('agents.title') }}
         </h4>
       </div>
-
-      <LlmLink to="/admin/agents" type="buttonPrimary">
-        {{ t('agents.title') }}
-      </LlmLink>
+      <div class="quick-actions-wrapper">
+        <LlmLink to="/admin/agents/create" type="button">
+          <AddAgentIcon size="24px" />  {{ t('agents.buttons.create') }}
+        </LlmLink>
+        <LlmLink to="/admin/agents" type="buttonPrimary">
+          <AgentsIcon size="24px" /> {{ t('agents.title') }}
+        </LlmLink>
+      </div>
     </div>
 
     <ElCard
@@ -159,6 +164,10 @@ const { dashboardCountLoading } = storeToRefs(useStatisticStore())
       font-size: var(--font-size-fluid-2);
     }
   }
+}
+.quick-actions-wrapper {
+  display: flex;
+  gap: 22px;
 }
 .most-used-agents-loader-container,
 .providers-loader-container {

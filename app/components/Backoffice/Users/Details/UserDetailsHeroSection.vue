@@ -127,6 +127,7 @@ const handleDeletePicture = () => {
       </div>
     </div>
     <div class="user-details-actions-wrapper">
+      <CopyAddressButton />
       <ElButton
         size="small"
         type="primary"

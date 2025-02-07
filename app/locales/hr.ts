@@ -38,6 +38,8 @@ export default {
   empty_description: 'Trenutno nema elemenata za prikaz.',
   view_all: 'Prikaži sve',
   chat_now: 'Započnite chat',
+  link: 'Poveznica',
+  create: 'Kreiraj',
   details: 'Detalji',
   chatDock: 'Chat panel',
   adminPanel: 'Admin Panel',
@@ -670,6 +672,21 @@ export default {
     placeholders: {
       search_users: 'Pretraži korisnike',
     },
+
+    titles: {
+      invite_users: 'Pozovite korisnike',
+      invite_user: 'Pozovite korisnika',
+      single_user: 'Jedan korisnik',
+      multiple_users_csv: 'Više korisnika',
+      invite_users_options: 'Opcije za pozivanje korisnika',
+    },
+
+    descriptions: {
+      invite_users: 'Odaberite opciju koja vam najbolje odgovara i pojednostavite proces dodavanja korisnika.',
+      invite_single_user: 'Pozovite novog korisnika u samo nekoliko koraka.',
+      invite_multiple_users_csv: 'Brz unos više korisnika odjednom putem CSV datoteke.',
+    },
+
     delete_user: {
       title: 'Izbriši korisnika',
       description: 'Jeste li sigurni da želite izbrisati ovog korisnika? Ova radnja se ne može poništiti.',

@@ -168,6 +168,7 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
       </div>
     </div>
     <div class="agent-details-actions-wrapper">
+      <CopyAddressButton />
       <el-button
         v-if="!agent?.agent?.active"
         size="small"
