@@ -1033,6 +1033,7 @@ export default {
   agents: {
     title: 'Agenti',
     all_agents: 'Svi agenti',
+    latest_version: 'Najnovija verzija',
     agent_avatar: 'Avatar agenta',
     user_avatar: 'Avatar korisnika',
     empty_state_title_all: 'Nema dostupnih agenata',

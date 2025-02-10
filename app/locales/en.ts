@@ -1021,6 +1021,7 @@ export default {
   agents: {
     title: 'Agents',
     all_agents: 'All Agents',
+    latest_version: 'Latest version',
     empty_state_title_all: 'No agents available',
     empty_state_desc_all: 'Currently, there are no agents to display here.',
     agent_avatar: 'Agent Avatar',

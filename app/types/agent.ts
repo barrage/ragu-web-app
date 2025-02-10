@@ -64,7 +64,7 @@ export interface EvaluationMessage {
 }
 export interface Agents {
   agent: SingleAgent
-  configuration: Configuration
+  configuration: Configuration | null
 }
 export interface SingleAgent {
   active: boolean

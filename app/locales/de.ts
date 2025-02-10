@@ -732,6 +732,7 @@ export default {
     all_agents: 'Alle Agenten',
     agent_avatar: 'Agenten-Avatar',
     user_avatar: 'Benutzer-Avatar',
+    latest_version: 'Neueste Version',
     empty_state_title_all: 'Keine Agenten verfügbar',
     empty_state_desc_all: 'Derzeit gibt es keine Agenten, die hier angezeigt werden können.',
     titles: {

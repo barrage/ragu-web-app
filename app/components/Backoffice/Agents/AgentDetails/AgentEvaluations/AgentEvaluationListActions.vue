@@ -97,7 +97,7 @@ const numberOfFiltersApplied = computed(() => {
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  padding-inline: 0.8rem;
+  padding-inline: 1.4rem;
   margin-bottom: 0.7rem;
   margin-top: 18px;
 
