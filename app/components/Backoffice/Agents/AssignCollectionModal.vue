@@ -54,7 +54,7 @@ const payload = computed(() => ({
 
 // API CALLS
 
-const { data: allCollections } = await useAsyncData(() => $api.collection.GetAllCollections())
+const { data: allCollections } = await useAsyncData(() => $api.collection.GetAllCollections(1, 1000, 'name', 'asc'))
 
 const { execute: putCollection, error, status: updateAgentCollectionStatus } = await useAsyncData(() => $api.agent.UpdateAgentCollection(agentId, payload.value), { immediate: false })
 
