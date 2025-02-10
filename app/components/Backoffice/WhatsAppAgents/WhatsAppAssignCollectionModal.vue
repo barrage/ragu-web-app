@@ -52,7 +52,7 @@ const payload = computed(() => ({
 
 // API CALLS
 
-const { data: allCollections } = await useAsyncData(() => $api.collection.GetAllCollections())
+const { data: allCollections } = await useAsyncData(() => $api.collection.GetAllCollections(1, 1000, 'name', 'asc'))
 
 const { execute: putCollection, error } = await useAsyncData(() => $api.whatsApp.BoUpdateAgentCollection(agentId, payload.value), { immediate: false })
 
