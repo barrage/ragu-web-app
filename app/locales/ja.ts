@@ -723,6 +723,7 @@ export default {
   agents: {
     title: 'エージェント',
     all_agents: 'すべてのエージェント',
+    latest_version: '最新バージョン',
     agent_avatar: 'エージェントのアバター',
     user_avatar: 'ユーザーのアバター',
     empty_state_title_all: '利用可能なエージェントがいません',

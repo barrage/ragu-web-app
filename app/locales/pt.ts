@@ -729,6 +729,7 @@ export default {
   agents: {
     title: 'Agentes',
     all_agents: 'Todos os agentes',
+    latest_version: 'Última versão',
     agent_avatar: 'Avatar do agente',
     user_avatar: 'Avatar do usuário',
     empty_state_title_all: 'Nenhum agente disponível',

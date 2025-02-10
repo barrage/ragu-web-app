@@ -10,8 +10,8 @@ const emits = defineEmits<Emits>()
 interface Emits {
   (event: 'filterApplied', filter: AgentVersionEvaluationMessagesFilter): void
 }
-const { t } = useI18n()
 
+const { t } = useI18n()
 const agentEvaluationsFilterFormRef = ref<FormInstance>()
 const agentEvaluationsFilterForm = reactive<AgentVersionEvaluationMessagesFilter>({
   evaluation: undefined,
@@ -22,54 +22,64 @@ const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) { return }
   formEl.resetFields()
 }
+
 const scrollIntoViewOptions = {
   behavior: 'smooth',
   block: 'center',
 }
 
+const rules = computed<FormRules<AgentVersionEvaluationMessagesFilter>>(() => ({
+  agentVersion: [{ required: true, message: t('form_rules.required'), trigger: 'change' }],
+}))
+
+const agentStatuses = computed(() => [
+  { id: 1, label: t('agents.descriptions.evaluation_positive'), value: true },
+  { id: 2, label: t('agents.descriptions.evaluation_negative'), value: false },
+])
+
+const submitAgentFilterForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) { return }
+  await formEl.validate((valid) => {
+    if (valid) { emits('filterApplied', agentEvaluationsFilterForm) }
+  })
+}
+
+const agentVersionsDataItems = computed(() => useAgentStore().backofficeSelectedAgentDetailsVersions)
+
+const setAgentLabel = (id: string) => {
+  const agent = agentVersionsDataItems.value?.find(agent => agent.id === id)
+  return agent ? `v.${agent.version}` : ''
+}
+
+const currentLabel = computed(() => setAgentLabel(agentEvaluationsFilterForm.agentVersion))
+
 const prefillAgentsFilter = () => {
   agentEvaluationsFilterForm.evaluation = props.filter?.evaluation
-  agentEvaluationsFilterForm.agentVersion = props.filter?.agentVersion
+  agentEvaluationsFilterForm.agentVersion = props.filter.agentVersion
+
+  if (props.filter.agentVersion) {
+    const agentExists = agentVersionsDataItems.value?.find(agent => agent.id === props.filter.agentVersion)
+    if (agentExists) {
+      agentEvaluationsFilterForm.agentVersion = props.filter.agentVersion
+    }
+    else {
+      const lastAgent = agentVersionsDataItems.value?.[agentVersionsDataItems.value.length - 1]
+      if (lastAgent) {
+        agentEvaluationsFilterForm.agentVersion = lastAgent.id
+      }
+    }
+  }
+  else {
+    const lastAgent = agentVersionsDataItems.value?.[agentVersionsDataItems.value.length - 1]
+    if (lastAgent) {
+      agentEvaluationsFilterForm.agentVersion = lastAgent.id
+    }
+  }
 }
 
 onMounted(() => {
   prefillAgentsFilter()
 })
-
-const rules = computed<FormRules<AgentVersionEvaluationMessagesFilter>>(() => ({
-  agentVersion: [
-    { required: true, message: t('form_rules.required'), trigger: 'change' },
-  ],
-}))
-
-const agentStatuses = computed(() =>
-  [
-    {
-      id: 1,
-      label: t('agents.descriptions.evaluation_positive'),
-      value: true,
-    },
-    {
-      id: 2,
-      label: t('agents.descriptions.evaluation_negative'),
-      value: false,
-    },
-  ],
-)
-
-const submitAgentFilterForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) {
-    return
-  }
-  await formEl.validate(async (valid, __) => {
-    if (valid) {
-      emits('filterApplied', agentEvaluationsFilterForm)
-    }
-  },
-  )
-}
-
-const agentVersionsDataItems = computed(() => useAgentStore().backofficeSelectedAgentDetailsVersions)
 </script>
 
 <template>
@@ -107,15 +117,19 @@ const agentVersionsDataItems = computed(() => useAgentStore().backofficeSelected
             clearable
             data-testid="bo-agents-evaluation-list-filter-form-version-select"
           >
+            <template #label>
+              {{ currentLabel }}
+            </template>
             <ElOption
-              v-for="status in agentVersionsDataItems"
-              :key="status.id"
-              :label="`v.${status.version}`"
-              :value="status.id"
+              v-for="version in agentVersionsDataItems"
+              :key="version.id"
+              :label="setAgentLabel(version.id)"
+              :value="version.id"
               data-testid="bo-agents-list-filter-form-status-option"
             />
           </ElSelect>
         </ElFormItem>
+
         <ElFormItem>
           <div class="form-actions">
             <el-button
@@ -131,7 +145,6 @@ const agentVersionsDataItems = computed(() => useAgentStore().backofficeSelected
               type="primary"
               size="small"
               data-testid="bo-agent-list-filter-form-confirm-button"
-
               @click="submitAgentFilterForm(agentEvaluationsFilterFormRef)"
             >
               {{ t('users.edit_user.confirm') }}

@@ -33,7 +33,7 @@ const sort = ref<Sort>({
 
 const filterForm = ref<AgentVersionEvaluationMessagesFilter>({
   evaluation: undefined,
-  agentVersion: props.agentId || '',
+  agentVersion: '',
 })
 
 const {

@@ -86,6 +86,9 @@ const {
     pagination.value.pageSize,
     sort.value.sortBy,
     sort.value.sortOrder,
+    filterForm.value.userId,
+    filterForm.value.agentId,
+    searchInput.value,
   ), { lazy: true })
 
 /* Computed */
