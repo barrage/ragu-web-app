@@ -754,6 +754,7 @@ export default {
       deleteTitle: 'Supprimer l\'Agent ?',
       deleteDescription: 'Êtes-vous sûr de vouloir supprimer l\'agent ?',
       rollback_version_modal: 'Restaurer la version de l\'agent',
+      tools: 'Outils de l\'agent',
     },
     tooltips: {
       version_details: 'Voir les détails de la version',
@@ -977,6 +978,34 @@ export default {
             security: 'Assurez-vous que les mécanismes de contrôle d\'accès et les mesures de sécurité appropriés sont en place',
           },
         },
+      },
+    },
+    tools: {
+      description_text: 'Gérez les capacités de votre agent en sélectionnant parmi les fonctions disponibles ci-dessous. Cliquez sur \'Ajouter des fonctions\' pour les ajouter, ou sur les fonctions déjà attribuées pour les marquer en vue de leur suppression.',
+      current_tools: 'Fonctions actuellement attribuées',
+      available_tools: 'Fonctions disponibles',
+      add_tool: 'Ajouter des fonctions',
+      empty_state: {
+        title: 'Aucune fonction disponible',
+        description: 'Aucune fonction n\'est actuellement attribuée à cet agent. Veuillez ajouter des fonctions ou contacter votre administrateur.',
+      },
+      function_name: 'Nom de la fonction',
+      description: 'Description',
+      notification: {
+        error_title: 'Erreur',
+        assign_error_title: 'Échec de l\'attribution des fonctions à l\'agent!',
+        success_title: 'Succès',
+        assign_success_title: 'Agent mis à jour avec succès!',
+      },
+      modal: {
+        title: 'Ajouter des fonctions à votre agent',
+        subtitle: 'Sélectionnez les fonctions que vous souhaitez ajouter à votre agent. Ces fonctions détermineront ce que votre agent peut faire.',
+      },
+      remove_selected: 'Supprimer la sélection',
+      remove_tools: {
+        title: 'Supprimer les fonctions sélectionnées',
+        message: 'Êtes-vous sûr de vouloir supprimer {count} fonctions sélectionnées de cet agent?',
+        confirm: 'Supprimer les fonctions',
       },
     },
   },

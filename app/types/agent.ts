@@ -148,3 +148,48 @@ export interface EditAgentPayload {
   name: string
   configuration: AgentConfiguration
 }
+
+export interface AssignAgentsToolsPayload {
+  add: string[]
+  remove: string[]
+}
+
+export interface AgentTools {
+  id: string
+  agentId: string
+  toolName: string
+  function: Function
+}
+
+export type AgentToolsResponse = AgentTools[]
+
+export interface Function {
+  name: string
+  description: string
+  parameters: Parameters
+  strict: boolean
+}
+
+export interface AgentTool {
+  type: string
+  function: Function
+}
+
+export type AgentToolList = AgentTool[]
+
+export interface Parameters {
+  type: string
+  properties: Properties
+  required: string[]
+  additionalProperties: boolean
+}
+
+export interface Properties {
+  agent_id: AgentID
+}
+
+export interface AgentID {
+  type: string
+  description: string
+  enum: null
+}

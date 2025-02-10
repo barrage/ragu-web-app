@@ -9,6 +9,7 @@ import LikeDislikeIcon from '~/assets/icons/svg/like_dislike.svg'
 import PersonTagIcon from '~/assets/icons/svg/person-tag.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
+import AgentTools from '~/assets/icons/svg/tools.svg'
 import type { TabOption } from '~/types/tab'
 
 const props = defineProps<{
@@ -128,6 +129,14 @@ const tabOptions = computed((): TabOption[] => {
       icon: PersonTagIcon,
       component: defineAsyncComponent(() =>
         import('~/components/Backoffice/Agents/AgentDetails/AgentVersions/AsyncAgentVersionList.vue'),
+      ),
+    },
+    {
+      name: 'tools',
+      label: t('agents.titles.tools'),
+      icon: AgentTools,
+      component: defineAsyncComponent(() =>
+        import('~/components/Backoffice/Agents/AgentDetails/AgentTools/index.vue'),
       ),
     },
   ]

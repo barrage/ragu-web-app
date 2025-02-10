@@ -750,6 +750,7 @@ export default {
       deleteTitle: 'エージェントを削除しますか？',
       deleteDescription: '本当にエージェントを削除してもよろしいですか？',
       rollback_version_modal: 'エージェントのバージョンをロールバック',
+      tools: 'エージェントツール',
     },
     tooltips: {
       version_details: 'バージョンの詳細を表示',
@@ -973,6 +974,34 @@ export default {
             security: '適切なアクセス制御とセキュリティ対策が実装されていることを確認してください',
           },
         },
+      },
+    },
+    tools: {
+      description_text: '利用可能な機能を選択して、エージェントの能力を管理します。 「機能を追加」をクリックして追加するか、現在割り当てられている機能をクリックして削除対象としてマークしてください。',
+      current_tools: '現在割り当てられている機能',
+      available_tools: '利用可能な機能',
+      add_tool: '機能を追加',
+      empty_state: {
+        title: '利用可能な機能がありません',
+        description: 'このエージェントには現在、割り当てられた機能がありません。 機能を追加するか、管理者に連絡してください。',
+      },
+      function_name: '機能名',
+      description: '説明',
+      notification: {
+        error_title: 'エラー',
+        assign_error_title: 'エージェントへの機能の割り当てに失敗しました！',
+        success_title: '成功',
+        assign_success_title: 'エージェントが正常に更新されました！',
+      },
+      modal: {
+        title: 'エージェントに機能を追加',
+        subtitle: 'エージェントに追加したい機能を選択します。 これらの機能は、エージェントができることを決定します。',
+      },
+      remove_selected: '選択を削除',
+      remove_tools: {
+        title: '選択した機能を削除',
+        message: '本当にこのエージェントから {count} 個の選択した機能を削除しますか？',
+        confirm: '機能を削除',
       },
     },
   },

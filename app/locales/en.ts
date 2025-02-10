@@ -1049,6 +1049,7 @@ export default {
       deleteTitle: 'Delete Agent?',
       deleteDescription: 'Are you sure you want to delete the agent?',
       rollback_version_modal: 'Rollback Agent Version',
+      tools: 'Agent Tools',
     },
     tooltips: {
       version_details: 'View version details',
@@ -1277,6 +1278,35 @@ export default {
             security: 'Ensure proper access controls and security measures are in place',
           },
         },
+      },
+    },
+    tools: {
+      description_text: 'Manage your agent\'s capabilities by selecting from the available tools below. Click on add functions to add them, or click on currently assigned tools to mark them for removal.',
+      current_tools: 'Currently Assigned Functions',
+      available_tools: 'Available Tools Functions',
+      add_tool: 'Add Functions',
+      empty_state: {
+        title: 'No Functions Available',
+        description: 'There are currently no Functions assigned for this agent. Please add functions or contact your administrator.',
+      },
+      function_name: 'Function Name',
+      description: 'Description',
+      notification: {
+        error_title: 'Error',
+        assign_error_title: 'Failed to assign tools to agent!',
+        success_title: 'Success',
+        assign_success_title: 'Agent successfully updated!',
+      },
+      modal: {
+        title: 'Add Functions to Your Agent',
+        subtitle: 'Select the functions you want to add to your agent. These functions will determine what your agent can do.',
+      },
+
+      remove_selected: 'Remove Selected',
+      remove_tools: {
+        title: 'Remove Selected Functions',
+        message: 'Are you sure you want to remove {count} selected functions from this agent?',
+        confirm: 'Delete Functions',
       },
     },
   },

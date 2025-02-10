@@ -1,6 +1,6 @@
 import FetchFactory from '../fetchFactory'
 import type { AssignCollectionPayload } from '~/types/collection'
-import type { Agent, AgentDetail, AgentVersion, AgentVersionEvaluationMessages, AgentVersions, Agents, AllAgentResponse, AllAppAgentsResponse } from '~/types/agent'
+import type { Agent, AgentDetail, AgentToolList, AgentTools, AgentToolsResponse, AgentVersion, AgentVersionEvaluationMessages, AgentVersions, Agents, AllAgentResponse, AllAppAgentsResponse, AssignAgentsToolsPayload } from '~/types/agent'
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
@@ -444,6 +444,73 @@ export default class AgentService extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to update agent version`,
+      })
+    }
+  }
+
+  /**
+   * Fetches tool list
+   * @returns A promise that resolves to an AgentVersions object.
+   * @throws Will throw an error if the request fails.
+   */
+
+  async GetToolList(): Promise<AgentToolList> {
+    try {
+      return await this.$fetch(`${this.adminAgentsEndpoint}/tools`, {
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch tool list with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Fetches single aggent tools by unique agent ID.
+   * @param agentId - The ID of the agent.
+   * @returns A promise that resolves to an AgentVersions object.
+   * @throws Will throw an error if the request fails.
+   */
+
+  async GetAgentsTools(agentId: string): Promise<AgentToolsResponse> {
+    try {
+      return await this.$fetch(`${this.adminAgentsEndpoint}/${agentId}/tools`, {
+        credentials: 'include',
+
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to fetch agent tools with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  /**
+   * Assign tools to agent
+   * @param agentId The ID of the agent to update
+   * @param body The updated data for the agent
+   * @returns A promise that resolves to Agent object
+   * @throws Will throw an error if request fails
+   */
+
+  async AssignAgentsTools(agentId: string, body: AssignAgentsToolsPayload): Promise<void> {
+    const plainPayload = toRaw(body)
+    try {
+      await this.$fetch(`${this.adminAgentsEndpoint}/${agentId}/tools`, {
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify(plainPayload),
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to assign tools to agent with id ${agentId}`,
       })
     }
   }

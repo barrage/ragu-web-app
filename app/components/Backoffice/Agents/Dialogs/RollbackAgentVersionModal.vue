@@ -8,7 +8,6 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
-
 const isOpen = defineModel<boolean>()
 
 const { $api } = useNuxtApp()

@@ -757,6 +757,7 @@ export default {
       deleteTitle: 'Agent löschen?',
       deleteDescription: 'Sind Sie sicher, dass Sie den Agenten löschen möchten?',
       rollback_version_modal: 'Agentenversion zurücksetzen',
+      tools: 'Agenten-Werkzeuge',
     },
     agent_card: {
       unknown_id: 'Unbekannte Agenten-ID',
@@ -980,6 +981,35 @@ export default {
             security: 'Stellen Sie sicher, dass die entsprechenden Steuermechanismen und Sicherheitsmaßnahmen vorhanden sind',
           },
         },
+      },
+    },
+
+    tools: {
+      description_text: 'Verwalten Sie die Fähigkeiten Ihres Agenten, indem Sie aus den verfügbaren Funktionen unten auswählen. Klicken Sie auf \'Funktionen hinzufügen\', um sie hinzuzufügen, oder auf bereits zugewiesene Funktionen, um sie zur Entfernung zu markieren.',
+      current_tools: 'Derzeit zugewiesene Funktionen',
+      available_tools: 'Verfügbare Funktionen',
+      add_tool: 'Funktionen hinzufügen',
+      empty_state: {
+        title: 'Keine Funktionen verfügbar',
+        description: 'Für diesen Agenten sind derzeit keine Funktionen zugewiesen. Bitte fügen Sie Funktionen hinzu oder kontaktieren Sie Ihren Administrator.',
+      },
+      function_name: 'Funktionsname',
+      description: 'Beschreibung',
+      notification: {
+        error_title: 'Fehler',
+        assign_error_title: 'Fehler beim Zuweisen von Funktionen zum Agenten!',
+        success_title: 'Erfolg',
+        assign_success_title: 'Agent erfolgreich aktualisiert!',
+      },
+      modal: {
+        title: 'Funktionen zu Ihrem Agenten hinzufügen',
+        subtitle: 'Wählen Sie die Funktionen aus, die Sie Ihrem Agenten hinzufügen möchten. Diese bestimmen, was Ihr Agent tun kann.',
+      },
+      remove_selected: 'Ausgewählte entfernen',
+      remove_tools: {
+        title: 'Ausgewählte Funktionen entfernen',
+        message: 'Sind Sie sicher, dass Sie {count} ausgewählte Funktionen von diesem Agenten entfernen möchten?',
+        confirm: 'Funktionen löschen',
       },
     },
   },

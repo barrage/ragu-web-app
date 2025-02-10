@@ -752,6 +752,7 @@ export default {
       deleteTitle: 'Eliminare Agente?',
       deleteDescription: 'Sei sicuro di voler eliminare l\'agente?',
       rollback_version_modal: 'Ripristina Versione Agente',
+      tools: 'Strumenti agente',
     },
     tooltips: {
       version_details: 'Visualizza i dettagli della versione',
@@ -975,6 +976,34 @@ export default {
             security: 'Assicurati che i meccanismi di controllo di accesso e le misure di sicurezza appropriate siano in vigore',
           },
         },
+      },
+    },
+    tools: {
+      description_text: 'Gestisci le capacità del tuo agente selezionando tra le funzioni disponibili qui sotto. Clicca su \'Aggiungi funzioni\' per aggiungerle o sulle funzioni assegnate per segnarle per la rimozione.',
+      current_tools: 'Funzioni attualmente assegnate',
+      available_tools: 'Funzioni disponibili',
+      add_tool: 'Aggiungi funzioni',
+      empty_state: {
+        title: 'Nessuna funzione disponibile',
+        description: 'Attualmente non ci sono funzioni assegnate a questo agente. Aggiungi funzioni o contatta l\'amministratore.',
+      },
+      function_name: 'Nome della funzione',
+      description: 'Descrizione',
+      notification: {
+        error_title: 'Errore',
+        assign_error_title: 'Assegnazione delle funzioni all\'agente fallita!',
+        success_title: 'Successo',
+        assign_success_title: 'Agente aggiornato con successo!',
+      },
+      modal: {
+        title: 'Aggiungi funzioni al tuo agente',
+        subtitle: 'Seleziona le funzioni che desideri aggiungere al tuo agente. Queste funzioni determineranno cosa può fare il tuo agente.',
+      },
+      remove_selected: 'Rimuovi selezionati',
+      remove_tools: {
+        title: 'Rimuovi funzioni selezionate',
+        message: 'Sei sicuro di voler rimuovere {count} funzioni selezionate da questo agente?',
+        confirm: 'Elimina funzioni',
       },
     },
   },

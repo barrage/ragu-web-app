@@ -1062,6 +1062,7 @@ export default {
       deleteTitle: 'Izbrisati agenta?',
       deleteDescription: 'Jeste li sigurni da želite izbrisati agenta?',
       rollback_version_modal: 'Vraćanje verzije agenta',
+      tools: 'Alati agenta',
     },
     tooltips: {
       version_details: 'Pogledajte detalje verzije',
@@ -1289,6 +1290,34 @@ export default {
             security: 'Provjerite da li su u mjestu odgovarajući kontrolni mehanizmi i sigurnosne mjere',
           },
         },
+      },
+    },
+    tools: {
+      description_text: 'Upravljajte sposobnostima svog agenta odabirom dostupnih funkcija u nastavku. Kliknite na \'Dodaj funkcije\' za dodavanje ili na trenutno dodijeljene funkcije kako biste ih označili za uklanjanje.',
+      current_tools: 'Trenutno dodijeljene funkcije',
+      available_tools: 'Dostupne funkcije',
+      add_tool: 'Dodaj funkcije',
+      empty_state: {
+        title: 'Nema dostupnih funkcija',
+        description: 'Trenutno nisu dodijeljene funkcije ovom agentu. Molimo dodajte funkcije ili kontaktirajte administratora.',
+      },
+      function_name: 'Naziv funkcije',
+      description: 'Opis',
+      notification: {
+        error_title: 'Greška',
+        assign_error_title: 'Neuspjelo dodjeljivanje funkcija agentu!',
+        success_title: 'Uspjeh',
+        assign_success_title: 'Agent uspješno ažuriran!',
+      },
+      modal: {
+        title: 'Dodajte funkcije svom agentu',
+        subtitle: 'Odaberite funkcije koje želite dodati svom agentu. Te funkcije određuju što vaš agent može raditi.',
+      },
+      remove_selected: 'Ukloni odabrano',
+      remove_tools: {
+        title: 'Ukloni odabrane funkcije',
+        message: 'Jeste li sigurni da želite ukloniti {count} odabranih funkcija s ovog agenta?',
+        confirm: 'Obriši funkcije',
       },
     },
   },
