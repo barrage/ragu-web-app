@@ -43,7 +43,7 @@ const {
   data: agentVersionEvaluationsData,
 } = await useAsyncData(() => $api.agent.GetAgentVersionEvaluationMessages(
   props.agentId,
-  props.configurationAgentId,
+  filterForm.value.agentVersion || props.configurationAgentId,
   pagination.value.currentPage,
   pagination.value.pageSize,
   sort.value.sortBy,
