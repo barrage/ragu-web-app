@@ -87,6 +87,7 @@ async function handleServerMessage(data: string) {
 
   if (parsedData.errorType) {
     isWebSocketStreaming.value = false
+    assistantMessage.content = parsedData.displayMessage
     if (assistantMessage) {
       assistantMessage.id = ''
     }

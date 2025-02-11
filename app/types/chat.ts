@@ -12,6 +12,10 @@ export interface Message {
   evaluation: boolean | null
   createdAt: string
   updatedAt: string
+  errorType?: string
+  errorReason?: string
+  displayMessage?: string
+
 }
 
 export interface ChatConfig {
