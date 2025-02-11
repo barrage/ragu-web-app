@@ -21,9 +21,17 @@ const { currentChatId, isWebSocketStreaming, messages, wsToken }
 const isTokenFetching = ref(false)
 const message = ref('')
 const router = useRouter()
-
 const route = useRoute()
 
+const { error, execute: executeGetAgents } = await useAsyncData(() => agentStore.GET_AllAppAgents(), {
+  lazy: true,
+})
+const { error: chatError, execute: getChat } = await useAsyncData(() =>
+  chatStore.GET_Chat(currentChatId.value!.toString()), { immediate: false })
+
+errorHandler(chatError)
+
+errorHandler(error)
 async function ensureWsTokenAndConnect() {
   if (isTokenFetching.value) {
     return
@@ -77,13 +85,18 @@ async function handleServerMessage(data: string) {
     return
   }
 
-  // Check if the parsed JSON is an error
   if (parsedData.errorType) {
     isWebSocketStreaming.value = false
     if (assistantMessage) {
       assistantMessage.id = ''
     }
-    await ensureWsTokenAndConnect()
+
+    if (currentChatId.value) {
+      getChat()
+      chatStore.GET_ChatMessages(currentChatId.value)
+    }
+    executeGetAgents()
+
     return
   }
 
@@ -216,10 +229,6 @@ const isSelectedAgentActive = computed(() => {
     return true
   }
 })
-const { error } = await useAsyncData(() => agentStore.GET_AllAppAgents(), {
-  lazy: true,
-})
-errorHandler(error)
 
 function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
   const { chatId, title } = parsedData
