@@ -31,7 +31,14 @@ export default {
     go_back: 'Retourner',
 
   },
-
+  placeholders: {
+    choose: 'Choisir',
+    choose_user: 'Choisissez un utilisateur',
+    choose_agent: 'Choisissez un agent',
+    choose_agent_status: 'Choisissez le statut de l\'agent',
+    choose_status: 'Choisissez un statut',
+    choose_role: 'Choisissez un rôle',
+  },
   empty_title: 'Rien à voir ici encore',
   empty_description: 'Il n\'y a actuellement aucun élément à afficher ici.',
   view_all: 'Voir tout',

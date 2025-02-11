@@ -30,7 +30,14 @@ export default {
     description_default: 'Ein unbekannter Fehler ist aufgetreten. Bitte wenden Sie sich an den Support, wenn dieses Problem weiterhin besteht.',
     go_back: 'Zurückgehen',
   },
-
+  placeholders: {
+    choose: 'Wählen',
+    choose_user: 'Wählen Sie einen Benutzer',
+    choose_agent: 'Wählen Sie einen Agenten',
+    choose_agent_status: 'Wählen Sie den Agentenstatus',
+    choose_status: 'Wählen Sie den Status',
+    choose_role: 'Wählen Sie eine Rolle',
+  },
   empty_title: 'Hier gibt es noch nichts zu sehen',
   empty_description: 'Hier gibt es keine Elemente, die angezeigt werden sollen.',
   view_all: 'Alle anzeigen',

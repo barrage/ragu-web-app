@@ -34,6 +34,15 @@ export default {
 
   },
 
+  placeholders: {
+    choose: 'Odaberite',
+    choose_user: 'Odaberite korisnika',
+    choose_agent: 'Odaberite agenta',
+    choose_agent_status: 'Odaberite status agenta',
+    choose_status: 'Odaberite status',
+    choose_role: 'Odaberite ulogu',
+  },
+
   empty_title: 'Ovdje još nema ništa za prikaz',
   empty_description: 'Trenutno nema elemenata za prikaz.',
   view_all: 'Prikaži sve',
