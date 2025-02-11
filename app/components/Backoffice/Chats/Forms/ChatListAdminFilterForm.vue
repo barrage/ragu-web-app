@@ -64,7 +64,7 @@ const { status: getUsersStatus, data: allUsersData } = await useAsyncData(() => 
         <ElFormItem :label="t('chat.user')" prop="status">
           <ElSelect
             v-model="chatListAdminFilterForm.userId"
-            :placeholder="t('agents.placeholder.filter_by_status')"
+            :placeholder="t('placeholders.choose_user')"
             clearable
             data-testid="bo-agents-list-filter-form-status-select"
             :disabled="getUsersStatus === 'pending'"
@@ -81,7 +81,7 @@ const { status: getUsersStatus, data: allUsersData } = await useAsyncData(() => 
         <ElFormItem :label="t('agents.title')" prop="status">
           <ElSelect
             v-model="chatListAdminFilterForm.agentId"
-            :placeholder="t('agents.placeholder.filter_by_status')"
+            :placeholder="t('placeholders.choose_agent')"
             clearable
             data-testid="bo-agents-list-filter-form-status-select"
             :disabled="getAgentsStatus === 'pending'"

@@ -30,7 +30,14 @@ export default {
     description_default: 'Ocorreu um erro desconhecido. Entre em contato com o suporte se isso persistir.',
     go_back: 'Voltar',
   },
-
+  placeholders: {
+    choose: 'Escolher',
+    choose_user: 'Escolha um usuário',
+    choose_agent: 'Escolha um agente',
+    choose_agent_status: 'Escolha o status do agente',
+    choose_status: 'Escolha o status',
+    choose_role: 'Escolha um papel',
+  },
   empty_title: 'Ainda não há nada para ver aqui',
   empty_description: 'Não há itens para exibir aqui.',
   view_all: 'Ver tudo',

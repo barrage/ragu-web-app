@@ -30,7 +30,14 @@ export default {
     description_default: 'Si è verificato un errore sconosciuto. Contatta il supporto se il problema persiste.',
     go_back: 'Torna indietro',
   },
-
+  placeholders: {
+    choose: 'Scegliere',
+    choose_user: 'Scegli un utente',
+    choose_agent: 'Scegli un agente',
+    choose_agent_status: 'Scegli lo stato dell\'agente',
+    choose_status: 'Scegli lo stato',
+    choose_role: 'Scegli un ruolo',
+  },
   empty_title: 'Niente da vedere qui ancora',
   empty_description: 'Non ci sono elementi da visualizzare qui.',
   view_all: 'Visualizza tutto',

@@ -96,7 +96,7 @@ const submitAgentFilterForm = async (formEl: FormInstance | undefined) => {
         <ElFormItem :label="t('users.user_card.status')" prop="status">
           <ElSelect
             v-model="usersFilterForm.status"
-            :placeholder="t('agents.placeholder.filter_by_status')"
+            :placeholder="t('placeholders.choose_status')"
             clearable
             data-testid="bo-users-list-filter-form-status-select"
           >
@@ -112,7 +112,7 @@ const submitAgentFilterForm = async (formEl: FormInstance | undefined) => {
         <ElFormItem :label="t('users.user_card.role')" prop="role">
           <ElSelect
             v-model="usersFilterForm.role"
-            placeholder="Filter by role"
+            :placeholder="t('placeholders.choose_role')"
             clearable
             data-testid="bo-users-list-filter-form-status-select"
           >

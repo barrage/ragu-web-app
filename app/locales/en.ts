@@ -30,7 +30,14 @@ export default {
     description_default: 'An unknown error has occurred. Please contact support if this persists.',
     go_back: 'Go Back',
   },
-
+  placeholders: {
+    choose: 'Choose',
+    choose_user: 'Choose a user',
+    choose_agent: 'Choose an agent',
+    choose_agent_status: 'Choose agent status',
+    choose_status: 'Choose status',
+    choose_role: 'Choose a role',
+  },
   empty_title: 'Nothing to see here yet',
   empty_description: 'There are no items to display here.',
   view_all: 'View all',

@@ -30,7 +30,14 @@ export default {
     description_default: '不明なエラーが発生しました。この問題が続く場合はサポートに連絡してください。',
     go_back: '戻る',
   },
-
+  placeholders: {
+    choose: '選択する',
+    choose_user: 'ユーザーを選択',
+    choose_agent: 'エージェントを選択',
+    choose_agent_status: 'エージェントのステータスを選択',
+    choose_status: 'ステータスを選択',
+    choose_role: '役割を選択',
+  },
   empty_title: 'まだ何も見ることができません',
   empty_description: 'ここには表示するアイテムはありません。',
   view_all: 'すべて表示',
