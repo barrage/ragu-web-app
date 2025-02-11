@@ -113,7 +113,7 @@ const submitSelection = async () => {
   }
   else {
     ElNotification({
-      title: t('collections.notifications.update_collection'),
+      title: t('collections.notifications.delete_title'),
       message: t('collections.assign_collection.notification.update_collection'),
       type: 'success',
       customClass: 'success',
