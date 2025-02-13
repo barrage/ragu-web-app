@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // IMPORTS
+import { Teleport } from 'vue'
 import ProfileOverviewModal from '../ProfileOverviewModal.vue'
 import { useDropdownKeyboard } from '~/utils/useDropdownKeyboard'
 import AdminIcon from '~/assets/icons/svg/admin.svg'
@@ -222,12 +223,14 @@ function switchRoute() {
       </el-button>
     </template>
   </ElDialog>
-  <ProfileOverviewModal
-    v-model="isProfileModelVisible"
-    :avatar="oAuthStore.user?.avatar"
-    :user="oAuthStore.user"
-    upload-type="users"
-  />
+  <Teleport to="body">
+    <ProfileOverviewModal
+      v-model="isProfileModelVisible"
+      :avatar="oAuthStore.user?.avatar"
+      :user="oAuthStore.user"
+      upload-type="users"
+    />
+  </Teleport>
 </template>
 
 <style lang="scss" scoped>

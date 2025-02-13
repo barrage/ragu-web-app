@@ -36,7 +36,6 @@ const { t } = useI18n()
             :size="32"
             fit="cover"
             default-image="agent"
-            :content-type="agent?.avatar?.contentType"
           />
           <p class="agent-select-text">
             {{ formatStringMaxLenght(agent?.name, 60) }}

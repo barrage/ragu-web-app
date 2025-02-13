@@ -24,7 +24,6 @@ const { t } = useI18n()
           :size="58"
           fit="cover"
           default-image="agent"
-          :content-type="agent?.avatar?.contentType"
         />
         <p class="agent-name-text">
           {{ formatStringMaxLenght(agent?.name, 60) }}

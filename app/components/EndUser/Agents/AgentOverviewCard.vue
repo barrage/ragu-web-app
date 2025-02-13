@@ -41,7 +41,6 @@ const redirectToAgentEdit = () => {
         :size="62"
         fit="cover"
         default-image="agent"
-        :content-type="agent?.avatar?.contentType"
       />
       <div class="agent-name-status-wrapper">
         <p class="agent-name-text">

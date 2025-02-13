@@ -41,7 +41,6 @@ const { t } = useI18n()
           :size="24"
           fit="cover"
           default-image="agent"
-          :content-type="useAgentStore().getAgentStoredAvatar(String(chat.agentId))?.contentType"
         />
 
         <span v-if="!isSidebarCollapsed" class="chat-title">{{ chat.title || $t('chat.chat') }}</span>

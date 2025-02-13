@@ -6,7 +6,7 @@ import type { User } from '~/types/users'
 const props = defineProps<{
   user: User | undefined | null
   uploadType?: 'users' | 'agents' | 'adminUsers'
-  avatar?: object
+  avatar?: string | null | undefined
 }>()
 
 const emits = defineEmits<Emits>()

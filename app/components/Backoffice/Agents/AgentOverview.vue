@@ -88,7 +88,6 @@ const handleRemovePicture = async () => {
             size="large"
             fit="cover"
             default-image="agent"
-            :content-type="agent?.agent?.avatar?.contentType"
           />
         </div>
       </div>

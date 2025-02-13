@@ -11,7 +11,7 @@ import type { User } from '~/types/users'
 const props = defineProps<{
   user: User | undefined | null
   uploadType: 'users' | 'agents' | 'adminUsers'
-  avatar?: object
+  avatar?: string | null | undefined
 }>()
 
 const emits = defineEmits<{
@@ -112,7 +112,6 @@ const handleRemovePicture = async () => {
             size="large"
             fit="cover"
             default-image="user"
-            :content-type="userAuth.user?.avatar?.contentType"
           />
         </div>
       </div>
