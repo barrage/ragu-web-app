@@ -33,6 +33,8 @@ const agentData = computed(() => {
     avatar: props.agent?.agent?.avatar || undefined,
     version: props.agent?.configuration?.version || '-',
     errorMessages: props.agent?.configuration?.agentInstructions?.errorMessage || t('agents.agent_card.unknown_instruction'),
+    presencePenalty: props.agent?.configuration?.presencePenalty || t('agents.agent_card.unknown_instruction'),
+    maxCompletionTokens: props.agent?.configuration?.maxCompletionTokens || t('agents.agent_card.unknown_instruction'),
   }
 })
 </script>
@@ -91,6 +93,30 @@ const agentData = computed(() => {
         <div class="agent-details-custom-label">
           <BrainIcon size="18px" />
           <span>  {{ t('agents.labels.version') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      :label="t('agents.labels.presencePenalty')"
+      :description="agentData.presencePenalty?.toString()"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <BrainIcon size="18px" />
+          <span>  {{ t('agents.labels.presencePenalty') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      :label="t('agents.labels.configuration_max_completion_tokens')"
+      :description="agentData.maxCompletionTokens?.toString()"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <BrainIcon size="18px" />
+          <span>  {{ t('agents.labels.configuration_max_completion_tokens') }}</span>
         </div>
       </template>
     </LabelDescriptionItem>

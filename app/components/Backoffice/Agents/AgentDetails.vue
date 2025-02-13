@@ -136,7 +136,7 @@ const tabOptions = computed((): TabOption[] => {
       label: t('agents.titles.tools'),
       icon: AgentTools,
       component: defineAsyncComponent(() =>
-        import('~/components/Backoffice/Agents/AgentDetails/AgentTools/index.vue'),
+        import('~/components/Backoffice/Agents/AgentDetails/AgentTools/AgentTools.vue'),
       ),
     },
   ]

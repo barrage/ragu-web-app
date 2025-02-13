@@ -1157,6 +1157,10 @@ export default {
       feedback: 'Povratna informacija',
       message: 'Poruka',
       errorMessage: 'Prilagođena poruka o pogrešci',
+      presencePenalty: 'Prevencija ponavljanja',
+      maxCompletionTokens: 'Ograniči duljinu odgovora agenta',
+      configuration_max_completion_tokens: 'Duljina odgovora',
+
     },
     buttons: {
       create: 'Dodaj agenta',

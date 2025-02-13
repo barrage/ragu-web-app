@@ -9,6 +9,8 @@ import BrainIcon from '~/assets/icons/svg/brain.svg'
 import MeetUpLoader from '~/components/MeetUpLoader.vue'
 import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import DeleteIcon from '~/assets/icons/svg/delete-person.svg'
+import AddIcon from '~/assets/icons/svg/add.svg'
+import MinusIcon from '~/assets/icons/svg/minus.svg'
 
 const props = defineProps<{
   singleAgent: Agent | null | undefined
@@ -37,6 +39,8 @@ const editAgentForm = reactive<EditAgentPayload>({
     llmProvider: '',
     model: '',
     temperature: 0.1,
+    presencePenalty: 0,
+    maxCompletionTokens: 0,
     instructions: {
       titleInstruction: '',
       languageInstruction: '',
@@ -197,6 +201,8 @@ const setForm = () => {
   editAgentForm.configuration.instructions.errorMessage = props.singleAgent?.configuration?.agentInstructions?.errorMessage ?? ''
   editAgentForm.configuration.instructions.promptInstruction = props.singleAgent?.configuration?.agentInstructions?.promptInstruction ?? ''
   editAgentForm.active = props.singleAgent?.agent?.active ?? true
+  editAgentForm.configuration.presencePenalty = props.singleAgent?.configuration?.presencePenalty ?? 0
+  editAgentForm.configuration.maxCompletionTokens = props.singleAgent?.configuration?.maxCompletionTokens ?? 0
 }
 
 onMounted(() => {
@@ -477,6 +483,49 @@ const handleRemovePicture = async () => {
           type="textarea"
           data-testid="bo-edit-agent-form-context-input"
         />
+      </ElFormItem>
+
+      <!-- Presence Penalty -->
+      <ElFormItem
+        class="agent-temperature-form-item"
+        :label="t('agents.labels.presencePenalty')"
+        prop="configuration.presencePenalty"
+      >
+        <el-card class="is-accent">
+          <div class="card-body ">
+            <ElTag
+              type="primary"
+            >
+              {{ editAgentForm.configuration.presencePenalty }}
+            </ElTag>
+            <ElSlider
+              v-model="editAgentForm.configuration.presencePenalty"
+              :min="-2"
+              :max="2"
+              :step="0.1"
+              data-testid="bo-Create-agent-form-presencePenalty-input"
+            />
+          </div>
+        </el-card>
+      </ElFormItem>
+
+      <!-- Max Completion Tokens -->
+      <ElFormItem
+        class="agent-temperature-form-item"
+        :label="t('agents.labels.maxCompletionTokens')"
+        prop="configuration.maxCompletionTokens"
+      >
+        <ElInputNumber
+          v-model="editAgentForm.configuration.maxCompletionTokens"
+          :min="0"
+        >
+          <template #increase-icon>
+            <AddIcon />
+          </template>
+          <template #decrease-icon>
+            <MinusIcon />
+          </template>
+        </ElInputNumber>
       </ElFormItem>
 
       <div class="group-heading-wrapper">

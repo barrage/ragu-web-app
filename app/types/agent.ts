@@ -93,6 +93,8 @@ export interface Configuration {
   temperature: number
   updatedAt: Date
   version: number
+  presencePenalty: number
+  maxCompletionTokens: number
 }
 
 export interface Instructions {
@@ -117,6 +119,8 @@ export interface AgentConfiguration {
   llmProvider: string
   model: string
   temperature: number
+  presencePenalty: number
+  maxCompletionTokens: number
 }
 
 export interface AgentPayload {

@@ -852,6 +852,10 @@ export default {
       feedback: 'Rückmeldung',
       message: 'Nachricht',
       errorMessage: 'Benutzerdefinierte Fehlermeldung',
+      presencePenalty: 'Wiederholungsvermeidung',
+      maxCompletionTokens: 'Limitieren Sie die Länge der Agentenantwort',
+      configuration_max_completion_tokens: 'Antwortlänge',
+
     },
     buttons: {
       create: 'Agent Erstellen',

@@ -854,6 +854,9 @@ export default {
       feedback: 'Feedback',
       message: 'Mensagem',
       errorMessage: 'Mensagem de erro personalizada',
+      presencePenalty: 'Prevenção de Repetição',
+      maxCompletionTokens: 'Limitar o comprimento da resposta do agente',
+      configuration_max_completion_tokens: 'Comprimento da resposta',
     },
 
     buttons: {

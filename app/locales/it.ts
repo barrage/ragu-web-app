@@ -847,6 +847,9 @@ export default {
       feedback: 'Feedback',
       message: 'Messaggio',
       errorMessage: 'Messaggio di errore personalizzato',
+      presencePenalty: 'Prevenzione della ripetizione',
+      maxCompletionTokens: 'Limita la lunghezza della risposta dell\'agente',
+      configuration_max_completion_tokens: 'Lunghezza della risposta',
     },
     buttons: {
       create: 'Crea Agente',

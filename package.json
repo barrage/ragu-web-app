@@ -44,10 +44,10 @@
     "element-plus": "^2.7.7",
     "eslint": "^8.57.0",
     "eslint-plugin-format": "^0.1.2",
-    "happy-dom": "^14.12.3",
+    "happy-dom": "^15.10.2",
     "lint-staged": "^15.2.7",
     "sass": "^1.77.8",
-    "vitest": "^2.0.4"
+    "vitest": "^2.1.9"
   },
   "overrides": {
     "vue": "latest"

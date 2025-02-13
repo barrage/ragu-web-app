@@ -7,6 +7,8 @@ import AzureIcon from '~/assets/icons/svg/azure.svg'
 import OllamaIcon from '~/assets/icons/svg/ollama.svg'
 import BrainIcon from '~/assets/icons/svg/brain.svg'
 import MeetUpLoader from '~/components/MeetUpLoader.vue'
+import AddIcon from '~/assets/icons/svg/add.svg'
+import MinusIcon from '~/assets/icons/svg/minus.svg'
 
 const emits = defineEmits<Emits>()
 
@@ -15,8 +17,8 @@ interface Emits {
 
 }
 
-const { $api } = useNuxtApp()
 const { t } = useI18n()
+const { $api } = useNuxtApp()
 const MAX_CONTEXT = 1000
 
 const createAgentFormRef = ref<FormInstance>()
@@ -30,6 +32,8 @@ const createAgentForm = reactive<AgentDetail>({
     llmProvider: '',
     model: '',
     temperature: 0.1,
+    presencePenalty: 0,
+    maxCompletionTokens: 0,
     instructions: {
       titleInstruction: '',
       languageInstruction: '',
@@ -126,6 +130,12 @@ const rules = computed<FormRules>(() => ({
   ],
   'active': [
     { required: true, message: t('agents.rules.active.required_message'), trigger: 'change' },
+  ],
+  'configuration.presencePenalty': [
+    { required: true, message: t('agents.rules.presencePenalty.required_message'), trigger: 'change' },
+  ],
+  'configuration.maxCompletionTokens': [
+    { required: true, message: t('agents.rules.maxCompletionTokens.required_message'), trigger: 'change' },
   ],
 }))
 
@@ -385,6 +395,49 @@ const scrollIntoViewOptions = {
           type="textarea"
           data-testid="bo-Create-agent-form-context-input"
         />
+      </ElFormItem>
+
+      <!-- Presence Penalty -->
+      <ElFormItem
+        class="agent-temperature-form-item"
+        :label="t('agents.labels.presencePenalty')"
+        prop="configuration.presencePenalty"
+      >
+        <el-card class="is-accent">
+          <div class="card-body ">
+            <ElTag
+              type="primary"
+            >
+              {{ createAgentForm.configuration.presencePenalty }}
+            </ElTag>
+            <ElSlider
+              v-model="createAgentForm.configuration.presencePenalty"
+              :min="-2"
+              :max="2"
+              :step="0.1"
+              data-testid="bo-Create-agent-form-presencePenalty-input"
+            />
+          </div>
+        </el-card>
+      </ElFormItem>
+
+      <!-- Max Completion Tokens -->
+      <ElFormItem
+        class="agent-temperature-form-item"
+        :label="t('agents.labels.maxCompletionTokens')"
+        prop="configuration.maxCompletionTokens"
+      >
+        <ElInputNumber
+          v-model="createAgentForm.configuration.maxCompletionTokens"
+          :min="0"
+        >
+          <template #increase-icon>
+            <AddIcon />
+          </template>
+          <template #decrease-icon>
+            <MinusIcon />
+          </template>
+        </ElInputNumber>
       </ElFormItem>
 
       <div class="group-heading-wrapper">

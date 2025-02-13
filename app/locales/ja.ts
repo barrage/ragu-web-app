@@ -845,6 +845,9 @@ export default {
       feedback: 'フィードバック',
       message: 'メッセージ',
       errorMessage: 'カスタムエラーメッセージ',
+      presencePenalty: '繰り返しの防止',
+      maxCompletionTokens: 'エージェントの応答の長さを制限する',
+      configuration_max_completion_tokens: '応答の長さ',
     },
     buttons: {
       create: 'エージェントを作成',
