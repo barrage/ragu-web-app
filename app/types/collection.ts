@@ -48,3 +48,9 @@ export interface RemoveCollection {
   name: string
   provider: string
 }
+
+export interface SearchDocumentsRequest {
+  collectionId: string
+  limit: number
+  query: string
+}

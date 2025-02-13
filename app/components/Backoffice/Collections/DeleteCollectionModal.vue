@@ -6,7 +6,7 @@ import type { Collection } from '~/types/collection'
 // PROPS & EMITS
 
 const props = defineProps<{
-  collection: Collection | null
+  collection: Collection | null | undefined
 }>()
 
 const emits = defineEmits<Emits>()

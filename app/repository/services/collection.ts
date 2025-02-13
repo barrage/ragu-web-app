@@ -1,9 +1,10 @@
 import FetchFactory from '../fetchFactory'
-import type { Collection, CollectionDetail, CollectionListResponse, CollectionResponse } from '~/types/collection'
+import type { Collection, CollectionDetail, CollectionListResponse, CollectionResponse, SearchDocumentsRequest, SearchDocumentsResponse } from '~/types/collection'
 
 export default class CollectionService extends FetchFactory {
   // Endpoint for collections-related API requests.
   private readonly endpoint: string = '/collections'
+  private readonly searchEndpoint: string = '/search'
 
   /**
    * Fetches a list of collections with pagination.
@@ -110,6 +111,21 @@ export default class CollectionService extends FetchFactory {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to fetch embedding models with code ${error?.statusCode}`,
+      })
+    }
+  }
+
+  async SearchDocumentsChunks(body: SearchDocumentsRequest): Promise<any> {
+    try {
+      return await this.$fetch(`${this.searchEndpoint}`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to search documents with code ${error?.statusCode}`,
       })
     }
   }

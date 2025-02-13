@@ -1515,6 +1515,30 @@ export default {
       save_hint: 'Kliknite na gumb Spremi za primjenu promjena',
     },
 
+    search: {
+      title: 'Testirajte dokumente u kolekciji',
+      description: 'Pretražite i pregledajte dokumente u kolekciji',
+      results: 'rezultati',
+      no_results: 'Nema rezultata',
+      query_placeholder: 'Unesite vaš upit...',
+      query_label: 'Pretraži',
+      limit_label: 'Limit rezultata',
+      limit_placeholder: 'Unesite limit rezultata...',
+      button: 'Pretraži',
+      results_title: 'Rezultati pretraživanja',
+      resuts_overview: 'Pregled rezultata pretraživanja',
+      empty_state_title: 'Nema dostupnih dokumenata',
+      empty_state_description: 'Trenutno nema dokumenata za prikaz. Dodajte dokumente u ovu kolekciju.',
+      query_required: 'Unesite upit',
+      query_min_length: 'Upit mora sadržavati barem 3 znaka',
+      notes: {
+        behavior: 'Pogledajte kako se vaša kolekcija ponaša na temelju ulaznog upita.',
+        limit: 'Ograničite broj rezultata pomicanjem limitatora na željenu vrijednost.',
+        terms: 'Pokušajte pretraživati relevantne terminologije temeljene na ulaznom upitu i dijelovima dokumenta.',
+        expand: 'Kliknite na bilo koji rezultat za proširivanje i pregled cijelog teksta.',
+      },
+    },
+
   },
 
   auth: {

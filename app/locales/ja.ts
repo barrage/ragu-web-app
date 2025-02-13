@@ -1196,6 +1196,30 @@ export default {
       move_hint: '左パネルからドキュメントを選択し、矢印をクリックしてコレクションに追加するか、右パネルからドキュメントを選択し、矢印をクリックして削除します',
       save_hint: '変更を適用するには、[保存] ボタンをクリックします',
     },
+
+    search: {
+      title: 'コレクション内のドキュメントをテストする',
+      description: 'コレクション内のドキュメントを検索し、プレビューします',
+      results: '結果',
+      no_results: '結果が見つかりません',
+      query_placeholder: 'クエリを入力してください...',
+      query_label: '検索',
+      limit_label: '結果の制限',
+      limit_placeholder: '結果の制限を入力してください...',
+      button: '検索',
+      results_title: '検索結果',
+      resuts_overview: '検索結果の概要',
+      empty_state_title: '利用可能なドキュメントはありません',
+      empty_state_description: '現在、ここに表示するドキュメントはありません。このコレクションにドキュメントを追加してください。',
+      query_required: 'クエリを入力してください',
+      query_min_length: 'クエリは3文字以上でなければなりません',
+      notes: {
+        behavior: '入力クエリに基づいて、コレクションの動作を確認します。',
+        limit: 'スライダーを希望の数値に合わせて、結果の数を制限します。',
+        terms: '入力クエリとドキュメントチャンクに基づいて、関連する用語を検索します。',
+        expand: '結果をクリックして展開し、完全なテキストを表示します。',
+      },
+    },
   },
 
   users: {

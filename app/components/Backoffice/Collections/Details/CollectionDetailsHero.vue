@@ -7,19 +7,14 @@ const props = defineProps<{
   singleCollection: CollectionResponse | null | undefined
 }>()
 
-const emits = defineEmits<{
-  (event: 'collectionDeleted'): void
-
-}>()
-
 const { t } = useI18n()
+const router = useRouter()
 
 const collectionName = computed(() => {
   return props.singleCollection?.collection?.name || t('collections.collection_card.unknown_collectin_name')
 })
 
-/* Delete User */
-const selectedCollectionDelete = ref<CollectionResponse | undefined | null>(props.singleCollection)
+/* Delete Collection */
 const deleteCollectionModalVisible = ref(false)
 
 const openCollectionUserModal = () => {
@@ -27,7 +22,8 @@ const openCollectionUserModal = () => {
 }
 
 const handleCollectionDeleted = () => {
-  emits('collectionDeleted')
+  deleteCollectionModalVisible.value = false
+  router.push(`/admin/collections`)
 }
 </script>
 
@@ -47,13 +43,18 @@ const handleCollectionDeleted = () => {
         plain
         type="danger"
         size="small"
-        disabled
         @click="openCollectionUserModal"
       >
         <DeleteIcon size="20px" />  {{ t('users.user_card.delete_user_title') }}
       </ElButton>
     </div>
   </div>
+
+  <DeleteCollectionModal
+    v-model="deleteCollectionModalVisible"
+    :collection="singleCollection?.collection"
+    @collection-deleted="handleCollectionDeleted"
+  />
 </template>
 
 <style>

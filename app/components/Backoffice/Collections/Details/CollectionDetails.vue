@@ -37,7 +37,11 @@ const { activeTab } = useTabQuery(
           </div>
         </template>
         <template v-if="activeTab === 'details'">
-          <CollectionDetailsTab :single-collection="props.singleCollection" />
+          <CollectionDetailsTab
+            v-motion-slide-bottom
+            :duration="400"
+            :single-collection="props.singleCollection"
+          />
         </template>
       </ElTabPane>
 
@@ -52,7 +56,11 @@ const { activeTab } = useTabQuery(
           </div>
         </template>
         <template v-if="activeTab === 'documents'">
-          <CollectionDocumentsTab :single-collection="props.singleCollection" />
+          <CollectionDocumentsTab
+            v-motion-slide-bottom
+            :duration="400"
+            :single-collection="props.singleCollection"
+          />
         </template>
       </ElTabPane>
     </ElTabs>

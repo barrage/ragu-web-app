@@ -1205,6 +1205,30 @@ export default {
       move_hint: 'Wählen Sie Dokumente aus dem linken Panel aus und klicken Sie auf den Pfeil, um sie zur Sammlung hinzuzufügen, oder wählen Sie Dokumente aus dem rechten Panel aus und klicken Sie auf den Pfeil, um sie zu entfernen',
       save_hint: 'Klicken Sie auf die Schaltfläche "Speichern", um Ihre Änderungen zu übernehmen',
     },
+
+    search: {
+      title: 'Dokumente in der Sammlung testen',
+      description: 'Dokumente in der Sammlung suchen und vorschauen',
+      results: 'Ergebnisse',
+      no_results: 'Keine Ergebnisse gefunden',
+      query_placeholder: 'Geben Sie Ihre Abfrage ein...',
+      query_label: 'Suche',
+      limit_label: 'Ergebnislimit',
+      limit_placeholder: 'Geben Sie das Ergebnislimit ein...',
+      button: 'Suche',
+      results_title: 'Suchergebnisse',
+      resuts_overview: 'Übersicht der Suchergebnisse',
+      empty_state_title: 'Keine Dokumente verfügbar',
+      empty_state_description: 'Derzeit gibt es keine Dokumente, die hier angezeigt werden können. Bitte fügen Sie Dokumente zu dieser Sammlung hinzu.',
+      query_required: 'Bitte geben Sie eine Abfrage ein',
+      query_min_length: 'Die Abfrage muss mindestens 3 Zeichen lang sein',
+      notes: {
+        behavior: 'Sehen Sie, wie Ihre Sammlung basierend auf der Eingabeabfrage verhält.',
+        limit: 'Beschränken Sie die Anzahl der Ergebnisse, indem Sie den Schieberegler auf die gewünschte Anzahl setzen.',
+        terms: 'Versuchen Sie, nach den relevanten Begriffen basierend auf der Eingabeabfrage und Dokumentenabschnitten zu suchen.',
+        expand: 'Klicken Sie auf jedes Ergebnis, um es zu erweitern und den vollständigen Text anzuzeigen.',
+      },
+    },
   },
 
   users: {

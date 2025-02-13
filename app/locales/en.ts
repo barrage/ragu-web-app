@@ -1,3 +1,5 @@
+import SearchInput from '~/components/SearchInput.vue'
+
 export default {
   seo: {
     defaultTitle: 'LLMAO - Interact with Custom AI Agents',
@@ -1350,6 +1352,7 @@ export default {
       modelPlaceholder: 'Select Model',
       collectionName: 'Please enter the collection name',
       empty_collection: 'No collection available',
+      query: 'Enter your query...',
     },
 
     collection_card: {
@@ -1374,6 +1377,8 @@ export default {
       model: 'Model',
       embedder: 'Embedder',
       add_document: 'Add documents to collection',
+      query: 'Query',
+      limit: 'Result Limit',
     },
 
     tooltip: {
@@ -1382,7 +1387,7 @@ export default {
 
     deleteModal: {
       title: 'Delete Collection',
-      text: 'Please select collections to delete',
+      text: 'Are you sure you want to delete this collection?',
 
     },
     rules: {
@@ -1505,6 +1510,29 @@ export default {
       search_hint: 'Use the search box to filter documents by name',
       move_hint: 'Select documents from the left panel and click the arrow to add them to the collection, or select documents from the right panel and click the arrow to remove them',
       save_hint: 'Click the Save button to apply your changes',
+    },
+    search: {
+      title: 'Test documents in collection',
+      description: 'Search and preview documents chunks in collection',
+      results: 'results',
+      no_results: 'No results found',
+      query_placeholder: 'Enter your query...',
+      query_label: 'Search',
+      limit_label: 'Result Limit',
+      limit_placeholder: 'Enter result limit...',
+      button: 'Search',
+      results_title: 'Search Results',
+      resuts_overview: 'Search results overview',
+      empty_state_title: 'No documents available',
+      empty_state_description: 'Currently, there are no documents to display here. Please add documents to this collection.',
+      query_required: 'Please enter a query',
+      query_min_length: 'Query must be at least 3 characters long',
+      notes: {
+        behavior: 'See how your collection behaves based on the input query.',
+        limit: 'Limit the amount of results by setting the slider to the desired amount.',
+        terms: 'Try searching for the relevant terms based on input query and document chunks.',
+        expand: 'Click on any result to expand and view the complete text.',
+      },
     },
   },
 

@@ -46,7 +46,7 @@ const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDo
 errorHandler(documentError)
 
 const { execute: updateCollection, error: collectionError, status } = await useAsyncData(() => $api.embedding.UpdateCollectionWithDocuments(payload.value), { immediate: false })
-const { error, execute: getCollection } = await useAsyncData(() => $api.collection.GetSingleCollection(collectionId?.value), { immediate: false })
+const { error, execute: getCollection, data: getSingleCollection } = await useAsyncData(() => $api.collection.GetSingleCollection(collectionId?.value), { immediate: false })
 
 errorHandler(error)
 
@@ -170,6 +170,11 @@ onMounted(() => {
       </template>
     </el-transfer>
 
+    <CollectionSearch
+      :assigned-documents="getSingleCollection?.documents || singleCollection?.documents"
+      :collection-id="collectionId"
+    />
+
     <ConformationModal
       :is-visible="showLeaveConfirmation"
       :title="t('unsaved_changes.title')"
@@ -197,6 +202,7 @@ onMounted(() => {
     border: 0;
     margin-top: 1.5rem;
     width: 100%;
+    margin-bottom: 4rem;
 
     &:deep(.barrage-transfer-panel) {
       flex: 1;

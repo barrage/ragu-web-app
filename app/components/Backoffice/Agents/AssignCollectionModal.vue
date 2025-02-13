@@ -213,7 +213,7 @@ const submitAssignCollectionForm = async () => {
           />
           <span class="response-depth-note"> {{ t('collections.assign_collection.descriptions.response_depth.note') }}</span>
         </div>
-        <el-divider class="is-weak" />
+
         <!-- Form Actions -->
         <ElFormItem>
           <div class="form-actions">

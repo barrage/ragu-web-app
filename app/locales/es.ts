@@ -1079,7 +1079,7 @@ export default {
 
     deleteModal: {
       title: 'Eliminar colección',
-      text: '¿Estás seguro de que deseas eliminar esta colección?',
+      text: '¿Está seguro de que desea eliminar esta colección?',
     },
     rules: {
       name: {
@@ -1199,6 +1199,30 @@ export default {
       search_hint: 'Utiliza el campo de búsqueda para buscar y filtrar documentos por nombre',
       move_hint: 'Selecciona documentos del panel izquierdo y haz clic en la flecha para agregarlos a la colección, o selecciona documentos del panel derecho y haz clic en la flecha para eliminarlos',
       save_hint: 'Haz clic en el botón Guardar para aplicar tus cambios',
+    },
+
+    search: {
+      title: 'Probar documentos en la colección',
+      description: 'Buscar y previsualizar fragmentos de documentos en la colección',
+      results: 'resultados',
+      no_results: 'No se encontraron resultados',
+      query_placeholder: 'Introduce tu consulta...',
+      query_label: 'Buscar',
+      limit_label: 'Límite de resultados',
+      limit_placeholder: 'Introduce el límite de resultados...',
+      button: 'Buscar',
+      results_title: 'Resultados de la búsqueda',
+      resuts_overview: 'Resumen de resultados de búsqueda',
+      empty_state_title: 'No hay documentos disponibles',
+      empty_state_description: 'Actualmente, no hay documentos para mostrar aquí. Por favor, agrega documentos a esta colección.',
+      query_required: 'Por favor, introduce una consulta',
+      query_min_length: 'La consulta debe tener al menos 3 caracteres',
+      notes: {
+        behavior: 'Ver cómo se comporta tu colección basada en la consulta de entrada.',
+        limit: 'Limita el número de resultados ajustando el control deslizante al número deseado.',
+        terms: 'Busca términos relevantes basados en la consulta de entrada y fragmentos de documentos.',
+        expand: 'Haz clic en cualquier resultado para expandirlo y ver el texto completo.',
+      },
     },
   },
 

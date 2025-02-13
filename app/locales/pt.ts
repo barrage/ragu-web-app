@@ -1199,6 +1199,30 @@ export default {
       move_hint: 'Selecione documentos do painel esquerdo e clique na seta para adicioná-los à coleção, ou selecione documentos do painel direito e clique na seta para removê-los',
       save_hint: 'Clique no botão Salvar para aplicar suas alterações',
     },
+
+    search: {
+      title: 'Testar documentos na coleção',
+      description: 'Pesquisar e pré-visualizar fragmentos de documentos na coleção',
+      results: 'resultados',
+      no_results: 'Nenhum resultado encontrado',
+      query_placeholder: 'Digite sua consulta...',
+      query_label: 'Pesquisar',
+      limit_label: 'Limite de resultados',
+      limit_placeholder: 'Digite o limite de resultados...',
+      button: 'Pesquisar',
+      results_title: 'Resultados da pesquisa',
+      resuts_overview: 'Visão geral dos resultados da pesquisa',
+      empty_state_title: 'Nenhum documento disponível',
+      empty_state_description: 'Atualmente, não há documentos para exibir aqui. Por favor, adicione documentos a esta coleção.',
+      query_required: 'Por favor, digite uma consulta',
+      query_min_length: 'A consulta deve ter pelo menos 3 caracteres',
+      notes: {
+        behavior: 'Veja como sua coleção se comporta com base na consulta de entrada.',
+        limit: 'Limite o número de resultados ajustando o cursor no número desejado.',
+        terms: 'Procure termos relevantes com base na consulta de entrada e fragmentos de documentos.',
+        expand: 'Clique em qualquer resultado para expandi-lo e exibir o texto completo.',
+      },
+    },
   },
 
   users: {

@@ -1202,6 +1202,30 @@ export default {
       move_hint: 'Sélectionnez des documents dans le panneau de gauche et cliquez sur la flèche pour les ajouter à la collection, ou sélectionnez des documents dans le panneau de droite et cliquez sur la flèche pour les supprimer',
       save_hint: 'Cliquez sur le bouton Enregistrer pour appliquer vos modifications',
     },
+
+    search: {
+      title: 'Tester les documents dans la collection',
+      description: 'Rechercher et prévisualiser des fragments de documents dans la collection',
+      results: 'résultats',
+      no_results: 'Aucun résultat trouvé',
+      query_placeholder: 'Entrez votre requête...',
+      query_label: 'Rechercher',
+      limit_label: 'Limite de résultats',
+      limit_placeholder: 'Entrez la limite de résultats...',
+      button: 'Rechercher',
+      results_title: 'Résultats de la recherche',
+      resuts_overview: 'Aperçu des résultats de la recherche',
+      empty_state_title: 'Aucun document disponible',
+      empty_state_description: 'Actuellement, il n\'y a pas de documents à afficher ici. Veuillez ajouter des documents à cette collection.',
+      query_required: 'Veuillez entrer une requête',
+      query_min_length: 'La requête doit comporter au moins 3 caractères',
+      notes: {
+        behavior: 'Voir comment votre collection se comporte en fonction de la requête d\'entrée.',
+        limit: 'Limitez le nombre de résultats en ajustant le curseur au nombre souhaité.',
+        terms: 'Recherchez des termes pertinents en fonction de la requête d\'entrée et des fragments de documents.',
+        expand: 'Cliquez sur un résultat pour l\'afficher et voir le texte complet.',
+      },
+    },
   },
 
   users: {
