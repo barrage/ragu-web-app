@@ -38,7 +38,7 @@ const pickerCallback = async (data: any) => {
 
     await executeImport()
 
-    if (importedData.value?.failed && !importedData.value.failed.length || error.value) {
+    if (importedData.value?.failed && importedData.value.failed.length || error.value) {
       ElNotification({
         title: t('documents.notifications.create.error_title'),
         message: t('documents.notifications.create.error_description'),
