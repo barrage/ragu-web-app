@@ -1602,6 +1602,68 @@ export default {
       description: 'Upravljajte kolekcijama i njihovim sadržajem. Dodajte, pregledajte i organizirajte kolekcije za korištenje u chatbotu.',
     },
   },
+
+  global_settings: {
+    title: 'Postavke',
+    description: 'Upravljajte svojim postavkama i odaberite opcije koje vam najbolje odgovaraju',
+    chats_config: {
+      title: 'Globalne postavke chat-a',
+    },
+    info: {
+      title: 'Pregled postavki aplikacije i dostupnih davatelja',
+      chunkers: {
+        title: 'Zadani chunkeri',
+      },
+      document_providers: {
+        title: 'Davatelji dokumenata',
+      },
+      embedding_providers: {
+        title: 'Davatelji ugradnje',
+      },
+      document_types: {
+        title: 'Podržani tipovi datoteka',
+      },
+      vector_providers: {
+        title: 'Davatelji vektora',
+      },
+    },
+
+    overview_title: 'Pregled postavki',
+    titles: {
+      settings: 'Postavke chat-a',
+      chat_max_history_tokens: 'Maksimalni broj tokena povijesti chat-a',
+      agent_presence_penalty: 'Punište za ponavljanje agenta',
+      agent_title_max_completion_tokens: 'Maksimalni broj tokena za generiranje naslova agenta',
+      agent_summary_max_completion_tokens: 'Maksimalni broj tokena za generiranje sažetka agenta',
+      whatsapp_agent_max_completion_tokens: 'Maksimalni broj tokena za odgovore WhatsApp agenta',
+    },
+
+    descriptions: {
+      settings_description: 'Konfigurirajte globalne postavke chat-a i parametre',
+      chat_max_history_tokens: 'Maksimalni broj tokena za zadržavanje u povijesti chat-a',
+      agent_presence_penalty: 'Vrijednost puništa za ponavljanje informacija u odgovorima',
+      agent_title_max_completion_tokens: 'Maksimalni broj tokena za generiranje naslova chat-a',
+      agent_summary_max_completion_tokens: 'Maksimalni broj tokena za generiranje sažetaka chat-a',
+      whatsapp_agent_max_completion_tokens: 'Maksimalni broj tokena za odgovore WhatsApp agenta',
+    },
+
+    labels: {
+      chatMaxHistoryTokens: 'Tokeni povijesti chat-a',
+      agentPresencePenalty: 'Spriječavanje ponavljanja',
+      agentTitleMaxCompletionTokens: 'Tokeni za generiranje naslova',
+      agentSummaryMaxCompletionTokens: 'Tokeni za generiranje sažetaka',
+      whatsappAgentMaxCompletionTokens: 'Tokeni za odgovore WhatsApp agenta',
+    },
+
+    rules: {
+      required: 'Ovo polje je obavezno',
+    },
+    update_button: 'Ažurirajte postavke',
+    update_success_title: 'Postavke uspješno ažurirane',
+    update_success_description: 'Vaše postavke su uspješno ažurirane.',
+    update_error_title: 'Ažuriranje nije uspjelo',
+    update_error_description: 'Došlo je do pogreške prilikom ažuriranja vaših postavki. Molimo pokušajte ponovo.',
+  },
   common: {
     backTo: 'Povratak na {page}',
   },

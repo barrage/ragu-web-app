@@ -1565,6 +1565,67 @@ export default {
       description: 'Assumi il controllo delle tue interazioni di chat con il nostro avanzato sistema di gestione delle chat. Accedi alla cronologia delle chat, analizza i modelli di conversazione, esporta i log delle chat e utilizza funzionalità come modifica in tempo reale e supporto multilingue.',
     },
   },
+
+  global_settings: {
+    title: 'Impostazioni',
+    description: 'Gestisci le tue impostazioni e scegli le opzioni più adatte alle tue esigenze',
+    chats_config: {
+      title: 'Configurazioni globali chat',
+    },
+    info: {
+      title: 'Panoramica delle impostazioni dell\'applicazione e dei provider disponibili',
+      chunkers: {
+        title: 'Chunkers predefiniti',
+      },
+      document_providers: {
+        title: 'Provider di documenti',
+      },
+      embedding_providers: {
+        title: 'Provider di embedding',
+      },
+      document_types: {
+        title: 'Tipi di file supportati',
+      },
+      vector_providers: {
+        title: 'Provider di vettori',
+      },
+    },
+    overview_title: 'Panoramica delle impostazioni',
+    titles: {
+      settings: 'Impostazioni chat',
+      chat_max_history_tokens: 'Numero massimo di token cronologia chat',
+      agent_presence_penalty: 'Penalità ripetizione agente',
+      agent_title_max_completion_tokens: 'Numero massimo di token per la generazione del titolo dell\'agente',
+      agent_summary_max_completion_tokens: 'Lunghezza risposta riepilogo agente',
+      whatsapp_agent_max_completion_tokens: 'Lunghezza risposta agente WhatsApp',
+    },
+
+    descriptions: {
+      settings_description: 'Configura le impostazioni globali delle chat e i parametri',
+      chat_max_history_tokens: 'Numero massimo di token da mantenere nella cronologia delle chat',
+      agent_presence_penalty: 'Valore di penalità per le informazioni ripetute nelle risposte',
+      agent_title_max_completion_tokens: 'Numero massimo di token per la generazione dei titoli delle chat',
+      agent_summary_max_completion_tokens: 'Numero massimo di token per la generazione dei riepiloghi delle chat',
+      whatsapp_agent_max_completion_tokens: 'Numero massimo di token per le risposte di WhatsApp',
+    },
+
+    labels: {
+      chatMaxHistoryTokens: 'Token cronologia chat',
+      agentPresencePenalty: 'Prevenzione ripetizione',
+      agentTitleMaxCompletionTokens: 'Token generazione titolo',
+      agentSummaryMaxCompletionTokens: 'Token generazione riepilogo',
+      whatsappAgentMaxCompletionTokens: 'Token risposta WhatsApp',
+    },
+
+    rules: {
+      required: 'Questo campo è obbligatorio',
+    },
+    update_button: 'Aggiorna impostazioni',
+    update_success_title: 'Impostazioni aggiornate con successo',
+    update_success_description: 'Le tue impostazioni sono state aggiornate con successo.',
+    update_error_title: 'Aggiornamento fallito',
+    update_error_description: 'Si è verificato un errore durante l\'aggiornamento delle tue impostazioni. Per favore riprova.',
+  },
   common: {
     backTo: 'Torna a {page}',
   },

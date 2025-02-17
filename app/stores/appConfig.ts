@@ -28,6 +28,10 @@ export const useAppConfigStore = defineStore('appConfig', () => {
 
   const defaultChunkers = computed(() => appConfig.value?.defaultChunkers || [])
 
+  const supportedDocumentTypes = computed(() => appConfig.value?.supportedDocumentTypes || [])
+
+  const documentProviders = computed(() => appConfig.value?.documentProviders || [])
+
   const slidingChunker = computed(() =>
     defaultChunkers.value.find(chunker => 'sliding' in chunker),
   )
@@ -54,5 +58,7 @@ export const useAppConfigStore = defineStore('appConfig', () => {
     snappingChunker,
     semanticChunkers,
     openaiEmbeddingModels,
+    supportedDocumentTypes,
+    documentProviders,
   }
 })

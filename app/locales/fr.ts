@@ -1572,6 +1572,69 @@ export default {
       description: 'Prenez le contrôle de vos interactions de chat avec notre système de gestion de chat avancé. Accédez à l\'historique des chats, analysez les modèles de conversation, exportez les journaux de chat et utilisez des fonctionnalités telles que l\'édition en temps réel et la prise en charge de plusieurs langues.',
     },
   },
+
+  global_settings: {
+    title: 'Paramètres',
+    description: 'Gérez vos paramètres et choisissez les options qui vous conviennent le mieux',
+    chats_config: {
+      title: 'Configuration globale du chat',
+    },
+    info: {
+      title: 'Vue d\'ensemble de la configuration de l\'application et des fournisseurs disponibles',
+      chunkers: {
+        title: 'Chunkers par défaut',
+      },
+      document_providers: {
+        title: 'Fournisseurs de documents',
+      },
+      embedding_providers: {
+        title: 'Fournisseurs d\'incrustation',
+      },
+      document_types: {
+        title: 'Types de fichiers pris en charge',
+      },
+      vector_providers: {
+        title: 'Fournisseurs de vecteurs',
+      },
+    },
+
+    overview_title: 'Vue d\'ensemble des paramètres',
+    titles: {
+      settings: 'Paramètres du chat',
+      chat_max_history_tokens: 'Nombre maximum de jetons d\'historique de chat',
+      agent_presence_penalty: 'Pénalité de répétition de l\'agent',
+      agent_title_max_completion_tokens: 'Nombre maximum de jetons de génération de titre de l\'agent',
+      agent_summary_max_completion_tokens: 'Nombre maximum de jetons de génération de résumé de l\'agent',
+      whatsapp_agent_max_completion_tokens: 'Nombre maximum de jetons de réponse de WhatsApp',
+    },
+
+    descriptions: {
+      settings_description: 'Configurez les paramètres globaux du chat et les paramètres',
+      chat_max_history_tokens: 'Nombre maximum de jetons à conserver dans l\'historique du chat',
+      agent_presence_penalty: 'Valeur de pénalité pour les informations répétées dans les réponses',
+      agent_title_max_completion_tokens: 'Nombre maximum de jetons pour la génération de titres de chat',
+      agent_summary_max_completion_tokens: 'Nombre maximum de jetons pour la génération de résumés de chat',
+      whatsapp_agent_max_completion_tokens: 'Nombre maximum de jetons pour les réponses de WhatsApp',
+    },
+
+    labels: {
+      chatMaxHistoryTokens: 'Jetons d\'historique de chat',
+      agentPresencePenalty: 'Prévention de la répétition',
+      agentTitleMaxCompletionTokens: 'Jetons de génération de titre',
+      agentSummaryMaxCompletionTokens: 'Jetons de génération de résumé',
+      whatsappAgentMaxCompletionTokens: 'Jetons de réponse de WhatsApp',
+    },
+
+    rules: {
+      required: 'Ce champ est requis',
+    },
+    update_button: 'Mettre à jour les paramètres',
+    update_success_title: 'Paramètres mis à jour avec succès',
+    update_success_description: 'Vos paramètres ont été mis à jour avec succès.',
+    update_error_title: 'Mise à jour échouée',
+    update_error_description: 'Une erreur s\'est produite lors de la mise à jour de vos paramètres. Veuillez réessayer.',
+  },
+
   common: {
     backTo: 'Retour à {page}',
   },

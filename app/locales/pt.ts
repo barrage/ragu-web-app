@@ -1565,6 +1565,67 @@ export default {
       description: 'Tenha controle sobre suas interações de chat com nosso sistema de gerenciamento de chat avançado. Acesse o histórico de chats, analise padrões de conversa, exporte registros de chat e aproveite recursos como edição em tempo real e suporte multilingue.',
     },
   },
+
+  global_settings: {
+    title: 'Configurações',
+    description: 'Gerencie suas configurações e escolha as opções que melhor atendem às suas necessidades',
+    chats_config: {
+      title: 'Configurações globais de chat',
+    },
+    info: {
+      title: 'Visão geral da configuração do aplicativo e dos provedores disponíveis',
+      chunkers: {
+        title: 'Chunkers padrão',
+      },
+      document_providers: {
+        title: 'Provedores de documentos',
+      },
+      embedding_providers: {
+        title: 'Provedores de embedding',
+      },
+      document_types: {
+        title: 'Tipos de arquivo suportados',
+      },
+      vector_providers: {
+        title: 'Provedores de vetores',
+      },
+    },
+    overview_title: 'Visão geral das configurações',
+    titles: {
+      settings: 'Configurações de chat',
+      chat_max_history_tokens: 'Máximo de tokens de histórico de chat',
+      agent_presence_penalty: 'Prevenção de repetição do agente',
+      agent_title_max_completion_tokens: 'Máximo de tokens de geração de título do agente',
+      agent_summary_max_completion_tokens: 'Máximo de tokens de geração de resumo do agente',
+      whatsapp_agent_max_completion_tokens: 'Máximo de tokens de resposta do agente WhatsApp',
+    },
+
+    descriptions: {
+      settings_description: 'Configure configurações globais de chat e parâmetros',
+      chat_max_history_tokens: 'Número máximo de tokens para manter no histórico de chat',
+      agent_presence_penalty: 'Valor de penalidade para informações repetidas nas respostas',
+      agent_title_max_completion_tokens: 'Máximo de tokens para geração de títulos de chat',
+      agent_summary_max_completion_tokens: 'Máximo de tokens para geração de resumos de chat',
+      whatsapp_agent_max_completion_tokens: 'Máximo de tokens para respostas do agente WhatsApp',
+    },
+
+    labels: {
+      chatMaxHistoryTokens: 'Tokens de histórico de chat',
+      agentPresencePenalty: 'Prevenção de repetição',
+      agentTitleMaxCompletionTokens: 'Tokens de geração de título',
+      agentSummaryMaxCompletionTokens: 'Tokens de geração de resumo',
+      whatsappAgentMaxCompletionTokens: 'Tokens de resposta do agente WhatsApp',
+    },
+
+    rules: {
+      required: 'Este campo é obrigatório',
+    },
+    update_button: 'Atualizar configurações',
+    update_success_title: 'Configurações atualizadas com sucesso',
+    update_success_description: 'Suas configurações foram atualizadas com sucesso.',
+    update_error_title: 'Atualização falhou',
+    update_error_description: 'Ocorreu um erro ao atualizar suas configurações. Por favor, tente novamente.',
+  },
   common: {
     backTo: 'Voltar para {page}',
   },

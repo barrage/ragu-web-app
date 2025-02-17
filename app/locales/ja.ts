@@ -1565,6 +1565,68 @@ export default {
       description: '高度なチャット管理システムを使用して、チャットの相互作用を管理します。チャット履歴にアクセスし、会話パターンを分析し、チャットログをエクスポートし、リアルタイム編集や多言語サポートなどの機能を活用します。',
     },
   },
+
+  global_settings: {
+    title: '設定',
+    description: '設定を管理し、ニーズに最も適したオプションを選択します',
+    chats_config: {
+      title: 'チャットのグローバル設定',
+    },
+    info: {
+      title: 'アプリケーションの設定と利用可能なプロバイダーの概要',
+      chunkers: {
+        title: 'デフォルトのチャンカー',
+      },
+      document_providers: {
+        title: 'ドキュメントプロバイダー',
+      },
+      embedding_providers: {
+        title: '埋め込みプロバイダー',
+      },
+      document_types: {
+        title: 'サポートされているファイルの種類',
+      },
+      vector_providers: {
+        title: 'ベクトルプロバイダー',
+      },
+    },
+    overview_title: '設定の概要',
+    titles: {
+      settings: 'チャット設定',
+      chat_max_history_tokens: 'チャット履歴の最大トークン数',
+      agent_presence_penalty: 'エージェントの重複防止',
+      agent_title_max_completion_tokens: 'エージェントのタイトル最大トークン数',
+      agent_summary_max_completion_tokens: 'エージェントの要約最大トークン数',
+      whatsapp_agent_max_completion_tokens: 'WhatsAppエージェントの最大トークン数',
+    },
+
+    descriptions: {
+      settings_description: 'チャットのグローバル設定とパラメータを構成します',
+      chat_max_history_tokens: 'チャット履歴に保持する最大トークン数',
+      agent_presence_penalty: '回答での繰り返し情報のペナルティ値',
+      agent_title_max_completion_tokens: 'チャットタイトルの生成の最大トークン数',
+      agent_summary_max_completion_tokens: 'チャット要約の生成の最大トークン数',
+      whatsapp_agent_max_completion_tokens: 'WhatsAppエージェントの回答の最大トークン数',
+    },
+
+    labels: {
+      chatMaxHistoryTokens: 'チャット履歴トークン',
+      agentPresencePenalty: '重複防止',
+      agentTitleMaxCompletionTokens: 'タイトル生成トークン',
+      agentSummaryMaxCompletionTokens: '要約生成トークン',
+      whatsappAgentMaxCompletionTokens: 'WhatsAppエージェントの回答トークン',
+    },
+
+    rules: {
+      required: 'このフィールドは必須です',
+    },
+    update_button: '設定を更新',
+    update_success_title: '設定が正常に更新されました',
+    update_success_description: '設定が正常に更新されました。',
+    update_error_title: '更新に失敗しました',
+    update_error_description: '設定の更新中にエラーが発生しました。もう一度お試しください。',
+  },
+
   common: {
     backTo: '{page}に戻る',
   },

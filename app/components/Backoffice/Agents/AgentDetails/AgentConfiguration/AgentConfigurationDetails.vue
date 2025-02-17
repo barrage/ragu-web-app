@@ -33,8 +33,12 @@ const agentData = computed(() => {
     avatar: props.agent?.agent?.avatar || undefined,
     version: props.agent?.configuration?.version || '-',
     errorMessages: props.agent?.configuration?.agentInstructions?.errorMessage || t('agents.agent_card.unknown_instruction'),
-    presencePenalty: props.agent?.configuration?.presencePenalty || t('agents.agent_card.unknown_instruction'),
-    maxCompletionTokens: props.agent?.configuration?.maxCompletionTokens || t('agents.agent_card.unknown_instruction'),
+    presencePenalty: props.agent?.configuration?.presencePenalty != null
+      ? props.agent.configuration.presencePenalty
+      : t('agents.agent_card.unknown_instruction'),
+    maxCompletionTokens: props.agent?.configuration?.maxCompletionTokens != null
+      ? props.agent.configuration.maxCompletionTokens
+      : t('agents.agent_card.unknown_instruction'),
   }
 })
 </script>
@@ -58,6 +62,7 @@ const agentData = computed(() => {
         </div>
       </template>
     </LabelDescriptionItem>
+
     <LabelDescriptionItem
       :label="t('agents.labels.model')"
       :description="agentData.model"
@@ -96,6 +101,7 @@ const agentData = computed(() => {
         </div>
       </template>
     </LabelDescriptionItem>
+
     <LabelDescriptionItem
       :label="t('agents.labels.presencePenalty')"
       :description="agentData.presencePenalty?.toString()"
@@ -108,6 +114,7 @@ const agentData = computed(() => {
         </div>
       </template>
     </LabelDescriptionItem>
+
     <LabelDescriptionItem
       :label="t('agents.labels.configuration_max_completion_tokens')"
       :description="agentData.maxCompletionTokens?.toString()"

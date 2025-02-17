@@ -1576,6 +1576,66 @@ export default {
       description: 'Nehmen Sie die Kontrolle über Ihre Chat-Interaktionen mit unserem fortschrittlichen Chat-Management-System. Greifen Sie auf den Chat-Verlauf zu, analysieren Sie Gesprächsmuster, exportieren Sie Chat-Protokolle und nutzen Sie Funktionen wie Echtzeitbearbeitung und Mehrsprachigkeit.',
     },
   },
+  global_settings: {
+    title: 'Einstellungen',
+    description: 'Verwalten Sie Ihre Einstellungen und wählen Sie die Optionen, die am besten zu Ihnen passen',
+    chats_config: {
+      title: 'Globale Chat-Konfigurationen',
+    },
+    info: {
+      title: 'Übersicht über die App-Konfiguration und verfügbare Anbieter',
+      chunkers: {
+        title: 'Standard Chunker',
+      },
+      document_providers: {
+        title: 'Dokumentanbieter',
+      },
+      embedding_providers: {
+        title: 'Einbettungsanbieter',
+      },
+      document_types: {
+        title: 'Unterstützte Dateitypen',
+      },
+      vector_providers: {
+        title: 'Vektoranbieter',
+      },
+    },
+    overview_title: 'Einstellungen-Übersicht',
+    titles: {
+      settings: 'Chat-Einstellungen',
+      chat_max_history_tokens: 'Maximale Chatverlauf-Token',
+      agent_presence_penalty: 'Agent Repetitionsvermeidung',
+      agent_title_max_completion_tokens: 'Agent Titel Max Completion Tokens',
+      agent_summary_max_completion_tokens: 'Agent Zusammenfassungsantwortlänge',
+      whatsapp_agent_max_completion_tokens: 'WhatsApp-Agent-Antwortlänge',
+
+    },
+
+    descriptions: {
+      settings_description: 'Konfigurieren Sie globale Chat-Einstellungen und Parameter',
+      chat_max_history_tokens: 'Maximale Anzahl von Tokens im Chatverlauf behalten',
+      agent_presence_penalty: 'Strafe für wiederholte Informationen in Antworten',
+      agent_title_max_completion_tokens: 'Maximale Tokens für die Generierung von Chat-Titeln',
+      agent_summary_max_completion_tokens: 'Maximale Tokens für die Generierung von Chat-Zusammenfassungen',
+      whatsapp_agent_max_completion_tokens: 'Maximale Tokens für WhatsApp-Antworten',
+    },
+    labels: {
+      chatMaxHistoryTokens: 'Chat History Tokens',
+      agentPresencePenalty: 'Repetition Prevention',
+      agentTitleMaxCompletionTokens: 'Title Generation Tokens',
+      agentSummaryMaxCompletionTokens: 'Summary Generation Tokens',
+      whatsappAgentMaxCompletionTokens: 'WhatsApp Response Tokens',
+    },
+
+    rules: {
+      required: 'Dieses Feld ist erforderlich',
+    },
+    update_button: 'Einstellungen aktualisieren',
+    update_success_title: 'Einstellungen erfolgreich aktualisiert',
+    update_success_description: 'Ihre Einstellungen wurden erfolgreich aktualisiert.',
+    update_error_title: 'Aktualisierung fehlgeschlagen',
+    update_error_description: 'Beim Aktualisieren Ihrer Einstellungen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+  },
   common: {
     backTo: 'Zurück zu {page}',
   },

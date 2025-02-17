@@ -9,6 +9,7 @@ import WhatsAppAgentsIcon from '~/assets/icons/svg/whatsapp-agents.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
 import WhatsAppIcon from '~/assets/icons/svg/whatsapp-chat-multiple.svg'
+import SettingIcon from '~/assets/icons/svg/settings.svg'
 
 interface MenuItem {
   label: string
@@ -61,6 +62,11 @@ const menuLists = computed<MenuList[]>(() => {
           label: t('collections.title'),
           link: '/admin/collections',
           icon: CollectionIcon,
+        },
+        {
+          label: t('global_settings.title'),
+          link: '/admin/settings',
+          icon: SettingIcon,
         },
       ],
     },
