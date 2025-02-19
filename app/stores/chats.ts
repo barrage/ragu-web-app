@@ -77,7 +77,7 @@ export const useChatStore = defineStore('chat', () => {
     page: number = 1,
     perPage: number = 10,
     sortBy: string = 'firstName',
-    sortOrder: 'asc' | 'desc' = 'asc',
+    sortOrder: 'asc' | 'desc' = 'desc',
     userId?: string,
   ): Promise<AdminChatsResponse | null> {
     try {

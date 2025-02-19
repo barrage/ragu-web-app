@@ -40,7 +40,7 @@ const shouldSyncQuery = ref(true)
 const syncQueryValues = (newQuery: LocationQuery) => {
   pagination.value.currentPage = Number(newQuery.page) || 1
   pagination.value.pageSize = Number(newQuery.pageSize) || 10
-  sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'asc'
+  sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'desc'
   sort.value.sortBy = (newQuery.sortBy as string) || 'createdAt'
   searchInput.value = newQuery.title ? (newQuery.title as string) : null
   filterForm.value.agentId = newQuery.agentId ? (newQuery.agentId as string) : undefined
