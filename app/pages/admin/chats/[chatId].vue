@@ -21,9 +21,7 @@ const selectedChatId = computed(() => {
   return chatId || ''
 })
 
-const { error: SingleChatError, status: getChatStatus, data: chatData } = await useAsyncData(() => $api.chat.GetAdminSingleChat(selectedChatId.value), { lazy: true })
-
-errorHandler(SingleChatError)
+const { status: getChatStatus, data: chatData } = await useAsyncData(() => $api.chat.GetAdminSingleChat(selectedChatId.value), { lazy: true })
 
 watch(chatData, (newData) => {
   if (newData?.chat) {
