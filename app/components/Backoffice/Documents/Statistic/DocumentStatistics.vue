@@ -9,6 +9,9 @@ const pagination = ref<Pagination>({
   total: 0,
   disabled: false,
 })
+
+const documentSynced = computed(() => documentStore.documentsSynced)
+
 const {
   execute: executeGetDocuments,
   error: getDocumentsError,
@@ -18,7 +21,7 @@ const {
   $api.document.GetAllDocuments(
     pagination.value.currentPage,
     pagination.value.pageSize,
-  ), { lazy: true })
+  ), { lazy: true, watch: [documentSynced] })
 
 errorHandler(getDocumentsError)
 
@@ -52,18 +55,18 @@ const totalDocuments = computed(() => documentsData.value?.total || 0)
 
 watch(
   () => documentStore.newDocumentUploaded,
-  (newValue) => {
+  async (newValue) => {
     if (newValue) {
-      executeGetDocuments()
+      await executeGetDocuments()
       documentStore.newDocumentUploaded = false
     }
   },
 )
 watch(
   () => documentStore.documentDeleted,
-  (newValue) => {
+  async (newValue) => {
     if (newValue) {
-      executeGetDocuments()
+      await executeGetDocuments()
       documentStore.documentDeleted = false
     }
   },

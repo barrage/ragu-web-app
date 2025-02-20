@@ -129,11 +129,11 @@ onBeforeUnmount(() => {
   shouldSyncQuery.value = false
 })
 
-watch(
+watch (
   () => documentStore.newDocumentUploaded,
-  (newValue) => {
+  async (newValue) => {
     if (newValue) {
-      executeGetDocuments()
+      await executeGetDocuments()
       documentStore.newDocumentUploaded = false
     }
   },
