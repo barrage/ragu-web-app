@@ -30,7 +30,7 @@ export default class CollectionService extends FetchFactory {
 
       if (search?.q) {
         queryParams.q = search.q
-        queryParams.column = search.column || 'name' // Default to 'name' if not provided
+        queryParams.column = search.column || 'name'
       }
 
       const queryString = new URLSearchParams(queryParams).toString()

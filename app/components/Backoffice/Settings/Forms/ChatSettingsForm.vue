@@ -19,7 +19,7 @@ const { t } = useI18n()
 const settingsFormRef = ref<FormInstance>()
 const settingsForm = reactive({
   chatMaxHistoryTokens: '',
-  agentPresencePenalty: 0.8,
+  agentPresencePenalty: 0,
   agentTitleMaxCompletionTokens: '',
   agentSummaryMaxCompletionTokens: '',
   whatsappAgentMaxCompletionTokens: '',
@@ -33,16 +33,26 @@ const settingsKeyMap = {
   WHATSAPP_AGENT_MAX_COMPLETION_TOKENS: 'whatsappAgentMaxCompletionTokens',
 }
 
-watch(() => props.settings, (newSettings) => {
+const initialPresencePenalty = ref(0)
+
+watch(() => props.settings, async (newSettings) => {
   if (newSettings) {
     Object.entries(newSettings).forEach(([key, setting]) => {
       const formKey = settingsKeyMap[key as keyof typeof settingsKeyMap]
       if (formKey) {
+        if (formKey === 'agentPresencePenalty') {
+          initialPresencePenalty.value = Number(setting.value)
+        }
         settingsForm[formKey] = setting.value
       }
     })
   }
 }, { immediate: true })
+
+onMounted(async () => {
+  await nextTick()
+  settingsForm.agentPresencePenalty = initialPresencePenalty.value
+})
 
 const updates = computed(() => {
   return [

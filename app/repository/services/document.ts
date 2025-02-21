@@ -28,7 +28,7 @@ export default class DocumentServise extends FetchFactory {
 
       if (search?.q) {
         queryParams.q = search.q
-        queryParams.column = search.column || 'name' // Default to 'name' if not provided
+        queryParams.column = search.column || 'name'
       }
 
       if (ready !== undefined && ready !== null) {
@@ -42,7 +42,7 @@ export default class DocumentServise extends FetchFactory {
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch collections with code ${error?.statusCode}`,
+        statusMessage: error?.message || `Failed to fetch documents with code ${error?.statusCode}`,
       })
     }
   }
