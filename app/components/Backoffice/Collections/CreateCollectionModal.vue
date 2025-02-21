@@ -14,13 +14,14 @@ const emits = defineEmits<Emits>()
 const router = useRouter()
 const { $api } = useNuxtApp()
 const { t } = useI18n()
+const appConfigStore = useAppConfigStore()
 
 useHead({
   title: computed(() => t('collections.titles.create')),
 })
 
-const vectorProviders = ['qdrant', 'weaviate']
-const embeddingProviders = ['openai']
+const vectorProviders = appConfigStore.vectorProviders
+const embeddingProviders = appConfigStore.embeddingProviders
 const isOpen = defineModel<boolean>()
 const formRef = ref<FormInstance>()
 const form = reactive<CollectionDetail>({
@@ -68,6 +69,10 @@ watch(
 const { execute: createExecute, error: createError, status: createStatus, data: createdUserData } = await useAsyncData(() => $api.collection.CreateCollection(form), {
   immediate: false,
 })
+
+const { error: getAppConfigError } = await useAsyncData(() => appConfigStore.GET_AppConfig())
+
+errorHandler(getAppConfigError)
 
 const closeModal = () => {
   isOpen.value = false
@@ -183,7 +188,7 @@ errorHandler(createError)
         >
           <ElSelect v-model="form.embeddingProvider" :placeholder="t('collections.placeholders.embeddingPlaceholder')">
             <ElOption
-              v-for="embeddingProvider in embeddingProviders"
+              v-for="(models, embeddingProvider) in embeddingProviders"
               :key="embeddingProvider"
               :label="embeddingProvider"
               :value="embeddingProvider"

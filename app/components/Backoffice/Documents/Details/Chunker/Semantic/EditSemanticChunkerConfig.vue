@@ -141,7 +141,8 @@ const prefillForm = () => {
     form.semantic.embeddingProvider = chunkConfig.semantic.embeddingProvider
   }
 }
-const embeddingProviders = ['openai']
+const embeddingProviders = appConfigStore.embeddingProviders
+
 const getModelsByProvider = (providerName: string) => {
   const models = appConfigStore.embeddingProviders[providerName]
   if (!models) {
@@ -285,7 +286,7 @@ function onProviderChange() {
           @change="onProviderChange"
         >
           <ElOption
-            v-for="(provider) in embeddingProviders"
+            v-for="(models, provider) in embeddingProviders"
             :key="provider"
             :label="provider"
             :value="provider"
