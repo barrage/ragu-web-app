@@ -26,7 +26,7 @@ const router = useRouter()
 errorHandler(getSingleAgentError)
 
 const handleAgentUpdated = () => {
-  router.push('/admin/agents')
+  router.push(`/admin/agents/${selectedAgentId.value}`)
 }
 </script>
 
