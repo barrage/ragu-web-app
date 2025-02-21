@@ -646,6 +646,20 @@ export default {
         },
       },
     },
+    form: {
+      reset: 'Réinitialiser',
+      confirm: 'Appliquer les filtres',
+    },
+    labels: {
+      status: 'Statut du document',
+    },
+    status: {
+      ready: 'Prêt',
+      not_ready: 'Pas prêt',
+    },
+    placeholder: {
+      filter_by_status: 'Filtrer par statut',
+    },
   },
   dashboard: {
     title: 'Tableau de bord',

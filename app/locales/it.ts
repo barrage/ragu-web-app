@@ -644,6 +644,20 @@ export default {
         },
       },
     },
+    form: {
+      reset: 'Reimposta',
+      confirm: 'Applica filtri',
+    },
+    labels: {
+      status: 'Stato del documento',
+    },
+    status: {
+      ready: 'Pronto',
+      not_ready: 'Non pronto',
+    },
+    placeholder: {
+      filter_by_status: 'Filtra per stato',
+    },
   },
   dashboard: {
     title: 'Pannello di controllo',

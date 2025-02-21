@@ -647,7 +647,20 @@ export default {
           },
         },
       },
-
+    },
+    form: {
+      reset: 'Zurücksetzen',
+      confirm: 'Filter anwenden',
+    },
+    labels: {
+      status: 'Dokumentstatus',
+    },
+    status: {
+      ready: 'Bereit',
+      not_ready: 'Nicht bereit',
+    },
+    placeholder: {
+      filter_by_status: 'Nach Status filtern',
     },
   },
   dashboard: {

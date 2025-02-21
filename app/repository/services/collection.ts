@@ -1,5 +1,5 @@
 import FetchFactory from '../fetchFactory'
-import type { Collection, CollectionDetail, CollectionListResponse, CollectionResponse, SearchDocumentsRequest, SearchDocumentsResponse } from '~/types/collection'
+import type { CollectionDetail, CollectionListResponse, CollectionResponse, Search, SearchDocumentsRequest } from '~/types/collection'
 
 export default class CollectionService extends FetchFactory {
   // Endpoint for collections-related API requests.
@@ -13,16 +13,29 @@ export default class CollectionService extends FetchFactory {
    * @returns A promise that resolves to the collections list response.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllCollections(page: number = 1, perPage: number = 20, sortBy?: string, sortDir: 'asc' | 'desc' = 'asc'): Promise<CollectionListResponse> {
+  async GetAllCollections(
+    page: number = 1,
+    perPage: number = 20,
+    sortBy: string = 'active',
+    sortDir: 'asc' | 'desc' = 'asc',
+    search?: Search,
+  ): Promise<CollectionListResponse> {
     try {
-      const queryParams = new URLSearchParams({
+      const queryParams: Record<string, string> = {
         page: page.toString(),
         perPage: perPage.toString(),
-        ...(sortBy && { sortBy }),
+        sortBy,
         sortDir,
-      }).toString()
+      }
 
-      return await this.$fetch<CollectionListResponse>(`${this.endpoint}?${queryParams}`)
+      if (search?.q) {
+        queryParams.q = search.q
+        queryParams.column = search.column || 'name' // Default to 'name' if not provided
+      }
+
+      const queryString = new URLSearchParams(queryParams).toString()
+
+      return await this.$fetch<CollectionListResponse>(`${this.endpoint}?${queryString}`)
     }
     catch (error: any) {
       throw createError({

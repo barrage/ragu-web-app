@@ -642,6 +642,20 @@ export default {
         },
       },
     },
+    form: {
+      reset: 'リセット',
+      confirm: 'フィルターを適用',
+    },
+    labels: {
+      status: 'ドキュメントのステータス',
+    },
+    status: {
+      ready: '準備完了',
+      not_ready: '準備できていません',
+    },
+    placeholder: {
+      filter_by_status: 'ステータスでフィルタリング',
+    },
   },
   dashboard: {
     title: 'ダッシュボード',

@@ -646,6 +646,20 @@ export default {
         },
       },
     },
+    form: {
+      reset: 'Restablecer',
+      confirm: 'Aplicar filtros',
+    },
+    labels: {
+      status: 'Estado del documento',
+    },
+    status: {
+      ready: 'Listo',
+      not_ready: 'No listo',
+    },
+    placeholder: {
+      filter_by_status: 'Filtrar por estado',
+    },
   },
   dashboard: {
     title: 'Panel de control',

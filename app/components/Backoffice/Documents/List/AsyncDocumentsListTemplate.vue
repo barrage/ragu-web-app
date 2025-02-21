@@ -4,6 +4,7 @@ import GlobalCardListLoader from '../../shared/Skeletons/GlobalCardListLoader.vu
 import type { Sort, SortingValues } from '~/types/sort'
 import type { Pagination } from '~/types/pagination'
 import DocumentErrorIcon from '~/assets/icons/svg/document-error.svg'
+import type { DocumentListFilterForm } from '~/types/document'
 
 const { $api } = useNuxtApp()
 const route = useRoute()
@@ -24,6 +25,15 @@ const sort = ref<Sort>({
   sortBy: (route.query.sortBy as string) || 'name',
 })
 
+const searchInput = ref<string | null>(route.query.q ? String(route.query.q) : null)
+const filterForm = ref<DocumentListFilterForm>({
+  ready: route.query.ready === 'true'
+    ? true
+    : route.query.ready === 'false'
+      ? false
+      : undefined,
+})
+
 const {
   execute: executeGetDocuments,
   error: getDocumentsError,
@@ -35,18 +45,34 @@ const {
     pagination.value.pageSize,
     sort.value.sortBy,
     sort.value.sortOrder,
+    filterForm.value.ready,
+    searchInput.value ? { q: searchInput.value, column: 'name' } : undefined,
   ), { lazy: true, watch: [documentSynced] })
 
 const updateRouteQuery = () => {
-  router.replace({
-    query: {
-      ...route.query,
-      page: pagination.value.currentPage.toString(),
-      pageSize: pagination.value.pageSize.toString(),
-      sortBy: sort.value.sortBy,
-      dir: sort.value.sortOrder,
-    },
-  })
+  const query: LocationQuery = {
+    ...route.query,
+    page: pagination.value.currentPage.toString(),
+    pageSize: pagination.value.pageSize.toString(),
+    sortBy: sort.value.sortBy,
+    dir: sort.value.sortOrder,
+  }
+
+  if (searchInput.value) {
+    query.q = searchInput.value
+  }
+  else {
+    delete query.q
+  }
+
+  if (filterForm.value.ready !== undefined) {
+    query.ready = filterForm.value.ready.toString()
+  }
+  else {
+    delete query.ready
+  }
+
+  router.replace({ query })
 }
 
 const syncQueryValues = (newQuery: LocationQuery) => {
@@ -54,6 +80,8 @@ const syncQueryValues = (newQuery: LocationQuery) => {
   pagination.value.pageSize = Number(newQuery.pageSize) || 10
   sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'asc'
   sort.value.sortBy = (newQuery.sortBy as string) || 'name'
+  searchInput.value = newQuery.q ? String(newQuery.q) : null
+  filterForm.value.ready = newQuery.ready ? newQuery.ready === 'true' : undefined
 }
 
 const handlePageChange = async (page: number) => {
@@ -67,6 +95,21 @@ const handleSortChange = async (sortingValues: SortingValues) => {
   sort.value.sortOrder = sortingValues.direction
   sort.value.sortBy = sortingValues.sortProperty.value
   updateRouteQuery()
+  await executeGetDocuments()
+}
+
+const handleSearchChange = async (search: string) => {
+  searchInput.value = search
+  pagination.value.currentPage = 1 // Reset to first page on search
+  updateRouteQuery()
+  scrollToTop()
+  await executeGetDocuments()
+}
+
+const handleFilterChange = async (filter: DocumentListFilterForm) => {
+  filterForm.value.ready = filter.ready
+  updateRouteQuery()
+  scrollToTop()
   await executeGetDocuments()
 }
 
@@ -144,8 +187,11 @@ watch (
   <DocumentsListActions
     :selected-sort-by="sort.sortBy"
     :selected-sort-direction="sort.sortOrder"
-    selected-search=""
+    :filter-form="filterForm"
+    :selected-search="searchInput"
     @sort-change="handleSortChange"
+    @search-change="handleSearchChange"
+    @filter-applied="handleFilterChange"
   />
 
   <GlobalCardListLoader

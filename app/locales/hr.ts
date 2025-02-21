@@ -660,6 +660,20 @@ export default {
         },
       },
     },
+    form: {
+      reset: 'Resetiraj',
+      confirm: 'Primijeni filtre',
+    },
+    labels: {
+      status: 'Status dokumenta',
+    },
+    status: {
+      ready: 'Spremno',
+      not_ready: 'Nije spremano',
+    },
+    placeholder: {
+      filter_by_status: 'Filtriraj po statusu',
+    },
   },
   users: {
     details: 'Detalji korisnika',

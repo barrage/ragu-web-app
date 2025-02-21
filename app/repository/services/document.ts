@@ -1,4 +1,5 @@
 import FetchFactory from '../fetchFactory'
+import type { Search } from '~/types/collection'
 import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, GoogleDriveImportResponse, ParserConfig } from '~/types/document.ts'
 
 export default class DocumentServise extends FetchFactory {
@@ -16,21 +17,32 @@ export default class DocumentServise extends FetchFactory {
    * @returns A promise that resolves to an DocumentListResponse type.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllDocuments(page: number = 1, perPage: number = 10, sortBy?: string, sortDir: 'asc' | 'desc' = 'asc', ready?: boolean): Promise<DocumentListResponse> {
+  async GetAllDocuments(page: number = 1, perPage: number = 10, sortBy: string = 'name', sortDir: 'asc' | 'desc' = 'asc', ready?: boolean | undefined, search?: Search): Promise<DocumentListResponse> {
     try {
-      const queryParams = new URLSearchParams({
+      const queryParams: Record<string, string> = {
         page: page.toString(),
         perPage: perPage.toString(),
-        ...(sortBy && { sortBy }),
+        sortBy,
         sortDir,
-        ...(ready !== undefined && { ready: ready.toString() }),
-      }).toString()
-      return await this.$fetch<DocumentListResponse>(`${this.endpoint}?${queryParams}`)
+      }
+
+      if (search?.q) {
+        queryParams.q = search.q
+        queryParams.column = search.column || 'name' // Default to 'name' if not provided
+      }
+
+      if (ready !== undefined && ready !== null) {
+        queryParams.ready = ready.toString()
+      }
+
+      const queryString = new URLSearchParams(queryParams).toString()
+
+      return await this.$fetch<DocumentListResponse>(`${this.endpoint}?${queryString}`)
     }
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch documents with code ${error?.statusCode}`,
+        statusMessage: error?.message || `Failed to fetch collections with code ${error?.statusCode}`,
       })
     }
   }

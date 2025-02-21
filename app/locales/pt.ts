@@ -648,6 +648,20 @@ export default {
         },
       },
     },
+    form: {
+      reset: 'Redefinir',
+      confirm: 'Aplicar filtros',
+    },
+    labels: {
+      status: 'Status do documento',
+    },
+    status: {
+      ready: 'Pronto',
+      not_ready: 'Não pronto',
+    },
+    placeholder: {
+      filter_by_status: 'Filtrar por status',
+    },
   },
   dashboard: {
     title: 'Painel de controle',

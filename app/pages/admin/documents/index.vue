@@ -5,6 +5,7 @@ import DocumentAddIcon from '~/assets/icons/svg/document-add.svg'
 
 const { t } = useI18n()
 const documentStore = useDocumentsStore()
+const route = useRoute()
 
 definePageMeta({
   layout: 'admin-layout',
@@ -14,13 +15,19 @@ useHead({
   title: computed(() => t('documents.title')),
 })
 
-const isUploadModalVisible = ref(false)
-
 const isInfoDrawerOpen = ref(false)
+const isUploadModalVisible = ref(false)
 
 const toggleInfoDrawer = () => {
   isInfoDrawerOpen.value = !isInfoDrawerOpen.value
 }
+
+const hasActiveFilters = computed(() => {
+  const hasReadyFilter = !('ready' in route.query) || (route.query.ready !== undefined && route.query.ready !== '')
+  const hasSearchFilter = !('q' in route.query) || (route.query.q !== undefined && route.query.q !== '')
+
+  return hasReadyFilter || hasSearchFilter
+})
 </script>
 
 <template>
@@ -39,13 +46,13 @@ const toggleInfoDrawer = () => {
         </AdminPageTitleContainer>
       </template>
       <template #actions>
-        <DocumentsQuickActionsContainer v-if="!(documentStore.documentsDataEmpty)" v-model="isUploadModalVisible" />
+        <DocumentsQuickActionsContainer />
       </template>
     </AdminPageHeadingTemplate>
     <DocumentsInfoDrawer
       v-model="isInfoDrawerOpen"
     />
-    <template v-if="!(documentStore.documentsDataEmpty)">
+    <template v-if="!(documentStore.documentsDataEmpty && !hasActiveFilters)">
       <div class="active-screen-container grid">
         <div class="documents-overview">
           <AsyncDocumentsListTemplate />
@@ -71,6 +78,7 @@ const toggleInfoDrawer = () => {
         </ElButton>
       </template>
     </EmptyState>
+    <UploadDocumentDialog v-model="isUploadModalVisible" />
   </AdminPageContainer>
 </template>
 

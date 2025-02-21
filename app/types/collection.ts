@@ -54,3 +54,8 @@ export interface SearchDocumentsRequest {
   limit: number
   query: string
 }
+
+export interface Search {
+  column: string
+  q: string
+}

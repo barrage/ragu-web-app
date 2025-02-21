@@ -93,3 +93,6 @@ export interface Success {
   tags: string[]
   updatedAt: Date | string
 }
+export interface DocumentListFilterForm {
+  ready?: boolean | undefined
+}

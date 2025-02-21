@@ -23,20 +23,26 @@ const sort = ref<Sort>({
   sortOrder: (route.query.dir as 'asc' | 'desc') || 'desc',
   sortBy: (route.query.sortBy as string) || 'name',
 })
-const searchValue = ('')
-const { execute: executeGetCollections, error: getCollectionError, status: getCollectionsStatus, data: allCollectionsData } = await useAsyncData(() => $api.collection.GetAllCollections(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder), { lazy: true })
+const searchInput = ref<string | null>(route.query.q ? String(route.query.q) : null)
+const { execute: executeGetCollections, error: getCollectionError, status: getCollectionsStatus, data: allCollectionsData } = await useAsyncData(() => $api.collection.GetAllCollections(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder, searchInput.value ? { q: searchInput.value, column: 'name' } : undefined), { lazy: true })
 errorHandler(getCollectionError)
 
 const updateRouteQuery = () => {
-  router.replace({
-    query: {
-      ...route.query,
-      page: pagination.value.currentPage.toString(),
-      pageSize: pagination.value.pageSize.toString(),
-      sortBy: sort.value.sortBy,
-      dir: sort.value.sortOrder,
-    },
-  })
+  const query: LocationQuery = {
+    ...route.query,
+    page: pagination.value.currentPage.toString(),
+    pageSize: pagination.value.pageSize.toString(),
+    sortBy: sort.value.sortBy,
+    dir: sort.value.sortOrder,
+  }
+
+  if (searchInput.value) {
+    query.q = searchInput.value
+  }
+  else {
+    delete query.name
+  }
+  router.replace({ query })
 }
 
 const syncQueryValues = (newQuery: LocationQuery) => {
@@ -44,6 +50,7 @@ const syncQueryValues = (newQuery: LocationQuery) => {
   pagination.value.pageSize = Number(newQuery.pageSize) || 10
   sort.value.sortOrder = (newQuery.dir as 'asc' | 'desc') || 'desc'
   sort.value.sortBy = (newQuery.sortBy as string) || 'created_at'
+  searchInput.value = newQuery.q ? String(newQuery.q) : null
 }
 
 const handlePageChange = async (page: number) => {
@@ -57,6 +64,14 @@ const handleSortChange = async (sortingValues: SortingValues) => {
   sort.value.sortOrder = sortingValues.direction
   sort.value.sortBy = sortingValues.sortProperty.value
   updateRouteQuery()
+  await executeGetCollections()
+}
+
+const handleSearchChange = async (search: string) => {
+  searchInput.value = search
+  pagination.value.currentPage = 1
+  updateRouteQuery()
+  scrollToTop()
   await executeGetCollections()
 }
 
@@ -119,8 +134,9 @@ onBeforeUnmount(() => {
   <CollectionListActions
     :selected-sort-by="sort.sortBy"
     :selected-sort-direction="sort.sortOrder"
-    :selected-search="searchValue"
+    :selected-search="searchInput"
     @sort-change="handleSortChange"
+    @search-change="handleSearchChange"
   />
   <GlobalCardListLoader
     v-if="(delayedStatus === 'pending') || (delayedStatus === 'idle')"

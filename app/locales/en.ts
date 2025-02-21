@@ -649,6 +649,21 @@ export default {
         },
       },
     },
+
+    form: {
+      reset: 'Reset',
+      confirm: 'Apply Filters',
+    },
+    labels: {
+      status: 'Document Status',
+    },
+    status: {
+      ready: 'Ready',
+      not_ready: 'Not Ready',
+    },
+    placeholder: {
+      filter_by_status: 'Filter by status',
+    },
   },
   users: {
     details: 'User Details',
