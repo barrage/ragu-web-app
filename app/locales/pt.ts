@@ -1647,5 +1647,6 @@ export default {
   app: {
     title: 'App',
   },
+  global_disclaimer: 'Assistente guiado por IA aqui. Verifique informações importantes.',
 
 }

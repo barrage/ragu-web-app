@@ -304,12 +304,11 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
 
 <style lang="scss" scoped>
 .chat-input-section {
-  height: 84px;
   width: 100%;
   background: transparent;
   display: flex;
   justify-content: center;
-
+  margin-bottom: 15px;
   & .input-button-wrapper {
     display: flex;
     align-items: center;

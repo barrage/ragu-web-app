@@ -1,5 +1,3 @@
-import SearchInput from '~/components/SearchInput.vue'
-
 export default {
   seo: {
     defaultTitle: 'LLMAO - Interact with Custom AI Agents',
@@ -1682,5 +1680,5 @@ export default {
   app: {
     title: 'App',
   },
-
+  global_disclaimer: 'AI-powered assistant here. Check important info.',
 }

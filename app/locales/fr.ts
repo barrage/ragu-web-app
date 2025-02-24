@@ -1655,5 +1655,6 @@ export default {
   app: {
     title: 'App',
   },
+  global_disclaimer: 'Assistant piloté par l\'IA ici. Vérifiez les informations importantes.',
 
 }

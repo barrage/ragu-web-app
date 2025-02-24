@@ -1648,5 +1648,6 @@ export default {
   app: {
     title: 'App',
   },
+  global_disclaimer: 'Asistente impulsado por IA aquí. Compruebe información importante.',
 
 }

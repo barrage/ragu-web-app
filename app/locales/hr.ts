@@ -1688,5 +1688,6 @@ export default {
   app: {
     title: 'App',
   },
+  global_disclaimer: 'AI asistent ovdje. Provjerite važne informacije.',
 
 }

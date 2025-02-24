@@ -1648,5 +1648,6 @@ export default {
   app: {
     title: 'App',
   },
+  global_disclaimer: 'AIで運営されるアシスタントです。重要な情報を確認してください。',
 
 }
