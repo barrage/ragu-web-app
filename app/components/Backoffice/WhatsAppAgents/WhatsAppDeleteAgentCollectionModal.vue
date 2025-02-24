@@ -90,6 +90,7 @@ const submitDeleteCollection = async () => {
           v-model="deleteCollections"
           :placeholder="t('collections.assign_collection.placeholder.select')"
           multiple
+          filterable
         >
           <ElOption
             v-for="collection in agentCollections"

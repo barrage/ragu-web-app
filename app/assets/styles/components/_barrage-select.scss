@@ -21,6 +21,11 @@
       0.875rem
     );
     --select-placeholder-color: var(--color-primary-500);
+    --select-input-text-color: var(--color-primary-700);
+    --select-input-placeholder-color: var(--color-primary-400);
+    --select-input-background: transparent;
+    --select-wrapper-background: var(--color-primary-50);
+    --select-wrapper-hover-background: var(--color-primary-100);
   }
 
   html.dark {
@@ -60,9 +65,7 @@
   }
 
   .barrage-select__selection {
-    flex-direction: row-reverse;
     display: flex;
-    gap: 6px;
     overflow: auto;
     align-items: center;
     position: relative;
@@ -78,17 +81,42 @@
   }
 
   .barrage-select__input-wrapper {
-    display: inline-block;
-    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+
     input.barrage-select__input {
       width: 100%;
-      padding: 0.375rem 0.5rem;
+      padding: 0;
       border: none;
       outline: none;
-      background: transparent;
-      color: red;
+      background: var(--select-input-background);
+      color: var(--select-placeholder-color);
       cursor: pointer;
-      transition: border-color 0.2s ease;
+      text-align: right;
+
+      &::placeholder {
+        color: var(--select-input-placeholder-color);
+      }
+    }
+    .barrage-select__input-calculator {
+      position: absolute;
+      top: 0;
+      left: -9999px;
+      height: 0;
+      overflow: scroll;
+      white-space: pre;
+      font-size: inherit;
+      font-family: inherit;
+    }
+  }
+
+  .barrage-select__placeholder {
+    color: var(--select-input-placeholder-color);
+    font-style: italic;
+
+    &.is-transparent {
+      opacity: 0.8;
     }
   }
 

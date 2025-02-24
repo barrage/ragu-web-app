@@ -82,7 +82,7 @@ const submitDeleteCollection = async () => {
       destroy-on-close
       align-center
       class="barrage-dialog--small"
-     :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
+      :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
       @close="closeModal"
     >
       <template #header>
@@ -99,6 +99,7 @@ const submitDeleteCollection = async () => {
           v-model="deleteCollections"
           :placeholder="t('collections.assign_collection.placeholder.select')"
           multiple
+          filterable
         >
           <ElOption
             v-for="collection in agentCollections"

@@ -155,6 +155,7 @@ const submitAssignCollectionForm = async () => {
           <ElSelect
             v-model="assignCollectionForm.collectionName"
             :placeholder="t('collections.assign_collection.placeholder.select')"
+            filterable
           >
             <ElOption
               v-for="collection in filteredCollections"
