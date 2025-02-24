@@ -1589,20 +1589,21 @@ export default {
 
   global_settings: {
     title: 'Paramètres',
-    description: 'Gérez vos paramètres et choisissez les options qui vous conviennent le mieux',
+    description: 'Gérez vos paramètres et choisissez les options qui conviennent le mieux à vos besoins',
     chats_config: {
-      title: 'Configuration globale du chat',
+      title: 'Paramètres du chat',
     },
     info: {
-      title: 'Vue d\'ensemble de la configuration de l\'application et des fournisseurs disponibles',
+      title: 'Paramètres du document',
+      description: 'Aperçu des paramètres du document et des fournisseurs disponibles',
       chunkers: {
-        title: 'Chunkers par défaut',
+        title: 'Découpeurs par défaut',
       },
       document_providers: {
         title: 'Fournisseurs de documents',
       },
       embedding_providers: {
-        title: 'Fournisseurs d\'incrustation',
+        title: 'Fournisseurs d\'intégration',
       },
       document_types: {
         title: 'Types de fichiers pris en charge',
@@ -1611,41 +1612,37 @@ export default {
         title: 'Fournisseurs de vecteurs',
       },
     },
-
-    overview_title: 'Vue d\'ensemble des paramètres',
+    overview_title: 'Aperçu des paramètres',
     titles: {
       settings: 'Paramètres du chat',
-      chat_max_history_tokens: 'Nombre maximum de jetons d\'historique de chat',
-      agent_presence_penalty: 'Pénalité de répétition de l\'agent',
-      agent_title_max_completion_tokens: 'Nombre maximum de jetons de génération de titre de l\'agent',
-      agent_summary_max_completion_tokens: 'Nombre maximum de jetons de génération de résumé de l\'agent',
-      whatsapp_agent_max_completion_tokens: 'Nombre maximum de jetons de réponse de WhatsApp',
+      chat_max_history_tokens: 'Nombre maximal de jetons d\'historique du chat',
+      agent_presence_penalty: 'Prévention de la répétition de l\'agent',
+      agent_title_max_completion_tokens: 'Nombre maximal de jetons pour le titre de l\'agent',
+      agent_summary_max_completion_tokens: 'Nombre maximal de jetons pour le résumé de l\'agent',
+      whatsapp_agent_max_completion_tokens: 'Nombre maximal de jetons pour les réponses WhatsApp',
     },
-
     descriptions: {
-      settings_description: 'Configurez les paramètres globaux du chat et les paramètres',
-      chat_max_history_tokens: 'Nombre maximum de jetons à conserver dans l\'historique du chat',
+      settings_description: 'Configurer les paramètres et les paramètres globaux du chat',
+      chat_max_history_tokens: 'Nombre maximal de jetons à conserver dans l\'historique du chat',
       agent_presence_penalty: 'Valeur de pénalité pour les informations répétées dans les réponses',
-      agent_title_max_completion_tokens: 'Nombre maximum de jetons pour la génération de titres de chat',
-      agent_summary_max_completion_tokens: 'Nombre maximum de jetons pour la génération de résumés de chat',
-      whatsapp_agent_max_completion_tokens: 'Nombre maximum de jetons pour les réponses de WhatsApp',
+      agent_title_max_completion_tokens: 'Nombre maximal de jetons pour générer les titres de chat',
+      agent_summary_max_completion_tokens: 'Nombre maximal de jetons pour générer les résumés de chat',
+      whatsapp_agent_max_completion_tokens: 'Nombre maximal de jetons pour les réponses WhatsApp',
     },
-
     labels: {
-      chatMaxHistoryTokens: 'Jetons d\'historique de chat',
+      chatMaxHistoryTokens: 'Jetons d\'historique du chat',
       agentPresencePenalty: 'Prévention de la répétition',
       agentTitleMaxCompletionTokens: 'Jetons de génération de titre',
       agentSummaryMaxCompletionTokens: 'Jetons de génération de résumé',
-      whatsappAgentMaxCompletionTokens: 'Jetons de réponse de WhatsApp',
+      whatsappAgentMaxCompletionTokens: 'Jetons de réponse WhatsApp',
     },
-
     rules: {
       required: 'Ce champ est requis',
     },
     update_button: 'Mettre à jour les paramètres',
     update_success_title: 'Paramètres mis à jour avec succès',
     update_success_description: 'Vos paramètres ont été mis à jour avec succès.',
-    update_error_title: 'Mise à jour échouée',
+    update_error_title: 'Échec de la mise à jour',
     update_error_description: 'Une erreur s\'est produite lors de la mise à jour de vos paramètres. Veuillez réessayer.',
   },
 

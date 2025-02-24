@@ -124,90 +124,36 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
     ref="settingsFormRef"
     :model="settingsForm"
     :rules="rules"
-    class="container"
+    class="settings-container"
     :scroll-to-error="true"
   >
-    <div class="group-heading-wrapper">
-      <h6 class="group-title">
-        {{ t('global_settings.titles.settings') }}
-      </h6>
-      <span class="group-description">{{ t('global_settings.descriptions.settings_description') }}</span>
-    </div>
-
     <!-- Chat Max History Tokens -->
     <ElFormItem
       v-motion-fade
-      :label="props.text.CHAT_MAX_HISTORY_TOKENS.label"
-      prop="chatMaxHistoryTokens"
       :delay="100"
+      prop="chatMaxHistoryTokens"
+      class="settings-form-item"
     >
+      <div class="setting-info">
+        <div class="setting-header">
+          <span class="setting-title">{{ props.text.CHAT_MAX_HISTORY_TOKENS.label }}</span>
+          <el-tag
+            size="small"
+            type="info"
+            class="current-value"
+          >
+            {{ settingsForm.chatMaxHistoryTokens }}
+          </el-tag>
+        </div>
+        <p class="setting-description">
+          {{ props.text.CHAT_MAX_HISTORY_TOKENS.description }}
+        </p>
+      </div>
       <ElInputNumber
         v-model="settingsForm.chatMaxHistoryTokens"
         :min="1000"
         controls-position="right"
-      >
-        <template #increase-icon>
-          <AddIcon />
-        </template>
-        <template #decrease-icon>
-          <MinusIcon />
-        </template>
-      </ElInputNumber>
-    </ElFormItem>
-
-    <!-- Agent Title Max Completion Tokens -->
-    <ElFormItem
-      v-motion-fade
-      :label="props.text.AGENT_TITLE_MAX_COMPLETION_TOKENS.label"
-      prop="agentTitleMaxCompletionTokens"
-      :delay="200"
-    >
-      <ElInputNumber
-        v-model="settingsForm.agentTitleMaxCompletionTokens"
-        :min="10"
-        controls-position="right"
-      >
-        <template #increase-icon>
-          <AddIcon />
-        </template>
-        <template #decrease-icon>
-          <MinusIcon />
-        </template>
-      </ElInputNumber>
-    </ElFormItem>
-
-    <!-- Agent Summary Max Completion Tokens -->
-    <ElFormItem
-      v-motion-fade
-      :label="props.text.AGENT_SUMMARY_MAX_COMPLETION_TOKENS.label"
-      prop="agentSummaryMaxCompletionTokens"
-      :delay="300"
-    >
-      <ElInputNumber
-        v-model="settingsForm.agentSummaryMaxCompletionTokens"
-        :min="100"
-        controls-position="right"
-      >
-        <template #increase-icon>
-          <AddIcon />
-        </template>
-        <template #decrease-icon>
-          <MinusIcon />
-        </template>
-      </ElInputNumber>
-    </ElFormItem>
-
-    <!-- WhatsApp Agent Max Completion Tokens -->
-    <ElFormItem
-      v-motion-fade
-      :delay="400"
-      :label="props.text.WHATSAPP_AGENT_MAX_COMPLETION_TOKENS.label"
-      prop="whatsappAgentMaxCompletionTokens"
-    >
-      <ElInputNumber
-        v-model="settingsForm.whatsappAgentMaxCompletionTokens"
-        :min="50"
-        controls-position="right"
+        class="setting-input"
       >
         <template #increase-icon>
           <AddIcon />
@@ -221,14 +167,30 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
     <!-- Agent Presence Penalty -->
     <ElFormItem
       v-motion-fade
-      :delay="500"
-      class="settings-form-item"
-      :label="props.text.AGENT_PRESENCE_PENALTY.label"
+      :delay="200"
       prop="agentPresencePenalty"
+      class="settings-form-item"
     >
+      <div class="setting-info">
+        <div class="setting-header">
+          <span class="setting-title">{{ props.text.AGENT_PRESENCE_PENALTY.label }}</span>
+          <el-tag
+            size="small"
+            type="info"
+            class="current-value"
+          >
+            {{ settingsForm.agentPresencePenalty }}
+          </el-tag>
+        </div>
+        <p class="setting-description">
+          {{ props.text.AGENT_PRESENCE_PENALTY.description }}
+        </p>
+      </div>
       <el-card class="is-accent">
         <div class="card-body">
-          <ElTag type="primary">
+          <ElTag
+            type="primary"
+          >
             {{ settingsForm.agentPresencePenalty }}
           </ElTag>
           <ElSlider
@@ -236,12 +198,125 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
             :min="-2"
             :max="2"
             :step="0.1"
+            class="setting-input"
           />
         </div>
       </el-card>
     </ElFormItem>
-
+    <el-divider class="is-weak" />
+    <!-- Agent Title Max Completion Tokens -->
     <ElFormItem
+      v-motion-fade
+      :delay="300"
+      prop="agentTitleMaxCompletionTokens"
+      class="settings-form-item"
+    >
+      <div class="setting-info">
+        <div class="setting-header">
+          <span class="setting-title">{{ props.text.AGENT_TITLE_MAX_COMPLETION_TOKENS.label }}</span>
+          <el-tag
+            size="small"
+            type="info"
+            class="current-value"
+          >
+            {{ settingsForm.agentTitleMaxCompletionTokens }}
+          </el-tag>
+        </div>
+        <p class="setting-description">
+          {{ props.text.AGENT_TITLE_MAX_COMPLETION_TOKENS.description }}
+        </p>
+      </div>
+      <ElInputNumber
+        v-model="settingsForm.agentTitleMaxCompletionTokens"
+        :min="10"
+        controls-position="right"
+        class="setting-input"
+      >
+        <template #increase-icon>
+          <AddIcon />
+        </template>
+        <template #decrease-icon>
+          <MinusIcon />
+        </template>
+      </ElInputNumber>
+    </ElFormItem>
+
+    <!-- Agent Summary Max Completion Tokens -->
+    <ElFormItem
+      v-motion-fade
+      :delay="400"
+      prop="agentSummaryMaxCompletionTokens"
+      class="settings-form-item"
+    >
+      <div class="setting-info">
+        <div class="setting-header">
+          <span class="setting-title">{{ props.text.AGENT_SUMMARY_MAX_COMPLETION_TOKENS.label }}</span>
+          <el-tag
+            size="small"
+            type="info"
+            class="current-value"
+          >
+            {{ settingsForm.agentSummaryMaxCompletionTokens }}
+          </el-tag>
+        </div>
+        <p class="setting-description">
+          {{ props.text.AGENT_SUMMARY_MAX_COMPLETION_TOKENS.description }}
+        </p>
+      </div>
+      <ElInputNumber
+        v-model="settingsForm.agentSummaryMaxCompletionTokens"
+        :min="10"
+        controls-position="right"
+        class="setting-input"
+      >
+        <template #increase-icon>
+          <AddIcon />
+        </template>
+        <template #decrease-icon>
+          <MinusIcon />
+        </template>
+      </ElInputNumber>
+    </ElFormItem>
+    <el-divider class="is-weak" />
+    <!-- WhatsApp Agent Max Completion Tokens -->
+    <ElFormItem
+      v-motion-fade
+      :delay="500"
+      prop="whatsappAgentMaxCompletionTokens"
+      class="settings-form-item"
+    >
+      <div class="setting-info">
+        <div class="setting-header">
+          <span class="setting-title">{{ props.text.WHATSAPP_AGENT_MAX_COMPLETION_TOKENS.label }}</span>
+          <el-tag
+            size="small"
+            type="info"
+            class="current-value"
+          >
+            {{ settingsForm.whatsappAgentMaxCompletionTokens }}
+          </el-tag>
+        </div>
+        <p class="setting-description">
+          {{ props.text.WHATSAPP_AGENT_MAX_COMPLETION_TOKENS.description }}
+        </p>
+      </div>
+      <ElInputNumber
+        v-model="settingsForm.whatsappAgentMaxCompletionTokens"
+        :min="10"
+        controls-position="right"
+        class="setting-input"
+      >
+        <template #increase-icon>
+          <AddIcon />
+        </template>
+        <template #decrease-icon>
+          <MinusIcon />
+        </template>
+      </ElInputNumber>
+    </ElFormItem>
+
+    <!-- Submit Button -->
+    <div
       v-motion-fade
       class="actions"
       :delay="600"
@@ -253,91 +328,89 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
       >
         {{ t('global_settings.update_button') }}
       </el-button>
-    </ElFormItem>
+    </div>
   </ElForm>
 </template>
 
   <style lang="scss" scoped>
-.container {
+ .settings-container {
   padding: 0.7rem;
   --container-background-color: var(--color-primary-100);
   --form-gap: 0;
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   column-gap: var(--spacing-fluid-2-xl);
   position: relative;
   width: 100%;
-
-  @include viewport-xs {
-    grid-template-columns: repeat(2, 1fr);
-
-    & .actions {
-      grid-column: span 2;
-    }
-  }
-
-  @include viewport-ml {
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: var(--spacing-fluid-3-xl);
-
-    & .actions {
-      grid-column: 2/-1;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      align-items: flex-end;
-      gap: var(--spacing-fluid-3-xl);
-    }
-  }
-
-  .actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: var(--spacing-fluid-m);
-  }
 }
 
 .settings-form-item {
-  grid-column: span 1;
-
-  @include viewport-xs {
-    grid-column: span 2;
+  grid-column: span 2;
+  margin-bottom: var(--spacing-fluid-l);
+  @include viewport-m {
+    grid-column: span 1;
   }
-}
 
-.card-body {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.375rem;
-}
+  .setting-info {
+    margin-bottom: var(--spacing-fluid-xs);
+  }
 
-.group-heading-wrapper {
-  grid-column: 1/-1;
-  margin-bottom: var(--font-size-fluid-3);
-  & .group-title {
-    font-size: var(--font-size-fluid-5);
+  .setting-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .setting-title {
+    font-size: var(--font-size-fluid-4);
+    font-weight: 500;
     color: var(--color-primary-900);
   }
-  & .group-description {
+
+  .setting-description {
     font-size: var(--font-size-fluid-3);
     color: var(--color-primary-700);
+    margin: 0;
   }
 }
 
+.actions {
+  margin-top: var(--spacing-fluid-xl);
+  display: flex;
+  justify-content: flex-end;
+  height: fit-content;
+  margin-top: auto;
+}
+
+.is-weak {
+  grid-column: span 2;
+  margin-bottom: var(--spacing-fluid-l);
+}
+.card-body {
+  display: flex;
+  gap: 1.375rem;
+  align-items: center;
+}
+
+.is-accent {
+  background-color: var(--color-primary-50);
+  border: 1px solid var(--color-primary-200);
+}
 html.dark {
-  .container {
-    --container-background-color: var(--color-primary-800);
-  }
-  & .group-heading-wrapper {
-    margin-bottom: var(--font-size-fluid-3);
-    & .group-title {
+  .settings-form-item {
+    .setting-title {
       color: var(--color-primary-0);
     }
-    & .group-description {
+    .setting-description {
       color: var(--color-primary-300);
     }
+  }
+  .settings-container {
+    --container-background-color: var(--color-primary-800);
+  }
+  .is-accent {
+    background-color: var(--color-primary-900);
+    border-color: var(--color-primary-700);
   }
 }
 </style>

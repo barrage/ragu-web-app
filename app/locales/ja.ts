@@ -1582,14 +1582,15 @@ export default {
 
   global_settings: {
     title: '設定',
-    description: '設定を管理し、ニーズに最も適したオプションを選択します',
+    description: '設定を管理し、あなたのニーズに最適なオプションを選択してください',
     chats_config: {
-      title: 'チャットのグローバル設定',
+      title: 'チャット設定',
     },
     info: {
-      title: 'アプリケーションの設定と利用可能なプロバイダーの概要',
+      title: 'ドキュメント設定',
+      description: 'ドキュメントの設定と利用可能なプロバイダーの概要',
       chunkers: {
-        title: 'デフォルトのチャンカー',
+        title: 'デフォルトのチャンク処理',
       },
       document_providers: {
         title: 'ドキュメントプロバイダー',
@@ -1598,39 +1599,36 @@ export default {
         title: '埋め込みプロバイダー',
       },
       document_types: {
-        title: 'サポートされているファイルの種類',
+        title: '対応ファイル形式',
       },
       vector_providers: {
         title: 'ベクトルプロバイダー',
       },
     },
-    overview_title: '設定の概要',
+    overview_title: '設定概要',
     titles: {
       settings: 'チャット設定',
       chat_max_history_tokens: 'チャット履歴の最大トークン数',
-      agent_presence_penalty: 'エージェントの重複防止',
-      agent_title_max_completion_tokens: 'エージェントのタイトル最大トークン数',
-      agent_summary_max_completion_tokens: 'エージェントの要約最大トークン数',
-      whatsapp_agent_max_completion_tokens: 'WhatsAppエージェントの最大トークン数',
+      agent_presence_penalty: 'エージェントの繰り返し防止',
+      agent_title_max_completion_tokens: 'エージェントのタイトル生成の最大トークン数',
+      agent_summary_max_completion_tokens: 'エージェントの要約応答の最大トークン数',
+      whatsapp_agent_max_completion_tokens: 'WhatsAppエージェントの応答の最大トークン数',
     },
-
     descriptions: {
-      settings_description: 'チャットのグローバル設定とパラメータを構成します',
-      chat_max_history_tokens: 'チャット履歴に保持する最大トークン数',
-      agent_presence_penalty: '回答での繰り返し情報のペナルティ値',
-      agent_title_max_completion_tokens: 'チャットタイトルの生成の最大トークン数',
-      agent_summary_max_completion_tokens: 'チャット要約の生成の最大トークン数',
-      whatsapp_agent_max_completion_tokens: 'WhatsAppエージェントの回答の最大トークン数',
+      settings_description: 'グローバルチャット設定とパラメータを構成する',
+      chat_max_history_tokens: 'チャット履歴に保存する最大トークン数',
+      agent_presence_penalty: '応答で繰り返される情報に対するペナルティ値',
+      agent_title_max_completion_tokens: 'チャットタイトルを生成するための最大トークン数',
+      agent_summary_max_completion_tokens: 'チャット要約を生成するための最大トークン数',
+      whatsapp_agent_max_completion_tokens: 'WhatsAppの応答に使用する最大トークン数',
     },
-
     labels: {
-      chatMaxHistoryTokens: 'チャット履歴トークン',
-      agentPresencePenalty: '重複防止',
-      agentTitleMaxCompletionTokens: 'タイトル生成トークン',
-      agentSummaryMaxCompletionTokens: '要約生成トークン',
-      whatsappAgentMaxCompletionTokens: 'WhatsAppエージェントの回答トークン',
+      chatMaxHistoryTokens: 'チャット履歴のトークン',
+      agentPresencePenalty: '繰り返し防止',
+      agentTitleMaxCompletionTokens: 'タイトル生成のトークン',
+      agentSummaryMaxCompletionTokens: '要約生成のトークン',
+      whatsappAgentMaxCompletionTokens: 'WhatsApp応答のトークン',
     },
-
     rules: {
       required: 'このフィールドは必須です',
     },

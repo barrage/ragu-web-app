@@ -34,42 +34,13 @@ const handleSettingsUpdate = async () => {
 </script>
 
 <template>
-  <el-card class="settings-overview-card" shadow="hover">
-    <template #header>
-      <div class="card-header">
-        <h6>{{ t('global_settings.overview_title') }}</h6>
-      </div>
-    </template>
-
-    <div class="settings-grid">
-      <template
-        v-for="(setting, key, index) in appConfig"
-        :key="key"
-      >
-        <div
-          v-motion-fade
-          class="setting-item"
-          :delay="(index * 100)"
-        >
-          <div class="setting-info">
-            <div class="setting-header">
-              <span class="setting-title">{{ settingsText[key].label }}</span>
-              <el-tag
-                size="small"
-                type="primary"
-                class="setting-value"
-              >
-                {{ setting.value }}
-              </el-tag>
-            </div>
-            <p class="setting-description">
-              {{ settingsText[key].description }}
-            </p>
-          </div>
-        </div>
-      </template>
-    </div>
-  </el-card>
+  <div v-motion-fade class="group-heading-wrapper">
+    <h5 class="group-title">
+      {{ t('global_settings.titles.settings') }}
+    </h5>
+    <span class="group-description">{{ t('global_settings.descriptions.settings_description') }}</span>
+  </div>
+  <el-divider class="is-weak" />
 
   <ChatSettingsForm
     :settings="appConfig"
@@ -79,109 +50,23 @@ const handleSettingsUpdate = async () => {
 </template>
 
 <style lang="scss" scoped>
-.settings-overview-card {
-  margin-bottom: var(--spacing-fluid-l);
-  .card-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-fluid-xs);
-
-    h4 {
-      margin: 0;
-      color: var(--color-primary-900);
-      font-weight: var(--font-weight-semibold);
-    }
-
-    .header-description {
-      color: var(--color-primary-600);
-      font-size: var(--font-size-fluid-1);
-    }
+.group-heading-wrapper {
+  margin-block: var(--font-size-fluid-3) var(--spacing-fluid-l);
+  & .group-title {
+    color: var(--color-primary-900);
   }
-
-  .settings-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-fluid-m);
-    padding: var(--spacing-fluid-s);
-
-    @include viewport-xs {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @include viewport-m {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .setting-item {
-    background-color: var(--color-primary-50);
-    border-radius: var(--border-radius-m);
-    padding: var(--spacing-fluid-m);
-    transition: all 0.3s ease;
-    border: 1px solid var(--color-primary-200);
-    border-radius: var(--radius-6);
-
-    &:hover {
-      background-color: var(--color-primary-100);
-      transform: translateY(-2px);
-    }
-
-    .setting-info {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-fluid-xs);
-    }
-
-    .setting-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .setting-title {
-      font-weight: var(--font-weight-medium);
-      color: var(--color-primary-800);
-      font-size: var(--font-size-fluid-2);
-    }
-
-    .setting-value {
-      font-weight: var(--font-weight-semibold);
-    }
-
-    .setting-description {
-      color: var(--color-primary-600);
-      font-size: var(--font-size-fluid-1);
-      margin: 0;
-    }
+  & .group-description {
+    color: var(--color-primary-700);
   }
 }
 
 html.dark {
-  .settings-overview-card {
-    .card-header {
-      h4 {
-        color: var(--color-primary-100);
-      }
-
-      .header-description {
-        color: var(--color-primary-400);
-      }
+  .group-heading-wrapper {
+    & .group-title {
+      color: var(--color-primary-0);
     }
-
-    .setting-item {
-      background-color: var(--color-primary-800);
-      border: 0;
-
-      &:hover {
-        background-color: var(--color-primary-700);
-      }
-
-      .setting-title {
-        color: var(--color-primary-200);
-      }
-
-      .setting-description {
-        color: var(--color-primary-400);
-      }
+    & .group-description {
+      color: var(--color-primary-300);
     }
   }
 }

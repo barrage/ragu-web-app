@@ -1621,10 +1621,11 @@ export default {
     title: 'Postavke',
     description: 'Upravljajte svojim postavkama i odaberite opcije koje vam najbolje odgovaraju',
     chats_config: {
-      title: 'Globalne postavke chat-a',
+      title: 'Postavke razgovora',
     },
     info: {
-      title: 'Pregled postavki aplikacije i dostupnih davatelja',
+      title: 'Postavke dokumenta',
+      description: 'Pregled postavki aplikacije i dostupnih davatelja',
       chunkers: {
         title: 'Zadani chunkeri',
       },
@@ -1644,8 +1645,8 @@ export default {
 
     overview_title: 'Pregled postavki',
     titles: {
-      settings: 'Postavke chat-a',
-      chat_max_history_tokens: 'Maksimalni broj tokena povijesti chat-a',
+      settings: 'Postavke razgovora',
+      chat_max_history_tokens: 'Maksimalni broj tokena povijesti razgovora',
       agent_presence_penalty: 'Punište za ponavljanje agenta',
       agent_title_max_completion_tokens: 'Maksimalni broj tokena za generiranje naslova agenta',
       agent_summary_max_completion_tokens: 'Maksimalni broj tokena za generiranje sažetka agenta',
@@ -1653,11 +1654,11 @@ export default {
     },
 
     descriptions: {
-      settings_description: 'Konfigurirajte globalne postavke chat-a i parametre',
-      chat_max_history_tokens: 'Maksimalni broj tokena za zadržavanje u povijesti chat-a',
+      settings_description: 'Konfigurirajte globalne postavke razgovora i parametre',
+      chat_max_history_tokens: 'Maksimalni broj tokena za zadržavanje u povijesti razgovora',
       agent_presence_penalty: 'Vrijednost puništa za ponavljanje informacija u odgovorima',
-      agent_title_max_completion_tokens: 'Maksimalni broj tokena za generiranje naslova chat-a',
-      agent_summary_max_completion_tokens: 'Maksimalni broj tokena za generiranje sažetaka chat-a',
+      agent_title_max_completion_tokens: 'Maksimalni broj tokena za generiranje naslova razgovora',
+      agent_summary_max_completion_tokens: 'Maksimalni broj tokena za generiranje sažetaka razgovora',
       whatsapp_agent_max_completion_tokens: 'Maksimalni broj tokena za odgovore WhatsApp agenta',
     },
 

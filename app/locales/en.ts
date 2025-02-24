@@ -1617,10 +1617,11 @@ export default {
     title: 'Settings',
     description: 'Manage your settings and choose the options that best suit your needs',
     chats_config: {
-      title: 'Chat global configurations',
+      title: 'Chat settings',
     },
     info: {
-      title: 'Overview of  app configuration and available providers',
+      title: 'Document settings',
+      description: 'Overview of document settings and available providers',
       chunkers: {
         title: 'Default Chunkers',
       },

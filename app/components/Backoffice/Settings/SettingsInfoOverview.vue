@@ -15,6 +15,9 @@ const getChunkerType = (chunker: any) => Object.keys(chunker)[0]
 </script>
 
 <template>
+  <div class="group-heading-wrapper">
+    <span class="group-description">{{ t('global_settings.info.description') }}</span>
+  </div>
   <div class="settings-info-grid">
     <!-- Default Chunkers Card -->
     <el-card
@@ -138,6 +141,15 @@ const getChunkerType = (chunker: any) => Object.keys(chunker)[0]
 </template>
 
 <style lang="scss" scoped>
+.group-heading-wrapper {
+  grid-column: 1/-1;
+  margin-bottom: var(--spacing-fluid-m);
+
+  & .group-description {
+    font-size: var(--font-size-fluid-3);
+    color: var(--color-primary-700);
+  }
+}
 .settings-info-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -202,7 +214,13 @@ const getChunkerType = (chunker: any) => Object.keys(chunker)[0]
   gap: var(--spacing-fluid-xs);
 }
 
-.dark {
+html.dark {
+  .group-heading-wrapper {
+    & .group-description {
+      color: var(--color-primary-300);
+    }
+  }
+
   .card-header {
     color: var(--color-primary-100);
   }
