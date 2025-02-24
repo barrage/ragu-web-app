@@ -25,10 +25,8 @@ const agentData = computed(() => {
     language: props.agent?.agent?.language || t('agents.agent_card.unknown_language'),
     temperature: props.agent?.configuration?.temperature || t('agents.agent_card.unknown_temperature'),
     updatedAt: props.agent?.agent?.updatedAt ? formatDate(props.agent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    languageInstruction: props.agent?.configuration?.agentInstructions?.languageInstruction || t('agents.agent_card.unknown_instruction'),
     summaryInstruction: props.agent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
     titleInstruction: props.agent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
-    promptInstruction: props.agent?.configuration?.agentInstructions?.promptInstruction || t('agents.agent_card.unknown_instruction'),
     createdAt: props.agent?.agent?.createdAt ? formatDate(props.agent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
     avatar: props.agent?.agent?.avatar || undefined,
     version: props.agent?.configuration?.version || '-',
@@ -134,20 +132,6 @@ const agentData = computed(() => {
     </div>
 
     <LabelDescriptionItem
-      :label="t('agents.labels.languageInstruction')"
-      :description="agentData.languageInstruction"
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <PersonClockIcon size="18px" />
-          <span>  {{ t('agents.labels.languageInstruction') }}</span>
-        </div>
-      </template>
-      <template #customDescription>
-        <HighlightedText :text="agentData.languageInstruction" />
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
       :label="t('agents.labels.summaryInstruction')"
       :description="agentData.summaryInstruction"
     >
@@ -173,20 +157,6 @@ const agentData = computed(() => {
       </template>
       <template #customDescription>
         <HighlightedText :text="agentData.titleInstruction" />
-      </template>
-    </LabelDescriptionItem>
-    <LabelDescriptionItem
-      :label="t('agents.labels.promptInstruction')"
-      :description="agentData.promptInstruction"
-    >
-      <template #customLabel>
-        <div class="agent-details-custom-label">
-          <PersonInfoIcon size="18px" />
-          <span>  {{ t('agents.labels.promptInstruction') }}</span>
-        </div>
-      </template>
-      <template #customDescription>
-        <HighlightedText :text="agentData.promptInstruction" />
       </template>
     </LabelDescriptionItem>
     <LabelDescriptionItem

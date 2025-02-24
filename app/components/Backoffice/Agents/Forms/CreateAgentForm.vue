@@ -36,9 +36,7 @@ const createAgentForm = reactive<AgentDetail>({
     maxCompletionTokens: 0,
     instructions: {
       titleInstruction: '',
-      languageInstruction: '',
       summaryInstruction: '',
-      promptInstruction: '',
       errorMessage: '',
     },
   },
@@ -459,19 +457,6 @@ const scrollIntoViewOptions = {
         />
       </ElFormItem>
 
-      <!-- Language Instruction -->
-      <ElFormItem
-        class="context-form-item"
-        :label="t('agents.labels.languageInstruction')"
-        prop="configuration.instructions.language"
-      >
-        <ElInput
-          v-model="createAgentForm.configuration.instructions.languageInstruction"
-          data-testid="bo-Create-agent-form-language-instruction-input"
-          size="small"
-          type="textarea"
-        />
-      </ElFormItem>
       <div class="group-heading-wrapper">
         <h5 class="group-title">
           {{ t('agents.titles.instructions') }}
@@ -489,21 +474,6 @@ const scrollIntoViewOptions = {
           v-model="createAgentForm.configuration.instructions.titleInstruction"
           :placeholder="t('agents.placeholder.titleInstruction')"
           data-testid="bo-Create-agent-form-title-instruction-input"
-          type="textarea"
-          size="small"
-        />
-      </ElFormItem>
-
-      <!-- Prompt Instruction -->
-      <ElFormItem
-        :label="t('agents.labels.promptInstruction')"
-        prop="configuration.instructions.promptInstruction"
-        class="context-form-item"
-      >
-        <ElInput
-          v-model="createAgentForm.configuration.instructions.promptInstruction"
-          :placeholder="t('agents.placeholder.promptInstruction')"
-          data-testid="bo-Create-agent-form-prompt-instruction-input"
           type="textarea"
           size="small"
         />

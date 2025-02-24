@@ -43,9 +43,7 @@ const editAgentForm = reactive<EditAgentPayload>({
     maxCompletionTokens: 0,
     instructions: {
       titleInstruction: '',
-      languageInstruction: '',
       summaryInstruction: '',
-      promptInstruction: '',
       errorMessage: '',
     },
   },
@@ -196,10 +194,8 @@ const setForm = () => {
   editAgentForm.language = props.singleAgent?.agent?.language ?? ''
   editAgentForm.configuration.temperature = props.singleAgent?.configuration?.temperature ?? 0.1
   editAgentForm.configuration.instructions.titleInstruction = props.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
-  editAgentForm.configuration.instructions.languageInstruction = props.singleAgent?.configuration?.agentInstructions?.languageInstruction ?? ''
   editAgentForm.configuration.instructions.summaryInstruction = props.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
   editAgentForm.configuration.instructions.errorMessage = props.singleAgent?.configuration?.agentInstructions?.errorMessage ?? ''
-  editAgentForm.configuration.instructions.promptInstruction = props.singleAgent?.configuration?.agentInstructions?.promptInstruction ?? ''
   editAgentForm.active = props.singleAgent?.agent?.active ?? true
   editAgentForm.configuration.presencePenalty = props.singleAgent?.configuration?.presencePenalty ?? 0
   editAgentForm.configuration.maxCompletionTokens = props.singleAgent?.configuration?.maxCompletionTokens ?? 0
@@ -546,20 +542,6 @@ const handleRemovePicture = async () => {
         />
       </ElFormItem>
 
-      <!-- Language Instruction -->
-      <ElFormItem
-        class="context-form-item"
-        :label="t('agents.labels.languageInstruction')"
-        prop="configuration.instructions.language"
-      >
-        <ElInput
-          v-model="editAgentForm.configuration.instructions.languageInstruction"
-          data-testid="bo-edit-agent-form-language-instruction-input"
-          size="small"
-          type="textarea"
-          :placeholder="t('agents.placeholder.language')"
-        />
-      </ElFormItem>
       <div class="group-heading-wrapper">
         <h5 class="group-title">
           {{ t('agents.titles.instructions') }}
@@ -577,21 +559,6 @@ const handleRemovePicture = async () => {
           v-model="editAgentForm.configuration.instructions.titleInstruction"
           :placeholder="t('agents.placeholder.titleInstruction')"
           data-testid="bo-edit-agent-form-title-instruction-input"
-          type="textarea"
-          size="small"
-        />
-      </ElFormItem>
-
-      <!-- Prompt Instruction -->
-      <ElFormItem
-        :label="t('agents.labels.promptInstruction')"
-        prop="configuration.instructions.promptInstruction"
-        class="context-form-item"
-      >
-        <ElInput
-          v-model="editAgentForm.configuration.instructions.promptInstruction"
-          :placeholder="t('agents.placeholder.promptInstruction')"
-          data-testid="bo-edit-agent-form-prompt-instruction-input"
           type="textarea"
           size="small"
         />

@@ -98,10 +98,10 @@ export interface Configuration {
 }
 
 export interface Instructions {
-  languageInstruction: string
+
   summaryInstruction: string
   titleInstruction: string
-  promptInstruction: string
+
 }
 
 export interface AgentDetail {
@@ -130,9 +130,7 @@ export interface AgentPayload {
 
 export interface Instructions {
   titleInstruction: string
-  languageInstruction: string
   summaryInstruction: string
-  promptInstruction: string
   errorMessage: string
 }
 

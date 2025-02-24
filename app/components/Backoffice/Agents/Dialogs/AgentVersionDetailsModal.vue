@@ -20,7 +20,6 @@ const agentVersionData = computed(() => {
     configId: props.selectedAgentVersion?.id || '-',
     agentId: props.selectedAgentVersion?.id || '-',
     agentInstructions: props.selectedAgentVersion?.agentInstructions || t('agents.agent_card.unknown_agentname'),
-    languageInstruction: props.selectedAgentVersion?.agentInstructions.languageInstruction || '-',
     summaryInstruction: props.selectedAgentVersion?.agentInstructions.summaryInstruction || '-',
     titleInstruction: props.selectedAgentVersion?.agentInstructions.titleInstruction || '-',
     context: props.selectedAgentVersion?.context || t('agents.agent_card.unknown_agentcontext'),
@@ -85,11 +84,6 @@ const agentVersionData = computed(() => {
         <LabelDescriptionItem
           :label="t('agents.labels.context')"
           :description="agentVersionData.context"
-          size="small"
-        />
-        <LabelDescriptionItem
-          :label="t('agents.labels.languageInstruction')"
-          :description="agentVersionData.languageInstruction"
           size="small"
         />
         <LabelDescriptionItem
