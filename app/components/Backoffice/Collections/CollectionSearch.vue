@@ -157,7 +157,7 @@ watch(hasAssignedDocuments, (hasDocuments) => {
             </ElTag>
             <ElSlider
               v-model="searchForm.limit"
-              :min="0"
+              :min="1"
               :max="100"
               :step="1"
               data-testid="collection-search-limit-slider"

@@ -175,7 +175,7 @@ const agentData = computed(() => {
     </LabelDescriptionItem>
     <LabelDescriptionItem
       :label="t('agents.labels.errorMessage')"
-      :description="agentData.e"
+      :description="agentData.errorMessages"
     >
       <template #customLabel>
         <div class="agent-details-custom-label">
