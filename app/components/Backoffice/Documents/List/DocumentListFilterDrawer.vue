@@ -6,7 +6,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
-
+const { drawerSize } = useDrawerSize()
 const isOpen = defineModel<boolean>()
 
 interface Emits {
@@ -26,6 +26,7 @@ const updateFilter = (filter: DocumentListFilterForm) => {
     title="Filter"
     destroy-on-close
     data-testid="document-list-filter-drawer"
+    :size="drawerSize"
   >
     <DocumentListFilterForm
       :filter="props.filter"

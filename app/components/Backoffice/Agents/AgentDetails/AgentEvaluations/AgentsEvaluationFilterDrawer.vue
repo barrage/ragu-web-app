@@ -6,7 +6,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<Emits>()
-
+const { drawerSize } = useDrawerSize()
 const isOpen = defineModel<boolean>()
 
 interface Emits {
@@ -25,6 +25,7 @@ const updateFilter = (filter: AgentVersionEvaluationMessagesFilter) => {
     title="Filter"
     destroy-on-close
     data-testid="agent-evaluation-filter-drawer"
+    :size="drawerSize"
   >
     <AgentEvaluationsFilterForm :filter="props.filter" @filter-applied="updateFilter" />
   </el-drawer>

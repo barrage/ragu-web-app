@@ -8,6 +8,7 @@ const props = defineProps<{
 const emits = defineEmits<Emits>()
 
 const isOpen = defineModel<boolean>()
+const { drawerSize } = useDrawerSize()
 
 interface Emits {
   (event: 'filterApplied', filter: AgentListFilterForm): void
@@ -24,6 +25,7 @@ const updateFilter = (filter: AgentListFilterForm) => {
     direction="rtl"
     title="Filter"
     destroy-on-close
+    :size="drawerSize"
   >
     <AgentsListFilterForm :filter="props.filter" @filter-applied="updateFilter" />
   </el-drawer>

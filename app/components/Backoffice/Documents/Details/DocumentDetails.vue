@@ -68,6 +68,7 @@ const { activeTab } = useTabQuery(
     display: flex;
     align-items: center;
     gap: var(--spacing-fluid-5-xs);
+    flex-shrink: 0;
   }
 }
 

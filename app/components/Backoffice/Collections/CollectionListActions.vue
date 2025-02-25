@@ -16,7 +16,7 @@ const emits = defineEmits<{
 }>()
 
 const { t } = useI18n()
-
+const { drawerSize } = useDrawerSize()
 const sortOptions = computed(() => [
   { name: t('collections.labels.created_at'), value: 'created_at' },
   { name: t('collections.labels.name'), value: 'name' },
@@ -79,6 +79,8 @@ const updateSearch = (search: string) => {
     v-model="collectionsListFilterOpen"
     direction="rtl"
     title="Filter"
+    :size="drawerSize"
+    destroy-on-close
   />
 </template>
 

@@ -133,11 +133,11 @@ const editClick = (): void => {
 
   & .agent-card-body {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 16px;
     align-items: center;
 
-    @include viewport-s {
+    @include viewport-xs {
       grid-template-columns: repeat(3, 1fr);
     }
 
@@ -150,13 +150,17 @@ const editClick = (): void => {
     }
 
     & .agent-name-type-wrapper {
-      grid-column: span 2;
+      grid-column: span 1;
       display: flex;
       gap: 0.5rem;
       align-items: center;
       justify-content: flex-start;
       overflow: hidden;
       color: var(--color-primary-900);
+
+      @include viewport-xs {
+        grid-column: span 2;
+      }
 
       & .agent-icon {
         min-width: fit-content;

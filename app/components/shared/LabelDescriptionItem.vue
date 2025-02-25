@@ -78,8 +78,13 @@ const copyItem = () => {
   gap: 0.5rem;
 
   &.horizontal {
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
+
+    @include viewport-xs {
+      flex-direction: row;
+      align-items: center;
+    }
   }
 
   &.reversed {

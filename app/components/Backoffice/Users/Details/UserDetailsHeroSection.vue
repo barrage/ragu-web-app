@@ -206,6 +206,7 @@ const handleDeletePicture = () => {
   justify-content: space-between;
   align-items: flex-end;
   padding-block: 1rem;
+  flex-wrap: wrap;
 
   & .profile-avatar-wrapper {
     display: flex;
@@ -214,6 +215,7 @@ const handleDeletePicture = () => {
     margin-right: 1rem;
     text-overflow: ellipsis;
     flex-direction: column;
+    flex-wrap: wrap;
     .profile-icon {
       color: var(--color-primary-900);
     }
@@ -223,6 +225,7 @@ const handleDeletePicture = () => {
     display: flex;
     align-items: center;
     gap: 2rem;
+    flex-wrap: wrap;
   }
   & .username {
     font-size: var(--font-size-fluid-6);
@@ -235,6 +238,7 @@ const handleDeletePicture = () => {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .change-picture {

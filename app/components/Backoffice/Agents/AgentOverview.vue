@@ -199,6 +199,7 @@ const handleRemovePicture = async () => {
 .agent-avatar-wrapper {
   display: flex;
   margin-right: 1rem;
+  flex-wrap: wrap;
 }
 
 .agent-overview-container {

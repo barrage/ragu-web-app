@@ -113,6 +113,7 @@ async function handleDocumentDeleted() {
     justify-content: flex-start;
     margin-right: 1rem;
     text-overflow: ellipsis;
+    flex-wrap: wrap;
   }
 
   & .document-details-actions-wrapper {

@@ -253,6 +253,7 @@ const handleRemovePicture = async () => {
 .profile-avatar-wrapper {
   display: flex;
   margin-right: 1rem;
+  flex-wrap: wrap;
 }
 
 .profile-informations-section {

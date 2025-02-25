@@ -40,11 +40,6 @@ const toggleFilterDrawer = () => {
   documentsFilterOpen.value = !documentsFilterOpen.value
 }
 
-/* Search */
-const updateSearch = (search: string) => {
-  emits('searchChange', search)
-}
-
 const numberOfFiltersApplied = computed(() => {
   let count = 0
 
@@ -54,6 +49,11 @@ const numberOfFiltersApplied = computed(() => {
 
   return count
 })
+
+/* Search */
+const updateSearch = (search: string) => {
+  emits('searchChange', search)
+}
 </script>
 
 <template>

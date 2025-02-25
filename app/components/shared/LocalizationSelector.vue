@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { DropdownInstance } from 'element-plus'
 import { useDropdownKeyboard } from '~/utils/useDropdownKeyboard'
 import LocaleIcon from '~/assets/icons/svg/locale.svg'
 import CheckIcon from '~/assets/icons/svg/check.svg'
@@ -27,14 +28,14 @@ const popperOptions = {
 
 const { setLocale, locales, locale } = useI18n()
 const currentLocale = computed (() => locales.value.findIndex(lang => lang.code === locale.value))
-const dropdownRef = ref(null)
+const dropdownRef = ref<DropdownInstance | null>(null)
 const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
   locales.value,
   currentLocale,
   'language-option',
   (selectedItem) => {
     setLocale(selectedItem.code)
-    dropdownRef.value.handleClose()
+    dropdownRef?.value?.handleClose()
   },
 )
 </script>

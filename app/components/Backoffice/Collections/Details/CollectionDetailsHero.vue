@@ -72,6 +72,7 @@ const handleCollectionDeleted = () => {
     justify-content: flex-start;
     margin-right: 1rem;
     text-overflow: ellipsis;
+    flex-wrap: wrap;
   }
 
   & .collection-details-actions-wrapper {

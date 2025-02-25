@@ -283,6 +283,7 @@ const handleDeleteAgent = async () => {
     justify-content: flex-start;
     margin-right: 1rem;
     text-overflow: ellipsis;
+    flex-wrap: wrap;
     .agent-icon {
       color: var(--color-primary-900);
     }
@@ -303,6 +304,7 @@ const handleDeleteAgent = async () => {
     display: flex;
     align-items: center;
     gap: var(--spacing-fluid-5-xs);
+    flex-shrink: 0;
   }
 }
 

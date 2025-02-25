@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 // IMPORTS
 import { Teleport } from 'vue'
+import type { DropdownInstance } from 'element-plus'
 import ProfileOverviewModal from '../ProfileOverviewModal.vue'
 import { useDropdownKeyboard } from '~/utils/useDropdownKeyboard'
 import AdminIcon from '~/assets/icons/svg/admin.svg'
@@ -9,6 +10,7 @@ import LogoutIcon from '~/assets/icons/svg/logout.svg'
 import SupportIcon from '~/assets/icons/svg/support.svg'
 import SettingsIcon from '~/assets/icons/svg/settings.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
+
 // STATE
 const router = useRouter()
 const route = useRoute()
@@ -83,14 +85,21 @@ const user = computed(() => {
 const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/admin'))
 
 // Keyboard accessability
-const dropdownRef = ref<HTMLElement | null>(null)
+const dropdownRef = ref<DropdownInstance | null>(null)
 const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
   [switchRoute, openProfileModal, openSettingsModal, undefined, openSignOutModal],
   0,
   'dropdown-item',
   (selectedItem) => {
-    selectedItem()
-    dropdownRef.value.handleClose()
+    if (selectedItem) {
+      selectedItem()
+    }
+
+    const focusedElement = document.activeElement as HTMLElement
+    if (focusedElement) {
+      focusedElement.blur()
+    }
+    dropdownRef.value?.handleClose()
   },
 )
 
@@ -148,7 +157,7 @@ function switchRoute() {
               <div
                 class="dropdown-item"
                 tabindex="0"
-                @keyup.escape="dropdownRef.handleClose"
+                @keyup.escape="dropdownRef?.handleClose"
               >
                 <AdminIcon size="20px" /> <p>  {{ isAdminRoute ? t('profileDropdown.switchToUser') : t('profileDropdown.switchToAdmin') }}</p>
               </div>
@@ -160,8 +169,8 @@ function switchRoute() {
         <el-dropdown-item @click="openProfileModal">
           <div
             class="dropdown-item"
-            tabindex="0"
-            @keyup.escape="dropdownRef.handleClose"
+            tabindex="-1"
+            @keyup.escape="dropdownRef?.handleClose"
           >
             <ProfileIcon size="20px" /> <p> {{ t('profileDropdown.profile') }}</p>
           </div>
@@ -170,7 +179,7 @@ function switchRoute() {
           <div
             class="dropdown-item"
             tabindex="0"
-            @keyup.escape="dropdownRef.handleClose"
+            @keyup.escape="dropdownRef?.handleClose"
           >
             <SettingsIcon size="20px" /> <p>{{ t('profileDropdown.settings') }}</p>
           </div>
@@ -181,7 +190,7 @@ function switchRoute() {
           <div
             class="dropdown-item"
             tabindex="0"
-            @keyup.escape="dropdownRef.handleClose"
+            @keyup.escape="dropdownRef?.handleClose"
           >
             <SupportIcon size="20px" /> <p>{{ t('profileDropdown.support') }}</p>
           </div>
@@ -191,7 +200,7 @@ function switchRoute() {
           <div
             class="dropdown-item"
             tabindex="0"
-            @keyup.escape="dropdownRef.handleClose"
+            @keyup.escape="dropdownRef?.handleClose"
           >
             <LogoutIcon size="20px" /> <p>{{ t('profileDropdown.signOut') }}</p>
           </div>

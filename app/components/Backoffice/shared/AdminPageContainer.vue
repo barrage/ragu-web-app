@@ -10,7 +10,7 @@
 
 <style lang="scss" scoped>
 .admin-page-container {
-  padding: 1rem 2rem;
+  padding-inline: 0;
 
   @include viewport-l {
     padding-inline: 2.5rem;

@@ -297,6 +297,7 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
     display: flex;
     align-items: center;
     gap: var(--spacing-fluid-5-xs);
+    flex-shrink: 0;
   }
 }
 
@@ -317,6 +318,7 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .change-picture {

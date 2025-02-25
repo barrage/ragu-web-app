@@ -134,6 +134,10 @@ export function useDropdownKeyboard<T>(
   function handleDropdownVisibleChange(state: boolean) {
     isDropdownOpen.value = state
     if (!state) {
+      const focusedElement = document.activeElement as HTMLElement
+      if (focusedElement && focusedElement.classList.contains(dropdownOptionClass.replace('.', ''))) {
+        focusedElement.blur()
+      }
       endKeyListener()
       focusedIndex.value = -1
     }

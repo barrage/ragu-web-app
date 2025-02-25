@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { DropdownInstance } from 'element-plus'
 import type { Chat, Message } from '~/types/chat'
 import EditTextIcon from '~/assets/icons/svg/edit-text.svg'
 import DeleteIcon from '~/assets/icons/svg/delete.svg'
@@ -87,7 +88,7 @@ function openDeleteDialog() {
 }
 
 // Keyboard accessability
-const dropdownRef = ref<HTMLElement | null>(null)
+const dropdownRef = ref<DropdownInstance | null>(null)
 const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
   [openEditDialog, openDeleteDialog],
   0,
@@ -125,7 +126,7 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
               <div
                 class="dropdown-item"
                 tabindex="0"
-                @keyup.escape="dropdownRef.handleClose"
+                @keyup.escape="dropdownRef?.handleClose"
               >
                 <EditTextIcon /> {{ $t('chat.edit_title.title') }}
               </div>
@@ -134,7 +135,7 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
               <div
                 class="dropdown-item"
                 tabindex="0"
-                @keyup.escape="dropdownRef.handleClose"
+                @keyup.escape="dropdownRef?.handleClose"
               >
                 <DeleteIcon /> {{ $t('chat.delete_chat.title') }}
               </div>
