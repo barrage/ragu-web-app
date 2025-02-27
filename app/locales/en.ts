@@ -364,7 +364,7 @@ export default {
     },
   },
   whatsapp_agents: {
-    title: 'WhatsApp Agents',
+    title: 'WhatsApp Agent',
     description: 'Manage the WhatsApp agents responsible for interacting with the AI',
     details_title: 'WhatsApp Agent',
     empty_state_title_details: 'WhatsApp agent not found',
@@ -383,11 +383,22 @@ export default {
     },
     set_as_active: {
       label: 'Set as active',
+      dialog_title: 'Activate WhatsApp Agent',
+      description: 'Are you sure you want to set this WhatsApp agent as active? This will make this agent responsible for handling WhatsApp conversations.',
+      action: 'Activate',
       success_notification_title: 'WhatsApp agent is set as active',
       success_notification_message: 'Active WhatsApp agent has been successfully changed.',
       already_active_message: 'This agent is already active',
-      dialog_title: 'Activate WhatsApp Agent',
-      dialog_description: 'Are you sure you want to set this WhatsApp agent as active?',
+    },
+    deactivate: {
+      dialog_title: 'Deactivate WhatsApp Agent',
+      description: 'Are you sure you want to deactivate this WhatsApp agent? This will stop the agent from handling any WhatsApp conversations.',
+      action: 'Deactivate',
+      success_notification_title: 'WhatsApp agent is deactivated',
+      success_notification_message: 'WhatsApp agent has been successfully deactivated.',
+      success_description: 'The agent has been successfully deactivated.',
+      error_title: 'Deactivation Failed',
+      error_description: 'An error occurred while deactivating the agent. Please try again.',
     },
     delete: {
       label: 'Delete',

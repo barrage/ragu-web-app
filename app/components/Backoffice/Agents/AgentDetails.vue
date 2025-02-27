@@ -11,6 +11,7 @@ import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 import AgentTools from '~/assets/icons/svg/tools.svg'
 import type { TabOption } from '~/types/tab'
+import WhatAppAgent from '~/assets/icons/svg/whatsapp-agents.svg'
 
 const props = defineProps<{
   agent: Agent | null | undefined
@@ -22,6 +23,8 @@ const emits = defineEmits<{
 }>()
 
 const { t } = useI18n()
+const whatsAppStore = useWhatsAppStore()
+const isWhatsAppActive = computed(() => whatsAppStore.isWhatsAppActive)
 
 const agentData = computed(() => {
   return {
@@ -41,6 +44,8 @@ const agentData = computed(() => {
     createdAt: props.agent?.agent?.createdAt ? formatDate(props.agent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
     avatar: props.agent?.agent?.avatar || undefined,
     version: props.agent?.configuration?.version || '-',
+    whatsApp: props.agent?.whatsapp,
+
   }
 })
 
@@ -76,6 +81,17 @@ const handleChangePicture = () => {
 
 const handleDeletePicture = () => {
   isAgentModalVisible.value = false
+  emits('refreshAgent')
+}
+
+const isWhatsAppAgentSetAsActiveModalVisible = ref(false)
+
+const openWhatsAppAgentSetAsActiveModal = () => {
+  isWhatsAppAgentSetAsActiveModalVisible.value = true
+}
+
+const handleWhatsAppAgentSetAsActiveDataChange = () => {
+  isWhatsAppAgentSetAsActiveModalVisible.value = false
   emits('refreshAgent')
 }
 
@@ -203,6 +219,15 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
       >
         <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
       </el-button>
+      <el-button
+        v-if="isWhatsAppActive"
+        plain
+        type="primary"
+        size="small"
+        @click="openWhatsAppAgentSetAsActiveModal()"
+      >
+        <WhatAppAgent size="20px" />  {{ agentData.whatsApp ? t('whatsapp_agents.deactivate.dialog_title') : t('whatsapp_agents.set_as_active.dialog_title') }}
+      </el-button>
     </div>
   </div>
 
@@ -257,6 +282,12 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
     :agent="agent"
     @change-picture="handleChangePicture"
     @delete-picture="handleDeletePicture"
+  />
+  <WhatsAppAgentAsActive
+    v-model="isWhatsAppAgentSetAsActiveModalVisible"
+    :whats-app-agent="agent"
+    :is-active="agentData.whatsApp"
+    @data-change="handleWhatsAppAgentSetAsActiveDataChange"
   />
 </template>
 

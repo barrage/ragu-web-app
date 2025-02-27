@@ -4,9 +4,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const publicRouteNames = [
     'admin-whatsapp-chats',
     'admin-whatsapp-chats-chatId',
-    'admin-whatsapp-agents',
-    'admin-whatsapp-agents-create',
-    'admin-whatsapp-agents-agentId',
   ]
 
   if (publicRouteNames.includes(String(to.name))

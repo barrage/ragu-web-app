@@ -381,11 +381,21 @@ export default {
     },
     set_as_active: {
       label: 'Establecer como activo',
-      success_notification_title: 'El agente de WhatsApp se ha establecido como activo',
+      success_notification_title: 'El agente de WhatsApp ha sido establecido como activo',
       success_notification_message: 'El agente de WhatsApp activo ha sido cambiado con éxito.',
       already_active_message: 'Este agente ya está activo',
-      dialog_title: 'Establecer Agente de WhatsApp como activo',
+      dialog_title: 'Establecer agente de WhatsApp como activo',
       dialog_description: '¿Está seguro de que desea establecer este agente de WhatsApp como activo?',
+    },
+    deactivate: {
+      dialog_title: 'Desactivar agente de WhatsApp',
+      description: '¿Está seguro de que desea desactivar este agente de WhatsApp? Esto detendrá al agente de WhatsApp de administrar cualquier conversación de WhatsApp.',
+      action: 'Desactivar',
+      success_notification_title: 'El agente de WhatsApp ha sido desactivado',
+      success_notification_message: 'El agente de WhatsApp ha sido desactivado con éxito.',
+      success_description: 'El agente ha sido desactivado con éxito.',
+      error_title: 'Desactivación fallida',
+      error_description: 'Ocurrió un error al desactivar el agente. Por favor, inténtalo de nuevo.',
     },
     delete: {
       label: 'Eliminar',

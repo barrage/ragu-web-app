@@ -382,11 +382,21 @@ export default {
     },
     set_as_active: {
       label: 'Définir comme actif',
-      success_notification_title: 'L’agent WhatsApp est défini comme actif',
+      success_notification_title: 'L’agent WhatsApp a été défini comme actif',
       success_notification_message: 'L’agent WhatsApp actif a été modifié avec succès.',
       already_active_message: 'Cet agent est déjà actif',
       dialog_title: 'Définir l’agent WhatsApp comme actif',
       dialog_description: 'Êtes-vous sûr de vouloir définir cet agent WhatsApp comme actif ?',
+    },
+    deactivate: {
+      dialog_title: 'Désactiver l’agent WhatsApp',
+      description: 'Êtes-vous sûr de vouloir désactiver cet agent WhatsApp ? Cela empêchera l’agent WhatsApp de gérer les conversations WhatsApp.',
+      action: 'Désactiver',
+      success_notification_title: 'L’agent WhatsApp a été désactivé',
+      success_notification_message: 'L’agent WhatsApp a été désactivé avec succès.',
+      success_description: 'L’agent a été désactivé avec succès.',
+      error_title: 'Échec de la désactivation',
+      error_description: 'Une erreur s\'est produite lors de la désactivation de l\'agent. Veuillez réessayer.',
     },
     delete: {
       label: 'Supprimer',

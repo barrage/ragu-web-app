@@ -4,6 +4,7 @@ export interface Agent {
   agent?: Partial<SingleAgent>
   configuration?: Partial <Configuration>
   collections?: Array<AgentCollection>
+  whatsapp?: boolean
 }
 
 export interface AgentCollection {
@@ -65,6 +66,7 @@ export interface EvaluationMessage {
 export interface Agents {
   agent: SingleAgent
   configuration: Configuration | null
+  whatsapp?: boolean
 }
 export interface SingleAgent {
   active: boolean

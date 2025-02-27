@@ -387,6 +387,16 @@ export default {
       dialog_title: 'Definir agente do WhatsApp como ativo',
       dialog_description: 'Tem certeza de que deseja definir este agente do WhatsApp como ativo?',
     },
+    deactivate: {
+      dialog_title: 'Desativar agente do WhatsApp',
+      description: 'Tem certeza de que deseja desativar este agente do WhatsApp? Isso impedirá o agente do WhatsApp de lidar com qualquer conversa do WhatsApp.',
+      action: 'Desativar',
+      success_notification_title: 'O agente do WhatsApp foi desativado',
+      success_notification_message: 'O agente do WhatsApp foi desativado com sucesso.',
+      success_description: 'O agente foi desativado com sucesso.',
+      error_title: 'Falha na desativação',
+      error_description: 'Ocorreu um erro ao desativar o agente. Por favor, tente novamente.',
+    },
     delete: {
       label: 'Excluir',
       success_notification_title: 'O agente do WhatsApp foi excluído',

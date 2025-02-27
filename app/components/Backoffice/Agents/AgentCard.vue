@@ -6,6 +6,7 @@ import EditIcon from '~/assets/icons/svg/edit-user.svg'
 import EyeIcon from '~/assets/icons/svg/eye.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
+import WhatAppAgent from '~/assets/icons/svg/whatsapp-agents.svg'
 
 // PROPS
 const props = defineProps<{
@@ -59,12 +60,18 @@ const editClick = (): void => {
           default-image="agent"
           :size="40"
         />
+
         <div class="agent-name-wrapper">
           <p class="agent-name">
             {{ agentData.name }}
           </p>
           <span class="agent-provider">{{ agentData.llmProvider }}</span>
         </div>
+        <WhatAppAgent
+          v-if="props.singleAgent?.whatsapp"
+          size="15px"
+          class="whatsapp-agent-icon"
+        />
       </LlmLink>
       <LabelDescriptionItem
         :label="t('agents.labels.model')"
@@ -228,7 +235,11 @@ const editClick = (): void => {
   }
 }
 
-.dark {
+.whatsapp-agent-icon {
+  margin-top: auto;
+}
+
+html.dark {
   .agent-card {
     & .agent-card-body {
       & .agent-name-type-wrapper {

@@ -27,6 +27,9 @@ interface Emits {
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const MAX_CONTEXT = 1000
+const whatsAppStore = useWhatsAppStore()
+const isWhatsAppEnabled = computed(() => whatsAppStore.isWhatsAppActive)
+const isWhatsAppActive = ref(false)
 
 const editAgentFormRef = ref<FormInstance>()
 const editAgentForm = reactive<EditAgentPayload>({
@@ -151,6 +154,35 @@ const isLlmModelsLoading = computed(() => {
 
 errorHandler(updateError)
 
+const { execute: updateWhatsAppSettings } = await useAsyncData(
+  () => $api.settings.UpdateAdminSettings({
+    updates: isWhatsAppActive.value
+      ? [
+          {
+            key: 'WHATSAPP_AGENT_ID',
+            value: props.singleAgent?.agent?.id || '',
+          },
+        ]
+      : [],
+    removal: !isWhatsAppActive.value
+      ? [
+          {
+            key: 'WHATSAPP_AGENT_ID',
+            value: props.singleAgent?.agent?.id || '',
+          },
+        ]
+      : [],
+  }),
+  { immediate: false },
+)
+
+const handleWhatsAppActiveChange = async (val: string | number | boolean) => {
+  const boolValue = Boolean(val)
+  isWhatsAppActive.value = boolValue
+
+  await updateWhatsAppSettings()
+}
+
 const updateAgent = async (formEl: FormInstance | undefined) => {
   if (!formEl) {
     return
@@ -168,6 +200,10 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
             customClass: 'success',
             duration: 2500,
           })
+
+          if (isWhatsAppEnabled.value && isWhatsAppActive.value) {
+            await updateWhatsAppSettings()
+          }
           emits('agentUpdated')
         }
       }
@@ -504,9 +540,32 @@ const handleRemovePicture = async () => {
       </el-card>
     </ElFormItem>
 
+    <!-- WhatsApp Active -->
+    <ElFormItem
+      v-if="isWhatsAppEnabled"
+      :label="t('whatsapp_agents.set_as_active.dialog_title')"
+      class="agent-wap-activate-form-item"
+    >
+      <el-card class="is-accent">
+        <div class="card-body">
+          <ElTag
+            :type="isWhatsAppActive ? 'success' : 'danger'"
+            size="small"
+          >
+            <span class="status-dot" /> {{ isWhatsAppActive ? t('agents.agent_card.active_status') : t('agents.agent_card.inactive_status') }}
+          </ElTag>
+          <el-switch
+            v-model="isWhatsAppActive"
+            data-testid="bo-Create-agent-form-whatsapp-active-input"
+            @change="handleWhatsAppActiveChange"
+          />
+        </div>
+      </el-card>
+    </ElFormItem>
+
     <!-- Max Completion Tokens -->
     <ElFormItem
-      class="agent-temperature-form-item"
+      class="agent-wap-activate-form-item"
       :label="t('agents.labels.maxCompletionTokens')"
       prop="configuration.maxCompletionTokens"
     >
@@ -819,6 +878,14 @@ const handleRemovePicture = async () => {
 
   @include viewport-m {
     grid-column: span 2;
+  }
+}
+
+.agent-wap-activate-form-item {
+  grid-column: 1/-1;
+
+  @include viewport-m {
+    grid-column: span 1;
   }
 }
 

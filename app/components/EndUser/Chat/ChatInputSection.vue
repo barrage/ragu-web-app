@@ -78,7 +78,7 @@ async function handleServerMessage(data: string) {
   )
 
   try {
-    parsedData = JSON.parse(data)
+    parsedData = data
   }
   catch (error) {
     console.error('Error parsing WebSocket message:', error)
@@ -87,7 +87,7 @@ async function handleServerMessage(data: string) {
 
   if (parsedData.errorType) {
     isWebSocketStreaming.value = false
-    assistantMessage.content = parsedData.displayMessage
+    assistantMessage.content = data
     if (assistantMessage) {
       assistantMessage.id = ''
     }

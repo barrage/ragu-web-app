@@ -5,6 +5,7 @@ import LocaleIcon from '~/assets/icons/svg/locale.svg'
 import PersonInfoIcon from '~/assets/icons/svg/person-info.svg'
 import { StatusType } from '~/types/statusTypes'
 import type { Agent } from '~/types/agent'
+import WhatAppAgent from '~/assets/icons/svg/whatsapp-agents.svg'
 
 const props = defineProps<{
   agent: Agent | null | undefined
@@ -30,6 +31,7 @@ const agentData = computed(() => {
     createdAt: props.agent?.agent?.createdAt ? formatDate(props.agent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
     avatar: props.agent?.agent?.avatar || undefined,
     version: props.agent?.configuration?.version || '-',
+    whatsApp: props.agent?.whatsapp ? t('whatsapp_agents.set_as_active.label') : '-',
   }
 })
 </script>
@@ -112,6 +114,19 @@ const agentData = computed(() => {
         <div class="agent-details-custom-label">
           <PersonClockIcon size="18px" />
           <span>  {{ t('agents.labels.updated_at') }}</span>
+        </div>
+      </template>
+    </LabelDescriptionItem>
+    <LabelDescriptionItem
+      v-if="agent?.whatsapp"
+      :label="t('whatsapp_agents.title')"
+      :description="agentData.whatsApp"
+      horizontal
+    >
+      <template #customLabel>
+        <div class="agent-details-custom-label">
+          <WhatAppAgent size="18px" />
+          <span>  {{ t('whatsapp_agents.title') }}</span>
         </div>
       </template>
     </LabelDescriptionItem>

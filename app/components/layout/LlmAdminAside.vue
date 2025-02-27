@@ -79,11 +79,6 @@ const menuLists = computed<MenuList[]>(() => {
           link: '/admin/whatsapp-chats',
           icon: WhatsAppIcon,
         },
-        {
-          label: t('whatsapp_agents.title'),
-          link: '/admin/whatsapp-agents',
-          icon: WhatsAppAgentsIcon,
-        },
       ],
     },
   ]
