@@ -27,11 +27,6 @@ const isProfileModelVisible = ref(false)
 const openProfileModal = () => {
   isProfileModelVisible.value = true
 }
-// Settings
-const isSettingsModalVisible = ref(false)
-const openSettingsModal = () => {
-  isSettingsModalVisible.value = !isSettingsModalVisible.value
-}
 
 const { execute, error, status: signoutStatus } = await useAsyncData(() => oAuthStore.POST_Logout(), {
   immediate: false,
@@ -84,10 +79,12 @@ const user = computed(() => {
 
 const isAdminRoute = computed(() => router.currentRoute.value.path.includes('/admin'))
 
+// Settings
+
 // Keyboard accessability
 const dropdownRef = ref<DropdownInstance | null>(null)
 const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
-  [switchRoute, openProfileModal, openSettingsModal, undefined, openSignOutModal],
+  [switchRoute, openProfileModal, redirectToSettings, undefined, openSignOutModal],
   0,
   'dropdown-item',
   (selectedItem) => {
@@ -102,6 +99,11 @@ const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
     dropdownRef.value?.handleClose()
   },
 )
+
+function redirectToSettings() {
+  handleDropdownVisibleChange(false)
+  navigateTo('/admin/settings')
+}
 
 function switchRoute() {
   handleDropdownVisibleChange(false)
@@ -164,7 +166,6 @@ function switchRoute() {
             </ElDropdownItem>
           </LlmLink>
         </template>
-
         <div class="horizontal-divider" />
         <el-dropdown-item @click="openProfileModal">
           <div
@@ -175,17 +176,24 @@ function switchRoute() {
             <ProfileIcon size="20px" /> <p> {{ t('profileDropdown.profile') }}</p>
           </div>
         </el-dropdown-item>
-        <el-dropdown-item @click="openSettingsModal">
-          <div
-            class="dropdown-item"
-            tabindex="0"
-            @keyup.escape="dropdownRef?.handleClose"
+        <template v-if="oAuthStore.isAdmin">
+          <div class="horizontal-divider" />
+          <LlmLink
+            to="/admin/settings"
+            type="link"
           >
-            <SettingsIcon size="20px" /> <p>{{ t('profileDropdown.settings') }}</p>
-          </div>
-        </el-dropdown-item>
+            <el-dropdown-item>
+              <div
+                class="dropdown-item"
+                tabindex="0"
+                @keyup.escape="dropdownRef?.handleClose"
+              >
+                <SettingsIcon size="20px" /> <p>{{ t('profileDropdown.settings') }}</p>
+              </div>
+            </el-dropdown-item>
+          </LlmLink>
+        </template>
         <div class="horizontal-divider" />
-
         <el-dropdown-item disabled>
           <div
             class="dropdown-item"
