@@ -148,11 +148,11 @@ export default class ChatServise extends FetchFactory {
   async GetAllChatMessagesAdmin(chatId: string): Promise<Message[]> {
     try {
       /* const queryParams = new URLSearchParams({
-        page: page.toString(),
-        perPage: perPage.toString(),
-        sortBy,
-        sortOrder,
-      }).toString() */
+                          page: page.toString(),
+                          perPage: perPage.toString(),
+                          sortBy,
+                          sortOrder,
+                        }).toString() */
       return await this.$fetch<Message[]>(`${this.adminChatsEndpoint}/${chatId}/messages`, {
         credentials: 'include',
       })

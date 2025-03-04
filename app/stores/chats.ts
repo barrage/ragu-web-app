@@ -108,19 +108,6 @@ export const useChatStore = defineStore('chat', () => {
     return selectedBoChatDetails.value = chat
   }
 
-  const wsToken = ref<string | null>(null)
-
-  async function GET_WsToken(): Promise<string | null> {
-    const token = await $api.chat.GetWsToken()
-
-    if (token) {
-      return wsToken.value = token
-    }
-    else {
-      return wsToken.value = null
-    }
-  }
-
   const getChatById = (chatId: string) => {
     return chats.value?.find(chat => chat.id === (chatId)) || null
   }
@@ -150,9 +137,7 @@ export const useChatStore = defineStore('chat', () => {
     GET_ChatMessages,
     GET_AllChats,
     getChatById,
-    wsToken,
     currentChatId,
-    GET_WsToken,
     GET_AllAdminChats,
     adminAllChatsData,
     adminAllChatsResponse,

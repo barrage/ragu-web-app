@@ -2,83 +2,45 @@
 import { nextTick } from 'vue'
 import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
 import StopStreamIcon from '~/assets/icons/svg/stop-stream.svg'
-import { useNuxtApp } from '#app'
+import type { RaguWebSocket } from '~/plugins/websocket.client'
 
-const {
-  $getWs,
-  $wsConnect,
-  $wsSendChatMessage,
-  $wsConnectionState,
-  $wsSendInitialMessage,
-  $wsStopStream,
-  $wsAddMessageHandler,
-} = useNuxtApp()
+const { $ws }: { $ws: () => RaguWebSocket } = useNuxtApp() as any
+let ws: RaguWebSocket
 
+const router = useRouter()
 const agentStore = useAgentStore()
 const chatStore = useChatStore()
-const { currentChatId, isWebSocketStreaming, messages, wsToken }
+const { currentChatId, isWebSocketStreaming, messages }
   = storeToRefs(useChatStore())
-const isTokenFetching = ref(false)
 const message = ref('')
-const router = useRouter()
-const route = useRoute()
+
+// Should be undefined only when a chat is currently selected.
+const agentId: Ref<string | undefined> = computed(() => {
+  if (currentChatId.value) {
+    return
+  }
+  return agentStore.selectedAgent?.id
+})
 
 const { error, execute: executeGetAgents } = await useAsyncData(() => agentStore.GET_AllAppAgents(), {
   lazy: true,
 })
+
+errorHandler(error)
+
 const { error: chatError, execute: getChat } = await useAsyncData(() =>
   chatStore.GET_Chat(currentChatId.value!.toString()), { immediate: false })
 
 errorHandler(chatError)
 
-errorHandler(error)
-async function ensureWsTokenAndConnect() {
-  if (isTokenFetching.value) {
-    return
-  }
-  if ($wsConnectionState.value !== 'open') {
-    try {
-      isTokenFetching.value = true
-      await chatStore.GET_WsToken()
-
-      await $wsConnect(wsToken.value)
-
-      $getWs().onopen = async () => {
-        $wsConnectionState.value = 'open'
-        await handleAgentOrChatChange()
-      }
-      $getWs().onmessage = event => handleServerMessage(event.data)
-      $getWs().onclose = async () => {
-        console.warn(
-          'WebSocket closed unexpectedly. Clearing token and attempting reconnection...',
-        )
-        $wsConnectionState.value = 'closed'
-        isTokenFetching.value = false
-        wsToken.value = ''
-        await ensureWsTokenAndConnect()
-      }
-    }
-    catch (error) {
-      isTokenFetching.value = false
-      console.error('Error fetching WebSocket token or connecting:', error)
-    }
-    finally {
-      isTokenFetching.value = false
-    }
-  }
-  else {
-    handleAgentOrChatChange()
-  }
-}
-
-async function handleServerMessage(data: string) {
+async function handleServerMessage(event: MessageEvent) {
   let parsedData
   const assistantMessage = messages.value?.find(
     msg => msg.id === 'currentlyStreaming',
   )
 
   try {
-    parsedData = JSON.parse(data)
+    parsedData = JSON.parse(event.data)
   }
   catch (error) {
     console.error('Error parsing WebSocket message:', error)
@@ -87,9 +49,9 @@ async function handleServerMessage(data: string) {
 
   if (parsedData.errorType) {
     isWebSocketStreaming.value = false
-    assistantMessage.content = parsedData.displayMessage
     if (assistantMessage) {
       assistantMessage.id = ''
+      assistantMessage.content = parsedData.displayMessage
     }
 
     if (currentChatId.value) {
@@ -124,42 +86,28 @@ async function handleServerMessage(data: string) {
       }
       break
     case 'chat.stream_chunk':
-      assistantMessage.content += parsedData.chunk
+      if (assistantMessage) {
+        assistantMessage.content += parsedData.chunk
+      }
       break
     default:
       break
   }
 }
 
-const agentId = computed(() => {
-  if (route.params.chatId) {
-    return ''
-  }
-  else {
-    return agentStore.selectedAgent?.id
-  }
-})
-
-async function handleAgentOrChatChange() {
-  if ($wsConnectionState.value === 'open') {
-    await $wsSendInitialMessage(route.params.chatId, agentId.value)
-  }
-  else {
-    await ensureWsTokenAndConnect()
-  }
-}
-
 const sendMessage = () => {
-  if (!($wsConnectionState.value === 'open') || isWebSocketStreaming.value) {
+  if (!(ws.state() === WebSocket.OPEN) || isWebSocketStreaming.value) {
     return
   }
+
   if (!message.value.trim()) {
     return
   }
+
   const userMessage = {
     id: '',
     sender: '1',
-    senderType: 'user',
+    senderType: 'user' as const,
     content: message.value,
     chatId: currentChatId.value || '',
     responseTo: '',
@@ -170,7 +118,7 @@ const sendMessage = () => {
   const assistantMessage = {
     id: 'currentlyStreaming',
     sender: '1',
-    senderType: 'assistant',
+    senderType: 'assistant' as const,
     content: '',
     chatId: currentChatId.value || '',
     responseTo: '',
@@ -185,35 +133,49 @@ const sendMessage = () => {
   messages.value.unshift(userMessage)
   messages.value.unshift(assistantMessage)
 
-  $wsSendChatMessage(message.value)
+  ws.sendTextMessage(message.value)
+
   isWebSocketStreaming.value = true
   message.value = ''
 }
 
 const isWatcherActive = ref(false)
 
+watch(agentId, async (newAgentId, oldAgentId) => {
+  if (!isWatcherActive.value) {
+    return
+  }
+
+  if (agentId.value && newAgentId !== oldAgentId) {
+    ws.openNewWorkflow('CHAT', agentId.value)
+  }
+}, { immediate: true })
+
 watch(
-  [agentId, currentChatId],
-  async ([newAgentId, newChatId], [oldAgentId, oldChatId]) => {
+  currentChatId,
+  async (newChatId, oldChatId) => {
     if (!isWatcherActive.value) {
       return
     }
-    if (newAgentId !== oldAgentId || newChatId !== oldChatId) {
-      await handleAgentOrChatChange()
+    if (currentChatId.value && newChatId !== oldChatId) {
+      ws.openExistingWorkflow(currentChatId.value)
     }
   },
   { immediate: true },
 )
 
-onBeforeMount(async () => {
-  await ensureWsTokenAndConnect()
-  $wsAddMessageHandler(handleServerMessage)
+onMounted(async () => {
+  ws = $ws()
+  ws.onMessage(handleServerMessage)
+  if (currentChatId.value) {
+    ws.openExistingWorkflow(currentChatId.value)
+  }
   isWatcherActive.value = true
 })
 
 const stopStream = () => {
   if (isWebSocketStreaming.value) {
-    $wsStopStream()
+    ws.cancelStream()
     isWebSocketStreaming.value = false
   }
 }
@@ -223,7 +185,7 @@ const hasActiveAgents = computed(() => {
 })
 
 const isSelectedAgentActive = computed(() => {
-  if (route.params.chatId) {
+  if (currentChatId.value) {
     return chatStore.selectedChat?.agent?.active
   }
   else {

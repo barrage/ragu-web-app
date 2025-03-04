@@ -18,7 +18,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--color-primary-300);
   z-index: 1000;
 
   &:deep(.loader) {
@@ -26,12 +25,6 @@
       width: 80px !important;
       height: 80px !important;
     }
-  }
-}
-
-.dark {
-  & .loader-overlay {
-    background: var(--color-primary-900);
   }
 }
 </style>

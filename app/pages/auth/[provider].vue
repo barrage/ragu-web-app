@@ -7,6 +7,10 @@ const router = useRouter()
 const authStore = useAuthStore()
 const { t } = useI18n()
 
+definePageMeta({
+  layout: 'auth-layout',
+})
+
 onMounted(async () => {
   const code = router.currentRoute.value.query.code as string
   const provider = router.currentRoute.value.params.provider as OAuthProvider
@@ -32,7 +36,6 @@ onMounted(async () => {
       await router.push('/login')
     }
   }
-  await router.push('/login')
 })
 </script>
 
