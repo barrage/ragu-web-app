@@ -1,147 +1,81 @@
 <script lang="ts" setup>
-import type { OAuthProvider } from '~/types/auth'
+import * as client from 'openid-client'
+
+// TODO: Either remove or use Authentik/Barrage icon?
 import GoogleLogo from '~/assets/icons/svg/google.svg'
-import AaiEduLogo from '~/assets/icons/svg/aai-edu.svg'
+
+const emits = defineEmits<Emits>()
+
+const config = useRuntimeConfig()
+
+let oidcConfig: client.Configuration
+try {
+  oidcConfig = await client.discovery(
+    new URL(config.public.oauthEndpoint),
+    config.public.oauthClientId,
+  )
+}
+catch (e) {
+  console.error('Failed to fetch OpenID configuration:', e)
+}
 
 interface Emits {
   (event: 'redirection'): void
 }
-interface AuthProviderConfig {
-  name: OAuthProvider
-  show: boolean
-  logo: string | Component
-  text: string
-  authUrl: string
-  client_id: string
-  additionalParams: string | null
-  scopes: string
-}
-type AuthConfig = Record<string, AuthProviderConfig>
-type AuthScope = Record<string, string[]>
-
-const emits = defineEmits<Emits>()
 
 // CONSTANTS
-const runtimeConfig = useRuntimeConfig()
-const enableCarnetLogin = ref(runtimeConfig.public.enableAAIEduLogin === 'true')
 const btnLoading = ref(false)
 
-const scopes: AuthScope = {
-  google: [
-    'https://www.googleapis.com/auth/userinfo.profile',
-    'https://www.googleapis.com/auth/userinfo.email',
-    'openid',
-  ],
-  carnet: [
-    'openid',
-    'email',
-  ],
-}
-
-const oAuthConfig: AuthConfig = {
-  google: {
-    name: 'google',
-    show: true,
-    logo: GoogleLogo,
-    text: 'Google',
-    authUrl: runtimeConfig.public.oAuthGoogleUrl,
-    client_id: runtimeConfig.public.googleOAuthClientId as string,
-    additionalParams: '&access_type=offline&include_granted_scopes=true',
-    scopes: scopes.google?.join(' ') as string,
-  },
-  carnet: {
-    name: 'carnet',
-    show: enableCarnetLogin.value,
-    logo: AaiEduLogo,
-    text: 'AAI@Edu',
-    authUrl: runtimeConfig.public.oAuthAAIEduUrl,
-    client_id: runtimeConfig.public.oAuthAAIEduLoginClientId as string,
-    additionalParams: '&access_type=offline&include_granted_scopes=true',
-    scopes: scopes.carnet?.join(' ') as string,
-  },
-}
-
-async function generateCodeVerifier(): Promise<string> {
-  const array = new Uint8Array(32)
-  window.crypto.getRandomValues(array)
-
-  const base64String = String.fromCharCode.apply(null, array as any)
-
-  let base64 = btoa(base64String)
-
-  base64 = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-
-  return base64
-}
-
-async function generateCodeChallenge(codeVerifier: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(codeVerifier)
-  const digest = await crypto.subtle.digest('SHA-256', data)
-  return btoa(String.fromCharCode(...new Uint8Array(digest)))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '')
-}
-
-async function socialSignIn(provider: OAuthProvider) {
+async function signIn() {
   btnLoading.value = true
-  const codeVerifier = await generateCodeVerifier()
-  const codeChallenge = await generateCodeChallenge(codeVerifier)
+  const redirectUri = `${window.location.origin}/auth/callback`
+  const scope = 'openid profile email entitlements offline_access'
 
-  sessionStorage.setItem('pkce_code_verifier', codeVerifier)
+  const codeVerifier = client.randomPKCECodeVerifier()
+  const codeChallenge
+      = await client.calculatePKCECodeChallenge(codeVerifier)
+  const state = client.randomState()
 
-  let redirectUrl = ''
-  const protocol = window.location.protocol
-  const hostname = window.location.hostname
-  const port = window.location.port ? `:${window.location.port}` : ''
-  const URI = `${protocol}//${hostname}${port}/auth/${provider}`
+  sessionStorage.setItem(config.public.keys.pkceVerifier, codeVerifier)
+  sessionStorage.setItem(config.public.keys.stateVerifier, state)
 
-  if (provider === 'google') {
-    redirectUrl = `${oAuthConfig.google?.authUrl}?client_id=${oAuthConfig.google?.client_id}&scope=${encodeURIComponent(
-      oAuthConfig.google?.scopes ?? '',
-    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}${oAuthConfig.google?.additionalParams}`
-  }
-  else if (provider === 'carnet' && enableCarnetLogin.value) {
-    redirectUrl = `${oAuthConfig.carnet?.authUrl}?client_id=${oAuthConfig.carnet?.client_id}&scope=${encodeURIComponent(
-      oAuthConfig.carnet?.scopes ?? '',
-    )}&redirect_uri=${encodeURIComponent(URI)}&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}${oAuthConfig.carnet?.additionalParams}`
+  const parameters: Record<string, string> = {
+    redirect_uri: redirectUri,
+    scope,
+    state,
+    code_challenge: codeChallenge,
+    code_challenge_method: 'S256',
   }
 
-  if (redirectUrl) {
-    emits('redirection')
-    // Wait for out-animation
-    setTimeout(() => window.location.href = redirectUrl, 1000)
-  }
-  else { btnLoading.value = false }
+  const redirectTo: URL = client.buildAuthorizationUrl(oidcConfig, parameters)
+
+  emits('redirection')
+  // Wait for out-animation
+  setTimeout(() => window.location.href = redirectTo.toString(), 1000)
 }
 </script>
 
 <template>
   <div class="social-container">
-    <template
-      v-for="option in oAuthConfig"
-      :key="option.name"
+    <ElButton
+      type="primary"
+      class="social"
+      :loading="btnLoading"
+      :disabled="!oidcConfig"
+      @click="signIn"
+      @keyup.enter="signIn"
     >
-      <ElButton
-        v-if="option.show"
-        type="primary"
-        class="social"
-        :loading="btnLoading"
-        @click="socialSignIn(option.name)"
-        @keyup.enter="socialSignIn(option.name)"
-      >
-        <component
-          :is="option.logo"
-          size="24px"
-          name="google"
-          original
-        />
-        <p class="semi-bold">
-          {{ `${$t('login.continueWith')} ${option.text}` }}
-        </p>
-      </ElButton>
-    </template>
+      <component
+        :is="GoogleLogo"
+        size="24px"
+        name="google"
+        original
+      />
+      <p class="semi-bold">
+        Login
+        <!-- TODO: {{ `${$t('login.continueWith')} ${option.text}` }} -->
+      </p>
+    </ElButton>
   </div>
 </template>
 

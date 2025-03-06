@@ -59,7 +59,7 @@ function handleAnimatingOut() {
       :class="{ 'animate-left-container-exit': isAnimatingOut }"
     >
       <NuxtPage
-        @redirection="(value) => handleAnimatingOut(value)"
+        @redirection="handleAnimatingOut"
       />
     </div>
     <div

@@ -26,6 +26,7 @@
     "marked": "^15.0.3",
     "nuxt": "^3.12.4",
     "nuxt-svgo": "^4.0.2",
+    "openid-client": "^6.3.3",
     "pinia": "^2.1.7",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",

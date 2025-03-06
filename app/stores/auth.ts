@@ -1,45 +1,43 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { useNuxtApp } from '#app'
-import type { OAuthPayload, OAuthProvider, User } from '~/types/auth'
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import { useNuxtApp } from "#app";
+import type { OAuthPayload, OAuthProvider, User } from "~/types/auth";
 
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore("auth", () => {
   // TYPES
-  type UserRole = 'user' | 'admin'
+  type UserRole = "user" | "admin";
 
   // CONSTANTS
-  const { $api } = useNuxtApp()
+  const { $api } = useNuxtApp();
 
   // STATE
-  const user = ref<User | null>(null)
-  const selectedRole = ref<UserRole | null>(null)
-  const isAuthenticated = ref<boolean>(false)
-  const iscurrentUserLoading = ref<boolean>(true)
-  const codeVerifier = sessionStorage.getItem('pkce_code_verifier')
+  const user = ref<User | null>(null);
+  const selectedRole = ref<UserRole | null>(null);
+  const isAuthenticated = ref<boolean>(false);
+  const iscurrentUserLoading = ref<boolean>(true);
+  const codeVerifier = sessionStorage.getItem("pkce_code_verifier");
 
   const isAdmin = computed(() => {
-    return selectedRole.value === 'admin'
-  })
+    return selectedRole.value === "admin";
+  });
   // ACTIONS
 
   /**
    * Fetch the current user's information.
    */
   async function GET_CurrentUser() {
-    iscurrentUserLoading.value = true
+    iscurrentUserLoading.value = true;
     try {
-      const currentUser = await $api.auth.GetCurrentUser()
+      const currentUser = await $api.auth.GetCurrentUser();
 
-      user.value = currentUser
-      selectedRole.value = currentUser.role as UserRole
-      isAuthenticated.value = true
-    }
-    catch (error) {
-      console.error('Failed fetch current user', error)
-      isAuthenticated.value = false
-    }
-    finally {
-      iscurrentUserLoading.value = false
+      user.value = currentUser;
+      selectedRole.value = currentUser.role as UserRole;
+      isAuthenticated.value = true;
+    } catch (error) {
+      console.error("Failed fetch current user", error);
+      isAuthenticated.value = false;
+    } finally {
+      iscurrentUserLoading.value = false;
     }
   }
 
@@ -49,32 +47,36 @@ export const useAuthStore = defineStore('auth', () => {
    * @param provider - The OAuth provider (e.g., 'google', 'microsoft').
    * @param source - The source of the login request (e.g., 'web', 'ios').
    */
-  async function POST_Login(code: string, provider: OAuthProvider, source: string) {
+  async function POST_Login(
+    code: string,
+    provider: OAuthProvider,
+    source: string,
+  ) {
     const payload: OAuthPayload = {
       code,
       redirect_uri: `${window.location.origin}/auth/${provider}`,
       provider,
       source,
-      grant_type: 'authorization_code',
+      grant_type: "authorization_code",
       code_verifier: codeVerifier,
-    }
+    };
 
-    await $api.auth.Login(payload)
-    await GET_CurrentUser()
+    await $api.auth.Login(payload);
+    await GET_CurrentUser();
   }
 
   /**
    * Logout the current user.
    */
   async function POST_Logout() {
-    isAuthenticated.value = false
-    await $api.auth.Logout()
-    user.value = null
+    isAuthenticated.value = false;
+    await $api.auth.Logout();
+    user.value = null;
   }
 
   async function initializeAuth(): Promise<void> {
     if (!user.value && !isAuthenticated.value) {
-      await GET_CurrentUser()
+      await GET_CurrentUser();
     }
   }
 
@@ -88,6 +90,5 @@ export const useAuthStore = defineStore('auth', () => {
     POST_Logout,
     GET_CurrentUser,
     initializeAuth,
-
-  }
-})
+  };
+});
