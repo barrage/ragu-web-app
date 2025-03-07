@@ -4,89 +4,66 @@ import { useNuxtApp } from "#app";
 import type { OAuthPayload, OAuthProvider, User } from "~/types/auth";
 
 export const useAuthStore = defineStore("auth", () => {
-  // TYPES
-  type UserRole = "user" | "admin";
-
   // CONSTANTS
   const { $api } = useNuxtApp();
 
   // STATE
+
   const user = ref<User | null>(null);
-  const selectedRole = ref<UserRole | null>(null);
-  const isAuthenticated = ref<boolean>(false);
+  const isAuthenticated = computed(() => user.value !== null);
   const iscurrentUserLoading = ref<boolean>(true);
-  const codeVerifier = sessionStorage.getItem("pkce_code_verifier");
 
   const isAdmin = computed(() => {
-    return selectedRole.value === "admin";
+    return user.value?.entitlements?.includes("admin") ?? false;
   });
+
   // ACTIONS
 
   /**
-   * Fetch the current user's information.
+   * Get the current user instance, or redirect to the login page if not authenticated.
    */
   async function GET_CurrentUser() {
     iscurrentUserLoading.value = true;
+
+    if (user.value !== null) {
+      return;
+    }
+
     try {
       const currentUser = await $api.auth.GetCurrentUser();
-
       user.value = currentUser;
-      selectedRole.value = currentUser.role as UserRole;
-      isAuthenticated.value = true;
     } catch (error) {
       console.error("Failed fetch current user", error);
-      isAuthenticated.value = false;
+      user.value = null;
     } finally {
       iscurrentUserLoading.value = false;
     }
   }
 
-  /**
-   * Login user using OAuth provider (Google, Microsoft, etc.).
-   * @param code - The authorization code returned from OAuth provider.
-   * @param provider - The OAuth provider (e.g., 'google', 'microsoft').
-   * @param source - The source of the login request (e.g., 'web', 'ios').
-   */
-  async function POST_Login(
-    code: string,
-    provider: OAuthProvider,
-    source: string,
-  ) {
-    const payload: OAuthPayload = {
-      code,
-      redirect_uri: `${window.location.origin}/auth/${provider}`,
-      provider,
-      source,
-      grant_type: "authorization_code",
-      code_verifier: codeVerifier,
-    };
-
-    await $api.auth.Login(payload);
-    await GET_CurrentUser();
+  function setCurrentUser(newUser: User) {
+    user.value = newUser;
   }
 
   /**
    * Logout the current user.
    */
   async function POST_Logout() {
-    isAuthenticated.value = false;
     await $api.auth.Logout();
     user.value = null;
   }
 
   async function initializeAuth(): Promise<void> {
-    if (!user.value && !isAuthenticated.value) {
+    if (!user.value) {
       await GET_CurrentUser();
     }
   }
 
   return {
     user,
-    selectedRole,
+    setCurrentUser,
     isAuthenticated,
     iscurrentUserLoading,
     isAdmin,
-    POST_Login,
     POST_Logout,
     GET_CurrentUser,
     initializeAuth,

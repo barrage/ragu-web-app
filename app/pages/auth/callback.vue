@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 
+definePageMeta({
+  layout: 'login-layout',
+})
+
+const authStore = useAuthStore()
 const config = useRuntimeConfig()
 
 const route = useRoute()
@@ -21,7 +26,7 @@ if (!pkceCodeVerifier) { console.error('PKCE verifier missing.') }
 if (!stateVerifier) { console.error('State verifier missing.') }
 if (stateVerifier !== state) { console.error('State mismatch.') }
 
-if (pkceCodeVerifier && stateVerifier === state) {
+if (code && pkceCodeVerifier && stateVerifier === state) {
   const body = JSON.stringify({
     // State verification is done here and when obtaining the token.
     state,
@@ -41,7 +46,9 @@ if (pkceCodeVerifier && stateVerifier === state) {
 
     const user = await response.json()
 
-    console.log(user)
+    authStore.setCurrentUser(user)
+
+    router.replace('/')
   }
   catch (e) {
     console.error(e)

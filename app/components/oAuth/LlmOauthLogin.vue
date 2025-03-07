@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import * as client from 'openid-client'
 
-// TODO: Either remove or use Authentik/Barrage icon?
-import GoogleLogo from '~/assets/icons/svg/google.svg'
+// TODO
+import BarrageLogo from '~/assets/icons/svg/barrage-logo.svg'
 
 const emits = defineEmits<Emits>()
 
@@ -26,14 +26,16 @@ interface Emits {
 // CONSTANTS
 const btnLoading = ref(false)
 
-async function signIn() {
+async function startOAuthFlow() {
   btnLoading.value = true
+
   const redirectUri = `${window.location.origin}/auth/callback`
-  const scope = 'openid profile email entitlements offline_access'
+  const scope = 'openid profile email entitlements offline_access avatar'
 
   const codeVerifier = client.randomPKCECodeVerifier()
   const codeChallenge
       = await client.calculatePKCECodeChallenge(codeVerifier)
+
   const state = client.randomState()
 
   sessionStorage.setItem(config.public.keys.pkceVerifier, codeVerifier)
@@ -62,11 +64,11 @@ async function signIn() {
       class="social"
       :loading="btnLoading"
       :disabled="!oidcConfig"
-      @click="signIn"
-      @keyup.enter="signIn"
+      @click="startOAuthFlow"
+      @keyup.enter="startOAuthFlow"
     >
       <component
-        :is="GoogleLogo"
+        :is="BarrageLogo"
         size="24px"
         name="google"
         original

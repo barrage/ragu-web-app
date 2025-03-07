@@ -1,75 +1,9 @@
-import { defineNuxtPlugin } from '#app'
+import { defineNuxtPlugin } from "#app";
 
-export default defineNuxtPlugin({
-  name: 'ragu-ws',
-  hooks: {
-    'app:beforeMount': async function() {
-      const nuxtApp = useNuxtApp()
-
-      let websocket: RaguWebSocket | undefined
-      let reconnectIntervalId: NodeJS.Timeout
-
-      const auth = useAuthStore()
-      const { isAuthenticated } = storeToRefs(auth)
-
-      if (isAuthenticated.value) {
-        await connect()
-      }
-
-      watch(isAuthenticated, async (authenticated) => {
-        if (!authenticated) {
-          if (websocket) {
-            websocket.close()
-            websocket = undefined
-          }
-          return
-        }
-
-        if (websocket) {
-          return
-        }
-
-        await connect()
-      }, { immediate: true })
-
-      function attemptReconnect() {
-        // Do not attempt any reconnections if the user is not authenticated
-        if (!isAuthenticated.value) {
-          return
-        }
-
-        reconnectIntervalId = setInterval(async () => {
-          if (websocket && reconnectIntervalId) {
-            clearInterval(reconnectIntervalId)
-            return
-          }
-          try {
-            websocket = await RaguWebSocket.init()
-          }
-          catch (e) {
-            console.error('Reconnection failed', e)
-          }
-        }, 1000)
-      }
-
-      async function connect() {
-        try {
-          websocket = await RaguWebSocket.init()
-          websocket.onDisconnect(() => {
-            websocket = undefined
-            attemptReconnect()
-          })
-        }
-        catch (e) {
-          console.error('Websocket connection failed', e)
-          attemptReconnect()
-        }
-      }
-
-      nuxtApp.provide('ws', () => websocket)
-    },
-  },
-})
+export enum RaguWebSocketState {
+  UNINITIALIZED = 0,
+  INITIALIZED = 1,
+}
 
 /**
  * Encapsulates a WebSocket connection to the Ragu chat server.
@@ -77,42 +11,99 @@ export default defineNuxtPlugin({
  * The reconnect logic is located in the plugin.
  */
 export class RaguWebSocket {
-  private ws: WebSocket
+  private authenticated: Ref<boolean>;
 
-  constructor(ws: WebSocket) {
-    this.ws = ws
+  private ws: WebSocket | undefined;
+
+  private messageHandler: ((data: MessageEvent) => void) | undefined;
+
+  private _state: RaguWebSocketState = RaguWebSocketState.UNINITIALIZED;
+
+  private reconnectInterval: NodeJS.Timeout | undefined;
+
+  constructor(auth: Ref<boolean>) {
+    this.authenticated = auth;
+    watch(
+      this.authenticated,
+      async (authenticated) => {
+        if (!authenticated) {
+          this.close();
+          return;
+        }
+        await this.init();
+      },
+      { immediate: true },
+    );
   }
 
-  static async init(): Promise<RaguWebSocket> {
-    const config = useRuntimeConfig()
-    let response
+  async init(): Promise<void> {
+    const config = useRuntimeConfig();
+    let response;
     try {
       response = await fetch(`${config.public.apiBaseUrl}/ws`, {
-        credentials: 'include',
-      })
-    }
-    catch (error: any) {
+        credentials: "include",
+      });
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch ws token with code ${error?.statusCode}`,
-      })
+        statusMessage:
+          error?.message ||
+          `Failed to fetch ws token with code ${error?.statusCode}`,
+      });
     }
-    const token = await response.text()
-    const ws = new WebSocket(`${config.public.wsUrl}?token=${token}`)
+    const token = await response.text();
+    const ws = new WebSocket(`${config.public.wsUrl}?token=${token}`);
+
+    ws.onmessage = (event) => {
+      if (this.messageHandler) {
+        this.messageHandler(event);
+      }
+    };
+
+    ws.onclose = this.attemptReconnect;
 
     // Resolve only when the websocket is ready, otherwise we might get
     // an undefined websocket from the plugin
     return new Promise((resolve, reject) => {
-      ws.onopen = () => resolve(new RaguWebSocket(ws))
-      ws.onerror = error => reject(error)
-    })
+      ws.onopen = () => resolve();
+      ws.onerror = (error) => reject(error);
+    }).then(() => {
+      this.ws = ws;
+      this._state = RaguWebSocketState.INITIALIZED;
+    });
+  }
+
+  attemptReconnect() {
+    this._state = RaguWebSocketState.UNINITIALIZED;
+    // Do not attempt any reconnections if the user is not authenticated
+    if (!this.authenticated.value) {
+      return;
+    }
+
+    this.reconnectInterval = setInterval(async () => {
+      if (this._state === RaguWebSocketState.INITIALIZED) {
+        if (this.reconnectInterval) {
+          clearInterval(this.reconnectInterval);
+        }
+        return;
+      }
+      try {
+        await this.init();
+      } catch (e) {
+        console.error("Reconnection failed", e);
+      }
+    }, 2000);
+  }
+
+  state(): RaguWebSocketState {
+    return this._state;
   }
 
   /**
-   * Returns the current state of the WebSocket connection.
+   * Returns the current state of the inner WebSocket connection.
    */
-  state(): number {
-    return this.ws.readyState
+  wsState(): number | undefined {
+    return this.ws?.readyState;
   }
 
   /**
@@ -120,10 +111,10 @@ export class RaguWebSocket {
    */
   sendTextMessage(text: string) {
     const message = {
-      type: 'chat',
+      type: "chat",
       text,
-    }
-    this.send(message)
+    };
+    this.send(message);
   }
 
   /**
@@ -131,25 +122,25 @@ export class RaguWebSocket {
    */
   openExistingWorkflow(workflowId: string) {
     const message = {
-      type: 'system',
+      type: "system",
       payload: {
-        type: 'workflow.existing',
+        type: "workflow.existing",
         workflowId,
       },
-    }
-    this.send(message)
+    };
+    this.send(message);
   }
 
   openNewWorkflow(workflowType: string, agentId: string | undefined) {
     const message = {
-      type: 'system',
+      type: "system",
       payload: {
-        type: 'workflow.new',
+        type: "workflow.new",
         workflowType,
         agentId,
       },
-    }
-    this.send(message)
+    };
+    this.send(message);
   }
 
   /**
@@ -157,12 +148,12 @@ export class RaguWebSocket {
    */
   closeWorkflow() {
     const message = {
-      type: 'system',
+      type: "system",
       payload: {
-        type: 'workflow.close',
+        type: "workflow.close",
       },
-    }
-    this.send(message)
+    };
+    this.send(message);
   }
 
   /**
@@ -170,36 +161,46 @@ export class RaguWebSocket {
    */
   cancelStream() {
     this.send({
-      type: 'system',
+      type: "system",
       payload: {
-        type: 'workflow.cancel_stream',
+        type: "workflow.cancel_stream",
       },
-    })
+    });
   }
 
   onMessage(handler: (data: MessageEvent) => void | Promise<void>) {
-    this.ws.onmessage = handler
-  }
-
-  onDisconnect(handler: (event: Event) => void | Promise<void>) {
-    this.ws.onclose = handler
+    this.messageHandler = handler;
   }
 
   close() {
-    this.ws.close()
+    this.ws?.close();
   }
 
   private send(message: any) {
-    if (this.ws.readyState !== WebSocket.OPEN) {
-      console.error('WebSocket is not open. Cannot send message.')
-      return
+    if (this.ws?.readyState !== WebSocket.OPEN) {
+      console.error("WebSocket is not open. Cannot send message.");
+      return;
     }
 
     try {
-      this.ws.send(JSON.stringify(message))
-    }
-    catch (error) {
-      console.error('Error sending message:', error)
+      this.ws.send(JSON.stringify(message));
+    } catch (error) {
+      console.error("Error sending message:", error);
     }
   }
 }
+
+export default defineNuxtPlugin({
+  name: "ragu-ws",
+  hooks: {
+    "app:beforeMount": async function() {
+      const nuxtApp = useNuxtApp();
+
+      const auth = useAuthStore();
+      const { isAuthenticated } = storeToRefs(auth);
+      const websocket: RaguWebSocket = new RaguWebSocket(isAuthenticated);
+
+      nuxtApp.provide("ws", websocket);
+    },
+  },
+});

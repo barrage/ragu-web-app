@@ -29,8 +29,6 @@ const emits = defineEmits<{
   (e: 'edit'): void
 }>()
 
-const config = useRuntimeConfig()
-
 // STATES
 
 const sizeMap = {
@@ -49,8 +47,7 @@ const avatarSize = computed(() => {
 })
 
 const avatarSrc = computed(() => {
-  if (!avatar) { return '' }
-  return `${config.public.apiBaseUrl}/avatars/${avatar}`
+  return avatar || ''
 })
 
 const showImage = computed(() => Boolean(avatarSrc.value))

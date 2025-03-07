@@ -4,8 +4,7 @@ import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
 import StopStreamIcon from '~/assets/icons/svg/stop-stream.svg'
 import type { RaguWebSocket } from '~/plugins/websocket.client'
 
-const { $ws }: { $ws: () => RaguWebSocket } = useNuxtApp() as any
-let ws: RaguWebSocket
+const { $ws }: { $ws: RaguWebSocket } = useNuxtApp() as any
 
 const router = useRouter()
 const agentStore = useAgentStore()
@@ -33,6 +32,7 @@ errorHandler(agentsError)
 
 async function handleServerMessage(event: MessageEvent) {
   let parsedData
+  // FIXME: This jank is glorious, but should be reconsidered
   const assistantMessage = messages.value?.find(
     msg => msg.id === 'currentlyStreaming',
   )
@@ -98,7 +98,7 @@ async function handleServerMessage(event: MessageEvent) {
 }
 
 const sendMessage = () => {
-  if (!(ws.state() === WebSocket.OPEN) || isWebSocketStreaming.value) {
+  if (!($ws.wsState() === WebSocket.OPEN) || isWebSocketStreaming.value) {
     return
   }
 
@@ -135,7 +135,7 @@ const sendMessage = () => {
   messages.value.unshift(userMessage)
   messages.value.unshift(assistantMessage)
 
-  ws.sendTextMessage(message.value)
+  $ws.sendTextMessage(message.value)
 
   isWebSocketStreaming.value = true
   message.value = ''
@@ -149,7 +149,7 @@ watch(agentId, async (newAgentId, oldAgentId) => {
   }
 
   if (agentId.value && newAgentId !== oldAgentId) {
-    ws.openNewWorkflow('CHAT', agentId.value)
+    $ws.openNewWorkflow('CHAT', agentId.value)
   }
 }, { immediate: true })
 
@@ -160,24 +160,23 @@ watch(
       return
     }
     if (currentChatId.value && newChatId !== oldChatId) {
-      ws.openExistingWorkflow(currentChatId.value)
+      $ws.openExistingWorkflow(currentChatId.value)
     }
   },
   { immediate: true },
 )
 
 onMounted(async () => {
-  ws = $ws()
-  ws.onMessage(handleServerMessage)
+  $ws.onMessage(handleServerMessage)
   if (currentChatId.value) {
-    ws.openExistingWorkflow(currentChatId.value)
+    $ws.openExistingWorkflow(currentChatId.value)
   }
   isWatcherActive.value = true
 })
 
 const stopStream = () => {
   if (isWebSocketStreaming.value) {
-    ws.cancelStream()
+    $ws.cancelStream()
     isWebSocketStreaming.value = false
   }
 }
