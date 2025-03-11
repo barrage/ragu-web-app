@@ -74,6 +74,11 @@ const handleSearch = async () => {
     if (valid) {
       await executeSearch()
 
+      if (!searchedDocuments.value || (Array.isArray(searchedDocuments.value) && searchedDocuments.value.length === 0)) {
+        searchResults.value = []
+        return
+      }
+
       if (searchedDocuments.value) {
         const results = Array.isArray(searchedDocuments.value)
           ? searchedDocuments.value
@@ -111,6 +116,7 @@ watch(hasAssignedDocuments, (hasDocuments) => {
 
 <template>
   <el-divider class="is-weak" />
+
   <div class="search-section">
     <div class="group-heading-wrapper">
       <h5 class="group-title">
@@ -120,61 +126,123 @@ watch(hasAssignedDocuments, (hasDocuments) => {
         {{ t('collections.search.description') }}
       </span>
     </div>
+
     <Note
       :title="t('collections.search.title')"
       :items="searchNoteItems"
       :icon="NoteIcon"
     />
-    <ElForm
-      v-if="hasAssignedDocuments"
-      ref="searchFormRef"
-      :model="searchForm"
-      :rules="rules"
-      class="search-form"
-    >
-      <ElFormItem
-        :label="t('collections.search.query_label')"
-        prop="query"
-        class="query-form-item"
-      >
-        <ElInput
-          v-model="searchForm.query"
-          type="textarea"
-          :rows="3"
-          :placeholder="t('collections.search.query_placeholder')"
-          data-testid="collection-search-query-input"
-        />
-      </ElFormItem>
 
-      <ElFormItem
-        :label="t('collections.search.limit_label')"
-        class="limit-form-item"
+    <template v-if="hasAssignedDocuments">
+      <ElForm
+        ref="searchFormRef"
+        :model="searchForm"
+        :rules="rules"
+        class="search-form"
       >
-        <el-card class="is-accent">
-          <div class="card-body">
-            <ElTag type="primary">
-              {{ searchForm.limit }}
-            </ElTag>
-            <ElSlider
-              v-model="searchForm.limit"
-              :min="1"
-              :max="100"
-              :step="1"
-              data-testid="collection-search-limit-slider"
-            />
+        <ElFormItem
+          :label="t('collections.search.query_label')"
+          prop="query"
+          class="query-form-item"
+        >
+          <ElInput
+            v-model="searchForm.query"
+            type="textarea"
+            :rows="3"
+            :placeholder="t('collections.search.query_placeholder')"
+            data-testid="collection-search-query-input"
+          />
+        </ElFormItem>
+
+        <ElFormItem
+          :label="t('collections.search.limit_label')"
+          class="limit-form-item"
+        >
+          <el-card class="is-accent">
+            <div class="card-body">
+              <ElTag type="primary">
+                {{ searchForm.limit }}
+              </ElTag>
+              <ElSlider
+                v-model="searchForm.limit"
+                :min="1"
+                :max="100"
+                :step="1"
+                data-testid="collection-search-limit-slider"
+              />
+            </div>
+          </el-card>
+        </ElFormItem>
+
+        <ElButton
+          type="primary"
+          class="search-button"
+          :loading="searchStatus === 'pending'"
+          @click="handleSearch"
+        >
+          {{ t('collections.search.button') }}
+        </ElButton>
+      </ElForm>
+
+      <EmptyState
+        v-if="searchResults.length === 0 && searchStatus === 'success'"
+        v-motion-fade
+        :title="t('collections.search.no_results')"
+        :description="t('collections.search.no_results_description')"
+        class="search-results"
+        :duration="400"
+      >
+        <template #icon>
+          <DocumentIcon size="44px" />
+        </template>
+      </EmptyState>
+
+      <!-- Search Results  -->
+      <div
+        v-else-if="searchResults.length > 0"
+        ref="searchResultsRef"
+        v-motion-fade
+        class="search-results"
+        :duration="400"
+      >
+        <div class="group-heading-wrapper">
+          <h5 class="group-title">
+            {{ t('collections.search.results_title') }}
+          </h5>
+        </div>
+        <el-card class="search-result-card is-primary">
+          <div>
+            <div class="search-result-content">
+              <div class="result-header">
+                <h6>{{ t('collections.search.resuts_overview') }}</h6>
+                <ElTag type="primary" size="small">
+                  {{ searchForm.limit }} {{ t('collections.search.results') }}
+                </ElTag>
+              </div>
+              <div class="result-body">
+                <div
+                  v-for="(result, index) in searchResults"
+                  :key="index"
+                  class="result-item"
+                  @click="toggleExpand(index)"
+                >
+                  <div class="result-item-content">
+                    <span class="result-number">{{ index + 1 }}.</span>
+                    <span class="result-text" :class="{ expanded: result.isExpanded }">
+                      {{ formatText(result.text, result.isExpanded) || t('collections.search.no_results') }}
+                    </span>
+                  </div>
+                  <ElIcon class="expand-icon" :class="{ expanded: result.isExpanded }">
+                    <ArrowDown />
+                  </ElIcon>
+                </div>
+              </div>
+            </div>
           </div>
         </el-card>
-      </ElFormItem>
+      </div>
+    </template>
 
-      <ElButton
-        type="primary"
-        class="search-button"
-        :loading="searchStatus === 'pending'"
-        @click="handleSearch"
-      >
-        {{ t('collections.search.button') }}
-      </ElButton>
-    </ElForm>
     <EmptyState
       v-else
       :title="t('collections.search.empty_state_title')"
@@ -184,51 +252,6 @@ watch(hasAssignedDocuments, (hasDocuments) => {
         <DocumentIcon size="44px" />
       </template>
     </EmptyState>
-
-    <!-- Search Results -->
-    <div
-      v-if="searchResults?.length"
-      ref="searchResultsRef"
-      v-motion-fade
-      class="search-results"
-      :duration="400"
-    >
-      <div class="group-heading-wrapper">
-        <h5 class="group-title">
-          {{ t('collections.search.results_title') }}
-        </h5>
-      </div>
-      <el-card class="search-result-card is-primary">
-        <div>
-          <div class="search-result-content">
-            <div class="result-header">
-              <h6>{{ t('collections.search.resuts_overview') }}</h6>
-              <ElTag type="primary" size="small">
-                {{ searchForm.limit }} {{ t('collections.search.results') }}
-              </ElTag>
-            </div>
-            <div class="result-body">
-              <div
-                v-for="(result, index) in searchResults"
-                :key="index"
-                class="result-item"
-                @click="toggleExpand(index)"
-              >
-                <div class="result-item-content">
-                  <span class="result-number">{{ index + 1 }}.</span>
-                  <span class="result-text" :class="{ expanded: result.isExpanded }">
-                    {{ formatText(result.text, result.isExpanded) || t('collections.search.no_results') }}
-                  </span>
-                </div>
-                <ElIcon class="expand-icon" :class="{ expanded: result.isExpanded }">
-                  <ArrowDown />
-                </ElIcon>
-              </div>
-            </div>
-          </div>
-        </div>
-      </el-card>
-    </div>
   </div>
 </template>
 

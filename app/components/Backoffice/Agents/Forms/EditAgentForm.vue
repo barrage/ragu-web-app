@@ -46,7 +46,6 @@ const editAgentForm = reactive<EditAgentPayload>({
     maxCompletionTokens: 0,
     instructions: {
       titleInstruction: '',
-      summaryInstruction: '',
       errorMessage: '',
     },
   },
@@ -230,7 +229,6 @@ const setForm = () => {
   editAgentForm.language = props.singleAgent?.agent?.language ?? ''
   editAgentForm.configuration.temperature = props.singleAgent?.configuration?.temperature ?? 0.1
   editAgentForm.configuration.instructions.titleInstruction = props.singleAgent?.configuration?.agentInstructions?.titleInstruction ?? ''
-  editAgentForm.configuration.instructions.summaryInstruction = props.singleAgent?.configuration?.agentInstructions?.summaryInstruction ?? ''
   editAgentForm.configuration.instructions.errorMessage = props.singleAgent?.configuration?.agentInstructions?.errorMessage ?? ''
   editAgentForm.active = props.singleAgent?.agent?.active ?? true
   editAgentForm.configuration.presencePenalty = props.singleAgent?.configuration?.presencePenalty ?? 0
@@ -617,21 +615,6 @@ const handleRemovePicture = async () => {
         v-model="editAgentForm.configuration.instructions.titleInstruction"
         :placeholder="t('agents.placeholder.titleInstruction')"
         data-testid="bo-edit-agent-form-title-instruction-input"
-        type="textarea"
-        size="small"
-      />
-    </ElFormItem>
-
-    <!-- Summary Instruction -->
-    <ElFormItem
-      :label="t('agents.labels.summaryInstruction')"
-      prop="configuration.instructions.summaryInstruction"
-      class="context-form-item"
-    >
-      <ElInput
-        v-model="editAgentForm.configuration.instructions.summaryInstruction"
-        :placeholder="t('agents.placeholder.summaryInstruction')"
-        data-testid="bo-edit-agent-form-summary-instruction-input"
         type="textarea"
         size="small"
       />

@@ -100,8 +100,6 @@ export interface Configuration {
 }
 
 export interface Instructions {
-
-  summaryInstruction: string
   titleInstruction: string
 
 }
@@ -132,7 +130,6 @@ export interface AgentPayload {
 
 export interface Instructions {
   titleInstruction: string
-  summaryInstruction: string
   errorMessage: string
 }
 

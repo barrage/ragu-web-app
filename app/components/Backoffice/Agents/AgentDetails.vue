@@ -39,7 +39,6 @@ const agentData = computed(() => {
     language: props.agent?.agent?.language || t('agents.agent_card.unknown_language'),
     temperature: props.agent?.configuration?.temperature || t('agents.agent_card.unknown_temperature'),
     updatedAt: props.agent?.agent?.updatedAt ? formatDate(props.agent?.agent?.updatedAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
-    summaryInstruction: props.agent?.configuration?.agentInstructions?.summaryInstruction || t('agents.agent_card.unknown_instruction'),
     titleInstruction: props.agent?.configuration?.agentInstructions?.titleInstruction || t('agents.agent_card.unknown_instruction'),
     createdAt: props.agent?.agent?.createdAt ? formatDate(props.agent?.agent?.createdAt, 'MMMM DD, YYYY') : t('agents.agent_card.unknown_date'),
     avatar: props.agent?.agent?.avatar || undefined,

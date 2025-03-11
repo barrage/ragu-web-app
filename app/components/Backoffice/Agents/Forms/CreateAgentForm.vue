@@ -36,7 +36,6 @@ const createAgentForm = reactive<AgentDetail>({
     maxCompletionTokens: 0,
     instructions: {
       titleInstruction: '',
-      summaryInstruction: '',
       errorMessage: '',
     },
   },
@@ -473,21 +472,6 @@ const scrollIntoViewOptions = {
         v-model="createAgentForm.configuration.instructions.titleInstruction"
         :placeholder="t('agents.placeholder.titleInstruction')"
         data-testid="bo-Create-agent-form-title-instruction-input"
-        type="textarea"
-        size="small"
-      />
-    </ElFormItem>
-
-    <!-- Summary Instruction -->
-    <ElFormItem
-      :label="t('agents.labels.summaryInstruction')"
-      prop="configuration.instructions.summaryInstruction"
-      class="context-form-item"
-    >
-      <ElInput
-        v-model="createAgentForm.configuration.instructions.summaryInstruction"
-        :placeholder="t('agents.placeholder.summaryInstruction')"
-        data-testid="bo-Create-agent-form-summary-instruction-input"
         type="textarea"
         size="small"
       />
