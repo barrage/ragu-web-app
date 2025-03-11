@@ -9,9 +9,7 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 const agentStore = useAgentStore()
 const oAuthStore = useAuthStore()
 const { selectedRole } = storeToRefs(useAuthStore())
-const { error, status } = await useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
 const { t } = useI18n()
-errorHandler(error)
 
 const carouselRef = ref<InstanceType<typeof ElCarousel> | null>(null)
 const setActiveSlide = (index: number, agent: SingleAgent) => {
@@ -87,7 +85,7 @@ const selectAgentForChat = (agent: SingleAgent) => {
     </div>
 
     <div class="about-container">
-      <template v-if="status === 'pending'">
+      <template v-if="!agentStore.agentResponseStatus">
         <div class="skeleton-wrapper">
           <template v-for="i in 10" :key="i">
             <SelectAgentCardSkeleton

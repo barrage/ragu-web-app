@@ -10,7 +10,7 @@ export const useAgentStore = defineStore('agent', () => {
   const editMode = ref<boolean>(false)
   const agentsResponse = ref<AllAgentResponse | null >()
   const selectedAgent = ref<SingleAgent | null >()
-
+  const agentResponseStatus = ref<boolean>(false)
   const appAgentsResponse = ref<AllAppAgentsResponse | null >()
   const appAgents = computed<SingleAgent[]>(() => {
     return appAgentsResponse.value?.items || [] // Return agents array or empty array if null
@@ -29,6 +29,14 @@ export const useAgentStore = defineStore('agent', () => {
   const setBackofficeSelectedAgentDetailsVersions = (versions: Configuration[] | undefined) => {
     backofficeSelectedAgentDetailsVersions.value = versions
   }
+
+  const updateAgentStatus = (agentId: string, isActive: boolean) => {
+    const agent = appAgents.value.find(a => a.id === agentId)
+    if (agent) {
+      agent.active = isActive
+    }
+  }
+
   // API
 
   const getAgentStoredAvatar = (agentId: string) => {
@@ -46,6 +54,7 @@ export const useAgentStore = defineStore('agent', () => {
       const data = await $api.agent.GetAllAppAgents(page, perPage, sortBy, sortOrder)
 
       if (data) {
+        agentResponseStatus.value = true
         selectedAgent.value = data.items[0]
         appAgentsResponse.value = data
         return data
@@ -68,11 +77,12 @@ export const useAgentStore = defineStore('agent', () => {
     editMode,
     appAgents,
     backofficeSelectedAgentDetailsVersions,
+    agentResponseStatus,
     setBackofficeSelectedAgentDetailsVersions,
     setEditMode,
     setSelectedAgent,
     GET_AllAppAgents,
     getAgentStoredAvatar,
-
+    updateAgentStatus,
   }
 })

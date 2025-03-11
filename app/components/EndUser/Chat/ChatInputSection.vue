@@ -22,16 +22,14 @@ const agentId: Ref<string | undefined> = computed(() => {
   return agentStore.selectedAgent?.id
 })
 
-const { error, execute: executeGetAgents } = await useAsyncData(() => agentStore.GET_AllAppAgents(), {
-  lazy: true,
-})
-
-errorHandler(error)
-
 const { error: chatError, execute: getChat } = await useAsyncData(() =>
   chatStore.GET_Chat(currentChatId.value!.toString()), { immediate: false })
 
 errorHandler(chatError)
+
+const { error: agentsError } = useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
+
+errorHandler(agentsError)
 
 async function handleServerMessage(event: MessageEvent) {
   let parsedData
@@ -54,11 +52,15 @@ async function handleServerMessage(event: MessageEvent) {
       assistantMessage.content = parsedData.displayMessage
     }
 
+    if (parsedData.errorType === 'API' && parsedData.errorReason === 'EntityDoesNotExist') {
+      const agentId = parsedData.errorDescription.split('\'')[1]
+      agentStore.updateAgentStatus(agentId, false)
+    }
+
     if (currentChatId.value) {
       getChat()
       chatStore.GET_ChatMessages(currentChatId.value)
     }
-    executeGetAgents()
 
     return
   }
@@ -232,7 +234,7 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
         size="large"
         :placeholder="$t('chat.chatInputPlaceholder')"
         class="barrage-chat-input"
-        :disabled="!hasActiveAgents || !isSelectedAgentActive"
+        :disabled="!hasActiveAgents || !isSelectedAgentActive "
         @keyup.enter="sendMessage"
       >
         <template #suffix>
