@@ -68,6 +68,7 @@ const { status: getUsersStatus, data: allUsersData } = await useAsyncData(() => 
             clearable
             data-testid="bo-agents-list-filter-form-status-select"
             :disabled="getUsersStatus === 'pending'"
+            filterable
           >
             <ElOption
               v-for="user in allUsersData?.items"
@@ -85,6 +86,7 @@ const { status: getUsersStatus, data: allUsersData } = await useAsyncData(() => 
             clearable
             data-testid="bo-agents-list-filter-form-status-select"
             :disabled="getAgentsStatus === 'pending'"
+            filterable
           >
             <ElOption
               v-for="agent in allAgentsData?.items"
