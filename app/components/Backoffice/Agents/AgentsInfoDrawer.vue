@@ -5,7 +5,7 @@ const props = withDefaults(defineProps<{
   size?: string | number
   direction?: 'ttb' | 'btt' | 'ltr' | 'rtl'
 }>(), {
-  size: '70%',
+  size: '75%',
   direction: 'btt',
 })
 
@@ -36,6 +36,11 @@ const agentInfoContent = computed(() => {
           label: t('agents.info.what_can_you_do_here.items.labels.assign_collections'),
           description: t('agents.info.what_can_you_do_here.items.descriptions.assign_collections'),
         },
+        {
+          label: t('agents.info.what_can_you_do_here.items.labels.wap'),
+          description: t('agents.info.what_can_you_do_here.items.descriptions.activate_wap_agent'),
+        },
+
       ],
     }, {
       title: t('agents.info.how_to_manage.title'),
