@@ -1,4 +1,19 @@
 import { defineNuxtPlugin } from "#app";
+import type { User } from "~/types/auth";
+
+export default defineNuxtPlugin({
+  name: "ragu-ws",
+  hooks: {
+    "app:beforeMount": async function () {
+      const nuxtApp = useNuxtApp();
+
+      const { user } = storeToRefs(useAuthStore());
+      const websocket: RaguWebSocket = new RaguWebSocket(user);
+
+      nuxtApp.provide("ws", websocket);
+    },
+  },
+});
 
 export enum RaguWebSocketState {
   UNINITIALIZED = 0,
@@ -11,8 +26,6 @@ export enum RaguWebSocketState {
  * The reconnect logic is located in the plugin.
  */
 export class RaguWebSocket {
-  private authenticated: Ref<boolean>;
-
   private ws: WebSocket | undefined;
 
   private messageHandler: ((data: MessageEvent) => void) | undefined;
@@ -21,22 +34,21 @@ export class RaguWebSocket {
 
   private reconnectInterval: NodeJS.Timeout | undefined;
 
-  constructor(auth: Ref<boolean>) {
-    this.authenticated = auth;
+  constructor(user: Ref<User | null>) {
     watch(
-      this.authenticated,
+      user,
       async (authenticated) => {
         if (!authenticated) {
           this.close();
-          return;
+        } else {
+          await this.init(user);
         }
-        await this.init();
       },
       { immediate: true },
     );
   }
 
-  async init(): Promise<void> {
+  async init(user: Ref<User | null>) {
     const config = useRuntimeConfig();
     let response;
     try {
@@ -57,10 +69,12 @@ export class RaguWebSocket {
     ws.onmessage = (event) => {
       if (this.messageHandler) {
         this.messageHandler(event);
+      } else {
+        console.warn("Message handler not registered");
       }
     };
 
-    ws.onclose = this.attemptReconnect;
+    ws.onclose = () => this.attemptReconnect(user);
 
     // Resolve only when the websocket is ready, otherwise we might get
     // an undefined websocket from the plugin
@@ -68,15 +82,21 @@ export class RaguWebSocket {
       ws.onopen = () => resolve();
       ws.onerror = (error) => reject(error);
     }).then(() => {
+      console.log("Websocket connected");
       this.ws = ws;
       this._state = RaguWebSocketState.INITIALIZED;
     });
   }
 
-  attemptReconnect() {
+  attemptReconnect(user: Ref<User | null>) {
+    console.warn("Websocket closed, attempting reconnection");
     this._state = RaguWebSocketState.UNINITIALIZED;
     // Do not attempt any reconnections if the user is not authenticated
-    if (!this.authenticated.value) {
+    if (!user.value) {
+      return;
+    }
+
+    if (this.reconnectInterval) {
       return;
     }
 
@@ -88,7 +108,7 @@ export class RaguWebSocket {
         return;
       }
       try {
-        await this.init();
+        await this.init(user);
       } catch (e) {
         console.error("Reconnection failed", e);
       }
@@ -189,18 +209,3 @@ export class RaguWebSocket {
     }
   }
 }
-
-export default defineNuxtPlugin({
-  name: "ragu-ws",
-  hooks: {
-    "app:beforeMount": async function() {
-      const nuxtApp = useNuxtApp();
-
-      const auth = useAuthStore();
-      const { isAuthenticated } = storeToRefs(auth);
-      const websocket: RaguWebSocket = new RaguWebSocket(isAuthenticated);
-
-      nuxtApp.provide("ws", websocket);
-    },
-  },
-});
