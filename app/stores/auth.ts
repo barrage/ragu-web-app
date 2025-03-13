@@ -42,6 +42,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   function setCurrentUser(newUser: User) {
     user.value = newUser;
+    iscurrentUserLoading.value = false;
   }
 
   /**

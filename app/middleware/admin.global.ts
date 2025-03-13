@@ -1,7 +1,11 @@
 export default defineNuxtRouteMiddleware(async (to) => {
   const authStore = useAuthStore();
 
-  await authStore.initializeAuth();
+  // Skip initialization for auth/callback route
+  // since we know there is no user yet
+  if (to.name !== "auth-callback") {
+    await authStore.initializeAuth();
+  }
 
   if (authStore.isAuthenticated && to.path === "/login") {
     return navigateTo("/");
