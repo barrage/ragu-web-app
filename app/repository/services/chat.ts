@@ -40,18 +40,14 @@ export default class ChatServise extends FetchFactory {
 
   /**
    * Fetches chat data for a specific chat by its ID.
-   * @param id - The ID of the chat for which data are being fetched.
+   * @param chatId - The ID of the chat for which data are being fetched.
    * @returns A promise that resolves to an Chat object.
    * @throws Will throw an error if the request fails.
    */
   async GetEndUserChat(chatId: string): Promise<EndUserChatDetails | null> {
     try {
-      const queryParams = new URLSearchParams({
-        withAvatar: "true",
-      });
-
       return await this.$fetch<EndUserChatDetails>(
-        `${this.chatsEndpoint}/${chatId}?${queryParams}`,
+        `${this.chatsEndpoint}/${chatId}`,
         {
           credentials: "include",
         },
@@ -68,7 +64,7 @@ export default class ChatServise extends FetchFactory {
 
   /**
    * Fetches all messages for a specific chat by its ID.
-   * @param id - The ID of the chat for which messages are being fetched.
+   * @param chatId - The ID of the chat for which messages are being fetched.
    * @returns A promise that resolves to an array of Message objects.
    * @throws Will throw an error if the request fails.
    */
@@ -184,11 +180,11 @@ export default class ChatServise extends FetchFactory {
   async GetAllChatMessagesAdmin(chatId: string): Promise<Message[]> {
     try {
       /* const queryParams = new URLSearchParams({
-                                                                                page: page.toString(),
-                                                                                perPage: perPage.toString(),
-                                                                                sortBy,
-                                                                                sortOrder,
-                                                                              }).toString() */
+                                                                                                  page: page.toString(),
+                                                                                                  perPage: perPage.toString(),
+                                                                                                  sortBy,
+                                                                                                  sortOrder,
+                                                                                                }).toString() */
       return await this.$fetch<Message[]>(
         `${this.adminChatsEndpoint}/${chatId}/messages`,
         {

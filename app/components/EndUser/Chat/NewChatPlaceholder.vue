@@ -11,6 +11,10 @@ const oAuthStore = useAuthStore()
 const { selectedRole } = storeToRefs(useAuthStore())
 const { t } = useI18n()
 
+const { error: agentsError } = useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
+
+errorHandler(agentsError)
+
 const carouselRef = ref<InstanceType<typeof ElCarousel> | null>(null)
 const setActiveSlide = (index: number, agent: SingleAgent) => {
   if (carouselRef.value) {

@@ -2,7 +2,6 @@
 // CONSTANTS
 const navigationStore = useNavigationStore()
 const { width } = useWindowSize()
-const { t } = useI18n()
 
 // WATCHERS
 watch(width, (newWidth) => {
@@ -22,13 +21,6 @@ watch(width, (newWidth) => {
     <main class="main">
       <div class="page-wrapper">
         <NuxtPage />
-      </div>
-
-      <div class="chat-page-footer">
-        <ChatInputSection />
-        <p class="chat-page-footer__text">
-          {{ t('global_disclaimer') }}
-        </p>
       </div>
     </main>
   </div>
@@ -74,16 +66,6 @@ watch(width, (newWidth) => {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 100%;
-  }
-
-  & .chat-page-footer {
-    flex: 1 0 calc(10%);
-
-    &__text {
-      color: var(--color-primary-500);
-      font-size: var(--font-size-fluid-2);
-      text-align: center;
-    }
   }
 }
 

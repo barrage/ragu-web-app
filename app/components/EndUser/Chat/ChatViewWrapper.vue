@@ -1,21 +1,20 @@
 <script lang="ts" setup>
 import type { Chat } from '~/types/chat'
 
-const chatStore = useChatStore()
-const messages = computed(() => {
-  return [...(chatStore?.messages || [])]
-})
+// This component gets loaded whenever the `messages` array
+// from the store contains messages in cases where a new chat
+// has started, or if the path contains /c/:chatId.
 
-const selectedChat = computed(() => {
-  return chatStore?.selectedChat?.chat || null
-})
+const chatStore = useChatStore()
+
+const { selectedChat, messages } = storeToRefs(chatStore)
 
 /* Delete Chat */
 const selectedChatDelete = ref<Chat | null>(null)
 const deleteChatModalVisible = ref(false)
 
 const openDeleteChatModal = () => {
-  selectedChatDelete.value = selectedChat.value
+  selectedChatDelete.value = selectedChat.value?.chat ?? null
   deleteChatModalVisible.value = true
 }
 
@@ -27,7 +26,7 @@ const selectedChatEdit = ref<Chat | null>(null)
 const editChatModalVisible = ref(false)
 
 const openEditChatModal = () => {
-  selectedChatEdit.value = selectedChat.value
+  selectedChatEdit.value = selectedChat.value?.chat ?? null
   editChatModalVisible.value = true
 }
 
@@ -42,7 +41,7 @@ const closeEditChatModal = () => {
   >
     <div class="chat-wrapper">
       <Chat
-        :chat="selectedChat"
+        :chat="selectedChat?.chat ?? null"
         :messages="messages"
         @edit-chat-title="openEditChatModal"
         @delete-chat="openDeleteChatModal"

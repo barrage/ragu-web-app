@@ -4,7 +4,7 @@ import type { User } from "~/types/auth";
 export default defineNuxtPlugin({
   name: "ragu-ws",
   hooks: {
-    "app:beforeMount": async function () {
+    "app:beforeMount": async function() {
       const nuxtApp = useNuxtApp();
 
       const { user } = storeToRefs(useAuthStore());
@@ -70,7 +70,7 @@ export class RaguWebSocket {
       if (this.messageHandler) {
         this.messageHandler(event);
       } else {
-        console.warn("Message handler not registered");
+        console.warn("Message handler not registered, dropping event", event);
       }
     };
 

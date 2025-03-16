@@ -1,216 +1,38 @@
 <script lang="ts" setup>
-import { nextTick } from 'vue'
 import ArrowUpIcon from '~/assets/icons/svg/arrow-up.svg'
 import StopStreamIcon from '~/assets/icons/svg/stop-stream.svg'
-import type { RaguWebSocket } from '~/plugins/websocket.client'
 
-const { $ws }: { $ws: RaguWebSocket } = useNuxtApp() as any
+defineProps<{
+  // Whether to show the input at all
+  show: boolean
 
-const router = useRouter()
-const agentStore = useAgentStore()
+  // Whether to disable the input and button
+  disabled: boolean
+
+  // Whether to show the stop stream button
+  streaming: boolean
+}>()
+
+const emit = defineEmits <{
+  (e: 'sendMessage', message: string): void
+  (e: 'stopStream'): void
+}>()
+
 const chatStore = useChatStore()
-const { currentChatId, isWebSocketStreaming, messages }
-  = storeToRefs(useChatStore())
 const message = ref('')
 
-// Should be undefined only when a chat is currently selected.
-const agentId: Ref<string | undefined> = computed(() => {
-  if (currentChatId.value) {
-    return
-  }
-  return agentStore.selectedAgent?.id
-})
-
-const { error: chatError, execute: getChat } = await useAsyncData(() =>
-  chatStore.GET_Chat(currentChatId.value!.toString()), { immediate: false })
-
-errorHandler(chatError)
-
-const { error: agentsError } = useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
-
-errorHandler(agentsError)
-
-async function handleServerMessage(event: MessageEvent) {
-  let parsedData
-  // FIXME: This jank is glorious, but should be reconsidered
-  const assistantMessage = messages.value?.find(
-    msg => msg.id === 'currentlyStreaming',
-  )
-
-  try {
-    parsedData = JSON.parse(event.data)
-  }
-  catch (error) {
-    console.error('Error parsing WebSocket message:', error)
-    return
-  }
-
-  if (parsedData.errorType) {
-    isWebSocketStreaming.value = false
-    if (assistantMessage) {
-      assistantMessage.id = ''
-      assistantMessage.content = parsedData.displayMessage
-    }
-
-    if (parsedData.errorType === 'API' && parsedData.errorReason === 'EntityDoesNotExist') {
-      const agentId = parsedData.errorDescription.split('\'')[1]
-      agentStore.updateAgentStatus(agentId, false)
-    }
-
-    if (currentChatId.value) {
-      getChat()
-      chatStore.GET_ChatMessages(currentChatId.value)
-    }
-
-    return
-  }
-
-  switch (parsedData?.type) {
-    case 'chat.title':
-      handleChatTitleEvent(parsedData)
-      break
-    case 'workflow.closed':
-      isWebSocketStreaming.value = false
-      if (assistantMessage) {
-        assistantMessage.id = ''
-      }
-      break
-    case 'chat.stream_complete':
-      isWebSocketStreaming.value = false
-      if (assistantMessage) {
-        assistantMessage.id = ''
-      }
-      if (parsedData.chatId) {
-        nextTick()
-        chatStore.GET_ChatMessages(parsedData.chatId)
-        chatStore.GET_AllChats()
-        router.push(`/c/${parsedData.chatId}`)
-      }
-      break
-    case 'chat.stream_chunk':
-      if (assistantMessage) {
-        assistantMessage.content += parsedData.chunk
-      }
-      break
-    default:
-      break
-  }
-}
-
 const sendMessage = () => {
-  if (!($ws.wsState() === WebSocket.OPEN) || isWebSocketStreaming.value) {
-    return
-  }
-
   if (!message.value.trim()) {
     return
   }
 
-  const userMessage = {
-    id: '',
-    sender: '1',
-    senderType: 'user' as const,
-    content: message.value,
-    chatId: currentChatId.value || '',
-    responseTo: '',
-    evaluation: null,
-    createdAt: '',
-    updatedAt: '',
-  }
-  const assistantMessage = {
-    id: 'currentlyStreaming',
-    sender: '1',
-    senderType: 'assistant' as const,
-    content: '',
-    chatId: currentChatId.value || '',
-    responseTo: '',
-    evaluation: null,
-    createdAt: '',
-    updatedAt: '',
-  }
-  if (!Array.isArray(messages.value)) {
-    messages.value = []
-  }
+  emit('sendMessage', message.value)
 
-  messages.value.unshift(userMessage)
-  messages.value.unshift(assistantMessage)
-
-  $ws.sendTextMessage(message.value)
-
-  isWebSocketStreaming.value = true
   message.value = ''
 }
 
-const isWatcherActive = ref(false)
-
-watch(agentId, async (newAgentId, oldAgentId) => {
-  if (!isWatcherActive.value) {
-    return
-  }
-
-  if (agentId.value && newAgentId !== oldAgentId) {
-    $ws.openNewWorkflow('CHAT', agentId.value)
-  }
-}, { immediate: true })
-
-watch(
-  currentChatId,
-  async (newChatId, oldChatId) => {
-    if (!isWatcherActive.value) {
-      return
-    }
-    if (currentChatId.value && newChatId !== oldChatId) {
-      $ws.openExistingWorkflow(currentChatId.value)
-    }
-  },
-  { immediate: true },
-)
-
-onMounted(async () => {
-  $ws.onMessage(handleServerMessage)
-  if (currentChatId.value) {
-    $ws.openExistingWorkflow(currentChatId.value)
-  }
-  isWatcherActive.value = true
-})
-
 const stopStream = () => {
-  if (isWebSocketStreaming.value) {
-    $ws.cancelStream()
-    isWebSocketStreaming.value = false
-  }
-}
-
-const hasActiveAgents = computed(() => {
-  return agentStore.appAgents.filter(agent => agent.active).length > 0
-})
-
-const isSelectedAgentActive = computed(() => {
-  if (currentChatId.value) {
-    return chatStore.selectedChat?.agent?.active
-  }
-  else {
-    return true
-  }
-})
-
-function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
-  const { chatId, title } = parsedData
-
-  if (!chatId || !title) {
-    console.error('Invalid data for chat_title event:', parsedData)
-    return
-  }
-
-  const selectedChat = chatStore.selectedChat?.chat
-  if (selectedChat && selectedChat.id === chatId) {
-    selectedChat.title = title
-  }
-
-  const chatToUpdate = chatStore.chats.find(chat => chat.id === chatId)
-  if (chatToUpdate) {
-    chatToUpdate.title = title
-  }
+  emit('stopStream')
 }
 </script>
 
@@ -225,7 +47,7 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
     >
       {{ $t("chat.inactive_agent") }}
     </ElCard>
-    <div v-else-if="agentStore.appAgents.length" class="input-button-wrapper">
+    <div v-else-if="show" class="input-button-wrapper">
       <ElInput
         v-model="message"
         v-motion-slide-bottom
@@ -233,7 +55,7 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
         size="large"
         :placeholder="$t('chat.chatInputPlaceholder')"
         class="barrage-chat-input"
-        :disabled="!hasActiveAgents || !isSelectedAgentActive "
+        :disabled="disabled"
         @keyup.enter="sendMessage"
       >
         <template #suffix>
@@ -241,18 +63,18 @@ function handleChatTitleEvent(parsedData: { chatId: string, title: string }) {
             class="input-suffix-wrapper"
             :class="{
               'input-suffix-wrapper--active':
-                message.length || isWebSocketStreaming,
+                message.length || streaming,
             }"
           >
             <StopStreamIcon
-              v-if="isWebSocketStreaming"
+              v-if="streaming"
               size="32px"
               tabindex="0"
               @click="stopStream"
               @keyup.enter="stopStream"
             />
             <ArrowUpIcon
-              v-else-if="hasActiveAgents && isSelectedAgentActive"
+              v-else-if="!disabled"
               :tabindex="message.length ? 0 : -1"
               size="32px"
               @click="sendMessage"

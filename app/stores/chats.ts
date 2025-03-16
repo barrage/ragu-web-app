@@ -3,27 +3,38 @@ import type {
   AdminChatDetails,
   AdminChatsResponse,
   Chat,
-  ChatsResponse,
   EndUserChatDetails,
   Message,
 } from "~/types/chat.ts";
 
 export const useChatStore = defineStore("chat", () => {
   // State
-  const chats = ref<Chat[]>([]);
-  const chatsResponse = ref<ChatsResponse | null>(null);
-  const messages = ref<Message[]>();
-  const selectedChat = ref<EndUserChatDetails | null>(null);
-  const isLoading = ref(false);
-  const error = ref<string | null>(null);
 
-  const isWebSocketStreaming = ref(false);
-  const route = useRoute();
-  const currentChatId = computed(() => {
-    const chatId = route.params.chatId;
-    return Array.isArray(chatId) ? chatId[0] : chatId || null;
-  });
-  const hasChats = computed(() => chats.value.length > 0);
+  /**
+   * Holds a list of all of the user's chats for display purposes.
+   */
+  const chats = ref<Chat[]>([]);
+
+  /**
+   * Contains messages for display on the current component.
+   *
+   * There are 2 possible states for this:
+   *
+   * 1. Initially empty: means we are on the index page.
+   * 2. Existing messages: means we are either moving from the index,
+   *                       or are on a chat page.
+   */
+  const messages = ref<Message[]>([]);
+
+  /**
+   * Holds the currently selected chat for display purposes.
+   *
+   * This will only be non-null when we have loaded an existing chat,
+   * or when we are redirected to a new one after the initial
+   * message pair is processed.
+   */
+  const selectedChat = ref<EndUserChatDetails | null>(null);
+
   const { $api } = useNuxtApp();
 
   /* API */
@@ -42,6 +53,10 @@ export const useChatStore = defineStore("chat", () => {
     }
   }
 
+  /**
+   * Fetch and set the @{@link selectedChat} to the chat with the given ID.
+   * @param chatId
+   */
   async function GET_Chat(chatId: string): Promise<EndUserChatDetails | null> {
     try {
       const data = await $api.chat.GetEndUserChat(chatId);
@@ -52,20 +67,17 @@ export const useChatStore = defineStore("chat", () => {
         return null;
       }
     } catch (error) {
-      console.error("Failed to fetch agents:", error);
+      console.error("Failed to fetch chat:", error);
       selectedChat.value = null;
       return null;
     }
   }
 
-  async function GET_AllChats(): Promise<ChatsResponse | null> {
+  async function GET_AllChats(): Promise<void> {
     const data = await $api.chat.GetAllChats();
 
     if (data) {
       chats.value = data.items;
-      return (chatsResponse.value = data);
-    } else {
-      return (chatsResponse.value = null);
     }
   }
 
@@ -146,15 +158,10 @@ export const useChatStore = defineStore("chat", () => {
   return {
     chats,
     messages,
-    isLoading,
-    error,
-    hasChats,
     selectedChat,
-    isWebSocketStreaming,
     GET_ChatMessages,
     GET_AllChats,
     getChatById,
-    currentChatId,
     GET_AllAdminChats,
     adminAllChatsData,
     adminAllChatsResponse,

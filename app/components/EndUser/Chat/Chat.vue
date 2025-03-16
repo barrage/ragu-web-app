@@ -87,7 +87,7 @@ function openDeleteDialog() {
   emits('deleteChat')
 }
 
-// Keyboard accessability
+// Keyboard accessibility
 const dropdownRef = ref<DropdownInstance | null>(null)
 const { toggleDropdown, handleDropdownVisibleChange } = useDropdownKeyboard(
   [openEditDialog, openDeleteDialog],

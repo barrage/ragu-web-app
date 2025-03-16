@@ -6,6 +6,10 @@ import QuestionIcon from '~/assets/icons/svg/question.svg'
 // CONSTANTS
 const navigationStore = useNavigationStore()
 const { isSidebarCollapsed } = storeToRefs(navigationStore)
+
+onMounted(() => {
+  useChatStore().GET_AllChats()
+})
 </script>
 
 <template>
