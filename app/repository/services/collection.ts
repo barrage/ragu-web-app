@@ -35,7 +35,9 @@ export default class CollectionService extends FetchFactory {
 
       const queryString = new URLSearchParams(queryParams).toString()
 
-      return await this.$fetch<CollectionListResponse>(`${this.endpoint}?${queryString}`)
+      return await this.$fetch<CollectionListResponse>(`${this.endpoint}?${queryString}`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({
@@ -53,9 +55,9 @@ export default class CollectionService extends FetchFactory {
    */
   async GetSingleCollection(collectionId: string): Promise<CollectionResponse> {
     try {
-      return await this.$fetch<CollectionResponse>(`display${this.endpoint}/${collectionId}`,
-
-      )
+      return await this.$fetch<CollectionResponse>(`display${this.endpoint}/${collectionId}`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({
@@ -75,6 +77,7 @@ export default class CollectionService extends FetchFactory {
     try {
       return await this.$fetch(`${this.endpoint}/${id}`, {
         method: 'DELETE',
+        credentials: 'include',
       })
     }
     catch (error: any) {
@@ -97,6 +100,7 @@ export default class CollectionService extends FetchFactory {
       return await this.$fetch(this.endpoint, {
         method: 'POST',
         body: JSON.stringify(body),
+        credentials: 'include',
       })
     }
     catch (error: any) {
@@ -118,7 +122,9 @@ export default class CollectionService extends FetchFactory {
     try {
       const url = `/embeddings/${provider}/models`
 
-      return await this.$fetch<any>(url)
+      return await this.$fetch<any>(url, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({
@@ -133,6 +139,7 @@ export default class CollectionService extends FetchFactory {
       return await this.$fetch(`${this.searchEndpoint}`, {
         method: 'POST',
         body: JSON.stringify(body),
+        credentials: 'include',
       })
     }
     catch (error: any) {

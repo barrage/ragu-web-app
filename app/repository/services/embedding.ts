@@ -16,6 +16,7 @@ export default class EmbeddingService extends FetchFactory {
       return await this.$fetch(`${this.endpoint}/batch`, {
         method: 'POST',
         body: JSON.stringify(body),
+        credentials: 'include',
       })
     }
     catch (error: any) {

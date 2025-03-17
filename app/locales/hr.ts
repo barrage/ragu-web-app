@@ -1548,6 +1548,7 @@ export default {
       query_placeholder: 'Unesite vaš upit...',
       query_label: 'Pretraži',
       limit_label: 'Limit rezultata',
+      max_distance_label: 'Maksimalna udaljenost',
       limit_placeholder: 'Unesite limit rezultata...',
       button: 'Pretraži',
       results_title: 'Rezultati pretraživanja',

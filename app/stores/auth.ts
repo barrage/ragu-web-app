@@ -1,21 +1,21 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import { useNuxtApp } from "#app";
-import type { User } from "~/types/auth";
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { useNuxtApp } from '#app'
+import type { User } from '~/types/auth'
 
-export const useAuthStore = defineStore("auth", () => {
+export const useAuthStore = defineStore('auth', () => {
   // CONSTANTS
-  const { $api } = useNuxtApp();
+  const { $api } = useNuxtApp()
 
   // STATE
 
-  const user = ref<User | null>(null);
-  const isAuthenticated = computed(() => user.value !== null);
-  const iscurrentUserLoading = ref<boolean>(true);
+  const user = ref<User | null>(null)
+  const isAuthenticated = computed(() => user.value !== null)
+  const iscurrentUserLoading = ref<boolean>(true)
 
   const isAdmin = computed(() => {
-    return user.value?.entitlements?.includes("admin") ?? false;
-  });
+    return user.value?.entitlements?.includes('admin') ?? false
+  })
 
   // ACTIONS
 
@@ -24,26 +24,28 @@ export const useAuthStore = defineStore("auth", () => {
    */
   async function GET_CurrentUser() {
     if (user.value !== null) {
-      return;
+      return
     }
-
-    iscurrentUserLoading.value = true;
+    iscurrentUserLoading.value = true
 
     try {
-      const { user: currentUser, expiresAt } = await $api.auth.GetCurrentUser();
-      user.value = currentUser;
-      const expiresIn = expiresAt - Math.round(Date.now() / 1000);
+      const { user: currentUser, expiresAt } = await $api.auth.GetCurrentUser()
+      user.value = currentUser
+      const expiresIn = expiresAt - Math.round(Date.now() / 1000)
       if (expiresIn > 30) {
-        console.log("Setting refresh timeout:", (expiresIn - 30) * 1000);
-        setTimeout($api.auth.Refresh, (expiresIn - 30) * 1000);
-      } else {
-        $api.auth.Refresh();
+        console.log('Setting refresh timeout:', (expiresIn - 30) * 1000)
+        setTimeout($api.auth.Refresh, (expiresIn - 30) * 1000)
       }
-    } catch (error) {
-      console.error("Failed fetch current user", error);
-      user.value = null;
-    } finally {
-      iscurrentUserLoading.value = false;
+      else {
+        $api.auth.Refresh()
+      }
+    }
+    catch (error) {
+      console.error('Failed fetch current user', error)
+      user.value = null
+    }
+    finally {
+      iscurrentUserLoading.value = false
     }
   }
 
@@ -51,8 +53,8 @@ export const useAuthStore = defineStore("auth", () => {
    * Logout the current user.
    */
   async function POST_Logout() {
-    await $api.auth.Logout();
-    user.value = null;
+    await $api.auth.Logout()
+    user.value = null
   }
 
   return {
@@ -62,5 +64,5 @@ export const useAuthStore = defineStore("auth", () => {
     isAdmin,
     POST_Logout,
     GET_CurrentUser,
-  };
-});
+  }
+})

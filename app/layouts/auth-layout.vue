@@ -1,10 +1,4 @@
 <script setup lang="ts">
-// TODO list
-// This is a dummy layout used to prevent loading the ChatInputSection
-// component from the default layout. It is janky and is a temporary fix.
-// Eventually, the ChatInputSection component should be removed from the layout
-// and should be used in components/pages that actually need it.
-
 const themeStore = useThemeStore()
 const { isDarkMode } = storeToRefs(themeStore)
 </script>
@@ -14,3 +8,18 @@ const { isDarkMode } = storeToRefs(themeStore)
     <NuxtPage />
   </main>
 </template>
+
+<style lang="scss" scoped>
+.main-content {
+  background: var(--color-app-background);
+  min-height: 100vh;
+  padding: 0.75rem;
+  overflow: hidden;
+  height: 100vh;
+  animation: fade-in 2s ease forwards;
+  background: linear-gradient(
+    var(--color-lightmode-0),
+    var(--color-primary-200)
+  );
+}
+</style>

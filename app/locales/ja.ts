@@ -1230,6 +1230,7 @@ export default {
       query_placeholder: 'クエリを入力してください...',
       query_label: '検索',
       limit_label: '結果の制限',
+      max_distance_label: '最大距離',
       limit_placeholder: '結果の制限を入力してください...',
       button: '検索',
       results_title: '検索結果',

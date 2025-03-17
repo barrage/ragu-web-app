@@ -1544,6 +1544,7 @@ export default {
       query_placeholder: 'Enter your query...',
       query_label: 'Search',
       limit_label: 'Result Limit',
+      max_distance_label: 'Max Distance',
       limit_placeholder: 'Enter result limit...',
       button: 'Search',
       results_title: 'Search Results',

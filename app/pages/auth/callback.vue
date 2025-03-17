@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 
 definePageMeta({
-  layout: 'login-layout',
+  layout: 'auth-layout',
 })
 
 const authStore = useAuthStore()
@@ -59,5 +59,5 @@ else {
 </script>
 
 <template>
-  <OAuthOverlayLoader />
+  <LlmOverlayLoader />
 </template>

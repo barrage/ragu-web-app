@@ -67,15 +67,9 @@ async function startOAuthFlow() {
       @click="startOAuthFlow"
       @keyup.enter="startOAuthFlow"
     >
-      <component
-        :is="BarrageLogo"
-        size="24px"
-        name="google"
-        original
-      />
+      <BarrageLogo size="54px" />
       <p class="semi-bold">
-        Login
-        <!-- TODO: {{ `${$t('login.continueWith')} ${option.text}` }} -->
+        {{ $t('login.title') }}
       </p>
     </ElButton>
   </div>
@@ -86,6 +80,7 @@ async function startOAuthFlow() {
   margin-block: 1.75rem;
 
   min-width: max-content;
+
   & .social {
     height: 58px;
     display: flex;
@@ -95,9 +90,13 @@ async function startOAuthFlow() {
     padding: 12px 20px;
     border: 1px solid var(--color-primary-300);
     width: 100%;
-
     border-radius: 8px;
     transition: 0.3s;
+
+    & :deep(span) {
+      gap: 0 70px;
+    }
+
     &:not(:last-child) {
       margin-bottom: 1.25rem;
     }

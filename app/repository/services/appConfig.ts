@@ -12,7 +12,9 @@ export default class usersService extends FetchFactory {
    */
   async GetAppConfig(): Promise<AppConfig> {
     try {
-      return await this.$fetch<AppConfig>(`${this.endpoint}`)
+      return await this.$fetch<AppConfig>(`${this.endpoint}`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({

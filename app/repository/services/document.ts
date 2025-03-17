@@ -37,7 +37,9 @@ export default class DocumentServise extends FetchFactory {
 
       const queryString = new URLSearchParams(queryParams).toString()
 
-      return await this.$fetch<DocumentListResponse>(`${this.endpoint}?${queryString}`)
+      return await this.$fetch<DocumentListResponse>(`${this.endpoint}?${queryString}`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({
@@ -54,7 +56,9 @@ export default class DocumentServise extends FetchFactory {
    */
   async GetSingleDocument(id: string): Promise<Document> {
     try {
-      return await this.$fetch<Document>(`${this.endpoint}/${id}`)
+      return await this.$fetch<Document>(`${this.endpoint}/${id}`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({
@@ -70,7 +74,9 @@ export default class DocumentServise extends FetchFactory {
    */
   async GetSyncFs() {
     try {
-      return await this.$fetch(`${this.endpoint}/sync/fs`)
+      return await this.$fetch(`${this.endpoint}/sync/fs`, {
+        credentials: 'include',
+      })
     }
     catch (error: any) {
       throw createError({
@@ -91,6 +97,7 @@ export default class DocumentServise extends FetchFactory {
       return await this.$fetch<DocumentListResponse>(`${this.endpoint}`, {
         method: 'POST',
         body: formData,
+        credentials: 'include',
       })
     }
     catch (error: any) {
@@ -111,6 +118,7 @@ export default class DocumentServise extends FetchFactory {
     try {
       return await this.$fetch(`${this.endpoint}/${id}`, {
         method: 'DELETE',
+        credentials: 'include',
       })
     }
     catch (error: any) {
@@ -136,6 +144,7 @@ export default class DocumentServise extends FetchFactory {
           'Content-Type': 'application/json',
         },
         body: ParserConfig,
+        credentials: 'include',
       })
     }
     catch (error: any) {
@@ -162,6 +171,7 @@ export default class DocumentServise extends FetchFactory {
           'Content-Type': 'application/json',
         },
         body: { chunker: chunkDocumentBody },
+        credentials: 'include',
       })
     }
     catch (error: any) {
@@ -187,6 +197,7 @@ export default class DocumentServise extends FetchFactory {
           'Content-Type': 'application/json',
         },
         body: documentConfig,
+        credentials: 'include',
       })
     }
     catch (error: any) {
@@ -216,6 +227,7 @@ export default class DocumentServise extends FetchFactory {
         headers: {
           'X-Google-Drive-Access-Token': accessToken,
         },
+        credentials: 'include',
       })
     }
     catch (error: any) {

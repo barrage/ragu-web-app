@@ -1238,6 +1238,7 @@ export default {
       query_placeholder: 'Geben Sie Ihre Abfrage ein...',
       query_label: 'Suche',
       limit_label: 'Ergebnislimit',
+      max_distance_label: 'Maximale Entfernung',
       limit_placeholder: 'Geben Sie das Ergebnislimit ein...',
       button: 'Suche',
       results_title: 'Suchergebnisse',

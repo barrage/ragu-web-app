@@ -1233,6 +1233,7 @@ export default {
       query_placeholder: 'Digite sua consulta...',
       query_label: 'Pesquisar',
       limit_label: 'Limite de resultados',
+      max_distance_label: 'Distância máxima',
       limit_placeholder: 'Digite o limite de resultados...',
       button: 'Pesquisar',
       results_title: 'Resultados da pesquisa',

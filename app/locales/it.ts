@@ -1230,6 +1230,7 @@ export default {
       query_placeholder: 'Inserisci la tua query...',
       query_label: 'Cerca',
       limit_label: 'Limite dei risultati',
+      max_distance_label: 'Distanza massima',
       limit_placeholder: 'Inserisci il limite dei risultati...',
       button: 'Cerca',
       results_title: 'Risultati della ricerca',

@@ -4,11 +4,12 @@ import DocumentIcon from '~/assets/icons/svg/document.svg'
 import NoteIcon from '~/assets/icons/svg/notes.svg'
 import type { Document } from '~/types/collection'
 import ArrowDown from '~/assets/icons/svg/arrow-down.svg'
+import { sanitizeHtml } from '~/utils/sanitizeHtml'
 
 interface SearchResultItem {
   text: string
   isExpanded: boolean
-
+  distance?: number
 }
 
 const props = defineProps<{
@@ -23,6 +24,7 @@ const searchForm = reactive({
   collectionId: props.collectionId,
   query: '',
   limit: 5,
+  maxDistance: 0.5,
 })
 
 const searchFormRef = ref<FormInstance>()
@@ -54,17 +56,31 @@ const searchResultsRef = ref<HTMLElement | null>(null)
 
 const searchResults = ref<SearchResultItem[]>([])
 
-const toggleExpand = (index: number) => {
-  const result = searchResults.value[index]
-  if (result) {
-    result.isExpanded = !result.isExpanded
+const formatText = (text: string | undefined, isExpanded: boolean) => {
+  if (!text) { return '' }
+
+  const isMenuFormat = text.includes('\\n')
+  let formattedText = text
+
+  if (isMenuFormat && isExpanded) { // Dodajemo isExpanded uvjet
+    formattedText = `<ul>${text
+      .split('\\n')
+      .map(line => `<li>${line.trim()}</li>`)
+      .join('')}</ul>`
   }
+  else {
+    if (!isExpanded && text.length > 100) {
+      formattedText = `${text.slice(0, 100)}...`
+    }
+  }
+
+  return sanitizeHtml(formattedText)
 }
 
-const formatText = (text: string | undefined, isExpanded: boolean) => {
-  if (!text) { return '' } // Ensure no errors if text is undefined
-  if (isExpanded) { return text }
-  return text.length > 100 ? `${text.slice(0, 100)}...` : text
+const toggleExpand = (index: number) => {
+  if (searchResults.value && searchResults.value[index]) {
+    searchResults.value[index].isExpanded = !searchResults.value[index].isExpanded
+  }
 }
 
 const handleSearch = async () => {
@@ -74,28 +90,21 @@ const handleSearch = async () => {
     if (valid) {
       await executeSearch()
 
-      if (!searchedDocuments.value || (Array.isArray(searchedDocuments.value) && searchedDocuments.value.length === 0)) {
+      if (!searchedDocuments.value?.items || searchedDocuments.value.items.length === 0) {
         searchResults.value = []
         return
       }
 
-      if (searchedDocuments.value) {
-        const results = Array.isArray(searchedDocuments.value)
-          ? searchedDocuments.value
-          : [searchedDocuments.value]
+      searchResults.value = searchedDocuments.value.items.map((item: { content: any }) => ({
+        text: item.content,
+        isExpanded: false,
 
-        searchResults.value = results.map((item) => {
-          return {
-            text: String(item || 'No Data'),
-            isExpanded: false,
-          }
-        })
+      }))
 
-        await nextTick()
+      await nextTick()
 
-        if (searchResultsRef.value) {
-          searchResultsRef.value.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }
+      if (searchResultsRef.value) {
+        searchResultsRef.value.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
     }
   })
@@ -173,6 +182,25 @@ watch(hasAssignedDocuments, (hasDocuments) => {
             </div>
           </el-card>
         </ElFormItem>
+        <ElFormItem
+          :label="t('collections.search.max_distance_label')"
+          class="limit-form-item "
+        >
+          <el-card class="is-accent">
+            <div class="card-body">
+              <ElTag type="primary">
+                {{ searchForm.maxDistance.toFixed(2) }}
+              </ElTag>
+              <ElSlider
+                v-model="searchForm.maxDistance"
+                :min="0"
+                :max="2"
+                :step="0.01"
+                data-testid="collection-search-distance-slider"
+              />
+            </div>
+          </el-card>
+        </ElFormItem>
 
         <ElButton
           type="primary"
@@ -216,7 +244,7 @@ watch(hasAssignedDocuments, (hasDocuments) => {
               <div class="result-header">
                 <h6>{{ t('collections.search.resuts_overview') }}</h6>
                 <ElTag type="primary" size="small">
-                  {{ searchForm.limit }} {{ t('collections.search.results') }}
+                  {{ searchResults.length }} {{ t('collections.search.results') }}
                 </ElTag>
               </div>
               <div class="result-body">
@@ -228,9 +256,11 @@ watch(hasAssignedDocuments, (hasDocuments) => {
                 >
                   <div class="result-item-content">
                     <span class="result-number">{{ index + 1 }}.</span>
-                    <span class="result-text" :class="{ expanded: result.isExpanded }">
-                      {{ formatText(result.text, result.isExpanded) || t('collections.search.no_results') }}
-                    </span>
+                    <span
+                      class="result-text"
+                      :class="{ expanded: result.isExpanded }"
+                      v-html="formatText(result.text, result.isExpanded) || t('collections.search.no_results')"
+                    />
                   </div>
                   <ElIcon class="expand-icon" :class="{ expanded: result.isExpanded }">
                     <ArrowDown />
@@ -262,16 +292,17 @@ watch(hasAssignedDocuments, (hasDocuments) => {
   form {
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     column-gap: 1rem;
 
     .query-form-item {
       margin-bottom: 1rem;
-      grid-column: span 3;
+      grid-column: span 4;
+      width: 100%;
     }
 
     .limit-form-item {
-      grid-column: span 3;
+      grid-column: span 2;
     }
 
     .search-button {
@@ -339,8 +370,29 @@ watch(hasAssignedDocuments, (hasDocuments) => {
         }
 
         .result-text {
+          flex: 1;
+          overflow: hidden;
+
           &.expanded {
             white-space: pre-wrap;
+
+            ul {
+              margin: 0;
+              padding-left: 1.5rem;
+
+              li {
+                margin-bottom: 0.5rem;
+
+                &:last-child {
+                  margin-bottom: 0;
+                }
+              }
+            }
+          }
+
+          &:not(.expanded) {
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
         }
 
