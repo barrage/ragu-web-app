@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { useNuxtApp } from "#app";
-import type { OAuthPayload, OAuthProvider, User } from "~/types/auth";
+import type { User } from "~/types/auth";
 
 export const useAuthStore = defineStore("auth", () => {
   // CONSTANTS
@@ -30,19 +30,21 @@ export const useAuthStore = defineStore("auth", () => {
     }
 
     try {
-      const currentUser = await $api.auth.GetCurrentUser();
+      const { user: currentUser, expiresAt } = await $api.auth.GetCurrentUser();
       user.value = currentUser;
+      const expiresIn = expiresAt - Math.round(Date.now() / 1000);
+      if (expiresIn > 30) {
+        console.log("Setting refresh timeout:", (expiresIn - 30) * 1000);
+        setTimeout($api.auth.Refresh, (expiresIn - 30) * 1000);
+      } else {
+        $api.auth.Refresh();
+      }
     } catch (error) {
       console.error("Failed fetch current user", error);
       user.value = null;
     } finally {
       iscurrentUserLoading.value = false;
     }
-  }
-
-  function setCurrentUser(newUser: User) {
-    user.value = newUser;
-    iscurrentUserLoading.value = false;
   }
 
   /**
@@ -61,7 +63,6 @@ export const useAuthStore = defineStore("auth", () => {
 
   return {
     user,
-    setCurrentUser,
     isAuthenticated,
     iscurrentUserLoading,
     isAdmin,

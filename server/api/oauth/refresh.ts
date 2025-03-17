@@ -5,34 +5,17 @@ export default defineEventHandler(async (event) => {
         const oidcConfig = event.context.oidcConfig;
         const config = useRuntimeConfig();
 
-        let accessToken: string | undefined = cookies.access_token;
         let refreshToken: string | undefined = cookies.refresh_token;
-        let expiresAt: number | undefined;
 
-        if (!accessToken && !refreshToken) {
+        if (!refreshToken) {
                 throw createError({
                         statusCode: 401,
                         statusMessage: "Unauthorized",
                 });
         }
 
-        if (accessToken) {
-                const claims = await client.tokenIntrospection(oidcConfig, accessToken);
-                expiresAt = claims.exp;
-                const user = await client.fetchUserInfo(
-                        oidcConfig,
-                        accessToken,
-                        client.skipSubjectCheck,
-                );
-                return { user, expiresAt };
-        }
-
         const tokens = await client.refreshTokenGrant(oidcConfig, refreshToken);
-
-        accessToken = tokens.access_token;
-        if (tokens.expires_in) {
-                expiresAt = Math.round(Date.now() / 1000) + tokens.expires_in;
-        }
+        const accessToken = tokens.access_token;
 
         setCookie(event, "access_token", accessToken, {
                 httpOnly: true,
@@ -53,11 +36,5 @@ export default defineEventHandler(async (event) => {
                 });
         }
 
-        const user = await client.fetchUserInfo(
-                oidcConfig,
-                accessToken,
-                client.skipSubjectCheck,
-        );
-
-        return { user, expiresAt };
+        return { expiresIn: tokens.expires_in };
 });

@@ -1,11 +1,8 @@
 import { createError } from "h3";
 import FetchFactory from "../fetchFactory";
-import type { AuthResponse, OAuthPayload, User } from "~/types/auth";
+import type { User } from "~/types/auth";
 
 export default class AuthService extends FetchFactory {
-  // Endpoint for auth-related API requests.
-  private readonly endpoint: string = "/auth";
-
   /**
    * Logs out the current authenticated user.
    * @returns A promise that resolves to a success message upon successful logout.
@@ -30,7 +27,7 @@ export default class AuthService extends FetchFactory {
    * @returns A promise that resolves to a User object containing the user's details.
    * @throws Will throw an error if the request fails.
    */
-  async GetCurrentUser(): Promise<User> {
+  async GetCurrentUser(): Promise<{ user: User; expiresAt: number }> {
     try {
       const response = await fetch("/api/oauth/user", {
         credentials: "include",
@@ -44,19 +41,50 @@ export default class AuthService extends FetchFactory {
         });
       }
 
-      const user = await response.json();
+      const { user, expiresAt } = await response.json();
 
       return {
-        id: user.sub,
-        fullName: user.name,
-        email: user.email,
-        avatar: user.avatar,
-        entitlements: user.entitlements,
+        user: {
+          id: user.sub,
+          fullName: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          entitlements: user.entitlements,
+        },
+        expiresAt,
       };
     } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || "Failed to fetch current user",
+      });
+    }
+  }
+
+  async Refresh(): Promise<void> {
+    try {
+      const response = await fetch("/api/oauth/refresh", {
+        credentials: "include",
+        method: "GET",
+      });
+
+      if (response.status !== 200) {
+        throw createError({
+          statusCode: response.status,
+          statusMessage: "Failed to refresh token",
+        });
+      }
+
+      response.json().then(({ expiresIn }) => {
+        const timeout =
+          expiresIn > 30 ? (expiresIn - 30) * 1000 : expiresIn * 1000;
+        console.log("Setting refresh timeout:", timeout);
+        setTimeout(this.Refresh, timeout);
+      });
+    } catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || "Failed to refresh token",
       });
     }
   }

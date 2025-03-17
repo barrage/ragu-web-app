@@ -38,15 +38,13 @@ if (code && pkceCodeVerifier && stateVerifier === state) {
   })
 
   try {
-    const response = await fetch(`/api/oauth/token`, {
+    await fetch(`/api/oauth/token`, {
       method: 'POST',
       body,
       credentials: 'include', // Ensures cookies are sent/received
     })
 
-    const user = await response.json()
-
-    authStore.setCurrentUser(user)
+    await authStore.GET_CurrentUser()
 
     router.replace('/')
   }
