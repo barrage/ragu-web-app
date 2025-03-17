@@ -23,11 +23,11 @@ export const useAuthStore = defineStore("auth", () => {
    * Get the current user instance, or redirect to the login page if not authenticated.
    */
   async function GET_CurrentUser() {
-    iscurrentUserLoading.value = true;
-
     if (user.value !== null) {
       return;
     }
+
+    iscurrentUserLoading.value = true;
 
     try {
       const { user: currentUser, expiresAt } = await $api.auth.GetCurrentUser();
@@ -55,12 +55,6 @@ export const useAuthStore = defineStore("auth", () => {
     user.value = null;
   }
 
-  async function initializeAuth(): Promise<void> {
-    if (!user.value) {
-      await GET_CurrentUser();
-    }
-  }
-
   return {
     user,
     isAuthenticated,
@@ -68,6 +62,5 @@ export const useAuthStore = defineStore("auth", () => {
     isAdmin,
     POST_Logout,
     GET_CurrentUser,
-    initializeAuth,
   };
 });
