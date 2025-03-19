@@ -88,15 +88,6 @@ const rules = computed<FormRules>(() => ({
   ],
   'configuration.context': [
     { required: true, message: t('agents.rules.context.required_message'), trigger: 'blur' },
-    {
-      validator: validateFieldWrapper({
-        requiredMessage: 'agents.rules.context.required_message',
-        min: 30,
-        max: MAX_CONTEXT,
-        lengthMessage: 'agents.rules.context.length_message',
-      }),
-      trigger: 'blur',
-    },
   ],
   'description': [
     { required: true, message: t('agents.rules.description.required_message'), trigger: 'blur' },

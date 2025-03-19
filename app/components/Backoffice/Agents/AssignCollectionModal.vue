@@ -38,6 +38,7 @@ const assignCollectionForm = reactive({
   collectionName: '',
   amount: 1,
   instruction: '',
+  maxDistance: 0.5,
 })
 
 const payload = computed(() => ({
@@ -48,6 +49,7 @@ const payload = computed(() => ({
       amount: assignCollectionForm.amount,
       instruction: assignCollectionForm.instruction,
       provider: assignCollectionForm.provider,
+      maxDistance: assignCollectionForm.maxDistance,
     },
   ],
 }))
@@ -181,21 +183,43 @@ const submitAssignCollectionForm = async () => {
           />
         </ElFormItem>
         <el-divider class="is-weak" />
-        <!-- Amount (Number Input) -->
-        <ElFormItem :label="t('collections.assign_collection.labels.amount')" prop="amount">
-          <ElInputNumber
-            v-model="assignCollectionForm.amount"
-            :min="1"
-            :placeholder="t('collections.assign_collection.placeholder.amount')"
+        <div class="collection-amount-wrapper">
+          <!-- Max Distance -->
+          <ElFormItem
+            :label="t('collections.search.max_distance_label')"
           >
-            <template #increase-icon>
-              <AddIcon />
-            </template>
-            <template #decrease-icon>
-              <MinusIcon />
-            </template>
-          </ElInputNumber>
-        </ElFormItem>
+            <el-card class="is-accent">
+              <div class="card-body">
+                <ElTag type="primary">
+                  {{ assignCollectionForm.maxDistance.toFixed(2) }}
+                </ElTag>
+                <ElSlider
+                  v-model="assignCollectionForm.maxDistance"
+                  :min="0"
+                  :max="2"
+                  :step="0.01"
+                />
+              </div>
+            </el-card>
+          </ElFormItem>
+          <!-- Amount (Number Input) -->
+          <ElFormItem :label="t('collections.assign_collection.labels.amount')" prop="amount">
+            <ElInputNumber
+              v-model="assignCollectionForm.amount"
+              :min="1"
+              :placeholder="t('collections.assign_collection.placeholder.amount')"
+            >
+              <template #increase-icon>
+                <AddIcon />
+              </template>
+              <template #decrease-icon>
+                <MinusIcon />
+              </template>
+            </ElInputNumber>
+          </ElFormItem>
+        </div>
+        <el-divider class="is-weak" />
+
         <div class="response-depth-info-wrapper">
           <LabelDescriptionItem
             size="small"
@@ -253,6 +277,7 @@ const submitAssignCollectionForm = async () => {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  margin-top: 22px;
 
   & .response-depth-note {
     font-size: var(--font-size-fluid-2);
@@ -261,5 +286,10 @@ const submitAssignCollectionForm = async () => {
 
 .barrage-form-item {
   padding-block: 32px;
+}
+.collection-amount-wrapper {
+  display: flex;
+  gap: 42px;
+  align-items: center;
 }
 </style>
