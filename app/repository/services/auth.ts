@@ -1,6 +1,6 @@
-import { createError } from "h3";
-import FetchFactory from "../fetchFactory";
-import type { User } from "~/types/auth";
+import { createError } from 'h3'
+import FetchFactory from '../fetchFactory'
+import type { User } from '~/types/auth'
 
 export default class AuthService extends FetchFactory {
   /**
@@ -10,15 +10,16 @@ export default class AuthService extends FetchFactory {
    */
   async Logout(): Promise<void> {
     try {
-      await fetch("/api/oauth/logout", {
-        credentials: "include",
-        method: "GET",
-      });
-    } catch (error: any) {
+      await fetch('/api/oauth/logout', {
+        credentials: 'include',
+        method: 'GET',
+      })
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || "Failed to logout",
-      });
+        statusMessage: error?.message || 'Failed to logout',
+      })
     }
   }
 
@@ -27,21 +28,21 @@ export default class AuthService extends FetchFactory {
    * @returns A promise that resolves to a User object containing the user's details.
    * @throws Will throw an error if the request fails.
    */
-  async GetCurrentUser(): Promise<{ user: User; expiresAt: number }> {
+  async GetCurrentUser(): Promise<{ user: User, expiresAt: number }> {
     try {
-      const response = await fetch("/api/oauth/user", {
-        credentials: "include",
-        method: "GET",
-      });
+      const response = await fetch('/api/oauth/user', {
+        credentials: 'include',
+        method: 'GET',
+      })
 
       if (response.status !== 200) {
         throw createError({
           statusCode: response.status,
-          statusMessage: "Failed to fetch current user",
-        });
+          statusMessage: 'Failed to fetch current user',
+        })
       }
 
-      const { user, expiresAt } = await response.json();
+      const { user, expiresAt } = await response.json()
 
       return {
         user: {
@@ -52,40 +53,42 @@ export default class AuthService extends FetchFactory {
           entitlements: user.entitlements,
         },
         expiresAt,
-      };
-    } catch (error: any) {
+      }
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || "Failed to fetch current user",
-      });
+        statusMessage: error?.message || 'Failed to fetch current user',
+      })
     }
   }
 
   Refresh = async (): Promise<void> => {
     try {
-      const response = await fetch("/api/oauth/refresh", {
-        credentials: "include",
-        method: "GET",
-      });
+      const response = await fetch('/api/oauth/refresh', {
+        credentials: 'include',
+        method: 'GET',
+      })
 
       if (response.status !== 200) {
         throw createError({
           statusCode: response.status,
-          statusMessage: "Failed to refresh token",
-        });
+          statusMessage: 'Failed to refresh token',
+        })
       }
 
       response.json().then(({ expiresIn }) => {
-        const timeout =
-          expiresIn > 30 ? (expiresIn - 30) * 1000 : expiresIn * 1000;
-        console.log(`refreshing in: ${timeout / 1000}s`);
-        setTimeout(this.Refresh, 10000);
-      });
-    } catch (error: any) {
+        const timeout
+          = expiresIn > 30 ? (expiresIn - 30) * 1000 : expiresIn * 1000
+        console.log(`refreshing in: ${timeout / 1000}s`)
+        setTimeout(this.Refresh, timeout)
+      })
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || "Failed to refresh token",
-      });
+        statusMessage: error?.message || 'Failed to refresh token',
+      })
     }
-  };
+  }
 }
