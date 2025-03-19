@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useScroll } from '@vueuse/core'
-import type { RaguWebSocket } from '~/plugins/websocket.client'
+import type { RaguWebSocket } from '~/utils/websocket'
+import { RaguWebSocketState } from '~/utils/websocket'
 
 const { t } = useI18n()
 
 const { $ws }: { $ws: RaguWebSocket } = useNuxtApp() as any
-const route = useRoute()
 
+const route = useRoute()
+const currentChatId = Array.isArray(route.params.chatId) ? route.params.chatId[0] : route.params.chatId
 const router = useRouter()
 const agentStore = useAgentStore()
 const chatStore = useChatStore()
@@ -16,7 +18,6 @@ const { selectedChat, messages } = storeToRefs(chatStore)
 const { selectedAgent } = storeToRefs(agentStore)
 
 const isWebSocketStreaming = ref(false)
-const isWatcherActive = ref(false)
 
 const isSelectedAgentActive = computed(() => {
   if (selectedChat.value) {
@@ -80,6 +81,11 @@ async function handleIncomingMessage(event: MessageEvent) {
       handleChatTitleEvent(parsedData)
       break
     case 'chat.stream_complete':
+      // This means we have errored and do not want to redirect
+      if (!isWebSocketStreaming.value) {
+        return
+      }
+
       isWebSocketStreaming.value = false
       if (parsedData.chatId) {
         nextTick()
@@ -169,13 +175,13 @@ function sendMessage(message: string) {
 }
 
 watch(selectedAgent, async (newAgent, oldAgent) => {
-  if (selectedChat.value) {
+  if (selectedChat.value || currentChatId) {
     return
   }
   if (selectedAgent.value?.id && newAgent?.id !== oldAgent?.id) {
     $ws.openNewWorkflow('CHAT', selectedAgent.value.id)
   }
-}, { immediate: true })
+})
 
 watch(
   messages,
@@ -183,32 +189,38 @@ watch(
   { immediate: true, deep: true },
 )
 
-onMounted(() => {
-  scrollToBottom()
-  $ws.onMessage(handleIncomingMessage)
-  isWatcherActive.value = true
+// Watch for WS state changes to send the open request
+
+let openingMessageSent = false
+
+watch($ws.state, (newState) => {
+  if (newState !== RaguWebSocketState.INITIALIZED || openingMessageSent) {
+    return
+  }
+
+  if (currentChatId) {
+    $ws.openExistingWorkflow(currentChatId)
+    openingMessageSent = true
+    return
+  }
+
+  if (selectedAgent.value) {
+    $ws.openNewWorkflow('CHAT', selectedAgent.value.id)
+    openingMessageSent = true
+  }
 })
 
-/* Chat messages */
 const { error: messagesError, execute: getChatMessages, status: loadingMessages } = await useAsyncData(() =>
   chatStore.GET_ChatMessages(route.params.chatId!.toString()), { immediate: false })
 errorHandler(messagesError)
 
-/* Chat data */
 const { error: chatError, execute: getChat, status: loadingChat } = await useAsyncData(() =>
   chatStore.GET_Chat(route.params.chatId!.toString()), { immediate: false })
-
 errorHandler(chatError)
 
-const showLoadingState = computed(() => !messages.value?.length && (loadingChat.value === 'pending' || loadingMessages.value === 'pending'))
-
-onBeforeMount(async () => {
-  // Check if we are loading an existing chat
-  const route = useRoute()
-  const chatId = route.params.chatId
-
-  const currentChatId = Array.isArray(chatId) ? chatId[0] : chatId
-
+onMounted(async () => {
+  scrollToBottom()
+  $ws.onMessage(handleIncomingMessage)
   // Load the chat and its messages
   if (currentChatId) {
     // Always fetch the chat, since we need it both when redirecting from / and
@@ -220,10 +232,15 @@ onBeforeMount(async () => {
     if (!messages.value?.length) {
       await getChatMessages()
     }
-    $ws.openExistingWorkflow(currentChatId)
+
+    if ($ws.state.value === RaguWebSocketState.INITIALIZED) {
+      $ws.openExistingWorkflow(currentChatId)
+    }
   }
   else if (selectedAgent.value) {
-    $ws.openNewWorkflow('CHAT', selectedAgent.value.id)
+    if ($ws.state.value === RaguWebSocketState.INITIALIZED) {
+      $ws.openNewWorkflow('CHAT', selectedAgent.value.id)
+    }
   }
 })
 
@@ -233,6 +250,8 @@ onBeforeUnmount(() => {
     selectedChat.value = null
   }
 })
+
+const showLoadingState = computed(() => !messages.value?.length && (loadingChat.value === 'pending' || loadingMessages.value === 'pending'))
 </script>
 
 <template>
@@ -291,6 +310,7 @@ onBeforeUnmount(() => {
   text-align: center;
   margin: 20px 0;
 }
+
 .chat-loading-container {
   display: flex;
   justify-content: center;
