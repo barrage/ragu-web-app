@@ -61,7 +61,7 @@ export default class AuthService extends FetchFactory {
     }
   }
 
-  async Refresh(): Promise<void> {
+  Refresh = async (): Promise<void> => {
     try {
       const response = await fetch("/api/oauth/refresh", {
         credentials: "include",
@@ -78,8 +78,8 @@ export default class AuthService extends FetchFactory {
       response.json().then(({ expiresIn }) => {
         const timeout =
           expiresIn > 30 ? (expiresIn - 30) * 1000 : expiresIn * 1000;
-        console.log("Setting refresh timeout:", timeout);
-        setTimeout(this.Refresh, timeout);
+        console.log(`refreshing in: ${timeout / 1000}s`);
+        setTimeout(this.Refresh, 10000);
       });
     } catch (error: any) {
       throw createError({
@@ -87,5 +87,5 @@ export default class AuthService extends FetchFactory {
         statusMessage: error?.message || "Failed to refresh token",
       });
     }
-  }
+  };
 }

@@ -60,8 +60,7 @@ export class RaguWebSocket {
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage:
-          error?.message
+        statusMessage: error?.message
           || `Failed to fetch ws token with code ${error?.statusCode}`,
       })
     }

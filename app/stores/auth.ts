@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = currentUser
       const expiresIn = expiresAt - Math.round(Date.now() / 1000)
       if (expiresIn > 30) {
-        console.log('Setting refresh timeout:', (expiresIn - 30) * 1000)
+        console.log(`refreshing in: ${expiresIn - 30}s`)
         setTimeout($api.auth.Refresh, (expiresIn - 30) * 1000)
       }
       else {
