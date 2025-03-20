@@ -7,8 +7,8 @@ const { $api } = useNuxtApp()
 const documentStore = useDocumentsStore()
 const { t } = useI18n()
 
-const CLIENT_ID = runtimeConfig.public.googleOAuthClientId as string
-const APP_ID = runtimeConfig.public.googleAppId as string
+const CLIENT_ID = runtimeConfig.public.googleDrive.clientId
+const APP_ID = runtimeConfig.public.googleDrive.appId
 
 const SCOPES = [
   'https://www.googleapis.com/auth/drive.appdata',
