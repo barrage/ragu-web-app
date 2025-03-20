@@ -194,6 +194,14 @@ watch(
 let openingMessageSent = false
 
 watch($ws.state, (newState) => {
+  // Retrigger the opening message in cases where we disconnected.
+  // Workflows on the server are removed on disconnection, so we need to reinitialize the
+  // chat again when we reconnect.
+  if (openingMessageSent && newState !== RaguWebSocketState.INITIALIZED) {
+    openingMessageSent = false
+    return
+  }
+
   if (newState !== RaguWebSocketState.INITIALIZED || openingMessageSent) {
     return
   }
