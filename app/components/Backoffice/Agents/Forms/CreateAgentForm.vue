@@ -19,7 +19,6 @@ interface Emits {
 
 const { t } = useI18n()
 const { $api } = useNuxtApp()
-const MAX_CONTEXT = 1000
 
 const createAgentFormRef = ref<FormInstance>()
 const createAgentForm = reactive<AgentDetail>({

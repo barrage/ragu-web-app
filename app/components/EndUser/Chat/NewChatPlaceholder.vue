@@ -227,6 +227,17 @@ const selectAgentForChat = (agent: SingleAgent) => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary-200),
+      var(--color-primary-600) 50%,
+      var(--color-primary-300) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-change 2s linear infinite;
   }
 
   & .view-all-button {
@@ -283,5 +294,26 @@ const selectAgentForChat = (agent: SingleAgent) => {
 .skeleton-wrapper {
   display: flex;
   gap: 1rem;
+}
+
+@property --＠color-1 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: var(--color-primary-300);
+}
+
+@property --＠color-2 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: var(--color-primary-500);
+}
+
+@keyframes gradient-change {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
 }
 </style>
