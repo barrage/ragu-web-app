@@ -243,11 +243,13 @@ onMounted(async () => {
 
     if ($ws.state.value === RaguWebSocketState.INITIALIZED) {
       $ws.openExistingWorkflow(currentChatId)
+      openingMessageSent = true
     }
   }
   else if (selectedAgent.value) {
     if ($ws.state.value === RaguWebSocketState.INITIALIZED) {
       $ws.openNewWorkflow('CHAT', selectedAgent.value.id)
+      openingMessageSent = true
     }
   }
 })
