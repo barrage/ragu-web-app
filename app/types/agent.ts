@@ -86,11 +86,6 @@ export interface Configuration {
   maxCompletionTokens: number
 }
 
-export interface Instructions {
-  titleInstruction: string
-
-}
-
 export interface AgentDetail {
   active: boolean
   configuration: AgentConfiguration
@@ -107,7 +102,7 @@ export interface AgentConfiguration {
   model: string
   temperature: number
   presencePenalty: number
-  maxCompletionTokens: number
+  maxCompletionTokens: number | null
 }
 
 export interface AgentPayload {
@@ -116,8 +111,8 @@ export interface AgentPayload {
 }
 
 export interface Instructions {
-  titleInstruction: string
-  errorMessage: string
+  titleInstruction: string | null
+  errorMessage: string | null
 }
 
 export interface AgentListFilterForm {

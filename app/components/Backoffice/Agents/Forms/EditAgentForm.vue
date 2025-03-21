@@ -26,7 +26,7 @@ interface Emits {
 
 const { $api } = useNuxtApp()
 const { t } = useI18n()
-const MAX_CONTEXT = 1000
+
 const whatsAppStore = useWhatsAppStore()
 const isWhatsAppEnabled = computed(() => whatsAppStore.isWhatsAppActive)
 const isWhatsAppActive = ref(false)
@@ -43,11 +43,31 @@ const editAgentForm = reactive<EditAgentPayload>({
     model: '',
     temperature: 0.1,
     presencePenalty: 0,
-    maxCompletionTokens: 0,
+    maxCompletionTokens: null,
     instructions: {
-      titleInstruction: '',
-      errorMessage: '',
+      titleInstruction: null,
+      errorMessage: null,
     },
+  },
+})
+
+const maxCompletionTokens = computed({
+  get: () => editAgentForm.configuration.maxCompletionTokens ?? 0,
+  set: (value: number) => {
+    editAgentForm.configuration.maxCompletionTokens = value === 0 ? null : value
+  },
+})
+const titleInstruction = computed({
+  get: () => editAgentForm.configuration.instructions.titleInstruction ?? '',
+  set: (value: string) => {
+    editAgentForm.configuration.instructions.titleInstruction = value.trim() === '' ? null : value
+  },
+})
+
+const errorMessage = computed({
+  get: () => editAgentForm.configuration.instructions.errorMessage ?? '',
+  set: (value: string) => {
+    editAgentForm.configuration.instructions.errorMessage = value.trim() === '' ? null : value
   },
 })
 
@@ -98,15 +118,6 @@ const rules = computed<FormRules>(() => ({
   ],
   'configuration.context': [
     { required: true, message: t('agents.rules.context.required_message'), trigger: 'blur' },
-    {
-      validator: validateFieldWrapper({
-        requiredMessage: 'agents.rules.context.required_message',
-        min: 30,
-        max: MAX_CONTEXT,
-        lengthMessage: 'agents.rules.context.length_message',
-      }),
-      trigger: 'blur',
-    },
   ],
   'description': [
     { required: true, message: t('agents.rules.description.required_message'), trigger: 'blur' },
@@ -190,6 +201,7 @@ const updateAgent = async (formEl: FormInstance | undefined) => {
   try {
     await formEl.validate(async (valid) => {
       if (valid) {
+        console.log(editAgentForm)
         await updateExecute()
         if (updateStatus.value === 'success') {
           ElNotification({
@@ -568,7 +580,7 @@ const handleRemovePicture = async () => {
       prop="configuration.maxCompletionTokens"
     >
       <ElInputNumber
-        v-model="editAgentForm.configuration.maxCompletionTokens"
+        v-model="maxCompletionTokens"
         :min="0"
       >
         <template #increase-icon>
@@ -612,7 +624,7 @@ const handleRemovePicture = async () => {
       class="context-form-item"
     >
       <ElInput
-        v-model="editAgentForm.configuration.instructions.titleInstruction"
+        v-model="titleInstruction"
         :placeholder="t('agents.placeholder.titleInstruction')"
         data-testid="bo-edit-agent-form-title-instruction-input"
         type="textarea"
@@ -627,7 +639,7 @@ const handleRemovePicture = async () => {
       class="context-form-item"
     >
       <ElInput
-        v-model="editAgentForm.configuration.instructions.errorMessage"
+        v-model="errorMessage"
         :placeholder="t('agents.placeholder.errorInstruction')"
         data-testid="bo-edit-agent-form-summary-instruction-input"
         type="textarea"

@@ -32,11 +32,31 @@ const createAgentForm = reactive<AgentDetail>({
     model: '',
     temperature: 0.1,
     presencePenalty: 0,
-    maxCompletionTokens: 0,
+    maxCompletionTokens: null,
     instructions: {
-      titleInstruction: '',
-      errorMessage: '',
+      titleInstruction: null,
+      errorMessage: null,
     },
+  },
+})
+
+const maxCompletionTokens = computed({
+  get: () => createAgentForm.configuration.maxCompletionTokens ?? 0,
+  set: (value: number) => {
+    createAgentForm.configuration.maxCompletionTokens = value === 0 ? null : value
+  },
+})
+const titleInstruction = computed({
+  get: () => createAgentForm.configuration.instructions.titleInstruction ?? '',
+  set: (value: string) => {
+    createAgentForm.configuration.instructions.titleInstruction = value.trim() === '' ? null : value
+  },
+})
+
+const errorMessage = computed({
+  get: () => createAgentForm.configuration.instructions.errorMessage ?? '',
+  set: (value: string) => {
+    createAgentForm.configuration.instructions.errorMessage = value.trim() === '' ? null : value
   },
 })
 
@@ -88,20 +108,22 @@ const rules = computed<FormRules>(() => ({
   'configuration.context': [
     { required: true, message: t('agents.rules.context.required_message'), trigger: 'blur' },
   ],
-  'description': [
-    { required: true, message: t('agents.rules.description.required_message'), trigger: 'blur' },
-    {
-      validator: validateFieldWrapper({
-        requiredMessage: 'agents.rules.description.required_message',
-      }),
-      trigger: 'blur',
-    },
-  ],
+
   'configuration.llmProvider': [
     { required: true, message: t('agents.rules.llmProvider.required_message'), trigger: 'change' },
   ],
   'configuration.model': [
     { required: true, message: t('agents.rules.model.required_message'), trigger: 'change' },
+  ],
+
+  'configuration.temperature': [
+    { required: true, message: t('agents.rules.temperature.required_message'), trigger: 'change' },
+  ],
+  'active': [
+    { required: true, message: t('agents.rules.active.required_message'), trigger: 'change' },
+  ],
+  'configuration.presencePenalty': [
+    { required: true, message: t('agents.rules.presencePenalty.required_message'), trigger: 'change' },
   ],
   'language': [
     { required: true, message: t('agents.rules.language.required_message'), trigger: 'blur' },
@@ -112,18 +134,7 @@ const rules = computed<FormRules>(() => ({
       trigger: 'blur',
     },
   ],
-  'configuration.temperature': [
-    { required: true, message: t('agents.rules.temperature.required_message'), trigger: 'change' },
-  ],
-  'active': [
-    { required: true, message: t('agents.rules.active.required_message'), trigger: 'change' },
-  ],
-  'configuration.presencePenalty': [
-    { required: true, message: t('agents.rules.presencePenalty.required_message'), trigger: 'change' },
-  ],
-  'configuration.maxCompletionTokens': [
-    { required: true, message: t('agents.rules.maxCompletionTokens.required_message'), trigger: 'change' },
-  ],
+
 }))
 
 const { execute: createExecute, error: createError, status: createStatus, data: CreateAgentData } = await useAsyncData(() => $api.agent.CreateAgent(createAgentForm), {
@@ -414,7 +425,7 @@ const scrollIntoViewOptions = {
       prop="configuration.maxCompletionTokens"
     >
       <ElInputNumber
-        v-model="createAgentForm.configuration.maxCompletionTokens"
+        v-model="maxCompletionTokens"
         :min="0"
       >
         <template #increase-icon>
@@ -459,7 +470,7 @@ const scrollIntoViewOptions = {
       class="context-form-item"
     >
       <ElInput
-        v-model="createAgentForm.configuration.instructions.titleInstruction"
+        v-model="titleInstruction"
         :placeholder="t('agents.placeholder.titleInstruction')"
         data-testid="bo-Create-agent-form-title-instruction-input"
         type="textarea"
@@ -474,7 +485,7 @@ const scrollIntoViewOptions = {
       class="context-form-item"
     >
       <ElInput
-        v-model="createAgentForm.configuration.instructions.errorMessage"
+        v-model="errorMessage"
         :placeholder="t('agents.placeholder.errorInstruction')"
         data-testid="bo-Create-agent-form-summary-instruction-input"
         type="textarea"

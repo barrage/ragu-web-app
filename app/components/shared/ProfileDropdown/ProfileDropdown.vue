@@ -216,30 +216,31 @@ function switchRoute() {
       </el-dropdown-menu>
     </template>
   </el-dropdown>
-
-  <ElDialog
-    v-model="isSignOutModalVisible"
-    align-center
-    class="barrage-dialog--small"
-    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
-  >
-    <template #header>
-      <h5>{{ t('profileDropdown.signOut') }}</h5>
-    </template>
-    <p>{{ t('profileDropdown.signout_text') }}</p>
-    <template #footer>
-      <el-button @click="isSignOutModalVisible = false">
-        {{ t('agents.buttons.cancel') }}
-      </el-button>
-      <el-button
-        type="primary"
-        :loading="signoutStatus === 'pending'"
-        @click="handleSignOut"
-      >
-        {{ t('profileDropdown.signOut') }}
-      </el-button>
-    </template>
-  </ElDialog>
+  <Teleport to="body">
+    <ElDialog
+      v-model="isSignOutModalVisible"
+      align-center
+      class="barrage-dialog--small"
+      :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
+    >
+      <template #header>
+        <h5>{{ t('profileDropdown.signOut') }}</h5>
+      </template>
+      <p>{{ t('profileDropdown.signout_text') }}</p>
+      <template #footer>
+        <el-button @click="isSignOutModalVisible = false">
+          {{ t('agents.buttons.cancel') }}
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="signoutStatus === 'pending'"
+          @click="handleSignOut"
+        >
+          {{ t('profileDropdown.signOut') }}
+        </el-button>
+      </template>
+    </ElDialog>
+  </Teleport>
   <Teleport to="body">
     <ProfileOverviewModal
       v-model="isProfileModelVisible"
