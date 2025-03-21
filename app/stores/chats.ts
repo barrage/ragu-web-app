@@ -1,19 +1,19 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 import type {
   AdminChatDetails,
   AdminChatsResponse,
   Chat,
   EndUserChatDetails,
   Message,
-} from "~/types/chat.ts";
+} from '~/types/chat.ts'
 
-export const useChatStore = defineStore("chat", () => {
+export const useChatStore = defineStore('chat', () => {
   // State
 
   /**
    * Holds a list of all of the user's chats for display purposes.
    */
-  const chats = ref<Chat[]>([]);
+  const chats = ref<Chat[]>([])
 
   /**
    * Contains messages for display on the current component.
@@ -24,7 +24,7 @@ export const useChatStore = defineStore("chat", () => {
    * 2. Existing messages: means we are either moving from the index,
    *                       or are on a chat page.
    */
-  const messages = ref<Message[]>([]);
+  const messages = ref<Message[]>([])
 
   /**
    * Holds the currently selected chat for display purposes.
@@ -33,23 +33,25 @@ export const useChatStore = defineStore("chat", () => {
    * or when we are redirected to a new one after the initial
    * message pair is processed.
    */
-  const selectedChat = ref<EndUserChatDetails | null>(null);
+  const selectedChat = ref<EndUserChatDetails | null>(null)
+  const isWebSocketStreaming = ref(false)
 
-  const { $api } = useNuxtApp();
+  const { $api } = useNuxtApp()
 
   /* API */
 
   async function GET_ChatMessages(chatId: string): Promise<Message[]> {
-    const data = await $api.chat.GetChatMessages(chatId);
+    const data = await $api.chat.GetChatMessages(chatId)
 
     if (data) {
       return (messages.value = data.items
         .reverse()
-        .flatMap((group) =>
+        .flatMap(group =>
           group.messages.toSorted((a, b) => a.order - b.order),
-        ));
-    } else {
-      return [];
+        ))
+    }
+    else {
+      return []
     }
   }
 
@@ -59,25 +61,27 @@ export const useChatStore = defineStore("chat", () => {
    */
   async function GET_Chat(chatId: string): Promise<EndUserChatDetails | null> {
     try {
-      const data = await $api.chat.GetEndUserChat(chatId);
+      const data = await $api.chat.GetEndUserChat(chatId)
       if (data) {
-        return (selectedChat.value = data);
-      } else {
-        selectedChat.value = null;
-        return null;
+        return (selectedChat.value = data)
       }
-    } catch (error) {
-      console.error("Failed to fetch chat:", error);
-      selectedChat.value = null;
-      return null;
+      else {
+        selectedChat.value = null
+        return null
+      }
+    }
+    catch (error) {
+      console.error('Failed to fetch chat:', error)
+      selectedChat.value = null
+      return null
     }
   }
 
   async function GET_AllChats(): Promise<void> {
-    const data = await $api.chat.GetAllChats();
+    const data = await $api.chat.GetAllChats()
 
     if (data) {
-      chats.value = data.items;
+      chats.value = data.items
     }
   }
 
@@ -90,13 +94,13 @@ export const useChatStore = defineStore("chat", () => {
    *  @param userId - Optional parametar for specific user chats.
    * @returns A promise that resolves to an ChatsResponse type or null.
    */
-  const adminAllChatsResponse = ref<AdminChatsResponse | null>(null);
-  const adminAllChatsData = ref<AdminChatDetails[]>([]);
+  const adminAllChatsResponse = ref<AdminChatsResponse | null>(null)
+  const adminAllChatsData = ref<AdminChatDetails[]>([])
   async function GET_AllAdminChats(
     page: number = 1,
     perPage: number = 10,
-    sortBy: string = "firstName",
-    sortOrder: "asc" | "desc" = "desc",
+    sortBy: string = 'firstName',
+    sortOrder: 'asc' | 'desc' = 'desc',
     userId?: string,
   ): Promise<AdminChatsResponse | null> {
     try {
@@ -106,59 +110,62 @@ export const useChatStore = defineStore("chat", () => {
         sortBy,
         sortOrder,
         userId,
-      );
+      )
 
       if (data) {
-        adminAllChatsData.value = data.items;
-        adminAllChatsResponse.value = data;
-        return data;
-      } else {
-        adminAllChatsData.value = [];
-        adminAllChatsResponse.value = null;
-        return null;
+        adminAllChatsData.value = data.items
+        adminAllChatsResponse.value = data
+        return data
       }
-    } catch (error) {
-      console.error("Error fetching admin chats:", error);
-      adminAllChatsData.value = [];
-      adminAllChatsResponse.value = null;
-      throw error;
+      else {
+        adminAllChatsData.value = []
+        adminAllChatsResponse.value = null
+        return null
+      }
+    }
+    catch (error) {
+      console.error('Error fetching admin chats:', error)
+      adminAllChatsData.value = []
+      adminAllChatsResponse.value = null
+      throw error
     }
   }
 
-  const selectedBoChatDetails = ref<AdminChatDetails | null>(null);
+  const selectedBoChatDetails = ref<AdminChatDetails | null>(null)
 
   const setSelectedBoChatDetails = (chat: AdminChatDetails | null) => {
-    return (selectedBoChatDetails.value = chat);
-  };
+    return (selectedBoChatDetails.value = chat)
+  }
 
   const getChatById = (chatId: string) => {
-    return chats.value?.find((chat) => chat.id === chatId) || null;
-  };
+    return chats.value?.find(chat => chat.id === chatId) || null
+  }
 
   async function DELETE_Chat(chatId: string): Promise<void> {
-    await $api.chat.DeleteChat(chatId);
+    await $api.chat.DeleteChat(chatId)
   }
 
   async function DELETE_ChatBackoffice(chatId: string): Promise<void> {
-    await $api.chat.DeleteChatBackoffice(chatId);
+    await $api.chat.DeleteChatBackoffice(chatId)
   }
   async function PUT_UpdateChatTitle(
     chatid: string,
     newChatTitle: string,
   ): Promise<void> {
-    await $api.chat.PutUpdateChatTitle(chatid, newChatTitle);
+    await $api.chat.PutUpdateChatTitle(chatid, newChatTitle)
   }
   async function PUT_UpdateChatTitleBackoffice(
     chatid: string,
     newChatTitle: string,
   ): Promise<void> {
-    await $api.chat.PutUpdateChatTitleBackoffice(chatid, newChatTitle);
+    await $api.chat.PutUpdateChatTitleBackoffice(chatid, newChatTitle)
   }
 
   return {
     chats,
     messages,
     selectedChat,
+    isWebSocketStreaming,
     GET_ChatMessages,
     GET_AllChats,
     getChatById,
@@ -172,5 +179,5 @@ export const useChatStore = defineStore("chat", () => {
     PUT_UpdateChatTitle,
     PUT_UpdateChatTitleBackoffice,
     GET_Chat,
-  };
-});
+  }
+})

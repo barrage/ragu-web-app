@@ -14,10 +14,8 @@ const router = useRouter()
 const agentStore = useAgentStore()
 const chatStore = useChatStore()
 
-const { selectedChat, messages } = storeToRefs(chatStore)
+const { selectedChat, messages, isWebSocketStreaming } = storeToRefs(chatStore)
 const { selectedAgent } = storeToRefs(agentStore)
-
-const isWebSocketStreaming = ref(false)
 
 const isSelectedAgentActive = computed(() => {
   if (selectedChat.value) {
