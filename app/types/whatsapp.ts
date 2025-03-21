@@ -1,3 +1,4 @@
+import type { PaginatedResponse } from './common'
 import type { User } from '~/types/users.js'
 
 export interface WhatsAppNumber {
@@ -26,13 +27,12 @@ export interface WhatsAppMessage {
   updatedAt: string | Date
 }
 
-export interface BoChatsResponse {
-  total: number
-  items: [{
-    chat: WhatsAppChat
-    fullName: string
-  }]
+export interface WhatsAppChatWithFullName {
+  chat: WhatsAppChat
+  fullName: string
 }
+
+export type BoChatsResponse = PaginatedResponse<WhatsAppChatWithFullName>
 
 export interface BoChatResponse {
   chat: WhatsAppChat

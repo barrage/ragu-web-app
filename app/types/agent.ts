@@ -1,3 +1,5 @@
+import type { PaginatedResponse } from './common'
+
 export type EmbeddingProvider = 'azure' | 'openai' | 'ollama'
 
 export interface Agent {
@@ -31,25 +33,10 @@ export interface AgentVersion {
   evaluationCounts: EvaluationCounts
 }
 
-export interface AgentVersions {
-  items: Configuration[]
-  total: number
-}
-
-export interface AllAgentResponse {
-  items: Agents[]
-  total: number
-}
-
-export interface AllAppAgentsResponse {
-  items: SingleAgent[]
-  total: number
-}
-
-export interface AgentVersionEvaluationMessages {
-  items: EvaluationMessage[]
-  total: number
-}
+export type AgentVersions = PaginatedResponse<Configuration>
+export type AllAgentResponse = PaginatedResponse<Agents>
+export type AllAppAgentsResponse = PaginatedResponse<SingleAgent>
+export type AgentVersionEvaluationMessages = PaginatedResponse<EvaluationMessage>
 
 export interface EvaluationMessage {
   chatId: string

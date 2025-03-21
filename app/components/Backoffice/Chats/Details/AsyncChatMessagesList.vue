@@ -30,7 +30,7 @@ watch(
 errorHandler(getChatMessagesError)
 
 const emptyChatMessagesData = computed(() => {
-  return !(Array.isArray(chatMessagesData?.value) && chatMessagesData.value.length > 0)
+  return !(chatMessagesData.value?.items && chatMessagesData.value.items.length > 0)
 })
 </script>
 
@@ -42,7 +42,7 @@ const emptyChatMessagesData = computed(() => {
   </template>
 
   <template v-else-if="!emptyChatMessagesData">
-    <ChatMessagesListAdmin :messages="chatMessagesData" />
+    <ChatMessagesListAdmin :messages="chatMessagesData?.items" />
   </template>
 
   <EmptyState

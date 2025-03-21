@@ -1,13 +1,19 @@
 <script lang="ts" setup>
 import ChatMutipleIcon from '~/assets/icons/svg/chat-multiple.svg'
-import type { Message } from '~/types/chat'
+import type { ChatMessage } from '~/types/chat'
 
 const props = defineProps<{
-  messages: Message[] | null | undefined
+  messages: ChatMessage[] | null | undefined
 }>()
 
 const messagesListData = computed(() => {
-  return props.messages && props.messages.length ? [...props.messages].reverse() : []
+  if (!props.messages || !props.messages.length) { return [] }
+
+  return [...props.messages]
+    .reverse()
+    .flatMap(group =>
+      group.messages.sort((a, b) => a.order - b.order),
+    )
 })
 </script>
 

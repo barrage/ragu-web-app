@@ -2,8 +2,6 @@
 import { marked } from 'marked'
 import hljs from 'highlight.js'
 import { useI18n } from 'vue-i18n'
-import ProfileIcon from '~/assets/icons/svg/account.svg'
-import BrainIcon from '~/assets/icons/svg/brain.svg'
 import { sanitizeHtml } from '~/utils/sanitizeHtml'
 import type { Message } from '~/types/chat'
 
@@ -12,7 +10,6 @@ const props = defineProps<{
 }>()
 
 const { t } = useI18n()
-
 const relativeCreatedDate = ref(props.message?.createdAt ? useRelativeDate(props.message.createdAt) : '-')
 const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 
@@ -145,7 +142,7 @@ const tableData = computed(() => {
   <div>
     <div class="message-card">
       <LlmLink
-        :to="message?.senderType === 'user' ? `/admin/users/${message?.sender}` : `/admin/agents/${message?.sender}`"
+        :to="message?.senderType === 'user' ? `/admin/users/${selectedUser?.id}` : `/admin/agents/${selectedAgent?.id}`"
         class="message-profile-item"
       >
         <LlmAvatar

@@ -1,19 +1,20 @@
-import FetchFactory from "../fetchFactory";
-import type { CountedList } from "~/types/common";
+import FetchFactory from '../fetchFactory'
+import type { CountedList } from '~/types/common'
 import type {
   AdminChatDetails,
   AdminChatsResponse,
+  ChatMessagesResponse,
   ChatsResponse,
   EndUserChatDetails,
   Message,
   MessageGroupAggregate,
-} from "~/types/chat.ts";
+} from '~/types/chat.ts'
 
 export default class ChatServise extends FetchFactory {
   // Endpoint for chat-related API requests.
-  private readonly chatsEndpoint: string = "/chats";
-  private readonly adminChatsEndpoint: string = "/admin/chats";
-  private readonly wsEndpoint: string = "/ws";
+  private readonly chatsEndpoint: string = '/chats'
+  private readonly adminChatsEndpoint: string = '/admin/chats'
+  private readonly wsEndpoint: string = '/ws'
 
   /**
    * Fetches a list of all chats for the user from the API.
@@ -25,16 +26,17 @@ export default class ChatServise extends FetchFactory {
       return await this.$fetch<ChatsResponse>(
         `${this.chatsEndpoint}?page=1&perPage=100&sortBy=createdAt&sortOrder=desc`,
         {
-          credentials: "include",
+          credentials: 'include',
         },
-      );
-    } catch (error: any) {
+      )
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
-          error?.message ||
-          `Failed to fetch chats with code ${error?.statusCode}`,
-      });
+          error?.message
+          || `Failed to fetch chats with code ${error?.statusCode}`,
+      })
     }
   }
 
@@ -49,16 +51,17 @@ export default class ChatServise extends FetchFactory {
       return await this.$fetch<EndUserChatDetails>(
         `${this.chatsEndpoint}/${chatId}`,
         {
-          credentials: "include",
+          credentials: 'include',
         },
-      );
-    } catch (error: any) {
+      )
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
-          error?.message ||
-          `Failed to fetch chat with code ${error?.statusCode}`,
-      });
+          error?.message
+          || `Failed to fetch chat with code ${error?.statusCode}`,
+      })
     }
   }
 
@@ -73,15 +76,16 @@ export default class ChatServise extends FetchFactory {
   ): Promise<CountedList<MessageGroupAggregate>> {
     try {
       return this.$fetch(`${this.chatsEndpoint}/${chatId}/messages`, {
-        credentials: "include",
-      });
-    } catch (error: any) {
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
-          error?.message ||
-          `Failed to fetch chat messages with code ${error?.statusCode}`,
-      });
+          error?.message
+          || `Failed to fetch chat messages with code ${error?.statusCode}`,
+      })
     }
   }
 
@@ -93,15 +97,16 @@ export default class ChatServise extends FetchFactory {
   async GetWsToken(): Promise<string> {
     try {
       return await this.$fetch<string>(`${this.wsEndpoint}`, {
-        credentials: "include",
-      });
-    } catch (error: any) {
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
-          error?.message ||
-          `Failed to fetch ws token with code ${error?.statusCode}`,
-      });
+          error?.message
+          || `Failed to fetch ws token with code ${error?.statusCode}`,
+      })
     }
   }
 
@@ -113,8 +118,8 @@ export default class ChatServise extends FetchFactory {
   async GetAllAdminChats(
     page: number = 1,
     perPage: number = 10,
-    sortBy: string = "firstName",
-    sortOrder: "asc" | "desc" = "desc",
+    sortBy: string = 'firstName',
+    sortOrder: 'asc' | 'desc' = 'desc',
     userId?: string,
     agentId?: string,
     title?: string | null,
@@ -128,20 +133,21 @@ export default class ChatServise extends FetchFactory {
         ...(userId ? { userId } : {}),
         ...(agentId ? { agentId } : {}),
         ...(title ? { title } : {}),
-      }).toString();
+      }).toString()
       return await this.$fetch<AdminChatsResponse>(
         `${this.adminChatsEndpoint}?${queryParams}`,
         {
-          credentials: "include",
+          credentials: 'include',
         },
-      );
-    } catch (error: any) {
+      )
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
-          error?.message ||
-          `Failed to fetch chats with code ${error?.statusCode}`,
-      });
+          error?.message
+          || `Failed to fetch chats with code ${error?.statusCode}`,
+      })
     }
   }
 
@@ -153,22 +159,23 @@ export default class ChatServise extends FetchFactory {
   async GetAdminSingleChat(chatId: string): Promise<AdminChatDetails> {
     try {
       const queryParams = new URLSearchParams({
-        withAvatar: "true",
-      });
+        withAvatar: 'true',
+      })
 
       return await this.$fetch<AdminChatDetails>(
         `${this.adminChatsEndpoint}/${chatId}?${queryParams}`,
         {
-          credentials: "include",
+          credentials: 'include',
         },
-      );
-    } catch (error: any) {
+      )
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
-          error?.message ||
-          `Failed to fetch chats with code ${error?.statusCode}`,
-      });
+          error?.message
+          || `Failed to fetch chats with code ${error?.statusCode}`,
+      })
     }
   }
 
@@ -177,7 +184,7 @@ export default class ChatServise extends FetchFactory {
    * @returns A promise that resolves to an array of Chat objects.
    * @throws Will throw an error if the request fails.
    */
-  async GetAllChatMessagesAdmin(chatId: string): Promise<Message[]> {
+  async GetAllChatMessagesAdmin(chatId: string): Promise<ChatMessagesResponse> {
     try {
       /* const queryParams = new URLSearchParams({
                                                                                                   page: page.toString(),
@@ -185,19 +192,20 @@ export default class ChatServise extends FetchFactory {
                                                                                                   sortBy,
                                                                                                   sortOrder,
                                                                                                 }).toString() */
-      return await this.$fetch<Message[]>(
+      return await this.$fetch<ChatMessagesResponse>(
         `${this.adminChatsEndpoint}/${chatId}/messages`,
         {
-          credentials: "include",
+          credentials: 'include',
         },
-      );
-    } catch (error: any) {
+      )
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
-          error?.message ||
-          `Failed to fetch chats with code ${error?.statusCode}`,
-      });
+          error?.message
+          || `Failed to fetch chats with code ${error?.statusCode}`,
+      })
     }
   }
 
@@ -211,15 +219,16 @@ export default class ChatServise extends FetchFactory {
   async DeleteChat(chatId: string): Promise<void> {
     try {
       await this.$fetch<void>(`${this.chatsEndpoint}/${chatId}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-    } catch (error: any) {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
           error?.message || `Failed to delete user with ID: ${chatId}`,
-      });
+      })
     }
   }
 
@@ -233,15 +242,16 @@ export default class ChatServise extends FetchFactory {
   async DeleteChatBackoffice(chatId: string): Promise<void> {
     try {
       await this.$fetch<void>(`${this.adminChatsEndpoint}/${chatId}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-    } catch (error: any) {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
           error?.message || `Failed to delete user with ID: ${chatId}`,
-      });
+      })
     }
   }
 
@@ -258,21 +268,22 @@ export default class ChatServise extends FetchFactory {
   ): Promise<void> {
     try {
       await this.$fetch<void>(`${this.adminChatsEndpoint}/${chatId}`, {
-        method: "PUT",
-        credentials: "include",
+        method: 'PUT',
+        credentials: 'include',
         body: {
           title: newChatTitle,
         },
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      });
-    } catch (error: any) {
+      })
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
           error?.message || `Failed to update chat title with ID: ${chatId}`,
-      });
+      })
     }
   }
 
@@ -289,21 +300,22 @@ export default class ChatServise extends FetchFactory {
   ): Promise<void> {
     try {
       await this.$fetch<void>(`${this.chatsEndpoint}/${chatId}`, {
-        method: "PUT",
-        credentials: "include",
+        method: 'PUT',
+        credentials: 'include',
         body: {
           title: newChatTitle,
         },
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      });
-    } catch (error: any) {
+      })
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
           error?.message || `Failed to update chat title with ID: ${chatId}`,
-      });
+      })
     }
   }
 
@@ -326,23 +338,24 @@ export default class ChatServise extends FetchFactory {
       await this.$fetch<void>(
         `${this.chatsEndpoint}/${chatId}/messages/${messageId}`,
         {
-          method: "PATCH",
-          credentials: "include",
+          method: 'PATCH',
+          credentials: 'include',
           body: {
             evaluation,
           },
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         },
-      );
-    } catch (error: any) {
+      )
+    }
+    catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage:
-          error?.message ||
-          `Failed to evaluate chat message with ID: ${messageId}`,
-      });
+          error?.message
+          || `Failed to evaluate chat message with ID: ${messageId}`,
+      })
     }
   }
 }

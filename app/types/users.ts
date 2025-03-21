@@ -1,3 +1,5 @@
+import type { PaginatedResponse } from './common'
+
 export interface User {
   id: string
   firstName: string
@@ -11,10 +13,7 @@ export interface User {
   avatar?: string
 }
 
-export interface UsersResponse {
-  items: User[]
-  total: number
-}
+export type BoChatsResponse = PaginatedResponse<User>
 
 export interface CreateUserPayload {
   email: string

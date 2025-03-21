@@ -24,7 +24,7 @@ const chatData = computed(() => {
     updatedAt: relativeUpdatedAtDate.value,
     createdAt: relativeCreatedAtDate.value,
     agentName: props.chat?.agent?.name || '-',
-    userName: props.chat?.user?.fullName || '-',
+    username: props.chat?.chat?.username || '-',
   }
 })
 
@@ -58,7 +58,7 @@ interface Emits {
         <LabelDescriptionItem
           :label="t('users.user_card.username')"
           size="small"
-          :description="chatData.userName"
+          :description="chatData.username"
         />
         <LabelDescriptionItem
           :label="t('agents.labels.name')"

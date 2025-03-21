@@ -1,4 +1,4 @@
-export interface CountedList<T> {
-  total: number;
-  items: T[];
+export interface PaginatedResponse<T> {
+  items: T[]
+  total: number
 }

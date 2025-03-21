@@ -31,9 +31,7 @@ watch(chatData, (newData) => {
 const selectedAgent = computed(() => {
   return chatData.value?.agent || null
 })
-const selectedUser = computed(() => {
-  return chatData.value?.user || null
-})
+
 const selectedChat = computed(() => {
   return chatData.value?.chat || null
 })
@@ -69,7 +67,6 @@ const isGetChatLoading = computed(() => {
       <ChatGeneralInfoAdmin
         :agent="selectedAgent"
         :chat="selectedChat"
-        :user="selectedUser"
       />
       <AsyncChatMessagesList :chat-id="selectedChat.id" />
     </template>

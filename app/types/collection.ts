@@ -1,3 +1,5 @@
+import type { PaginatedResponse } from './common'
+
 export interface CollectionResponse {
   collection: Collection
   totalDocuments: number
@@ -20,10 +22,7 @@ export interface Document {
   name: string
 }
 
-export interface CollectionListResponse {
-  total: number
-  items: Collection[]
-}
+export type CollectionListResponse = PaginatedResponse<Collection>
 
 export interface CollectionDetail {
   name: string

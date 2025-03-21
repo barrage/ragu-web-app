@@ -30,7 +30,7 @@ async function startOAuthFlow() {
   btnLoading.value = true
 
   const redirectUri = `${window.location.origin}/auth/callback`
-  const scope = 'openid profile email entitlements offline_access avatar'
+  const scope = 'openid profile email entitlements offline_access avatar goauthentik.io/api'
 
   const codeVerifier = client.randomPKCECodeVerifier()
   const codeChallenge

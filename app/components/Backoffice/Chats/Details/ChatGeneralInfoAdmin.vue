@@ -4,16 +4,14 @@ import type { SingleAgent } from '~/types/agent.ts'
 import type { User } from '~/types/users'
 import { StatusType } from '~/types/statusTypes'
 import LabelDescriptionItem from '~/components/shared/LabelDescriptionItem.vue'
-import ProfileIcon from '~/assets/icons/svg/account.svg'
-import AgentIcon from '~/assets/icons/svg/chat-agent.svg'
 
 const props = defineProps<{
   chat: Chat | null
   agent: SingleAgent | null
-  user: User | null
 }>()
 
 const { t } = useI18n()
+const oAuthStore = useAuthStore()
 const relativeChatUpdatedDate = ref(props.chat?.createdAt ? useRelativeDate(props.chat.createdAt) : '-')
 
 const chatData = computed(() => {
@@ -25,14 +23,17 @@ const chatData = computed(() => {
       id: props.chat?.id || '-',
     },
     user: {
-      username: props.user?.fullName || '-',
-      email: props.user?.email || '-',
-      id: props.user?.id || '-',
-      status: props.user?.active ? t('users.user_card.active_status') : t('users.user_card.inactive_status'),
-      role: props.user?.role === 'admin' ? t('users.user_card.adminRole') : t('users.user_card.userRole'),
-      statusType: props.user?.active ? StatusType.Success : StatusType.Danger,
-      avatar: props.user?.avatar || undefined,
+      username: props.chat?.username || '-',
+      email: props.chat?.email || '-', // TO DO change to selectedUser email
+      id: props.chat?.userId || '-',
+      role: oAuthStore.user?.entitlements?.includes('admin')
+        ? t('users.user_card.adminRole')
+        : t('users.user_card.userRole'),
+      statusType: StatusType.Success,
+      avatar: props.chat?.avatar || undefined, // TO DO change to selectedUser avatar
+      statusText: t('users.user_card.active_status'),
     },
+
     agent: {
       username: props.agent?.name || '-',
       id: props.agent?.id || '-',
@@ -61,7 +62,7 @@ const chatData = computed(() => {
     </div>
     <div class="user-general-info-card">
       <LlmLink
-        :to="`/admin/users/${user?.id}`"
+        :to="`/admin/users/${oAuthStore.user?.id}`"
         type="link"
         class="user-profile-item"
       >
@@ -83,11 +84,11 @@ const chatData = computed(() => {
         <LabelDescriptionItem
           :label="t('users.user_card.status')"
           size="small"
-          :description="chatData.user?.status"
+          :description="chatData.user?.statusText"
         >
           <template #customDescription>
             <el-tag :type="chatData.user.statusType" size="small">
-              <span class="status-dot" />  {{ chatData?.user.status }}
+              <span class="status-dot" />  {{ chatData?.user.statusText }}
             </el-tag>
           </template>
         </LabelDescriptionItem>
