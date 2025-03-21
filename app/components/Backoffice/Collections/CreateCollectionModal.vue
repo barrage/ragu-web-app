@@ -20,8 +20,8 @@ useHead({
   title: computed(() => t('collections.titles.create')),
 })
 
-const vectorProviders = appConfigStore.vectorProviders
-const embeddingProviders = appConfigStore.embeddingProviders
+const vectorProviders = computed(() => appConfigStore.vectorProviders || [])
+const embeddingProviders = computed(() => appConfigStore.embeddingProviders || {})
 const isOpen = defineModel<boolean>()
 const formRef = ref<FormInstance>()
 const form = reactive<CollectionDetail>({
@@ -30,6 +30,7 @@ const form = reactive<CollectionDetail>({
   vectorProvider: '',
   embeddingProvider: '',
 })
+
 const listEmbeddingsModels = ref<Record<string, number>>({})
 
 const rules = computed<FormRules<CollectionDetail>>(() => ({
@@ -144,7 +145,6 @@ errorHandler(createError)
         {{ t('collections.titles.createDescription') }}
       </p>
     </div>
-
     <template #footer>
       <ElForm
         ref="formRef"
