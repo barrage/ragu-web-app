@@ -3,6 +3,7 @@ import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 
 const props = defineProps<{
   chatId: string
+  userName: string
 }>()
 
 const { $api } = useNuxtApp()
@@ -42,7 +43,7 @@ const emptyChatMessagesData = computed(() => {
   </template>
 
   <template v-else-if="!emptyChatMessagesData">
-    <ChatMessagesListAdmin :messages="chatMessagesData?.items" />
+    <ChatMessagesListAdmin :messages="chatMessagesData?.items" :user-name="userName" />
   </template>
 
   <EmptyState

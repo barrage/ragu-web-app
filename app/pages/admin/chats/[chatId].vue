@@ -68,7 +68,7 @@ const isGetChatLoading = computed(() => {
         :agent="selectedAgent"
         :chat="selectedChat"
       />
-      <AsyncChatMessagesList :chat-id="selectedChat.id" />
+      <AsyncChatMessagesList :chat-id="selectedChat.id" :user-name="selectedChat.username" />
     </template>
     <EmptyState
       v-else

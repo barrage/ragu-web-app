@@ -7,6 +7,7 @@ import type { Message } from '~/types/chat'
 
 const props = defineProps<{
   message: Message
+  userName: string
 }>()
 
 const { t } = useI18n()
@@ -32,7 +33,7 @@ const messageData = computed(() => {
     createdAt: props.message.createdAt ? formatDate(props.message.createdAt, 'dddd, MMMM D, YYYY h:mm A') : '-',
     createdAtRealtiveTime: relativeCreatedDate.value,
     content: sanitizedContent,
-    sender: props.message?.senderType === 'user' ? selectedUser.value?.fullName : selectedAgent.value?.name,
+    sender: props.message?.senderType === 'user' ? props.userName : selectedAgent.value?.name,
   }
 })
 

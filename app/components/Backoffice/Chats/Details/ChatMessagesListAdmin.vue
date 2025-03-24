@@ -4,6 +4,7 @@ import type { ChatMessage } from '~/types/chat'
 
 const props = defineProps<{
   messages: ChatMessage[] | null | undefined
+  userName: string
 }>()
 
 const messagesListData = computed(() => {
@@ -35,6 +36,7 @@ const messagesListData = computed(() => {
           :delay="(index * 100)"
           :duration="400"
           :message="message"
+          :user-name="userName"
         />
       </div>
     </div>

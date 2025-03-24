@@ -2,7 +2,6 @@ import { defineNuxtPlugin } from '#app'
 import AuthService from '~/repository/services/auth'
 import ChatService from '~/repository/services/chat'
 import AgentService from '~/repository/services/agent'
-import UsersService from '~/repository/services/users'
 import DocumentService from '~/repository/services/document'
 import AppConfigService from '~/repository/services/appConfig'
 import CollectionService from '~/repository/services/collection'
@@ -24,7 +23,6 @@ export default defineNuxtPlugin(() => {
 
   const chatService = new ChatService(baseApiFetcher)
   const agentService = new AgentService(baseApiFetcher)
-  const usersService = new UsersService(baseApiFetcher)
   const authService = new AuthService(baseApiFetcher)
   const documentService = new DocumentService(baseApiChucker)
   const appConfigService = new AppConfigService(baseApiChucker)
@@ -41,7 +39,6 @@ export default defineNuxtPlugin(() => {
         agent: agentService,
         chat: chatService,
         auth: authService,
-        user: usersService,
         document: documentService,
         appConfig: appConfigService,
         collection: collectionService,

@@ -10,6 +10,7 @@ const props = defineProps<{
 }>()
 
 const { t } = useI18n()
+const oAuthStore = useAuthStore()
 const relativeChatUpdatedDate = ref(props.chat?.createdAt ? useRelativeDate(props.chat.createdAt) : '-')
 
 const chatData = computed(() => {
@@ -21,6 +22,13 @@ const chatData = computed(() => {
       id: props.chat?.id || '-',
       userId: props.chat?.userId || '-',
       username: props.chat?.username || '-',
+    },
+    user: {
+      username: props.chat?.username || '-',
+      id: props.chat?.userId || '-',
+      role: oAuthStore.user?.entitlements?.includes('admin')
+        ? t('users.user_card.adminRole')
+        : t('users.user_card.userRole'),
     },
 
     agent: {
@@ -68,6 +76,12 @@ const chatData = computed(() => {
         </div>
       </LlmLink>
       <div class="user-informations">
+        <LabelDescriptionItem
+          :label="t('users.user_card.role')"
+          size="small"
+          :description="chatData.user.role"
+        />
+
         <LabelDescriptionItem
           :label="t('users.user_card.user_id')"
           size="small"

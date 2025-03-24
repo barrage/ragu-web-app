@@ -19,6 +19,7 @@ export default defineNuxtConfig({
       appVersion: version,
       apiBaseUrl: process.env.API_BASE_URL,
       apiChunkerUrl: process.env.API_CHUCKER_URL,
+      apiAutentikUrl: process.env.API_AUTENTIK_URL,
       wsUrl: process.env.WS_URL,
       // WhatsApp
       enableWhatsApp: process.env.ENABLE_WHATSAPP,

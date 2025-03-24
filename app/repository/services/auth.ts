@@ -63,6 +63,36 @@ export default class AuthService extends FetchFactory {
     }
   }
 
+  /**
+   * Fetches all users from Autentik.
+   * @returns A promise that resolves to an array of User objects.
+   * @throws Will throw an error if the request fails.
+   */
+
+  async GetAllUsers(): Promise<any[]> {
+    try {
+      const response = await fetch('/api/oauth/users', {
+        credentials: 'include',
+        method: 'GET',
+      })
+
+      if (response.status !== 200) {
+        throw createError({
+          statusCode: response.status,
+          statusMessage: 'Failed to fetch users',
+        })
+      }
+
+      return await response.json()
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || 'Failed to fetch users',
+      })
+    }
+  }
+
   Refresh = async (): Promise<void> => {
     try {
       const response = await fetch('/api/oauth/refresh', {
