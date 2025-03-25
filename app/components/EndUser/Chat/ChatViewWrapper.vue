@@ -74,6 +74,7 @@ const closeEditChatModal = () => {
     background: transparent;
     position: relative;
     z-index: 0;
+    padding-bottom: 2rem;
   }
 }
 </style>

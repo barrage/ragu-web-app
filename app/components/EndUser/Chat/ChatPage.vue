@@ -300,6 +300,12 @@ const showLoadingState = computed(() => !messages.value?.length && (loadingChat.
     overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   & .chat-page-footer {

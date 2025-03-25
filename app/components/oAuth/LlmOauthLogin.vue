@@ -9,15 +9,15 @@ const emits = defineEmits<Emits>()
 const config = useRuntimeConfig()
 
 let oidcConfig: client.Configuration
-try {
-  oidcConfig = await client.discovery(
-    new URL(config.public.oauthEndpoint),
-    config.public.oauthClientId,
-  )
-}
-catch (e) {
-  console.error('Failed to fetch OpenID configuration:', e)
-}
+
+client.discovery(
+  new URL(config.public.oauthEndpoint),
+  config.public.oauthClientId,
+).then((config) => {
+  oidcConfig = config
+}).catch((error) => {
+  console.error('Failed to discover OIDC configuration:', error)
+})
 
 interface Emits {
   (event: 'redirection'): void

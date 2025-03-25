@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { h } from 'vue'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
-import type { User } from '~/types/users'
+import type { User } from '~/types/auth'
 
 const props = defineProps<{
   user: User | undefined | null
@@ -9,20 +9,8 @@ const props = defineProps<{
   avatar?: string | null | undefined
 }>()
 
-const emits = defineEmits<Emits>()
-interface Emits {
-  (e: 'changePicture'): void
-  (e: 'deletePicture'): void
-}
 const { t } = useI18n()
 const isOpen = defineModel<boolean>()
-const handleChangePicture = () => {
-  emits('changePicture')
-}
-
-const handleDeletePicture = () => {
-  emits('deletePicture')
-}
 
 const closeModal = () => {
   isOpen.value = false
@@ -43,9 +31,6 @@ const closeModal = () => {
     <ProfileOverview
       :avatar="avatar"
       :user="props.user"
-      upload-type="adminUsers"
-      @change-picture="handleChangePicture"
-      @delete-picture="handleDeletePicture"
     />
   </ElDialog>
 </template>
