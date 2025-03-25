@@ -48,14 +48,6 @@ const agentsProviders = computed<PieChartDataEntry[] | null>(() => {
 const mostUsedAgentData = computed(() => {
   return findMostUsedAgent()
 })
-
-// Recent users
-const { error: recentUsersError, data: recentUsers, status: recentUsersStatus } = await useAsyncData(() => $api.user.GetAllUsers(1, 5, 'createdAt', 'desc'), { lazy: true })
-
-const mostRecentUser = computed(() => recentUsers.value?.items || [])
-const isLoading = computed(() => recentUsersStatus.value === 'pending')
-const hasError = computed(() => !!dashboardCountError.value || !!recentUsersError.value)
-
 // Collections
 
 const { data: collections } = useAsyncData('collections', () =>
@@ -126,16 +118,7 @@ function findMostUsedAgent(): { name: string, stats: { used: number, total: numb
         <DashboardAgents
           :agent-providers-pie-chart-data="agentsProviders"
           :count-data-agents="agentsData"
-          :recent-users="mostRecentUser"
           :most-used-agent="mostUsedAgentData"
-        />
-      </div>
-      <div class="dashboard-users-template">
-        <DashboardUsers
-          :count-data-user="usersData"
-          :recent-users="mostRecentUser"
-          :loading="isLoading"
-          :error="hasError"
         />
       </div>
     </div>
@@ -150,22 +133,9 @@ function findMostUsedAgent(): { name: string, stats: { used: number, total: numb
   grid-column: span 12;
 }
 
-.dashboard-users-template {
-  padding-top: 12px;
-  grid-column: span 12;
-
-  @include viewport-xl {
-    grid-column: span 6;
-  }
-}
 .dashboard-agents-template {
   padding-top: 12px;
   grid-column: span 12;
-
-  @include viewport-xl {
-    grid-column: span 6;
-    padding-right: 32px;
-  }
 }
 .dashboard-chats-template {
   grid-column: span 12;

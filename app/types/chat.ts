@@ -1,6 +1,5 @@
 import type { PaginatedResponse } from './common'
 import type { SingleAgent } from '~/types/agent.ts'
-import type { User } from '~/types/users'
 import type { MonthName } from '~/components/EndUser/Chat/ChatListTimeLabel.vue'
 
 export interface Message {
@@ -83,7 +82,6 @@ export type AdminChatsResponse = PaginatedResponse<AdminChatDetails>
 export interface AdminChatDetails {
   agent: SingleAgent
   chat: Chat
-  user: User
 }
 
 export interface EndUserChatDetails {
@@ -96,6 +94,5 @@ export interface EditChatTitlePayload {
 }
 
 export interface ChatListFilterForm {
-  userId: undefined | string
   agentId: undefined | string
 }

@@ -6,12 +6,11 @@ import AgentsIcon from '~/assets/icons/svg/agents.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
 import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
-import type { AgentStatistic, LineChartSeriesData, UserStatistic } from '~/types/statistic'
+import type { AgentStatistic, LineChartSeriesData } from '~/types/statistic'
 import TitleDescription from '~/components/shared/TitleDescription.vue'
 
 const props = defineProps<{
   agentsStats: AgentStatistic
-  usersStats: UserStatistic
   documentsCount: number
   collectionsCount: number
   chatHistory: LineChartSeriesData[] | null
@@ -22,16 +21,10 @@ const emits = defineEmits<Emits>()
 
 const { t } = useI18n()
 const agentTotal = ref(props.agentsStats?.total || 0)
-const userTotal = ref(props.usersStats?.total || 0)
 const documentTotal = ref(props.documentsCount || 0)
 const collectionTotal = ref(props.collectionsCount || 0)
 
 const agentTotalTransition = useTransition(agentTotal, {
-  duration: 1000,
-  transition: TransitionPresets.easeInOutCubic,
-})
-
-const usersTotalTransition = useTransition(userTotal, {
   duration: 1000,
   transition: TransitionPresets.easeInOutCubic,
 })
@@ -47,16 +40,13 @@ const collectionsTotalTransition = useTransition(collectionTotal, {
 })
 
 const roundedAgentTotal = computed(() => Math.round(agentTotalTransition.value))
-const roundedUsersTotal = computed(() => Math.round(usersTotalTransition.value))
 const roundedDocumentsTotal = computed(() => Math.round(documentsTotalTransition.value))
 const roundedCollectionsTotal = computed(() => Math.round(collectionsTotalTransition.value))
 
 watch(() => props.agentsStats?.total, (newVal) => {
   if (newVal !== undefined) { agentTotal.value = newVal }
 })
-watch(() => props.usersStats?.total, (newVal) => {
-  if (newVal !== undefined) { userTotal.value = newVal }
-})
+
 watch(() => props.documentsCount, (newVal) => {
   if (newVal !== undefined) { documentTotal.value = newVal }
 })
@@ -72,13 +62,6 @@ const overviewWidgetsData = computed(() => {
     redirectUrl: '/admin/agents',
     redirectText: t('dashboard.service_widgets.agents.view_more'),
     icon: AgentsIcon,
-  }, {
-    name: t('dashboard.service_widgets.users.title'),
-    value: roundedUsersTotal.value,
-    description: `${props.usersStats?.active || 0} ${t('dashboard.service_widgets.users.description')}`,
-    redirectUrl: '/admin/users',
-    redirectText: t('dashboard.service_widgets.users.view_more'),
-    icon: TeamIcon,
   }, {
     name: t('dashboard.service_widgets.documents.title'),
     value: roundedDocumentsTotal.value,

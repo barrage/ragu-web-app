@@ -180,7 +180,7 @@ watch(
       :evaluation-messages="evaluationMessagesData"
     />
     <Pagination
-      data-testid="bo-users-list-pagination"
+      data-testid="bo-agent-evaluation-list-pagination"
       :current-page="pagination.currentPage"
       :page-size="pagination.pageSize"
       :total="pagination.total"

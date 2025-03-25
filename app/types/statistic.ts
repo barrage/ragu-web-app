@@ -20,18 +20,9 @@ export interface ChatStatistic {
   total: number
 }
 
-export interface UserStatistic {
-  active: number
-  admin: number
-  inactive: number
-  total: number
-  user: number
-}
-
 export interface DashboardStatistic {
   agent: AgentStatistic
   chat: ChatStatistic
-  user: UserStatistic
 }
 
 export interface StatisticData {

@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import type { WhatsAppChat } from '~/types/whatsapp.ts'
-import type { User } from '~/types/users'
 import { StatusType } from '~/types/statusTypes'
 import LabelDescriptionItem from '~/components/shared/LabelDescriptionItem.vue'
 import ProfileIcon from '~/assets/icons/svg/account.svg'
 
 const props = defineProps<{
   whatsAppChat: WhatsAppChat | null
-  whatsAppUser: User | null
+  whatsAppUser: any | null
 }>()
 
 const { t } = useI18n()

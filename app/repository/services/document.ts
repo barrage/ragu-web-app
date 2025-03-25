@@ -11,7 +11,7 @@ export default class DocumentServise extends FetchFactory {
   /**
    * Fetches a paginated and sorted list of documents.
    * @param page - The page number to fetch.
-   * @param perPage - The number of users per page.
+   * @param perPage - The number of documents per page.
    * @param sortBy - The field to sort by (e.g., 'createdAt').
    * @param sortOrder - The order of sorting ('asc' or 'desc').
    * @returns A promise that resolves to an DocumentListResponse type.

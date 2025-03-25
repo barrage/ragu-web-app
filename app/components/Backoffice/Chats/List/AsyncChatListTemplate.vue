@@ -27,7 +27,6 @@ const pagination = ref<Pagination>({
 
 /* Filter */
 const filterForm = ref<ChatListFilterForm>({
-  userId: undefined,
   agentId: undefined,
 })
 
@@ -44,7 +43,6 @@ const syncQueryValues = (newQuery: LocationQuery) => {
   sort.value.sortBy = (newQuery.sortBy as string) || 'createdAt'
   searchInput.value = newQuery.title ? (newQuery.title as string) : null
   filterForm.value.agentId = newQuery.agentId ? (newQuery.agentId as string) : undefined
-  filterForm.value.userId = newQuery.userId ? (newQuery.userId as string) : undefined
 }
 
 const updateRouteQuery = () => {
@@ -55,13 +53,6 @@ const updateRouteQuery = () => {
     sortBy: sort.value.sortBy,
     dir: sort.value.sortOrder,
     ...(searchInput.value ? { title: searchInput.value } : {}),
-  }
-
-  if (filterForm.value.userId) {
-    query.userId = filterForm.value.userId.toString()
-  }
-  else {
-    delete query.userId
   }
 
   if (filterForm.value.agentId) {
@@ -86,7 +77,6 @@ const {
     pagination.value.pageSize,
     sort.value.sortBy,
     sort.value.sortOrder,
-    filterForm.value.userId,
     filterForm.value.agentId,
     searchInput.value,
   ), { lazy: true })
@@ -143,7 +133,6 @@ const handleSortChange = async (sortingValues: SortingValues) => {
 }
 
 const handleFilterChange = async (filter: ChatListFilterForm) => {
-  filterForm.value.userId = filter.userId
   filterForm.value.agentId = filter.agentId
   updateRouteQuery()
   scrollToTop()

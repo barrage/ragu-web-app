@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { Chat } from '~/types/chat.ts'
 import type { SingleAgent } from '~/types/agent.ts'
-import type { User } from '~/types/users'
 import { StatusType } from '~/types/statusTypes'
 import LabelDescriptionItem from '~/components/shared/LabelDescriptionItem.vue'
 
@@ -11,7 +10,6 @@ const props = defineProps<{
 }>()
 
 const { t } = useI18n()
-const oAuthStore = useAuthStore()
 const relativeChatUpdatedDate = ref(props.chat?.createdAt ? useRelativeDate(props.chat.createdAt) : '-')
 
 const chatData = computed(() => {
@@ -21,17 +19,8 @@ const chatData = computed(() => {
       createdAt: props.chat?.title ? formatDate(props.chat.createdAt, 'dddd, MMMM D, YYYY h:mm A') : '-',
       updatedAt: relativeChatUpdatedDate.value,
       id: props.chat?.id || '-',
-    },
-    user: {
+      userId: props.chat?.userId || '-',
       username: props.chat?.username || '-',
-      email: props.chat?.email || '-', // TO DO change to selectedUser email
-      id: props.chat?.userId || '-',
-      role: oAuthStore.user?.entitlements?.includes('admin')
-        ? t('users.user_card.adminRole')
-        : t('users.user_card.userRole'),
-      statusType: StatusType.Success,
-      avatar: props.chat?.avatar || undefined, // TO DO change to selectedUser avatar
-      statusText: t('users.user_card.active_status'),
     },
 
     agent: {
@@ -62,12 +51,11 @@ const chatData = computed(() => {
     </div>
     <div class="user-general-info-card">
       <LlmLink
-        :to="`/admin/users/${oAuthStore.user?.id}`"
+        :to="`https://authentik.barrage.dev/users/${chatData.chat?.userId}`"
         type="link"
         class="user-profile-item"
       >
         <LlmAvatar
-          :avatar="chatData.user?.avatar"
           :alt="t('agents.user_avatar')"
           fit="cover"
           default-image="user"
@@ -75,33 +63,15 @@ const chatData = computed(() => {
         />
         <div class="username-mail-wrapper">
           <p class="username">
-            {{ `${chatData.user.username}` }}
+            {{ `${chatData.chat.username}` }}
           </p>
-          <span class="user-mail">{{ chatData.user.email }}</span>
         </div>
       </LlmLink>
       <div class="user-informations">
         <LabelDescriptionItem
-          :label="t('users.user_card.status')"
-          size="small"
-          :description="chatData.user?.statusText"
-        >
-          <template #customDescription>
-            <el-tag :type="chatData.user.statusType" size="small">
-              <span class="status-dot" />  {{ chatData?.user.statusText }}
-            </el-tag>
-          </template>
-        </LabelDescriptionItem>
-        <LabelDescriptionItem
-          :label="t('users.user_card.role')"
-          size="small"
-          :description="chatData.user.role"
-        />
-
-        <LabelDescriptionItem
           :label="t('users.user_card.user_id')"
           size="small"
-          :description="chatData.user.id"
+          :description="chatData.chat.userId"
         />
       </div>
     </div>

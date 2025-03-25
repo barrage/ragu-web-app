@@ -1,5 +1,4 @@
 import FetchFactory from '../fetchFactory'
-import type { CountedList } from '~/types/common'
 import type {
   AdminChatDetails,
   AdminChatsResponse,
@@ -73,7 +72,7 @@ export default class ChatServise extends FetchFactory {
    */
   async GetChatMessages(
     chatId: string,
-  ): Promise<CountedList<MessageGroupAggregate>> {
+  ): Promise<MessageGroupAggregate> {
     try {
       return this.$fetch(`${this.chatsEndpoint}/${chatId}/messages`, {
         credentials: 'include',
@@ -120,7 +119,6 @@ export default class ChatServise extends FetchFactory {
     perPage: number = 10,
     sortBy: string = 'firstName',
     sortOrder: 'asc' | 'desc' = 'desc',
-    userId?: string,
     agentId?: string,
     title?: string | null,
   ): Promise<AdminChatsResponse> {
@@ -130,7 +128,6 @@ export default class ChatServise extends FetchFactory {
         perPage: perPage.toString(),
         sortBy,
         sortOrder,
-        ...(userId ? { userId } : {}),
         ...(agentId ? { agentId } : {}),
         ...(title ? { title } : {}),
       }).toString()

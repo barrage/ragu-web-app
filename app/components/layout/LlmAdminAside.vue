@@ -39,11 +39,6 @@ const menuLists = computed<MenuList[]>(() => {
           icon: DashboardIcon,
         },
         {
-          label: t('users.title'),
-          link: '/admin/users',
-          icon: TeamIcon,
-        },
-        {
           label: t('chat.admin.title'),
           link: '/admin/chats',
           icon: ChatsIcon,
@@ -67,6 +62,17 @@ const menuLists = computed<MenuList[]>(() => {
           label: t('global_settings.title'),
           link: '/admin/settings',
           icon: SettingIcon,
+        },
+      ],
+    },
+    {
+      name: 'external',
+      show: true,
+      list: [
+        {
+          label: t('users.title'),
+          link: 'https://authentik.barrage.dev',
+          icon: TeamIcon,
         },
       ],
     },
