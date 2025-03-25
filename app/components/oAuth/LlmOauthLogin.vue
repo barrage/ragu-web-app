@@ -63,7 +63,6 @@ async function startOAuthFlow() {
 
 <template>
   <div class="social-container">
-    {{ isDisabled }}
     <ElButton
       type="primary"
       class="social"
