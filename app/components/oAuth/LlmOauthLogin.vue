@@ -10,13 +10,17 @@ const config = useRuntimeConfig()
 
 let oidcConfig: client.Configuration
 
+const isDisabled = ref(true)
+
 client.discovery(
   new URL(config.public.oauthEndpoint),
   config.public.oauthClientId,
 ).then((config) => {
   oidcConfig = config
+  isDisabled.value = false
 }).catch((error) => {
   console.error('Failed to discover OIDC configuration:', error)
+  isDisabled.value = true
 })
 
 interface Emits {
@@ -59,11 +63,12 @@ async function startOAuthFlow() {
 
 <template>
   <div class="social-container">
+    {{ isDisabled }}
     <ElButton
       type="primary"
       class="social"
       :loading="btnLoading"
-      :disabled="!oidcConfig"
+      :disabled="isDisabled"
       @click="startOAuthFlow"
       @keyup.enter="startOAuthFlow"
     >
