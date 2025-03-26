@@ -5,6 +5,7 @@ import TeamIcon from '~/assets/icons/svg/team.svg'
 import AgentsIcon from '~/assets/icons/svg/agents.svg'
 import DocumentIcon from '~/assets/icons/svg/document.svg'
 import CollectionIcon from '~/assets/icons/svg/folder-multiple.svg'
+import TokensIcon from '~/assets/icons/svg/tokens.svg'
 import ChatWarningIcon from '~/assets/icons/svg/chat-warning.svg'
 import type { AgentStatistic, LineChartSeriesData } from '~/types/statistic'
 import TitleDescription from '~/components/shared/TitleDescription.vue'
@@ -13,6 +14,7 @@ const props = defineProps<{
   agentsStats: AgentStatistic
   documentsCount: number
   collectionsCount: number
+  tokenTotalUsage: number
   chatHistory: LineChartSeriesData[] | null
   status: string
 }>()
@@ -23,6 +25,7 @@ const { t } = useI18n()
 const agentTotal = ref(props.agentsStats?.total || 0)
 const documentTotal = ref(props.documentsCount || 0)
 const collectionTotal = ref(props.collectionsCount || 0)
+const tokenTotal = ref(props.tokenTotalUsage || 0)
 
 const agentTotalTransition = useTransition(agentTotal, {
   duration: 1000,
@@ -39,9 +42,15 @@ const collectionsTotalTransition = useTransition(collectionTotal, {
   transition: TransitionPresets.easeInOutCubic,
 })
 
+const tokenTotalTransition = useTransition(tokenTotal, {
+  duration: 1000,
+  transition: TransitionPresets.easeInOutCubic,
+})
+
 const roundedAgentTotal = computed(() => Math.round(agentTotalTransition.value))
 const roundedDocumentsTotal = computed(() => Math.round(documentsTotalTransition.value))
 const roundedCollectionsTotal = computed(() => Math.round(collectionsTotalTransition.value))
+const roundedTokenTotal = computed(() => Math.round(tokenTotalTransition.value))
 
 watch(() => props.agentsStats?.total, (newVal) => {
   if (newVal !== undefined) { agentTotal.value = newVal }
@@ -53,30 +62,45 @@ watch(() => props.documentsCount, (newVal) => {
 watch(() => props.collectionsCount, (newVal) => {
   if (newVal !== undefined) { collectionTotal.value = newVal }
 })
+watch(() => props.tokenTotalUsage, (newVal) => {
+  if (newVal !== undefined) { tokenTotal.value = newVal }
+})
 
 const overviewWidgetsData = computed(() => {
-  return [{
-    name: t('dashboard.service_widgets.agents.title'),
-    value: roundedAgentTotal.value,
-    description: `${props.agentsStats?.active || 0} ${t('dashboard.service_widgets.agents.description')}`,
-    redirectUrl: '/admin/agents',
-    redirectText: t('dashboard.service_widgets.agents.view_more'),
-    icon: AgentsIcon,
-  }, {
-    name: t('dashboard.service_widgets.documents.title'),
-    value: roundedDocumentsTotal.value,
-    description: t('dashboard.service_widgets.documents.description'),
-    redirectUrl: '/admin/documents',
-    redirectText: t('dashboard.service_widgets.documents.view_more'),
-    icon: DocumentIcon,
-  }, {
-    name: t('dashboard.service_widgets.collections.title'),
-    value: roundedCollectionsTotal.value,
-    description: t('dashboard.service_widgets.collections.description'),
-    redirectUrl: '/admin/collections',
-    redirectText: t('dashboard.service_widgets.collections.view_more'),
-    icon: CollectionIcon,
-  }]
+  return [
+    {
+      name: t('dashboard.service_widgets.tokens.title'),
+      value: roundedTokenTotal.value,
+      description: t('dashboard.service_widgets.tokens.description'),
+      redirectUrl: '/admin',
+      redirectText: t('dashboard.service_widgets.tokens.view_more'),
+      icon: TokensIcon,
+    },
+    {
+      name: t('dashboard.service_widgets.agents.title'),
+      value: roundedAgentTotal.value,
+      description: `${props.agentsStats?.active || 0} ${t('dashboard.service_widgets.agents.description')}`,
+      redirectUrl: '/admin/agents',
+      redirectText: t('dashboard.service_widgets.agents.view_more'),
+      icon: AgentsIcon,
+    },
+    {
+      name: t('dashboard.service_widgets.documents.title'),
+      value: roundedDocumentsTotal.value,
+      description: t('dashboard.service_widgets.documents.description'),
+      redirectUrl: '/admin/documents',
+      redirectText: t('dashboard.service_widgets.documents.view_more'),
+      icon: DocumentIcon,
+    },
+    {
+      name: t('dashboard.service_widgets.collections.title'),
+      value: roundedCollectionsTotal.value,
+      description: t('dashboard.service_widgets.collections.description'),
+      redirectUrl: '/admin/collections',
+      redirectText: t('dashboard.service_widgets.collections.view_more'),
+      icon: CollectionIcon,
+    },
+  ]
 })
 
 interface Emits {

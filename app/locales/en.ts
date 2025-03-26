@@ -980,6 +980,11 @@ export default {
         providers_empty_title: 'No providers',
         providers_empty_description: 'Currently, there are no providers to show.',
       },
+      tokens: {
+        title: 'Tokens',
+        description: 'Total tokens usage',
+        view_more: 'View more',
+      },
       users: {
         title: 'Users',
         description: 'active users',

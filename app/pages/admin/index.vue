@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import DashboardIcon from '~/assets/icons/svg/dashboard-icon.svg'
-import type { AgentStatistic, PieChartDataEntry, UserStatistic } from '~/types/statistic'
+import type { AgentStatistic, PieChartDataEntry } from '~/types/statistic'
+import token from '~~/server/api/oauth/token'
 
 definePageMeta({
   layout: 'admin-layout',
@@ -33,10 +34,6 @@ const chatHistory = computed(() => {
   return statisticStore?.chatHistoryStats ? formatLineChartData(statisticStore.chatHistoryStats) : null
 })
 
-const usersData = computed<UserStatistic>(() => {
-  return statisticStore.dashboardCount?.user || { active: 0, admin: 0, inactive: 0, total: 0, user: 0 }
-})
-
 const agentsData = computed<AgentStatistic>(() => {
   return statisticStore.dashboardCount?.agent || { active: 0, inactive: 0, providers: [], total: 0 }
 })
@@ -48,6 +45,13 @@ const agentsProviders = computed<PieChartDataEntry[] | null>(() => {
 const mostUsedAgentData = computed(() => {
   return findMostUsedAgent()
 })
+
+// Tokens
+
+const { data: tokenTotalUsage } = useAsyncData(() => $api.provider.GetTokenTotalUsage())
+
+const tokenCount = computed(() => tokenTotalUsage.value || 0)
+
 // Collections
 
 const { data: collections } = useAsyncData('collections', () =>
@@ -103,9 +107,9 @@ function findMostUsedAgent(): { name: string, stats: { used: number, total: numb
       <div class="dashboard-hero-section-template">
         <DashboardHeroOverview
           :agents-stats="agentsData"
-          :users-stats="usersData"
           :collections-count="collectionsCount"
           :documents-count="documentsCount"
+          :token-total-usage="tokenCount"
           :chat-history="chatHistory"
           :status="chatHistoryStatus"
           @change-period="updatePeriod"
