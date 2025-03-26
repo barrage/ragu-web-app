@@ -686,6 +686,11 @@ export default {
         providers_empty_title: 'Nenhum provedor',
         providers_empty_description: 'Atualmente, não há provedores para mostrar.',
       },
+      tokens: {
+        title: 'Tokens',
+        description: 'Uso total de tokens',
+        view_more: 'Ver mais',
+      },
       users: {
         title: 'Usuários',
         description: 'usuários ativos',

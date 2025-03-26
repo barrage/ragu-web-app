@@ -684,6 +684,11 @@ export default {
         providers_empty_title: 'Aucun fournisseur',
         providers_empty_description: 'Il n\'y a actuellement aucun fournisseur à afficher.',
       },
+      tokens: {
+        title: 'Jetons',
+        description: 'Utilisation totale des jetons',
+        view_more: 'Voir plus',
+      },
       users: {
         title: 'Utilisateurs',
         description: 'utilisateurs actifs',

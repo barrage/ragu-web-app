@@ -992,6 +992,11 @@ export default {
         providers_empty_title: 'Nema pružatelja usluga',
         providers_empty_description: 'Trenutno nema pružatelja usluga za prikaz.',
       },
+      tokens: {
+        title: 'Tokeni',
+        description: 'Ukupno korištenje tokena',
+        view_more: 'Prikaži više',
+      },
       users: {
         title: 'Korisnici',
         description: 'aktivni korisnici',

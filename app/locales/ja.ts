@@ -680,6 +680,11 @@ export default {
         providers_empty_title: 'プロバイダーがありません',
         providers_empty_description: '現在、表示するプロバイダーはありません。',
       },
+      tokens: {
+        title: 'トークン',
+        description: '合計トークンの使用',
+        view_more: 'もっと見る',
+      },
       users: {
         title: '合計ユーザー',
         description: 'アクティブなユーザー',

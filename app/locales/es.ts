@@ -675,6 +675,11 @@ export default {
     title: 'Panel de control',
     description: 'Administre la aplicación de administración LLMAO.',
     service_widgets: {
+      tokens: {
+        title: 'Tokens',
+        description: 'Uso total de tokens',
+        view_more: 'Ver más',
+      },
       agents: {
         title: 'Agentes',
         description: 'agentes activos',
