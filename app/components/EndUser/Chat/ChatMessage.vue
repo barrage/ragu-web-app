@@ -46,6 +46,18 @@ const displayedContent = ref('')
 const pendingContent = ref('')
 const likeDislikeLoading = ref(false)
 
+const getCurrentMessageEvaluation = computed(() => {
+  if (!props.message?.messageGroupId || !chatStore.chatMessagesResponse?.items) {
+    return null
+  }
+
+  const messageGroup = chatStore.chatMessagesResponse.items.find(
+    item => item.group.id === props.message?.messageGroupId,
+  )
+
+  return messageGroup?.evaluation?.evaluation ?? null
+})
+
 const agentAvatar = computed(() => {
   if (!route.params.chatId) {
     return agentStore.selectedAgent?.avatar || null
@@ -207,26 +219,64 @@ const copyItem = () => {
   }
 }
 
-const optimisticEvaluationUpdate = (messageId: string, status: boolean) => {
-  if (!chatStore || !chatStore.messages) {
-    console.error('Chat store or messages array is undefined.')
-    return
-  }
+const optimisticEvaluationUpdate = (messageGroupId: string, status: boolean): boolean => {
+  try {
+    if (!messageGroupId || !props.message) {
+      console.error('Missing required data: messageGroupId or message')
+      return false
+    }
 
-  const messageIndex = chatStore.messages.findIndex(message => message.id === messageId)
+    if (!chatStore.chatMessagesResponse?.items) {
+      chatStore.chatMessagesResponse = {
+        total: 0,
+        items: [],
+      }
+    }
 
-  if (messageIndex !== -1 && chatStore.messages[messageIndex]) {
-    const message = chatStore.messages[messageIndex]
+    let messageGroup = chatStore.chatMessagesResponse.items.find(
+      item => item.group.id === messageGroupId,
+    )
 
-    if (message) {
-      message.evaluation = status
+    if (!messageGroup) {
+      const chatId = route.params.chatId?.toString()
+      if (!chatId) {
+        console.error('Cannot create message group: chatId is missing')
+        return false
+      }
+
+      messageGroup = {
+        group: {
+          id: messageGroupId,
+          agentConfigurationId: props.agentId || '',
+          chatId,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        messages: [props.message],
+        evaluation: null,
+      }
+      chatStore.chatMessagesResponse.items.push(messageGroup)
+    }
+
+    if (!messageGroup.evaluation) {
+      messageGroup.evaluation = {
+        id: '',
+        messageGroupId,
+        evaluation: status,
+        feedback: null,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }
     }
     else {
-      console.error(`Message with ID ${messageId} is undefined.`)
+      messageGroup.evaluation.evaluation = status
     }
+
+    return true
   }
-  else {
-    console.error(`Message with ID ${messageId} not found.`)
+  catch (error) {
+    console.error('Error in optimisticEvaluationUpdate:', error)
+    return false
   }
 }
 
@@ -235,27 +285,36 @@ const { $api } = useNuxtApp()
 const evaluateMessage = async (status: boolean) => {
   if (!likeDislikeLoading.value) {
     likeDislikeLoading.value = true
-    const messageId = props.message?.id
-    const chatId = props.message?.chatId
+    const messageGroupId = props.message?.messageGroupId
 
-    if (!messageId || !chatId) {
-      ElNotification({
-        title: 'Error Evaluating Message',
-        message: 'Message ID or Chat ID is missing.',
-        type: 'error',
-        customClass: 'error',
-        duration: 2500,
-      })
-      return
+    if (!chatStore.chatMessagesResponse) {
+      chatStore.chatMessagesResponse = {
+        total: 0,
+        items: [],
+      }
     }
 
     try {
-      await $api.chat.PatchEvaluateChatMessage(chatId, messageId, status)
+      optimisticEvaluationUpdate(messageGroupId!, status)
+      const messageGroup = chatStore.chatMessagesResponse.items.find(
+        item => item.group.id === messageGroupId,
+      )
+      const chatId = messageGroup?.group.chatId
 
-      optimisticEvaluationUpdate(messageId, status)
+      if (!messageGroupId || !chatId) {
+        ElNotification({
+          title: 'Error Evaluating Message',
+          message: 'Message ID or Chat ID is missing.',
+          type: 'error',
+          customClass: 'error',
+          duration: 2500,
+        })
+        return
+      }
+      await $api.chat.PatchEvaluateChatMessage(chatId, messageGroupId, status)
     }
     catch (err) {
-      optimisticEvaluationUpdate(messageId, status)
+      optimisticEvaluationUpdate(messageGroupId, status)
 
       ElNotification({
         title: 'Error Evaluating Message',
@@ -404,7 +463,7 @@ watchEffect(() => {
           @keyup.enter="handleLike"
         >
           <component
-            :is="message?.evaluation === null || message?.evaluation === false ? LikeIcon : LikeFilledIcon"
+            :is="getCurrentMessageEvaluation === null || getCurrentMessageEvaluation === false ? LikeIcon : LikeFilledIcon"
             size="18"
             :class="{ 'icon-loading': likeDislikeLoading }"
           />
@@ -417,7 +476,7 @@ watchEffect(() => {
           @keyup.enter="handleDislike"
         >
           <component
-            :is="message?.evaluation === null || message?.evaluation === true ? DislikeIcon : DislikeFilledIcon"
+            :is="getCurrentMessageEvaluation === null || getCurrentMessageEvaluation === true ? DislikeIcon : DislikeFilledIcon"
             size="18"
             :class="{ 'icon-loading': likeDislikeLoading }"
           />

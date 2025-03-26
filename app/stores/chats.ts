@@ -5,6 +5,8 @@ import type {
   Chat,
   EndUserChatDetails,
   Message,
+  MessageGroupResponse,
+
 } from '~/types/chat.ts'
 
 export const useChatStore = defineStore('chat', () => {
@@ -33,6 +35,8 @@ export const useChatStore = defineStore('chat', () => {
    * or when we are redirected to a new one after the initial
    * message pair is processed.
    */
+
+  const chatMessagesResponse = ref<MessageGroupResponse | null>(null)
   const selectedChat = ref<EndUserChatDetails | null>(null)
   const isWebSocketStreaming = ref(false)
 
@@ -44,12 +48,18 @@ export const useChatStore = defineStore('chat', () => {
     const data = await $api.chat.GetChatMessages(chatId)
 
     if (data) {
+      chatMessagesResponse.value = {
+        total: data.total,
+        items: data.items.reverse(),
+      }
+
       return (messages.value = data.items
         .reverse()
         .flatMap(group =>
           group.messages.toSorted((a, b) => a.order - b.order),
         ))
     }
+
     else {
       return []
     }
@@ -166,6 +176,7 @@ export const useChatStore = defineStore('chat', () => {
     messages,
     selectedChat,
     isWebSocketStreaming,
+    chatMessagesResponse,
     GET_ChatMessages,
     GET_AllChats,
     getChatById,

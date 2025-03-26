@@ -328,12 +328,12 @@ export default class ChatServise extends FetchFactory {
    */
   async PatchEvaluateChatMessage(
     chatId: string,
-    messageId: string,
+    messageGroupId: string,
     evaluation: boolean,
   ): Promise<void> {
     try {
       await this.$fetch<void>(
-        `${this.chatsEndpoint}/${chatId}/messages/${messageId}`,
+        `${this.chatsEndpoint}/${chatId}/messages/${messageGroupId}`,
         {
           method: 'PATCH',
           credentials: 'include',
@@ -351,7 +351,7 @@ export default class ChatServise extends FetchFactory {
         statusCode: error?.statusCode || 500,
         statusMessage:
           error?.message
-          || `Failed to evaluate chat message with ID: ${messageId}`,
+          || `Failed to evaluate chat message with ID: ${messageGroupId}`,
       })
     }
   }

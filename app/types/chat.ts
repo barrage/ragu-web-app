@@ -5,7 +5,7 @@ import type { MonthName } from '~/components/EndUser/Chat/ChatListTimeLabel.vue'
 export interface Message {
   // Model fields
   id: string
-  messageGroupId: string
+  messageGroupId?: string
   order: number
   senderType: 'user' | 'assistant' | 'tool'
   content: string
@@ -22,10 +22,24 @@ export interface Message {
   displayMessage?: string
 }
 
-export interface MessageGroupAggregate {
+export interface MessageGroupResponse {
+  total: number
+  items: MessageGroupAggregate[]
+}
+
+export interface MessageGroupEvaluation {
   id: string
+  messageGroupId: string
+  evaluation: boolean
+  feedback: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface MessageGroupAggregate {
   group: MessageGroup
   messages: Message[]
+  evaluation: MessageGroupEvaluation | null
 }
 
 export interface ChatMessage {

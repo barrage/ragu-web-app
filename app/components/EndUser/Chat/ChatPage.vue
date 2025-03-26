@@ -85,13 +85,20 @@ async function handleIncomingMessage(event: MessageEvent) {
       }
 
       isWebSocketStreaming.value = false
-      if (parsedData.chatId) {
+      if (parsedData.chatId && parsedData.messageId) {
+        const lastAssistantMessage = messages.value[messages.value.length - 1]
+        if (lastAssistantMessage && lastAssistantMessage.senderType === 'assistant') {
+          lastAssistantMessage.messageGroupId = parsedData.messageId
+        }
+
         nextTick()
         router.push(`/c/${parsedData.chatId}`)
+
         if (!selectedChat.value) {
-          chatStore.GET_AllChats()
+          await chatStore.GET_AllChats()
         }
       }
+
       break
     case 'chat.stream_chunk':
       if (!isWebSocketStreaming.value) {
