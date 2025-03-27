@@ -35,6 +35,14 @@ export default defineNuxtConfig({
         appId: process.env.GOOGLE_DRIVE_APP_ID,
         clientId: process.env.GOOGLE_DRIVE_CLIENT_ID,
       },
+      /**
+       * Link to the user management service, used in the backoffice.
+       */
+      userManagementEndpoint: process.env.USER_MANAGEMENT_ENDPOINT,
+      /**
+       * Link to a user's page on the authorization server, used in the backoffice.
+       */
+      userEndpointBase: process.env.USER_ENDPOINT_BASE,
     },
     server: {
       // OAuth - server only

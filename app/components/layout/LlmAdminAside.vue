@@ -71,7 +71,7 @@ const menuLists = computed<MenuList[]>(() => {
       list: [
         {
           label: t('users.title'),
-          link: 'https://authentik.barrage.dev',
+          link: useRuntimeConfig().public.userManagementEndpoint,
           icon: TeamIcon,
         },
       ],

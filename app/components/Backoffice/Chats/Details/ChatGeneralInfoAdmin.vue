@@ -59,7 +59,7 @@ const chatData = computed(() => {
     </div>
     <div class="user-general-info-card">
       <LlmLink
-        :to="`https://authentik.barrage.dev/users/${chatData.chat?.userId}`"
+        :to="`${useRuntimeConfig().public.userEndpointBase}/${chatData.chat?.userId}`"
         type="link"
         class="user-profile-item"
       >

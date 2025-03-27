@@ -143,7 +143,7 @@ const tableData = computed(() => {
   <div>
     <div class="message-card">
       <LlmLink
-        :to="message?.senderType === 'user' ? `https://authentik.barrage.dev/users/${selectedUser?.id}` : `/admin/agents/${selectedAgent?.id}`"
+        :to="message?.senderType === 'user' ? `${useRuntimeConfig().public.userEndpointBase}/${selectedUser?.id}` : `/admin/agents/${selectedAgent?.id}`"
         class="message-profile-item"
       >
         <LlmAvatar
