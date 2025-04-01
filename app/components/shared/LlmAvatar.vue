@@ -47,7 +47,12 @@ const avatarSize = computed(() => {
 })
 
 const avatarSrc = computed(() => {
-  return avatar || ''
+  if (defaultImage === 'user') {
+    return avatar
+  }
+  else {
+    return `${useRuntimeConfig().public.apiBaseUrl}/avatars/${avatar}` || ''
+  }
 })
 
 const showImage = computed(() => Boolean(avatarSrc.value))
