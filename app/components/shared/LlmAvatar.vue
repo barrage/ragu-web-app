@@ -51,7 +51,7 @@ const avatarSrc = computed(() => {
     return avatar
   }
   else {
-    return `${useRuntimeConfig().public.apiBaseUrl}/avatars/${avatar}` || ''
+    return avatar ? `${useRuntimeConfig().public.apiBaseUrl}/avatars/${avatar}` : ''
   }
 })
 
