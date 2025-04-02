@@ -50,11 +50,10 @@ export const useChatStore = defineStore('chat', () => {
     if (data) {
       chatMessagesResponse.value = {
         total: data.total,
-        items: data.items.reverse(),
+        items: data.items,
       }
 
       return (messages.value = data.items
-        .reverse()
         .flatMap(group =>
           group.messages.toSorted((a, b) => a.order - b.order),
         ))
