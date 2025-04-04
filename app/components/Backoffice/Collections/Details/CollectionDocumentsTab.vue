@@ -30,15 +30,10 @@ const transferNoteItems = computed(() => [
   t('collections.transfer.save_hint'),
 ])
 
-const payload = computed(() => {
-  const add = rightValue.value.filter(id => !selectedDocumentIds.value.includes(id))
-  const remove = selectedDocumentIds.value.filter(id => !rightValue.value.includes(id))
-
-  return {
-    add,
-    collection: collectionId.value,
-    remove,
-  }
+const payload = ref({
+  add: [] as string[],
+  collection: route.params.collectionId as string,
+  remove: [] as string[],
 })
 
 const { error: documentError } = await useAsyncData(() => documetStore.GET_AllDocuments(1, 1000, undefined, undefined, true))
@@ -51,23 +46,67 @@ const { error, execute: getCollection, data: getSingleCollection } = await useAs
 errorHandler(error)
 
 // FUNCTIONS
-
 const handleTransferChange = (newValue: TransferKey[]) => {
-  const addedDocs = newValue.filter(id => !rightValue.value.includes(String(id)))
-  const removedDocs = rightValue.value.filter(id => !newValue.includes(id))
+  const newValueStrings = newValue.map(String)
 
-  addedDocs.forEach((id) => {
-    if (!payload.value.remove.includes(String(id))) { payload.value.add.push(String(id)) }
-    payload.value.remove = payload.value.remove.filter(removeId => removeId !== id)
+  payload.value.add = []
+  payload.value.remove = []
+
+  newValueStrings.forEach((id) => {
+    if (!selectedDocumentIds.value.includes(id)) {
+      payload.value.add.push(id)
+    }
   })
 
-  removedDocs.forEach((id) => {
-    if (!payload.value.add.includes(id)) { payload.value.remove.push(id) }
-    payload.value.add = payload.value.add.filter(addId => addId !== id)
+  selectedDocumentIds.value.forEach((id) => {
+    if (!newValueStrings.includes(id)) {
+      payload.value.remove.push(id)
+    }
   })
 
-  rightValue.value = newValue as Array<string>
+  rightValue.value = newValueStrings
   hasUnsavedChanges.value = true
+}
+
+const submitSelection = async () => {
+  if (!collectionId.value) {
+    console.error('No collection ID found - aborting submission')
+    return
+  }
+
+  if (!payload.value.add.length && !payload.value.remove.length) {
+    console.warn(' No changes detected in payload - aborting submission')
+    return
+  }
+
+  await updateCollection()
+
+  if (collectionError.value) {
+    ElNotification({
+      title: t('collections.assign_collection.notification.error_title'),
+      message: t('collections.assign_collection.notification.update_error_collection'),
+      type: 'error',
+      customClass: 'error',
+      duration: 2500,
+    })
+    return
+  }
+
+  // Success
+  hasUnsavedChanges.value = false
+  await getCollection()
+
+  if (getSingleCollection.value?.documents) {
+    selectedDocumentIds.value = getSingleCollection.value.documents.map(doc => doc.id)
+  }
+
+  ElNotification({
+    title: t('collections.notifications.delete_title'),
+    message: t('collections.assign_collection.notification.update_collection'),
+    type: 'success',
+    customClass: 'success',
+    duration: 2500,
+  })
 }
 
 const transformedDocuments = computed(() => {
@@ -86,41 +125,6 @@ const handleLeaveConfirmation = (confirm: boolean) => {
   }
   else {
     nextRoute.value = null
-  }
-}
-
-const submitSelection = async () => {
-  if (!collectionId.value) { return }
-
-  const existingDocIds = props.singleCollection?.documents.map(doc => doc.id) || []
-  payload.value.add = payload.value.add.filter(id => !existingDocIds.includes(id))
-
-  if (!payload.value.add.length && !payload.value.remove.length) { return }
-  await updateCollection()
-
-  if (!collectionError.value) {
-    hasUnsavedChanges.value = false
-  }
-
-  if (collectionError.value) {
-    ElNotification({
-      title: t('collections.assign_collection.notification.error_title'),
-      message: t('collections.assign_collection.notification.update_error_collection'),
-      type: 'error',
-      customClass: 'error',
-      duration: 2500,
-    })
-  }
-  else {
-    ElNotification({
-      title: t('collections.notifications.delete_title'),
-      message: t('collections.assign_collection.notification.update_collection'),
-      type: 'success',
-      customClass: 'success',
-      duration: 2500,
-    })
-
-    await getCollection()
   }
 }
 
@@ -145,6 +149,7 @@ onMounted(() => {
       :items="transferNoteItems"
       :icon="NoteIcon"
     />
+
     <el-transfer
       v-model="rightValue"
       :titles="[t('documents.title'), t('collections.single_collection')]"
