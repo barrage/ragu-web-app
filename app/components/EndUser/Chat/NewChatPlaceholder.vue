@@ -8,7 +8,6 @@ import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
 
 const agentStore = useAgentStore()
 const oAuthStore = useAuthStore()
-const { selectedRole } = storeToRefs(useAuthStore())
 const { t } = useI18n()
 
 const { error: agentsError } = useAsyncData(() => agentStore.GET_AllAppAgents(), { lazy: true })
@@ -136,7 +135,7 @@ const selectAgentForChat = (agent: SingleAgent) => {
         <template #icon>
           <AccountWarningIcon size="44px" />
         </template>
-        <template v-if="selectedRole === 'admin'" #cta>
+        <template v-if="oAuthStore.isAdmin" #cta>
           <LlmLink to="/admin/agents" type="button">
             <PersonAddIcon /> {{ $t('chat.newChat.empty_cta') }}
           </LlmLink>
