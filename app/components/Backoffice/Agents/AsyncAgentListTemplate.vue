@@ -32,10 +32,9 @@ const filterForm = ref<AgentListFilterForm>({
 })
 
 const searchInput = ref<string | null>(route.query.name ? String(route.query.name) : null)
-const withAvatar = ref<boolean | undefined>(true)
 
 const { execute: executeGetAgents, error: getAgentsError, status: getAgentsStatus, data: allAgentsData } = await useAsyncData(() =>
-  $api.agent.GetAllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder, searchInput.value, filterForm.value.status, withAvatar.value), { lazy: true })
+  $api.agent.GetAllAgents(pagination.value.currentPage, pagination.value.pageSize, sort.value.sortBy, sort.value.sortOrder, searchInput.value, filterForm.value.status), { lazy: true })
 
 const updateRouteQuery = () => {
   const query: LocationQuery = {

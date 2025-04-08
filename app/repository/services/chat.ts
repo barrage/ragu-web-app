@@ -155,12 +155,8 @@ export default class ChatServise extends FetchFactory {
    */
   async GetAdminSingleChat(chatId: string): Promise<AdminChatDetails> {
     try {
-      const queryParams = new URLSearchParams({
-        withAvatar: 'true',
-      })
-
-      return await this.$fetch<AdminChatDetails>(
-        `${this.adminChatsEndpoint}/${chatId}?${queryParams}`,
+      return this.$fetch<AdminChatDetails>(
+        `${this.adminChatsEndpoint}/${chatId}`,
         {
           credentials: 'include',
         },
@@ -183,12 +179,6 @@ export default class ChatServise extends FetchFactory {
    */
   async GetAllChatMessagesAdmin(chatId: string): Promise<ChatMessagesResponse> {
     try {
-      /* const queryParams = new URLSearchParams({
-                                                                                                  page: page.toString(),
-                                                                                                  perPage: perPage.toString(),
-                                                                                                  sortBy,
-                                                                                                  sortOrder,
-                                                                                                }).toString() */
       return await this.$fetch<ChatMessagesResponse>(
         `${this.adminChatsEndpoint}/${chatId}/messages`,
         {
