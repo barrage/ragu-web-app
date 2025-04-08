@@ -132,7 +132,6 @@ export class RaguWebSocket {
    */
   sendTextMessage(text: string) {
     const message = {
-      type: 'chat',
       text,
     }
     this.send(message)
@@ -141,14 +140,12 @@ export class RaguWebSocket {
   /**
    * Send a system message of type `workflow.existing`.
    */
-  openExistingWorkflow(workflowId: string) {
+  openExistingWorkflow(workflowType: string, workflowId: string) {
     console.log('Opening existing workflow', workflowId)
     const message = {
-      type: 'system',
-      payload: {
-        type: 'workflow.existing',
-        workflowId,
-      },
+      type: 'workflow.existing',
+      workflowType,
+      workflowId,
     }
     this.send(message)
   }
@@ -156,12 +153,9 @@ export class RaguWebSocket {
   openNewWorkflow(workflowType: string, agentId: string | undefined) {
     console.log('Opening new workflow', workflowType, agentId)
     const message = {
-      type: 'system',
-      payload: {
-        type: 'workflow.new',
-        workflowType,
-        agentId,
-      },
+      type: 'workflow.new',
+      workflowType,
+      agentId,
     }
     this.send(message)
   }
@@ -171,10 +165,7 @@ export class RaguWebSocket {
    */
   closeWorkflow() {
     const message = {
-      type: 'system',
-      payload: {
-        type: 'workflow.close',
-      },
+      type: 'workflow.close',
     }
     this.send(message)
   }
@@ -184,10 +175,7 @@ export class RaguWebSocket {
    */
   cancelStream() {
     this.send({
-      type: 'system',
-      payload: {
-        type: 'workflow.cancel_stream',
-      },
+      type: 'workflow.cancel_stream',
     })
   }
 

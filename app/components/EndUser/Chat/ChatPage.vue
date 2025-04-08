@@ -91,15 +91,28 @@ async function handleIncomingMessage(event: MessageEvent) {
           lastAssistantMessage.messageGroupId = parsedData.messageId
         }
 
-        nextTick()
-        router.push(`/c/${parsedData.chatId}`)
-
         if (!selectedChat.value) {
           await chatStore.GET_AllChats()
         }
+
+        nextTick()
+        router.push(`/c/${parsedData.chatId}`)
       }
 
       break
+    case 'chat.response': {
+      if (!isWebSocketStreaming.value) {
+        return
+      }
+
+      const assistantMessage = messages.value[messages.value.length - 1]
+
+      if (assistantMessage) {
+        console.assert(assistantMessage?.senderType === 'assistant', 'Assistant message not found')
+        assistantMessage.content = parsedData.content
+      }
+      break
+    }
     case 'chat.stream_chunk':
       if (!isWebSocketStreaming.value) {
         return
@@ -212,7 +225,7 @@ watch($ws.state, (newState) => {
   }
 
   if (currentChatId) {
-    $ws.openExistingWorkflow(currentChatId)
+    $ws.openExistingWorkflow('CHAT', currentChatId)
     openingMessageSent = true
     return
   }
@@ -247,13 +260,13 @@ onMounted(async () => {
     }
 
     if ($ws.state.value === RaguWebSocketState.INITIALIZED) {
-      $ws.openExistingWorkflow(currentChatId)
+      $ws.openExistingWorkflow('CHAT', currentChatId)
       openingMessageSent = true
     }
   }
   else if (selectedAgent.value) {
     if ($ws.state.value === RaguWebSocketState.INITIALIZED) {
-      $ws.openNewWorkflow('CHAT', selectedAgent.value.id)
+      $ws.openNewWorkflow('CHAT')
       openingMessageSent = true
     }
   }
