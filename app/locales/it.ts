@@ -849,6 +849,18 @@ export default {
         error_description: 'Si è verificato un errore durante la disattivazione dell\'agente. Per favore riprova.',
       },
     },
+    delete_agent: {
+      title: 'Elimina Agente?',
+      description: 'Sei sicuro di voler eliminare l\'agente?',
+      confirm: 'Elimina',
+      cancel: 'Annulla',
+      notifications: {
+        success_title: 'Agente Eliminato',
+        success_description: 'L\'agente è stato eliminato con successo.',
+        error_title: 'Eliminazione Fallita',
+        error_description: 'Si è verificato un errore durante l\'eliminazione dell\'agente. Per favore riprova.',
+      },
+    },
     labels: {
       id: 'ID Agente',
       name: 'Nome Agente',

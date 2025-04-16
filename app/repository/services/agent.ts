@@ -1,6 +1,6 @@
 import FetchFactory from '../fetchFactory'
 import type { AssignCollectionPayload } from '~/types/collection'
-import type { Agent, AgentDetail, AgentToolList, AgentTools, AgentToolsResponse, AgentVersion, AgentVersionEvaluationMessages, AgentVersions, Agents, AllAgentResponse, AllAppAgentsResponse, AssignAgentsToolsPayload } from '~/types/agent'
+import type { Agent, AgentDetail, AgentToolList, AgentToolsResponse, AgentVersion, AgentVersionEvaluationMessages, AgentVersions, Agents, AllAgentResponse, AllAppAgentsResponse, AssignAgentsToolsPayload } from '~/types/agent'
 
 export default class AgentService extends FetchFactory {
   // Endpoint for agent-related API requests.
@@ -143,6 +143,27 @@ export default class AgentService extends FetchFactory {
   }
 
   /**
+   * Delete agent from the API
+   * @param id The ID of the agent to delete
+   * @returns Void
+   * @throws Will throw an error if request fails
+   */
+  async DeleteAgent(id: string): Promise<void> {
+    try {
+      await this.$fetch(`${this.adminAgentsEndpoint}/${id}`, {
+        credentials: 'include',
+        method: 'DELETE',
+      })
+    }
+    catch (error: any) {
+      throw createError({
+        statusCode: error?.statusCode || 500,
+        statusMessage: error?.message || `Failed to delete agent with id ${id}`,
+      })
+    }
+  }
+
+  /**
    * Updates an agent from the API
    * @param id The ID of the agent to update
    * @param body The updated data for the agent
@@ -151,7 +172,7 @@ export default class AgentService extends FetchFactory {
    */
   async UpdateAgent(id: string, body: Agent): Promise<Agent> {
     try {
-      return await this.$fetch<Agents>(`${this.adminAgentsEndpoint}/${id}`, {
+      return await this.$fetch<Agent>(`${this.adminAgentsEndpoint}/${id}`, {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(body),
@@ -445,8 +466,10 @@ export default class AgentService extends FetchFactory {
     try {
       return await this.$fetch(`${this.adminAgentsEndpoint}/tools`, {
         credentials: 'include',
+
       })
     }
+
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,

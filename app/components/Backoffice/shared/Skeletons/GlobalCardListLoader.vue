@@ -30,10 +30,10 @@ const skeletonCardData = computed(() => {
   if (props.type === 'agent') {
     return {
       numberOfLabelDescriptions: 4,
-      numberOfActions: 3,
+      numberOfActions: 4,
       hasProfileDescription: true,
       gridColumns: 7,
-      mergeButtons: true,
+
     }
   }
   if (props.type === 'whatsAppAgent') {

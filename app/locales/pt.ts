@@ -856,6 +856,18 @@ export default {
         error_description: 'Ocorreu um erro ao desativar o agente. Por favor, tente novamente.',
       },
     },
+    delete_agent: {
+      title: 'Excluir Agente?',
+      description: 'Tem certeza de que deseja excluir o agente?',
+      confirm: 'Excluir',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Agente Excluído',
+        success_description: 'O agente foi excluído com sucesso.',
+        error_title: 'Falha na Exclusão',
+        error_description: 'Ocorreu um erro ao excluir o agente. Por favor, tente novamente.',
+      },
+    },
     labels: {
       id: 'ID do Agente',
       name: 'Nome do Agente',

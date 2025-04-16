@@ -12,6 +12,7 @@ import PersonSettingsIcon from '~/assets/icons/svg/person-settings.svg'
 import AgentTools from '~/assets/icons/svg/tools.svg'
 import type { TabOption } from '~/types/tab'
 import WhatAppAgent from '~/assets/icons/svg/whatsapp-agents.svg'
+import DeleteIcon from '~/assets/icons/svg/delete.svg'
 
 const props = defineProps<{
   agent: Agent | null | undefined
@@ -23,6 +24,7 @@ const emits = defineEmits<{
 }>()
 
 const { t } = useI18n()
+const router = useRouter()
 const whatsAppStore = useWhatsAppStore()
 const isWhatsAppActive = computed(() => whatsAppStore.isWhatsAppActive)
 
@@ -64,6 +66,20 @@ const openDeactivateAgentModal = () => {
 
 const handleGetSingleAgent = () => {
   emits('refreshAgent')
+}
+
+/* Delete Agent */
+
+const selectedAgentDelete = ref<Agent | null>(null)
+const deleteAgentModalVisible = ref(false)
+
+const openDeleteAgentModal = (agent: Agent | null) => {
+  selectedAgentDelete.value = agent
+  deleteAgentModalVisible.value = true
+}
+
+const handleDeleteAgent = () => {
+  router.push('/admin/agents')
 }
 
 /* Profile Picture */
@@ -208,7 +224,15 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
           </el-button>
         </template>
       </LlmLink>
-
+      <el-button
+        v-if="isWhatsAppActive"
+        plain
+        type="primary"
+        size="small"
+        @click="openWhatsAppAgentSetAsActiveModal()"
+      >
+        <WhatAppAgent size="20px" />  {{ agentData.whatsApp ? t('whatsapp_agents.deactivate.dialog_title') : t('whatsapp_agents.set_as_active.dialog_title') }}
+      </el-button>
       <el-button
         v-if="agent?.agent?.active"
         size="small"
@@ -219,13 +243,12 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
         <PersonLockIcon size="20px" />   {{ t('users.user_card.deactivate_user_title') }}
       </el-button>
       <el-button
-        v-if="isWhatsAppActive"
-        plain
-        type="primary"
         size="small"
-        @click="openWhatsAppAgentSetAsActiveModal()"
+        type="danger"
+        plain
+        @click="openDeleteAgentModal(agent)"
       >
-        <WhatAppAgent size="20px" />  {{ agentData.whatsApp ? t('whatsapp_agents.deactivate.dialog_title') : t('whatsapp_agents.set_as_active.dialog_title') }}
+        <DeleteIcon size="20px" />  {{ t('agents.buttons.delete') }}
       </el-button>
     </div>
   </div>
@@ -287,6 +310,11 @@ const handleAgentVersionRollback = (agentConfig: Configuration) => {
     :whats-app-agent="agent"
     :is-active="agentData.whatsApp"
     @data-change="handleWhatsAppAgentSetAsActiveDataChange"
+  />
+  <DeleteAgentModalBackoffice
+    v-model="deleteAgentModalVisible"
+    :selected-agent="agent"
+    @agent-deleted="handleDeleteAgent"
   />
 </template>
 

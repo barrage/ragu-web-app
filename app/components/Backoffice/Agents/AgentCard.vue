@@ -7,7 +7,7 @@ import EyeIcon from '~/assets/icons/svg/eye.svg'
 import PersonLockIcon from '~/assets/icons/svg/person-lock.svg'
 import PersonPasskeyIcon from '~/assets/icons/svg/person-passkey.svg'
 import WhatAppAgent from '~/assets/icons/svg/whatsapp-agents.svg'
-
+import DeleteIcon from '~/assets/icons/svg/delete.svg'
 // PROPS
 const props = defineProps<{
   singleAgent: Agents | null | undefined
@@ -17,7 +17,7 @@ const emits = defineEmits<Emits>()
 // CONSTANTS
 const { t } = useI18n()
 interface Emits {
-
+  (event: 'deleteAgent', agent: Agents): void
   (event: 'activateAgent', agent: Agents): void
   (event: 'deactivateAgent', agent: Agents): void
 }
@@ -128,6 +128,16 @@ const editClick = (): void => {
             <PersonPasskeyIcon size="20px" />
           </el-button>
         </LlmTooltip>
+        <LlmTooltip :content="$t('agents.agent_card.delete_agent')">
+          <el-button
+            plain
+            type="danger"
+            class="delete-action"
+            @click="emits('deleteAgent', props.singleAgent as Agents)"
+          >
+            <DeleteIcon size="20px" />
+          </el-button>
+        </LlmTooltip>
       </div>
     </div>
   </el-card>
@@ -218,6 +228,10 @@ const editClick = (): void => {
     display: flex;
     gap: 12px;
     justify-content: flex-start;
+
+    & .delete-action {
+      margin-left: 2rem;
+    }
 
     @include viewport-m {
       justify-content: flex-end;

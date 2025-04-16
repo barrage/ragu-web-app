@@ -847,6 +847,18 @@ export default {
         error_description: 'エージェントの非アクティブ化中にエラーが発生しました。もう一度お試しください。',
       },
     },
+    delete_agent: {
+      title: 'エージェントを削除しますか？',
+      description: 'エージェントを削除してもよろしいですか？',
+      confirm: '削除',
+      cancel: 'キャンセル',
+      notifications: {
+        success_title: 'エージェントが削除されました',
+        success_description: 'エージェントが正常に削除されました。',
+        error_title: '削除に失敗しました',
+        error_description: 'エージェントの削除中にエラーが発生しました。もう一度お試しください。',
+      },
+    },
     labels: {
       id: 'エージェントID',
       name: 'エージェント名',

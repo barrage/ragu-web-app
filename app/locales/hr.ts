@@ -1159,6 +1159,18 @@ export default {
         error_description: 'Došlo je do pogreške prilikom deaktivacije agenta. Molimo pokušajte ponovno.',
       },
     },
+    delete_agent: {
+      title: 'Izbrisati agenta?',
+      description: 'Jeste li sigurni da želite izbrisati agenta?',
+      confirm: 'Izbriši',
+      cancel: 'Otkaži',
+      notifications: {
+        success_title: 'Agent izbrisan',
+        success_description: 'Agent je uspješno izbrisan.',
+        error_title: 'Brisanje nije uspjelo',
+        error_description: 'Došlo je do pogreške prilikom brisanja agenta. Molimo pokušajte ponovno.',
+      },
+    },
     labels: {
       id: 'ID agenta',
       name: 'Ime agenta',

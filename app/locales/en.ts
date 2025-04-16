@@ -1148,6 +1148,18 @@ export default {
         error_description: 'An error occurred while deactivating the agent. Please try again.',
       },
     },
+    delete_agent: {
+      title: 'Delete Agent?',
+      description: 'Are you sure you want to delete the agent?',
+      confirm: 'Delete',
+      cancel: 'Cancel',
+      notifications: {
+        success_title: 'Agent Deleted',
+        success_description: 'The agent has been successfully deleted.',
+        error_title: 'Deletion Failed',
+        error_description: 'An error occurred while deleting the agent. Please try again.',
+      },
+    },
     labels: {
       id: 'Agent ID',
       name: 'Agent Name',

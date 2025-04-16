@@ -851,6 +851,18 @@ export default {
         error_description: 'Ocurrió un error al desactivar al agente. Por favor, inténtelo de nuevo.',
       },
     },
+    delete_agent: {
+      title: '¿Eliminar Agente?',
+      description: '¿Está seguro de que desea eliminar el agente?',
+      confirm: 'Eliminar',
+      cancel: 'Cancelar',
+      notifications: {
+        success_title: 'Agente Eliminado',
+        success_description: 'El agente ha sido eliminado correctamente.',
+        error_title: 'Error de Eliminación',
+        error_description: 'Ocurrió un error al eliminar al agente. Por favor, inténtelo de nuevo.',
+      },
+    },
     labels: {
       id: 'ID del Agente',
       name: 'Nombre del Agente',

@@ -853,6 +853,18 @@ export default {
         error_description: 'Beim Deaktivieren des Agenten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
       },
     },
+    delete_agent: {
+      title: 'Agent löschen?',
+      description: 'Sind Sie sicher, dass Sie den Agenten löschen möchten?',
+      confirm: 'Löschen',
+      cancel: 'Abbrechen',
+      notifications: {
+        success_title: 'Agent gelöscht',
+        success_description: 'Der Agent wurde erfolgreich gelöscht.',
+        error_title: 'Löschen fehlgeschlagen',
+        error_description: 'Beim Löschen des Agenten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+      },
+    },
     labels: {
       id: 'Agenten-ID',
       name: 'Agentenname',

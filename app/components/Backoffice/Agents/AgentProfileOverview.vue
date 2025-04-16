@@ -19,7 +19,7 @@ const { t } = useI18n()
 
 const agentData = computed(() => {
   return {
-    fullname: props.agent?.agent?.name || t('agents.agent_card.unknown_name'),
+    fullname: props.agent?.name || t('agents.agent_card.unknown_name'),
   }
 })
 

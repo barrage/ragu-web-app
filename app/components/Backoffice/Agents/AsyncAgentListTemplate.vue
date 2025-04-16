@@ -183,6 +183,7 @@ onBeforeUnmount(() => {
       @page-change="handlePageChange"
       @agent-activated="(handlePageChange(1))"
       @agent-deactivated="(handlePageChange(1))"
+      @agent-deleted="(handlePageChange(1))"
     />
     <Pagination
       data-testid="bo-agents-list-pagination"

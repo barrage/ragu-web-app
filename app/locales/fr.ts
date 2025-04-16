@@ -851,6 +851,18 @@ export default {
         error_description: 'Une erreur s\'est produite lors de la désactivation de l\'agent. Veuillez réessayer.',
       },
     },
+    delete_agent: {
+      title: 'Supprimer l’Agent ?',
+      description: 'Êtes-vous sûr de vouloir supprimer l’agent ?',
+      confirm: 'Supprimer',
+      cancel: 'Annuler',
+      notifications: {
+        success_title: 'Agent Supprimé',
+        success_description: 'L\'agent a été supprimé avec succès.',
+        error_title: 'Échec de la Suppression',
+        error_description: 'Une erreur s\'est produite lors de la suppression de l\'agent. Veuillez réessayer.',
+      },
+    },
     labels: {
       id: 'ID de l\'Agent',
       name: 'Nom de l\'Agent',

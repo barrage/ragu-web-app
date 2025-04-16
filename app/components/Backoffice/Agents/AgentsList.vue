@@ -10,6 +10,7 @@ const emits = defineEmits<{
   (event: 'pageChange', page: number): number
   (event: 'agentDeactivated'): void
   (event: 'agentActivated'): void
+  (event: 'agentDeleted'): void
 }>()
 
 /* Activate Agent */
@@ -36,6 +37,19 @@ const openDeactivateAgentModal = (agent: Agents) => {
 const agentDeactivated = () => {
   emits('agentDeactivated')
 }
+
+/* Delete Agent */
+const selectedAgentDelete = ref<Agents | null>(null)
+const deleteAgentModalVisible = ref(false)
+
+const openDeleteAgentModal = (agent: Agents) => {
+  selectedAgentDelete.value = agent
+  deleteAgentModalVisible.value = true
+}
+
+const agentDeleted = () => {
+  emits('agentDeleted')
+}
 </script>
 
 <template>
@@ -52,6 +66,7 @@ const agentDeactivated = () => {
           :single-agent="agent"
           @activate-agent="openActivateAgentModal(agent)"
           @deactivate-agent="openDeactivateAgentModal(agent)"
+          @delete-agent="openDeleteAgentModal(agent)"
         />
       </template>
     </div>
@@ -65,6 +80,11 @@ const agentDeactivated = () => {
       v-model="deactivateAgentModalVisible"
       :selected-agent="selectedAgentDeactivate"
       @agent-deactivated="agentDeactivated"
+    />
+    <DeleteAgentModalBackoffice
+      v-model="deleteAgentModalVisible"
+      :selected-agent="selectedAgentDelete"
+      @agent-deleted="agentDeleted"
     />
   </div>
 </template>
