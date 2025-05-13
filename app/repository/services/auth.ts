@@ -4,6 +4,28 @@ import type { User } from '~/types/auth'
 
 export default class AuthService extends FetchFactory {
   /**
+   * Generates default headers for API requests.
+   *
+   * @param {Record<string, string>} [additionalHeaders] Optional additional headers to merge with the default headers.
+   * @returns {Record<string, string>} The merged headers object, including default headers and any additional ones passed.
+   */
+  private getDefaultHeaders(
+    additionalHeaders: Record<string, string> = {},
+  ): Record<string, string> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...additionalHeaders,
+    }
+
+    if (process.dev) {
+      const token = useCookie('access_token')?.value || ''
+      headers.Authorization = `Bearer ${token}`
+    }
+
+    return headers
+  }
+
+  /**
    * Logs out the current authenticated user.
    * @returns A promise that resolves to a success message upon successful logout.
    * @throws Will throw an error if the request fails.
@@ -13,6 +35,7 @@ export default class AuthService extends FetchFactory {
       await fetch('/api/oauth/logout', {
         credentials: 'include',
         method: 'GET',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -32,6 +55,7 @@ export default class AuthService extends FetchFactory {
     try {
       const response = await fetch('/api/oauth/user', {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
         method: 'GET',
       })
 
@@ -74,6 +98,7 @@ export default class AuthService extends FetchFactory {
       const response = await fetch('/api/oauth/users', {
         credentials: 'include',
         method: 'GET',
+        headers: this.getDefaultHeaders(),
       })
 
       if (response.status !== 200) {
@@ -97,6 +122,7 @@ export default class AuthService extends FetchFactory {
     try {
       const response = await fetch('/api/oauth/refresh', {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
         method: 'GET',
       })
 

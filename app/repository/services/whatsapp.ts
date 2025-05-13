@@ -7,7 +7,27 @@ import type { BoChatResponse, BoChatsResponse, UserChatResponse, WhatsAppNumber 
 export default class whatsAppService extends FetchFactory {
   private readonly adminEndpoint: string = 'admin/whatsapp'
   private readonly userEndpoint: string = 'whatsapp'
+  /**
+   * Generates default headers for API requests.
+   *
+   * @param {Record<string, string>} [additionalHeaders] Optional additional headers to merge with the default headers.
+   * @returns {Record<string, string>} The merged headers object, including default headers and any additional ones passed.
+   */
+  private getDefaultHeaders(
+  additionalHeaders: Record<string, string> = {},
+  ): Record<string, string> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...additionalHeaders,
+    }
 
+    if (process.dev) {
+      const token = useCookie('access_token')?.value || ''
+      headers.Authorization = `Bearer ${token}`
+    }
+
+    return headers
+  }
   /* PHONE NUMBERS */
 
   /**
@@ -19,6 +39,7 @@ export default class whatsAppService extends FetchFactory {
     try {
       return await this.$fetch<WhatsAppNumber[]>(`${this.adminEndpoint}/numbers/${userId}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -38,6 +59,7 @@ export default class whatsAppService extends FetchFactory {
     try {
       return await this.$fetch<WhatsAppNumber[]>(`${this.userEndpoint}/numbers`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -60,9 +82,7 @@ export default class whatsAppService extends FetchFactory {
       return await this.$fetch<WhatsAppNumber>(`${this.adminEndpoint}/numbers/${userId}`, {
         method: 'POST',
         body: JSON.stringify({ phoneNumber: phoneNumber.replaceAll(' ', '') }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getDefaultHeaders(),
         credentials: 'include',
       })
     }
@@ -86,9 +106,7 @@ export default class whatsAppService extends FetchFactory {
       const response = await this.$fetch<WhatsAppNumber>(`${this.userEndpoint}/numbers`, {
         method: 'POST',
         body: JSON.stringify({ phoneNumber: phoneNumber.replaceAll(' ', '') }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getDefaultHeaders(),
         credentials: 'include',
       })
       if (route?.name === 'admin-users-userId' && useAuthStore().user?.id === route.params.userId) {
@@ -117,9 +135,7 @@ export default class whatsAppService extends FetchFactory {
       return await this.$fetch<WhatsAppNumber>(`${this.adminEndpoint}/numbers/${userId}/${phoneNumberId}`, {
         method: 'PUT',
         body: JSON.stringify({ phoneNumber }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getDefaultHeaders(),
         credentials: 'include',
       })
     }
@@ -144,9 +160,7 @@ export default class whatsAppService extends FetchFactory {
       const response = await this.$fetch<WhatsAppNumber>(`${this.userEndpoint}/numbers/${phoneNumberId}`, {
         method: 'PUT',
         body: JSON.stringify({ phoneNumber }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getDefaultHeaders(),
         credentials: 'include',
       })
       if (route?.name === 'admin-users-userId' && useAuthStore().user?.id === route.params.userId) {
@@ -174,6 +188,7 @@ export default class whatsAppService extends FetchFactory {
       await this.$fetch<void>(`${this.adminEndpoint}/numbers/${userId}/${phoneNumberId}`, {
         method: 'DELETE',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -196,6 +211,7 @@ export default class whatsAppService extends FetchFactory {
       await this.$fetch<void>(`${this.userEndpoint}/numbers/${phoneNumberId}`, {
         method: 'DELETE',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
       if (route?.name === 'admin-users-userId' && useAuthStore().user?.id === route.params.userId) {
         useWhatsAppStore().triggerReloadBOWhatsAppNumbers()
@@ -237,6 +253,7 @@ export default class whatsAppService extends FetchFactory {
 
       return await this.$fetch<BoChatsResponse>(`${this.adminEndpoint}/chats?${queryParams}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -258,6 +275,7 @@ export default class whatsAppService extends FetchFactory {
     try {
       return await this.$fetch<BoChatResponse>(`${this.adminEndpoint}/chats/${chatId}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -277,6 +295,7 @@ export default class whatsAppService extends FetchFactory {
     try {
       return await this.$fetch<UserChatResponse>(`${this.userEndpoint}/chats`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {

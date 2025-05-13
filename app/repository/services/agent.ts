@@ -8,6 +8,28 @@ export default class AgentService extends FetchFactory {
   private readonly endUserAgentsEndpoint: string = '/agents'
 
   /**
+   * Generates default headers for API requests.
+   *
+   * @param {Record<string, string>} [additionalHeaders] Optional additional headers to merge with the default headers.
+   * @returns {Record<string, string>} The merged headers object, including default headers and any additional ones passed.
+   */
+  private getDefaultHeaders(
+      additionalHeaders: Record<string, string> = {},
+  ): Record<string, string> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...additionalHeaders,
+    }
+
+    if (process.dev) {
+      const token = useCookie('access_token')?.value || ''
+      headers.Authorization = `Bearer ${token}`
+    }
+
+    return headers
+  }
+
+  /**
    *
    * Fetches a list of agents with optional filtering, sorting, searching and pagination.
    *
@@ -49,6 +71,7 @@ export default class AgentService extends FetchFactory {
 
       return await this.$fetch<AllAgentResponse>(`${this.adminAgentsEndpoint}?${queryString}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -89,6 +112,7 @@ export default class AgentService extends FetchFactory {
 
       return await this.$fetch<AllAppAgentsResponse>(`${this.endUserAgentsEndpoint}?${queryParams}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -130,6 +154,7 @@ export default class AgentService extends FetchFactory {
     try {
       return await this.$fetch<Agents>(this.adminAgentsEndpoint, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
         method: 'POST',
         body: JSON.stringify(body),
       })
@@ -153,6 +178,7 @@ export default class AgentService extends FetchFactory {
       await this.$fetch(`${this.adminAgentsEndpoint}/${id}`, {
         credentials: 'include',
         method: 'DELETE',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -176,34 +202,13 @@ export default class AgentService extends FetchFactory {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(body),
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
         statusMessage: error?.message || `Failed to update agent with id ${id}`,
-      })
-    }
-  }
-
-  /**
-   * Deletes an agent from the API
-   * @param id The ID of the agent to delete
-   * @returns Void
-   * @throws Will throw an error if request fails
-   */
-  async DeleteAgent(id: number): Promise<number> {
-    try {
-      await this.$fetch(`${this.adminAgentsEndpoint}/${id}`, {
-        credentials: 'include',
-        method: 'DELETE',
-      })
-      return 204
-    }
-    catch (error: any) {
-      throw createError({
-        statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to delete agent with id ${id}`,
       })
     }
   }
@@ -223,6 +228,7 @@ export default class AgentService extends FetchFactory {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(plainPayload),
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -250,6 +256,7 @@ export default class AgentService extends FetchFactory {
       return await this.$fetch<void>(`${this.adminAgentsEndpoint}/collections?${queryParams}`, {
         method: 'DELETE',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -271,6 +278,7 @@ export default class AgentService extends FetchFactory {
       await this.$fetch<void>(`${this.adminAgentsEndpoint}/${agentId}`, {
         method: 'PUT',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
         body: {
           active: true,
         },
@@ -295,6 +303,7 @@ export default class AgentService extends FetchFactory {
       await this.$fetch<void>(`${this.adminAgentsEndpoint}/${agentId}`, {
         method: 'PUT',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
         body: {
           active: false,
         },
@@ -319,6 +328,7 @@ export default class AgentService extends FetchFactory {
       await this.$fetch<void>(`${this.adminAgentsEndpoint}/${agentId}/avatars`, {
         method: 'DELETE',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -342,6 +352,7 @@ export default class AgentService extends FetchFactory {
         method: 'POST',
         body: avatar,
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -362,6 +373,7 @@ export default class AgentService extends FetchFactory {
     try {
       return await this.$fetch<AgentVersions>(`${this.adminAgentsEndpoint}/${agentId}/versions`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -383,6 +395,7 @@ export default class AgentService extends FetchFactory {
     try {
       return await this.$fetch<AgentVersion>(`${this.adminAgentsEndpoint}/${agentId}/versions/${versionId}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -423,6 +436,7 @@ export default class AgentService extends FetchFactory {
 
       return await this.$fetch<AgentVersionEvaluationMessages>(`${this.adminAgentsEndpoint}/${agentId}/versions/${versionId}/messages?${queryString}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -445,6 +459,7 @@ export default class AgentService extends FetchFactory {
     try {
       await this.$fetch(`${this.adminAgentsEndpoint}/${agentId}/versions/${versionID}/rollback`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
         method: 'PUT',
       })
     }
@@ -466,6 +481,7 @@ export default class AgentService extends FetchFactory {
     try {
       return await this.$fetch(`${this.adminAgentsEndpoint}/tools`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
 
       })
     }
@@ -489,6 +505,7 @@ export default class AgentService extends FetchFactory {
     try {
       return await this.$fetch(`${this.adminAgentsEndpoint}/${agentId}/tools`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
 
       })
     }
@@ -514,6 +531,7 @@ export default class AgentService extends FetchFactory {
       await this.$fetch(`${this.adminAgentsEndpoint}/${agentId}/tools`, {
         credentials: 'include',
         method: 'PUT',
+        headers: this.getDefaultHeaders(),
         body: JSON.stringify(plainPayload),
       })
     }

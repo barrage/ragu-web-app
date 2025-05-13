@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   if (accessToken) {
     client.tokenRevocation(oidcConfig, accessToken)
     setCookie(event, 'access_token', '', {
-      httpOnly: true,
+      httpOnly: config.server.refreshCookieDomain !== 'localhost',
       maxAge: 0,
       domain: config.server.accessCookieDomain,
       secure: config.server.accessCookieDomain !== 'localhost',
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   if (refreshToken) {
     client.tokenRevocation(oidcConfig, refreshToken)
     setCookie(event, 'refresh_token', '', {
-      httpOnly: true,
+      httpOnly: config.server.refreshCookieDomain !== 'localhost',
       maxAge: 0,
       domain: config.server.refreshCookieDomain,
       secure: config.server.refreshCookieDomain !== 'localhost',

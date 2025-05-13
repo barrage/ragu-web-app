@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
   )
 
   setCookie(event, 'access_token', response.access_token, {
-    httpOnly: true,
+    httpOnly: config.server.refreshCookieDomain !== 'localhost',
     maxAge: response.expires_in,
     domain: config.server.accessCookieDomain,
     secure: config.server.accessCookieDomain !== 'localhost',
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
 
   if (response.refresh_token) {
     setCookie(event, 'refresh_token', response.refresh_token, {
-      httpOnly: true,
+      httpOnly: config.server.refreshCookieDomain !== 'localhost',
       // The max age for this is determined by the auth server
       // and must be known in advance.
       maxAge: Number.parseInt(config.server.refreshTokenDurationSeconds),

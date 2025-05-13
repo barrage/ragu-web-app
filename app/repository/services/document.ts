@@ -7,6 +7,27 @@ export default class DocumentServise extends FetchFactory {
   // Endpoint for documents-related API requests.
   private readonly endpoint: string = '/documents'
   private readonly googleEndpoint: string = '/external/google'
+  /**
+   * Generates default headers for API requests.
+   *
+   * @param {Record<string, string>} [additionalHeaders] Optional additional headers to merge with the default headers.
+   * @returns {Record<string, string>} The merged headers object, including default headers and any additional ones passed.
+   */
+  private getDefaultHeaders(
+  additionalHeaders: Record<string, string> = {},
+  ): Record<string, string> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...additionalHeaders,
+    }
+
+    if (process.dev) {
+      const token = useCookie('access_token')?.value || ''
+      headers.Authorization = `Bearer ${token}`
+    }
+
+    return headers
+  }
 
   /**
    * Fetches a paginated and sorted list of documents.
@@ -39,6 +60,7 @@ export default class DocumentServise extends FetchFactory {
 
       return await this.$fetch<DocumentListResponse>(`${this.endpoint}?${queryString}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -58,6 +80,7 @@ export default class DocumentServise extends FetchFactory {
     try {
       return await this.$fetch<Document>(`${this.endpoint}/${id}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -76,6 +99,7 @@ export default class DocumentServise extends FetchFactory {
     try {
       return await this.$fetch(`${this.endpoint}/sync/fs`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -98,6 +122,7 @@ export default class DocumentServise extends FetchFactory {
         method: 'POST',
         body: formData,
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -119,6 +144,7 @@ export default class DocumentServise extends FetchFactory {
       return await this.$fetch(`${this.endpoint}/${id}`, {
         method: 'DELETE',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -140,11 +166,9 @@ export default class DocumentServise extends FetchFactory {
     try {
       return await this.$fetch<string>(`${this.endpoint}/${id}/parse/preview`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: ParserConfig,
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -167,9 +191,7 @@ export default class DocumentServise extends FetchFactory {
     try {
       return await this.$fetch<string>(`${this.endpoint}/${id}/chunk/preview`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getDefaultHeaders(),
         body: { chunker: chunkDocumentBody },
         credentials: 'include',
       })
@@ -193,9 +215,7 @@ export default class DocumentServise extends FetchFactory {
     try {
       return await this.$fetch<string>(`${this.endpoint}/${id}/config`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getDefaultHeaders(),
         body: documentConfig,
         credentials: 'include',
       })
@@ -224,9 +244,7 @@ export default class DocumentServise extends FetchFactory {
         body: {
           files: payload.files,
         },
-        headers: {
-          'X-Google-Drive-Access-Token': accessToken,
-        },
+        headers: this.getDefaultHeaders({ 'X-Google-Drive-Access-Token': accessToken }),
         credentials: 'include',
       })
     }

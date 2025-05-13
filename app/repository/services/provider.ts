@@ -6,6 +6,28 @@ export default class ProviderService extends FetchFactory {
   private readonly endpoint: string = '/admin'
 
   /**
+   * Generates default headers for API requests.
+   *
+   * @param {Record<string, string>} [additionalHeaders] Optional additional headers to merge with the default headers.
+   * @returns {Record<string, string>} The merged headers object, including default headers and any additional ones passed.
+   */
+  private getDefaultHeaders(
+    additionalHeaders: Record<string, string> = {},
+  ): Record<string, string> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...additionalHeaders,
+    }
+
+    if (process.dev) {
+      const token = useCookie('access_token')?.value || ''
+      headers.Authorization = `Bearer ${token}`
+    }
+
+    return headers
+  }
+
+  /**
    * Fetches a list of all providers.
    * @returns A promise that resolves to an ProvidersResponse type.
    * @throws Will throw an error if the request fails.
@@ -15,6 +37,7 @@ export default class ProviderService extends FetchFactory {
     try {
       return await this.$fetch<ListProviders>(`${this.endpoint}/providers`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -35,6 +58,7 @@ export default class ProviderService extends FetchFactory {
     try {
       return await this.$fetch(`${this.endpoint}/providers/llm/${id}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -55,6 +79,7 @@ export default class ProviderService extends FetchFactory {
     try {
       return await this.$fetch<TokenUsageListResponse>(`${this.endpoint}/tokens/usage`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -75,6 +100,7 @@ export default class ProviderService extends FetchFactory {
     try {
       const response = await this.$fetch<number | { total: number }>(`${this.endpoint}/tokens/usage/total`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
 
       // Handle both response types

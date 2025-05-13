@@ -14,6 +14,27 @@ export default class ChatServise extends FetchFactory {
   private readonly chatsEndpoint: string = '/chats'
   private readonly adminChatsEndpoint: string = '/admin/chats'
   private readonly wsEndpoint: string = '/ws'
+  /**
+   * Generates default headers for API requests.
+   *
+   * @param {Record<string, string>} [additionalHeaders] Optional additional headers to merge with the default headers.
+   * @returns {Record<string, string>} The merged headers object, including default headers and any additional ones passed.
+   */
+  private getDefaultHeaders(
+    additionalHeaders: Record<string, string> = {},
+  ): Record<string, string> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...additionalHeaders,
+    }
+
+    if (process.dev) {
+      const token = useCookie('access_token')?.value || ''
+      headers.Authorization = `Bearer ${token}`
+    }
+
+    return headers
+  }
 
   /**
    * Fetches a list of all chats for the user from the API.
@@ -26,6 +47,7 @@ export default class ChatServise extends FetchFactory {
         `${this.chatsEndpoint}?page=1&perPage=100&sortBy=createdAt&sortOrder=desc`,
         {
           credentials: 'include',
+          headers: this.getDefaultHeaders(),
         },
       )
     }
@@ -51,6 +73,7 @@ export default class ChatServise extends FetchFactory {
         `${this.chatsEndpoint}/${chatId}`,
         {
           credentials: 'include',
+          headers: this.getDefaultHeaders(),
         },
       )
     }
@@ -76,6 +99,7 @@ export default class ChatServise extends FetchFactory {
     try {
       return this.$fetch(`${this.chatsEndpoint}/${chatId}/messages`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -97,6 +121,7 @@ export default class ChatServise extends FetchFactory {
     try {
       return await this.$fetch<string>(`${this.wsEndpoint}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -135,6 +160,7 @@ export default class ChatServise extends FetchFactory {
         `${this.adminChatsEndpoint}?${queryParams}`,
         {
           credentials: 'include',
+          headers: this.getDefaultHeaders(),
         },
       )
     }
@@ -159,6 +185,7 @@ export default class ChatServise extends FetchFactory {
         `${this.adminChatsEndpoint}/${chatId}`,
         {
           credentials: 'include',
+          headers: this.getDefaultHeaders(),
         },
       )
     }
@@ -183,6 +210,7 @@ export default class ChatServise extends FetchFactory {
         `${this.adminChatsEndpoint}/${chatId}/messages`,
         {
           credentials: 'include',
+          headers: this.getDefaultHeaders(),
         },
       )
     }
@@ -208,6 +236,7 @@ export default class ChatServise extends FetchFactory {
       await this.$fetch<void>(`${this.chatsEndpoint}/${chatId}`, {
         method: 'DELETE',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -231,6 +260,7 @@ export default class ChatServise extends FetchFactory {
       await this.$fetch<void>(`${this.adminChatsEndpoint}/${chatId}`, {
         method: 'DELETE',
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -260,9 +290,7 @@ export default class ChatServise extends FetchFactory {
         body: {
           title: newChatTitle,
         },
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -292,9 +320,7 @@ export default class ChatServise extends FetchFactory {
         body: {
           title: newChatTitle,
         },
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
@@ -330,9 +356,7 @@ export default class ChatServise extends FetchFactory {
           body: {
             evaluation,
           },
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: this.getDefaultHeaders(),
         },
       )
     }

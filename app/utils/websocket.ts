@@ -18,6 +18,27 @@ export class RaguWebSocket {
   state: Ref<RaguWebSocketState> = ref(RaguWebSocketState.UNINITIALIZED)
 
   private reconnectInterval: NodeJS.Timeout | undefined
+  /**
+   * Generates default headers for API requests.
+   *
+   * @param {Record<string, string>} [additionalHeaders] Optional additional headers to merge with the default headers.
+   * @returns {Record<string, string>} The merged headers object, including default headers and any additional ones passed.
+   */
+  private getDefaultHeaders(
+  additionalHeaders: Record<string, string> = {},
+  ): Record<string, string> {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...additionalHeaders,
+    }
+
+    if (process.dev) {
+      const token = useCookie('access_token')?.value || ''
+      headers.Authorization = `Bearer ${token}`
+    }
+
+    return headers
+  }
 
   constructor(user: Ref<User | null>) {
     console.debug('Initializing RaguWebSocket')
@@ -47,6 +68,7 @@ export class RaguWebSocket {
     try {
       response = await fetch(`${config.public.apiBaseUrl}/ws`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
