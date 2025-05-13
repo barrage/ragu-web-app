@@ -150,7 +150,7 @@ export default defineNuxtConfig({
         name: 'English',
         file: 'en.ts',
       },
-      {
+    /*   {
         code: 'de',
         language: 'de',
         name: 'German',
@@ -185,7 +185,7 @@ export default defineNuxtConfig({
         language: 'pt',
         name: 'Portuguese',
         file: 'pt.ts',
-      },
+      }, */
     ],
     detectBrowserLanguage: {
       useCookie: true,

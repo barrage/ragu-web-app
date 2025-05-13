@@ -80,6 +80,7 @@ export default class CollectionService extends FetchFactory {
     try {
       return await this.$fetch<CollectionResponse>(`display${this.endpoint}/${collectionId}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {

@@ -134,6 +134,7 @@ export default class AgentService extends FetchFactory {
     try {
       return await this.$fetch<Agent>(`${this.adminAgentsEndpoint}/${agentId}`, {
         credentials: 'include',
+        headers: this.getDefaultHeaders(),
       })
     }
     catch (error: any) {
