@@ -16,9 +16,11 @@ export default defineNuxtPlugin(() => {
 
   const baseApiFetcher = $fetch.create({
     baseURL: config.public.apiBaseUrl,
+    onResponseError: useApiErrorHandler,
   })
   const baseApiChucker = $fetch.create({
     baseURL: config.public.apiChunkerUrl,
+    onResponseError: useApiErrorHandler,
   })
 
   const chatService = new ChatService(baseApiFetcher)

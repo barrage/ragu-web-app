@@ -2,6 +2,53 @@ import { createError } from 'nuxt/app'
 import type { NuxtError } from 'nuxt/app'
 import type { Ref } from 'vue'
 import { debounce } from 'lodash-es'
+import { type FetchContext, FetchError } from 'ofetch'
+
+export const useApiErrorHandler = async (
+  context: FetchContext<any, any>,
+): Promise<void> => {
+  const { response } = context
+  const authStore = useAuthStore()
+  const router = useRouter()
+
+  if (!response) {
+    throw new FetchError('API request failed, no response available', {
+      cause: 'No response',
+    })
+  }
+  const status = response.status
+  const data = response._data
+
+  switch (status) {
+    case 401:
+      console.error('Unauthorized access - redirecting to login...')
+      authStore.POST_Logout().then(() => {
+        router.push('/login')
+      })
+
+      break
+
+    case 404:
+      console.error('Page not found')
+      throw createError({
+        statusCode: 404,
+        message: 'Page not found. Please check the URL.',
+      })
+
+    case 500:
+      console.error('Server error occurred', data)
+      throw createError({
+        statusCode: 500,
+        message: 'Internal server error. Please try again later.',
+      })
+
+    default:
+      console.error(`Error ${status}: ${data?.message || 'Unknown error'}`)
+      throw new FetchError(`API request failed with status ${status}`, {
+        cause: `Error status: ${status}`,
+      })
+  }
+}
 
 /**
  * Handles errors by either displaying a notification for non-fatal client-side errors
