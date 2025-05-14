@@ -39,7 +39,6 @@ watch(isDark, (newVal) => {
 const { t } = useI18n()
 const authStore = useAuthStore()
 const chatStore = useChatStore()
-const agentStore = useAgentStore()
 const route = useRoute()
 const isAssistantMessage = computed(() => props.message?.senderType === 'assistant')
 const displayedContent = ref('')
@@ -56,15 +55,6 @@ const getCurrentMessageEvaluation = computed(() => {
   )
 
   return messageGroup?.evaluation?.evaluation ?? null
-})
-
-const agentAvatar = computed(() => {
-  if (!route.params.chatId) {
-    return agentStore.selectedAgent?.avatar || null
-  }
-
-  const agent = agentStore.appAgentsResponse?.items.find(agent => agent.id === props.agentId)
-  return agent?.avatar || null
 })
 
 const isTable = computed(() => {
@@ -364,7 +354,7 @@ watchEffect(() => {
       <div class="sender">
         <LlmAvatar
           v-if="props.message.senderType === 'assistant'"
-          :avatar="agentAvatar"
+          :avatar="chatStore.selectedChat?.agent?.avatar"
           :alt="t('agents.agent_avatar')"
           fit="cover"
           default-image="brain"

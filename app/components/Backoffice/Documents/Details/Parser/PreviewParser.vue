@@ -15,7 +15,7 @@ const closeParserDialog = () => {
 }
 
 const parserResponse = computed(() => {
-  return documentStore.parserPreview
+  return documentStore.parserPreview?.text?.string || null
 })
 
 const selectedDocument = computed(() => {
@@ -61,7 +61,7 @@ watch(
   <el-dialog
     v-model="isParserDialogVisible"
     :before-close="closeParserDialog"
-  :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     class="barrage-dialog--large"
   >
     <template #header>

@@ -20,6 +20,14 @@ export interface StringParserMode {
   filters: string[]
 }
 
+export interface ParserPreviewResponse {
+  text: {
+    string: string
+  }
+  images: string[]
+  totalTokens: TokenCount
+}
+
 export interface DocumentListResponse {
   documents: Document[]
   errors: any

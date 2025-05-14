@@ -17,6 +17,8 @@ definePageMeta({
 const route = useRoute()
 const { t } = useI18n()
 
+const docsUrl = useRuntimeConfig().public.docsUrl
+
 const backNavigation = computed(() => {
   const referrer = route.query.from as string
 
@@ -93,7 +95,7 @@ const helpCards = computed(() => [
     <p class="subtitle">
       {{ t('help.subtitle') }}
       <LlmLink
-        to="/docs"
+        :to="docsUrl"
         type="link"
       >
         {{ t('help.full_documentation') }}

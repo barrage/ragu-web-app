@@ -11,6 +11,8 @@ const chatId = computed(() => {
   return route.params.chatId
 })
 const { t } = useI18n()
+
+const agentStore = useAgentStore()
 </script>
 
 <template>
@@ -36,7 +38,7 @@ const { t } = useI18n()
         :class="{ selected: chatId === chat.id }"
       >
         <LlmAvatar
-          :avatar="useAgentStore().getAgentStoredAvatar(String(chat.agentId))"
+          :avatar="agentStore.getAgentStoredAvatar(String(chat.agentId))"
           :alt="t('agents.agent_avatar')"
           :size="24"
           fit="cover"

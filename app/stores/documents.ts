@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { ChunkerConfig, ChunkerResponse, Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document'
+import type { ChunkerConfig, ChunkerResponse, Document, DocumentConfig, DocumentListResponse, ParserConfig, ParserPreviewResponse } from '~/types/document'
 
 export const useDocumentsStore = defineStore('document', () => {
   // State
@@ -49,9 +49,9 @@ export const useDocumentsStore = defineStore('document', () => {
     }
   }
   /* PARSER */
-  const parserPreview = ref<string | null>(null)
+  const parserPreview = ref<ParserPreviewResponse | null>(null)
   const loadingParsePreview = ref<boolean>(false)
-  async function POST_ParseDocumentPreview(id: string, ParserConfig?: ParserConfig): Promise<string | null> {
+  async function POST_ParseDocumentPreview(id: string, ParserConfig?: ParserConfig): Promise<ParserPreviewResponse | null> {
     try {
       loadingParsePreview.value = true
       const response = await $api.document.PostParseDocumentPreview(id, ParserConfig)

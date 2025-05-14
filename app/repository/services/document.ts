@@ -1,6 +1,6 @@
 import FetchFactory from '../fetchFactory'
 import type { Search } from '~/types/collection'
-import type { ChunkerConfig, ChunkerResponse, Document, DocumentConfig, DocumentListResponse, GoogleDriveImportResponse, ParserConfig } from '~/types/document.ts'
+import type { ChunkerConfig, ChunkerResponse, Document, DocumentConfig, DocumentListResponse, GoogleDriveImportResponse, ParserConfig, ParserPreviewResponse } from '~/types/document.ts'
 
 export default class DocumentServise extends FetchFactory {
   [x: string]: any
@@ -162,9 +162,9 @@ export default class DocumentServise extends FetchFactory {
    * @returns A promise that resolves to the string response.
    * @throws Will throw an error if the upload fails.
    */
-  async PostParseDocumentPreview(id: string, ParserConfig?: ParserConfig): Promise<string> {
+  async PostParseDocumentPreview(id: string, ParserConfig?: ParserConfig): Promise<ParserPreviewResponse> {
     try {
-      return await this.$fetch<string>(`${this.endpoint}/${id}/parse/preview`, {
+      return await this.$fetch<ParserPreviewResponse>(`${this.endpoint}/${id}/parse/preview`, {
         method: 'POST',
         body: ParserConfig,
         credentials: 'include',
