@@ -119,6 +119,16 @@ watch(
   { immediate: true },
 )
 
+const isCreateModalVisible = ref(false)
+
+const openCreateModal = () => {
+  isCreateModalVisible.value = true
+}
+
+const handleCollectionCreated = () => {
+  handlePageChange(1)
+}
+
 onMounted(async () => {
   shouldSyncQuery.value = true
   syncQueryValues(route.query)
@@ -171,9 +181,13 @@ onBeforeUnmount(() => {
       <EmptyCollectionIcon size="44px" />
     </template>
     <template #cta>
-      <LlmLink to="/admin/collections/create" type="button">
+      <ElButton @click="openCreateModal">
         <AddCollectionIcon /> {{ t('collections.titles.create') }}
-      </LlmLink>
+      </ElButton>
     </template>
   </EmptyState>
+  <CreateCollectionModal
+    v-model="isCreateModalVisible"
+    @collection-created="handleCollectionCreated"
+  />
 </template>
