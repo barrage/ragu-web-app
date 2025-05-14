@@ -13,6 +13,13 @@ export interface Document {
   parseConfig: ParserConfig | null
 }
 
+export interface StringParserMode {
+  start: number
+  end: number
+  range: boolean
+  filters: string[]
+}
+
 export interface DocumentListResponse {
   documents: Document[]
   errors: any
@@ -21,10 +28,27 @@ export interface DocumentListResponse {
 }
 
 export interface ParserConfig {
-  start: number
-  end: number
-  range: boolean
-  filters: string[]
+  mode: {
+    string: StringParserMode
+  }
+  includeImages: boolean
+}
+
+export interface TokenCount {
+  cl100k: number
+  o200k: number
+}
+
+export interface ChunkItem {
+  chunk: string
+  tokenCount: TokenCount
+}
+
+export interface ChunkerResponse {
+  chunks: ChunkItem[]
+  images: string[]
+  totalTokensPre: TokenCount
+  totalTokensPost: TokenCount
 }
 
 export interface SnappingChunker {

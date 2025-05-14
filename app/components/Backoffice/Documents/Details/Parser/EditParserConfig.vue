@@ -18,19 +18,24 @@ const selectedDocument = computed(() => {
 const { t } = useI18n()
 const formRef = ref<FormInstance>()
 const form = reactive<ParserConfig>({
-  start: 0,
-  end: 0,
-  range: false,
-  filters: [],
+  mode: {
+    string: {
+      start: 0,
+      end: 0,
+      range: false,
+      filters: [],
+    },
+  },
+  includeImages: false,
 })
+
 const validateStartWithRange = (_rule: any, value: any, callback: any) => {
-  if (form.range && form.start === 0) {
+  if (form.mode.string.range && form.mode.string.start === 0) {
     callback(new Error(t('documents.parser.validation.start_0_with_range')))
   }
-  else if (form.range && form.start > form.end) {
+  else if (form.mode.string.range && form.mode.string.start > form.mode.string.end) {
     callback(new Error(t('documents.parser.validation.start_greater_with_range')))
   }
-
   else {
     callback()
   }
@@ -105,12 +110,13 @@ async function saveConfig() {
 }
 
 const prefillForm = () => {
-  form.start = selectedDocument.value?.parseConfig?.start || 0
-  form.end = selectedDocument.value?.parseConfig?.end || 0
-  form.range = selectedDocument.value?.parseConfig?.range || false
-  form.filters = selectedDocument.value?.parseConfig?.filters
-    ? [...selectedDocument.value.parseConfig.filters]
+  form.mode.string.start = selectedDocument.value?.parseConfig?.mode.string.start || 0
+  form.mode.string.end = selectedDocument.value?.parseConfig?.mode.string.end || 0
+  form.mode.string.range = selectedDocument.value?.parseConfig?.mode.string.range || false
+  form.mode.string.filters = selectedDocument.value?.parseConfig?.mode.string.filters
+    ? [...selectedDocument.value.parseConfig.mode.string.filters]
     : []
+  form.includeImages = selectedDocument.value?.parseConfig?.includeImages || false
 }
 watch(
   () => selectedDocument.value,
@@ -140,19 +146,19 @@ const submitSaveForm = async (formEl: FormInstance | undefined) => {
     }
   })
 }
+
 const filtersString = ref('')
 const addFilter = () => {
-  if (!form.filters.includes(filtersString.value)) {
-    form.filters.push(filtersString.value)
+  if (filtersString.value && !form.mode.string.filters.includes(filtersString.value)) {
+    form.mode.string.filters.push(filtersString.value)
   }
-
   filtersString.value = ''
 }
 
 const removeFilter = (filter: string) => {
-  const index = form.filters.indexOf(filter)
+  const index = form.mode.string.filters.indexOf(filter)
   if (index !== -1) {
-    form.filters.splice(index, 1)
+    form.mode.string.filters.splice(index, 1)
   }
 }
 </script>
@@ -168,10 +174,10 @@ const removeFilter = (filter: string) => {
     >
       <ElFormItem
         :label="t('documents.parser.form.start')"
-        prop="start"
+        prop="mode.string.start"
       >
         <ElInputNumber
-          v-model="form.start"
+          v-model="form.mode.string.start"
           :min="0"
         >
           <template #increase-icon>
@@ -185,9 +191,9 @@ const removeFilter = (filter: string) => {
 
       <ElFormItem
         :label="t('documents.parser.form.end')"
-        prop="end"
+        prop="mode.string.end"
       >
-        <ElInputNumber v-model="form.end" :min="0">
+        <ElInputNumber v-model="form.mode.string.end" :min="0">
           <template #increase-icon>
             <AddIcon />
           </template>
@@ -198,7 +204,7 @@ const removeFilter = (filter: string) => {
       </ElFormItem>
       <ElFormItem
         :label="t('documents.parser.form.range')"
-        prop="range"
+        prop="mode.string.range"
         class="range-checkbox"
       >
         <!--    <input
@@ -206,16 +212,16 @@ const removeFilter = (filter: string) => {
             type="checkbox"
           > -->
 
-        <el-switch v-model="form.range" />
+        <el-switch v-model="form.mode.string.range" />
       </ElFormItem>
       <div class="range-filters-wrapper">
         <ElFormItem
           :label="t('documents.parser.form.filters')"
-          prop="filters"
+          prop="mode.string.filters"
         >
           <ElInput v-model="filtersString" @keyup.enter="addFilter()" />
           <div class="filter-items-wrapper">
-            <template v-for="filter in form.filters" :key="filter">
+            <template v-for="filter in form.mode.string.filters" :key="filter">
               <el-tag size="small">
                 <span> {{ filter }}  </span>
                 <CloseIcon

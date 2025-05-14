@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import FullscreenIcon from '~/assets/icons/svg/fullscreen.svg'
 import CloseCircleIcon from '~/assets/icons/svg/close-circle.svg'
+import type { ChunkerResponse } from '~/types/document.ts'
 
 const { t } = useI18n()
 const documentStore = useDocumentsStore()
@@ -18,7 +19,7 @@ const closeChunkerDialog = () => {
   isChunkerDialogVisible.value = false
 }
 
-const chunkerResponse = computed(() => {
+const chunkerResponse = computed<ChunkerResponse | null>(() => {
   return documentStore.chunkPreview
 })
 
@@ -27,15 +28,21 @@ const selectedDocument = computed(() => {
 })
 
 const hasChunks = computed(() => {
-  return chunkerResponse.value && chunkerResponse.value.length > 0
+  return chunkerResponse.value
+    && chunkerResponse.value.chunks
+    && chunkerResponse.value.chunks.length > 0
 })
 
 const displayedChunks = computed(() => {
-  return hasChunks.value ? chunkerResponse.value?.slice(0, currentItemCount.value) : []
+  if (!hasChunks.value) { return [] }
+  return chunkerResponse?.value?.chunks
+    .slice(0, currentItemCount.value)
+    .map(item => item.chunk)
 })
 
 const hasMoreItems = computed(() => {
-  return currentItemCount.value < (hasChunks.value && chunkerResponse.value?.length ? chunkerResponse.value.length : 0)
+  if (!hasChunks.value) { return false }
+  return currentItemCount.value < (chunkerResponse.value?.chunks?.length || 0)
 })
 
 function loadMoreItems() {
@@ -102,20 +109,24 @@ watch(
   <el-dialog
     v-model="isChunkerDialogVisible"
     :before-close="closeChunkerDialog"
-   :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
+    :close-icon="() => h(CloseCircleIcon, { size: '20px' })"
     class="barrage-dialog--large"
   >
     <template #header>
       <h6>        {{ t('documents.chunker.chunk_preview') }}</h6>
     </template>
     <p>        {{ t('documents.chunker.selected_document') }}: <b>{{ selectedDocument?.name }}</b> </p>
-    <p>   {{ t('documents.chunker.total_chunk') }}: <b>{{ chunkerResponse?.length }}</b> </p>
+    <p>   {{ t('documents.chunker.total_chunk') }}: <b>{{ chunkerResponse?.chunks?.length }}</b> </p>
     <div class="chunker-preview-content-wrapper">
       <template v-if="hasChunks">
         <template v-for="(chunk, index) in displayedChunks" :key="chunk">
           <span class="chunk-title">{{ index + 1 }}. {{ t('documents.chunker.chunk') }}</span>
           <p class="single-chunk">
             {{ chunk }}
+          </p>
+          <p v-if="chunkerResponse?.chunks[index]?.tokenCount" class="token-count">
+            Tokens: cl100k: {{ chunkerResponse.chunks[index].tokenCount.cl100k }},
+            o200k: {{ chunkerResponse.chunks[index].tokenCount.o200k }}
           </p>
         </template>
         <button
@@ -209,6 +220,14 @@ watch(
   background-color: var(--color-primary-600);
 }
 
+.token-count {
+  font-size: var(--font-size-fluid-1);
+  color: var(--color-primary-600);
+  margin-top: -8px;
+  margin-bottom: 12px;
+  padding-left: 12px;
+}
+
 .dark {
   & .chunker-preview-wrapper {
     background: var(--color-primary-700);
@@ -226,6 +245,9 @@ watch(
   }
   & .chunk-title {
     color: var(--color-primary-200);
+  }
+  & .token-count {
+    color: var(--color-primary-300);
   }
 }
 </style>

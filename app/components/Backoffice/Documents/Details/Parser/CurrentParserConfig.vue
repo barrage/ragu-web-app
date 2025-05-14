@@ -17,31 +17,31 @@ const props = defineProps<{
         <div class="start-end-range-wrapper">
           <LabelDescriptionItem
             :label="$t('documents.parser.form.start')"
-            :description="props.config.start.toString()"
+            :description="props.config.mode.string.start.toString()"
             horizontal
           />
           <div class="horizontal-divider" />
           <LabelDescriptionItem
             :label="$t('documents.parser.form.end')"
-            :description="props.config.end.toString()"
+            :description="props.config.mode.string.end.toString()"
             horizontal
           />
           <div class="horizontal-divider" />
           <LabelDescriptionItem
             :label="$t('documents.parser.form.range')"
-            :description="props.config.range.toString()"
+            :description="props.config.mode.string.range.toString()"
             horizontal
           />
         </div>
         <div class="horizontal-divider" />
         <LabelDescriptionItem
           :label="$t('documents.parser.form.filters')"
-          :description="props.config.filters.join(', ')"
+          :description="props.config.mode.string.filters.join(', ')"
         >
           <template #customDescription>
             <div class="tag-list">
               <el-tag
-                v-for="item in props.config.filters"
+                v-for="item in props.config.mode.string.filters"
                 :key="item"
               >
                 {{ item }}

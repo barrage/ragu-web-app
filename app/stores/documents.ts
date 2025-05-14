@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { ChunkerConfig, Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document'
+import type { ChunkerConfig, ChunkerResponse, Document, DocumentConfig, DocumentListResponse, ParserConfig } from '~/types/document'
 
 export const useDocumentsStore = defineStore('document', () => {
   // State
@@ -72,10 +72,10 @@ export const useDocumentsStore = defineStore('document', () => {
     }
   }
   /* CHUNKER */
-  const chunkPreview = ref<string | null>(null)
+  const chunkPreview = ref<ChunkerResponse | null>(null)
   const loadingChunkPreview = ref<boolean>(false)
 
-  async function POST_ChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<string | null> {
+  async function POST_ChunkDocumentPreview(id: string, chunkDocumentBody?: ChunkerConfig): Promise<ChunkerResponse | null> {
     try {
       loadingChunkPreview.value = true
       const response = await $api.document.PostChunkDocumentPreview(id, chunkDocumentBody)
