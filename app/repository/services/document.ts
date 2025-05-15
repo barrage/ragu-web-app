@@ -14,12 +14,20 @@ export default class DocumentServise extends FetchFactory {
    * @returns {Record<string, string>} The merged headers object, including default headers and any additional ones passed.
    */
   private getDefaultHeaders(
-  additionalHeaders: Record<string, string> = {},
+additionalHeaders: Record<string, string | undefined> = {},
   ): Record<string, string> {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...additionalHeaders,
     }
+
+    Object.entries(additionalHeaders).forEach(([key, value]) => {
+      if (value === undefined) {
+        delete headers[key]
+      }
+      else {
+        headers[key] = value
+      }
+    })
 
     if (process.dev) {
       const token = useCookie('access_token')?.value || ''
@@ -122,7 +130,9 @@ export default class DocumentServise extends FetchFactory {
         method: 'POST',
         body: formData,
         credentials: 'include',
-        headers: this.getDefaultHeaders(),
+        headers: this.getDefaultHeaders({
+          'Content-Type': undefined,
+        }),
       })
     }
     catch (error: any) {
