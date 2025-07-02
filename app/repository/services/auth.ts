@@ -1,6 +1,6 @@
-import { createError } from 'h3'
-import FetchFactory from '../fetchFactory'
-import type { User } from '~/types/auth'
+import { createError } from "h3";
+import FetchFactory from "../fetchFactory";
+import type { User } from "~/types/auth";
 
 export default class AuthService extends FetchFactory {
   /**
@@ -13,16 +13,18 @@ export default class AuthService extends FetchFactory {
     additionalHeaders: Record<string, string> = {},
   ): Record<string, string> {
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...additionalHeaders,
-    }
+    };
 
     if (process.dev) {
-      const token = useCookie('access_token')?.value || ''
-      headers.Authorization = `Bearer ${token}`
+      const token = useCookie("access_token")?.value;
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
     }
 
-    return headers
+    return headers;
   }
 
   /**
@@ -31,18 +33,21 @@ export default class AuthService extends FetchFactory {
    * @throws Will throw an error if the request fails.
    */
   async Logout(): Promise<void> {
-    try {
-      await fetch('/api/oauth/logout', {
-        credentials: 'include',
-        method: 'GET',
-        headers: this.getDefaultHeaders(),
-      })
+    if (!useRuntimeConfig().public.enableAuth) {
+      return;
     }
-    catch (error: any) {
+
+    try {
+      await fetch("/api/oauth/logout", {
+        credentials: "include",
+        method: "GET",
+        headers: this.getDefaultHeaders(),
+      });
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || 'Failed to logout',
-      })
+        statusMessage: error?.message || "Failed to logout",
+      });
     }
   }
 
@@ -51,22 +56,35 @@ export default class AuthService extends FetchFactory {
    * @returns A promise that resolves to a User object containing the user's details.
    * @throws Will throw an error if the request fails.
    */
-  async GetCurrentUser(): Promise<{ user: User, expiresAt: number }> {
+  async GetCurrentUser(): Promise<{ user: User; expiresAt: number }> {
+    if (!useRuntimeConfig().public.enableAuth) {
+      return {
+        user: {
+          id: "admin",
+          fullName: "admin",
+          email: "admin@ragu.com",
+          avatar: undefined,
+          entitlements: ["admin"],
+        },
+        expiresAt: Math.floor(new Date(8640000000000000).getTime() / 1000),
+      };
+    }
+
     try {
-      const response = await fetch('/api/oauth/user', {
-        credentials: 'include',
+      const response = await fetch("/api/oauth/user", {
+        credentials: "include",
         headers: this.getDefaultHeaders(),
-        method: 'GET',
-      })
+        method: "GET",
+      });
 
       if (response.status !== 200) {
         throw createError({
           statusCode: response.status,
-          statusMessage: 'Failed to fetch current user',
-        })
+          statusMessage: "Failed to fetch current user",
+        });
       }
 
-      const { user, expiresAt } = await response.json()
+      const { user, expiresAt } = await response.json();
 
       return {
         user: {
@@ -77,13 +95,12 @@ export default class AuthService extends FetchFactory {
           entitlements: user.entitlements,
         },
         expiresAt,
-      }
-    }
-    catch (error: any) {
+      };
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || 'Failed to fetch current user',
-      })
+        statusMessage: error?.message || "Failed to fetch current user",
+      });
     }
   }
 
@@ -95,56 +112,58 @@ export default class AuthService extends FetchFactory {
 
   async GetAllUsers(): Promise<any[]> {
     try {
-      const response = await fetch('/api/oauth/users', {
-        credentials: 'include',
-        method: 'GET',
+      const response = await fetch("/api/oauth/users", {
+        credentials: "include",
+        method: "GET",
         headers: this.getDefaultHeaders(),
-      })
+      });
 
       if (response.status !== 200) {
         throw createError({
           statusCode: response.status,
-          statusMessage: 'Failed to fetch users',
-        })
+          statusMessage: "Failed to fetch users",
+        });
       }
 
-      return await response.json()
-    }
-    catch (error: any) {
+      return await response.json();
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || 'Failed to fetch users',
-      })
+        statusMessage: error?.message || "Failed to fetch users",
+      });
     }
   }
 
   Refresh = async (): Promise<void> => {
+    if (!useRuntimeConfig().public.enableAuth) {
+      return;
+    }
+
     try {
-      const response = await fetch('/api/oauth/refresh', {
-        credentials: 'include',
+      const response = await fetch("/api/oauth/refresh", {
+        credentials: "include",
         headers: this.getDefaultHeaders(),
-        method: 'GET',
-      })
+        method: "GET",
+      });
 
       if (response.status !== 200) {
         throw createError({
           statusCode: response.status,
-          statusMessage: 'Failed to refresh token',
-        })
+          statusMessage: "Failed to refresh token",
+        });
       }
 
       response.json().then(({ expiresIn }) => {
-        const timeout
-          = expiresIn > 30 ? (expiresIn - 30) * 1000 : expiresIn * 1000
-        console.log(`refreshing in: ${timeout / 1000}s`)
-        setTimeout(this.Refresh, timeout)
-      })
-    }
-    catch (error: any) {
+        const timeout =
+          expiresIn > 30 ? (expiresIn - 30) * 1000 : expiresIn * 1000;
+        console.log(`refreshing in: ${timeout / 1000}s`);
+        setTimeout(this.Refresh, timeout);
+      });
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || 'Failed to refresh token',
-      })
+        statusMessage: error?.message || "Failed to refresh token",
+      });
     }
-  }
+  };
 }

@@ -5,17 +5,21 @@ import * as client from "openid-client";
  * of requests.
  */
 export default defineNitroPlugin(async (nitroApp) => {
-	const config = useRuntimeConfig();
+  const config = useRuntimeConfig();
 
-	const authServer = new URL(config.public.oauthEndpoint);
-	const clientId = config.public.oauthClientId;
-	const clientSecret = config.server.oauthClientSecret;
+  if (!config.public.enableAuth) {
+    return;
+  }
 
-	const oidcConfig = await client.discovery(authServer, clientId, clientSecret);
+  const authServer = new URL(config.public.oauthEndpoint);
+  const clientId = config.public.oauthClientId;
+  const clientSecret = config.server.oauthClientSecret;
 
-	nitroApp.hooks.hook("request", (event) => {
-		event.context.oidcConfig = oidcConfig;
-	});
+  const oidcConfig = await client.discovery(authServer, clientId, clientSecret);
 
-	console.log("OIDC discovery plugin configured");
+  nitroApp.hooks.hook("request", (event) => {
+    event.context.oidcConfig = oidcConfig;
+  });
+
+  console.log("OIDC discovery plugin configured");
 });
