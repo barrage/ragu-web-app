@@ -1,9 +1,13 @@
-import FetchFactory from '../fetchFactory'
-import type { LLmList, ListProviders, TokenUsageListResponse } from '~/types/provider'
+import FetchFactory from "../fetchFactory";
+import type {
+  LLmList,
+  ListProviders,
+  TokenUsageListResponse,
+} from "~/types/provider";
 
 export default class ProviderService extends FetchFactory {
   // Endpoint for agent-related API requests.
-  private readonly endpoint: string = '/admin'
+  private readonly endpoint: string = "/admin";
 
   /**
    * Generates default headers for API requests.
@@ -15,16 +19,16 @@ export default class ProviderService extends FetchFactory {
     additionalHeaders: Record<string, string> = {},
   ): Record<string, string> {
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...additionalHeaders,
-    }
+    };
 
     if (process.dev) {
-      const token = useCookie('access_token')?.value || ''
-      headers.Authorization = `Bearer ${token}`
+      const token = useCookie("access_token")?.value || "";
+      headers.Authorization = `Bearer ${token}`;
     }
 
-    return headers
+    return headers;
   }
 
   /**
@@ -36,15 +40,16 @@ export default class ProviderService extends FetchFactory {
   async GetListProviders(): Promise<ListProviders> {
     try {
       return await this.$fetch<ListProviders>(`${this.endpoint}/providers`, {
-        credentials: 'include',
+        credentials: "include",
         headers: this.getDefaultHeaders(),
-      })
-    }
-    catch (error: any) {
+      });
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch providers with code ${error?.statusCode}`,
-      })
+        statusMessage:
+          error?.message ||
+          `Failed to fetch providers with code ${error?.statusCode}`,
+      });
     }
   }
 
@@ -57,15 +62,15 @@ export default class ProviderService extends FetchFactory {
   async GetListAvailableLLms(id: string): Promise<LLmList> {
     try {
       return await this.$fetch(`${this.endpoint}/providers/llm/${id}`, {
-        credentials: 'include',
+        credentials: "include",
         headers: this.getDefaultHeaders(),
-      })
-    }
-    catch (error: any) {
+      });
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to get Available LLms with id ${id}`,
-      })
+        statusMessage:
+          error?.message || `Failed to get Available LLms with id ${id}`,
+      });
     }
   }
 
@@ -77,16 +82,20 @@ export default class ProviderService extends FetchFactory {
    */
   async GetTokenListUsage(): Promise<TokenUsageListResponse> {
     try {
-      return await this.$fetch<TokenUsageListResponse>(`${this.endpoint}/tokens/usage`, {
-        credentials: 'include',
-        headers: this.getDefaultHeaders(),
-      })
-    }
-    catch (error: any) {
+      return await this.$fetch<TokenUsageListResponse>(
+        `${this.endpoint}/tokens/usage`,
+        {
+          credentials: "include",
+          headers: this.getDefaultHeaders(),
+        },
+      );
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch providers with code ${error?.statusCode}`,
-      })
+        statusMessage:
+          error?.message ||
+          `Failed to fetch providers with code ${error?.statusCode}`,
+      });
     }
   }
 
@@ -98,19 +107,21 @@ export default class ProviderService extends FetchFactory {
    */
   async GetTokenTotalUsage(): Promise<number> {
     try {
-      const response = await this.$fetch<number | { total: number }>(`${this.endpoint}/tokens/usage/total`, {
-        credentials: 'include',
-        headers: this.getDefaultHeaders(),
-      })
+      // const response = await this.$fetch<number | { total: number }>(`${this.endpoint}/tokens/usage/total`, {
+      //   credentials: 'include',
+      //   headers: this.getDefaultHeaders(),
+      // })
 
       // Handle both response types
-      return typeof response === 'number' ? response : response.total
-    }
-    catch (error: any) {
+      // return typeof response === 'number' ? response : response.total
+      return 0;
+    } catch (error: any) {
       throw createError({
         statusCode: error?.statusCode || 500,
-        statusMessage: error?.message || `Failed to fetch providers with code ${error?.statusCode}`,
-      })
+        statusMessage:
+          error?.message ||
+          `Failed to fetch providers with code ${error?.statusCode}`,
+      });
     }
   }
 }

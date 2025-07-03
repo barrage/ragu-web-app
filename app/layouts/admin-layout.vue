@@ -1,21 +1,27 @@
 <script lang="ts" setup>
 // CONSTANTS
-const navigationStore = useNavigationStore()
-const { width } = useWindowSize()
+const navigationStore = useNavigationStore();
+const { width } = useWindowSize();
 
 // WATCHERS
-watch(width, (newWidth) => {
-  if (newWidth <= 990) {
-    navigationStore.isAdminSidebarCollapsed = true
-  }
-  else {
-    navigationStore.isAdminSidebarCollapsed = false
-  }
-}, { immediate: true })
+watch(
+  width,
+  (newWidth) => {
+    if (newWidth <= 990) {
+      navigationStore.isAdminSidebarCollapsed = true;
+    } else {
+      navigationStore.isAdminSidebarCollapsed = false;
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
-  <div class="main-layout" :class="{ 'sidebar-collapsed': navigationStore.isAdminSidebarCollapsed }">
+  <div
+    class="admin-layout"
+    :class="{ 'sidebar-collapsed': navigationStore.isAdminSidebarCollapsed }"
+  >
     <LlmHeader />
     <LlmAdminAside />
     <main class="main">
@@ -30,13 +36,13 @@ watch(width, (newWidth) => {
 </template>
 
 <style lang="scss" scoped>
-.main-layout {
+.admin-layout {
   max-width: 2560px;
   margin-inline: auto;
   display: grid;
   grid-template-areas:
-    'header header'
-    'aside main';
+    "header header"
+    "aside main";
   grid-template-columns: 16.25rem 1fr;
   grid-template-rows: auto 1fr;
   min-height: 100vh;
