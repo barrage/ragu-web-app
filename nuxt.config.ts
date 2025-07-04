@@ -139,9 +139,6 @@ export default defineNuxtConfig({
     langDir: "locales",
     strategy: "no_prefix",
     defaultLocale: "en",
-    bundle: {
-      optimizeTranslationDirective: false,
-    },
     locales: [
       {
         code: "hr",
