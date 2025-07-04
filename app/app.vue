@@ -1,55 +1,50 @@
 <script setup lang="ts">
-const authStore = useAuthStore();
-const router = useRouter();
-const route = useRoute();
-const { t } = useI18n();
+const authStore = useAuthStore()
+const router = useRouter()
+const route = useRoute()
+const { t } = useI18n()
 
 const localHead = useLocaleHead({
   addDirAttribute: true,
-  identifierAttribute: "id",
+  identifierAttribute: 'id',
   addSeoAttributes: true,
-});
+})
 
 useHead(() => ({
   titleTemplate: (titleChunk) => {
     return titleChunk
-      ? t("seo.titleTemplate", { title: titleChunk })
-      : t("seo.defaultTitle");
+      ? t('seo.titleTemplate', { title: titleChunk })
+      : t('seo.defaultTitle')
   },
   htmlAttrs: {
     lang: localHead.value.htmlAttrs!.lang,
   },
   link: localHead.value.link,
   meta: localHead.value.meta,
-}));
+}))
 
 useSeoMeta({
-  ogTitle: computed(() => t("seo.ogTitle")),
-  description: computed(() => t("seo.description")),
-  ogDescription: computed(() => t("seo.ogDescription")),
-  ogImage: "https://example.com/llmao-og-image.png",
-  twitterCard: "summary_large_image",
-});
+  ogTitle: computed(() => t('seo.ogTitle')),
+  description: computed(() => t('seo.description')),
+  ogDescription: computed(() => t('seo.ogDescription')),
+  ogImage: 'https://example.com/llmao-og-image.png',
+  twitterCard: 'summary_large_image',
+})
 
 onMounted(async () => {
-  const publicRouteNames = ["login", "auth-provider"];
+  const publicRouteNames = ['login', 'auth-provider']
 
-  if (
-    !authStore.isAuthenticated &&
-    !publicRouteNames.includes(String(route.name))
-  ) {
-    router.push("/login");
+  if (!authStore.isAuthenticated && !publicRouteNames.includes(String(route.name))) {
+    router.push('/login')
   }
-});
+})
 </script>
 
 <template>
   <div>
     <ElConfigProvider namespace="barrage">
       <LlmOverlayLoader v-if="authStore.iscurrentUserLoading" />
-      <NuxtLayout
-        :key="route.path.startsWith('/admin') ? 'admin' : 'default'"
-      />
+      <NuxtLayout />
     </ElConfigProvider>
   </div>
 </template>
