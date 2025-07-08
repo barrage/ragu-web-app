@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { version } from "./package.json";
+import { version } from './package.json'
 
 export default defineNuxtConfig({
   ssr: false,
-  compatibilityDate: "2024-07-18",
+  compatibilityDate: '2024-07-18',
   future: {
     compatibilityVersion: 4,
   },
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
       apiAutentikUrl: process.env.API_AUTENTIK_URL,
       wsUrl: process.env.WS_URL,
       docsUrl: process.env.DOCS_URL,
-      enableAuth: process.env.ENABLE_AUTH === "true",
+      enableAuth: process.env.ENABLE_AUTH === 'true',
       // WhatsApp
       enableWhatsApp: process.env.ENABLE_WHATSAPP,
       // OAuth - public
@@ -30,8 +30,8 @@ export default defineNuxtConfig({
       oauthEndpoint: process.env.OAUTH_ENDPOINT,
       // Storage keys
       keys: {
-        pkceVerifier: "PKCE_VERIFIER",
-        stateVerifier: "STATE_VERIFIER",
+        pkceVerifier: 'PKCE_VERIFIER',
+        stateVerifier: 'STATE_VERIFIER',
       },
       googleDrive: {
         appId: process.env.GOOGLE_DRIVE_APP_ID,
@@ -63,50 +63,50 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         {
-          rel: "apple-touch-icon",
-          sizes: "180x180",
-          href: "/apple-touch-icon.png",
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
         },
         {
-          rel: "icon",
-          type: "image/png",
-          sizes: "32x32",
-          href: "/favicon-32x32.png",
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/favicon-32x32.png',
         },
         {
-          rel: "icon",
-          type: "image/png",
-          sizes: "16x16",
-          href: "/favicon-16x16.png",
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16',
+          href: '/favicon-16x16.png',
         },
-        { rel: "manifest", href: "/site.webmanifest" },
+        { rel: 'manifest', href: '/site.webmanifest' },
       ],
     },
   },
   modules: [
-    "@nuxt/eslint",
-    "@vueuse/nuxt",
-    "nuxt-svgo",
-    "@pinia/nuxt",
-    "@nuxtjs/i18n",
-    "@element-plus/nuxt",
-    "@vueuse/motion/nuxt",
+    '@nuxt/eslint',
+    '@vueuse/nuxt',
+    'nuxt-svgo',
+    '@pinia/nuxt',
+    '@nuxtjs/i18n',
+    '@element-plus/nuxt',
+    '@vueuse/motion/nuxt',
   ],
   plugins: [
-    "~/plugins/error-handler",
-    { src: "~/plugins/websocket.client.ts", mode: "client" },
+    '~/plugins/error-handler',
+    { src: '~/plugins/websocket.client.ts', mode: 'client' },
   ],
   eslint: {
     config: {
       stylistic: true,
     },
   },
-  css: ["~/assets/styles/styles.scss"],
+  css: ['~/assets/styles/styles.scss'],
   elementPlus: {
     importStyle: false,
-    namespace: "barrage",
+    namespace: 'barrage',
   },
   vite: {
     server: {
@@ -117,7 +117,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          api: "modern-compiler",
+          api: 'modern-compiler',
           additionalData: '@use "~/assets/styles/mixins/_media.scss" as *; ',
         },
       },
@@ -126,31 +126,32 @@ export default defineNuxtConfig({
   svgo: {
     autoImportPath: false,
     global: false,
-    customComponent: "NuxtIcon",
+    customComponent: 'NuxtIcon',
   },
   components: [
     {
-      path: "~/components",
+      path: '~/components',
       pathPrefix: false,
     },
   ],
   i18n: {
+    baseUrl: '/',
     lazy: true,
-    langDir: "locales",
-    strategy: "no_prefix",
-    defaultLocale: "en",
+    langDir: 'locales',
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
     locales: [
       {
-        code: "hr",
-        language: "hr",
-        name: "Croatian",
-        file: "hr.ts",
+        code: 'hr',
+        language: 'hr',
+        name: 'Croatian',
+        file: 'hr.ts',
       },
       {
-        code: "en",
-        language: "en",
-        name: "English",
-        file: "en.ts",
+        code: 'en',
+        language: 'en',
+        name: 'English',
+        file: 'en.ts',
       },
       /*   {
         code: 'de',
@@ -191,8 +192,8 @@ export default defineNuxtConfig({
     ],
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: "i18n_redirected",
-      redirectOn: "root",
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
     },
   },
-});
+})

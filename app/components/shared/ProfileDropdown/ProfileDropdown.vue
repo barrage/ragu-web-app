@@ -152,6 +152,7 @@ function switchRoute() {
         <template v-if="oAuthStore.isAdmin">
           <div class="horizontal-divider" />
           <LlmLink
+            external
             :to="route.path.includes('/admin') ? '/' : '/admin'"
             type="link"
           >

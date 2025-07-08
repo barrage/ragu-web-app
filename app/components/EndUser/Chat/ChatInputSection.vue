@@ -13,7 +13,7 @@ defineProps<{
   streaming: boolean
 }>()
 
-const emit = defineEmits <{
+const emit = defineEmits<{
   (e: 'sendMessage', message: string): void
   (e: 'stopStream'): void
 }>()
@@ -79,8 +79,6 @@ const handleEnterKey = (e: KeyboardEvent) => {
         <textarea
           ref="textareaRef"
           v-model="message"
-          v-motion-slide-bottom
-          :delay="1100"
           class="barrage-chat-input"
           :placeholder="$t('chat.chatInputPlaceholder')"
           :disabled="disabled"

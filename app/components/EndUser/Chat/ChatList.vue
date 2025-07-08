@@ -30,8 +30,6 @@ const agentStore = useAgentStore()
         </div>
       </template>
       <LlmLink
-        v-motion-fade-visible-once
-        :delay="300"
         :to="`/c/${chat.id}`"
         type="link"
         class="menu-item"

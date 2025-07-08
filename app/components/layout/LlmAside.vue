@@ -34,7 +34,7 @@ onMounted(() => {
         :content="$t('getHelp.title')"
       >
         <LlmLink
-          v-motion-fade-visible-once
+          v-motion-fade
           :delay="300"
           to="/help?from=user"
           type="link"

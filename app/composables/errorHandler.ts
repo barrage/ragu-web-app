@@ -84,6 +84,7 @@ export const errorHandler = (error: Ref<NuxtError | undefined>, fatal: boolean =
           errorMessage = t('error_notifications.status_422')
           break
         case 500:
+          console.error(currentError)
           errorMessage = t('error_notifications.status_500')
           break
         case 503:

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import DashboardIcon from '~/assets/icons/svg/dashboard-icon.svg'
 import type { AgentStatistic, PieChartDataEntry } from '~/types/statistic'
-import token from '~~/server/api/oauth/token'
 
 definePageMeta({
   layout: 'admin-layout',

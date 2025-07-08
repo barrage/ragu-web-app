@@ -24,8 +24,6 @@ const groupedChats = computed(() => { return groupChatsByTime(allChats.value) })
       :content="$t('chat.newChat.title')"
     >
       <LlmLink
-        v-motion-fade-visible-once
-        :delay="300"
         to="/"
         type="link"
         class="menu-item"

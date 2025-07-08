@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-const route = useRoute()
-const router = useRouter()
+import { useRoute } from 'vue-router'
 
-onMounted(async () => {
+const router = useRouter()
+const route = useRoute()
+
+onMounted(() => {
   if (!route?.params?.chatId) {
     router.push('/')
   }

@@ -384,7 +384,7 @@
     }
 
     &--bottom {
-      flex-direction: column;
+      flex-direction: column-reverse;
 
       & .barrage-tabs__header.is-bottom {
         margin-bottom: 0;
@@ -643,7 +643,7 @@
     }
 
     &--top {
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
   }
 }
