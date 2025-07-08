@@ -4,7 +4,7 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "node_modules/.bin/nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -16,25 +16,23 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "@nuxt/eslint": "^0.3.13",
-    "@nuxtjs/i18n": "^9.5.6",
     "@pinia/nuxt": "^0.5.1",
     "@vueuse/core": "^10.11.0",
     "@vueuse/motion": "^2.2.6",
     "dompurify": "^3.2.1",
-    "highlight.js": "^11.10.0",
     "marked": "^15.0.3",
     "nuxt": "^3.12.4",
     "nuxt-svgo": "^4.0.2",
     "openid-client": "^6.3.3",
     "pinia": "^2.1.7",
-    "socket.io": "^4.7.5",
-    "socket.io-client": "^4.7.5",
     "vue": "latest",
     "vue-echarts": "^7.0.3",
     "vue-virtual-scroller": "^1.1.2"
   },
   "devDependencies": {
+    "highlight.js": "^11.10.0",
+    "@nuxtjs/i18n": "9.5.6",
+    "@nuxt/eslint": "^0.3.13",
     "@antfu/eslint-config": "2.22.4",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
